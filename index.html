@@ -350,11 +350,60 @@
         overflow: hidden;
       }
 
-      /* Línea divisora vertical en PC */
+      /* Panel izquierdo: contenedor relativo para línea diagonal + arte decorativo */
+      .calc-left-panel {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Línea divisora DIAGONAL dorada con brillo (elemento distintivo) */
+      @media (min-width: 992px) {
+        .calc-left-panel::after {
+          content: '';
+          position: absolute;
+          top: -18%;
+          bottom: -18%;
+          right: -1.75rem;
+          width: 2px;
+          background: linear-gradient(180deg,
+            rgba(212, 184, 149, 0) 0%,
+            rgba(212, 184, 149, 0.9) 42%,
+            rgba(212, 184, 149, 0.9) 58%,
+            rgba(212, 184, 149, 0) 100%);
+          transform: rotate(9deg);
+          box-shadow:
+            0 0 18px 2px rgba(212, 184, 149, 0.55),
+            0 0 60px 12px rgba(212, 184, 149, 0.2);
+        }
+      }
+
+      /* Arte decorativo (plano + árbol) esquina inferior izquierda */
+      .calc-left-visual {
+        position: absolute;
+        left: -8%;
+        bottom: -12%;
+        width: 75%;
+        max-width: 320px;
+        opacity: 0.5;
+        pointer-events: none;
+        z-index: -1;
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 85%);
+        mask-image: linear-gradient(to top, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 85%);
+      }
+
+      /* Línea divisora en PC (solo espaciado, la línea diagonal ya separa) */
       @media (min-width: 992px) {
         .calc-divider-vertical {
-          border-left: 1px solid rgba(255, 255, 255, 0.1);
+          border-left: none;
           padding-left: 3rem;
+        }
+      }
+      /* Separador horizontal en móvil */
+      @media (max-width: 991px) {
+        .calc-divider-vertical {
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          padding-top: 2rem;
+          margin-top: 0.5rem;
         }
       }
 
@@ -399,14 +448,46 @@
         text-align: left;
       }
 
-      .calc-info-card {
+      .calc-info-bar {
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 12px;
-        padding: 0.9rem 1.2rem;
+        border-radius: 14px;
+        display: flex;
+        align-items: stretch;
+      }
+      .calc-info-bar .calc-info-col {
+        flex: 1 1 0;
         display: flex;
         align-items: center;
         gap: 12px;
+        padding: 0.9rem 1.2rem;
+        min-width: 0;
+      }
+      .calc-info-bar .calc-info-divider {
+        width: 1px;
+        background: rgba(255, 255, 255, 0.08);
+        margin: 0.7rem 0;
+      }
+      .calc-icon-box {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      @media (max-width: 767px) {
+        .calc-info-bar {
+          flex-direction: column;
+        }
+        .calc-info-bar .calc-info-divider {
+          width: auto;
+          height: 1px;
+          margin: 0 1rem;
+        }
       }
 
       .features-grid-3 {
@@ -688,10 +769,23 @@
                 <div class="row align-items-center g-4">
                   
                   <!-- Panel Izquierdo: Textos explicativos -->
-                  <div class="col-12 col-lg-5 text-center text-lg-start">
-                    <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">CALCULADORA DE ÁREA</span>
-                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.8rem; line-height: 1.2;">¿No sabes cuántos m² tiene tu terreno?</h3>
+                  <div class="col-12 col-lg-5 text-center text-lg-start calc-left-panel">
+                    <span class="small fw-bold text-uppercase d-block mb-2" style="letter-spacing: 2px;"><span class="accent-text">CALCULADORA</span><span class="text-white fw-lighter"> DE ÁREA</span></span>
+                    <h3 class="fw-bold text-white mb-3" style="font-size: 2.1rem; line-height: 1.15;">¿No sabes cuántos m² tiene tu terreno?</h3>
                     <p class="text-secondary small mb-0">Ingresa las medidas de tu terreno y obtén el área total al instante.</p>
+
+                    <!-- Arte decorativo: plano arquitectónico + árbol -->
+                    <svg class="calc-left-visual d-none d-lg-block" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <g stroke="#d4b895" stroke-width="1" fill="none" opacity="0.9">
+                        <path d="M100 170 L180 90 L300 90 L220 170 Z"></path>
+                        <path d="M100 170 L180 90 M120 170 L200 90 M140 170 L220 90 M160 170 L240 90 M180 170 L260 90 M200 170 L280 90 M220 170 L300 90"></path>
+                        <path d="M100 170 L220 170 M110 155 L230 155 M120 140 L240 140 M130 125 L250 125 M140 110 L260 110 M150 95 L270 95"></path>
+                      </g>
+                      <g fill="#d4b895" opacity="0.8">
+                        <rect x="38" y="60" width="6" height="110"></rect>
+                        <ellipse cx="41" cy="45" rx="34" ry="42"></ellipse>
+                      </g>
+                    </svg>
                   </div>
 
                   <!-- Panel Derecho: Inputs y Resultado con división -->
@@ -744,24 +838,26 @@
                     </div>
 
                     <!-- Fila inferior de especificaciones técnicas -->
-                    <div class="row g-2 mt-3">
-                      <div class="col-12 col-md-6">
-                        <div class="calc-info-card">
-                          <svg width="20" height="20" class="text-secondary shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                          <div>
-                            <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Fórmula aplicada</span>
-                            <span class="text-white small" style="font-size: 0.75rem;">Ancho × Largo = Área Total</span>
-                          </div>
+                    <div class="calc-info-bar mt-3">
+                      <div class="calc-info-col">
+                        <div class="calc-icon-box">
+                          <svg width="18" height="18" class="accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        </div>
+                        <div>
+                          <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Fórmula aplicada</span>
+                          <span class="text-white small" style="font-size: 0.75rem;">Ancho × Largo = Área Total</span>
                         </div>
                       </div>
 
-                      <div class="col-12 col-md-6">
-                        <div class="calc-info-card">
-                          <svg width="20" height="20" class="accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
-                          <div>
-                            <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Unidad de medida</span>
-                            <span class="text-white small" style="font-size: 0.75rem;">metros cuadrados (m²)</span>
-                          </div>
+                      <div class="calc-info-divider"></div>
+
+                      <div class="calc-info-col">
+                        <div class="calc-icon-box">
+                          <svg width="18" height="18" class="accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
+                        </div>
+                        <div>
+                          <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Unidad de medida</span>
+                          <span class="text-white small" style="font-size: 0.75rem;">metros cuadrados (m²)</span>
                         </div>
                       </div>
                     </div>
