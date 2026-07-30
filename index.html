@@ -340,6 +340,23 @@
       /* =========================================
          DISEÑO PRO NUEVA CALCULADORA DE ÁREA
          ========================================= */
+      /* Wrapper que expande la calculadora más allá del ancho del container estándar */
+      .calc-pro-container-wrap {
+        width: 100%;
+      }
+      @media (min-width: 992px) {
+        .calc-pro-container-wrap {
+          width: 112%;
+          margin-left: -6%;
+        }
+      }
+      @media (min-width: 1400px) {
+        .calc-pro-container-wrap {
+          width: 122%;
+          margin-left: -11%;
+        }
+      }
+
       .calc-pro-container {
         position: relative;
         border-radius: 24px;
@@ -361,8 +378,8 @@
         .calc-left-panel::after {
           content: '';
           position: absolute;
-          top: -18%;
-          bottom: -18%;
+          top: -6%;
+          bottom: -6%;
           right: -1.75rem;
           width: 2px;
           background: linear-gradient(180deg,
@@ -370,7 +387,7 @@
             rgba(212, 184, 149, 0.9) 42%,
             rgba(212, 184, 149, 0.9) 58%,
             rgba(212, 184, 149, 0) 100%);
-          transform: rotate(9deg);
+          transform: rotate(4deg);
           box-shadow:
             0 0 18px 2px rgba(212, 184, 149, 0.55),
             0 0 60px 12px rgba(212, 184, 149, 0.2);
@@ -765,6 +782,7 @@
           <!-- NUEVA CALCULADORA DE ÁREA DE TERRENO (DISEÑO EXACTO REFERENCIA) -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
+              <div class="calc-pro-container-wrap">
               <div class="calc-pro-container p-4 p-lg-5">
                 <div class="row align-items-center g-4">
                   
@@ -865,6 +883,7 @@
                   </div>
 
                 </div>
+              </div>
               </div>
             </div>
           </div>
