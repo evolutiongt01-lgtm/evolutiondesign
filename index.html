@@ -280,6 +280,65 @@
         padding-left: 0 !important;
         margin-left: 0 !important;
       }
+
+      /* =========================================
+         TARJETAS DE PAQUETES (Liquid Glass)
+         ========================================= */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.03) !important;
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+      /* Efecto de reflejo de cristal */
+      .glass-panel::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -150%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 100%);
+        transform: skewX(-25deg);
+        animation: glass-shine 8s infinite;
+        pointer-events: none;
+      }
+
+      .glass-panel-accent {
+        background: rgba(212, 184, 149, 0.05) !important; /* Tono sutil dorado */
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        border: 1px solid rgba(212, 184, 149, 0.3) !important;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+      }
+      .glass-panel-accent::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -150%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(212, 184, 149, 0.08) 50%, rgba(255,255,255,0) 100%);
+        transform: skewX(-25deg);
+        animation: glass-shine 8s infinite 1.5s; /* Retraso para que no brillen al mismo tiempo */
+        pointer-events: none;
+      }
+
+      @keyframes glass-shine {
+        0% { left: -150%; }
+        20% { left: 200%; }
+        100% { left: 200%; }
+      }
+
+      /* Fondo contenedor sutil para que el cristal resalte más */
+      .glass-container-bg {
+        background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,1) 80%);
+      }
     </style>
   </head>
 
@@ -399,7 +458,7 @@
       </div>
 
       <!-- SECCIÓN DE PAQUETES 3D -->
-      <div id="visualizacion" class="py-vh-5" style="background-color: #0a0a0a;">
+      <div id="visualizacion" class="py-vh-5 glass-container-bg">
         <div class="container px-vw-5">
           <div class="text-center mb-5" data-aos="fade">
             <span class="h5 text-secondary fw-lighter">Renderismo y Modelado</span>
@@ -410,14 +469,13 @@
           <div class="row gx-4 g-5 align-items-stretch">
             <!-- PAQUETE BÁSICO -->
             <div class="col-12 col-lg-4" data-aos="zoom-in-up">
-              <div class="bg-black p-5 rounded-5 shadow h-100 border border-secondary" style="border-color: #222 !important;">
+              <div class="glass-panel p-5 rounded-5 h-100">
                 <h3 class="fw-lighter text-center">BÁSICO</h3>
                 <p class="text-center text-secondary small">PAQUETE</p>
                 <div class="text-center my-4">
                   <span class="fs-6 text-secondary">HASTA 300 m²</span>
                   <h2 class="display-5 fw-bold">$199 <span class="fs-6 text-secondary">USD</span></h2>
                 </div>
-                <!-- CLASE no-bullets AGREGADA -->
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
                   <li class="mb-2">✓ Modelado 3D profesional</li>
                   <li class="mb-2">✓ 2 Renders exteriores</li>
@@ -433,15 +491,14 @@
 
             <!-- PAQUETE PROFESIONAL -->
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="1500">
-              <div class="bg-black p-5 rounded-5 shadow h-100 border position-relative" style="border-color: #d4b895 !important;">
-                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000;">MÁS POPULAR</span>
+              <div class="glass-panel-accent p-5 rounded-5 h-100">
+                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MÁS POPULAR</span>
                 <h3 class="fw-lighter text-center mt-3">PROFESIONAL</h3>
                 <p class="text-center text-secondary small">PAQUETE</p>
                 <div class="text-center my-4">
                   <span class="fs-6 text-secondary">HASTA 300 m²</span>
                   <h2 class="display-5 fw-bold text-white">$399 <span class="fs-6 text-secondary">USD</span></h2>
                 </div>
-                <!-- CLASE no-bullets AGREGADA -->
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
                   <li class="mb-2">✓ Modelado 3D completo</li>
                   <li class="mb-2">✓ 5 Renders fotorrealistas</li>
@@ -451,7 +508,7 @@
                   <li class="mb-2">✓ Entrega en alta resolución</li>
                   <li class="mb-2">✓ 2 revisiones incluidas</li>
                 </ul>
-                <div class="text-center">
+                <div class="text-center" style="position: relative; z-index: 10;">
                   <a href="https://www.paypal.com/ncp/payment/T5GGC93YAXSWG" target="_blank" class="btn w-100 text-black fw-bold rounded-pill" style="background-color: #d4b895;">Adquirir Profesional</a>
                 </div>
               </div>
@@ -459,14 +516,13 @@
 
             <!-- PAQUETE PREMIUM -->
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="2000">
-              <div class="bg-black p-5 rounded-5 shadow h-100 border border-secondary" style="border-color: #222 !important;">
+              <div class="glass-panel p-5 rounded-5 h-100">
                 <h3 class="fw-lighter text-center">PREMIUM</h3>
                 <p class="text-center text-secondary small">PAQUETE</p>
                 <div class="text-center my-4">
                   <span class="fs-6 text-secondary">HASTA 300 m²</span>
                   <h2 class="display-5 fw-bold">$799 <span class="fs-6 text-secondary">USD</span></h2>
                 </div>
-                <!-- CLASE no-bullets AGREGADA -->
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
                   <li class="mb-2">✓ Modelado 3D completo</li>
                   <li class="mb-2">✓ 5 Renders ultra realistas</li>
@@ -487,7 +543,7 @@
           <!-- SERVICIOS ADICIONALES 3D -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
-              <div class="p-4 p-lg-5 rounded-5 border shadow-sm" style="background-color: #111; border-color: #222 !important;">
+              <div class="glass-panel p-4 p-lg-5 rounded-5">
                 <h6 class="text-center mb-4 text-white letter-spacing-2 fw-light" style="letter-spacing: 2px;">
                   <span class="accent-text fw-bold">SERVICIOS</span> ADICIONALES
                 </h6>
@@ -501,21 +557,21 @@
                   </div>
 
                   <!-- Recorrido Virtual -->
-                  <div class="col-6 col-md-3 border-start" style="border-color: #222 !important;">
+                  <div class="col-6 col-md-3 border-start" style="border-color: rgba(255,255,255,0.1) !important;">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Recorrido Virtual</h6>
                     <span class="accent-text fw-bold">$150 USD</span>
                   </div>
 
                   <!-- Diseño de Fachada -->
-                  <div class="col-6 col-md-3 border-start-md mt-4 mt-md-0" style="border-color: #222 !important;">
+                  <div class="col-6 col-md-3 border-start-md mt-4 mt-md-0" style="border-color: rgba(255,255,255,0.1) !important;">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Diseño de Fachada</h6>
                     <span class="text-secondary small d-inline me-1" style="font-size: 0.75rem;">DESDE</span><span class="accent-text fw-bold">$120 USD</span>
                   </div>
 
                   <!-- Modelado 3D -->
-                  <div class="col-6 col-md-3 border-start mt-4 mt-md-0" style="border-color: #222 !important;">
+                  <div class="col-6 col-md-3 border-start mt-4 mt-md-0" style="border-color: rgba(255,255,255,0.1) !important;">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Modelado 3D</h6>
                     <span class="text-secondary small d-inline me-1" style="font-size: 0.75rem;">DESDE</span><span class="accent-text fw-bold">$150 USD</span>
@@ -530,7 +586,7 @@
       </div>
 
       <!-- SECCIÓN DE PLANOS 2D -->
-      <div id="servicios-tecnicos" class="bg-black py-vh-5 border-top" style="border-color: #1a1a1a !important;">
+      <div id="servicios-tecnicos" class="bg-black py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container px-vw-5">
           <div class="text-center mb-5" data-aos="fade">
             <span class="h5 text-secondary fw-lighter">Precisión en cada línea</span>
@@ -539,19 +595,18 @@
 
           <div class="row justify-content-center">
             <div class="col-12 col-lg-8" data-aos="zoom-in-up">
-              <div class="p-5 rounded-5 shadow h-100 border" style="background-color: #111; border-color: #333 !important; text-align: center;">
+              <div class="glass-panel p-5 rounded-5 text-center">
                 <div class="text-center my-4">
                   <h2 class="display-5 fw-bold text-white">$2.00 <span class="fs-6 text-secondary">USD/m²</span></h2>
                 </div>
                 <h5 class="text-white mb-3 text-start">Incluye:</h5>
-                <!-- CLASE no-bullets AGREGADA -->
                 <ul class="list-unstyled no-bullets text-secondary mb-4 text-start">
                   <li class="mb-2">✓ Planta arquitectónica y Fachadas</li>
                   <li class="mb-2">✓ Secciones y Planta de techos</li>
                   <li class="mb-2">✓ Detalles constructivos y Cuadros</li>
                 </ul>
                 <div class="table-responsive">
-                  <table class="table table-dark table-borderless small text-secondary text-start mt-4">
+                  <table class="table table-dark table-borderless small text-secondary text-start mt-4" style="background: transparent;">
                     <thead class="border-bottom border-secondary"><tr><th>Área Construida</th><th>Cálculo</th><th>Precio</th></tr></thead>
                     <tbody>
                       <tr><td>150 m²</td><td>150 x $2.00</td><td class="text-white">$300 USD</td></tr>
@@ -566,7 +621,7 @@
       </div>
 
       <!-- SECCIÓN DE CUANTIFICACIÓN DE MATERIALES -->
-      <div id="cuantificacion" class="py-vh-5" style="background-color: #0a0a0a;">
+      <div id="cuantificacion" class="py-vh-5 glass-container-bg">
         <div class="container px-vw-5">
           <div class="text-center mb-5" data-aos="fade">
             <span class="h5 text-secondary fw-lighter">Optimización de recursos</span>
@@ -575,12 +630,11 @@
 
           <div class="row gx-5 g-5 justify-content-center">
             <div class="col-12 col-lg-8" data-aos="zoom-in-up">
-              <div class="p-5 rounded-5 shadow h-100 border text-center" style="background-color: #111; border-color: #333 !important;">
+              <div class="glass-panel p-5 rounded-5 text-center">
                 <div class="text-center my-4">
                   <h2 class="display-5 fw-bold text-white">$1.50 <span class="fs-6 text-secondary">USD/m²</span></h2>
                 </div>
                 <h5 class="text-white mb-3 text-start">Incluye cálculo de:</h5>
-                <!-- CLASE no-bullets AGREGADA -->
                 <ul class="list-unstyled no-bullets text-secondary mb-4 text-start">
                   <li class="mb-2">✓ Concreto, Acero, Block / Ladrillo</li>
                   <li class="mb-2">✓ Cubierta, Piso, Cielo falso</li>
@@ -593,10 +647,10 @@
           <!-- PAQUETE COMBINADO -->
           <div class="row mt-5 justify-content-center" data-aos="fade">
             <div class="col-12 col-lg-8">
-              <div class="p-5 rounded-5 shadow border text-center" style="background: linear-gradient(145deg, #1a1a1a, #000); border-color: #d4b895 !important;">
+              <div class="glass-panel-accent p-5 rounded-5 text-center">
                 <h3 class="fw-lighter text-white">PAQUETE: PLANOS + CUANTIFICACIÓN</h3>
                 <h2 class="display-4 fw-bold my-3 accent-text">$3.50 <span class="fs-6 text-light">USD/m²</span></h2>
-                <p class="text-secondary mb-0">Ahorra al contratar ambos servicios para tu proyecto estructural.</p>
+                <p class="text-secondary mb-0" style="position: relative; z-index: 10;">Ahorra al contratar ambos servicios para tu proyecto estructural.</p>
               </div>
             </div>
           </div>
