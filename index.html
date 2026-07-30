@@ -1,4 +1,4 @@
- <!doctype html>
+<!doctype html>
 <html class="h-100" lang="es">
 
   <head>
@@ -358,38 +358,24 @@
       .calc-pro-container {
         position: relative;
         border-radius: 24px;
-        background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.8) 100%);
+        /* 👉 FONDO CON IMAGEN ATENUADA EN NEGRO:
+           Reemplaza 'img/calculadora-fondo.jpg' por la ruta de tu imagen.
+           El primer degradado negro controla qué tan oscura se ve (0.7 = 70% de opacidad negra encima). 
+           Si la imagen no carga, se ve el degradado de respaldo (igual que antes). */
+        background:
+          linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url('img/calculadora-fondo.jpg') center / cover no-repeat,
+          linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.8) 100%);
         border: 1px solid rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
         overflow: hidden;
       }
 
-      /* Panel izquierdo: contenedor relativo para línea diagonal + arte decorativo */
+      /* Panel izquierdo: contenedor relativo para el arte decorativo */
       .calc-left-panel {
         position: relative;
         z-index: 1;
-      }
-
-      /* Línea divisora DIAGONAL dorada con brillo (elemento distintivo) */
-      @media (min-width: 992px) {
-        .calc-left-panel::after {
-          content: '';
-          position: absolute;
-          top: -6%;
-          bottom: -6%;
-          right: -1.75rem;
-          width: 2px;
-          background: linear-gradient(180deg,
-            rgba(212, 184, 149, 0) 0%,
-            rgba(212, 184, 149, 0.9) 42%,
-            rgba(212, 184, 149, 0.9) 58%,
-            rgba(212, 184, 149, 0) 100%);
-          transform: rotate(4deg);
-          box-shadow:
-            0 0 18px 2px rgba(212, 184, 149, 0.55),
-            0 0 60px 12px rgba(212, 184, 149, 0.2);
-        }
       }
 
       /* Arte decorativo (plano + árbol) esquina inferior izquierda */
@@ -406,10 +392,10 @@
         mask-image: linear-gradient(to top, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 85%);
       }
 
-      /* Línea divisora en PC (solo espaciado, la línea diagonal ya separa) */
+      /* Línea divisora vertical simple en PC (entre inputs y resultado) */
       @media (min-width: 992px) {
         .calc-divider-vertical {
-          border-left: none;
+          border-left: 1px solid rgba(255, 255, 255, 0.1);
           padding-left: 3rem;
         }
       }
@@ -787,7 +773,7 @@
                   <!-- Panel Izquierdo: Textos explicativos -->
                   <div class="col-12 col-lg-5 text-center text-lg-start calc-left-panel">
                     <span class="small fw-bold text-uppercase d-block mb-2" style="letter-spacing: 2px;"><span class="accent-text">CALCULADORA</span><span class="text-white fw-lighter"> DE ÁREA</span></span>
-                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.9rem; line-height: 1.2;">¿No sabes cuántos m²<br>tiene tu terreno?</h3>
+                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.9rem; line-height: 1.2;">Ingresa las dimensiones<br>de tu terreno</h3>
                     <p class="text-secondary small mb-0">Ingresa las medidas de tu terreno y obtén el área total al instante.</p>
 
                     <!-- Arte decorativo: plano arquitectónico + árbol -->
@@ -814,7 +800,7 @@
                           
                           <!-- Ancho -->
                           <div>
-                            <span class="small text-secondary d-block mb-1">Ancho del terreno</span>
+                            <span class="small text-secondary d-block mb-1">Ancho del terreno (m)</span>
                             <div class="calc-input-group-pro">
                               <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 12h20M2 7h20M2 17h20"></path></svg>
                               <input type="number" id="calcAncho" class="calc-input-field" placeholder="Ej. 10" min="0" step="any">
@@ -829,7 +815,7 @@
 
                           <!-- Largo -->
                           <div>
-                            <span class="small text-secondary d-block mb-1">Largo del terreno</span>
+                            <span class="small text-secondary d-block mb-1">Largo del terreno (m)</span>
                             <div class="calc-input-group-pro">
                               <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2v20M7 2h10M7 22h10"></path></svg>
                               <input type="number" id="calcLargo" class="calc-input-field" placeholder="Ej. 20" min="0" step="any">
@@ -843,7 +829,7 @@
                       <!-- Columna Pantalla Resultado Total -->
                       <div class="col-12 col-xl-5">
                         <div class="calc-result-display-box">
-                          <span class="small text-secondary d-block mb-1">Área Total</span>
+                          <span class="small accent-text fw-bold d-block mb-1" style="letter-spacing: 1px;">ÁREA TOTAL</span>
                           <div class="d-flex align-items-baseline">
                             <h2 class="fw-bold accent-text mb-0" id="calcTotal" style="font-size: 2.2rem;">0.00</h2>
                             <span class="ms-1 text-secondary small">m²</span>
