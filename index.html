@@ -346,7 +346,7 @@
         }
       }
 
-      /* ESTILOS CALCULADORA DE ÁREA */
+      /* ESTILOS CALCULADORA DE ÁREA E INGRESOS */
       .form-glass {
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.15);
@@ -580,7 +580,7 @@
             </div>
           </div>
 
-          <!-- CALCULADORA DE ÁREA (HORIZONAL EN PC / APILADO EN MÓVIL) -->
+          <!-- CALCULADORA DE ÁREA -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
               <div class="glass-panel px-4 px-lg-5 rounded-5" style="padding-top: 4.5rem; padding-bottom: 4.5rem;">
@@ -594,7 +594,6 @@
                   </div>
                   
                   <div class="col-12 col-xl-7 mt-4 mt-xl-0">
-                    <!-- Contenedor flex forzado a horizontal en pantallas medianas y grandes -->
                     <div class="d-flex flex-column flex-md-row gap-3 align-items-center justify-content-center justify-content-xl-end w-100">
                       
                       <!-- Input Ancho -->
@@ -674,7 +673,7 @@
         </div>
       </div>
 
-      <!-- SECCIÓN DE PLANOS 2D -->
+      <!-- SECCIÓN DE PLANOS 2D CON CALCULADORA INCORPORADA -->
       <div id="servicios-tecnicos" class="bg-black py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container px-vw-5">
           <div class="text-center mb-5" data-aos="fade">
@@ -694,15 +693,41 @@
                   <li class="mb-2">✓ Secciones y Planta de techos</li>
                   <li class="mb-2">✓ Detalles constructivos y Cuadros</li>
                 </ul>
-                <div class="table-responsive">
-                  <table class="table table-dark table-borderless small text-secondary text-start mt-4" style="background: transparent;">
-                    <thead class="border-bottom border-secondary"><tr><th>Área Construida</th><th>Cálculo</th><th>Precio</th></tr></thead>
-                    <tbody>
-                      <tr><td>150 m²</td><td>150 x $2.00</td><td class="text-white">$300 USD</td></tr>
-                      <tr><td>300 m²</td><td>300 x $2.00</td><td class="text-white">$600 USD</td></tr>
-                    </tbody>
-                  </table>
+                
+                <!-- NUEVA CALCULADORA PARA PLANOS 2D -->
+                <div class="mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
+                  <h6 class="text-white mb-4 letter-spacing-2 fw-light text-center" style="letter-spacing: 2px;"><span class="accent-text fw-bold">CALCULA</span> TU PROYECTO</h6>
+                  <div class="d-flex flex-column flex-md-row gap-3 align-items-center justify-content-center w-100">
+                    
+                    <!-- Input m2 -->
+                    <div class="text-center" style="width: 140px;">
+                      <label class="small text-secondary mb-1 d-block">Área Total (m²)</label>
+                      <input type="number" id="calcArea2D" class="form-glass w-100 text-center" placeholder="Ej. 150" min="0" step="any">
+                    </div>
+                    
+                    <div class="text-secondary fw-bold fs-4 d-none d-md-block mt-3">×</div>
+                    
+                    <!-- Tarifa Constante -->
+                    <div class="text-center mt-3 mt-md-0" style="width: 100px;">
+                      <label class="small text-secondary mb-1 d-block">Tarifa</label>
+                      <div class="h4 text-white mb-0 mt-2">$2.00</div>
+                    </div>
+
+                    <div class="text-secondary fw-bold fs-4 d-none d-md-block mt-3">=</div>
+                    
+                    <!-- Resultado -->
+                    <div class="result-box text-center mt-2 mt-md-0" style="min-width: 160px;">
+                      <span class="small text-secondary d-block mb-1">Costo Estimado</span>
+                      <div class="d-flex align-items-baseline justify-content-center">
+                        <h2 class="fw-bold accent-text mb-0">$<span id="calcTotal2D">0.00</span></h2>
+                        <span class="ms-1 text-secondary small">USD</span>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
+                <!-- FIN DE LA CALCULADORA PLANOS 2D -->
+
               </div>
             </div>
           </div>
@@ -810,9 +835,11 @@
       
     </div>
 
-    <!-- LOGICA DE LA CALCULADORA -->
+    <!-- LOGICA DE LAS CALCULADORAS -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        
+        // Calculadora de Área (Ancho x Largo)
         const anchoInput = document.getElementById('calcAncho');
         const largoInput = document.getElementById('calcLargo');
         const totalDisplay = document.getElementById('calcTotal');
@@ -831,6 +858,25 @@
 
         anchoInput.addEventListener('input', calcularArea);
         largoInput.addEventListener('input', calcularArea);
+
+        // Calculadora de Costo Planos 2D (Área x $2.00)
+        const area2DInput = document.getElementById('calcArea2D');
+        const total2DDisplay = document.getElementById('calcTotal2D');
+        const tarifa2D = 2.00;
+
+        function calcularPrecio2D() {
+          const area = parseFloat(area2DInput.value) || 0;
+          const total = area * tarifa2D;
+
+          if(total > 0) {
+            total2DDisplay.textContent = total.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          } else {
+            total2DDisplay.textContent = "0.00";
+          }
+        }
+
+        area2DInput.addEventListener('input', calcularPrecio2D);
+        
       });
     </script>
     <script src="js/bootstrap.bundle.min.js"></script>
