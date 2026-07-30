@@ -497,7 +497,7 @@
           </h1>
           
           <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">
-            Modelado 3D profesional y renders fotorrealistas que dan vida à tu proyecto antes de construirlo.
+            Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.
           </p>
 
           <!-- BOTONES DE PAQUETES LIQUID GLASS -->
@@ -537,7 +537,7 @@
           <div class="text-center mb-5" data-aos="fade">
             <span class="h5 text-secondary fw-lighter">Renderismo y Modelado</span>
             <h2 class="display-4 fw-bold">Paquetes 3D</h2>
-            <p class="text-secondary">Proyectos residenciales de hasta 300 m² de construcción. Si supera los 300 m², se incrementa $3 USD por cada m² adicional.</p>
+            <p class="text-secondary">Proyectos residenciales de hasta 300 m² de construcción. (Nota: El servicio incluye estrictamente modelado y renders; contáctanos para enviarnos tus planos o adquiere primero tus planos 2D).</p>
           </div>
 
           <div class="row gx-4 g-5 align-items-stretch">
@@ -614,17 +614,17 @@
             </div>
           </div>
 
-          <!-- COTIZADOR INTELIGENTE CON BOTÓN DE WHATSAPP -->
+          <!-- COTIZADOR INTELIGENTE (Condicional > 300m²) -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
               <div class="calc-pro-container p-4 p-lg-5">
                 <div class="row align-items-center g-4">
                   
-                  <!-- Panel Izquierdo: Selector de Servicio e Inputs de Medidas -->
+                  <!-- Panel Izquierdo -->
                   <div class="col-12 col-lg-5 text-center text-lg-start">
                     <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">COTIZADOR INTELIGENTE</span>
-                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.8rem; line-height: 1.2;">Calcula según tus m²</h3>
-                    <p class="text-secondary small mb-3">Selecciona el servicio que te interesa e ingresa las medidas de tu terreno para obtener el precio adaptado al instante.</p>
+                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.8rem; line-height: 1.2;">¿Tu terreno supera los 300 m²?</h3>
+                    <p class="text-secondary small mb-3">Si tu proyecto mide más de 300 m², calcula tus medidas exactas para cotizar el excedente o tus planos 2D/cuantificaciones.</p>
                     
                     <div class="mb-3 text-start">
                       <span class="small text-secondary d-block mb-1">Seleccionar Servicio</span>
@@ -641,7 +641,7 @@
                     </div>
                   </div>
 
-                  <!-- Panel Derecho: Ancho, Largo, m² y Costo Adaptado Final -->
+                  <!-- Panel Derecho -->
                   <div class="col-12 col-lg-7 calc-divider-vertical">
                     <div class="row g-3 align-items-center">
                       
@@ -653,7 +653,7 @@
                             <span class="small text-secondary d-block mb-1">Ancho del terreno (m)</span>
                             <div class="calc-input-group-pro">
                               <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 12h20M2 7h20M2 17h20"></path></svg>
-                              <input type="number" id="calcAncho" class="calc-input-field" placeholder="Ej. 10" min="0" step="any">
+                              <input type="number" id="calcAncho" class="calc-input-field" placeholder="Ej. 15" min="0" step="any">
                               <span class="text-secondary small ms-2">m</span>
                             </div>
                           </div>
@@ -666,7 +666,7 @@
                             <span class="small text-secondary d-block mb-1">Largo del terreno (m)</span>
                             <div class="calc-input-group-pro">
                               <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2v20M7 2h10M7 22h10"></path></svg>
-                              <input type="number" id="calcLargo" class="calc-input-field" placeholder="Ej. 20" min="0" step="any">
+                              <input type="number" id="calcLargo" class="calc-input-field" placeholder="Ej. 25" min="0" step="any">
                               <span class="text-secondary small ms-2">m</span>
                             </div>
                           </div>
@@ -685,7 +685,7 @@
                         </div>
 
                         <div class="calc-result-display-box" style="background: rgba(212, 184, 149, 0.05); border-color: rgba(212, 184, 149, 0.3);">
-                          <span class="accent-text small d-block mb-1">Costo Estimado Final</span>
+                          <span class="accent-text small d-block mb-1" id="labelCostoFinal">Costo Estimado</span>
                           <div class="d-flex align-items-baseline">
                             <h2 class="fw-bold accent-text mb-0" id="calcPrecioFinal" style="font-size: 2rem;">$0.00</h2>
                             <span class="ms-1 accent-text small">USD</span>
@@ -695,16 +695,15 @@
 
                     </div>
 
-                    <!-- BOTÓN ENVIAR COTIZACIÓN A WHATSAPP -->
-                    <div class="mt-4">
+                    <!-- CONTENEDOR DEL BOTÓN DE WHATSAPP (Aparece solo si > 300m² en 3D, o siempre en Planos/Cuantificación) -->
+                    <div id="wrapperBtnCotizar" class="mt-4" style="display: none;">
                       <a id="btnEnviarCotizacion" href="https://wa.me/50237343909?text=Hola,%20me%20interesa%20cotizar%20un%20proyecto" target="_blank" class="btn btn-light w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
                         <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
                         Enviar cotización por WhatsApp
                       </a>
                     </div>
-
-                    <div class="mt-3 text-secondary small text-center text-lg-start" style="opacity: 0.8;">
-                      * Nota: Para paquetes 3D, el precio base cubre hasta 300 m². Si excede, se suman $3.00 USD por cada m² adicional.
+                    <div id="avisoPagoDirecto" class="mt-3 text-secondary small text-center text-lg-start" style="opacity: 0.8;">
+                      * Tu terreno es de 300 m² o menos. Puedes adquirir tu paquete 3D directamente arriba con nuestros botones de pago seguro.
                     </div>
 
                   </div>
@@ -917,7 +916,7 @@
       
     </div>
 
-    <!-- LÓGICA DINÁMICA DE CÁLCULO Y WHATSAPP -->
+    <!-- LÓGICA INTELIGENTE CONDICIONAL -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const servicioSelect = document.getElementById('calcServicioSelect');
@@ -925,6 +924,8 @@
         const largoInput = document.getElementById('calcLargo');
         const totalDisplay = document.getElementById('calcTotal');
         const precioFinalDisplay = document.getElementById('calcPrecioFinal');
+        const wrapperBtnCotizar = document.getElementById('wrapperBtnCotizar');
+        const avisoPagoDirecto = document.getElementById('avisoPagoDirecto');
         const btnEnviarCotizacion = document.getElementById('btnEnviarCotizacion');
 
         function actualizarCotizacion() {
@@ -939,6 +940,7 @@
             totalDisplay.textContent = areaTotal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             
             let precioFinal = 0;
+            let esServicio3D = (servicioVal === 'basico' || servicioVal === 'profesional' || servicioVal === 'premium');
 
             if (servicioVal === 'basico') {
               let base = 199;
@@ -963,13 +965,23 @@
             const precioFormateado = `$${precioFinal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
             precioFinalDisplay.textContent = precioFormateado;
 
-            // Actualizar enlace de WhatsApp con los datos del cálculo
-            const mensaje = encodeURIComponent(`Hola, me interesa el servicio de: *${servicioNombre}*.\nDimensiones del terreno: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: ${precioFormateado} USD.\n¿Cómo procedemos con el pago y la contratación?`);
+            // Lógica de visualización del botón de WhatsApp según si supera o no los 300m² en 3D
+            if (esServicio3D && areaTotal <= 300) {
+              wrapperBtnCotizar.style.display = 'none';
+              avisoPagoDirecto.style.display = 'block';
+            } else {
+              wrapperBtnCotizar.style.display = 'block';
+              avisoPagoDirecto.style.display = 'none';
+            }
+
+            // Actualizar enlace de WhatsApp
+            const mensaje = encodeURIComponent(`Hola, me interesa el servicio de: *${servicioNombre}*.\nDimensiones: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: ${precioFormateado} USD.\n¿Cómo procedemos?`);
             btnEnviarCotizacion.href = `https://wa.me/50237343909?text=${mensaje}`;
           } else {
             totalDisplay.textContent = "0.00";
             precioFinalDisplay.textContent = "$0.00";
-            btnEnviarCotizacion.href = `https://wa.me/50237343909?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto`;
+            wrapperBtnCotizar.style.display = 'none';
+            avisoPagoDirecto.style.display = 'block';
           }
         }
 
