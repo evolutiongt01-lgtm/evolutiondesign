@@ -2,444 +2,478 @@
 <html class="h-100" lang="es">
 
   <head>
-      <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-  <meta name="description" content="Evolution Desing - Estudio de Visualización Arquitectónica, Planos 2D y Cuantificación de Materiales">
-  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
-  <meta name="author" content="Evolution Desing">
-  <meta name="generator" content="Eleventy v2.0.0">
-  <meta name="HandheldFriendly" content="true">
-  <title>Evolution Desing - Visualización, Planos y Cuantificación</title>
-  <link rel="stylesheet" href="css/theme.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="description" content="Evolution Design - Estudio de Visualización Arquitectónica, Planos 2D y Cuantificación de Materiales">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
+    <meta name="author" content="Evolution Design">
+    <meta name="generator" content="Eleventy v2.0.0">
+    <meta name="HandheldFriendly" content="true">
+    <title>Evolution Design - Visualización, Planos y Cuantificación</title>
+    <link rel="stylesheet" href="css/theme.min.css">
 
-   <style>
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: local(''),
-       url('fonts/inter-v12-latin-300.woff2') format('woff2'),
-       url('fonts/inter-v12-latin-300.woff') format('woff');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: local(''),
-       url('fonts/inter-v12-latin-regular.woff2') format('woff2'),
-       url('fonts/inter-v12-latin-regular.woff') format('woff');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: local(''),
-       url('fonts/inter-v12-latin-500.woff2') format('woff2'),
-       url('fonts/inter-v12-latin-500.woff') format('woff');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: local(''),
-       url('fonts/inter-v12-latin-700.woff2') format('woff2'),
-       url('fonts/inter-v12-latin-700.woff') format('woff');
-}
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: local(''),
+             url('fonts/inter-v12-latin-300.woff2') format('woff2'),
+             url('fonts/inter-v12-latin-300.woff') format('woff');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local(''),
+             url('fonts/inter-v12-latin-regular.woff2') format('woff2'),
+             url('fonts/inter-v12-latin-regular.woff') format('woff');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: local(''),
+             url('fonts/inter-v12-latin-500.woff2') format('woff2'),
+             url('fonts/inter-v12-latin-500.woff') format('woff');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: local(''),
+             url('fonts/inter-v12-latin-700.woff2') format('woff2'),
+             url('fonts/inter-v12-latin-700.woff') format('woff');
+      }
 
-@media (max-width: 768px) {
-  .navbar-nav {
-    display: none !important; /* Oculta menú colapsado en móvil para que luzca limpio, usa el botón flotante o superior */
-  }
-}
-</style>
+      body {
+        background-color: #0d0d0d;
+        color: #e0e0e0;
+        font-family: 'Inter', sans-serif;
+      }
+
+      @media (max-width: 768px) {
+        .navbar-nav {
+          display: none !important;
+        }
+      }
+
+      /* Estilos personalizados para el nuevo diseño */
+      .bg-darker { background-color: #121212; }
+      .text-accent { color: #a1a1aa; }
+      
+      .service-card {
+        min-width: 260px;
+        height: 380px;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.3s ease;
+      }
+      .service-card:hover {
+        transform: translateY(-5px);
+      }
+      .service-card-overlay {
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 100%);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      
+      .process-step {
+        position: relative;
+      }
+      .process-line {
+        position: absolute;
+        top: 24px;
+        left: 60px;
+        right: -20px;
+        height: 1px;
+        border-top: 1px dashed #4b4b4b;
+        z-index: 0;
+      }
+      @media (max-width: 991px) {
+        .process-line { display: none; }
+      }
+
+      .horizontal-scroll {
+        display: flex;
+        overflow-x: auto;
+        gap: 1.5rem;
+        padding-bottom: 1rem;
+        scrollbar-width: none; /* Firefox */
+      }
+      .horizontal-scroll::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+      }
+    </style>
   </head>
 
-  <body class="bg-black text-white mt-0" data-bs-spy="scroll" data-bs-target="#navScroll">
+  <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-    <nav id="navScroll" class="navbar navbar-dark bg-black fixed-top px-vw-5" tabindex="0">
-  <div class="container">
-    <a class="navbar-brand pe-md-4 col-12 col-md-auto text-center" href="index.html">
-      <img src="img/logo.png" alt="Evolution Desing" style="max-height: 40px; width: auto;">
-    </a>
-
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 list-group list-group-horizontal">
-      <li class="nav-item">
-  <a class="nav-link fs-5" href="index.html" aria-label="Inicio">Inicio</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link fs-5" href="#visualizacion" aria-label="Visualización 3D">Visualización 3D</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link fs-5" href="#servicios-tecnicos" aria-label="Planos 2D">Planos 2D</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link fs-5" href="#cuantificacion" aria-label="Cuantificación">Cuantificación</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link fs-5" href="#testimonios" aria-label="Reseñas">Reseñas</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link fs-5" href="#contacto" aria-label="Contacto">Contacto</a>
-</li>
-    </ul>
-      <a href="https://www.facebook.com/TU_PAGINA_DE_FACEBOOK" target="_blank" aria-label="Contáctanos" class="btn btn-outline-light">
-        <small>Cotizar Proyecto</small>
-      </a>
-</div>
-</nav>
+    <nav id="navScroll" class="navbar navbar-dark fixed-top px-vw-5" tabindex="0" style="background-color: rgba(13, 13, 13, 0.9); backdrop-filter: blur(10px);">
+      <div class="container">
+        <a class="navbar-brand pe-md-4 col-12 col-md-auto text-center" href="index.html">
+          <img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;">
+        </a>
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 list-group list-group-horizontal gap-4">
+          <li class="nav-item"><a class="nav-link fs-6 text-white" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link fs-6 text-white" href="#servicios">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link fs-6 text-white" href="#portafolio">Portafolio</a></li>
+          <li class="nav-item"><a class="nav-link fs-6 text-white" href="#nosotros">Nosotros</a></li>
+          <li class="nav-item"><a class="nav-link fs-6 text-white" href="#contacto">Contacto</a></li>
+        </ul>
+        <a href="https://wa.me/50237343909" target="_blank" class="btn btn-light rounded-pill px-4 fw-bold">Cotizar Proyecto &rarr;</a>
+      </div>
+    </nav>
 
     <main>
-      <!-- SECCIÓN PRINCIPAL DE VISUALIZACIÓN CON DOS BOTONES -->
-      <div class="w-100 overflow-hidden position-relative bg-black text-white" data-aos="fade">
-  <div class="position-absolute w-100 h-100 bg-black opacity-75 top-0 start-0"></div>
-  <div class="container py-vh-4 position-relative mt-5 px-vw-5 text-center">
-  <div class="row d-flex align-items-center justify-content-center py-vh-5">
-    <div class="col-12 col-xl-10">
-      <span class="h5 text-secondary fw-lighter">Estudio de Visualización Arquitectónica</span>
-      <h1 class="display-huge mt-3 mb-3 lh-1">Visualizamos tu visión.</h1>
-    </div>
-    <div class="col-12 col-xl-8">
-      <p class="lead text-secondary">Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.</p>
-    </div>
-    <div class="col-12 text-center d-flex justify-content-center gap-3 flex-wrap">
-      <a href="#visualizacion" class="btn btn-xl btn-light">Ver Paquetes 3D
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg>
-      </a>
-      <a href="#servicios-tecnicos" class="btn btn-xl btn-outline-light">Ver Paquetes 2D
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg>
-      </a>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- SECCIÓN DE PAQUETES 3D -->
-<div id="visualizacion" class="bg-dark py-vh-5">
-  <div class="container px-vw-5">
-    <div class="text-center mb-5" data-aos="fade">
-      <span class="h5 text-secondary fw-lighter">Renderismo y Modelado</span>
-      <h2 class="display-4">Paquetes de Visualización 3D</h2>
-      <p class="text-secondary">Proyectos residenciales de hasta 300 m² de construcción.</p>
-    </div>
-
-    <div class="row gx-4 g-5 align-items-stretch">
-      <!-- PAQUETE BÁSICO -->
-      <div class="col-12 col-lg-4" data-aos="zoom-in-up">
-        <div class="bg-black p-5 rounded-5 shadow h-100 border border-secondary">
-          <h3 class="fw-lighter text-center">BÁSICO</h3>
-          <p class="text-center text-secondary small">PAQUETE</p>
-          <div class="text-center my-4">
-            <span class="fs-6 text-secondary">HASTA 300 m²</span>
-            <h2 class="display-5 fw-bold">$199 <span class="fs-6 text-secondary">USD</span></h2>
+      <!-- HERO SECTION -->
+      <div class="w-100 overflow-hidden position-relative text-white" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url('img/tu-imagen-hero.jpg'); background-size: cover; background-position: center; min-height: 100vh; display: flex; align-items: center;" data-aos="fade">
+        <div class="container position-relative px-vw-5" style="margin-top: 80px;">
+          <div class="row">
+            <div class="col-12 col-xl-9">
+              <span class="small text-uppercase tracking-wider text-accent fw-bold letter-spacing-2">VISUALIZACIÓN ARQUITECTÓNICA</span>
+              <h1 class="display-huge mt-3 mb-4 lh-1 fw-bold text-white" style="font-size: clamp(3rem, 6vw, 5.5rem);">CREAMOS<br>ESPACIOS<br><span class="fw-light">ANTES DE</span><br><span class="fw-light">CONSTRUIRLOS.</span></h1>
+              <p class="lead text-light mb-5" style="max-width: 600px; font-size: 1.1rem;">Renders fotorrealistas, recorridos virtuales, planos técnicos y visualización arquitectónica para proyectos residenciales, comerciales e industriales.</p>
+              <div class="d-flex justify-content-start gap-3 flex-wrap">
+                <a href="https://wa.me/50237343909" target="_blank" class="btn btn-light rounded-pill px-4 py-2 fw-bold text-black">Cotizar Proyecto &rarr;</a>
+                <a href="#portafolio" class="btn btn-outline-light rounded-pill px-4 py-2">Ver Portafolio &rarr;</a>
+              </div>
+            </div>
           </div>
-          <ul class="list-unstyled text-secondary mb-5">
-            <li class="mb-2">✓ Modelado 3D profesional</li>
-            <li class="mb-2">✓ 2 Renders exteriores</li>
-            <li class="mb-2">✓ Resolución HD</li>
-            <li class="mb-2">✓ Materiales e iluminación básicos</li>
-            <li class="mb-2">✓ 1 revisión incluida</li>
-          </ul>
-          <div class="text-center">
-            <a href="https://www.facebook.com/TU_PAGINA_DE_FACEBOOK" target="_blank" class="btn btn-outline-light w-100">Elegir Básico</a>
+          <div class="row mt-5 pt-5 text-center">
+            <div class="col-12">
+              <small class="text-accent">Desliza para descubrir</small>
+              <div class="mt-2" style="height: 40px; border-left: 1px solid #fff; width: 1px; margin: 0 auto;"></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- PAQUETE PROFESIONAL -->
-      <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="2000">
-        <div class="bg-black p-5 rounded-5 shadow h-100 border border-light position-relative">
-          <span class="position-absolute top-0 start-50 translate-middle badge bg-light text-black px-3 py-2 rounded-pill fw-bold">MÁS POPULAR</span>
-          <h3 class="fw-lighter text-center mt-3">PROFESIONAL</h3>
-          <p class="text-center text-secondary small">PAQUETE</p>
-          <div class="text-center my-4">
-            <span class="fs-6 text-secondary">HASTA 300 m²</span>
-            <h2 class="display-5 fw-bold text-white">$399 <span class="fs-6 text-secondary">USD</span></h2>
+      <!-- ESTADÍSTICAS -->
+      <div class="bg-darker py-5 border-bottom border-secondary" style="border-color: #333 !important;">
+        <div class="container px-vw-5">
+          <div class="row g-4 text-center text-md-start align-items-center justify-content-center">
+            <div class="col-6 col-md-3 d-flex align-items-center gap-3">
+              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              <div>
+                <h3 class="fw-bold mb-0 text-white">+150</h3>
+                <small class="text-accent">Proyectos<br>Completados</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3 d-flex align-items-center gap-3 border-start border-secondary" style="border-color: #333 !important; padding-left: 2rem;">
+              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <div>
+                <h3 class="fw-bold mb-0 text-white">98%</h3>
+                <small class="text-accent">Clientes<br>Satisfechos</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3 d-flex align-items-center gap-3 border-start border-secondary" style="border-color: #333 !important; padding-left: 2rem;">
+              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <div>
+                <h3 class="fw-bold mb-0 text-white">48 HRS</h3>
+                <small class="text-accent">Tiempo promedio<br>de entrega</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3 d-flex align-items-center gap-3 border-start border-secondary" style="border-color: #333 !important; padding-left: 2rem;">
+              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+              <div>
+                <h3 class="fw-bold mb-0 text-white">6 AÑOS</h3>
+                <small class="text-accent">De experiencia en<br>visualización</small>
+              </div>
+            </div>
           </div>
-          <ul class="list-unstyled text-secondary mb-5">
-            <li class="mb-2">✓ Modelado 3D completo</li>
-            <li class="mb-2">✓ 5 Renders fotorrealistas</li>
-            <li class="mb-2">✓ Fachada frontal y posterior</li>
-            <li class="mb-2">✓ Sala, comedor y cocina</li>
-            <li class="mb-2">✓ Dormitorio principal</li>
-            <li class="mb-2">✓ Entrega en alta resolución</li>
-            <li class="mb-2">✓ 2 revisiones incluidas</li>
-          </ul>
-          <div class="text-center">
-            <a href="https://www.facebook.com/TU_PAGINA_DE_FACEBOOK" target="_blank" class="btn btn-light w-100 text-black fw-bold">Elegir Profesional</a>
+        </div>
+      </div>
+
+      <!-- SERVICIOS -->
+      <div id="servicios" class="bg-darker py-vh-5">
+        <div class="container px-vw-5">
+          <div class="d-flex justify-content-between align-items-end mb-5" data-aos="fade">
+            <div>
+              <span class="small text-uppercase text-accent tracking-wider">NUESTROS SERVICIOS</span>
+              <h2 class="display-5 fw-light text-white mt-2 mb-0">Soluciones visuales<br>para cada etapa<br>de <span class="fw-bold">tu proyecto.</span></h2>
+            </div>
+            <a href="#" class="text-white text-decoration-none small d-none d-md-block">Ver todos los servicios &rarr;</a>
+          </div>
+
+          <div class="horizontal-scroll" data-aos="fade-up">
+            <!-- Servicio 1 -->
+            <div class="service-card" style="background: url('img/servicio-1.jpg') center/cover;">
+              <div class="service-card-overlay">
+                <svg width="24" height="24" class="text-white mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                <h4 class="text-white fw-bold mb-2 fs-5">Visualización 3D</h4>
+                <p class="text-accent small mb-4">Renders fotorrealistas que muestran cada detalle antes de construir.</p>
+                <a href="#" class="text-white">&rarr;</a>
+              </div>
+            </div>
+            <!-- Servicio 2 -->
+            <div class="service-card" style="background: url('img/servicio-2.jpg') center/cover;">
+              <div class="service-card-overlay">
+                <svg width="24" height="24" class="text-white mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                <h4 class="text-white fw-bold mb-2 fs-5">Planos 2D</h4>
+                <p class="text-accent small mb-4">Planos arquitectónicos precisos y listos para construcción.</p>
+                <a href="#" class="text-white">&rarr;</a>
+              </div>
+            </div>
+            <!-- Servicio 3 -->
+            <div class="service-card" style="background: url('img/servicio-3.jpg') center/cover;">
+              <div class="service-card-overlay">
+                <svg width="24" height="24" class="text-white mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                <h4 class="text-white fw-bold mb-2 fs-5">Recorridos Virtuales</h4>
+                <p class="text-accent small mb-4">Experiencias inmersivas que permiten recorrer tu proyecto en 360°.</p>
+                <a href="#" class="text-white">&rarr;</a>
+              </div>
+            </div>
+            <!-- Servicio 4 -->
+            <div class="service-card" style="background: url('img/servicio-4.jpg') center/cover;">
+              <div class="service-card-overlay">
+                <svg width="24" height="24" class="text-white mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>
+                <h4 class="text-white fw-bold mb-2 fs-5">Cuantificación</h4>
+                <p class="text-accent small mb-4">Cómputos detallados de materiales y presupuestos precisos.</p>
+                <a href="#" class="text-white">&rarr;</a>
+              </div>
+            </div>
+            <!-- Servicio 5 -->
+            <div class="service-card" style="background: url('img/servicio-5.jpg') center/cover;">
+              <div class="service-card-overlay">
+                <svg width="24" height="24" class="text-white mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 22L22 2M2 2l20 20"></path></svg>
+                <h4 class="text-white fw-bold mb-2 fs-5">Supervisión</h4>
+                <p class="text-accent small mb-4">Control y supervisión profesional para asegurar la calidad del proyecto.</p>
+                <a href="#" class="text-white">&rarr;</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- PAQUETE PREMIUM -->
-      <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="3000">
-        <div class="bg-black p-5 rounded-5 shadow h-100 border border-secondary">
-          <h3 class="fw-lighter text-center">PREMIUM</h3>
-          <p class="text-center text-secondary small">PAQUETE</p>
-          <div class="text-center my-4">
-            <span class="fs-6 text-secondary">HASTA 300 m²</span>
-            <h2 class="display-5 fw-bold">$799 <span class="fs-6 text-secondary">USD</span></h2>
-          </div>
-          <ul class="list-unstyled text-secondary mb-5">
-            <li class="mb-2">✓ Modelado 3D completo</li>
-            <li class="mb-2">✓ 5 Renders ultra realistas</li>
-            <li class="mb-2">✓ Video recorrido arquitectónico</li>
-            <li class="mb-2">✓ Plano amueblado</li>
-            <li class="mb-2">✓ Iluminación avanzada</li>
-            <li class="mb-2">✓ Diseño de paisaje conceptual</li>
-            <li class="mb-2">✓ Resolución 4K</li>
-            <li class="mb-2">✓ 3 revisiones incluidas</li>
-          </ul>
-          <div class="text-center">
-            <a href="https://www.facebook.com/TU_PAGINA_DE_FACEBOOK" target="_blank" class="btn btn-outline-light w-100">Elegir Premium</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ÁREA ADICIONAL 3D Y EJEMPLOS -->
-    <div class="row mt-5 pt-4 align-items-center bg-black p-5 rounded-5">
-      <div class="col-12 col-lg-6 text-center text-lg-start mb-4 mb-lg-0">
-        <span class="h5 text-secondary fw-lighter">¿Tu proyecto es más grande?</span>
-        <h3 class="text-white mb-3">Área Adicional sobre 300 m²</h3>
-        <p class="display-6 fw-bold text-light">$2 USD <span class="fs-6 text-secondary">por cada m² adicional</span></p>
-        <p class="text-secondary small mt-2">Ejemplos: 350 m² ($499) | 400 m² ($599) | 500 m² ($799) | 700 m² ($1,199)</p>
-      </div>
-      <div class="col-12 col-lg-6">
-        <h5 class="text-white mb-3 text-center text-lg-start">Servicios Adicionales 3D</h5>
-        <div class="row g-2">
-          <div class="col-6"><div class="bg-dark p-3 rounded-4 text-center"><small class="text-secondary d-block">Render Extra</small><strong>$35 USD</strong></div></div>
-          <div class="col-6"><div class="bg-dark p-3 rounded-4 text-center"><small class="text-secondary d-block">Recorrido Virtual</small><strong>$150 USD</strong></div></div>
-          <div class="col-6"><div class="bg-dark p-3 rounded-4 text-center"><small class="text-secondary d-block">Diseño de Fachada</small><strong>Desde $120 USD</strong></div></div>
-          <div class="col-6"><div class="bg-dark p-3 rounded-4 text-center"><small class="text-secondary d-block">Modelado 3D / Cocinas / Baños</small><strong>Desde $100 USD</strong></div></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- SECCIÓN DE PLANOS 2D (SEPARADA) -->
-<div id="servicios-tecnicos" class="bg-black py-vh-5">
-  <div class="container px-vw-5">
-    <div class="text-center mb-5" data-aos="fade">
-      <span class="h5 text-secondary fw-lighter">Precisión en cada línea, valor en cada detalle</span>
-      <h2 class="display-4">Juego de Planos 2D Completos</h2>
-    </div>
-
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-8" data-aos="zoom-in-up">
-        <div class="bg-dark p-5 rounded-5 shadow h-100 border border-secondary text-center">
-          <h3 class="fw-lighter">1. JUEGO DE PLANOS COMPLETO</h3>
-          <div class="text-center my-4">
-            <h2 class="display-5 fw-bold text-white">$2.00 <span class="fs-6 text-secondary">USD/m²</span></h2>
-          </div>
-          <h5 class="text-white mb-3 text-start">Incluye:</h5>
-          <ul class="list-unstyled text-secondary mb-4 text-start">
-            <li class="mb-2">✓ Planta arquitectónica</li>
-            <li class="mb-2">✓ Fachadas</li>
-            <li class="mb-2">✓ Secciones</li>
-            <li class="mb-2">✓ Planta de techos</li>
-            <li class="mb-2">✓ Cubiertas</li>
-            <li class="mb-2">✓ Detalles constructivos</li>
-            <li class="mb-2">✓ Cuadro de puertas y ventanas</li>
-          </ul>
-          <hr class="border-secondary my-4">
-          <h6 class="text-white mb-3 text-start">Ejemplos de Precios:</h6>
-          <div class="table-responsive">
-            <table class="table table-dark table-striped small text-secondary text-start">
-              <thead><tr><th>Área Construida</th><th>Cálculo</th><th>Precio</th></tr></thead>
-              <tbody>
-                <tr><td>150 m²</td><td>150 x $2.00</td><td>$300 USD</td></tr>
-                <tr><td>200 m²</td><td>200 x $2.00</td><td>$400 USD</td></tr>
-                <tr><td>250 m²</td><td>250 x $2.00</td><td>$500 USD</td></tr>
-                <tr><td>300 m²</td><td>300 x $2.00</td><td>$600 USD</td></tr>
-              </tbody>
-            </table>
+      <!-- PORTAFOLIO -->
+      <div id="portafolio" class="bg-black py-vh-5">
+        <div class="container px-vw-5">
+          <div class="row align-items-center">
+            <div class="col-12 col-lg-4 mb-5 mb-lg-0" data-aos="fade-right">
+              <span class="small text-uppercase text-accent tracking-wider">PROYECTOS DESTACADOS</span>
+              <h2 class="display-6 fw-light text-white mt-2 mb-4">Cada proyecto<br>cuenta una historia<br>única.</h2>
+              <p class="text-accent mb-4">Explora nuestro portafolio y descubre cómo transformamos ideas en espacios extraordinarios.</p>
+              <a href="#" class="btn btn-outline-light rounded-pill px-4">Ver Portafolio Completo &rarr;</a>
+            </div>
+            <div class="col-12 col-lg-8" data-aos="fade-left">
+              <!-- Slider simulado (puedes reemplazar con un carousel de Bootstrap si lo deseas) -->
+              <div class="d-flex align-items-center gap-3 overflow-hidden">
+                <div class="opacity-50" style="min-width: 150px; height: 300px; background: url('img/port-1.jpg') center/cover; border-radius: 12px;"></div>
+                <div class="shadow-lg position-relative" style="min-width: 500px; height: 400px; background: url('img/port-2.jpg') center/cover; border-radius: 12px; z-index: 2;"></div>
+                <div class="opacity-50" style="min-width: 150px; height: 300px; background: url('img/port-3.jpg') center/cover; border-radius: 12px;"></div>
+              </div>
+              <div class="d-flex justify-content-center gap-2 mt-4">
+                <span style="width: 8px; height: 8px; background: #fff; border-radius: 50%; display: inline-block;"></span>
+                <span style="width: 8px; height: 8px; background: #555; border-radius: 50%; display: inline-block;"></span>
+                <span style="width: 8px; height: 8px; background: #555; border-radius: 50%; display: inline-block;"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-  </div>
-</div>
-
-<!-- SECCIÓN DE CUANTIFICACIÓN DE MATERIALES (APARTE) -->
-<div id="cuantificacion" class="bg-dark py-vh-5">
-  <div class="container px-vw-5">
-    <div class="text-center mb-5" data-aos="fade">
-      <span class="h5 text-secondary fw-lighter">Optimización de recursos y costos</span>
-      <h2 class="display-4">Cuantificación de Materiales</h2>
-    </div>
-
-    <div class="row gx-5 g-5 justify-content-center">
-      <div class="col-12 col-lg-8" data-aos="zoom-in-up">
-        <div class="bg-black p-5 rounded-5 shadow h-100 border border-secondary text-center">
-          <h3 class="fw-lighter">2. CUANTIFICACIÓN DE MATERIALES</h3>
-          <div class="text-center my-4">
-            <h2 class="display-5 fw-bold text-white">$1.50 <span class="fs-6 text-secondary">USD/m²</span></h2>
+      <!-- PROCESO -->
+      <div class="bg-darker py-vh-5 border-top border-bottom border-secondary" style="border-color: #333 !important;">
+        <div class="container px-vw-5">
+          <div class="row mb-5">
+            <div class="col-12">
+              <span class="small text-uppercase text-accent tracking-wider">NUESTRO PROCESO</span>
+              <h2 class="display-6 fw-light text-white mt-2 mb-0">Simple, claro y<br>eficiente.</h2>
+            </div>
           </div>
-          <h5 class="text-white mb-3 text-start">Incluye:</h5>
-          <ul class="list-unstyled text-secondary mb-4 text-start">
-            <li class="mb-2">✓ Concreto, Acero, Block / Ladrillo</li>
-            <li class="mb-2">✓ Cubierta, Piso, Cielo falso</li>
-            <li class="mb-2">✓ Puertas, Ventanas, Pintura, Acabados</li>
-          </ul>
-          <hr class="border-secondary my-4">
-          <h6 class="text-white mb-3 text-start">Ejemplos de Precios:</h6>
-          <div class="table-responsive">
-            <table class="table table-dark table-striped small text-secondary text-start">
-              <thead><tr><th>Área Construida</th><th>Cálculo</th><th>Precio</th></tr></thead>
-              <tbody>
-                <tr><td>150 m²</td><td>150 x $1.50</td><td>$225 USD</td></tr>
-                <tr><td>200 m²</td><td>200 x $1.50</td><td>$300 USD</td></tr>
-                <tr><td>250 m²</td><td>250 x $1.50</td><td>$375 USD</td></tr>
-                <tr><td>300 m²</td><td>300 x $1.50</td><td>$450 USD</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PAQUETE COMBINADO PLANOS + CUANTIFICACIÓN -->
-    <div class="row mt-5 justify-content-center" data-aos="fade">
-      <div class="col-12 col-lg-8">
-        <div class="bg-black p-5 rounded-5 shadow border border-light text-center">
-          <h3 class="fw-lighter">3. PAQUETE COMPLETO: PLANOS + CUANTIFICACIÓN</h3>
-          <h2 class="display-4 fw-bold text-white my-3">$3.50 <span class="fs-6 text-secondary">USD/m²</span></h2>
-          <p class="text-secondary mb-4">Juego de Planos Completo + Cuantificación detallada de materiales.</p>
-          <div class="table-responsive">
-            <table class="table table-dark table-striped small text-secondary text-start">
-              <thead><tr><th>Área Construida</th><th>Cálculo</th><th>Precio Total</th></tr></thead>
-              <tbody>
-                <tr><td>150 m²</td><td>150 x $3.50</td><td>$525 USD</td></tr>
-                <tr><td>200 m²</td><td>200 x $3.50</td><td>$700 USD</td></tr>
-                <tr><td>250 m²</td><td>250 x $3.50</td><td>$875 USD</td></tr>
-                <tr><td>300 m²</td><td>300 x $3.50</td><td>$1,050 USD</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- SECCIÓN DE TESTIMONIOS / FEEDBACKS -->
-<div id="testimonios" class="bg-black py-vh-5">
-<div class="container px-vw-5">
-  <div class="text-center mb-5" data-aos="fade">
-    <span class="h5 text-secondary fw-lighter">Opiniones</span>
-    <h2 class="display-4">Lo que dicen nuestros clientes</h2>
-  </div>
-  <div class="row d-flex gx-5 align-items-center">
-    <div class="col-12 col-lg-6">
-      <div class="rounded-5 bg-dark p-5 shadow mb-5" data-aos="zoom-in-right">
-        <div class="fs-1 text-warning mb-3">★★★★★</div>
-        <p class="text-secondary lead">"El nivel de detalle en los renders fotorrealistas y la precisión de los planos 2D superaron totalmente nuestras expectativas. Pudimos presupuestar sin sorpresas."</p>
-        <div class="d-flex justify-content-start align-items-center border-top border-secondary pt-3 mt-3">
-          <img src="img/webp/person14.webp" width="60" height="60" class="rounded-circle me-3" alt="Cliente" loading="lazy">
-          <div>
-            <span class="h6 fw-5 text-white">Carlos Mendoza</span><br>
-            <small class="text-secondary">Desarrollador Inmobiliario</small>
+          
+          <div class="row g-4 mt-2">
+            <!-- Paso 1 -->
+            <div class="col-12 col-md-3 process-step" data-aos="fade-up" data-aos-delay="0">
+              <div class="d-flex align-items-center gap-2 mb-3 position-relative z-index-1">
+                <span class="fs-4 fw-bold text-white">01</span>
+                <div class="p-2 border border-secondary rounded-circle bg-darker">
+                  <svg width="24" height="24" class="text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                </div>
+              </div>
+              <div class="process-line"></div>
+              <h5 class="text-white fw-bold fs-6">Envíanos tu proyecto</h5>
+              <p class="text-accent small">Recibimos tus planos, ideas o referencias para entender tu visión.</p>
+            </div>
+            <!-- Paso 2 -->
+            <div class="col-12 col-md-3 process-step" data-aos="fade-up" data-aos-delay="100">
+              <div class="d-flex align-items-center gap-2 mb-3 position-relative z-index-1">
+                <span class="fs-4 fw-bold text-white">02</span>
+                <div class="p-2 border border-secondary rounded-circle bg-darker">
+                  <svg width="24" height="24" class="text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                </div>
+              </div>
+              <div class="process-line"></div>
+              <h5 class="text-white fw-bold fs-6">Modelamos en 3D</h5>
+              <p class="text-accent small">Creamos un modelo 3D detallado con precisión y calidad.</p>
+            </div>
+            <!-- Paso 3 -->
+            <div class="col-12 col-md-3 process-step" data-aos="fade-up" data-aos-delay="200">
+              <div class="d-flex align-items-center gap-2 mb-3 position-relative z-index-1">
+                <span class="fs-4 fw-bold text-white">03</span>
+                <div class="p-2 border border-secondary rounded-circle bg-darker">
+                  <svg width="24" height="24" class="text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
+                </div>
+              </div>
+              <div class="process-line"></div>
+              <h5 class="text-white fw-bold fs-6">Renderizamos</h5>
+              <p class="text-accent small">Aplicamos iluminación, materiales y detalles para resultados increíbles.</p>
+            </div>
+            <!-- Paso 4 -->
+            <div class="col-12 col-md-3 process-step" data-aos="fade-up" data-aos-delay="300">
+              <div class="d-flex align-items-center gap-2 mb-3 position-relative z-index-1">
+                <span class="fs-4 fw-bold text-white">04</span>
+                <div class="p-2 border border-secondary rounded-circle bg-darker">
+                  <svg width="24" height="24" class="text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+              </div>
+              <h5 class="text-white fw-bold fs-6">Entregamos resultados</h5>
+              <p class="text-accent small">Recibes tus renders, planos o videos listos para presentar o construir.</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="rounded-5 bg-dark p-5 shadow" data-aos="zoom-in-right">
-        <div class="fs-1 text-warning mb-3">★★★★★</div>
-        <p class="text-secondary lead">"Excelente comunicación y entrega puntual. La cuantificación de materiales nos ahorró muchísimo dinero y tiempo en la compra de insumos."</p>
-        <div class="d-flex justify-content-start align-items-center border-top border-secondary pt-3 mt-3">
-          <img src="img/webp/person13.webp" width="60" height="60" class="rounded-circle me-3" alt="Cliente" loading="lazy">
-          <div>
-            <span class="h6 fw-5 text-white">María Fernanda Ruíz</span><br>
-            <small class="text-secondary">Arquitecta Asociada</small>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="rounded-5 bg-dark p-5 shadow" data-aos="zoom-in-left">
-        <div class="fs-1 text-warning mb-3">★★★★★</div>
-        <p class="text-secondary lead">"Contratamos el paquete completo de planos y cuantificación. La documentación es sumamente profesional y organizada. Sin duda volveremos a trabajar con Evolution Desing."</p>
-        <div class="d-flex justify-content-start align-items-center border-top border-secondary pt-3 mt-3">
-          <img src="img/webp/person16.webp" width="60" height="60" class="rounded-circle me-3" alt="Cliente" loading="lazy">
-          <div>
-            <span class="h6 fw-5 text-white">Alejandro Morales</span><br>
-            <small class="text-secondary">Director de Proyectos</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
 
+      <!-- TESTIMONIOS Y CTA -->
+      <div class="bg-black py-vh-5">
+        <div class="container px-vw-5">
+          <div class="row g-5">
+            <!-- Testimonios -->
+            <div class="col-12 col-lg-5" data-aos="fade-right">
+              <span class="small text-uppercase text-accent tracking-wider">LO QUE DICEN NUESTROS CLIENTES</span>
+              <div class="mt-4 mb-4">
+                <svg width="40" height="40" class="text-secondary opacity-50 mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                <p class="fs-5 text-light fst-italic">"El equipo de Evolution Design entendió perfectamente nuestra visión y la llevó a otro nivel. Los renders son impresionantes y nos ayudaron a tomar decisiones clave."</p>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <img src="img/webp/person14.webp" alt="Carlos Méndez" class="rounded-circle" width="50" height="50" style="object-fit: cover;">
+                <div>
+                  <h6 class="text-white mb-0">Carlos Méndez</h6>
+                  <small class="text-accent">Arquitecto | CM Arquitectos</small>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Banner CTA -->
+            <div class="col-12 col-lg-7" data-aos="fade-left">
+              <div class="p-5 rounded-4 h-100 d-flex flex-column justify-content-center" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('img/cta-bg.jpg') center/cover; border: 1px solid #333;">
+                <h3 class="display-6 fw-light text-white mb-3">¿Listo para visualizar<br>tu próximo proyecto?</h3>
+                <p class="text-accent mb-4">Hablemos de tu idea y hagámosla realidad.</p>
+                <div>
+                  <a href="https://wa.me/50237343909" target="_blank" class="btn btn-light rounded-pill px-4 py-2 fw-bold text-black">Cotizar Proyecto Ahora &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
-    <footer id="contacto" class="bg-black border-top border-dark">
-  <div class="container py-vh-4 text-secondary fw-lighter">
-    <div class="row">
-      <div class="col-12 col-lg-5 py-4 text-center text-lg-start">
-            <a class="navbar-brand pe-md-4 col-12 col-md-auto text-center" href="index.html">
-              <img src="img/logo.png" alt="Evolution Desing" style="max-height: 45px; width: auto;">
-            </a>
-<p class="small mt-3">Precisión en cada línea, valor en cada detalle.</p>
+    <!-- FOOTER -->
+    <footer id="contacto" class="bg-darker pt-5 pb-4 border-top border-secondary" style="border-color: #222 !important;">
+      <div class="container px-vw-5">
+        <div class="row g-4 mb-5">
+          <div class="col-12 col-lg-4 pe-lg-5">
+            <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;" class="mb-3">
+            <p class="text-accent small mb-4">Visualización arquitectónica que da vida a tus ideas.</p>
+            <div class="d-flex gap-3">
+              <a href="#" class="text-accent text-decoration-none"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+              <a href="#" class="text-accent text-decoration-none"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.902 4.902 0 001.523 6.574 4.903 4.903 0 01-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.935 4.935 0 01-2.224.084 4.928 4.928 0 004.6 3.419A9.9 9.9 0 010 19.54a13.94 13.94 0 007.548 2.212c9.055 0 14.01-7.503 14.01-14.01 0-.213-.005-.425-.014-.636A10.012 10.012 0 0024 4.557z"/></svg></a>
+            </div>
+          </div>
+          
+          <div class="col-6 col-lg-2">
+            <h6 class="text-white mb-3">Servicios</h6>
+            <ul class="list-unstyled small text-accent">
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Visualización 3D</a></li>
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Planos 2D</a></li>
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Recorridos Virtuales</a></li>
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Cuantificación</a></li>
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Supervisión</a></li>
+            </ul>
+          </div>
+          
+          <div class="col-6 col-lg-2">
+            <h6 class="text-white mb-3">Enlaces</h6>
+            <ul class="list-unstyled small text-accent">
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Inicio</a></li>
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Portafolio</a></li>
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Nosotros</a></li>
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Contacto</a></li>
+              <li class="mb-2"><a href="#" class="text-accent text-decoration-none hover-white">Preguntas Frecuentes</a></li>
+            </ul>
+          </div>
+          
+          <div class="col-12 col-lg-4">
+            <h6 class="text-white mb-3">Contacto</h6>
+            <ul class="list-unstyled small text-accent">
+              <li class="mb-2 d-flex align-items-center gap-2">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm8.239-4.133L9.197 8.243 15 11.801V4.697z"/></svg>
+                support@evolutiondesign.com
+              </li>
+              <li class="mb-2 d-flex align-items-center gap-2">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/></svg>
+                +502 3734 3909
+              </li>
+              <li class="mb-2 d-flex align-items-center gap-2">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+                Panajachel, Guatemala
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="row pt-4 border-top border-secondary text-accent small" style="border-color: #222 !important;">
+          <div class="col-12 col-md-6 text-center text-md-start mb-3 mb-md-0">
+            © 2026 Evolution Design. Todos los derechos reservados.
+          </div>
+          <div class="col-12 col-md-6 text-center text-md-end d-flex gap-3 justify-content-center justify-content-md-end">
+            <a href="#" class="text-accent text-decoration-none hover-white">Política de Privacidad</a>
+            <a href="#" class="text-accent text-decoration-none hover-white">Términos y Condiciones</a>
+          </div>
+        </div>
       </div>
-      <div class="col-12 col-lg-7">
-        <span class="h6 text-white">Contáctanos</span>
-        <ul class="nav flex-column mt-2">
-          <li class="nav-item mb-2 d-flex align-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill me-2 text-white" viewBox="0 0 16 16">
-              <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm8.239-4.133L9.197 8.243 15 11.801V4.697z"/>
-            </svg>
-            support@evolutiondesing.com
-          </li>
-          <li class="nav-item mb-1 d-flex align-items-center text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flag-fill me-2 text-white" viewBox="0 0 16 16">
-              <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L12 9.586l-2.686-.828a.5.5 0 0 0-.294 0L6.334 9.69a.5.5 0 0 1-.315-.025L3 8.35v6.15a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .314-.464L5 1.414l2.686.828a.5.5 0 0 0 .294 0L10.666.31a.5.5 0 0 1 .315.025l2.686 1.157L14.778.085z"/>
-            </svg>
-            +502 3734 3909
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="container text-center small py-vh-2 border-top border-dark text-white">© 2026 Evolution Desing. Todos los derechos reservados.
-  </div>
-</footer>
+    </footer>
 
-<!-- BOTÓN FLOTANTE DE WHATSAPP -->
-<a href="https://wa.me/50237343909?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; background-color: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-  <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
-    <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/>
-  </svg>
-</a>
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+    <a href="https://wa.me/50237343909?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; background-color: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/>
+      </svg>
+    </a>
 
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/aos.js"></script>
-<script>
-AOS.init({ duration: 800 });
-</script>
-<script>
-  let scrollpos = window.scrollY
-  const header = document.querySelector(".navbar")
-  const header_height = header.offsetHeight
-  const add_class_on_scroll = () => header.classList.add("scrolled", "shadow-sm")
-  const remove_class_on_scroll = () => header.classList.remove("scrolled", "shadow-sm")
-  window.addEventListener('scroll', function() {
-    scrollpos = window.scrollY;
-    if (scrollpos >= header_height) { add_class_on_scroll() }
-    else { remove_class_on_scroll() }
-  })
-</script>
-
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script>
+      AOS.init({ duration: 800 });
+    </script>
+    <script>
+      let scrollpos = window.scrollY
+      const header = document.querySelector(".navbar")
+      const header_height = header.offsetHeight
+      const add_class_on_scroll = () => header.classList.add("scrolled", "shadow-sm")
+      const remove_class_on_scroll = () => header.classList.remove("scrolled", "shadow-sm")
+      window.addEventListener('scroll', function() {
+        scrollpos = window.scrollY;
+        if (scrollpos >= header_height) { add_class_on_scroll() }
+        else { remove_class_on_scroll() }
+      })
+    </script>
   </body>
 </html>
