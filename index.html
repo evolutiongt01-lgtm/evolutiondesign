@@ -154,7 +154,6 @@
         transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
       }
       
-      /* Estados de interacción pestañas móviles */
       .tab-item:hover, .tab-item:focus, .tab-item:active {
         color: #fff !important;
       }
@@ -213,7 +212,6 @@
       }
       .accent-text { color: #d4b895; }
       
-      /* BOTONES CUADRADOS DE PAQUETES (Liquid Glass) */
       .grid-buttons {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -246,7 +244,6 @@
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       }
       
-      /* INSIGNIAS DE CONFIANZA */
       .trust-badges {
         display: flex;
         justify-content: space-between;
@@ -274,7 +271,6 @@
         .trust-item svg { margin-bottom: 0; }
       }
 
-      /* QUITAR PUNTITOS DE LAS LISTAS */
       .no-bullets {
         list-style-type: none !important;
         padding-left: 0 !important;
@@ -282,7 +278,7 @@
       }
 
       /* =========================================
-         TARJETAS DE PAQUETES (Liquid Glass)
+         TARJETAS GENERALES (Liquid Glass)
          ========================================= */
       .glass-panel {
         background: rgba(255, 255, 255, 0.03) !important;
@@ -293,7 +289,6 @@
         position: relative;
         overflow: hidden;
       }
-      /* Efecto de reflejo de cristal */
       .glass-panel::before {
         content: '';
         position: absolute;
@@ -339,45 +334,49 @@
         background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,1) 80%);
       }
 
-      /* AJUSTE BORDES SERVICIOS MÓVIL */
       @media (max-width: 991px) {
         .mobile-remove-border {
           border-left: none !important;
         }
       }
 
-      /* ESTILOS CALCULADORA DE ÁREA E INGRESOS */
-      .form-glass {
-        background: rgba(255, 255, 255, 0.05);
+      /* =========================================
+         ESTILOS MINI CALCULADORA 2D
+         ========================================= */
+      .calc-sub-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 1rem;
+        text-align: center;
+        width: 100%;
+      }
+      @media(min-width: 768px) {
+        .calc-sub-box {
+          width: 170px;
+        }
+      }
+      .form-glass-2d {
+        background: rgba(255, 255, 255, 0.06);
         border: 1px solid rgba(255, 255, 255, 0.15);
         color: #fff;
-        border-radius: 12px;
-        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        padding: 0.6rem;
         width: 100%;
-        transition: all 0.3s ease;
         text-align: center;
         font-size: 1.1rem;
+        transition: all 0.3s ease;
       }
-      .form-glass:focus {
-        background: rgba(255, 255, 255, 0.1);
+      .form-glass-2d:focus {
+        background: rgba(255, 255, 255, 0.12);
         border-color: #d4b895;
         box-shadow: 0 0 15px rgba(212, 184, 149, 0.3);
-        color: #fff;
         outline: none;
       }
-      .form-glass::placeholder {
-        color: rgba(255, 255, 255, 0.3);
-      }
-      .form-glass::-webkit-outer-spin-button,
-      .form-glass::-webkit-inner-spin-button {
+      .form-glass-2d::-webkit-outer-spin-button,
+      .form-glass-2d::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
-      }
-      .result-box {
-        background: rgba(0, 0, 0, 0.4);
-        border-radius: 12px;
-        padding: 0.8rem 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.05);
       }
     </style>
   </head>
@@ -580,7 +579,7 @@
             </div>
           </div>
 
-          <!-- CALCULADORA DE ÁREA -->
+          <!-- CALCULADORA DE ÁREA DE TERRENO -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
               <div class="glass-panel px-4 px-lg-5 rounded-5" style="padding-top: 4.5rem; padding-bottom: 4.5rem;">
@@ -596,23 +595,20 @@
                   <div class="col-12 col-xl-7 mt-4 mt-xl-0">
                     <div class="d-flex flex-column flex-md-row gap-3 align-items-center justify-content-center justify-content-xl-end w-100">
                       
-                      <!-- Input Ancho -->
                       <div class="text-center" style="width: 120px;">
                         <label class="small text-secondary mb-1 d-block">Ancho</label>
-                        <input type="number" id="calcAncho" class="form-glass w-100 text-center" placeholder="Ej. 10" min="0" step="any">
+                        <input type="number" id="calcAncho" class="form-glass-2d w-100 text-center" placeholder="Ej. 10" min="0" step="any">
                       </div>
                       
                       <div class="text-secondary fw-bold fs-4 d-none d-md-block mt-3">×</div>
                       
-                      <!-- Input Largo -->
                       <div class="text-center" style="width: 120px;">
                         <label class="small text-secondary mb-1 d-block">Largo</label>
-                        <input type="number" id="calcLargo" class="form-glass w-100 text-center" placeholder="Ej. 20" min="0" step="any">
+                        <input type="number" id="calcLargo" class="form-glass-2d w-100 text-center" placeholder="Ej. 20" min="0" step="any">
                       </div>
                       
                       <div class="text-secondary fw-bold fs-4 d-none d-md-block mt-3">=</div>
                       
-                      <!-- Resultado -->
                       <div class="result-box text-center mt-2 mt-md-0" style="min-width: 160px;">
                         <span class="small text-secondary d-block mb-1">Área Total</span>
                         <div class="d-flex align-items-baseline justify-content-center">
@@ -637,28 +633,24 @@
                 </h6>
                 <div class="row g-4 justify-content-center text-center align-items-center">
                   
-                  <!-- Render Extra -->
                   <div class="col-6 col-lg-3">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Render Extra</h6>
                     <span class="accent-text fw-bold">$35 USD</span>
                   </div>
 
-                  <!-- Recorrido Virtual -->
                   <div class="col-6 col-lg-3 border-start" style="border-color: rgba(255,255,255,0.1) !important;">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Recorrido Virtual</h6>
                     <span class="accent-text fw-bold">$150 USD</span>
                   </div>
 
-                  <!-- Diseño de Fachada -->
                   <div class="col-6 col-lg-3 border-start mobile-remove-border" style="border-color: rgba(255,255,255,0.1) !important;">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Diseño de Fachada</h6>
                     <span class="text-secondary small d-inline me-1" style="font-size: 0.75rem;">DESDE</span><span class="accent-text fw-bold">$120 USD</span>
                   </div>
 
-                  <!-- Modelado 3D -->
                   <div class="col-6 col-lg-3 border-start" style="border-color: rgba(255,255,255,0.1) !important;">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Modelado 3D</h6>
@@ -673,64 +665,112 @@
         </div>
       </div>
 
-      <!-- SECCIÓN DE PLANOS 2D CON CALCULADORA INCORPORADA -->
+      <!-- SECCIÓN DE PLANOS 2D (CON NUEVO DISEÑO Y CALCULADORA INTEGRADA) -->
       <div id="servicios-tecnicos" class="bg-black py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container px-vw-5">
           <div class="text-center mb-5" data-aos="fade">
             <span class="h5 text-secondary fw-lighter">Precisión en cada línea</span>
-            <h2 class="display-4 fw-bold">Planos 2D Completos</h2>
+            <h2 class="display-4 fw-bold mb-3">Planos 2D Completos</h2>
+            <p class="text-secondary" style="max-width: 600px; margin: 0 auto;">Documentación arquitectónica profesional elaborada con precisión, lista para construir y cumplir con todos los estándares.</p>
           </div>
 
-          <div class="row justify-content-center">
-            <div class="col-12 col-lg-8" data-aos="zoom-in-up">
-              <div class="glass-panel p-5 rounded-5 text-center">
-                <div class="text-center my-4">
-                  <h2 class="display-5 fw-bold text-white">$2.00 <span class="fs-6 text-secondary">USD/m²</span></h2>
+          <!-- 3 Tarjetas Superiores de Características -->
+          <div class="row g-4 mb-5 justify-content-center">
+            
+            <div class="col-12 col-md-4" data-aos="fade-up">
+              <div class="glass-panel p-4 rounded-4 h-100 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3">
+                <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                  <svg width="28" height="28" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"></path></svg>
                 </div>
-                <h5 class="text-white mb-3 text-start">Incluye:</h5>
-                <ul class="list-unstyled no-bullets text-secondary mb-4 text-start">
-                  <li class="mb-2">✓ Planta arquitectónica y Fachadas</li>
-                  <li class="mb-2">✓ Secciones y Planta de techos</li>
-                  <li class="mb-2">✓ Detalles constructivos y Cuadros</li>
-                </ul>
+                <div>
+                  <h6 class="text-white mb-1 fw-bold small">ARQUITECTÓNICO Y FACHADAS</h6>
+                  <p class="text-secondary small mb-0">Plantas arquitectónicas y elevaciones detalladas.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4" data-aos="fade-up" data-aos-duration="1200">
+              <div class="glass-panel p-4 rounded-4 h-100 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3">
+                <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                  <svg width="28" height="28" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </div>
+                <div>
+                  <h6 class="text-white mb-1 fw-bold small">SECCIONES Y TECHOS</h6>
+                  <p class="text-secondary small mb-0">Cortes constructivos y planta de techos.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4" data-aos="fade-up" data-aos-duration="1500">
+              <div class="glass-panel p-4 rounded-4 h-100 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3">
+                <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                  <svg width="28" height="28" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                </div>
+                <div>
+                  <h6 class="text-white mb-1 fw-bold small">DETALLES Y CUADROS</h6>
+                  <p class="text-secondary small mb-0">Detalles constructivos y cuadros de acabados.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Panel Principal con Precio y Mini Calculadora -->
+          <div class="row justify-content-center">
+            <div class="col-12 col-lg-10" data-aos="zoom-in-up">
+              <div class="glass-panel p-5 rounded-5 text-center">
                 
-                <!-- NUEVA CALCULADORA PARA PLANOS 2D -->
-                <div class="mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
-                  <h6 class="text-white mb-4 letter-spacing-2 fw-light text-center" style="letter-spacing: 2px;"><span class="accent-text fw-bold">CALCULA</span> TU PROYECTO</h6>
-                  <div class="d-flex flex-column flex-md-row gap-3 align-items-center justify-content-center w-100">
+                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PRECIO ESPECIAL</span>
+                <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
+                  <h1 class="display-3 fw-bold text-white mb-0">$2.00</h1>
+                  <span class="accent-text fs-5 fw-medium">USD/m²</span>
+                </div>
+                
+                <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 2rem 0;"></div>
+                
+                <p class="text-secondary mb-4">Tarifa por metro cuadrado</p>
+
+                <!-- Mini Calculadora Estilo Imagen Referencia -->
+                <div class="p-4 rounded-4 mx-auto" style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08); max-width: 750px;">
+                  <h6 class="text-white mb-3 fw-bold small uppercase" style="letter-spacing: 1.5px;">CALCULA TU PROYECTO</h6>
+                  
+                  <div class="d-flex flex-column flex-md-row gap-3 align-items-center justify-content-center">
                     
-                    <!-- Input m2 -->
-                    <div class="text-center" style="width: 140px;">
-                      <label class="small text-secondary mb-1 d-block">Área Total (m²)</label>
-                      <input type="number" id="calcArea2D" class="form-glass w-100 text-center" placeholder="Ej. 150" min="0" step="any">
-                    </div>
-                    
-                    <div class="text-secondary fw-bold fs-4 d-none d-md-block mt-3">×</div>
-                    
-                    <!-- Tarifa Constante -->
-                    <div class="text-center mt-3 mt-md-0" style="width: 100px;">
-                      <label class="small text-secondary mb-1 d-block">Tarifa</label>
-                      <div class="h4 text-white mb-0 mt-2">$2.00</div>
+                    <div class="calc-sub-box">
+                      <span class="small text-secondary d-block mb-1">Área Total (m²)</span>
+                      <input type="number" id="calcArea2D" class="form-glass-2d" placeholder="Ej. 100" min="0" step="any" value="30">
                     </div>
 
-                    <div class="text-secondary fw-bold fs-4 d-none d-md-block mt-3">=</div>
-                    
-                    <!-- Resultado -->
-                    <div class="result-box text-center mt-2 mt-md-0" style="min-width: 160px;">
+                    <div class="text-secondary fw-bold fs-4 d-none d-md-block">×</div>
+
+                    <div class="calc-sub-box">
+                      <span class="small text-secondary d-block mb-1">Tarifa (USD/m²)</span>
+                      <input type="text" class="form-glass-2d" value="$2.00" disabled style="opacity: 0.8; cursor: not-allowed;">
+                    </div>
+
+                    <div class="text-secondary fw-bold fs-4 d-none d-md-block">=</div>
+
+                    <div class="calc-sub-box" style="background: rgba(212, 184, 149, 0.05); border-color: rgba(212, 184, 149, 0.2);">
                       <span class="small text-secondary d-block mb-1">Costo Estimado</span>
                       <div class="d-flex align-items-baseline justify-content-center">
-                        <h2 class="fw-bold accent-text mb-0">$<span id="calcTotal2D">0.00</span></h2>
+                        <span class="h4 fw-bold accent-text mb-0" id="calcTotal2D">60.00</span>
                         <span class="ms-1 text-secondary small">USD</span>
                       </div>
                     </div>
 
                   </div>
+
+                  <div class="d-flex align-items-center justify-content-center gap-2 mt-4 text-secondary small" style="opacity: 0.7;">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Pago seguro y confidencial</span>
+                  </div>
                 </div>
-                <!-- FIN DE LA CALCULADORA PLANOS 2D -->
+                <!-- Fin Mini Calculadora -->
 
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -794,7 +834,7 @@
           
           <div class="col-12 col-lg-7 mt-5 mt-lg-0">
             <div class="d-flex flex-column align-items-center align-items-lg-start" style="max-width: 300px; margin: 0 auto;">
-              <span class="h6 text-white mb-3 text-center text-lg-start w-100">Contacto Directo</span>
+              <span class="h6 text-white mb-3 d-block text-center text-lg-start w-100">Contacto Directo</span>
               <ul class="nav flex-column align-items-center align-items-lg-start w-100">
                 <li class="nav-item mb-2 d-flex align-items-center justify-content-center justify-content-lg-start w-100">
                   <svg width="16" height="16" fill="currentColor" class="me-2 text-white" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm8.239-4.133L9.197 8.243 15 11.801V4.697z"/></svg>
@@ -839,7 +879,7 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         
-        // Calculadora de Área (Ancho x Largo)
+        // Calculadora de Área (Ancho x Largo) - 3D
         const anchoInput = document.getElementById('calcAncho');
         const largoInput = document.getElementById('calcLargo');
         const totalDisplay = document.getElementById('calcTotal');
@@ -856,10 +896,12 @@
           }
         }
 
-        anchoInput.addEventListener('input', calcularArea);
-        largoInput.addEventListener('input', calcularArea);
+        if(anchoInput && largoInput) {
+          anchoInput.addEventListener('input', calcularArea);
+          largoInput.addEventListener('input', calcularArea);
+        }
 
-        // Calculadora de Costo Planos 2D (Área x $2.00)
+        // Calculadora Planos 2D (Área x $2.00)
         const area2DInput = document.getElementById('calcArea2D');
         const total2DDisplay = document.getElementById('calcTotal2D');
         const tarifa2D = 2.00;
@@ -875,7 +917,9 @@
           }
         }
 
-        area2DInput.addEventListener('input', calcularPrecio2D);
+        if(area2DInput) {
+          area2DInput.addEventListener('input', calcularPrecio2D);
+        }
         
       });
     </script>
