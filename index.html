@@ -98,6 +98,8 @@
         align-items: center;
         padding: 1rem 1.5rem;
       }
+      
+      /* BOTONES REDONDOS MÓVILES (Menú / Usuario) */
       .icon-btn {
         width: 45px;
         height: 45px;
@@ -108,12 +110,18 @@
         justify-content: center;
         background: rgba(255, 255, 255, 0.05);
         color: #fff;
-        text-decoration: none;
-        transition: background 0.3s ease;
+        text-decoration: none !important;
+        transition: all 0.3s ease;
+        -webkit-tap-highlight-color: transparent !important;
+        outline: none !important;
       }
-      .icon-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
+      .icon-btn:hover, .icon-btn:focus, .icon-btn:active {
+        background-color: #fff !important;
+        color: #000 !important;
+        border-color: #fff !important;
+        transform: scale(1.05);
       }
+
       .app-tabs {
         display: flex;
         overflow-x: auto;
@@ -130,14 +138,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        color: #888 !important; /* Fuerza el gris siempre */
+        color: #888 !important; 
         text-decoration: none !important;
         font-size: 0.75rem;
         padding-bottom: 0.8rem;
         border-bottom: 2px solid transparent;
         white-space: nowrap;
-        transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Transición de app nativa */
-        -webkit-tap-highlight-color: transparent !important; /* Mata el destello azul/morado */
+        transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
+        -webkit-tap-highlight-color: transparent !important; 
         outline: none !important;
       }
       .tab-item svg { 
@@ -146,7 +154,7 @@
         transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
       }
       
-      /* Estados de interacción */
+      /* Estados de interacción pestañas móviles */
       .tab-item:hover, .tab-item:focus, .tab-item:active {
         color: #fff !important;
       }
@@ -156,7 +164,7 @@
       }
       .tab-item.active svg { 
         opacity: 1; 
-        transform: scale(1.15); /* Micro-interacción: el icono crece sutilmente */
+        transform: scale(1.15); 
       }
 
       /* =========================================
