@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html class="h-100" lang="es">
 
   <head>
@@ -340,26 +340,18 @@
       /* =========================================
          DISEÑO PRO NUEVA CALCULADORA DE ÁREA
          ========================================= */
-      /* Wrapper que expande la calculadora más allá del ancho del container estándar */
+      /* Wrapper que rompe el ancho del container estándar del sitio (breakout real, basado en vw) */
       .calc-pro-container-wrap {
         width: 100%;
       }
       @media (min-width: 992px) {
         .calc-pro-container-wrap {
-          width: 122%;
-          margin-left: -11%;
-        }
-      }
-      @media (min-width: 1400px) {
-        .calc-pro-container-wrap {
-          width: 136%;
-          margin-left: -18%;
-        }
-      }
-      @media (min-width: 1800px) {
-        .calc-pro-container-wrap {
-          width: 148%;
-          margin-left: -24%;
+          position: relative;
+          left: 50%;
+          width: 100vw;
+          margin-left: -50vw;
+          padding: 0 2.5vw;
+          box-sizing: border-box;
         }
       }
 
