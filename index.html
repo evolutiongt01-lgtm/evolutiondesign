@@ -37,15 +37,6 @@
       @font-face {
         font-family: 'Inter';
         font-style: normal;
-        font-weight: 500;
-        font-display: swap;
-        src: local(''),
-             url('fonts/inter-v12-latin-500.woff2') format('woff2'),
-             url('fonts/inter-v12-latin-500.woff') format('woff');
-      }
-      @font-face {
-        font-family: 'Inter';
-        font-style: normal;
         font-weight: 700;
         font-display: swap;
         src: local(''),
@@ -59,13 +50,34 @@
         font-family: 'Inter', sans-serif;
       }
 
-      /* NAVEGACIÓN TIPO APP MÓVIL */
-      .app-nav {
+      /* =========================================
+         NAVEGACIÓN ESCRITORIO (Mac)
+         ========================================= */
+      .desktop-nav {
+        display: none !important;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(10px);
+      }
+      @media (min-width: 992px) {
+        .desktop-nav {
+          display: flex !important;
+        }
+      }
+
+      /* =========================================
+         NAVEGACIÓN MÓVIL TIPO APP
+         ========================================= */
+      .mobile-app-nav {
         background-color: #000;
         position: sticky;
         top: 0;
         z-index: 1030;
         border-bottom: 1px solid #1a1a1a;
+      }
+      @media (min-width: 992px) {
+        .mobile-app-nav {
+          display: none !important;
+        }
       }
       .app-nav-top {
         display: flex;
@@ -107,33 +119,42 @@
         white-space: nowrap;
         transition: all 0.3s ease;
       }
-      .tab-item svg {
-        margin-bottom: 6px;
-        opacity: 0.7;
-      }
-      .tab-item.active {
-        color: #fff;
-        border-bottom-color: #fff;
-      }
-      .tab-item.active svg {
-        opacity: 1;
-      }
+      .tab-item svg { margin-bottom: 6px; opacity: 0.7; }
+      .tab-item.active { color: #fff; border-bottom-color: #fff; }
+      .tab-item.active svg { opacity: 1; }
 
-      /* HERO SECTION ADAPTADO */
+      /* =========================================
+         HERO SECTION (AJUSTADO PARA MAC)
+         ========================================= */
       .hero-app {
         position: relative;
-        padding: 2rem 1.5rem 4rem;
+        padding: 2rem 0 4rem;
         min-height: 85vh;
         display: flex;
         flex-direction: column;
-        background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.9) 100%), url('img/tu-imagen-hero.jpg') right center/cover no-repeat;
+        justify-content: center;
+        background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%), url('img/tu-imagen-hero.jpg') center/cover no-repeat;
       }
+      
+      .hero-content {
+        width: 100%;
+        padding: 0 1.5rem;
+      }
+
+      /* Control de estiramiento en Escritorio (Mac) */
       @media (min-width: 992px) {
         .hero-app {
-          background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 45%, rgba(0,0,0,0) 100%), url('img/tu-imagen-hero.jpg') center/cover no-repeat;
-          padding: 4rem 10vw;
+          min-height: 100vh;
+          background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/tu-imagen-hero.jpg') right center/cover no-repeat;
+          padding-top: 100px; /* Espacio para el navbar */
+        }
+        .hero-content {
+          max-width: 550px; /* ESTO EVITA QUE LOS BOTONES SE VEAN FEOS Y ESTIRADOS */
+          padding: 0;
+          margin-left: 5vw;
         }
       }
+
       .btn-pill-outline {
         border: 1px solid #444;
         border-radius: 50px;
@@ -147,9 +168,7 @@
         width: fit-content;
         margin-bottom: 3rem;
       }
-      .accent-text {
-        color: #d4b895; /* Color beige/dorado del diseño */
-      }
+      .accent-text { color: #d4b895; }
       
       /* BOTONES CUADRADOS DE PAQUETES */
       .grid-buttons {
@@ -168,18 +187,9 @@
         text-decoration: none;
         transition: transform 0.3s ease;
       }
-      .sq-btn:hover {
-        transform: translateY(-3px);
-      }
-      .sq-btn-light {
-        background-color: #f4f4f4;
-        color: #000;
-      }
-      .sq-btn-dark {
-        background-color: transparent;
-        border: 1px solid #444;
-        color: #fff;
-      }
+      .sq-btn:hover { transform: translateY(-3px); }
+      .sq-btn-light { background-color: #f4f4f4; color: #000; }
+      .sq-btn-dark { background-color: transparent; border: 1px solid #444; color: #fff; }
       
       /* INSIGNIAS DE CONFIANZA */
       .trust-badges {
@@ -202,17 +212,9 @@
         color: #aaa;
         flex: 1;
       }
-      .trust-item:not(:last-child) {
-        border-right: 1px solid #222;
-      }
+      .trust-item:not(:last-child) { border-right: 1px solid #222; }
       @media (min-width: 768px) {
         .trust-item { flex-direction: row; gap: 10px; font-size: 0.85rem; justify-content: center; }
-      }
-      .trust-item svg {
-        margin-bottom: 6px;
-        color: #666;
-      }
-      @media (min-width: 768px) {
         .trust-item svg { margin-bottom: 0; }
       }
     </style>
@@ -220,21 +222,39 @@
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-    <!-- NAVEGACIÓN TIPO APP -->
-    <nav class="app-nav">
+    <!-- NAVEGACIÓN ESCRITORIO (Solo visible en Mac/PC) -->
+    <nav class="navbar navbar-expand-lg navbar-dark desktop-nav fixed-top border-bottom border-dark" id="navScroll">
+      <div class="container px-vw-5">
+        <a class="navbar-brand py-3" href="index.html">
+          <img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;">
+        </a>
+        <div class="collapse navbar-collapse justify-content-end">
+          <ul class="navbar-nav gap-4 align-items-center">
+            <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#visualizacion">Visualización 3D</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#servicios-tecnicos">Planos 2D</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#cuantificacion">Cuantificaciones</a></li>
+            <li class="nav-item ms-3">
+              <a class="btn btn-light rounded-pill px-4 text-black fw-bold" href="https://wa.me/50237343909" target="_blank">Cotizar Proyecto &rarr;</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- NAVEGACIÓN TIPO APP (Solo visible en Celular) -->
+    <nav class="mobile-app-nav">
       <div class="app-nav-top">
         <a href="#" class="icon-btn" aria-label="Menú">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
         </a>
         <a href="index.html">
-          <!-- Asegúrate de usar la versión blanca/clara de tu logo aquí -->
           <img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;">
         </a>
         <a href="#contacto" class="icon-btn" aria-label="Usuario">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
         </a>
       </div>
-      
       <div class="app-tabs">
         <a href="index.html" class="tab-item active">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -258,48 +278,50 @@
     <main>
       <!-- SECCIÓN HERO DE ALTO IMPACTO -->
       <div class="hero-app">
-        <a href="https://wa.me/50237343909" target="_blank" class="btn-pill-outline">
-          Cotizar Proyecto 
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-        </a>
-
-        <div style="width: 40px; height: 2px; background-color: #fff; margin-bottom: 1.5rem;"></div>
-        
-        <h1 class="display-3 fw-bold lh-1 mb-4">
-          Visualizamos<br>
-          tu <span class="accent-text">visión.</span>
-        </h1>
-        
-        <p class="fs-5 text-light mb-0" style="max-width: 400px; color: #a1a1aa !important;">
-          Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.
-        </p>
-
-        <!-- BOTONES DE PAQUETES -->
-        <div class="grid-buttons">
-          <a href="#visualizacion" class="sq-btn sq-btn-light">
-            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="m-auto"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            <span class="text-center mt-3">Ver Paquetes<br>3D &rarr;</span>
+        <div class="hero-content">
+          <a href="https://wa.me/50237343909" target="_blank" class="btn-pill-outline mt-3 mt-lg-0">
+            Cotizar Proyecto 
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
           </a>
+
+          <div style="width: 40px; height: 2px; background-color: #fff; margin-bottom: 1.5rem;"></div>
           
-          <a href="#servicios-tecnicos" class="sq-btn sq-btn-dark">
-            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="m-auto"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
-            <span class="text-center mt-3">Ver Paquetes<br>2D &rarr;</span>
-          </a>
-        </div>
+          <h1 class="display-3 fw-bold lh-1 mb-4">
+            Visualizamos<br>
+            tu <span class="accent-text">visión.</span>
+          </h1>
+          
+          <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">
+            Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.
+          </p>
 
-        <!-- INSIGNIAS DE CONFIANZA -->
-        <div class="trust-badges">
-          <div class="trust-item">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
-            <span>Calidad<br>Garantizada</span>
+          <!-- BOTONES DE PAQUETES (Controlados para Mac) -->
+          <div class="grid-buttons">
+            <a href="#visualizacion" class="sq-btn sq-btn-light">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="m-auto"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              <span class="text-center mt-3">Ver Paquetes<br>3D &rarr;</span>
+            </a>
+            
+            <a href="#servicios-tecnicos" class="sq-btn sq-btn-dark">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="m-auto"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
+              <span class="text-center mt-3">Ver Paquetes<br>2D &rarr;</span>
+            </a>
           </div>
-          <div class="trust-item">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            <span>Entrega<br>Puntual</span>
-          </div>
-          <div class="trust-item">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg>
-            <span>Asesoría<br>Personalizada</span>
+
+          <!-- INSIGNIAS DE CONFIANZA -->
+          <div class="trust-badges">
+            <div class="trust-item">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+              <span>Calidad<br>Garantizada</span>
+            </div>
+            <div class="trust-item">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>Entrega<br>Puntual</span>
+            </div>
+            <div class="trust-item">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg>
+              <span>Asesoría<br>Personalizada</span>
+            </div>
           </div>
         </div>
       </div>
@@ -473,8 +495,8 @@
             <p class="small">Precisión en cada línea, valor en cada detalle.</p>
           </div>
           <div class="col-12 col-lg-7">
-            <span class="h6 text-white mb-3 d-block">Contacto Directo</span>
-            <ul class="nav flex-column">
+            <span class="h6 text-white mb-3 d-block text-center text-lg-start">Contacto Directo</span>
+            <ul class="nav flex-column align-items-center align-items-lg-start">
               <li class="nav-item mb-2 d-flex align-items-center">
                 <svg width="16" height="16" fill="currentColor" class="me-2 text-white" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm8.239-4.133L9.197 8.243 15 11.801V4.697z"/></svg>
                 support@evolutiondesign.com
@@ -492,7 +514,7 @@
       </div>
     </footer>
 
-    <!-- BOTÓN FLOTANTE DE WHATSAPP MANTENIDO -->
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/50237343909?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; background-color: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
       <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
         <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/>
