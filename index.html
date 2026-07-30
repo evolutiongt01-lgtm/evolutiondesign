@@ -345,6 +345,47 @@
           border-left: none !important;
         }
       }
+
+      /* ESTILOS CALCULADORA DE ÁREA */
+      .form-glass {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fff;
+        border-radius: 12px;
+        padding: 0.8rem 1rem;
+        width: 100%;
+        max-width: 100%;
+        transition: all 0.3s ease;
+        text-align: center;
+        font-size: 1.1rem;
+      }
+      @media (min-width: 768px) {
+        .form-glass {
+          max-width: 140px;
+        }
+      }
+      .form-glass:focus {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #d4b895;
+        box-shadow: 0 0 15px rgba(212, 184, 149, 0.3);
+        color: #fff;
+        outline: none;
+      }
+      .form-glass::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .form-glass::-webkit-outer-spin-button,
+      .form-glass::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .result-box {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        padding: 0.8rem 1.5rem;
+        min-width: 140px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
     </style>
   </head>
 
@@ -546,6 +587,53 @@
             </div>
           </div>
 
+          <!-- CALCULADORA DE ÁREA (NUEVA SECCIÓN) -->
+          <div class="row mt-5 pt-4" data-aos="fade-up">
+            <div class="col-12">
+              <div class="glass-panel p-4 p-lg-5 rounded-5">
+                <div class="row align-items-center">
+                  <div class="col-12 col-lg-5 text-center text-lg-start mb-4 mb-lg-0">
+                    <h6 class="text-white letter-spacing-2 fw-light mb-2" style="letter-spacing: 2px;">
+                      <span class="accent-text fw-bold">CALCULADORA</span> DE ÁREA
+                    </h6>
+                    <h3 class="fw-bold mb-0">¿No sabes cuántos m² tiene tu terreno?</h3>
+                    <p class="text-secondary mt-2 mb-0">Ingresa las medidas y calcúlalo al instante.</p>
+                  </div>
+                  <div class="col-12 col-lg-7">
+                    <div class="d-flex flex-column flex-md-row gap-3 align-items-center justify-content-center justify-content-lg-end">
+                      
+                      <!-- Input Ancho -->
+                      <div class="w-100" style="max-width: 150px;">
+                        <label class="small text-secondary mb-1 d-block text-center text-md-start">Ancho</label>
+                        <input type="number" id="calcAncho" class="form-glass" placeholder="Ej. 10" min="0" step="any">
+                      </div>
+                      
+                      <div class="text-secondary fw-bold fs-4 d-none d-md-block px-1 mt-3">×</div>
+                      
+                      <!-- Input Largo -->
+                      <div class="w-100 mt-2 mt-md-0" style="max-width: 150px;">
+                        <label class="small text-secondary mb-1 d-block text-center text-md-start">Largo</label>
+                        <input type="number" id="calcLargo" class="form-glass" placeholder="Ej. 20" min="0" step="any">
+                      </div>
+                      
+                      <div class="text-secondary fw-bold fs-4 d-none d-md-block px-2 mt-3">=</div>
+                      
+                      <!-- Resultado -->
+                      <div class="result-box mt-4 mt-md-0 text-center">
+                        <span class="small text-secondary d-block mb-1">Área Total</span>
+                        <div class="d-flex align-items-baseline justify-content-center">
+                          <h2 class="fw-bold accent-text mb-0" id="calcTotal">0.00</h2>
+                          <span class="ms-1 text-secondary small">m²</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- SERVICIOS ADICIONALES 3D (Fila Horizontal en PC, 2x2 en Móvil) -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
@@ -727,6 +815,29 @@
       
     </div>
 
+    <!-- LOGICA DE LA CALCULADORA -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const anchoInput = document.getElementById('calcAncho');
+        const largoInput = document.getElementById('calcLargo');
+        const totalDisplay = document.getElementById('calcTotal');
+
+        function calcularArea() {
+          const ancho = parseFloat(anchoInput.value) || 0;
+          const largo = parseFloat(largoInput.value) || 0;
+          const total = ancho * largo;
+          
+          if(total > 0) {
+            totalDisplay.textContent = total.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          } else {
+            totalDisplay.textContent = "0.00";
+          }
+        }
+
+        anchoInput.addEventListener('input', calcularArea);
+        largoInput.addEventListener('input', calcularArea);
+      });
+    </script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/aos.js"></script>
     <script>
