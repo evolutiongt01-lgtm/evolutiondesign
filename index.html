@@ -338,8 +338,77 @@
       }
 
       /* =========================================
-         ESTILOS PRO CALCULADORA 2D (Referencia exacta)
+         DISEÑO PRO NUEVA CALCULADORA DE ÁREA
          ========================================= */
+      .calc-pro-container {
+        position: relative;
+        border-radius: 24px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.8) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        overflow: hidden;
+      }
+
+      /* Línea divisora vertical en PC */
+      @media (min-width: 992px) {
+        .calc-divider-vertical {
+          border-left: 1px solid rgba(255, 255, 255, 0.1);
+          padding-left: 3rem;
+        }
+      }
+
+      .calc-input-group-pro {
+        position: relative;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+      }
+      .calc-input-group-pro:focus-within {
+        border-color: #d4b895;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 20px rgba(212, 184, 149, 0.25);
+      }
+      .calc-input-field {
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 1.1rem;
+        width: 100%;
+        outline: none;
+        padding: 0.4rem 0;
+      }
+      .calc-input-field::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .calc-input-field::-webkit-outer-spin-button,
+      .calc-input-field::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .calc-result-display-box {
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 1.5rem;
+        text-align: left;
+      }
+
+      .calc-info-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 12px;
+        padding: 0.9rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
       .features-grid-3 {
         display: grid;
         grid-template-columns: 1fr;
@@ -612,46 +681,93 @@
             </div>
           </div>
 
-          <!-- CALCULADORA DE ÁREA DE TERRENO -->
+          <!-- NUEVA CALCULADORA DE ÁREA DE TERRENO (DISEÑO EXACTO REFERENCIA) -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
-              <div class="glass-panel px-4 px-lg-5 rounded-5" style="padding-top: 4.5rem; padding-bottom: 4.5rem;">
-                <div class="row align-items-center">
-                  <div class="col-12 col-xl-5 text-center text-xl-start mb-4 mb-xl-0">
-                    <h6 class="text-white letter-spacing-2 fw-light mb-2" style="letter-spacing: 2px;">
-                      <span class="accent-text fw-bold">CALCULADORA</span> DE ÁREA
-                    </h6>
-                    <h3 class="fw-bold mb-0">¿No sabes cuántos m² tiene tu terreno?</h3>
-                    <p class="text-secondary mt-2 mb-0">Ingresa las medidas y calcúlalo al instante.</p>
-                  </div>
+              <div class="calc-pro-container p-4 p-lg-5">
+                <div class="row align-items-center g-4">
                   
-                  <div class="col-12 col-xl-7 mt-4 mt-xl-0">
-                    <div class="d-flex flex-column flex-md-row gap-3 align-items-center justify-content-center justify-content-xl-end w-100">
+                  <!-- Panel Izquierdo: Textos explicativos -->
+                  <div class="col-12 col-lg-5 text-center text-lg-start">
+                    <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">CALCULADORA DE ÁREA</span>
+                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.8rem; line-height: 1.2;">¿No sabes cuántos m² tiene tu terreno?</h3>
+                    <p class="text-secondary small mb-0">Ingresa las medidas de tu terreno y obtén el área total al instante.</p>
+                  </div>
+
+                  <!-- Panel Derecho: Inputs y Resultado con división -->
+                  <div class="col-12 col-lg-7 calc-divider-vertical">
+                    <div class="row g-3 align-items-center">
                       
-                      <div class="text-center" style="width: 120px;">
-                        <label class="small text-secondary mb-1 d-block">Ancho</label>
-                        <input type="number" id="calcAncho" class="form-glass-2d w-100 text-center" placeholder="Ej. 10" min="0" step="any">
+                      <!-- Columna Inputs & Multiplicador -->
+                      <div class="col-12 col-xl-7">
+                        <div class="d-flex flex-column gap-3">
+                          
+                          <!-- Ancho -->
+                          <div>
+                            <span class="small text-secondary d-block mb-1">Ancho del terreno</span>
+                            <div class="calc-input-group-pro">
+                              <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 12h20M2 7h20M2 17h20"></path></svg>
+                              <input type="number" id="calcAncho" class="calc-input-field" placeholder="Ej. 10" min="0" step="any">
+                              <span class="text-secondary small ms-2">m</span>
+                            </div>
+                          </div>
+
+                          <!-- Signo Multiplicar -->
+                          <div class="text-center text-secondary my-n2">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                          </div>
+
+                          <!-- Largo -->
+                          <div>
+                            <span class="small text-secondary d-block mb-1">Largo del terreno</span>
+                            <div class="calc-input-group-pro">
+                              <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2v20M7 2h10M7 22h10"></path></svg>
+                              <input type="number" id="calcLargo" class="calc-input-field" placeholder="Ej. 20" min="0" step="any">
+                              <span class="text-secondary small ms-2">m</span>
+                            </div>
+                          </div>
+
+                        </div>
                       </div>
-                      
-                      <div class="text-secondary fw-bold fs-4 d-none d-md-block mt-3">×</div>
-                      
-                      <div class="text-center" style="width: 120px;">
-                        <label class="small text-secondary mb-1 d-block">Largo</label>
-                        <input type="number" id="calcLargo" class="form-glass-2d w-100 text-center" placeholder="Ej. 20" min="0" step="any">
-                      </div>
-                      
-                      <div class="text-secondary fw-bold fs-4 d-none d-md-block mt-3">=</div>
-                      
-                      <div class="result-box text-center mt-2 mt-md-0" style="min-width: 160px;">
-                        <span class="small text-secondary d-block mb-1">Área Total</span>
-                        <div class="d-flex align-items-baseline justify-content-center">
-                          <h2 class="fw-bold accent-text mb-0" id="calcTotal">0.00</h2>
-                          <span class="ms-1 text-secondary small">m²</span>
+
+                      <!-- Columna Pantalla Resultado Total -->
+                      <div class="col-12 col-xl-5">
+                        <div class="calc-result-display-box">
+                          <span class="small text-secondary d-block mb-1">Área Total</span>
+                          <div class="d-flex align-items-baseline">
+                            <h2 class="fw-bold accent-text mb-0" id="calcTotal" style="font-size: 2.2rem;">0.00</h2>
+                            <span class="ms-1 text-secondary small">m²</span>
+                          </div>
                         </div>
                       </div>
 
                     </div>
+
+                    <!-- Fila inferior de especificaciones técnicas -->
+                    <div class="row g-2 mt-3">
+                      <div class="col-12 col-md-6">
+                        <div class="calc-info-card">
+                          <svg width="20" height="20" class="text-secondary shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                          <div>
+                            <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Fórmula aplicada</span>
+                            <span class="text-white small" style="font-size: 0.75rem;">Ancho × Largo = Área Total</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-6">
+                        <div class="calc-info-card">
+                          <svg width="20" height="20" class="accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
+                          <div>
+                            <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Unidad de medida</span>
+                            <span class="text-white small" style="font-size: 0.75rem;">metros cuadrados (m²)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
+
                 </div>
               </div>
             </div>
@@ -698,18 +814,16 @@
         </div>
       </div>
 
-      <!-- SECCIÓN DE PLANOS 2D (DISEÑO EXACTO A REFERENCIA CON GRID FLEXIBLE) -->
+      <!-- SECCIÓN DE PLANOS 2D -->
       <div id="servicios-tecnicos" class="bg-black py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container px-vw-5">
           
-          <!-- Encabezado de la Sección -->
           <div class="text-center mb-5" data-aos="fade">
             <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PRECISIÓN EN CADA LÍNEA</span>
             <h2 class="display-4 fw-bold mb-3 text-white">Planos 2D Completos</h2>
             <p class="text-secondary mx-auto" style="max-width: 600px;">Documentación arquitectónica profesional elaborada con precisión, lista para construir y cumplir con todos los estándares.</p>
           </div>
 
-          <!-- 3 Tarjetas Superiores en Fila Horizontal Forzada -->
           <div class="features-grid-3">
             
             <div class="glass-panel p-4 rounded-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3 h-100" data-aos="fade-up">
@@ -896,7 +1010,7 @@
         </svg>
       </a>
 
-      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Escríbenos por Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4)';">
+      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Escríbenos por Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;">
           <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
         </svg>
@@ -908,7 +1022,7 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         
-        // Calculadora de Área (Ancho x Largo) - 3D
+        // Calculadora de Área (Ancho x Largo)
         const anchoInput = document.getElementById('calcAncho');
         const largoInput = document.getElementById('calcLargo');
         const totalDisplay = document.getElementById('calcTotal');
