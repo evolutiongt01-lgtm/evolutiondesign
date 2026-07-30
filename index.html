@@ -338,7 +338,7 @@
       }
 
       /* =========================================
-         DISEÑO PRO NUEVA CALCULADORA DE ÁREA
+         DISEÑO PRO CALCULADORA DE ÁREA CON ADAPTACIÓN DE PRECIOS
          ========================================= */
       .calc-pro-container {
         position: relative;
@@ -350,7 +350,6 @@
         overflow: hidden;
       }
 
-      /* Línea divisora vertical en PC */
       @media (min-width: 992px) {
         .calc-divider-vertical {
           border-left: 1px solid rgba(255, 255, 255, 0.1);
@@ -419,66 +418,6 @@
         .features-grid-3 {
           grid-template-columns: repeat(3, 1fr);
         }
-      }
-
-      .calc-wrapper-pro {
-        background: rgba(0, 0, 0, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 2rem 1.5rem;
-        max-width: 650px;
-        margin: 0 auto;
-      }
-
-      .calc-inputs-row {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-        justify-content: center;
-      }
-      @media(min-width: 768px) {
-        .calc-inputs-row {
-          flex-direction: row;
-          gap: 1rem;
-        }
-      }
-
-      .calc-box-item {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 0.8rem 1rem;
-        text-align: center;
-        width: 100%;
-      }
-      @media(min-width: 768px) {
-        .calc-box-item {
-          width: 160px;
-        }
-      }
-
-      .form-glass-2d {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        color: #fff;
-        border-radius: 8px;
-        padding: 0.5rem;
-        width: 100%;
-        text-align: center;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
-      }
-      .form-glass-2d:focus {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: #d4b895;
-        box-shadow: 0 0 15px rgba(212, 184, 149, 0.3);
-        outline: none;
-      }
-      .form-glass-2d::-webkit-outer-spin-button,
-      .form-glass-2d::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
       }
     </style>
   </head>
@@ -681,7 +620,7 @@
             </div>
           </div>
 
-          <!-- NUEVA CALCULADORA DE ÁREA DE TERRENO (DISEÑO EXACTO REFERENCIA) -->
+          <!-- CALCULADORA DE ÁREA DE TERRENO Y ADAPTACIÓN AUTOMÁTICA DE PRECIOS -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
               <div class="calc-pro-container p-4 p-lg-5">
@@ -689,20 +628,19 @@
                   
                   <!-- Panel Izquierdo: Textos explicativos -->
                   <div class="col-12 col-lg-5 text-center text-lg-start">
-                    <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">CALCULADORA DE ÁREA</span>
-                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.8rem; line-height: 1.2;">¿No sabes cuántos m² tiene tu terreno?</h3>
-                    <p class="text-secondary small mb-0">Ingresa las medidas de tu terreno y obtén el área total al instante.</p>
+                    <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">COTIZADOR INTELIGENTE</span>
+                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.8rem; line-height: 1.2;">Calcula tu terreno y adapta tus precios</h3>
+                    <p class="text-secondary small mb-0">Ingresa el ancho y largo de tu terreno. El sistema calculará los m² y adaptará automáticamente el costo de tus planos y cuantificaciones.</p>
                   </div>
 
-                  <!-- Panel Derecho: Inputs y Resultado con división -->
+                  <!-- Panel Derecho: Inputs, m² calculados y Cotización Adaptada -->
                   <div class="col-12 col-lg-7 calc-divider-vertical">
                     <div class="row g-3 align-items-center">
                       
-                      <!-- Columna Inputs & Multiplicador -->
+                      <!-- Inputs Ancho y Largo -->
                       <div class="col-12 col-xl-7">
                         <div class="d-flex flex-column gap-3">
                           
-                          <!-- Ancho -->
                           <div>
                             <span class="small text-secondary d-block mb-1">Ancho del terreno</span>
                             <div class="calc-input-group-pro">
@@ -712,12 +650,10 @@
                             </div>
                           </div>
 
-                          <!-- Signo Multiplicar -->
                           <div class="text-center text-secondary my-n2">
                             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                           </div>
 
-                          <!-- Largo -->
                           <div>
                             <span class="small text-secondary d-block mb-1">Largo del terreno</span>
                             <div class="calc-input-group-pro">
@@ -730,10 +666,10 @@
                         </div>
                       </div>
 
-                      <!-- Columna Pantalla Resultado Total -->
+                      <!-- Pantalla de Resultado m² Totales -->
                       <div class="col-12 col-xl-5">
                         <div class="calc-result-display-box">
-                          <span class="small text-secondary d-block mb-1">Área Total</span>
+                          <span class="small text-secondary d-block mb-1">Área Total Calculada</span>
                           <div class="d-flex align-items-baseline">
                             <h2 class="fw-bold accent-text mb-0" id="calcTotal" style="font-size: 2.2rem;">0.00</h2>
                             <span class="ms-1 text-secondary small">m²</span>
@@ -743,26 +679,32 @@
 
                     </div>
 
-                    <!-- Fila inferior de especificaciones técnicas -->
-                    <div class="row g-2 mt-3">
-                      <div class="col-12 col-md-6">
-                        <div class="calc-info-card">
-                          <svg width="20" height="20" class="text-secondary shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                          <div>
-                            <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Fórmula aplicada</span>
-                            <span class="text-white small" style="font-size: 0.75rem;">Ancho × Largo = Área Total</span>
+                    <!-- PRECIOS ADAPTADOS SEGÚN LOS M² OBTENIDOS -->
+                    <div class="mt-4 pt-3 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
+                      <h6 class="text-white mb-3 fw-bold small text-uppercase" style="letter-spacing: 1.5px;">Cotización adaptada a tus m²:</h6>
+                      <div class="row g-2">
+                        
+                        <div class="col-12 col-md-4">
+                          <div class="p-3 rounded-3 text-center" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);">
+                            <span class="text-secondary d-block mb-1" style="font-size: 0.65rem; text-transform: uppercase;">Planos 2D ($2.00)</span>
+                            <span class="text-white fw-bold fs-6" id="price2D">$0.00 USD</span>
                           </div>
                         </div>
-                      </div>
 
-                      <div class="col-12 col-md-6">
-                        <div class="calc-info-card">
-                          <svg width="20" height="20" class="accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
-                          <div>
-                            <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Unidad de medida</span>
-                            <span class="text-white small" style="font-size: 0.75rem;">metros cuadrados (m²)</span>
+                        <div class="col-12 col-md-4">
+                          <div class="p-3 rounded-3 text-center" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);">
+                            <span class="text-secondary d-block mb-1" style="font-size: 0.65rem; text-transform: uppercase;">Cuantificación ($1.50)</span>
+                            <span class="text-white fw-bold fs-6" id="priceCuant">$0.00 USD</span>
                           </div>
                         </div>
+
+                        <div class="col-12 col-md-4">
+                          <div class="p-3 rounded-3 text-center" style="background: rgba(212, 184, 149, 0.05); border: 1px solid rgba(212, 184, 149, 0.2);">
+                            <span class="accent-text d-block mb-1" style="font-size: 0.65rem; text-transform: uppercase;">Paquete Completo ($3.50)</span>
+                            <span class="accent-text fw-bold fs-6" id="priceCompleto">$0.00 USD</span>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
 
@@ -858,58 +800,16 @@
 
           </div>
 
-          <!-- Panel Principal con Tarifa y Mini Calculadora Horizontal Pro -->
+          <!-- Panel de Tarifa 2D -->
           <div class="row justify-content-center">
-            <div class="col-12 col-lg-10" data-aos="zoom-in-up">
+            <div class="col-12 col-lg-8" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 text-center">
-                
-                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PRECIO ESPECIAL</span>
+                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">TARIFA ESTÁNDAR</span>
                 <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
                   <h1 class="display-3 fw-bold text-white mb-0">$2.00</h1>
                   <span class="accent-text fs-5 fw-medium">USD/m²</span>
                 </div>
-                
-                <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 2rem 0;"></div>
-                
-                <p class="text-secondary mb-4">Tarifa por metro cuadrado</p>
-
-                <!-- Mini Calculadora Horizontal Estilo Referencia -->
-                <div class="calc-wrapper-pro mx-auto">
-                  <h6 class="text-white mb-3 fw-bold small text-uppercase" style="letter-spacing: 1.5px;">CALCULA TU PROYECTO</h6>
-                  
-                  <div class="calc-inputs-row">
-                    
-                    <div class="calc-box-item">
-                      <span class="small text-secondary d-block mb-1">Área Total (m²)</span>
-                      <input type="number" id="calcArea2D" class="form-glass-2d" placeholder="Ej. 100" min="0" step="any" value="30">
-                    </div>
-
-                    <div class="text-secondary fw-bold fs-4 d-none d-md-block">×</div>
-
-                    <div class="calc-box-item">
-                      <span class="small text-secondary d-block mb-1">Tarifa (USD/m²)</span>
-                      <input type="text" class="form-glass-2d" value="$2.00" disabled style="opacity: 0.8; cursor: not-allowed;">
-                    </div>
-
-                    <div class="text-secondary fw-bold fs-4 d-none d-md-block">=</div>
-
-                    <div class="calc-box-item" style="background: rgba(212, 184, 149, 0.05); border-color: rgba(212, 184, 149, 0.2);">
-                      <span class="small text-secondary d-block mb-1">Costo Estimado</span>
-                      <div class="d-flex align-items-baseline justify-content-center">
-                        <span class="h4 fw-bold accent-text mb-0" id="calcTotal2D">60.00</span>
-                        <span class="ms-1 text-secondary small">USD</span>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <div class="d-flex align-items-center justify-content-center gap-2 mt-4 text-secondary small" style="opacity: 0.7;">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    <span>Pago seguro y confidencial</span>
-                  </div>
-                </div>
-                <!-- Fin Mini Calculadora -->
-
+                <p class="text-secondary mb-0">Incluye planta arquitectónica, fachadas, secciones, techos y detalles constructivos completos.</p>
               </div>
             </div>
           </div>
@@ -1001,7 +901,7 @@
       </div>
     </footer>
 
-    <!-- BOTONES FLOTANTES (Minimalistas en Pila con Liquid Glass) -->
+    <!-- BOTONES FLOTANTES -->
     <div style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px;">
       
       <a href="https://wa.me/50237343909?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #25d366';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.1)'; this.style.color='#25d366'; this.style.border='1px solid rgba(37, 211, 102, 0.4)';">
@@ -1018,54 +918,48 @@
       
     </div>
 
-    <!-- LOGICA DE LAS CALCULADORAS -->
+    <!-- LÓGICA DE LA CALCULADORA ÚNICA Y ADAPTACIÓN DE PRECIOS -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        
-        // Calculadora de Área (Ancho x Largo)
         const anchoInput = document.getElementById('calcAncho');
         const largoInput = document.getElementById('calcLargo');
         const totalDisplay = document.getElementById('calcTotal');
+        
+        const price2DDisplay = document.getElementById('price2D');
+        const priceCuantDisplay = document.getElementById('priceCuant');
+        const priceCompletoDisplay = document.getElementById('priceCompleto');
 
-        function calcularArea() {
+        function actualizarCalculadora() {
           const ancho = parseFloat(anchoInput.value) || 0;
           const largo = parseFloat(largoInput.value) || 0;
-          const total = ancho * largo;
+          const areaTotal = ancho * largo;
           
-          if(total > 0) {
-            totalDisplay.textContent = total.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          if(areaTotal > 0) {
+            totalDisplay.textContent = areaTotal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            
+            // Adaptar precios según los m² calculados
+            const p2d = areaTotal * 2.00;
+            const pCuant = areaTotal * 1.50;
+            const pCompleto = areaTotal * 3.50;
+
+            price2DDisplay.textContent = `$${p2d.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`;
+            priceCuantDisplay.textContent = `$${pCuant.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`;
+            priceCompletoDisplay.textContent = `$${pCompleto.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`;
           } else {
             totalDisplay.textContent = "0.00";
+            price2DDisplay.textContent = "$0.00 USD";
+            priceCuantDisplay.textContent = "$0.00 USD";
+            priceCompletoDisplay.textContent = "$0.00 USD";
           }
         }
 
         if(anchoInput && largoInput) {
-          anchoInput.addEventListener('input', calcularArea);
-          largoInput.addEventListener('input', calcularArea);
+          anchoInput.addEventListener('input', actualizarCalculadora);
+          largoInput.addEventListener('input', actualizarCalculadora);
         }
-
-        // Calculadora Planos 2D (Área x $2.00)
-        const area2DInput = document.getElementById('calcArea2D');
-        const total2DDisplay = document.getElementById('calcTotal2D');
-        const tarifa2D = 2.00;
-
-        function calcularPrecio2D() {
-          const area = parseFloat(area2DInput.value) || 0;
-          const total = area * tarifa2D;
-
-          if(total > 0) {
-            total2DDisplay.textContent = total.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-          } else {
-            total2DDisplay.textContent = "0.00";
-          }
-        }
-
-        if(area2DInput) {
-          area2DInput.addEventListener('input', calcularPrecio2D);
-        }
-        
       });
     </script>
+
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/aos.js"></script>
     <script>
