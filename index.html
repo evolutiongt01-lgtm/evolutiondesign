@@ -4,15 +4,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <meta name="description" content="Evolution Design - Estudio de Visualización Arquitectónica, Planos 2D y Cuantificación de Materiales">
+    <meta name="description" content="Evolution Desing - Estudio de Visualización Arquitectónica, Planos 2D y Cuantificación de Materiales">
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
-    <meta name="author" content="Evolution Design">
+    <meta name="author" content="Evolution Desing">
     <meta name="generator" content="Eleventy v2.0.0">
     <meta name="HandheldFriendly" content="true">
-    <title>Evolution Design - Visualización, Planos y Cuantificación</title>
+    <title>Evolution Desing - Visualización, Planos y Cuantificación</title>
     <link rel="stylesheet" href="css/theme.min.css">
 
     <style>
@@ -37,6 +37,15 @@
       @font-face {
         font-family: 'Inter';
         font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: local(''),
+             url('fonts/inter-v12-latin-500.woff2') format('woff2'),
+             url('fonts/inter-v12-latin-500.woff') format('woff');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
         font-weight: 700;
         font-display: swap;
         src: local(''),
@@ -51,7 +60,7 @@
       }
 
       /* =========================================
-         NAVEGACIÓN ESCRITORIO (Mac)
+         NAVEGACIÓN ESCRITORIO (Mac/PC)
          ========================================= */
       .desktop-nav {
         display: none !important;
@@ -60,7 +69,7 @@
       }
       @media (min-width: 992px) {
         .desktop-nav {
-          display: flex !important;
+          display: block !important;
         }
       }
 
@@ -124,7 +133,7 @@
       .tab-item.active svg { opacity: 1; }
 
       /* =========================================
-         HERO SECTION (AJUSTADO PARA MAC)
+         HERO SECTION
          ========================================= */
       .hero-app {
         position: relative;
@@ -146,10 +155,10 @@
         .hero-app {
           min-height: 100vh;
           background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/tu-imagen-hero.jpg') right center/cover no-repeat;
-          padding-top: 100px; /* Espacio para el navbar */
+          padding-top: 100px;
         }
         .hero-content {
-          max-width: 550px; /* ESTO EVITA QUE LOS BOTONES SE VEAN FEOS Y ESTIRADOS */
+          max-width: 550px; 
           padding: 0;
           margin-left: 5vw;
         }
@@ -223,21 +232,33 @@
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
     <!-- NAVEGACIÓN ESCRITORIO (Solo visible en Mac/PC) -->
-    <nav class="navbar navbar-expand-lg navbar-dark desktop-nav fixed-top border-bottom border-dark" id="navScroll">
-      <div class="container px-vw-5">
-        <a class="navbar-brand py-3" href="index.html">
-          <img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;">
-        </a>
-        <div class="collapse navbar-collapse justify-content-end">
-          <ul class="navbar-nav gap-4 align-items-center">
-            <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html">Inicio</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="#visualizacion">Visualización 3D</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="#servicios-tecnicos">Planos 2D</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="#cuantificacion">Cuantificaciones</a></li>
-            <li class="nav-item ms-3">
-              <a class="btn btn-light rounded-pill px-4 text-black fw-bold" href="https://wa.me/50237343909" target="_blank">Cotizar Proyecto &rarr;</a>
-            </li>
-          </ul>
+    <nav class="desktop-nav fixed-top border-bottom border-dark" id="navScroll" style="height: 85px;">
+      <div class="container px-vw-5 h-100">
+        <!-- Cuadrícula que fuerza 3 espacios: izquierda, centro exacto y derecha -->
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%; height: 100%;">
+          
+          <!-- Lado Izquierdo: Enlaces -->
+          <div style="justify-self: start;">
+            <ul class="nav gap-4 m-0 p-0">
+              <li class="nav-item"><a class="nav-link text-white fw-bold px-0" href="index.html">Inicio</a></li>
+              <li class="nav-item"><a class="nav-link text-white px-0" href="#visualizacion">Visualización 3D</a></li>
+              <li class="nav-item"><a class="nav-link text-white px-0" href="#servicios-tecnicos">Planos 2D</a></li>
+              <li class="nav-item"><a class="nav-link text-white px-0" href="#cuantificacion">Cuantificaciones</a></li>
+            </ul>
+          </div>
+
+          <!-- Centro Exacto: Logo -->
+          <div style="justify-self: center;">
+            <a href="index.html">
+              <img src="img/logo.png" alt="Evolution Desing" style="max-height: 40px; width: auto;">
+            </a>
+          </div>
+
+          <!-- Lado Derecho: Botón -->
+          <div style="justify-self: end;">
+            <a class="btn btn-light rounded-pill px-4 text-black fw-bold" href="https://wa.me/50237343909" target="_blank">Cotizar Proyecto &rarr;</a>
+          </div>
+
         </div>
       </div>
     </nav>
@@ -249,7 +270,7 @@
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
         </a>
         <a href="index.html">
-          <img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;">
+          <img src="img/logo.png" alt="Evolution Desing" style="max-height: 28px; width: auto;">
         </a>
         <a href="#contacto" class="icon-btn" aria-label="Usuario">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -490,7 +511,7 @@
         <div class="row g-4">
           <div class="col-12 col-lg-5 text-center text-lg-start">
             <a href="index.html">
-              <img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;" class="mb-3">
+              <img src="img/logo.png" alt="Evolution Desing" style="max-height: 40px; width: auto;" class="mb-3">
             </a>
             <p class="small">Precisión en cada línea, valor en cada detalle.</p>
           </div>
@@ -499,7 +520,7 @@
             <ul class="nav flex-column align-items-center align-items-lg-start">
               <li class="nav-item mb-2 d-flex align-items-center">
                 <svg width="16" height="16" fill="currentColor" class="me-2 text-white" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm8.239-4.133L9.197 8.243 15 11.801V4.697z"/></svg>
-                support@evolutiondesign.com
+                support@evolutiondesing.com
               </li>
               <li class="nav-item mb-1 d-flex align-items-center text-white">
                 <svg width="16" height="16" fill="currentColor" class="me-2 text-white" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/></svg>
@@ -510,7 +531,7 @@
         </div>
       </div>
       <div class="container text-center small py-vh-2 mt-4 border-top text-secondary" style="border-color: #111 !important;">
-        © 2026 Evolution Design. Todos los derechos reservados.
+        © 2026 Evolution Desing. Todos los derechos reservados.
       </div>
     </footer>
 
