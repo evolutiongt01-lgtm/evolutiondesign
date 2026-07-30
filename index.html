@@ -133,7 +133,7 @@
       .tab-item.active svg { opacity: 1; }
 
       /* =========================================
-         HERO SECTION
+         HERO SECTION (DOS IMÁGENES DIFERENTES)
          ========================================= */
       .hero-app {
         position: relative;
@@ -142,7 +142,8 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%), url('img/tu-imagen-hero.jpg') center/cover no-repeat;
+        /* IMAGEN PARA CELULARES (Vertical) */
+        background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%), url('img/hero-movil.jpg') center/cover no-repeat;
       }
       
       .hero-content {
@@ -150,11 +151,12 @@
         padding: 0 1.5rem;
       }
 
-      /* Control de estiramiento en Escritorio (Mac) */
+      /* Control para Escritorio (Mac/PC) */
       @media (min-width: 992px) {
         .hero-app {
           min-height: 100vh;
-          background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/tu-imagen-hero.jpg') right center/cover no-repeat;
+          /* IMAGEN PARA COMPUTADORAS (Horizontal) */
+          background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/hero-pc.jpg') right center/cover no-repeat;
           padding-top: 100px;
         }
         .hero-content {
@@ -295,7 +297,7 @@
     </nav>
 
     <main>
-      <!-- SECCIÓN HERO DE ALTO IMPACTO -->
+      <!-- SECCIÓN HERO DE ALTO IMPACTO (Con carga condicional en CSS) -->
       <div class="hero-app">
         <div class="hero-content">
           <a href="https://wa.me/50237343909" target="_blank" class="btn-pill-outline mt-3 mt-lg-0">
@@ -314,7 +316,7 @@
             Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.
           </p>
 
-          <!-- BOTONES DE PAQUETES (Controlados para Mac) -->
+          <!-- BOTONES DE PAQUETES -->
           <div class="grid-buttons">
             <a href="#visualizacion" class="sq-btn sq-btn-light">
               <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="m-auto"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
@@ -428,7 +430,7 @@
             </div>
           </div>
 
-          <!-- SERVICIOS ADICIONALES 3D (NUEVO) -->
+          <!-- SERVICIOS ADICIONALES 3D -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
               <div class="p-4 p-lg-5 rounded-5 border shadow-sm" style="background-color: #111; border-color: #222 !important;">
