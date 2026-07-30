@@ -308,7 +308,7 @@
       }
 
       .glass-panel-accent {
-        background: rgba(212, 184, 149, 0.05) !important; /* Tono sutil dorado */
+        background: rgba(212, 184, 149, 0.05) !important; 
         backdrop-filter: blur(20px) saturate(150%);
         -webkit-backdrop-filter: blur(20px) saturate(150%);
         border: 1px solid rgba(212, 184, 149, 0.3) !important;
@@ -325,7 +325,7 @@
         height: 100%;
         background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(212, 184, 149, 0.08) 50%, rgba(255,255,255,0) 100%);
         transform: skewX(-25deg);
-        animation: glass-shine 8s infinite 1.5s; /* Retraso para que no brillen al mismo tiempo */
+        animation: glass-shine 8s infinite 1.5s; 
         pointer-events: none;
       }
 
@@ -335,9 +335,15 @@
         100% { left: 200%; }
       }
 
-      /* Fondo contenedor sutil para que el cristal resalte más */
       .glass-container-bg {
         background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,1) 80%);
+      }
+
+      /* AJUSTE BORDES SERVICIOS MÓVIL */
+      @media (max-width: 991px) {
+        .mobile-remove-border {
+          border-left: none !important;
+        }
       }
     </style>
   </head>
@@ -540,38 +546,38 @@
             </div>
           </div>
 
-          <!-- SERVICIOS ADICIONALES 3D -->
+          <!-- SERVICIOS ADICIONALES 3D (Fila Horizontal en PC, 2x2 en Móvil) -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
               <div class="glass-panel p-4 p-lg-5 rounded-5">
                 <h6 class="text-center mb-4 text-white letter-spacing-2 fw-light" style="letter-spacing: 2px;">
                   <span class="accent-text fw-bold">SERVICIOS</span> ADICIONALES
                 </h6>
-                <div class="row g-4 justify-content-center text-center">
+                <div class="row g-4 justify-content-center text-center align-items-center">
                   
                   <!-- Render Extra -->
-                  <div class="col-6 col-md-3">
+                  <div class="col-6 col-lg-3">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Render Extra</h6>
                     <span class="accent-text fw-bold">$35 USD</span>
                   </div>
 
                   <!-- Recorrido Virtual -->
-                  <div class="col-6 col-md-3 border-start" style="border-color: rgba(255,255,255,0.1) !important;">
+                  <div class="col-6 col-lg-3 border-start" style="border-color: rgba(255,255,255,0.1) !important;">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Recorrido Virtual</h6>
                     <span class="accent-text fw-bold">$150 USD</span>
                   </div>
 
                   <!-- Diseño de Fachada -->
-                  <div class="col-6 col-md-3 border-start-md mt-4 mt-md-0" style="border-color: rgba(255,255,255,0.1) !important;">
+                  <div class="col-6 col-lg-3 border-start mobile-remove-border" style="border-color: rgba(255,255,255,0.1) !important;">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Diseño de Fachada</h6>
                     <span class="text-secondary small d-inline me-1" style="font-size: 0.75rem;">DESDE</span><span class="accent-text fw-bold">$120 USD</span>
                   </div>
 
                   <!-- Modelado 3D -->
-                  <div class="col-6 col-md-3 border-start mt-4 mt-md-0" style="border-color: rgba(255,255,255,0.1) !important;">
+                  <div class="col-6 col-lg-3 border-start" style="border-color: rgba(255,255,255,0.1) !important;">
                     <svg width="36" height="36" class="mb-3 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                     <h6 class="text-white mb-1 small text-uppercase">Modelado 3D</h6>
                     <span class="text-secondary small d-inline me-1" style="font-size: 0.75rem;">DESDE</span><span class="accent-text fw-bold">$150 USD</span>
