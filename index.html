@@ -338,99 +338,47 @@
       }
 
       /* =========================================
-         DISEÑO PRO NUEVA CALCULADORA DE ÁREA
+         DISEÑO EXACTO NUEVA CALCULADORA DE ÁREA CON FONDO ATENUADO
          ========================================= */
-      /* Wrapper que rompe el ancho del container estándar del sitio (breakout real, basado en vw) */
-      .calc-pro-container-wrap {
-        width: 100%;
-      }
-      @media (min-width: 992px) {
-        .calc-pro-container-wrap {
-          position: relative;
-          left: 50%;
-          width: 100vw;
-          margin-left: -50vw;
-          padding: 0 2.5vw;
-          box-sizing: border-box;
-        }
-      }
-
       .calc-pro-container {
         position: relative;
         border-radius: 24px;
-        /* 👉 FONDO CON IMAGEN ATENUADA EN NEGRO:
-           Reemplaza 'img/calculadora-fondo.jpg' por la ruta de tu imagen.
-           El primer degradado negro controla qué tan oscura se ve (0.7 = 70% de opacidad negra encima). 
-           Si la imagen no carga, se ve el degradado de respaldo (igual que antes). */
-        background:
-          linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-          url('img/calculadora-fondo.jpg') center / cover no-repeat,
-          linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.8) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
+        /* Imagen de fondo atenuada con un gradiente oscuro encima */
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.75) 100%), url('img/terreno-bg.jpg') center/cover no-repeat;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.6);
         overflow: hidden;
       }
 
-      /* Panel izquierdo: contenedor relativo para el arte decorativo */
-      .calc-left-panel {
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Arte decorativo (plano + árbol) esquina inferior izquierda */
-      .calc-left-visual {
-        position: absolute;
-        left: -8%;
-        bottom: -12%;
-        width: 75%;
-        max-width: 320px;
-        opacity: 0.5;
-        pointer-events: none;
-        z-index: -1;
-        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 85%);
-        mask-image: linear-gradient(to top, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 85%);
-      }
-
-      /* Línea divisora vertical simple en PC (entre inputs y resultado) */
       @media (min-width: 992px) {
         .calc-divider-vertical {
           border-left: 1px solid rgba(255, 255, 255, 0.1);
           padding-left: 3rem;
         }
       }
-      /* Separador horizontal en móvil */
-      @media (max-width: 991px) {
-        .calc-divider-vertical {
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
-          padding-top: 2rem;
-          margin-top: 0.5rem;
-        }
-      }
 
       .calc-input-group-pro {
         position: relative;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
         display: flex;
         align-items: center;
-        padding: 0.5rem 1rem;
+        padding: 0.6rem 1rem;
         transition: all 0.3s ease;
       }
       .calc-input-group-pro:focus-within {
         border-color: #d4b895;
-        background: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 0 20px rgba(212, 184, 149, 0.25);
+        background: rgba(0, 0, 0, 0.7);
+        box-shadow: 0 0 15px rgba(212, 184, 149, 0.25);
       }
       .calc-input-field {
         background: transparent;
         border: none;
         color: #fff;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         width: 100%;
         outline: none;
-        padding: 0.4rem 0;
       }
       .calc-input-field::placeholder {
         color: rgba(255, 255, 255, 0.3);
@@ -442,53 +390,21 @@
       }
 
       .calc-result-display-box {
-        background: rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 16px;
         padding: 1.5rem;
         text-align: left;
       }
 
-      .calc-info-bar {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 14px;
-        display: flex;
-        align-items: stretch;
-      }
-      .calc-info-bar .calc-info-col {
-        flex: 1 1 0;
+      .calc-info-card {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 0.9rem 1.2rem;
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 0.9rem 1.2rem;
-        min-width: 0;
-      }
-      .calc-info-bar .calc-info-divider {
-        width: 1px;
-        background: rgba(255, 255, 255, 0.08);
-        margin: 0.7rem 0;
-      }
-      .calc-icon-box {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-      @media (max-width: 767px) {
-        .calc-info-bar {
-          flex-direction: column;
-        }
-        .calc-info-bar .calc-info-divider {
-          width: auto;
-          height: 1px;
-          margin: 0 1rem;
-        }
       }
 
       .features-grid-3 {
@@ -763,38 +679,24 @@
             </div>
           </div>
 
-          <!-- NUEVA CALCULADORA DE ÁREA DE TERRENO (DISEÑO EXACTO REFERENCIA) -->
+          <!-- NUEVA CALCULADORA DE ÁREA DE TERRENO (DISEÑO EXACTO REFERENCIA CON FONDO ATENUADO) -->
           <div class="row mt-5 pt-4" data-aos="fade-up">
             <div class="col-12">
-              <div class="calc-pro-container-wrap">
               <div class="calc-pro-container p-4 p-lg-5">
                 <div class="row align-items-center g-4">
                   
-                  <!-- Panel Izquierdo: Textos explicativos -->
-                  <div class="col-12 col-lg-5 text-center text-lg-start calc-left-panel">
-                    <span class="small fw-bold text-uppercase d-block mb-2" style="letter-spacing: 2px;"><span class="accent-text">CALCULADORA</span><span class="text-white fw-lighter"> DE ÁREA</span></span>
-                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.9rem; line-height: 1.2;">Ingresa las dimensiones<br>de tu terreno</h3>
-                    <p class="text-secondary small mb-0">Ingresa las medidas de tu terreno y obtén el área total al instante.</p>
-
-                    <!-- Arte decorativo: plano arquitectónico + árbol -->
-                    <svg class="calc-left-visual d-none d-lg-block" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <g stroke="#d4b895" stroke-width="1" fill="none" opacity="0.9">
-                        <path d="M100 170 L180 90 L300 90 L220 170 Z"></path>
-                        <path d="M100 170 L180 90 M120 170 L200 90 M140 170 L220 90 M160 170 L240 90 M180 170 L260 90 M200 170 L280 90 M220 170 L300 90"></path>
-                        <path d="M100 170 L220 170 M110 155 L230 155 M120 140 L240 140 M130 125 L250 125 M140 110 L260 110 M150 95 L270 95"></path>
-                      </g>
-                      <g fill="#d4b895" opacity="0.8">
-                        <rect x="38" y="60" width="6" height="110"></rect>
-                        <ellipse cx="41" cy="45" rx="34" ry="42"></ellipse>
-                      </g>
-                    </svg>
+                  <!-- Panel Izquierdo: Textos -->
+                  <div class="col-12 col-lg-5 text-center text-lg-start">
+                    <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">CALCULADORA DE ÁREA</span>
+                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.8rem; line-height: 1.2;">Calcula el área de tu terreno</h3>
+                    <p class="text-secondary small mb-0">Ingresa las dimensiones de tu terreno y obtén el área total al instante.</p>
                   </div>
 
-                  <!-- Panel Derecho: Inputs y Resultado con división -->
+                  <!-- Panel Derecho: Inputs y Resultado -->
                   <div class="col-12 col-lg-7 calc-divider-vertical">
                     <div class="row g-3 align-items-center">
                       
-                      <!-- Columna Inputs & Multiplicador -->
+                      <!-- Inputs & Multiplicador -->
                       <div class="col-12 col-xl-7">
                         <div class="d-flex flex-column gap-3">
                           
@@ -802,7 +704,7 @@
                           <div>
                             <span class="small text-secondary d-block mb-1">Ancho del terreno (m)</span>
                             <div class="calc-input-group-pro">
-                              <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 12h20M2 7h20M2 17h20"></path></svg>
+                              <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
                               <input type="number" id="calcAncho" class="calc-input-field" placeholder="Ej. 10" min="0" step="any">
                               <span class="text-secondary small ms-2">m</span>
                             </div>
@@ -817,7 +719,7 @@
                           <div>
                             <span class="small text-secondary d-block mb-1">Largo del terreno (m)</span>
                             <div class="calc-input-group-pro">
-                              <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2v20M7 2h10M7 22h10"></path></svg>
+                              <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
                               <input type="number" id="calcLargo" class="calc-input-field" placeholder="Ej. 20" min="0" step="any">
                               <span class="text-secondary small ms-2">m</span>
                             </div>
@@ -826,10 +728,10 @@
                         </div>
                       </div>
 
-                      <!-- Columna Pantalla Resultado Total -->
+                      <!-- Pantalla Resultado Total -->
                       <div class="col-12 col-xl-5">
                         <div class="calc-result-display-box">
-                          <span class="small accent-text fw-bold d-block mb-1" style="letter-spacing: 1px;">ÁREA TOTAL</span>
+                          <span class="small text-secondary d-block mb-1" style="font-size: 0.7rem; letter-spacing: 1px;">ÁREA TOTAL</span>
                           <div class="d-flex align-items-baseline">
                             <h2 class="fw-bold accent-text mb-0" id="calcTotal" style="font-size: 2.2rem;">0.00</h2>
                             <span class="ms-1 text-secondary small">m²</span>
@@ -840,26 +742,24 @@
                     </div>
 
                     <!-- Fila inferior de especificaciones técnicas -->
-                    <div class="calc-info-bar mt-3">
-                      <div class="calc-info-col">
-                        <div class="calc-icon-box">
-                          <svg width="18" height="18" class="accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                        </div>
-                        <div>
-                          <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Fórmula aplicada</span>
-                          <span class="text-white small" style="font-size: 0.75rem;">Ancho × Largo = Área Total</span>
+                    <div class="row g-2 mt-3">
+                      <div class="col-12 col-md-6">
+                        <div class="calc-info-card">
+                          <svg width="20" height="20" class="text-secondary shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                          <div>
+                            <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">FÓRMULA APLICADA</span>
+                            <span class="text-white small" style="font-size: 0.75rem;">Ancho × Largo = Área Total</span>
+                          </div>
                         </div>
                       </div>
 
-                      <div class="calc-info-divider"></div>
-
-                      <div class="calc-info-col">
-                        <div class="calc-icon-box">
-                          <svg width="18" height="18" class="accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
-                        </div>
-                        <div>
-                          <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">Unidad de medida</span>
-                          <span class="text-white small" style="font-size: 0.75rem;">metros cuadrados (m²)</span>
+                      <div class="col-12 col-md-6">
+                        <div class="calc-info-card">
+                          <span class="accent-text fw-bold shrink-0" style="font-size: 0.85rem;">m²</span>
+                          <div>
+                            <span class="text-secondary d-block" style="font-size: 0.65rem; text-transform: uppercase;">UNIDAD DE MEDIDA</span>
+                            <span class="text-white small" style="font-size: 0.75rem;">metros cuadrados (m²)</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -867,7 +767,6 @@
                   </div>
 
                 </div>
-              </div>
               </div>
             </div>
           </div>
@@ -1109,7 +1008,7 @@
         </svg>
       </a>
 
-      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Escríbenos por Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);">
+      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Escríbenos por Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4)';">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;">
           <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
         </svg>
