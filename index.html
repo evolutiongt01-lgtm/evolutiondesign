@@ -181,7 +181,7 @@
       }
       .accent-text { color: #d4b895; }
       
-      /* BOTONES CUADRADOS DE PAQUETES (Liquid Glass & Centrados) */
+      /* BOTONES CUADRADOS DE PAQUETES (Liquid Glass con Inversión de Color) */
       .grid-buttons {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -197,19 +197,21 @@
         justify-content: center;  /* Centra verticalmente */
         gap: 12px;                /* Espaciado perfecto entre icono y texto */
         min-height: 160px;
-        text-decoration: none;
+        text-decoration: none !important;
         transition: all 0.3s ease;
-        /* Efecto Liquid Glass */
+        /* Efecto Liquid Glass inicial */
         background-color: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #fff;
+        color: #fff !important; /* Letras e ícono blancos */
       }
       .sq-btn:hover { 
         transform: translateY(-5px); 
-        background-color: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.3);
+        /* Inversión de colores al pasar el cursor */
+        background-color: #fff !important; /* Fondo blanco sólido */
+        color: #000 !important; /* Letras e ícono negros */
+        border-color: #fff;
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       }
       
