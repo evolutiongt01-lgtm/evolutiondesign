@@ -522,7 +522,7 @@
       }
       
       /* =========================================
-         SELECTOR DE IDIOMA
+         SELECTOR DE IDIOMA (SIN PUNTOS BLANCOS)
          ========================================= */
       .lang-float-container {
         position: fixed;
@@ -567,6 +567,10 @@
         min-width: 160px !important;
         box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
         gap: 5px;
+        list-style: none !important;
+      }
+      .lang-float-menu li {
+        list-style: none !important;
       }
       .lang-float-menu.show {
         display: flex;
@@ -707,7 +711,7 @@
         </div>
       </div>
 
-      <!-- NUEVA SECCIÓN DE SERVICIOS CON VIDEOS (CARRUSEL MÓVIL / GRID PC) -->
+      <!-- NUEVA SECCIÓN DE SERVICIOS CON VIDEOS -->
       <section id="servicios-destacados" class="services-section">
         <div class="container px-vw-5">
           
@@ -723,10 +727,8 @@
             </div>
           </div>
 
-          <!-- Contenedor Carrusel Horizontal (Móvil) / Grid (PC) -->
           <div class="services-scroll-container" data-aos="fade-up">
             
-            <!-- Tarjeta 1 -->
             <div class="service-card">
               <video src="vid/servicio-3d.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
@@ -738,7 +740,6 @@
               </div>
             </div>
 
-            <!-- Tarjeta 2 -->
             <div class="service-card">
               <video src="vid/servicio-2d.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
@@ -750,7 +751,6 @@
               </div>
             </div>
 
-            <!-- Tarjeta 3 -->
             <div class="service-card">
               <video src="vid/servicio-recorrido.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
@@ -762,7 +762,6 @@
               </div>
             </div>
 
-            <!-- Tarjeta 4 -->
             <div class="service-card">
               <video src="vid/servicio-cuantificacion.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
@@ -774,7 +773,6 @@
               </div>
             </div>
 
-            <!-- Tarjeta 5 -->
             <div class="service-card">
               <video src="vid/servicio-supervision.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
@@ -884,7 +882,6 @@
               <div class="calc-pro-container p-4 p-lg-5">
                 <div class="row g-5 align-items-center">
                   
-                  <!-- Panel Izquierdo -->
                   <div class="col-12 col-lg-5 text-center d-flex flex-column justify-content-center">
                     <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">ORÇAMENTISTA INTELIGENTE</span>
                     <h3 class="fw-bold text-white mb-3 px-2" style="font-size: 1.8rem; line-height: 1.2;">Seu terreno supera os 300 m²?</h3>
@@ -905,7 +902,6 @@
                     </div>
                   </div>
 
-                  <!-- Panel Derecho -->
                   <div class="col-12 col-lg-7 calc-divider-vertical">
                     <div class="row g-4">
                       
