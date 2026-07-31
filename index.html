@@ -169,11 +169,11 @@
       }
 
       /* =========================================
-         ESTILO PARA FONDO ATENUADO EN PLANOS 2D
+         ESTILO PARA FONDO ATENUADO EN PLANOS 2D (img/planos-bg.jpg)
          ========================================= */
       .section-planos-bg {
         position: relative;
-        background: linear-gradient(180deg, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.80) 50%, rgba(0,0,0,0.90) 100%), url('img/hero-pc.jpg') center/cover no-repeat !important;
+        background: linear-gradient(180deg, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.80) 50%, rgba(0,0,0,0.90) 100%), url('img/planos-bg.jpg') center/cover no-repeat !important;
       }
 
       /* =========================================
@@ -1053,7 +1053,7 @@
 
       </div>
 
-      <!-- SECCIÓN DE PLANOS 2D CON IMAGEN ATENUADA DE FONDO -->
+      <!-- SECCIÓN DE PLANOS 2D CON FONDO ATENUADO (img/planos-bg.jpg) -->
       <div id="servicios-tecnicos" class="section-planos-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           
@@ -1223,9 +1223,8 @@
       </button>
     </div>
 
-    <!-- LÓGICA INTELIGENTE (RELOJES GT & MIA FORMATO 24H + IDIOMA + COTIZADOR) -->
+    <!-- LÓGICA INTELIGENTE -->
     <script>
-      // Relojes en vivo formato 24 horas (Guatemala y Miami)
       function updateClocks() {
         const options24 = { timeZone: 'America/Guatemala', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
         const gtString = new Intl.DateTimeFormat('es-GT', options24).format(new Date());
