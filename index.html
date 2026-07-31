@@ -15,6 +15,9 @@
     <title>Evolution Design - Visualización, Planos y Cuantificación</title>
     <link rel="stylesheet" href="css/theme.min.css">
 
+    <!-- GOOGLE RECAPTCHA V3 SCRIPT -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LewmG4tAAAAADBNcF1z4t7NvP_YFyA7P57xx9uM"></script>
+
     <style>
       @font-face {
         font-family: 'Inter';
@@ -229,25 +232,21 @@
       .facade-box-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 2rem; height: 100%; }
       .facade-icon { flex-shrink: 0; color: rgba(255,255,255,0.5); }
       
-      /* Inputs Numericos Personalizados (Ancho/Altura) */
       .facade-input-wrap { display: flex; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; width: 120px; transition: border-color 0.3s; }
       .facade-input-wrap:focus-within { border-color: #d4b895; }
       .facade-num-input { background: transparent; border: none; color: #fff; width: 100%; padding: 0.6rem 0.8rem; text-align: right; outline: none; -moz-appearance: textfield; font-weight: bold; font-size: 0.95rem; }
       .facade-num-input::-webkit-outer-spin-button, .facade-num-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
       .facade-unit { background: rgba(255,255,255,0.08); color: #aaa; padding: 0.6rem 0.8rem; font-size: 0.85rem; border-left: 1px solid rgba(255,255,255,0.05); }
 
-      /* Filas de la calculadora */
       .facade-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
       .facade-row-col { display: flex; flex-direction: column; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
       .facade-row:last-child, .facade-row-col:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
-      /* Radio Buttons Estilo Cajas Rígidas */
       .facade-radio-group { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 1rem; }
       .facade-radio-group input[type="radio"] { display: none; }
       .facade-radio-label { flex: 1 1 0; min-width: 85px; text-align: center; padding: 0.8rem 0.2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 0.75rem; color: #888; cursor: pointer; transition: all 0.3s; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.3; }
       .facade-radio-group input[type="radio"]:checked + .facade-radio-label { border-color: #d4b895; color: #fff; background: rgba(212, 184, 149, 0.08); }
 
-      /* iOS Toggle Render */
       .facade-switch { position: relative; display: inline-block; width: 48px; height: 26px; flex-shrink: 0; }
       .facade-switch input { opacity: 0; width: 0; height: 0; }
       .f-slider-toggle { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
@@ -255,9 +254,6 @@
       input:checked + .f-slider-toggle { background-color: #d4b895; }
       input:checked + .f-slider-toggle:before { transform: translateX(22px); }
 
-      .f-feature-icon { color: #d4b895; margin-bottom: 8px; flex-shrink: 0; }
-
-      /* Panel Resultados */
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
       /* =========================================
@@ -277,7 +273,7 @@
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-    <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) -->
+    <!-- DESKTOP NAVIGATION (Mac/PC) -->
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
@@ -287,52 +283,52 @@
           </a>
 
           <div class="nav-pill-links d-none d-xl-flex">
-            <a href="index.html" class="nav-pill-link active">Inicio</a>
-            <a href="#servicios-destacados" class="nav-pill-link">Servicios</a>
-            <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
-            <a href="#fachadas" class="nav-pill-link">Fachadas</a>
-            <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
+            <a href="index.html" class="nav-pill-link active">Home</a>
+            <a href="#servicios-destacados" class="nav-pill-link">Services</a>
+            <a href="#servicios-tecnicos" class="nav-pill-link">2D Plans</a>
+            <a href="#fachadas" class="nav-pill-link">Facades</a>
+            <a href="#visualizacion" class="nav-pill-link">3D Pricing</a>
           </div>
 
-          <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Descargar Software &rarr;</a>
+          <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Download Software &rarr;</a>
 
         </div>
       </div>
     </nav>
 
-    <!-- NAVEGACIÓN MÓVIL TIPO APP -->
+    <!-- MOBILE APP NAVIGATION -->
     <nav class="mobile-app-nav">
       <div class="app-nav-top">
-        <a href="#" class="icon-btn" aria-label="Menú">
+        <a href="#" class="icon-btn" aria-label="Menu">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
         </a>
         <a href="index.html">
           <img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;">
         </a>
-        <a href="#contacto" class="icon-btn" aria-label="Usuario">
+        <a href="#contacto" class="icon-btn" aria-label="User">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
         </a>
       </div>
       <div class="app-tabs">
         <a href="index.html" class="tab-item active">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-          Inicio
+          Home
         </a>
         <a href="#servicios-destacados" class="tab-item">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-          Servicios
+          Services
         </a>
         <a href="#servicios-tecnicos" class="tab-item">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
-          Planos
+          Plans
         </a>
         <a href="#visualizacion" class="tab-item">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-          Tarifas 3D
+          3D Pricing
         </a>
         <a href="#cuantificacion" class="tab-item">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg>
-          Cuantif.
+          Quant.
         </a>
       </div>
     </nav>
@@ -342,49 +338,49 @@
       <div class="hero-app">
         <div class="hero-content">
           <div style="width: 40px; height: 2px; background-color: #fff; margin-bottom: 1.5rem;"></div>
-          <h1 class="display-3 fw-bold lh-1 mb-4">Visualizamos<br>tu <span class="accent-text">visión.</span></h1>
-          <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.</p>
+          <h1 class="display-3 fw-bold lh-1 mb-4">We visualize<br>your <span class="accent-text">vision.</span></h1>
+          <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">Professional 3D modeling and photorealistic renders that bring your project to life before building it.</p>
           <div class="grid-buttons">
-            <a href="#visualizacion" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>3D &rarr;</span></a>
-            <a href="#servicios-tecnicos" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>2D &rarr;</span></a>
+            <a href="#visualizacion" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span class="text-center fw-medium">View 3D<br>Packages &rarr;</span></a>
+            <a href="#servicios-tecnicos" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg><span class="text-center fw-medium">View 2D<br>Packages &rarr;</span></a>
           </div>
           <div class="trust-badges">
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg><span>Calidad<br>Garantizada</span></div>
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Entrega<br>Puntual</span></div>
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg><span>Asesoría<br>Personalizada</span></div>
+            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg><span>Guaranteed<br>Quality</span></div>
+            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>On-Time<br>Delivery</span></div>
+            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg><span>Personalized<br>Consulting</span></div>
           </div>
         </div>
       </div>
 
-      <!-- 1. SERVICIOS VIDEOS -->
+      <!-- 1. OUR SERVICES -->
       <section id="servicios-destacados" class="services-section">
         <div class="container px-vw-5">
           <div class="row align-items-end mb-5" data-aos="fade">
             <div class="col-12 col-lg-8">
-              <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">NUESTROS SERVICIOS</span>
-              <h2 class="display-4 fw-bold text-white mb-0">Soluciones visuales para cada etapa de tu proyecto.</h2>
+              <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">OUR SERVICES</span>
+              <h2 class="display-4 fw-bold text-white mb-0">Visual solutions for every stage of your project.</h2>
             </div>
             <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
-              <a href="#visualizacion" class="text-white text-decoration-none small fw-medium d-inline-flex align-items-center gap-1" style="opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">Ver todos los servicios &rarr;</a>
+              <a href="#visualizacion" class="text-white text-decoration-none small fw-medium d-inline-flex align-items-center gap-1" style="opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">View all services &rarr;</a>
             </div>
           </div>
           <div class="services-scroll-container" data-aos="fade-up">
-            <div class="service-card"><video src="vid/servicio-3d.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Visualización 3D</h5><p class="text-secondary small mb-4">Renders fotorrealistas que muestran cada detalle antes de construir.</p></div><a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-2d.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Planos 2D</h5><p class="text-secondary small mb-4">Planos arquitectónicos precisos y listos para construcción.</p></div><a href="#servicios-tecnicos" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-recorrido.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Recorridos Virtuales</h5><p class="text-secondary small mb-4">Experiencias inmersivas que permiten recorrer tu proyecto en 360°.</p></div><a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-cuantificacion.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Cuantificación</h5><p class="text-secondary small mb-4">Cómputos detallados de materiales y presupuestos precisos.</p></div><a href="#cuantificacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-supervision.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Supervisión</h5><p class="text-secondary small mb-4">Control y supervisión profesional para asegurar la calidad del proyecto.</p></div><a href="#contacto" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
+            <div class="service-card"><video src="vid/servicio-3d.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">3D Visualization</h5><p class="text-secondary small mb-4">Photorealistic renders showing every detail before building.</p></div><a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
+            <div class="service-card"><video src="vid/servicio-2d.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">2D Floor Plans</h5><p class="text-secondary small mb-4">Precise architectural plans ready for construction.</p></div><a href="#servicios-tecnicos" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
+            <div class="service-card"><video src="vid/servicio-recorrido.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Virtual Tours</h5><p class="text-secondary small mb-4">Immersive experiences allowing you to walk through your project in 360°.</p></div><a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
+            <div class="service-card"><video src="vid/servicio-cuantificacion.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Quantification</h5><p class="text-secondary small mb-4">Detailed material takeoffs and precise budgets.</p></div><a href="#cuantificacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
+            <div class="service-card"><video src="vid/servicio-supervision.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Supervision</h5><p class="text-secondary small mb-4">Professional control and supervision to ensure project quality.</p></div><a href="#contacto" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
           </div>
         </div>
       </section>
 
-      <!-- 2. SECCIÓN DE PLANOS 2D -->
+      <!-- 2. 2D FLOOR PLANS -->
       <div id="servicios-tecnicos" class="section-planos-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
-            <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PRECISIÓN EN CADA LÍNEA</span>
-            <h2 class="display-4 fw-bold mb-3 text-white">Diseño de Planos 2D</h2>
-            <p class="text-secondary mx-auto" style="max-width: 700px;">Los planos son el manual de instrucciones exacto de tu proyecto. Garantizan la ejecución correcta de la obra, evitan sobrecostos por errores de construcción y son indispensables para cualquier trámite legal o municipal.</p>
+            <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PRECISION IN EVERY LINE</span>
+            <h2 class="display-4 fw-bold mb-3 text-white">2D Floor Plan Design</h2>
+            <p class="text-secondary mx-auto" style="max-width: 700px;">Floor plans are the exact instruction manual for your project. They guarantee correct construction execution, prevent budget overruns from building errors, and are essential for any legal or municipal permit.</p>
           </div>
 
           <div class="features-grid-3">
@@ -393,8 +389,8 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"></path></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">ARQUITECTÓNICOS Y ACOTADOS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Distribución de espacios y medidas exactas para albañilería.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">ARCHITECTURAL & DIMENSIONED</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Space layout and precise masonry dimensions.</p>
               </div>
             </div>
 
@@ -403,8 +399,8 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">INSTALACIONES ELÉCTRICAS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Planos de iluminación, fuerza y cableado estructural.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">ELECTRICAL INSTALLATIONS</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Lighting, power, and structural wiring plans.</p>
               </div>
             </div>
 
@@ -413,8 +409,8 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">OTROS SERVICIOS 2D</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Planos de ubicación, techos y detalles constructivos.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">OTHER 2D SERVICES</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Location plans, roofing, and construction details.</p>
               </div>
             </div>
           </div>
@@ -422,14 +418,14 @@
           <div class="row justify-content-center mt-5">
             <div class="col-12 col-lg-8" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 text-center">
-                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">TARIFA ESTÁNDAR POR PLANO</span>
+                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">STANDARD RATE PER PLAN</span>
                 <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
                   <h1 class="display-3 fw-bold text-white mb-0">$1.50</h1>
                   <span class="accent-text fs-5 fw-medium">USD/m²</span>
                 </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo tipo de plano</strong> a tu elección (ej. Arquitectónico, Acotado, Iluminación, Ubicación, etc.). Contáctanos para cotizar un juego de planos completo.</p>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* This rate applies to <strong>a single type of plan</strong> of your choice (e.g., Architectural, Dimensioned, Lighting, Location, etc.). Contact us for a special quote if you require a full set of plans.</p>
                 <div class="mt-4 pt-2">
-                  <a href="#cotizador-general" class="btn-liquid-glass">↓ Haz tu cálculo y continúa tu proyecto abajo</a>
+                  <a href="#cotizador-general" class="btn-liquid-glass">↓ Calculate your estimate and continue below</a>
                 </div>
               </div>
             </div>
@@ -437,13 +433,13 @@
         </div>
       </div>
 
-      <!-- 3. SECCIÓN DE DISEÑO DE FACHADAS -->
+      <!-- 3. FACADE DESIGN -->
       <div id="fachadas" class="py-vh-5 glass-container-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
-            <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">LA CARA DE TU PROYECTO</span>
-            <h2 class="display-4 fw-bold mb-3 text-white">Diseño de Fachadas</h2>
-            <p class="text-secondary mx-auto" style="max-width: 700px;">Una fachada impresionante es la carta de presentación de tu hogar o negocio. Creamos diseños que combinan estética funcional y los mejores materiales. <strong>En cualquier paquete que elijas, te entregamos 3 propuestas distintas.</strong> Además, si nos envías una foto de tu terreno, podemos montar el diseño digitalmente para que veas cómo lucirá en la vida real.</p>
+            <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">THE FACE OF YOUR PROJECT</span>
+            <h2 class="display-4 fw-bold mb-3 text-white">Facade Design</h2>
+            <p class="text-secondary mx-auto" style="max-width: 700px;">An impressive facade is the presentation card of your home or business. We create designs blending functional aesthetics with top materials. <strong>In any package you choose, we deliver 3 different proposals.</strong> Also, if you send us a photo of your plot, we can digitally mount the design so you can see how it will look in real life.</p>
           </div>
 
           <div class="features-grid-3">
@@ -452,8 +448,8 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">ESTÁNDAR</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Diseño común, funcional y estético. Perfecto para darle vida a tu proyecto con una inversión muy inteligente.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">STANDARD</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Common, functional, and aesthetic design. Perfect to bring your project to life with a smart investment.</p>
               </div>
             </div>
 
@@ -462,8 +458,8 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">PROFESIONAL</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Minimalismo contemporáneo puro. Líneas limpias, texturas modernas y una estética altamente elegante.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">PROFESSIONAL</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Pure contemporary minimalism. Clean lines, modern textures, and highly elegant aesthetics.</p>
               </div>
             </div>
 
@@ -473,7 +469,7 @@
               </div>
               <div>
                 <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">PREMIUM</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Belleza absoluta. El minimalismo contemporáneo llevado a su máxima expresión con acabados exclusivos.</p>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Absolute beauty. Contemporary minimalism brought to its maximum expression with exclusive finishes.</p>
               </div>
             </div>
           </div>
@@ -481,14 +477,14 @@
           <div class="row justify-content-center mt-5">
             <div class="col-12 col-lg-8" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 text-center">
-                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">OPCIÓN HIPERREALISTA</span>
+                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">HYPERREALISTIC OPTION</span>
                 <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
                   <h2 class="display-5 fw-bold text-white mb-0">+$40.00</h2>
                   <span class="accent-text fs-5 fw-medium">USD</span>
                 </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Mejora tu presentación agregando <strong>3 Renders hiperrealistas</strong> de tu fachada elegida para visualizar la iluminación y materiales a la perfección.</p>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Enhance your presentation by adding <strong>3 hyperrealistic renders</strong> of your chosen facade to visualize lighting and materials to perfection.</p>
                 <div class="mt-4 pt-2">
-                  <a href="#calculadora-fachadas" class="btn-liquid-glass">↓ Calcula el precio exacto de tu fachada abajo</a>
+                  <a href="#calculadora-fachadas" class="btn-liquid-glass">↓ Calculate your exact facade price below</a>
                 </div>
               </div>
             </div>
@@ -496,13 +492,13 @@
         </div>
       </div>
 
-      <!-- 4. SECCIÓN DE CUANTIFICACIÓN DE MATERIALES -->
+      <!-- 4. MATERIAL QUANTIFICATION -->
       <div id="cuantificacion" class="py-vh-5 section-planos-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
-            <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PROTEGE TU PRESUPUESTO</span>
-            <h2 class="display-4 fw-bold mb-3 text-white">Cálculo de Materiales</h2>
-            <p class="text-secondary mx-auto" style="max-width: 700px;">¿No sabes cuánto cemento o block comprar? Nosotros lo calculamos por ti. Obtén un listado exacto de los materiales que necesitas para evitar desperdicios, robos o compras innecesarias. Así cuidas cada centavo de tu inversión.</p>
+            <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PROTECT YOUR BUDGET</span>
+            <h2 class="display-4 fw-bold mb-3 text-white">Material Quantification</h2>
+            <p class="text-secondary mx-auto" style="max-width: 700px;">Don't know how much cement or block to buy? We calculate it for you. Get an exact list of the materials you need to avoid waste, theft, or unnecessary purchases. This is how you protect every penny of your investment.</p>
           </div>
 
           <div class="features-grid-3">
@@ -511,8 +507,8 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">OBRA GRIS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Cemento, arena, grava, block y ladrillo.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">GRAY WORK</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Cement, sand, gravel, block, and brick.</p>
               </div>
             </div>
 
@@ -521,8 +517,8 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">HIERRO Y TECHOS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Hierro para construcción, losa y lámina.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">STEEL & ROOFING</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Construction rebar, slab, and metal sheets.</p>
               </div>
             </div>
 
@@ -531,8 +527,8 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">ACABADOS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Piso, repello, puertas, ventanas y pintura.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">FINISHES</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Flooring, rendering, doors, windows, and paint.</p>
               </div>
             </div>
           </div>
@@ -540,28 +536,28 @@
           <div class="row justify-content-center mt-5">
             <div class="col-12 col-lg-8" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 text-center">
-                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">TARIFA DE CUANTIFICACIÓN</span>
+                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">QUANTIFICATION RATE</span>
                 <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
                   <h1 class="display-3 fw-bold text-white mb-0">$1.75</h1>
                   <span class="accent-text fs-5 fw-medium">USD/m²</span>
                 </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo cálculo de material</strong> a tu elección (ej. Obra gris, Acabados, Hierro, etc.). Contáctanos para cotizar el listado completo de tu obra.</p>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* This rate applies to <strong>a single material calculation</strong> of your choice (e.g., Gray Work, Finishes, Steel, etc.). Contact us to quote the complete list for your project.</p>
                 <div class="mt-4 pt-2">
-                  <a href="#cotizador-general" class="btn-liquid-glass">↓ Ir al Cotizador Inteligente</a>
+                  <a href="#cotizador-general" class="btn-liquid-glass">↓ Go to the Smart Calculator</a>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- PAQUETE COMBINADO -->
+          <!-- COMBINED PACKAGE -->
           <div class="row mt-5 justify-content-center" data-aos="fade">
             <div class="col-12 col-lg-8">
               <div class="glass-panel-accent p-5 rounded-5 text-center">
-                <h3 class="fw-lighter text-white">PAQUETE: PLANOS + CUANTIFICACIÓN</h3>
+                <h3 class="fw-lighter text-white">PACKAGE: PLANS + QUANTIFICATION</h3>
                 <h2 class="display-4 fw-bold my-3 accent-text">$3.25 <span class="fs-6 text-light">USD/m²</span></h2>
-                <p class="text-secondary mb-4" style="position: relative; z-index: 10;">* Incluye <strong>un tipo de plano 2D</strong> y <strong>un cálculo de material</strong> a tu elección. Ideal para arrancar tu proyecto con precisión y ahorrar recursos. Aceptamos cualquier tipo de moneda en nuestros pagos.</p>
+                <p class="text-secondary mb-4" style="position: relative; z-index: 10;">* Includes <strong>one 2D plan type</strong> and <strong>one material calculation</strong> of your choice. Ideal to start your project accurately and save resources. We accept any type of currency for our payments.</p>
                 <div style="position: relative; z-index: 10;">
-                  <a href="#cotizador-general" class="btn-liquid-glass">↓ Cotizar paquete combinado</a>
+                  <a href="#cotizador-general" class="btn-liquid-glass">↓ Quote combined package</a>
                 </div>
               </div>
             </div>
@@ -569,72 +565,72 @@
         </div>
       </div>
 
-      <!-- 5. PAQUETES 3D -->
+      <!-- 5. 3D PACKAGES -->
       <div id="visualizacion" class="py-vh-5 glass-container-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
-            <span class="h5 text-secondary fw-lighter">Renderismo y Modelado</span>
-            <h2 class="display-4 fw-bold">Paquetes 3D</h2>
-            <p class="text-secondary">Proyectos residenciales de hasta 300 m² de construcción. (Nota: El servicio incluye estrictamente modelado y renders; contáctanos para enviarnos tus planos o adquiere primero tus planos 2D).</p>
+            <span class="h5 text-secondary fw-lighter">Rendering & Modeling</span>
+            <h2 class="display-4 fw-bold">3D Packages</h2>
+            <p class="text-secondary">Residential projects up to 300 m² of construction. (Note: The service strictly includes modeling and renders; contact us to send your plans or acquire your 2D plans first).</p>
           </div>
           <div class="row gx-4 g-5 align-items-stretch">
             <div class="col-12 col-lg-4" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 h-100">
-                <h3 class="fw-lighter text-center">BÁSICO</h3>
-                <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold">$199 <span class="fs-6 text-secondary">USD</span></h2></div>
+                <h3 class="fw-lighter text-center">BASIC</h3>
+                <p class="text-center text-secondary small">PACKAGE</p>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">UP TO 300 m²</span><h2 class="display-5 fw-bold">$199 <span class="fs-6 text-secondary">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
-                  <li class="mb-2">✓ Modelado 3D profesional</li>
-                  <li class="mb-2">✓ 2 Renders exteriores</li>
-                  <li class="mb-2">✓ Resolución HD</li>
-                  <li class="mb-2">✓ Materiales e iluminación básicos</li>
-                  <li class="mb-2">✓ 1 revisión incluida</li>
+                  <li class="mb-2">✓ Professional 3D modeling</li>
+                  <li class="mb-2">✓ 2 Exterior renders</li>
+                  <li class="mb-2">✓ HD Resolution</li>
+                  <li class="mb-2">✓ Basic materials and lighting</li>
+                  <li class="mb-2">✓ 1 revision included</li>
                 </ul>
-                <div class="text-center"><a href="https://www.paypal.com/ncp/payment/VNATBWUJSX8XA" target="_blank" class="btn btn-outline-light w-100 rounded-pill">Adquirir Básico</a></div>
+                <div class="text-center"><a href="https://www.paypal.com/ncp/payment/VNATBWUJSX8XA" target="_blank" class="btn btn-outline-light w-100 rounded-pill">Get Basic</a></div>
               </div>
             </div>
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="1500">
               <div class="glass-panel-accent p-5 rounded-5 h-100">
-                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MÁS POPULAR</span>
-                <h3 class="fw-lighter text-center mt-3">PROFESIONAL</h3>
-                <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold text-white">$399 <span class="fs-6 text-secondary">USD</span></h2></div>
+                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MOST POPULAR</span>
+                <h3 class="fw-lighter text-center mt-3">PROFESSIONAL</h3>
+                <p class="text-center text-secondary small">PACKAGE</p>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">UP TO 300 m²</span><h2 class="display-5 fw-bold text-white">$399 <span class="fs-6 text-secondary">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
-                  <li class="mb-2">✓ Modelado 3D completo</li>
-                  <li class="mb-2">✓ 5 Renders fotorrealistas</li>
-                  <li class="mb-2">✓ Fachada frontal y posterior</li>
-                  <li class="mb-2">✓ Sala, comedor y cocina</li>
-                  <li class="mb-2">✓ Dormitorio principal</li>
-                  <li class="mb-2">✓ Entrega en alta resolución</li>
-                  <li class="mb-2">✓ 2 revisiones incluidas</li>
+                  <li class="mb-2">✓ Complete 3D modeling</li>
+                  <li class="mb-2">✓ 5 Photorealistic renders</li>
+                  <li class="mb-2">✓ Front and rear facade</li>
+                  <li class="mb-2">✓ Living room, dining room, and kitchen</li>
+                  <li class="mb-2">✓ Master bedroom</li>
+                  <li class="mb-2">✓ High-resolution delivery</li>
+                  <li class="mb-2">✓ 2 revisions included</li>
                 </ul>
-                <div class="text-center" style="position: relative; z-index: 10;"><a href="https://www.paypal.com/ncp/payment/T5GGC93YAXSWG" target="_blank" class="btn w-100 text-black fw-bold rounded-pill" style="background-color: #d4b895;">Adquirir Profesional</a></div>
+                <div class="text-center" style="position: relative; z-index: 10;"><a href="https://www.paypal.com/ncp/payment/T5GGC93YAXSWG" target="_blank" class="btn w-100 text-black fw-bold rounded-pill" style="background-color: #d4b895;">Get Professional</a></div>
               </div>
             </div>
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="2000">
               <div class="glass-panel-vip p-5 rounded-5 h-100">
-                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MÁXIMO NIVEL / VIP</span>
+                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MAXIMUM LEVEL / VIP</span>
                 <h3 class="fw-lighter text-center mt-3 text-white">PREMIUM</h3>
-                <p class="text-center accent-text small fw-medium">EL PAQUETE DEFINITIVO</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold accent-text">$799 <span class="fs-6 text-secondary">USD</span></h2></div>
+                <p class="text-center accent-text small fw-medium">THE ULTIMATE PACKAGE</p>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">UP TO 300 m²</span><h2 class="display-5 fw-bold accent-text">$799 <span class="fs-6 text-secondary">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-light mb-5" style="opacity: 0.9;">
-                  <li class="mb-2">✓ Modelado 3D completo</li>
-                  <li class="mb-2">✓ 5 Renders ultra realistas</li>
-                  <li class="mb-2">✓ Video recorrido arquitectónico</li>
-                  <li class="mb-2">✓ Plano amueblado</li>
-                  <li class="mb-2">✓ Iluminación avanzada</li>
-                  <li class="mb-2">✓ Diseño de paisaje conceptual</li>
-                  <li class="mb-2">✓ Resolución 4K</li>
-                  <li class="mb-2">✓ 3 revisiones incluidas</li>
+                  <li class="mb-2">✓ Complete 3D modeling</li>
+                  <li class="mb-2">✓ 5 Ultra-realistic renders</li>
+                  <li class="mb-2">✓ Architectural walkthrough video</li>
+                  <li class="mb-2">✓ Furnished floor plan</li>
+                  <li class="mb-2">✓ Advanced lighting</li>
+                  <li class="mb-2">✓ Conceptual landscaping design</li>
+                  <li class="mb-2">✓ 4K Resolution</li>
+                  <li class="mb-2">✓ 3 revisions included</li>
                 </ul>
-                <div class="text-center" style="position: relative; z-index: 10;"><a href="https://www.paypal.com/ncp/payment/H657UM6NM3LHY" target="_blank" class="btn w-100 text-black fw-bold rounded-pill shadow" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); transition: transform 0.3s ease;">Adquirir Premium VIP</a></div>
+                <div class="text-center" style="position: relative; z-index: 10;"><a href="https://www.paypal.com/ncp/payment/H657UM6NM3LHY" target="_blank" class="btn w-100 text-black fw-bold rounded-pill shadow" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); transition: transform 0.3s ease;">Get Premium VIP</a></div>
               </div>
             </div>
           </div>
         </div> 
       </div>
 
-      <!-- 6. COTIZADOR GENERAL (TERRENOS) -->
+      <!-- 6. SMART CALCULATOR (LAND) -->
       <section id="cotizador-general" style="scroll-margin-top: 100px;">
         <div class="container mt-5 pt-4 mb-5" data-aos="fade-up">
           <div class="row justify-content-center">
@@ -642,19 +638,19 @@
               <div class="calc-pro-container p-4 p-lg-5">
                 <div class="row g-5 align-items-center">
                   <div class="col-12 col-lg-5 text-center d-flex flex-column justify-content-center">
-                    <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">COTIZADOR INTELIGENTE</span>
-                    <h3 class="fw-bold text-white mb-3 px-2" style="font-size: 1.8rem; line-height: 1.2;">¿Tu terreno supera los 300 m²?</h3>
-                    <p class="text-secondary small mb-4 px-3">Selecciona el servicio e ingresa tus medidas exactas para cotizar el excedente o tus planos 2D y cuantificaciones. Aceptamos cualquier tipo de moneda.</p>
+                    <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">SMART CALCULATOR</span>
+                    <h3 class="fw-bold text-white mb-3 px-2" style="font-size: 1.8rem; line-height: 1.2;">Does your plot exceed 300 m²?</h3>
+                    <p class="text-secondary small mb-4 px-3">Select the service and enter your exact measurements to quote the surplus, 2D plans, or quantifications. We accept any type of currency.</p>
                     <div class="text-center px-2">
-                      <span class="small text-secondary d-block mb-1">Seleccionar Servicio</span>
+                      <span class="small text-secondary d-block mb-1">Select Service</span>
                       <div class="calc-input-group-pro text-start mx-auto" style="max-width: 100%;">
                         <select id="calcServicioSelect" class="calc-select-field w-100">
-                          <option value="basico">Paquete 3D Básico ($199 base)</option>
-                          <option value="profesional">Paquete 3D Profesional ($399 base)</option>
-                          <option value="premium">Paquete 3D Premium ($799 base)</option>
-                          <option value="planos">Planos 2D ($1.50 / m²)</option>
-                          <option value="cuantificacion">Cuant. de Materiales ($1.75 / m²)</option>
-                          <option value="completo">Planos + Cuantificación ($3.25 / m²)</option>
+                          <option value="basico">3D Basic Package ($199 base)</option>
+                          <option value="profesional">3D Professional Package ($399 base)</option>
+                          <option value="premium">3D Premium Package ($799 base)</option>
+                          <option value="planos">2D Plans ($1.50 / m²)</option>
+                          <option value="cuantificacion">Material Quantification ($1.75 / m²)</option>
+                          <option value="completo">Plans + Quantification ($3.25 / m²)</option>
                         </select>
                       </div>
                     </div>
@@ -663,33 +659,33 @@
                     <div class="row g-4">
                       <div class="col-12 col-md-6 d-flex flex-column gap-3">
                         <div>
-                          <span class="small text-secondary d-block mb-1">Ancho del terreno (m)</span>
+                          <span class="small text-secondary d-block mb-1">Plot Width (m)</span>
                           <div class="calc-input-group-pro">
                             <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 12h20M2 7h20M2 17h20"></path></svg>
-                            <input type="number" id="calcAncho" class="calc-input-field" placeholder="Ej. 10" min="0" step="any">
+                            <input type="number" id="calcAncho" class="calc-input-field" placeholder="Ex. 10" min="0" step="any">
                             <span class="text-secondary small ms-2">m</span>
                           </div>
                         </div>
                         <div class="text-center text-secondary my-n3 d-none d-md-block"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
                         <div>
-                          <span class="small text-secondary d-block mb-1">Largo del terreno (m)</span>
+                          <span class="small text-secondary d-block mb-1">Plot Length (m)</span>
                           <div class="calc-input-group-pro">
                             <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2v20M7 2h10M7 22h10"></path></svg>
-                            <input type="number" id="calcLargo" class="calc-input-field" placeholder="Ej. 20" min="0" step="any">
+                            <input type="number" id="calcLargo" class="calc-input-field" placeholder="Ex. 20" min="0" step="any">
                             <span class="text-secondary small ms-2">m</span>
                           </div>
                         </div>
                       </div>
                       <div class="col-12 col-md-6 d-flex flex-column gap-3">
                         <div class="calc-result-display-box flex-fill d-flex flex-column justify-content-center">
-                          <span class="small text-secondary d-block mb-1">Área Total</span>
+                          <span class="small text-secondary d-block mb-1">Total Area</span>
                           <div class="d-flex align-items-baseline">
                             <h2 class="fw-bold text-white mb-0" id="calcTotal" style="font-size: 1.8rem;">0.00</h2>
                             <span class="ms-1 text-secondary small">m²</span>
                           </div>
                         </div>
                         <div class="calc-result-display-box flex-fill d-flex flex-column justify-content-center" style="background: rgba(212, 184, 149, 0.05); border-color: rgba(212, 184, 149, 0.3);">
-                          <span class="accent-text small d-block mb-1" id="labelCostoFinal">Tu Inversión</span>
+                          <span class="accent-text small d-block mb-1" id="labelCostoFinal">Your Investment</span>
                           <div class="d-flex align-items-baseline">
                             <h2 class="fw-bold accent-text mb-0" id="calcPrecioFinal" style="font-size: 1.8rem;">$0.00</h2>
                             <span class="ms-1 accent-text small">USD</span>
@@ -699,11 +695,11 @@
                     </div>
                     <div id="wrapperBtnCotizar" class="mt-4" style="display: none;">
                       <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
-                        CONTINUAR CON MI PROYECTO
+                        CONTINUE WITH MY PROJECT
                       </a>
                     </div>
                     <div id="avisoPagoDirecto" class="mt-3 text-secondary small text-center text-lg-start" style="opacity: 0.8;">
-                      * Tu terreno es de 300 m² o menos. Puedes adquirir tu paquete 3D directamente arriba con nuestros botones de pago seguro (aceptamos cualquier moneda).
+                      * Your plot is 300 m² or less. You can purchase your 3D package directly above using our secure payment buttons (we accept any currency).
                     </div>
                   </div>
                 </div>
@@ -713,29 +709,29 @@
         </div>
       </section>
 
-      <!-- 7. CALCULADORA DE FACHADAS -->
+      <!-- 7. FACADE CALCULATOR -->
       <section id="calculadora-fachadas" class="facade-calc-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
-            <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">CALCULADORA DE FACHADA</span>
-            <h2 class="display-4 fw-bold text-white mb-3">Calcula el precio de tu fachada</h2>
-            <p class="text-secondary mx-auto" style="max-width: 600px;">Ingresa las medidas y características de tu proyecto y obtén tu precio estimado al instante.</p>
+            <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">FACADE CALCULATOR</span>
+            <h2 class="display-4 fw-bold text-white mb-3">Calculate your facade price</h2>
+            <p class="text-secondary mx-auto" style="max-width: 600px;">Enter your project's measurements and features to get an instant estimated price.</p>
           </div>
 
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
             <div class="row g-4 g-lg-5 align-items-start">
               
-              <!-- PANEL IZQUIERDO: CONTROLES -->
+              <!-- LEFT PANEL: CONTROLS -->
               <div class="col-12 col-lg-6"> 
                 <div class="facade-box-panel d-flex flex-column gap-4">
                   
-                  <!-- Ancho -->
+                  <!-- Width -->
                   <div class="facade-row">
                     <div class="d-flex align-items-center gap-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M5 12h14"></path></svg>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Ancho de la fachada</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Medida total en metros</span>
+                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Facade Width</h6>
+                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Total measurement in meters</span>
                       </div>
                     </div>
                     <div class="facade-input-wrap">
@@ -744,13 +740,13 @@
                     </div>
                   </div>
 
-                  <!-- Altura -->
+                  <!-- Height -->
                   <div class="facade-row">
                     <div class="d-flex align-items-center gap-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M15 8l-3-3-3 3M15 16l-3 3-3-3M12 5v14"></path></svg>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Altura total</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Medida total en metros</span>
+                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Total Height</h6>
+                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Total measurement in meters</span>
                       </div>
                     </div>
                     <div class="facade-input-wrap">
@@ -759,49 +755,49 @@
                     </div>
                   </div>
 
-                  <!-- Niveles -->
+                  <!-- Levels -->
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M4 12h16M12 4v16"></path></svg>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Cantidad de niveles</h6>
+                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Number of Levels</h6>
                       </div>
                     </div>
                     <div class="facade-radio-group">
-                      <input type="radio" id="niv1" name="f-niveles" value="1"><label class="facade-radio-label" for="niv1">1 Nivel</label>
-                      <input type="radio" id="niv2" name="f-niveles" value="2" checked><label class="facade-radio-label" for="niv2">2 Niveles</label>
-                      <input type="radio" id="niv3" name="f-niveles" value="3"><label class="facade-radio-label" for="niv3">3 Niveles</label>
-                      <input type="radio" id="niv4" name="f-niveles" value="4"><label class="facade-radio-label" for="niv4">4+ Niveles</label>
+                      <input type="radio" id="niv1" name="f-niveles" value="1"><label class="facade-radio-label" for="niv1">1 Level</label>
+                      <input type="radio" id="niv2" name="f-niveles" value="2" checked><label class="facade-radio-label" for="niv2">2 Levels</label>
+                      <input type="radio" id="niv3" name="f-niveles" value="3"><label class="facade-radio-label" for="niv3">3 Levels</label>
+                      <input type="radio" id="niv4" name="f-niveles" value="4"><label class="facade-radio-label" for="niv4">4+ Levels</label>
                     </div>
                   </div>
 
-                  <!-- Tipo -->
+                  <!-- Project Type -->
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Tipo de proyecto</h6>
+                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Project Type</h6>
                       </div>
                     </div>
                     <div class="facade-radio-group">
-                      <input type="radio" id="tipo1" name="f-tipo" value="Vivienda" checked><label class="facade-radio-label" for="tipo1">Vivienda</label>
-                      <input type="radio" id="tipo2" name="f-tipo" value="Comercio"><label class="facade-radio-label" for="tipo2">Comercio</label>
-                      <input type="radio" id="tipo3" name="f-tipo" value="Edificio"><label class="facade-radio-label" for="tipo3">Edificio</label>
+                      <input type="radio" id="tipo1" name="f-tipo" value="Residential" checked><label class="facade-radio-label" for="tipo1">Residential</label>
+                      <input type="radio" id="tipo2" name="f-tipo" value="Commercial"><label class="facade-radio-label" for="tipo2">Commercial</label>
+                      <input type="radio" id="tipo3" name="f-tipo" value="Building"><label class="facade-radio-label" for="tipo3">Building</label>
                     </div>
                   </div>
 
-                  <!-- Complejidad -->
+                  <!-- Complexity -->
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Nivel de complejidad</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Elige el nivel de detalle del diseño</span>
+                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Complexity Level</h6>
+                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Choose design detail level</span>
                       </div>
                     </div>
                     <div class="facade-radio-group">
-                      <input type="radio" id="comp1" name="f-complejidad" value="1.0" data-label="Estándar"><label class="facade-radio-label" for="comp1"><span class="d-block">Estándar</span><span class="d-block mt-1" style="font-size: 0.65rem; opacity: 0.6;">1.00x</span></label>
-                      <input type="radio" id="comp2" name="f-complejidad" value="1.3" data-label="Profesional" checked><label class="facade-radio-label" for="comp2"><span class="d-block">Profesional</span><span class="d-block mt-1" style="font-size: 0.65rem; opacity: 0.6;">1.30x</span></label>
+                      <input type="radio" id="comp1" name="f-complejidad" value="1.0" data-label="Standard"><label class="facade-radio-label" for="comp1"><span class="d-block">Standard</span><span class="d-block mt-1" style="font-size: 0.65rem; opacity: 0.6;">1.00x</span></label>
+                      <input type="radio" id="comp2" name="f-complejidad" value="1.3" data-label="Professional" checked><label class="facade-radio-label" for="comp2"><span class="d-block">Professional</span><span class="d-block mt-1" style="font-size: 0.65rem; opacity: 0.6;">1.30x</span></label>
                       <input type="radio" id="comp3" name="f-complejidad" value="1.6" data-label="Premium"><label class="facade-radio-label" for="comp3"><span class="d-block">Premium</span><span class="d-block mt-1" style="font-size: 0.65rem; opacity: 0.6;">1.60x</span></label>
                     </div>
                   </div>
@@ -811,8 +807,8 @@
                     <div class="d-flex align-items-center gap-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Incluir 3 Renders fotorealistas</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">(Opcional) Visualización de alta calidad</span>
+                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Include 3 Photorealistic Renders</h6>
+                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">(Optional) High quality visualization</span>
                       </div>
                     </div>
                     <div class="d-flex align-items-center gap-3">
@@ -827,91 +823,91 @@
                 </div>
               </div>
 
-              <!-- PANEL DERECHO: RESULTADOS Y LISTA DE INCLUSIONES -->
+              <!-- RIGHT PANEL: RESULTS & INCLUSIONS -->
               <div class="col-12 col-lg-6">
                 <div class="facade-results-panel d-flex flex-column h-100">
                   <div class="d-flex justify-content-center mb-5">
-                    <h6 class="accent-text mb-0" style="letter-spacing: 1px;">TU ESTIMACIÓN</h6>
+                    <h6 class="accent-text mb-0" style="letter-spacing: 1px;">YOUR ESTIMATE</h6>
                   </div>
 
-                  <!-- DESGLOSE MATEMÁTICO -->
+                  <!-- BREAKDOWN -->
                   <div class="mt-2">
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                      <span class="text-secondary" style="font-size: 0.85rem;">Área de fachada</span>
+                      <span class="text-secondary" style="font-size: 0.85rem;">Facade Area</span>
                       <span class="text-white text-end fw-medium" id="f-area-text" style="font-size: 0.9rem;">0.00 m²</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                      <span class="text-secondary" style="font-size: 0.85rem;">Precio base (1.50 USD/m²)</span>
+                      <span class="text-secondary" style="font-size: 0.85rem;">Base Price (1.50 USD/m²)</span>
                       <span class="text-white text-end fw-medium" id="f-base-text" style="font-size: 0.9rem;">$0.00</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                      <span class="text-secondary" id="f-complex-label" style="font-size: 0.85rem;">Nivel de complejidad</span>
+                      <span class="text-secondary" id="f-complex-label" style="font-size: 0.85rem;">Complexity Level</span>
                       <span class="text-white text-end fw-medium" id="f-complex-text" style="font-size: 0.9rem;">1.00x</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important;">
-                      <span class="text-secondary" style="font-size: 0.85rem;">Subtotal Diseño</span>
+                      <span class="text-secondary" style="font-size: 0.85rem;">Design Subtotal</span>
                       <span class="text-white fw-medium text-end" id="f-subtotal-text" style="font-size: 0.9rem;">$0.00</span>
                     </div>
                     
-                    <!-- Fila Dinámica Niveles Extra -->
+                    <!-- Dynamic Extra Levels Row -->
                     <div id="row-niveles-extra" class="d-flex justify-content-between align-items-center mb-4 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important; display: none !important;">
-                      <span class="text-secondary" id="f-niveles-label" style="font-size: 0.85rem;">Cargo por Niveles Adicionales</span>
+                      <span class="text-secondary" id="f-niveles-label" style="font-size: 0.85rem;">Additional Levels Charge</span>
                       <span class="text-white fw-medium text-end" id="f-niveles-costo" style="font-size: 0.9rem;">+$0.00</span>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-5 pb-2 w-100">
-                      <span class="text-secondary" style="font-size: 0.85rem;">3 Renders fotorealistas</span>
+                      <span class="text-secondary" style="font-size: 0.85rem;">3 Photorealistic Renders</span>
                       <span class="text-white fw-medium text-end" id="f-render-text" style="font-size: 0.9rem;">$0.00</span>
                     </div>
 
                     <!-- TOTAL -->
                     <div class="text-center mt-4">
-                      <span class="accent-text fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">TOTAL ESTIMADO</span>
+                      <span class="accent-text fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">ESTIMATED TOTAL</span>
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
                         <h1 class="fw-bold text-white mb-0" id="f-total" style="font-size: 3rem;">$0.00</h1>
                         <span class="text-secondary" style="font-size: 0.9rem;">USD</span>
                       </div>
-                      <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión</span>
+                      <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Estimated price subject to review</span>
                     </div>
                     
-                    <!-- BOTÓN DINÁMICO -->
+                    <!-- DYNAMIC BUTTON -->
                     <button id="btnFachadaAccion" type="button" class="btn w-100 text-white fw-bold py-3 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s; font-size: 1.1rem;">
-                      CALCULAR PRECIO
+                      CALCULATE PRICE
                     </button>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
                       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                      Tus datos están protegidos y son confidenciales
+                      Your data is protected and confidential
                     </div>
                   </div>
 
-                  <!-- QUÉ INCLUYE EL DISEÑO (Con bastante espacio) -->
+                  <!-- WHAT THE DESIGN INCLUDES -->
                   <div class="mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
-                    <h6 class="text-white mb-4 fw-bold" style="font-size: 0.9rem;">¿Qué incluye el diseño?</h6>
+                    <h6 class="text-white mb-4 fw-bold" style="font-size: 0.9rem;">What does the design include?</h6>
                     <ul class="list-unstyled text-secondary m-0" style="font-size: 0.8rem;">
                       <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
-                        Propuesta arquitectónica moderna y personalizada.
+                        Modern and customized architectural proposal.
                       </li>
                       <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
-                        Selección de materiales y acabados.
+                        Selection of materials and finishes.
                       </li>
                       <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
-                        Diseño de puertas, ventanas y balcones.
+                        Design of doors, windows, and balconies.
                       </li>
                       <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
-                        Iluminación arquitectónica.
+                        Architectural lighting.
                       </li>
                       <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
-                        Fachadas listas para integrarse a tus planos.
+                        Facades ready to integrate into your plans.
                       </li>
                       <li class="d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
-                        Una ronda de ajustes menores.
+                        One round of minor adjustments.
                       </li>
                     </ul>
                   </div>
@@ -934,7 +930,7 @@
             <a href="index.html">
               <img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;" class="mb-3">
             </a>
-            <p class="small">Precisión en cada línea, valor en cada detalle.</p>
+            <p class="small">Precision in every line, value in every detail.</p>
             
             <div class="d-flex justify-content-center justify-content-lg-start mt-4">
               <a href="https://www.facebook.com/evolutiondesing.gt" target="_blank" class="text-secondary text-decoration-none" aria-label="Facebook" style="margin-right: 25px;">
@@ -948,7 +944,7 @@
           
           <div class="col-12 col-lg-7 mt-5 mt-lg-0">
             <div class="d-flex flex-column align-items-center align-items-lg-start" style="max-width: 300px; margin: 0 auto;">
-              <span class="h6 text-white mb-3 d-block text-center text-lg-start w-100">Contacto Directo</span>
+              <span class="h6 text-white mb-3 d-block text-center text-lg-start w-100">Direct Contact</span>
               <ul class="nav flex-column align-items-center align-items-lg-start">
                 <li class="nav-item mb-2 d-flex align-items-center">
                   <svg width="16" height="16" fill="currentColor" class="me-2 text-white" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm8.239-4.133L9.197 8.243 15 11.801V4.697z"/></svg>
@@ -964,40 +960,37 @@
         </div>
       </div>
       <div class="container text-center small py-vh-2 mt-4 border-top text-secondary" style="border-color: #111 !important;">
-        © 2026 Evolution Design. Todos los derechos reservados.
+        © 2026 Evolution Design. All rights reserved.
       </div>
     </footer>
 
-    <!-- BOTONES FLOTANTES ESQUINA DERECHA (Contacto) -->
+    <!-- FLOATING BUTTONS RIGHT (Contact) -->
     <div style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px;">
-      <a href="https://wa.me/18329774150?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #25d366';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.1)'; this.style.color='#25d366'; this.style.border='1px solid rgba(37, 211, 102, 0.4);'">
+      <a href="https://wa.me/18329774150?text=Hello,%20I%20would%20like%20to%20quote%20a%20project" target="_blank" aria-label="Write to us on WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #25d366';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.1)'; this.style.color='#25d366'; this.style.border='1px solid rgba(37, 211, 102, 0.4);'">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
       </a>
-      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Escríbenos por Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);'">
+      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Write to us on Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);'">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
       </a>
     </div>
 
-    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma Actualizado con Árabe, Chino y Japonés) -->
+    <!-- LANGUAGE SELECTOR LEFT -->
     <div class="lang-float-container" id="langContainer">
       <ul class="lang-float-menu" id="langMenu">
         <li><a class="lang-item" href="index.html"><span class="badge bg-secondary me-2">ES</span> Español</a></li>
-        <li><a class="lang-item" href="index-en.html"><span class="badge bg-secondary me-2">EN</span> English</a></li>
+        <li><a class="lang-item active" href="index-en.html"><span class="badge bg-secondary me-2">EN</span> English</a></li>
         <li><a class="lang-item" href="index-pt.html"><span class="badge bg-secondary me-2">PT</span> Português</a></li>
         <li><a class="lang-item" href="index-ar.html"><span class="badge bg-secondary me-2">AR</span> العربية (قطر)</a></li>
         <li><a class="lang-item" href="index-zh.html"><span class="badge bg-secondary me-2">ZH</span> 中文</a></li>
         <li><a class="lang-item" href="index-ja.html"><span class="badge bg-secondary me-2">JA</span> 日本語</a></li>
       </ul>
-      <button class="lang-float-btn" id="langBtn" aria-label="Cambiar Idioma">
+      <button class="lang-float-btn" id="langBtn" aria-label="Change Language">
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
       </button>
     </div>
 
-    <!-- LÓGICA INTELIGENTE -->
+    <!-- SMART LOGIC -->
     <script>
-      // ==========================================
-      // SELECTOR DE IDIOMA
-      // ==========================================
       const langBtn = document.getElementById('langBtn');
       const langMenu = document.getElementById('langMenu');
       const langContainer = document.getElementById('langContainer');
@@ -1016,9 +1009,6 @@
 
       document.addEventListener('DOMContentLoaded', function() {
         
-        // ==========================================
-        // 1. COTIZADOR GENERAL DE TERRENOS
-        // ==========================================
         const servicioSelect = document.getElementById('calcServicioSelect');
         const anchoInput = document.getElementById('calcAncho');
         const largoInput = document.getElementById('calcLargo');
@@ -1037,7 +1027,7 @@
           const servicioVal = servicioSelect.value;
 
           if (areaTotal > 0) {
-            totalDisplay.textContent = areaTotal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            totalDisplay.textContent = areaTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             
             let precioFinal = 0;
             let esServicio3D = (servicioVal === 'basico' || servicioVal === 'profesional' || servicioVal === 'premium');
@@ -1055,14 +1045,14 @@
               if (areaTotal > 300) { base += (areaTotal - 300) * 3.00; }
               precioFinal = base;
             } else if (servicioVal === 'planos') {
-              precioFinal = areaTotal * 1.50; // $1.50 por plano
+              precioFinal = areaTotal * 1.50;
             } else if (servicioVal === 'cuantificacion') {
-              precioFinal = areaTotal * 1.75; // $1.75 por cuantificación
+              precioFinal = areaTotal * 1.75;
             } else if (servicioVal === 'completo') {
-              precioFinal = areaTotal * 3.25; // 1.50 + 1.75
+              precioFinal = areaTotal * 3.25;
             }
 
-            const precioFormateado = `$${precioFinal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            const precioFormateado = `$${precioFinal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
             precioFinalDisplay.textContent = precioFormateado;
 
             if (esServicio3D && areaTotal <= 300) {
@@ -1073,7 +1063,7 @@
               avisoPagoDirecto.style.display = 'none';
             }
 
-            const mensaje = encodeURIComponent(`Hola. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: ${precioFormateado} USD.\nMe gustaría continuar con mi proyecto. (Aceptamos cualquier tipo de moneda).`);
+            const mensaje = encodeURIComponent(`Hello. I am interested in the service: ${servicioNombre}.\nDimensions: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nEstimated cost: ${precioFormateado} USD.\nI would like to proceed with my project. (We accept any type of currency).`);
             btnEnviarCotizacion.href = `https://wa.me/18329774150?text=${mensaje}`;
           } else {
             totalDisplay.textContent = "0.00";
@@ -1089,9 +1079,6 @@
           servicioSelect.addEventListener('change', actualizarCotizacionTerreno);
         }
 
-        // ==========================================
-        // 2. CALCULADORA INTELIGENTE DE FACHADAS
-        // ==========================================
         const fAncho = document.getElementById('f-ancho');
         const fAltura = document.getElementById('f-altura');
         
@@ -1129,42 +1116,32 @@
           
           const renderOn = fRenderToggle.checked;
 
-          // Cálculos base
           const area = ancho * altura;
-          const precioBase = area * 1.50; // USD $1.50 por m2
+          const precioBase = area * 1.50;
           
-          // Lógica de costo por niveles adicionales
           let costoNiveles = 0;
           let labelNiveles = "";
           if (nivelesTexto === "3") {
             costoNiveles = 25.00;
-            labelNiveles = "Cargo por 3 Niveles";
+            labelNiveles = "Charge for 3 Levels";
           } else if (nivelesTexto === "4") {
             costoNiveles = 30.00;
-            labelNiveles = "Cargo por 4+ Niveles";
+            labelNiveles = "Charge for 4+ Levels";
           }
           
-          // Subtotal con multiplicador de complejidad
           let subtotal = precioBase * complejidad;
-          
-          // Mínimo garantizado de $80 (aplicado al subtotal del diseño)
           if (subtotal < 80) {
             subtotal = 80;
           }
 
-          // Render 3D ($40.00)
           const costoRender = renderOn ? 40.00 : 0.00;
-          
-          // Total Estimado
           const totalFinal = subtotal + costoNiveles + costoRender;
 
-          // Actualizar Textos HTML
           fAreaText.textContent = area.toFixed(2) + ' m²';
           fBaseText.textContent = '$' + precioBase.toFixed(2);
-          fComplexLabel.textContent = `Nivel de complejidad (${complejidadTexto} ${complejidad.toFixed(2)}x)`;
+          fComplexLabel.textContent = `Complexity level (${complejidadTexto} ${complejidad.toFixed(2)}x)`;
           fSubtotalText.textContent = '$' + subtotal.toFixed(2);
           
-          // Fila dinámica para niveles extra
           const rowNivelesExtra = document.getElementById('row-niveles-extra');
           const fNivelesLabelUI = document.getElementById('f-niveles-label');
           const fNivelesCostoUI = document.getElementById('f-niveles-costo');
@@ -1180,17 +1157,14 @@
           fRenderText.textContent = '$' + costoRender.toFixed(2);
           fTotal.textContent = '$' + totalFinal.toFixed(2);
 
-          // Armar Mensaje de WhatsApp dinámico
-          let articulo = tipoTexto === "vivienda" ? "una" : "un";
-          let pluralNiveles = nivelesTexto === "1" ? "1 nivel" : nivelesTexto + " niveles";
-          let textoRender = renderOn ? "con 3 Renders fotorealistas" : "sin Renders";
+          let pluralNiveles = nivelesTexto === "1" ? "1 level" : nivelesTexto + " levels";
+          let textoRender = renderOn ? "with 3 photorealistic renders" : "without renders";
 
-          const waMessage = encodeURIComponent(`Hola. Acabo de utilizar la calculadora de fachadas en su sitio web. Mi proyecto tiene un área aproximada de ${area.toFixed(2)} m², es ${articulo} ${tipoTexto} de ${pluralNiveles}, seleccioné el paquete ${complejidadTexto} ${textoRender}. El precio estimado fue de USD $${totalFinal.toFixed(2)}. Me gustaría continuar con mi proyecto.`);
+          const waMessage = encodeURIComponent(`Hello. I just used the facade calculator on your website. My project has an approximate area of ${area.toFixed(2)} m², it is ${tipoTexto} with ${pluralNiveles}, and I selected the ${complejidadTexto} package ${textoRender}. The estimated price was USD $${totalFinal.toFixed(2)}. I would like to proceed with my project.`);
           
           urlWhatsAppFachada = `https://wa.me/18329774150?text=${waMessage}`;
         }
 
-        // Función para cambiar el estado del botón tras la primera interacción
         function registrarInteraccion() {
           actualizarCalculadoraFachada();
           if (!calculoFachadaInteractuado) {
@@ -1199,11 +1173,10 @@
             btnFachadaAccion.style.borderColor = '#d4b895';
             btnFachadaAccion.classList.remove('text-white');
             btnFachadaAccion.classList.add('text-black');
-            btnFachadaAccion.innerHTML = `CONTINUAR CON MI PROYECTO`;
+            btnFachadaAccion.innerHTML = `CONTINUE WITH MY PROJECT`;
           }
         }
 
-        // Lógica del botón principal
         if (btnFachadaAccion) {
           btnFachadaAccion.addEventListener('click', function(e) {
             if (!calculoFachadaInteractuado) {
@@ -1215,7 +1188,6 @@
           });
         }
 
-        // Escuchar cambios en los inputs para auto-calcular
         if(fAncho && fAltura) {
           fAncho.addEventListener('input', registrarInteraccion);
           fAltura.addEventListener('input', registrarInteraccion);
@@ -1224,7 +1196,6 @@
           fRadiosTipo.forEach(radio => radio.addEventListener('change', registrarInteraccion));
           fRadiosNiveles.forEach(radio => radio.addEventListener('change', registrarInteraccion));
           
-          // Ejecutar matemáticas silentes al cargar la web
           actualizarCalculadoraFachada();
         }
 
