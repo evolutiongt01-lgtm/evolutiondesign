@@ -116,6 +116,9 @@
         background-color: #fff;
         border-radius: 2px;
       }
+      .lang-btn:hover {
+        opacity: 1 !important;
+      }
 
       /* =========================================
          NAVEGACIÓN MÓVIL TIPO APP
@@ -236,7 +239,20 @@
           margin-left: 5vw;
         }
       }
-      
+
+      .btn-pill-outline {
+        border: 1px solid #444;
+        border-radius: 50px;
+        color: #fff;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        margin-bottom: 3rem;
+      }
       .accent-text { color: #d4b895; }
       
       .grid-buttons {
@@ -445,7 +461,7 @@
       }
 
       /* =========================================
-         DISEÑO PRO COTIZADOR INTELIGENTE (ANCHURA AJUSTADA)
+         DISEÑO PRO COTIZADOR INTELIGENTE
          ========================================= */
       .calc-pro-container {
         position: relative;
@@ -531,10 +547,26 @@
       <div class="container px-0">
         <div class="nav-pill">
           
-          <!-- LOGO (IZQUIERDA) -->
-          <a href="index.html" class="d-flex align-items-center">
-            <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
-          </a>
+          <!-- LADO IZQUIERDO: Logo + Idioma -->
+          <div class="d-flex align-items-center gap-4">
+            <!-- LOGO -->
+            <a href="index.html" class="d-flex align-items-center">
+              <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
+            </a>
+
+            <!-- SELECTOR DE IDIOMA -->
+            <div class="dropdown">
+              <button class="btn btn-link text-white text-decoration-none dropdown-toggle p-0 d-flex align-items-center gap-1 lang-btn" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.85rem; opacity: 0.7; box-shadow: none; transition: opacity 0.3s;">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                ES
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark shadow border-0" aria-labelledby="languageDropdown" style="background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(20px); border-radius: 12px; min-width: 140px; margin-top: 10px;">
+                <li><a class="dropdown-item active d-flex align-items-center gap-2" href="#" style="font-size: 0.85rem;"><span style="font-size: 1.1rem;">🇪🇸</span> Español</a></li>
+                <li><a class="dropdown-item d-flex align-items-center gap-2" href="#" style="font-size: 0.85rem;"><span style="font-size: 1.1rem;">🇺🇸</span> English</a></li>
+                <li><a class="dropdown-item d-flex align-items-center gap-2" href="#" style="font-size: 0.85rem;"><span style="font-size: 1.1rem;">🇧🇷</span> Português</a></li>
+              </ul>
+            </div>
+          </div>
 
           <!-- ENLACES (CENTRO) -->
           <div class="nav-pill-links d-none d-xl-flex">
