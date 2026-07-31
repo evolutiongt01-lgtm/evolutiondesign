@@ -262,29 +262,19 @@
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
       /* =========================================
-         SELECTOR DE MONEDA Y IDIOMA
+         SELECTORES FLOTANTES (Moneda e Idioma)
          ========================================= */
-      .lang-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; display: flex; gap: 10px; align-items: center; }
-      .lang-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2) !important; background-color: rgba(255, 255, 255, 0.05) !important; color: #fff !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
-      .lang-float-btn:hover { transform: scale(1.1); background-color: rgba(255, 255, 255, 0.15) !important; }
-      .lang-float-menu { display: none; flex-direction: column; position: absolute; bottom: 65px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 175px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; list-style: none !important; }
-      .lang-float-menu li { list-style: none !important; }
-      .lang-float-menu.show { display: flex; animation: popUp 0.3s ease; }
-      @keyframes popUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-      .lang-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
-      .lang-item:hover, .lang-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
-      
-      /* SELECTOR DE MONEDA FLOTANTE */
+      .currency-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
       .currency-selector-wrap {
         background: rgba(15, 15, 15, 0.85);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
         border: 1px solid rgba(212, 184, 149, 0.3);
         border-radius: 30px;
-        padding: 0.3rem 0.8rem;
+        padding: 0.4rem 1rem;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.4);
       }
       .currency-selector-wrap select {
@@ -300,6 +290,16 @@
         background: #111;
         color: #fff;
       }
+
+      .lang-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+      .lang-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2) !important; background-color: rgba(255, 255, 255, 0.05) !important; color: #fff !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
+      .lang-float-btn:hover { transform: scale(1.1); background-color: rgba(255, 255, 255, 0.15) !important; }
+      .lang-float-menu { display: none; flex-direction: column; position: absolute; bottom: 60px; right: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 175px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; list-style: none !important; }
+      .lang-float-menu li { list-style: none !important; }
+      .lang-float-menu.show { display: flex; animation: popUp 0.3s ease; }
+      @keyframes popUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      .lang-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+      .lang-item:hover, .lang-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
     </style>
   </head>
 
@@ -601,7 +601,7 @@
                   <h1 class="display-3 fw-bold text-white mb-0"><span class="price-val" data-usd="1.75">1.75</span></h1>
                   <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span>/m²</span>
                 </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo cálculo de material</strong> a tu elección (ej. Obra gris, Acabados, Hierro, etc.). Contáctanos para cotizar el listado completo de tu obra.</p>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo tipo de plano</strong> a tu elección (ej. Arquitectónico, Acotado, Iluminación, Ubicación, etc.). Contáctanos para cotizar un juego de planos completo.</p>
                 <div class="mt-4 pt-2">
                   <a href="#cotizador-general" class="btn-liquid-glass">↓ Ir al Cotizador Inteligente</a>
                 </div>
@@ -1058,19 +1058,8 @@
       </div>
     </footer>
 
-    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp y Telegram) -->
-    <div style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px;">
-      <a href="https://wa.me/50231256942?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #25d366';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.1)'; this.style.color='#25d366'; this.style.border='1px solid rgba(37, 211, 102, 0.4);'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
-      </a>
-      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Escríbenos por Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
-      </a>
-    </div>
-
-    <!-- BOTONES FLOTANTES ESQUINA IZQUIERDA (Selector de Moneda + Selector de Idioma) -->
-    <div class="lang-float-container" id="langContainer">
-      <!-- SELECTOR DE MONEDA -->
+    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Moneda) -->
+    <div class="currency-float-container" id="currencyContainer">
       <div class="currency-selector-wrap">
         <svg width="14" height="14" fill="none" stroke="#d4b895" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
         <select id="currencySelect" aria-label="Seleccionar Moneda">
@@ -1084,24 +1073,35 @@
           <option value="JPY">JPY (¥)</option>
         </select>
       </div>
-
-      <!-- MENÚ DE IDIOMA -->
-      <div style="position: relative;">
-        <ul class="lang-float-menu" id="langMenu">
-          <li><a class="lang-item active" href="index.html"><span class="badge bg-secondary me-2">ES</span> Español</a></li>
-          <li><a class="lang-item" href="index-en.html"><span class="badge bg-secondary me-2">EN</span> English</a></li>
-          <li><a class="lang-item" href="index-pt.html"><span class="badge bg-secondary me-2">PT</span> Português</a></li>
-          <li><a class="lang-item" href="index-ar.html"><span class="badge bg-secondary me-2">AR</span> العربية (قطر)</a></li>
-          <li><a class="lang-item" href="index-zh.html"><span class="badge bg-secondary me-2">ZH</span> 中文</a></li>
-          <li><a class="lang-item" href="index-ja.html"><span class="badge bg-secondary me-2">JA</span> 日本語</a></li>
-        </ul>
-        <button class="lang-float-btn" id="langBtn" aria-label="Cambiar Idioma">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-        </button>
-      </div>
     </div>
 
-    <!-- LÓGICA INTELIGENTE (COTIZADOR Y CONVERSOR DE MONEDAS) -->
+    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp, Telegram y Selector de Idioma Arriba) -->
+    <div class="lang-float-container" id="langContainer">
+      <!-- Menú de Idioma (Despliega hacia arriba) -->
+      <ul class="lang-float-menu" id="langMenu">
+        <li><a class="lang-item active" href="index.html"><span class="badge bg-secondary me-2">ES</span> Español</a></li>
+        <li><a class="lang-item" href="index-en.html"><span class="badge bg-secondary me-2">EN</span> English</a></li>
+        <li><a class="lang-item" href="index-pt.html"><span class="badge bg-secondary me-2">PT</span> Português</a></li>
+        <li><a class="lang-item" href="index-ar.html"><span class="badge bg-secondary me-2">AR</span> العربية (قطر)</a></li>
+        <li><a class="lang-item" href="index-zh.html"><span class="badge bg-secondary me-2">ZH</span> 中文</a></li>
+        <li><a class="lang-item" href="index-ja.html"><span class="badge bg-secondary me-2">JA</span> 日本語</a></li>
+      </ul>
+      <button class="lang-float-btn" id="langBtn" aria-label="Cambiar Idioma">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      </button>
+
+      <!-- Botón de WhatsApp -->
+      <a href="https://wa.me/50231256942?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #25d366';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.1)'; this.style.color='#25d366'; this.style.border='1px solid rgba(37, 211, 102, 0.4);'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
+      </a>
+
+      <!-- Botón de Telegram -->
+      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Escríbenos por Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
+      </a>
+    </div>
+
+    <!-- LÓGICA INTELIGENTE -->
     <script>
       const langBtn = document.getElementById('langBtn');
       const langMenu = document.getElementById('langMenu');
@@ -1136,16 +1136,13 @@
         const selectedCurr = currencySelect.value;
         const config = exchangeRates[selectedCurr];
 
-        // Actualizar todos los elementos con precios estáticos
         document.querySelectorAll('.price-val').forEach(el => {
           const usdVal = parseFloat(el.getAttribute('data-usd'));
           const converted = usdVal * config.rate;
-          // Formatear según la moneda (Japón sin decimales, otros con 2)
           const decimals = selectedCurr === 'JPY' ? 0 : 2;
           el.textContent = converted.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
         });
 
-        // Actualizar símbolos de moneda en las tarjetas
         document.querySelectorAll('.curr-symbol').forEach(el => {
           el.textContent = config.symbol;
         });
@@ -1205,7 +1202,6 @@
             const convertedFinal = precioFinalUSD * config.rate;
             const decimals = currentCurr === 'JPY' ? 0 : 2;
 
-            const precioFormateado = `${config.symbol} ${convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
             precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
             if (esServicio3D && areaTotal <= 300) {
