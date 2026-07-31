@@ -466,7 +466,7 @@
       }
 
       /* =========================================
-         DISEÑO PRO COTIZADOR INTELIGENTE
+         DISEÑO PRO COTIZADOR INTELIGENTE (ANCHURA AJUSTADA)
          ========================================= */
       .calc-pro-container {
         position: relative;
@@ -544,7 +544,7 @@
       }
       
       /* =========================================
-         BOTÓN FLOTANTE DE IDIOMA (CORRECCIÓN PREMIUM Y ENGINE)
+         BOTÓN FLOTANTE DE IDIOMA (CÓDIGO PURO Y ESTABLE)
          ========================================= */
       .lang-float-container {
         position: fixed;
@@ -568,15 +568,18 @@
         transition: all 0.3s ease;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         padding: 0;
+        outline: none;
       }
       .lang-float-btn:hover, .lang-float-btn:focus {
         transform: scale(1.1);
         background-color: rgba(255, 255, 255, 0.15) !important;
       }
-      .lang-float-btn::after {
-        display: none !important; /* Ocultar flecha nativa */
-      }
       .lang-float-menu {
+        display: none; /* Oculto por defecto */
+        flex-direction: column;
+        position: absolute;
+        bottom: 65px; /* Sube la cajita por encima del botón */
+        left: 0;
         background: rgba(15, 15, 15, 0.95) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
@@ -584,13 +587,16 @@
         border-radius: 16px !important;
         padding: 0.5rem !important;
         min-width: 160px !important;
-        margin-bottom: 15px !important;
         box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+        gap: 5px;
       }
-      .lang-float-menu li {
-        list-style: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
+      .lang-float-menu.show {
+        display: flex; /* Se muestra al hacer clic */
+        animation: popUp 0.3s ease;
+      }
+      @keyframes popUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
       }
       .lang-item {
         color: #ddd !important;
@@ -604,6 +610,7 @@
         background: transparent !important;
         font-weight: 500 !important;
         font-size: 0.95rem !important;
+        cursor: pointer;
       }
       .lang-item:hover, .lang-item.active {
         background: rgba(255, 255, 255, 0.1) !important;
@@ -1153,35 +1160,54 @@
       
     </div>
 
-    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma Dropup) -->
-    <div class="dropup lang-float-container">
-      <button class="btn dropdown-toggle lang-float-btn" type="button" id="langMenuBtn" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Cambiar Idioma">
+    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma Custom) -->
+    <div class="lang-float-container" id="langContainer">
+      <ul class="lang-float-menu" id="langMenu">
+        <li class="lang-item active" onclick="changeLanguage('es', this)"><span style="font-size: 1.2rem;">🇪🇸</span> Español</li>
+        <li class="lang-item" onclick="changeLanguage('en', this)"><span style="font-size: 1.2rem;">🇺🇸</span> English</li>
+        <li class="lang-item" onclick="changeLanguage('pt', this)"><span style="font-size: 1.2rem;">🇧🇷</span> Português</li>
+      </ul>
+      <button class="lang-float-btn" id="langBtn" aria-label="Cambiar Idioma">
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
       </button>
-      <ul class="dropdown-menu dropdown-menu-dark lang-float-menu" aria-labelledby="langMenuBtn">
-        <li><a class="dropdown-item lang-item active" href="#" onclick="changeLanguage('es', this); return false;"><span style="font-size: 1.2rem;">🇪🇸</span> Español</a></li>
-        <li><a class="dropdown-item lang-item" href="#" onclick="changeLanguage('en', this); return false;"><span style="font-size: 1.2rem;">🇺🇸</span> English</a></li>
-        <li><a class="dropdown-item lang-item" href="#" onclick="changeLanguage('pt', this); return false;"><span style="font-size: 1.2rem;">🇧🇷</span> Português</a></li>
-      </ul>
     </div>
 
-    <!-- LÓGICA INTELIGENTE CONDICIONAL -->
+    <!-- LÓGICA INTELIGENTE -->
     <script>
-      // Lógica de Traducción
+      // Lógica de Traducción Personalizada
+      const langBtn = document.getElementById('langBtn');
+      const langMenu = document.getElementById('langMenu');
+      const langContainer = document.getElementById('langContainer');
+
+      if(langBtn && langMenu) {
+          langBtn.addEventListener('click', function(e) {
+            langMenu.classList.toggle('show');
+            e.stopPropagation();
+          });
+          document.addEventListener('click', function(e) {
+            if (!langContainer.contains(e.target)) {
+              langMenu.classList.remove('show');
+            }
+          });
+      }
+
       function changeLanguage(langCode, element) {
         var selectField = document.querySelector('select.goog-te-combo');
         if (selectField) {
           selectField.value = langCode;
-          selectField.dispatchEvent(new Event('change'));
+          // Evento especial para engañar a Google Translate
+          selectField.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
         }
         
-        // Actualizar visualmente la opción seleccionada
+        // Efecto visual en la lista
         document.querySelectorAll('.lang-item').forEach(function(item) {
           item.classList.remove('active');
         });
         element.classList.add('active');
+        langMenu.classList.remove('show');
       }
 
+      // Iniciador oculto de Google Translate
       function googleTranslateElementInit() {
         new google.translate.TranslateElement({
           pageLanguage: 'es', 
