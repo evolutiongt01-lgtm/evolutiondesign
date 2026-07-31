@@ -776,24 +776,23 @@
           </div>
         </div> 
 
-        <!-- COTIZADOR INTELIGENTE (ALINEADO Y EQUILIBRADO) -->
+        <!-- COTIZADOR INTELIGENTE (ALINEADO Y CENTRADO) -->
         <div class="container mt-5 pt-4" data-aos="fade-up">
           <div class="row justify-content-center">
-            <!-- Ancho ajustado a col-12 dentro del container estándar para alinear con las 3 tarjetas -->
             <div class="col-12">
               <div class="calc-pro-container p-4 p-lg-5">
                 <div class="row g-5 align-items-center">
                   
-                  <!-- Panel Izquierdo: Textos y Select -->
-                  <div class="col-12 col-lg-5 text-center text-lg-start">
+                  <!-- Panel Izquierdo: Textos y Select Centrados -->
+                  <div class="col-12 col-lg-5 text-center d-flex flex-column justify-content-center">
                     <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">COTIZADOR INTELIGENTE</span>
-                    <h3 class="fw-bold text-white mb-3" style="font-size: 1.8rem; line-height: 1.2;">¿Tu terreno supera los 300 m²?</h3>
-                    <p class="text-secondary small mb-4">Selecciona el servicio e ingresa tus medidas exactas para cotizar el excedente o tus planos 2D y cuantificaciones.</p>
+                    <h3 class="fw-bold text-white mb-3 px-2" style="font-size: 1.8rem; line-height: 1.2;">¿Tu terreno supera los 300 m²?</h3>
+                    <p class="text-secondary small mb-4 px-3">Selecciona el servicio e ingresa tus medidas exactas para cotizar el excedente o tus planos 2D y cuantificaciones.</p>
                     
-                    <div class="text-start">
+                    <div class="text-center px-2">
                       <span class="small text-secondary d-block mb-1">Seleccionar Servicio</span>
-                      <div class="calc-input-group-pro">
-                        <select id="calcServicioSelect" class="calc-select-field">
+                      <div class="calc-input-group-pro text-start mx-auto" style="max-width: 100%;">
+                        <select id="calcServicioSelect" class="calc-select-field w-100">
                           <option value="basico">Paquete 3D Básico ($199 base)</option>
                           <option value="profesional">Paquete 3D Profesional ($399 base)</option>
                           <option value="premium">Paquete 3D Premium ($799 base)</option>
