@@ -118,13 +118,17 @@
       }
 
       /* =========================================
-         WIDGET HORA MIAMI (ESTILO APPLE ESQUINA SUPERIOR DERECHA)
+         WIDGETS DE RELOJES (ESTILO APPLE ESQUINA SUPERIOR DERECHA)
          ========================================= */
       .clock-float-container {
         position: fixed;
         top: 30px;
         right: 30px;
         z-index: 9998;
+      }
+      .apple-clock-group {
+        display: flex;
+        gap: 10px;
       }
       .apple-clock-widget {
         display: flex;
@@ -134,20 +138,28 @@
         border: 1px solid rgba(255, 255, 255, 0.12);
         backdrop-filter: blur(20px) saturate(200%);
         -webkit-backdrop-filter: blur(20px) saturate(200%);
-        padding: 0.6rem 1.2rem;
+        padding: 0.6rem 1.1rem;
         border-radius: 50px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: #fff;
         font-weight: 400;
         letter-spacing: 0.3px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       }
-      .apple-clock-dot {
+      .apple-clock-dot-gt {
         width: 6px;
         height: 6px;
         background-color: #34c759;
         border-radius: 50%;
         box-shadow: 0 0 8px rgba(52, 199, 89, 0.8);
+        animation: pulse-dot 2s infinite;
+      }
+      .apple-clock-dot-mia {
+        width: 6px;
+        height: 6px;
+        background-color: #0a84ff;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(10, 132, 255, 0.8);
         animation: pulse-dot 2s infinite;
       }
       @keyframes pulse-dot {
@@ -641,11 +653,17 @@
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-    <!-- WIDGET HORA MIAMI (ESQUINA SUPERIOR DERECHA) -->
+    <!-- WIDGETS DE RELOJES GT Y MIA (ESQUINA SUPERIOR DERECHA) -->
     <div class="clock-float-container d-none d-lg-block">
-      <div class="apple-clock-widget">
-        <div class="apple-clock-dot"></div>
-        <span>Miami <strong id="miamiClock">--:--:--</strong></span>
+      <div class="apple-clock-group">
+        <div class="apple-clock-widget">
+          <div class="apple-clock-dot-gt"></div>
+          <span>GT <strong id="gtClock">--:--:--</strong></span>
+        </div>
+        <div class="apple-clock-widget">
+          <div class="apple-clock-dot-mia"></div>
+          <span>MIA <strong id="miamiClock">--:--:--</strong></span>
+        </div>
       </div>
     </div>
 
@@ -1197,17 +1215,22 @@
       </button>
     </div>
 
-    <!-- LÓGICA INTELIGENTE (HORA MIAMI + IDIOMA + COTIZADOR) -->
+    <!-- LÓGICA INTELIGENTE (RELOJES GT & MIA FORMATO 24H + IDIOMA + COTIZADOR) -->
     <script>
-      // Reloj Miami en vivo estilo Apple
-      function updateMiamiTime() {
-        const options = { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-        const timeString = new Intl.DateTimeFormat('en-US', options).format(new Date());
-        const clockEl = document.getElementById('miamiClock');
-        if (clockEl) clockEl.textContent = timeString;
+      // Relojes en vivo formato 24 hrs
+      function updateClocks() {
+        const options24 = { timeZone: 'America/Guatemala', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        const gtString = new Intl.DateTimeFormat('es-GT', options24).format(new Date());
+        const gtEl = document.getElementById('gtClock');
+        if (gtEl) gtEl.textContent = gtString;
+
+        const miamiOptions24 = { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        const miamiString = new Intl.DateTimeFormat('en-US', miamiOptions24).format(new Date());
+        const miamiEl = document.getElementById('miamiClock');
+        if (miamiEl) miamiEl.textContent = miamiString;
       }
-      setInterval(updateMiamiTime, 1000);
-      updateMiamiTime();
+      setInterval(updateClocks, 1000);
+      updateClocks();
 
       const langBtn = document.getElementById('langBtn');
       const langMenu = document.getElementById('langMenu');
