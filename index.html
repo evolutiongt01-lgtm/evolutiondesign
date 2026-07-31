@@ -574,7 +574,7 @@
                   <h1 class="display-3 fw-bold text-white mb-0">$1.75</h1>
                   <span class="accent-text fs-5 fw-medium">USD/m²</span>
                 </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo cálculo de material</strong> a tu elección (ej. Obra gris, Acabados, Hierro, etc.). Contáctanos para cotizar el listado completo de tu obra.</p>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo tipo de plano</strong> a tu elección (ej. Arquitectónico, Acotado, Iluminación, Ubicación, etc.). Contáctanos para cotizar el listado completo de tu obra.</p>
                 <div class="mt-4 pt-2">
                   <a href="#cotizador-general" class="btn-liquid-glass">↓ Ir al Cotizador Inteligente</a>
                 </div>
@@ -960,13 +960,13 @@
           <p class="text-secondary mb-2" style="font-size: 0.72rem; letter-spacing: 0.3px; opacity: 0.7;">
             Protegido por reCAPTCHA &bull; Se aplican las <a href="https://policies.google.com/privacy" target="_blank" class="text-secondary text-decoration-underline" style="opacity: 0.9;">Políticas</a> y los <a href="https://policies.google.com/terms" target="_blank" class="text-secondary text-decoration-underline" style="opacity: 0.9;">Términos</a> de Google
           </p>
-          <!-- Métodos de Pago Seguros en Texto Limpio -->
+          <!-- Métodos de Pago Seguros y Lema Profesional -->
           <div class="pt-2 border-top" style="border-color: rgba(255,255,255,0.06) !important;">
             <p class="text-secondary mb-1" style="font-size: 0.7rem; letter-spacing: 0.5px;">
               MÉTODOS DE PAGO SEGUROS: <span class="text-white fw-medium">Visa &bull; Mastercard &bull; American Express &bull; PayPal</span>
             </p>
             <p class="accent-text mb-0" style="font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3px;">
-              Aceptamos cualquier tipo de moneda. El cobro se hace en dólares únicamente.
+              Múltiples divisas aceptadas. Procesamiento de pagos facturado en USD.
             </p>
           </div>
         </div>
@@ -1115,7 +1115,7 @@
               avisoPagoDirecto.style.display = 'none';
             }
 
-            const mensaje = encodeURIComponent(`Hola. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: ${precioFormateado} USD.\nMe gustaría continuar con mi proyecto. (Aceptamos cualquier tipo de moneda).`);
+            const mensaje = encodeURIComponent(`Hola. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: ${precioFormateado} USD.\nMe gustaría continuar con mi proyecto. (Múltiples divisas aceptadas. Procesamiento de pagos facturado en USD).`);
             btnEnviarCotizacion.href = `https://wa.me/18329774150?text=${mensaje}`;
           } else {
             totalDisplay.textContent = "0.00";
