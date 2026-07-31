@@ -410,6 +410,7 @@
         pointer-events: none;
       }
 
+      /* EFECTO PREMIUM VIP BRILLANTE Y LLAMATIVO */
       .glass-panel-vip {
         background: linear-gradient(145deg, rgba(212, 184, 149, 0.08) 0%, rgba(10, 10, 10, 0.9) 100%) !important;
         backdrop-filter: blur(25px) saturate(180%);
@@ -522,7 +523,7 @@
       }
       
       /* =========================================
-         BOTÓN FLOTANTE DE IDIOMA
+         BOTÓN FLOTANTE DE IDIOMA (SIN PUNTOS BLANCOS)
          ========================================= */
       .lang-float-container {
         position: fixed;
@@ -567,6 +568,10 @@
         min-width: 160px !important;
         box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
         gap: 5px;
+        list-style: none !important;
+      }
+      .lang-float-menu li {
+        list-style: none !important;
       }
       .lang-float-menu.show {
         display: flex;
@@ -598,7 +603,7 @@
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-    <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) - TIPO CÁPSULA -->
+    <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) - CÁPSULA LIMPIA -->
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
@@ -1134,7 +1139,7 @@
       
     </div>
 
-    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma con ES, EN y PT) -->
+    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma) -->
     <div class="lang-float-container" id="langContainer">
       <ul class="lang-float-menu" id="langMenu">
         <li><a class="lang-item active" href="index.html"><span style="font-size: 1.2rem;">🇪🇸</span> Español</a></li>
