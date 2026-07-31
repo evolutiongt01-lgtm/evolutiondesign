@@ -262,7 +262,7 @@
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
       /* =========================================
-         SELECTORES FLOTANTES (Moneda e Idioma)
+         SELECTORES FLOTANTES (Moneda e Idioma con Animación Hacia Arriba)
          ========================================= */
       .currency-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
       .currency-selector-wrap {
@@ -294,10 +294,34 @@
       .lang-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
       .lang-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2) !important; background-color: rgba(255, 255, 255, 0.05) !important; color: #fff !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
       .lang-float-btn:hover { transform: scale(1.1); background-color: rgba(255, 255, 255, 0.15) !important; }
-      .lang-float-menu { display: none; flex-direction: column; position: absolute; bottom: 60px; right: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 175px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; list-style: none !important; }
+      
+      /* MENÚ DESPLEGABLE HACIA ARRIBA CON ANIMACIÓN SUAVE */
+      .lang-float-menu { 
+        display: none; 
+        flex-direction: column; 
+        position: absolute; 
+        bottom: 65px; 
+        right: 0; 
+        background: rgba(15, 15, 15, 0.95) !important; 
+        backdrop-filter: blur(20px) !important; 
+        -webkit-backdrop-filter: blur(20px) !important; 
+        border: 1px solid rgba(255,255,255,0.1) !important; 
+        border-radius: 16px !important; 
+        padding: 0.5rem !important; 
+        min-width: 175px !important; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; 
+        gap: 5px; 
+        list-style: none !important;
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
       .lang-float-menu li { list-style: none !important; }
-      .lang-float-menu.show { display: flex; animation: popUp 0.3s ease; }
-      @keyframes popUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      .lang-float-menu.show { 
+        display: flex; 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
       .lang-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .lang-item:hover, .lang-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
     </style>
@@ -1058,7 +1082,7 @@
       </div>
     </footer>
 
-    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Moneda) -->
+    <!-- BOTONES FLOTANTES ESQUINA IZQUIERDA (Selector de Moneda) -->
     <div class="currency-float-container" id="currencyContainer">
       <div class="currency-selector-wrap">
         <svg width="14" height="14" fill="none" stroke="#d4b895" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
@@ -1075,9 +1099,9 @@
       </div>
     </div>
 
-    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp, Telegram y Selector de Idioma Arriba) -->
+    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp, Telegram y Selector de Idioma Desplegándose Arriba) -->
     <div class="lang-float-container" id="langContainer">
-      <!-- Menú de Idioma (Despliega hacia arriba) -->
+      <!-- Menú de Idioma con Despliegue Vertical Superior y Animación Suave -->
       <ul class="lang-float-menu" id="langMenu">
         <li><a class="lang-item active" href="index.html"><span class="badge bg-secondary me-2">ES</span> Español</a></li>
         <li><a class="lang-item" href="index-en.html"><span class="badge bg-secondary me-2">EN</span> English</a></li>
