@@ -108,7 +108,7 @@
          ========================================= */
       .desktop-nav {
         display: none !important;
-        padding-top: calc(25px + env(safe-area-inset-top)); 
+        padding-top: calc(25px + env(safe-area-inset-top, 0px)); 
         pointer-events: none; 
       }
       @media (min-width: 992px) {
@@ -150,22 +150,45 @@
       }
 
       /* =========================================
-         NAVEGACIÓN MÓVIL TIPO APP
+         NAVEGACIÓN MÓVIL TIPO APP (OPTIMIZADA ANDROID/IOS)
          ========================================= */
       .mobile-app-nav {
-        background: rgba(10, 10, 10, 0.5) !important; 
-        backdrop-filter: blur(15px) saturate(150%); 
-        -webkit-backdrop-filter: blur(15px) saturate(150%); 
-        position: sticky; 
-        top: 0; 
+        background: rgba(10, 10, 10, 0.6) !important; 
+        backdrop-filter: blur(20px) saturate(150%); 
+        -webkit-backdrop-filter: blur(20px) saturate(150%); 
+        position: fixed; /* Fija para que el Hero pase por debajo gloriosamente */
+        top: 0; left: 0; width: 100%;
         z-index: 1030; 
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        padding-top: env(safe-area-inset-top); 
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
       }
       @media (min-width: 992px) { .mobile-app-nav { display: none !important; } }
-      .app-nav-top { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; }
-      .icon-btn { width: 45px; height: 45px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); color: #fff; text-decoration: none !important; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent !important; outline: none !important; }
-      .icon-btn:hover, .icon-btn:focus, .icon-btn:active { background-color: #fff !important; color: #000 !important; border-color: #fff !important; transform: scale(1.05); }
+      
+      .app-nav-top { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        /* 15px de colchón + safe-area para que Android y el Notch respiren bien */
+        padding: calc(15px + env(safe-area-inset-top, 0px)) 1.5rem 0.8rem; 
+      }
+      
+      .icon-btn { 
+        width: 42px; height: 42px; 
+        border-radius: 50%; 
+        border: 1px solid rgba(255, 255, 255, 0.15); 
+        display: flex; align-items: center; justify-content: center; 
+        background: rgba(255, 255, 255, 0.05); color: #fff; 
+        text-decoration: none !important; transition: all 0.3s ease; 
+        -webkit-tap-highlight-color: transparent !important; outline: none !important; 
+      }
+      .icon-btn:hover, .icon-btn:focus { 
+        background-color: rgba(255, 255, 255, 0.15) !important; 
+        transform: scale(1.05); 
+      }
+      .icon-btn:active { 
+        background-color: rgba(255, 255, 255, 0.25) !important; 
+        transform: scale(0.95); 
+      }
+      
       .app-tabs { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 1.5rem; gap: 2rem; justify-content: space-around; }
       .app-tabs::-webkit-scrollbar { display: none; }
       .tab-item { display: flex; flex-direction: column; align-items: center; color: #888 !important; text-decoration: none !important; font-size: 0.75rem; padding-bottom: 0.8rem; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); -webkit-tap-highlight-color: transparent !important; outline: none !important; }
@@ -175,21 +198,30 @@
       .tab-item.active svg { opacity: 1; transform: scale(1.15); }
 
       /* =========================================
-         HERO SECTION
+         HERO SECTION (AJUSTADO PARA NO CHOCAR)
          ========================================= */
       .hero-app {
-        position: relative; padding: 2rem 0 4rem; min-height: 85vh; display: flex; flex-direction: column; justify-content: center;
+        position: relative; 
+        /* Padding top brutal para asegurar que el texto quede libre de la barra en móviles */
+        padding: calc(130px + env(safe-area-inset-top, 0px)) 1.5rem 4rem; 
+        min-height: 85vh; 
+        display: flex; flex-direction: column; justify-content: center;
         background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%), url('img/hero-movil.jpg') center/cover no-repeat;
       }
-      .hero-content { width: 100%; padding: 0 1.5rem; }
+      .hero-content { width: 100%; padding: 0; }
       @media (min-width: 992px) {
-        .hero-app { min-height: 100vh; background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/hero-pc.jpg') right center/cover no-repeat; padding-top: 100px; }
+        .hero-app { 
+          min-height: 100vh; 
+          background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/hero-pc.jpg') right center/cover no-repeat; 
+          padding: calc(100px + env(safe-area-inset-top, 0px)) 0 4rem; 
+        }
         .hero-content { max-width: 550px; padding: 0; margin-left: 5vw; }
       }
+      
       .accent-text { color: #d4b895; }
       .grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
       .sq-btn { border-radius: 16px; padding: 1.5rem 1.2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: 160px; text-decoration: none !important; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff !important; -webkit-tap-highlight-color: transparent !important; }
-      .sq-btn:hover, .sq-btn:active { transform: translateY(-5px); background-color: #fff !important; color: #000 !important; border-color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+      .sq-btn:hover, .sq-btn:active { transform: translateY(-5px); background-color: rgba(255, 255, 255, 0.15) !important; color: #fff !important; border-color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
       .trust-badges { display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.2rem; margin-top: 3rem; background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
       .trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 0.7rem; color: #aaa; flex: 1; }
       .trust-item:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.1); }
@@ -271,7 +303,7 @@
       /* =========================================
          BOTONES FLOTANTES CIRCULARES (Moneda e Idioma)
          ========================================= */
-      .currency-float-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom)); left: 30px; z-index: 9999; }
+      .currency-float-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); left: 30px; z-index: 9999; }
       .currency-wrapper { position: relative; width: 50px; height: 50px; }
       
       .currency-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212, 184, 149, 0.4) !important; background-color: rgba(212, 184, 149, 0.1) !important; color: #d4b895 !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
@@ -281,7 +313,7 @@
         display: none; 
         flex-direction: column; 
         position: absolute; 
-        bottom: 62px; /* Se abre directamente hacia arriba */
+        bottom: 62px; 
         left: 0; 
         background: rgba(15, 15, 15, 0.95) !important; 
         backdrop-filter: blur(20px) !important; 
@@ -303,19 +335,18 @@
       .currency-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 10px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .currency-item:hover, .currency-item.active { background: rgba(212, 184, 149, 0.15) !important; color: #fff !important; }
 
-
-      .lang-float-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom)); right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+      .lang-float-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
       .lang-wrapper { position: relative; width: 50px; height: 50px; }
       .lang-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2) !important; background-color: rgba(255, 255, 255, 0.05) !important; color: #fff !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
       .lang-float-btn:hover { transform: scale(1.1); background-color: rgba(255, 255, 255, 0.15) !important; }
       
-      /* MENÚ DE IDIOMA: SE ABRE RECTO HACIA ARRIBA */
+      /* MENÚ DE IDIOMA: DESPLIEGUE A LA IZQUIERDA DEL BOTÓN (SIN CHOCAR) */
       .lang-float-menu { 
         display: none; 
         flex-direction: column; 
         position: absolute; 
-        bottom: 62px; 
-        right: 0; 
+        bottom: 0px; 
+        right: 65px; 
         background: rgba(15, 15, 15, 0.95) !important; 
         backdrop-filter: blur(20px) !important; 
         -webkit-backdrop-filter: blur(20px) !important; 
@@ -327,17 +358,17 @@
         gap: 5px; 
         list-style: none !important;
         opacity: 0;
-        transform: translateY(10px) scale(0.97);
-        transform-origin: bottom right;
-        transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateX(15px) scale(0.95);
+        transform-origin: right bottom;
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
       }
       .lang-float-menu li { list-style: none !important; }
-      .lang-float-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+      .lang-float-menu.show { display: flex; opacity: 1; transform: translateX(0) scale(1); }
       .lang-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .lang-item:hover, .lang-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
       /* FOOTER SAFE AREA FIX PARA IOS */
-      footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important; }
+      footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important; }
     </style>
   </head>
 
@@ -1116,7 +1147,7 @@
       </div>
     </div>
 
-    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp, Telegram y Selector de Idioma Desplegándose Hacia la Izquierda) -->
+    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp, Telegram y Selector de Idioma Despliegue a la Izquierda) -->
     <div class="lang-float-container" id="langContainer">
       
       <!-- Contenedor independiente para el Botón y Menú de Idiomas -->
