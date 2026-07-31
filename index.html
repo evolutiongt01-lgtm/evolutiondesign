@@ -262,9 +262,9 @@
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
       /* =========================================
-         SELECTOR DE IDIOMA
+         SELECTOR DE MONEDA Y IDIOMA
          ========================================= */
-      .lang-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
+      .lang-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; display: flex; gap: 10px; align-items: center; }
       .lang-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2) !important; background-color: rgba(255, 255, 255, 0.05) !important; color: #fff !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
       .lang-float-btn:hover { transform: scale(1.1); background-color: rgba(255, 255, 255, 0.15) !important; }
       .lang-float-menu { display: none; flex-direction: column; position: absolute; bottom: 65px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 175px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; list-style: none !important; }
@@ -273,6 +273,33 @@
       @keyframes popUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       .lang-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .lang-item:hover, .lang-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
+      
+      /* SELECTOR DE MONEDA FLOTANTE */
+      .currency-selector-wrap {
+        background: rgba(15, 15, 15, 0.85);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(212, 184, 149, 0.3);
+        border-radius: 30px;
+        padding: 0.3rem 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      }
+      .currency-selector-wrap select {
+        background: transparent;
+        border: none;
+        color: #d4b895;
+        font-size: 0.85rem;
+        font-weight: 600;
+        outline: none;
+        cursor: pointer;
+      }
+      .currency-selector-wrap select option {
+        background: #111;
+        color: #fff;
+      }
     </style>
   </head>
 
@@ -453,8 +480,8 @@
               <div class="glass-panel p-5 rounded-5 text-center">
                 <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">TARIFA ESTÁNDAR POR PLANO</span>
                 <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
-                  <h1 class="display-3 fw-bold text-white mb-0">$1.50</h1>
-                  <span class="accent-text fs-5 fw-medium">USD/m²</span>
+                  <h1 class="display-3 fw-bold text-white mb-0"><span class="price-val" data-usd="1.50">1.50</span></h1>
+                  <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span>/m²</span>
                 </div>
                 <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo tipo de plano</strong> a tu elección (ej. Arquitectónico, Acotado, Iluminación, Ubicación, etc.). Contáctanos para cotizar un juego de planos completo.</p>
                 <div class="mt-4 pt-2">
@@ -512,8 +539,8 @@
               <div class="glass-panel p-5 rounded-5 text-center">
                 <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">OPCIÓN HIPERREALISTA</span>
                 <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
-                  <h2 class="display-5 fw-bold text-white mb-0">+$40.00</h2>
-                  <span class="accent-text fs-5 fw-medium">USD</span>
+                  <h2 class="display-5 fw-bold text-white mb-0">+<span class="price-val" data-usd="40.00">40.00</span></h2>
+                  <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span></span>
                 </div>
                 <p class="text-secondary mb-0" style="font-size: 0.9rem;">Mejora tu presentación agregando <strong>3 Renders hiperrealistas</strong> de tu fachada elegida para visualizar la iluminación y materiales a la perfección.</p>
                 <div class="mt-4 pt-2">
@@ -571,10 +598,10 @@
               <div class="glass-panel p-5 rounded-5 text-center">
                 <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">TARIFA DE CUANTIFICACIÓN</span>
                 <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
-                  <h1 class="display-3 fw-bold text-white mb-0">$1.75</h1>
-                  <span class="accent-text fs-5 fw-medium">USD/m²</span>
+                  <h1 class="display-3 fw-bold text-white mb-0"><span class="price-val" data-usd="1.75">1.75</span></h1>
+                  <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span>/m²</span>
                 </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo tipo de plano</strong> a tu elección (ej. Arquitectónico, Acotado, Iluminación, Ubicación, etc.). Contáctanos para cotizar un juego de planos completo.</p>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo cálculo de material</strong> a tu elección (ej. Obra gris, Acabados, Hierro, etc.). Contáctanos para cotizar el listado completo de tu obra.</p>
                 <div class="mt-4 pt-2">
                   <a href="#cotizador-general" class="btn-liquid-glass">↓ Ir al Cotizador Inteligente</a>
                 </div>
@@ -587,7 +614,7 @@
             <div class="col-12 col-lg-8">
               <div class="glass-panel-accent p-5 rounded-5 text-center">
                 <h3 class="fw-lighter text-white">PAQUETE: PLANOS + CUANTIFICACIÓN</h3>
-                <h2 class="display-4 fw-bold my-3 accent-text">$3.25 <span class="fs-6 text-light">USD/m²</span></h2>
+                <h2 class="display-4 fw-bold my-3 accent-text"><span class="price-val" data-usd="3.25">3.25</span> <span class="fs-6 text-light"><span class="curr-symbol">USD</span>/m²</span></h2>
                 <p class="text-secondary mb-4" style="position: relative; z-index: 10;">* Incluye <strong>un tipo de plano 2D</strong> y <strong>un cálculo de material</strong> a tu elección. Ideal para arrancar tu proyecto con precisión y ahorrar recursos. Aceptamos cualquier tipo de moneda en nuestros pagos.</p>
                 <div style="position: relative; z-index: 10;">
                   <a href="#cotizador-general" class="btn-liquid-glass">↓ Cotizar paquete combinado</a>
@@ -611,7 +638,7 @@
               <div class="glass-panel p-5 rounded-5 h-100">
                 <h3 class="fw-lighter text-center">BÁSICO</h3>
                 <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold">$300 <span class="fs-6 text-secondary">USD</span></h2></div>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold"><span class="price-val" data-usd="300">300</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
                   <li class="mb-2">✓ Modelado 3D profesional</li>
                   <li class="mb-2">✓ 8 Renders realistas</li>
@@ -628,7 +655,7 @@
                 <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MÁS POPULAR</span>
                 <h3 class="fw-lighter text-center mt-3">PROFESIONAL</h3>
                 <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold text-white">$499 <span class="fs-6 text-secondary">USD</span></h2></div>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold text-white"><span class="price-val" data-usd="499">499</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
                   <li class="mb-2">✓ Modelado 3D completo</li>
                   <li class="mb-2">✓ 16 Renders realistas</li>
@@ -645,7 +672,7 @@
                 <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MÁXIMO NIVEL / VIP</span>
                 <h3 class="fw-lighter text-center mt-3 text-white">PREMIUM</h3>
                 <p class="text-center accent-text small fw-medium">EL PAQUETE DEFINITIVO</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold accent-text">$949 <span class="fs-6 text-secondary">USD</span></h2></div>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold accent-text"><span class="price-val" data-usd="949">949</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-light mb-5" style="opacity: 0.9;">
                   <li class="mb-2">✓ Modelado 3D completo</li>
                   <li class="mb-2">✓ 26 Renders realistas</li>
@@ -721,7 +748,7 @@
                           <span class="accent-text small d-block mb-1" id="labelCostoFinal">Tu Inversión</span>
                           <div class="d-flex align-items-baseline">
                             <h2 class="fw-bold accent-text mb-0" id="calcPrecioFinal" style="font-size: 1.8rem;">$0.00</h2>
-                            <span class="ms-1 accent-text small">USD</span>
+                            <span class="ms-1 accent-text small curr-symbol">USD</span>
                           </div>
                         </div>
                       </div>
@@ -845,7 +872,7 @@
                       </div>
                     </div>
                     <div class="d-flex align-items-center gap-3">
-                      <span class="text-white fw-bold" style="font-size: 0.85rem; white-space: nowrap;">+ $40.00</span>
+                      <span class="text-white fw-bold" style="font-size: 0.85rem; white-space: nowrap;">+ $<span class="price-val" data-usd="40.00">40.00</span></span>
                       <label class="facade-switch">
                         <input type="checkbox" id="f-render" checked>
                         <span class="f-slider-toggle"></span>
@@ -870,7 +897,7 @@
                       <span class="text-white text-end fw-medium" id="f-area-text" style="font-size: 0.9rem;">0.00 m²</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                      <span class="text-secondary" style="font-size: 0.85rem;">Precio base (1.50 USD/m²)</span>
+                      <span class="text-secondary" style="font-size: 0.85rem;">Precio base (<span class="price-val" data-usd="1.50">1.50</span> <span class="curr-symbol">USD</span>/m²)</span>
                       <span class="text-white text-end fw-medium" id="f-base-text" style="font-size: 0.9rem;">$0.00</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
@@ -898,7 +925,7 @@
                       <span class="accent-text fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">TOTAL ESTIMADO</span>
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
                         <h1 class="fw-bold text-white mb-0" id="f-total" style="font-size: 3rem;">$0.00</h1>
-                        <span class="text-secondary" style="font-size: 0.9rem;">USD</span>
+                        <span class="text-secondary curr-symbol" style="font-size: 0.9rem;">USD</span>
                       </div>
                       <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión</span>
                     </div>
@@ -1041,26 +1068,45 @@
       </a>
     </div>
 
-    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma) -->
+    <!-- BOTONES FLOTANTES ESQUINA IZQUIERDA (Selector de Moneda + Selector de Idioma) -->
     <div class="lang-float-container" id="langContainer">
-      <ul class="lang-float-menu" id="langMenu">
-        <li><a class="lang-item active" href="index.html"><span class="badge bg-secondary me-2">ES</span> Español</a></li>
-        <li><a class="lang-item" href="index-en.html"><span class="badge bg-secondary me-2">EN</span> English</a></li>
-        <li><a class="lang-item" href="index-pt.html"><span class="badge bg-secondary me-2">PT</span> Português</a></li>
-        <li><a class="lang-item" href="index-ar.html"><span class="badge bg-secondary me-2">AR</span> العربية (قطر)</a></li>
-        <li><a class="lang-item" href="index-zh.html"><span class="badge bg-secondary me-2">ZH</span> 中文</a></li>
-        <li><a class="lang-item" href="index-ja.html"><span class="badge bg-secondary me-2">JA</span> 日本語</a></li>
-      </ul>
-      <button class="lang-float-btn" id="langBtn" aria-label="Cambiar Idioma">
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-      </button>
+      <!-- SELECTOR DE MONEDA -->
+      <div class="currency-selector-wrap">
+        <svg width="14" height="14" fill="none" stroke="#d4b895" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <select id="currencySelect" aria-label="Seleccionar Moneda">
+          <option value="USD" selected>USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GTQ">GTQ (Q)</option>
+          <option value="MXN">MXN ($)</option>
+          <option value="CNY">CNY (¥)</option>
+          <option value="AED">AED (د.إ)</option>
+          <option value="BRL">BRL (R$)</option>
+          <option value="JPY">JPY (¥)</option>
+        </select>
+      </div>
+
+      <!-- MENÚ DE IDIOMA -->
+      <div style="position: relative;">
+        <ul class="lang-float-menu" id="langMenu">
+          <li><a class="lang-item active" href="index.html"><span class="badge bg-secondary me-2">ES</span> Español</a></li>
+          <li><a class="lang-item" href="index-en.html"><span class="badge bg-secondary me-2">EN</span> English</a></li>
+          <li><a class="lang-item" href="index-pt.html"><span class="badge bg-secondary me-2">PT</span> Português</a></li>
+          <li><a class="lang-item" href="index-ar.html"><span class="badge bg-secondary me-2">AR</span> العربية (قطر)</a></li>
+          <li><a class="lang-item" href="index-zh.html"><span class="badge bg-secondary me-2">ZH</span> 中文</a></li>
+          <li><a class="lang-item" href="index-ja.html"><span class="badge bg-secondary me-2">JA</span> 日本語</a></li>
+        </ul>
+        <button class="lang-float-btn" id="langBtn" aria-label="Cambiar Idioma">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+      </div>
     </div>
 
-    <!-- LÓGICA INTELIGENTE -->
+    <!-- LÓGICA INTELIGENTE (COTIZADOR Y CONVERSOR DE MONEDAS) -->
     <script>
       const langBtn = document.getElementById('langBtn');
       const langMenu = document.getElementById('langMenu');
       const langContainer = document.getElementById('langContainer');
+      const currencySelect = document.getElementById('currencySelect');
 
       if(langBtn && langMenu) {
           langBtn.addEventListener('click', function(e) {
@@ -1072,6 +1118,41 @@
               langMenu.classList.remove('show');
             }
           });
+      }
+
+      // Tasas de cambio aproximadas respecto al Dólar (USD)
+      const exchangeRates = {
+        USD: { rate: 1.0, symbol: 'USD' },
+        EUR: { rate: 0.92, symbol: 'EUR' },
+        GTQ: { rate: 7.85, symbol: 'GTQ' },
+        MXN: { rate: 18.50, symbol: 'MXN' },
+        CNY: { rate: 7.25, symbol: 'CNY' },
+        AED: { rate: 3.67, symbol: 'AED' },
+        BRL: { rate: 5.40, symbol: 'BRL' },
+        JPY: { rate: 155.0, symbol: 'JPY' }
+      };
+
+      function updateAllCurrencies() {
+        const selectedCurr = currencySelect.value;
+        const config = exchangeRates[selectedCurr];
+
+        // Actualizar todos los elementos con precios estáticos
+        document.querySelectorAll('.price-val').forEach(el => {
+          const usdVal = parseFloat(el.getAttribute('data-usd'));
+          const converted = usdVal * config.rate;
+          // Formatear según la moneda (Japón sin decimales, otros con 2)
+          const decimals = selectedCurr === 'JPY' ? 0 : 2;
+          el.textContent = converted.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+        });
+
+        // Actualizar símbolos de moneda en las tarjetas
+        document.querySelectorAll('.curr-symbol').forEach(el => {
+          el.textContent = config.symbol;
+        });
+      }
+
+      if(currencySelect) {
+        currencySelect.addEventListener('change', updateAllCurrencies);
       }
 
       document.addEventListener('DOMContentLoaded', function() {
@@ -1096,31 +1177,36 @@
           if (areaTotal > 0) {
             totalDisplay.textContent = areaTotal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             
-            let precioFinal = 0;
+            let precioFinalUSD = 0;
             let esServicio3D = (servicioVal === 'basico' || servicioVal === 'profesional' || servicioVal === 'premium');
 
             if (servicioVal === 'basico') {
               let base = 300;
               if (areaTotal > 300) { base += (areaTotal - 300) * 3.00; }
-              precioFinal = base;
+              precioFinalUSD = base;
             } else if (servicioVal === 'profesional') {
               let base = 499;
               if (areaTotal > 300) { base += (areaTotal - 300) * 3.00; }
-              precioFinal = base;
+              precioFinalUSD = base;
             } else if (servicioVal === 'premium') {
               let base = 949;
               if (areaTotal > 300) { base += (areaTotal - 300) * 3.00; }
-              precioFinal = base;
+              precioFinalUSD = base;
             } else if (servicioVal === 'planos') {
-              precioFinal = areaTotal * 1.50;
+              precioFinalUSD = areaTotal * 1.50;
             } else if (servicioVal === 'cuantificacion') {
-              precioFinal = areaTotal * 1.75;
+              precioFinalUSD = areaTotal * 1.75;
             } else if (servicioVal === 'completo') {
-              precioFinal = areaTotal * 3.25;
+              precioFinalUSD = areaTotal * 3.25;
             }
 
-            const precioFormateado = `$${precioFinal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-            precioFinalDisplay.textContent = precioFormateado;
+            const currentCurr = currencySelect.value;
+            const config = exchangeRates[currentCurr];
+            const convertedFinal = precioFinalUSD * config.rate;
+            const decimals = currentCurr === 'JPY' ? 0 : 2;
+
+            const precioFormateado = `${config.symbol} ${convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+            precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
             if (esServicio3D && areaTotal <= 300) {
               wrapperBtnCotizar.style.display = 'none';
@@ -1130,11 +1216,11 @@
               avisoPagoDirecto.style.display = 'none';
             }
 
-            const mensaje = encodeURIComponent(`Hola. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: ${precioFormateado} USD.\nMe gustaría continuar con mi proyecto. (Múltiples divisas aceptadas. Procesamiento de pagos facturado en USD).`);
+            const mensaje = encodeURIComponent(`Hola. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: $${precioFinalUSD.toFixed(2)} USD.\nMe gustaría continuar con mi proyecto. (Múltiples divisas aceptadas. Procesamiento de pagos facturado en USD).`);
             btnEnviarCotizacion.href = `https://wa.me/18329774150?text=${mensaje}`;
           } else {
             totalDisplay.textContent = "0.00";
-            precioFinalDisplay.textContent = "$0.00";
+            precioFinalDisplay.textContent = "0.00";
             wrapperBtnCotizar.style.display = 'none';
             avisoPagoDirecto.style.display = 'block';
           }
@@ -1144,6 +1230,7 @@
           anchoInput.addEventListener('input', actualizarCotizacionTerreno);
           largoInput.addEventListener('input', actualizarCotizacionTerreno);
           servicioSelect.addEventListener('change', actualizarCotizacionTerreno);
+          currencySelect.addEventListener('change', actualizarCotizacionTerreno);
         }
 
         const fAncho = document.getElementById('f-ancho');
@@ -1202,12 +1289,20 @@
           }
 
           const costoRender = renderOn ? 40.00 : 0.00;
-          const totalFinal = subtotal + costoNiveles + costoRender;
+          const totalFinalUSD = subtotal + costoNiveles + costoRender;
+
+          const currentCurr = currencySelect.value;
+          const config = exchangeRates[currentCurr];
+          const convertedTotal = totalFinalUSD * config.rate;
+          const convertedBase = precioBase * config.rate;
+          const convertedRender = costoRender * config.rate;
+          const convertedNiveles = costoNiveles * config.rate;
+          const decimals = currentCurr === 'JPY' ? 0 : 2;
 
           fAreaText.textContent = area.toFixed(2) + ' m²';
-          fBaseText.textContent = '$' + precioBase.toFixed(2);
+          fBaseText.textContent = `${config.symbol} ${convertedBase.toFixed(decimals)}`;
           fComplexLabel.textContent = `Nivel de complejidad (${complejidadTexto} ${complejidad.toFixed(2)}x)`;
-          fSubtotalText.textContent = '$' + subtotal.toFixed(2);
+          fSubtotalText.textContent = `${config.symbol} ${(subtotal * config.rate).toFixed(decimals)}`;
           
           const rowNivelesExtra = document.getElementById('row-niveles-extra');
           const fNivelesLabelUI = document.getElementById('f-niveles-label');
@@ -1216,19 +1311,19 @@
           if (costoNiveles > 0) {
             rowNivelesExtra.style.setProperty('display', 'flex', 'important');
             fNivelesLabelUI.textContent = labelNiveles;
-            fNivelesCostoUI.textContent = '+$' + costoNiveles.toFixed(2);
+            fNivelesCostoUI.textContent = `+${config.symbol} ${convertedNiveles.toFixed(decimals)}`;
           } else {
             rowNivelesExtra.style.setProperty('display', 'none', 'important');
           }
 
-          fRenderText.textContent = '$' + costoRender.toFixed(2);
-          fTotal.textContent = '$' + totalFinal.toFixed(2);
+          fRenderText.textContent = `${config.symbol} ${convertedRender.toFixed(decimals)}`;
+          fTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
 
           let articulo = tipoTexto === "vivienda" ? "una" : "un";
           let pluralNiveles = nivelesTexto === "1" ? "1 nivel" : nivelesTexto + " niveles";
           let textoRender = renderOn ? "con 3 Renders fotorealistas" : "sin Renders";
 
-          const waMessage = encodeURIComponent(`Hola. Acabo de utilizar la calculadora de fachadas en su sitio web. Mi proyecto tiene un área aproximada de ${area.toFixed(2)} m², es ${articulo} ${tipoTexto} de ${pluralNiveles}, seleccioné el paquete ${complejidadTexto} ${textoRender}. El precio estimado fue de USD $${totalFinal.toFixed(2)}. Me gustaría continuar con mi proyecto.`);
+          const waMessage = encodeURIComponent(`Hola. Acabo de utilizar la calculadora de fachadas en su sitio web. Mi proyecto tiene un área aproximada de ${area.toFixed(2)} m², es ${articulo} ${tipoTexto} de ${pluralNiveles}, seleccioné el paquete ${complejidadTexto} ${textoRender}. El precio estimado fue de $${totalFinalUSD.toFixed(2)} USD. Me gustaría continuar con mi proyecto.`);
           
           urlWhatsAppFachada = `https://wa.me/18329774150?text=${waMessage}`;
         }
@@ -1263,6 +1358,7 @@
           fRadiosComplejidad.forEach(radio => radio.addEventListener('change', registrarInteraccion));
           fRadiosTipo.forEach(radio => radio.addEventListener('change', registrarInteraccion));
           fRadiosNiveles.forEach(radio => radio.addEventListener('change', registrarInteraccion));
+          currencySelect.addEventListener('change', actualizarCalculadoraFachada);
           
           actualizarCalculadoraFachada();
         }
