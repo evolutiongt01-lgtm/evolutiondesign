@@ -60,14 +60,6 @@
       }
 
       /* =========================================
-         OCULTAR BARRA FEA DE GOOGLE TRANSLATE
-         ========================================= */
-      .goog-te-banner-frame.skiptranslate { display: none !important; }
-      body { top: 0px !important; position: static !important; }
-      #goog-gt-tt { display: none !important; box-shadow: none !important; }
-      .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
-
-      /* =========================================
          NAVEGACIÓN ESCRITORIO (Mac/PC) - TIPO CÁPSULA
          ========================================= */
       .desktop-nav {
@@ -245,19 +237,6 @@
         }
       }
 
-      .btn-pill-outline {
-        border: 1px solid #444;
-        border-radius: 50px;
-        color: #fff;
-        padding: 0.6rem 1.2rem;
-        font-size: 0.9rem;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        width: fit-content;
-        margin-bottom: 3rem;
-      }
       .accent-text { color: #d4b895; }
       
       .grid-buttons {
@@ -544,7 +523,7 @@
       }
       
       /* =========================================
-         BOTÓN FLOTANTE DE IDIOMA (CÓDIGO PURO Y ESTABLE)
+         BOTÓN FLOTANTE DE IDIOMA
          ========================================= */
       .lang-float-container {
         position: fixed;
@@ -570,15 +549,15 @@
         padding: 0;
         outline: none;
       }
-      .lang-float-btn:hover, .lang-float-btn:focus {
+      .lang-float-btn:hover {
         transform: scale(1.1);
         background-color: rgba(255, 255, 255, 0.15) !important;
       }
       .lang-float-menu {
-        display: none; /* Oculto por defecto */
+        display: none;
         flex-direction: column;
         position: absolute;
-        bottom: 65px; /* Sube la cajita por encima del botón */
+        bottom: 65px;
         left: 0;
         background: rgba(15, 15, 15, 0.95) !important;
         backdrop-filter: blur(20px) !important;
@@ -591,7 +570,7 @@
         gap: 5px;
       }
       .lang-float-menu.show {
-        display: flex; /* Se muestra al hacer clic */
+        display: flex;
         animation: popUp 0.3s ease;
       }
       @keyframes popUp {
@@ -610,7 +589,6 @@
         background: transparent !important;
         font-weight: 500 !important;
         font-size: 0.95rem !important;
-        cursor: pointer;
       }
       .lang-item:hover, .lang-item.active {
         background: rgba(255, 255, 255, 0.1) !important;
@@ -620,9 +598,6 @@
   </head>
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
-
-    <!-- MOTOR INVISIBLE DE GOOGLE TRANSLATE -->
-    <div id="google_translate_element" style="display:none;"></div>
 
     <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) - CÁPSULA LIMPIA -->
     <nav class="desktop-nav fixed-top" id="navScroll">
@@ -1160,21 +1135,19 @@
       
     </div>
 
-    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma Custom) -->
+    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma Real) -->
     <div class="lang-float-container" id="langContainer">
       <ul class="lang-float-menu" id="langMenu">
-        <li class="lang-item active" onclick="changeLanguage('es', this)"><span style="font-size: 1.2rem;">🇪🇸</span> Español</li>
-        <li class="lang-item" onclick="changeLanguage('en', this)"><span style="font-size: 1.2rem;">🇺🇸</span> English</li>
-        <li class="lang-item" onclick="changeLanguage('pt', this)"><span style="font-size: 1.2rem;">🇧🇷</span> Português</li>
+        <li><a class="lang-item active" href="index.html"><span style="font-size: 1.2rem;">🇪🇸</span> Español</a></li>
+        <li><a class="lang-item" href="index-en.html"><span style="font-size: 1.2rem;">🇺🇸</span> English</a></li>
       </ul>
       <button class="lang-float-btn" id="langBtn" aria-label="Cambiar Idioma">
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
       </button>
     </div>
 
-    <!-- LÓGICA INTELIGENTE -->
+    <!-- LÓGICA INTELIGENTE CONDICIONAL Y COTIZADOR -->
     <script>
-      // Lógica de Traducción Personalizada
       const langBtn = document.getElementById('langBtn');
       const langMenu = document.getElementById('langMenu');
       const langContainer = document.getElementById('langContainer');
@@ -1191,33 +1164,6 @@
           });
       }
 
-      function changeLanguage(langCode, element) {
-        var selectField = document.querySelector('select.goog-te-combo');
-        if (selectField) {
-          selectField.value = langCode;
-          // Evento especial para engañar a Google Translate
-          selectField.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-        }
-        
-        // Efecto visual en la lista
-        document.querySelectorAll('.lang-item').forEach(function(item) {
-          item.classList.remove('active');
-        });
-        element.classList.add('active');
-        langMenu.classList.remove('show');
-      }
-
-      // Iniciador oculto de Google Translate
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'es', 
-          includedLanguages: 'en,pt,es', 
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
-          autoDisplay: false
-        }, 'google_translate_element');
-      }
-
-      // Lógica del Cotizador
       document.addEventListener('DOMContentLoaded', function() {
         const servicioSelect = document.getElementById('calcServicioSelect');
         const anchoInput = document.getElementById('calcAncho');
@@ -1290,9 +1236,7 @@
         }
       });
     </script>
-    
-    <!-- Script Oficial de Google Translate -->
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/aos.js"></script>
     <script>
