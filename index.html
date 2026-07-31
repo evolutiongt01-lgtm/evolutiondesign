@@ -118,11 +118,11 @@
       }
 
       /* =========================================
-         WIDGETS DE RELOJES (ESTILO APPLE BAJO LA NAVBAR)
+         WIDGETS DE RELOJES (ESTILO APPLE ESQUINA SUPERIOR DERECHA)
          ========================================= */
       .clock-float-container {
         position: fixed;
-        top: 100px; /* Bajado para no chocar con la barra */
+        top: 100px;
         right: 30px;
         z-index: 9998;
       }
@@ -166,6 +166,14 @@
         0% { transform: scale(0.95); opacity: 0.8; }
         50% { transform: scale(1.2); opacity: 1; }
         100% { transform: scale(0.95); opacity: 0.8; }
+      }
+
+      /* =========================================
+         ESTILO PARA FONDO ATENUADO EN PLANOS 2D
+         ========================================= */
+      .section-planos-bg {
+        position: relative;
+        background: linear-gradient(180deg, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.80) 50%, rgba(0,0,0,0.90) 100%), url('img/hero-pc.jpg') center/cover no-repeat !important;
       }
 
       /* =========================================
@@ -1045,8 +1053,8 @@
 
       </div>
 
-      <!-- SECCIÓN DE PLANOS 2D -->
-      <div id="servicios-tecnicos" class="bg-black py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
+      <!-- SECCIÓN DE PLANOS 2D CON IMAGEN ATENUADA DE FONDO -->
+      <div id="servicios-tecnicos" class="section-planos-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           
           <div class="text-center mb-5" data-aos="fade">
