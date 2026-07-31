@@ -213,39 +213,86 @@
       /* =========================================
          NUEVA CALCULADORA DE FACHADAS (ESTILO OSCURO)
          ========================================= */
-      .facade-calc-bg { background: linear-gradient(to bottom, #080808, #000); }
-      .facade-calc-card { background: #0d0d0d; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.8); overflow: hidden; }
-      .facade-box-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 2rem; height: 100%; }
-      .facade-icon { flex-shrink: 0; color: rgba(255,255,255,0.5); }
+      .facade-calc-bg {
+        background: linear-gradient(to bottom, #080808, #000);
+      }
+      .facade-calc-card {
+        background: #0d0d0d;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 24px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+        overflow: hidden;
+      }
+      .facade-box-panel {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 16px;
+        padding: 2rem;
+        height: 100%;
+      }
+      .facade-icon {
+        flex-shrink: 0; 
+        color: rgba(255,255,255,0.5);
+      }
       
       /* Inputs Numericos Personalizados (Ancho/Altura) */
-      .facade-input-wrap { display: flex; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; width: 120px; transition: border-color 0.3s; }
-      .facade-input-wrap:focus-within { border-color: #d4b895; }
-      .facade-num-input { background: transparent; border: none; color: #fff; width: 100%; padding: 0.6rem 0.8rem; text-align: right; outline: none; -moz-appearance: textfield; font-weight: bold; font-size: 0.95rem; }
+      .facade-input-wrap {
+        display: flex; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; width: 120px; transition: border-color 0.3s;
+      }
+      .facade-input-wrap:focus-within {
+        border-color: #d4b895;
+      }
+      .facade-num-input {
+        background: transparent; border: none; color: #fff; width: 100%; padding: 0.6rem 0.8rem; text-align: right; outline: none; -moz-appearance: textfield; font-weight: bold; font-size: 0.95rem;
+      }
       .facade-num-input::-webkit-outer-spin-button, .facade-num-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-      .facade-unit { background: rgba(255,255,255,0.08); color: #aaa; padding: 0.6rem 0.8rem; font-size: 0.85rem; border-left: 1px solid rgba(255,255,255,0.05); }
+      .facade-unit {
+        background: rgba(255,255,255,0.08); color: #aaa; padding: 0.6rem 0.8rem; font-size: 0.85rem; border-left: 1px solid rgba(255,255,255,0.05);
+      }
 
       /* Filas de la calculadora */
-      .facade-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-      .facade-row-col { display: flex; flex-direction: column; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-      .facade-row:last-child, .facade-row-col:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+      .facade-row {
+        display: flex; align-items: center; justify-content: space-between; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      .facade-row-col {
+        display: flex; flex-direction: column; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      .facade-row:last-child, .facade-row-col:last-child {
+        border-bottom: none; margin-bottom: 0; padding-bottom: 0;
+      }
 
       /* Radio Buttons Estilo Cajas Rígidas */
-      .facade-radio-group { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 1rem; }
+      .facade-radio-group { 
+        display: flex; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 1rem;
+      }
       .facade-radio-group input[type="radio"] { display: none; }
-      .facade-radio-label { flex: 1 1 0; min-width: 85px; text-align: center; padding: 0.8rem 0.2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 0.75rem; color: #888; cursor: pointer; transition: all 0.3s; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.3; }
-      .facade-radio-group input[type="radio"]:checked + .facade-radio-label { border-color: #d4b895; color: #fff; background: rgba(212, 184, 149, 0.08); }
+      .facade-radio-label {
+        flex: 1 1 0; min-width: 85px; text-align: center; padding: 0.8rem 0.2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 0.75rem; color: #888; cursor: pointer; transition: all 0.3s; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.3;
+      }
+      .facade-radio-group input[type="radio"]:checked + .facade-radio-label {
+        border-color: #d4b895; color: #fff; background: rgba(212, 184, 149, 0.08);
+      }
 
       /* iOS Toggle Render */
-      .facade-switch { position: relative; display: inline-block; width: 48px; height: 26px; flex-shrink: 0; }
+      .facade-switch {
+        position: relative; display: inline-block; width: 48px; height: 26px; flex-shrink: 0;
+      }
       .facade-switch input { opacity: 0; width: 0; height: 0; }
-      .f-slider-toggle { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
-      .f-slider-toggle:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+      .f-slider-toggle {
+        position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px;
+      }
+      .f-slider-toggle:before {
+        position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;
+      }
       input:checked + .f-slider-toggle { background-color: #d4b895; }
       input:checked + .f-slider-toggle:before { transform: translateX(22px); }
 
+      .f-feature-icon { color: #d4b895; margin-bottom: 8px; flex-shrink: 0; }
+
       /* Panel Resultados */
-      .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
+      .facade-results-panel {
+        background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem;
+      }
 
       /* =========================================
          SELECTOR DE IDIOMA
@@ -322,13 +369,13 @@
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           Servicios
         </a>
-        <a href="#servicios-tecnicos" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
-          Planos
-        </a>
         <a href="#visualizacion" class="tab-item">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
           Tarifas 3D
+        </a>
+        <a href="#servicios-tecnicos" class="tab-item">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
+          Planos
         </a>
         <a href="#cuantificacion" class="tab-item">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg>
@@ -381,20 +428,22 @@
       <!-- 2. SECCIÓN DE PLANOS 2D CON FONDO ATENUADO -->
       <div id="servicios-tecnicos" class="section-planos-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
+          
           <div class="text-center mb-5" data-aos="fade">
             <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PRECISIÓN EN CADA LÍNEA</span>
-            <h2 class="display-4 fw-bold mb-3 text-white">Planos 2D Completos</h2>
-            <p class="text-secondary mx-auto" style="max-width: 600px;">Documentación arquitectónica profesional elaborada con precisión, lista para construir y cumplir con todos los estándares.</p>
+            <h2 class="display-4 fw-bold mb-3 text-white">Diseño de Planos 2D</h2>
+            <p class="text-secondary mx-auto" style="max-width: 700px;">Los planos son el manual de instrucciones exacto de tu proyecto. Garantizan la ejecución correcta de la obra, evitan sobrecostos por errores de construcción y son indispensables para cualquier trámite legal o municipal.</p>
           </div>
 
           <div class="features-grid-3">
+            
             <div class="glass-panel p-4 rounded-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3 h-100" data-aos="fade-up">
               <div class="p-3 rounded-3 shrink-0" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"></path></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">ARQUITECTÓNICO Y FACHADAS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Plantas arquitectónicas y elevaciones detalladas.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">ARQUITECTÓNICOS Y ACOTADOS</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Distribución de espacios y medidas exactas para albañilería.</p>
               </div>
             </div>
 
@@ -403,8 +452,8 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">SECCIONES Y TECHOS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Cortes constructivos y planta de techos.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">INSTALACIONES ELÉCTRICAS</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Planos de iluminación, fuerza y cableado estructural.</p>
               </div>
             </div>
 
@@ -413,24 +462,27 @@
                 <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
               </div>
               <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">DETALLES Y CUADROS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Detalles constructivos y cuadros de acabados.</p>
+                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">OTROS SERVICIOS 2D</h6>
+                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Planos de ubicación, techos, fachadas, y detalles constructivos.</p>
               </div>
             </div>
+
           </div>
 
+          <!-- Panel de Tarifa 2D -->
           <div class="row justify-content-center">
             <div class="col-12 col-lg-8" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 text-center">
-                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">TARIFA ESTÁNDAR</span>
+                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">TARIFA ESTÁNDAR POR PLANO</span>
                 <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
                   <h1 class="display-3 fw-bold text-white mb-0">$2.00</h1>
                   <span class="accent-text fs-5 fw-medium">USD/m²</span>
                 </div>
-                <p class="text-secondary mb-0">Incluye planta arquitectónica, fachadas, secciones, techos y detalles constructivos completos.</p>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo tipo de plano</strong> a tu elección (ej. Arquitectónico, Acotado, Iluminación, Ubicación, etc.). Contáctanos para recibir una cotización especial si requieres un juego de planos completo.</p>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -467,6 +519,7 @@
             </div>
           </div>
 
+          <!-- PAQUETE COMBINADO -->
           <div class="row mt-5 justify-content-center" data-aos="fade">
             <div class="col-12 col-lg-8">
               <div class="glass-panel-accent p-5 rounded-5 text-center">
@@ -828,12 +881,6 @@
               </div>
             </div>
 
-            <!-- Nota Precio Mínimo -->
-            <div class="text-center mt-5 text-secondary d-flex justify-content-center align-items-center gap-2" style="font-size: 0.8rem;">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
-              <span>El precio mínimo por proyecto es de USD $80.00</span>
-            </div>
-
           </div>
         </div>
       </div>
@@ -892,7 +939,7 @@
       </a>
     </div>
 
-    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma) -->
+    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma Sin Emojis) -->
     <div class="lang-float-container" id="langContainer">
       <ul class="lang-float-menu" id="langMenu">
         <li><a class="lang-item active" href="index.html"><span class="badge bg-secondary me-2">ES</span> Español</a></li>
