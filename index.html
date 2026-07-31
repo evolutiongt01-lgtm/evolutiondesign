@@ -611,7 +611,7 @@
               <div class="glass-panel p-5 rounded-5 h-100">
                 <h3 class="fw-lighter text-center">BÁSICO</h3>
                 <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold">$199 <span class="fs-6 text-secondary">USD</span></h2></div>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold">$300 <span class="fs-6 text-secondary">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
                   <li class="mb-2">✓ Modelado 3D profesional</li>
                   <li class="mb-2">✓ 8 Renders realistas</li>
@@ -628,7 +628,7 @@
                 <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MÁS POPULAR</span>
                 <h3 class="fw-lighter text-center mt-3">PROFESIONAL</h3>
                 <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold text-white">$399 <span class="fs-6 text-secondary">USD</span></h2></div>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold text-white">$499 <span class="fs-6 text-secondary">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
                   <li class="mb-2">✓ Modelado 3D completo</li>
                   <li class="mb-2">✓ 16 Renders realistas</li>
@@ -645,7 +645,7 @@
                 <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MÁXIMO NIVEL / VIP</span>
                 <h3 class="fw-lighter text-center mt-3 text-white">PREMIUM</h3>
                 <p class="text-center accent-text small fw-medium">EL PAQUETE DEFINITIVO</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold accent-text">$799 <span class="fs-6 text-secondary">USD</span></h2></div>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold accent-text">$949 <span class="fs-6 text-secondary">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-light mb-5" style="opacity: 0.9;">
                   <li class="mb-2">✓ Modelado 3D completo</li>
                   <li class="mb-2">✓ 26 Renders realistas</li>
@@ -678,9 +678,9 @@
                       <span class="small text-secondary d-block mb-1">Seleccionar Servicio</span>
                       <div class="calc-input-group-pro text-start mx-auto" style="max-width: 100%;">
                         <select id="calcServicioSelect" class="calc-select-field w-100">
-                          <option value="basico">Paquete 3D Básico ($199 base)</option>
-                          <option value="profesional">Paquete 3D Profesional ($399 base)</option>
-                          <option value="premium">Paquete 3D Premium ($799 base)</option>
+                          <option value="basico">Paquete 3D Básico ($300 base)</option>
+                          <option value="profesional">Paquete 3D Profesional ($499 base)</option>
+                          <option value="premium">Paquete 3D Premium ($949 base)</option>
                           <option value="planos">Planos 2D ($1.50 / m²)</option>
                           <option value="cuantificacion">Cuant. de Materiales ($1.75 / m²)</option>
                           <option value="completo">Planos + Cuantificación ($3.25 / m²)</option>
@@ -1075,15 +1075,15 @@
             let esServicio3D = (servicioVal === 'basico' || servicioVal === 'profesional' || servicioVal === 'premium');
 
             if (servicioVal === 'basico') {
-              let base = 199;
+              let base = 300;
               if (areaTotal > 300) { base += (areaTotal - 300) * 3.00; }
               precioFinal = base;
             } else if (servicioVal === 'profesional') {
-              let base = 399;
+              let base = 499;
               if (areaTotal > 300) { base += (areaTotal - 300) * 3.00; }
               precioFinal = base;
             } else if (servicioVal === 'premium') {
-              let base = 799;
+              let base = 949;
               if (areaTotal > 300) { base += (areaTotal - 300) * 3.00; }
               precioFinal = base;
             } else if (servicioVal === 'planos') {
