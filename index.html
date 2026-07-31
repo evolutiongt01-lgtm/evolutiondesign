@@ -77,13 +77,15 @@
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(212, 184, 149, 0.4);
         color: #d4b895;
-        padding: 0.8rem 1.8rem;
+        padding: 0.75rem 1.5rem;
         border-radius: 50px;
         text-decoration: none !important;
         font-weight: 500;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         transition: all 0.3s ease;
-        cursor: pointer;
+        display: inline-block;
+        text-align: center;
+        white-space: normal;
       }
       .btn-liquid-glass:hover, .btn-liquid-glass:focus, .btn-liquid-glass:active {
         background: #fff;
@@ -129,28 +131,6 @@
       .nav-pill-link:hover, .nav-pill-link.active { color: #fff; }
       .nav-pill-link.active::after {
         content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px; background-color: #fff; border-radius: 2px;
-      }
-
-      /* =========================================
-         WIDGETS DE RELOJES PC (ESQUINA SUPERIOR DERECHA)
-         ========================================= */
-      .clock-float-container {
-        position: fixed; top: 100px; right: 30px; z-index: 9998;
-      }
-      .apple-clock-group { display: flex; gap: 10px; }
-      .apple-clock-widget {
-        display: flex; align-items: center; gap: 8px; background: rgba(15, 15, 15, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(20px) saturate(200%); -webkit-backdrop-filter: blur(20px) saturate(200%); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.8rem; color: #fff; font-weight: 400; letter-spacing: 0.3px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      }
-      .apple-clock-dot-gt {
-        width: 6px; height: 6px; background-color: #34c759; border-radius: 50%; box-shadow: 0 0 8px rgba(52, 199, 89, 0.8); animation: pulse-dot 2s infinite;
-      }
-      .apple-clock-dot-mia {
-        width: 6px; height: 6px; background-color: #0a84ff; border-radius: 50%; box-shadow: 0 0 8px rgba(10, 132, 255, 0.8); animation: pulse-dot 2s infinite;
-      }
-      @keyframes pulse-dot {
-        0% { transform: scale(0.95); opacity: 0.8; }
-        50% { transform: scale(1.2); opacity: 1; }
-        100% { transform: scale(0.95); opacity: 0.8; }
       }
 
       /* =========================================
@@ -238,6 +218,8 @@
       .calc-select-field option { background-color: #111; color: #fff; }
       .calc-input-field::placeholder { color: rgba(255, 255, 255, 0.3); }
       .calc-result-display-box { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; text-align: left; }
+      .features-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+      @media(min-width: 992px) { .features-grid-3 { grid-template-columns: repeat(3, 1fr); } }
 
       /* =========================================
          NUEVA CALCULADORA DE FACHADAS (ESTILO OSCURO)
@@ -247,21 +229,25 @@
       .facade-box-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 2rem; height: 100%; }
       .facade-icon { flex-shrink: 0; color: rgba(255,255,255,0.5); }
       
+      /* Inputs Numericos Personalizados (Ancho/Altura) */
       .facade-input-wrap { display: flex; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; width: 120px; transition: border-color 0.3s; }
       .facade-input-wrap:focus-within { border-color: #d4b895; }
       .facade-num-input { background: transparent; border: none; color: #fff; width: 100%; padding: 0.6rem 0.8rem; text-align: right; outline: none; -moz-appearance: textfield; font-weight: bold; font-size: 0.95rem; }
       .facade-num-input::-webkit-outer-spin-button, .facade-num-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
       .facade-unit { background: rgba(255,255,255,0.08); color: #aaa; padding: 0.6rem 0.8rem; font-size: 0.85rem; border-left: 1px solid rgba(255,255,255,0.05); }
 
+      /* Filas de la calculadora */
       .facade-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
       .facade-row-col { display: flex; flex-direction: column; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
       .facade-row:last-child, .facade-row-col:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
+      /* Radio Buttons Estilo Cajas Rígidas */
       .facade-radio-group { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 1rem; }
       .facade-radio-group input[type="radio"] { display: none; }
       .facade-radio-label { flex: 1 1 0; min-width: 85px; text-align: center; padding: 0.8rem 0.2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 0.75rem; color: #888; cursor: pointer; transition: all 0.3s; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.3; }
       .facade-radio-group input[type="radio"]:checked + .facade-radio-label { border-color: #d4b895; color: #fff; background: rgba(212, 184, 149, 0.08); }
 
+      /* iOS Toggle Render */
       .facade-switch { position: relative; display: inline-block; width: 48px; height: 26px; flex-shrink: 0; }
       .facade-switch input { opacity: 0; width: 0; height: 0; }
       .f-slider-toggle { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
@@ -270,6 +256,8 @@
       input:checked + .f-slider-toggle:before { transform: translateX(22px); }
 
       .f-feature-icon { color: #d4b895; margin-bottom: 8px; flex-shrink: 0; }
+
+      /* Panel Resultados */
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
       /* =========================================
@@ -289,7 +277,7 @@
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-    <!-- WIDGETS DE RELOJES GT Y MIA (SÓLO PC) -->
+    <!-- WIDGETS DE RELOJES GT Y MIA (ESQUINA SUPERIOR DERECHA - SÓLO PC) -->
     <div class="clock-float-container d-none d-lg-block">
       <div class="apple-clock-group">
         <div class="apple-clock-widget">
@@ -307,16 +295,21 @@
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
+          
           <a href="index.html" class="d-flex align-items-center">
             <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
           </a>
+
           <div class="nav-pill-links d-none d-xl-flex">
             <a href="index.html" class="nav-pill-link active">Inicio</a>
             <a href="#servicios-destacados" class="nav-pill-link">Servicios</a>
             <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
+            <a href="#fachadas" class="nav-pill-link">Fachadas</a>
             <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
           </div>
+
           <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Descargar Software &rarr;</a>
+
         </div>
       </div>
     </nav>
@@ -362,17 +355,45 @@
       <!-- HERO -->
       <div class="hero-app">
         <div class="hero-content">
+
           <div style="width: 40px; height: 2px; background-color: #fff; margin-bottom: 1.5rem;"></div>
-          <h1 class="display-3 fw-bold lh-1 mb-4">Visualizamos<br>tu <span class="accent-text">visión.</span></h1>
-          <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.</p>
+          
+          <h1 class="display-3 fw-bold lh-1 mb-4">
+            Visualizamos<br>
+            tu <span class="accent-text">visión.</span>
+          </h1>
+          
+          <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">
+            Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.
+          </p>
+
+          <!-- BOTONES DE PAQUETES LIQUID GLASS -->
           <div class="grid-buttons">
-            <a href="#visualizacion" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>3D &rarr;</span></a>
-            <a href="#servicios-tecnicos" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>2D &rarr;</span></a>
+            <a href="#visualizacion" class="sq-btn">
+              <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              <span class="text-center fw-medium">Ver Paquetes<br>3D &rarr;</span>
+            </a>
+            
+            <a href="#servicios-tecnicos" class="sq-btn">
+              <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
+              <span class="text-center fw-medium">Ver Paquetes<br>2D &rarr;</span>
+            </a>
           </div>
+
+          <!-- INSIGNIAS DE CONFIANZA -->
           <div class="trust-badges">
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg><span>Calidad<br>Garantizada</span></div>
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Entrega<br>Puntual</span></div>
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg><span>Asesoría<br>Personalizada</span></div>
+            <div class="trust-item">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+              <span>Calidad<br>Garantizada</span>
+            </div>
+            <div class="trust-item">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>Entrega<br>Puntual</span>
+            </div>
+            <div class="trust-item">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg>
+              <span>Asesoría<br>Personalizada</span>
+            </div>
           </div>
         </div>
       </div>
@@ -399,7 +420,7 @@
         </div>
       </section>
 
-      <!-- 2. SECCIÓN DE PLANOS 2D CON FONDO ATENUADO -->
+      <!-- 2. SECCIÓN DE PLANOS 2D -->
       <div id="servicios-tecnicos" class="section-planos-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -450,7 +471,7 @@
                 </div>
                 <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo tipo de plano</strong> a tu elección (ej. Arquitectónico, Acotado, Iluminación, Ubicación, etc.). Contáctanos para cotizar un juego de planos completo.</p>
                 <div class="mt-4 pt-2">
-                  <a href="#cotizador-general" class="btn-liquid-glass d-inline-block">↓ Haz tu cálculo y continúa tu proyecto abajo</a>
+                  <a href="#cotizador-general" class="btn-liquid-glass">↓ Haz tu cálculo y continúa tu proyecto abajo</a>
                 </div>
               </div>
             </div>
@@ -458,7 +479,7 @@
         </div>
       </div>
 
-      <!-- 3. SECCIÓN DE DISEÑO DE FACHADAS (NUEVO) -->
+      <!-- 3. SECCIÓN DE DISEÑO DE FACHADAS -->
       <div id="fachadas" class="py-vh-5 glass-container-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -509,7 +530,7 @@
                 </div>
                 <p class="text-secondary mb-0" style="font-size: 0.9rem;">Mejora tu presentación agregando <strong>3 Renders hiperrealistas</strong> de tu fachada elegida para visualizar la iluminación y materiales a la perfección.</p>
                 <div class="mt-4 pt-2">
-                  <a href="#calculadora-fachadas" class="btn-liquid-glass d-inline-block">↓ Calcula el precio exacto de tu fachada abajo</a>
+                  <a href="#calculadora-fachadas" class="btn-liquid-glass">↓ Calcula el precio exacto de tu fachada abajo</a>
                 </div>
               </div>
             </div>
@@ -568,7 +589,7 @@
                 </div>
                 <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para <strong>un solo cálculo de material</strong> a tu elección (ej. Obra gris, Acabados, Hierro, etc.). Contáctanos para cotizar el listado completo de tu obra.</p>
                 <div class="mt-4 pt-2">
-                  <a href="#cotizador-general" class="btn-liquid-glass d-inline-block">↓ Ir al Cotizador Inteligente</a>
+                  <a href="#cotizador-general" class="btn-liquid-glass">↓ Ir al Cotizador Inteligente</a>
                 </div>
               </div>
             </div>
@@ -582,7 +603,7 @@
                 <h2 class="display-4 fw-bold my-3 accent-text">$3.25 <span class="fs-6 text-light">USD/m²</span></h2>
                 <p class="text-secondary mb-4" style="position: relative; z-index: 10;">* Incluye <strong>un tipo de plano 2D</strong> y <strong>un cálculo de material</strong> a tu elección. Ideal para arrancar tu proyecto con precisión y ahorrar recursos.</p>
                 <div style="position: relative; z-index: 10;">
-                  <a href="#cotizador-general" class="btn-liquid-glass d-inline-block">↓ Cotizar paquete combinado</a>
+                  <a href="#cotizador-general" class="btn-liquid-glass">↓ Cotizar paquete combinado</a>
                 </div>
               </div>
             </div>
@@ -904,6 +925,37 @@
                       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                       Tus datos están protegidos y son confidenciales
                     </div>
+                  </div>
+
+                  <!-- QUÉ INCLUYE EL DISEÑO (Con bastante espacio) -->
+                  <div class="mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
+                    <h6 class="text-white mb-4 fw-bold" style="font-size: 0.9rem;">¿Qué incluye el diseño?</h6>
+                    <ul class="list-unstyled text-secondary m-0" style="font-size: 0.8rem;">
+                      <li class="mb-3 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Propuesta arquitectónica moderna y personalizada.
+                      </li>
+                      <li class="mb-3 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Selección de materiales y acabados.
+                      </li>
+                      <li class="mb-3 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Diseño de puertas, ventanas y balcones.
+                      </li>
+                      <li class="mb-3 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Iluminación arquitectónica.
+                      </li>
+                      <li class="mb-3 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Fachadas listas para integrarse a tus planos.
+                      </li>
+                      <li class="d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Una ronda de ajustes menores.
+                      </li>
+                    </ul>
                   </div>
 
                 </div>
