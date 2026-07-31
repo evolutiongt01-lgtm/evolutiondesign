@@ -60,7 +60,7 @@
       }
 
       /* =========================================
-         NAVEGACIÓN ESCRITORIO (Mac/PC) - TIPO CÁPSULA
+         NAVEGACIÓN ESCRITORIO (Mac/PC)
          ========================================= */
       .desktop-nav {
         display: none !important;
@@ -81,12 +81,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        max-width: 1100px;
+        max-width: 1150px;
         margin: 0 auto;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
       }
       .nav-pill-links {
-        display: flex; gap: 2.5rem; align-items: center;
+        display: flex; gap: 2rem; align-items: center;
       }
       .nav-pill-link {
         color: rgba(255, 255, 255, 0.65);
@@ -171,9 +171,9 @@
          SERVICIOS CARRUSEL
          ========================================= */
       .services-section { padding: 6rem 0; background: #000; }
-      .services-scroll-container { display: flex; gap: 1.5rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 1rem; }
+      .services-scroll-container { display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 1rem; }
       .services-scroll-container::-webkit-scrollbar { display: none; }
-      .service-card { flex: 0 0 280px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s ease, border-color 0.3s ease; }
+      .service-card { flex: 0 0 280px; scroll-snap-align: start; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s ease, border-color 0.3s ease; }
       .service-card:hover { border-color: rgba(212, 184, 149, 0.5); transform: translateY(-5px); }
       .service-card-video { width: 100%; height: 180px; object-fit: cover; }
       .service-card-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
@@ -187,12 +187,12 @@
          ========================================= */
       .glass-panel { background: rgba(255, 255, 255, 0.03) !important; backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%); border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); position: relative; overflow: hidden; }
       .glass-panel-accent { background: rgba(212, 184, 149, 0.05) !important; backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%); border: 1px solid rgba(212, 184, 149, 0.3) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4); position: relative; overflow: hidden; }
-      .glass-panel-vip { background: linear-gradient(145deg, rgba(212, 184, 149, 0.08) 0%, rgba(10, 10, 10, 0.9) 100%) !important; backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%); border: 2px solid rgba(212, 184, 149, 0.6) !important; box-shadow: 0 0 35px rgba(212, 184, 149, 0.25), 0 10px 40px rgba(0, 0, 0, 0.6); position: relative; overflow: visible !important; animation: vip-pulse 4s infinite ease-in-out; }
+      .glass-panel-vip { background: linear-gradient(145deg, rgba(212, 184, 149, 0.08) 0%, rgba(10, 10, 10, 0.9) 100%) !important; border: 2px solid rgba(212, 184, 149, 0.6) !important; animation: vip-pulse 4s infinite ease-in-out; }
       @keyframes vip-pulse { 0% { border-color: rgba(212, 184, 149, 0.4); box-shadow: 0 0 20px rgba(212, 184, 149, 0.15); } 50% { border-color: rgba(212, 184, 149, 0.9); box-shadow: 0 0 40px rgba(212, 184, 149, 0.35); } 100% { border-color: rgba(212, 184, 149, 0.4); box-shadow: 0 0 20px rgba(212, 184, 149, 0.15); } }
       .glass-container-bg { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,1) 80%); }
 
       /* =========================================
-         COTIZADOR GENERAL DE TERRENOS
+         DISEÑO PRO COTIZADOR TERRENO (GENERAL)
          ========================================= */
       .calc-pro-container { position: relative; border-radius: 24px; background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.8) 100%); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); width: 100%; }
       @media (min-width: 992px) { .calc-divider-vertical { border-left: 1px solid rgba(255, 255, 255, 0.1); padding-left: 3rem; } }
@@ -202,11 +202,9 @@
       .calc-select-field option { background-color: #111; color: #fff; }
       .calc-input-field::placeholder { color: rgba(255, 255, 255, 0.3); }
       .calc-result-display-box { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; text-align: left; }
-      .features-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
-      @media(min-width: 992px) { .features-grid-3 { grid-template-columns: repeat(3, 1fr); } }
 
       /* =========================================
-         NUEVA CALCULADORA DE FACHADAS (PANEL OSCURO)
+         NUEVA CALCULADORA DE FACHADAS (ESTILO OSCURO)
          ========================================= */
       .facade-calc-bg {
         background: linear-gradient(to bottom, #080808, #000);
@@ -229,7 +227,7 @@
         color: rgba(255,255,255,0.5);
       }
       
-      /* Sliders */
+      /* Sliders Personalizados */
       .facade-slider {
         -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.15); outline: none;
       }
@@ -237,22 +235,19 @@
         -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; cursor: pointer; box-shadow: 0 0 10px rgba(0,0,0,0.6);
       }
       
-      /* Radio Buttons Estilo Cajas Rígidas (Solución al deformado) */
+      /* Radio Buttons Estilo Cajas Rígidas */
       .facade-radio-group { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(85px, 1fr)); 
-        gap: 8px; 
-        width: 100%;
+        display: flex; flex-wrap: wrap; gap: 8px; width: 100%;
       }
       .facade-radio-group input[type="radio"] { display: none; }
       .facade-radio-label {
-        text-align: center; padding: 0.8rem 0.2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 0.75rem; color: #888; cursor: pointer; transition: all 0.3s; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.3;
+        flex: 1 1 0; min-width: 85px; text-align: center; padding: 0.8rem 0.2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 0.75rem; color: #888; cursor: pointer; transition: all 0.3s; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.3;
       }
       .facade-radio-group input[type="radio"]:checked + .facade-radio-label {
         border-color: #d4b895; color: #fff; background: rgba(212, 184, 149, 0.08);
       }
 
-      /* iOS Toggle */
+      /* iOS Toggle Render */
       .facade-switch {
         position: relative; display: inline-block; width: 48px; height: 26px; flex-shrink: 0;
       }
@@ -266,11 +261,16 @@
       input:checked + .f-slider-toggle { background-color: #d4b895; }
       input:checked + .f-slider-toggle:before { transform: translateX(22px); }
 
+      /* Gráfico Wireframe */
+      .facade-wireframe {
+        width: 100%; max-width: 250px; margin: 0 auto; opacity: 0.5;
+      }
+      .f-feature-icon { color: #d4b895; margin-bottom: 8px; flex-shrink: 0; }
+
       /* Panel Resultados */
       .facade-results-panel {
         background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem;
       }
-      .f-feature-icon { color: #d4b895; margin-bottom: 8px; flex-shrink: 0; }
 
       /* =========================================
          SELECTOR DE IDIOMA
@@ -307,21 +307,25 @@
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
+          
           <a href="index.html" class="d-flex align-items-center">
             <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
           </a>
+
           <div class="nav-pill-links d-none d-xl-flex">
             <a href="index.html" class="nav-pill-link active">Inicio</a>
             <a href="#servicios-destacados" class="nav-pill-link">Servicios</a>
             <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
             <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
           </div>
+
           <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Descargar Software &rarr;</a>
+
         </div>
       </div>
     </nav>
 
-    <!-- NAVEGACIÓN MÓVIL (SIN RELOJES) -->
+    <!-- NAVEGACIÓN MÓVIL TIPO APP (SIN RELOJES) -->
     <nav class="mobile-app-nav">
       <div class="app-nav-top">
         <a href="#" class="icon-btn" aria-label="Menú">
@@ -443,7 +447,7 @@
             </div>
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="2000">
               <div class="glass-panel-vip p-5 rounded-5 h-100">
-                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">👑 MÁXIMO NIVEL / VIP</span>
+                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MÁXIMO NIVEL / VIP</span>
                 <h3 class="fw-lighter text-center mt-3 text-white">PREMIUM</h3>
                 <p class="text-center accent-text small fw-medium">EL PAQUETE DEFINITIVO</p>
                 <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold accent-text">$799 <span class="fs-6 text-secondary">USD</span></h2></div>
@@ -464,7 +468,7 @@
         </div> 
       </div>
 
-      <!-- COTIZADOR INTELIGENTE (TERRENOS) -->
+      <!-- COTIZADOR GENERAL (TERRENOS) -->
       <div class="container mt-5 pt-4" data-aos="fade-up">
         <div class="row justify-content-center">
           <div class="col-12">
@@ -518,7 +522,7 @@
                         </div>
                       </div>
                       <div class="calc-result-display-box flex-fill d-flex flex-column justify-content-center" style="background: rgba(212, 184, 149, 0.05); border-color: rgba(212, 184, 149, 0.3);">
-                        <span class="accent-text small d-block mb-1" id="labelCostoFinal">Costo Estimado Final</span>
+                        <span class="accent-text small d-block mb-1" id="labelCostoFinal">Tu Inversión</span>
                         <div class="d-flex align-items-baseline">
                           <h2 class="fw-bold accent-text mb-0" id="calcPrecioFinal" style="font-size: 1.8rem;">$0.00</h2>
                           <span class="ms-1 accent-text small">USD</span>
@@ -529,7 +533,7 @@
                   <div id="wrapperBtnCotizar" class="mt-4" style="display: none;">
                     <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn btn-light w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
                       <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
-                      Enviar cotización por WhatsApp
+                      Continuar por WhatsApp
                     </a>
                   </div>
                   <div id="avisoPagoDirecto" class="mt-3 text-secondary small text-center text-lg-start" style="opacity: 0.8;">
@@ -648,7 +652,7 @@
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
                     <div>
                       <h6 class="text-white mb-0" style="font-size: 0.85rem;">3 RENDERS PROFESIONALES</h6>
-                      <span class="text-secondary" style="font-size: 0.7rem;">(Opcional) Incluye visualización 3D realista</span>
+                      <span class="text-secondary" style="font-size: 0.7rem;">(Opcional) Visualización fotorrealista</span>
                     </div>
                   </div>
                   <div class="d-flex align-items-center gap-2">
@@ -661,7 +665,7 @@
                 </div>
 
                 <!-- Nota Info -->
-                <div class="d-flex align-items-start gap-2 text-secondary" style="font-size: 0.7rem;">
+                <div class="d-flex align-items-start gap-2 text-secondary mt-1" style="font-size: 0.7rem;">
                   <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon mt-1" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
                   <span>Para garantizar un trabajo profesional, todos los proyectos tienen un precio mínimo de USD $80.00.</span>
                 </div>
@@ -676,7 +680,7 @@
                     <h6 class="accent-text mb-0" style="letter-spacing: 1px;">ESTIMACIÓN DEL PROYECTO</h6>
                   </div>
 
-                  <!-- WIREFRAME MEJORADO -->
+                  <!-- WIREFRAME -->
                   <div class="position-relative my-4" style="height: 180px; width: 100%; display: flex; align-items: center; justify-content: center;">
                     <div class="position-absolute d-flex flex-column align-items-center justify-content-center" style="left: 0; top: 0; bottom: 0; width: 50px;">
                       <span id="wf-height" class="text-white mb-1" style="font-size: 0.75rem;">6.20 m</span>
@@ -699,7 +703,7 @@
                     </div>
                   </div>
 
-                  <!-- DESGLOSE MATEMÁTICO (CORREGIDO ALINEACIÓN FLEX) -->
+                  <!-- DESGLOSE MATEMÁTICO -->
                   <div class="mt-4 pt-3 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
                     <div class="d-flex justify-content-between align-items-center mb-2 w-100">
                       <span class="text-secondary" style="font-size: 0.85rem;">Área de la fachada</span>
@@ -724,31 +728,48 @@
 
                     <!-- TOTAL -->
                     <div class="text-center mt-3 pt-3">
-                      <span class="text-white fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">TOTAL ESTIMADO</span>
+                      <span class="text-white fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">TU INVERSIÓN</span>
                       <div class="d-flex justify-content-center align-items-baseline gap-1 mb-1">
                         <h1 class="fw-bold text-white mb-0" id="f-total" style="font-size: 2.5rem;">$137.77</h1>
                         <span class="text-secondary small">USD</span>
                       </div>
-                      <span class="text-secondary d-block" style="font-size: 0.65rem;">* El precio final puede variar ligeramente tras revisar planos/fotos</span>
+                      <span class="text-secondary d-block" style="font-size: 0.65rem;">Tu estimación está lista. Continúa por WhatsApp para iniciar tu proyecto.</span>
                     </div>
                     
-                    <!-- BOTON WA -->
-                    <a id="btnFachadaWa" href="#" target="_blank" class="btn w-100 text-white fw-bold py-3 mt-4 d-flex align-items-center justify-content-center gap-2" style="background-color: #25D366; border-radius: 12px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                      <svg width="20" height="20" fill="currentColor" class="flex-shrink-0" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
-                      SOLICITAR COTIZACIÓN POR WHATSAPP
-                    </a>
+                    <!-- BOTÓN DINÁMICO DE WHATSAPP -->
+                    <button id="btnFachadaAccion" type="button" class="btn w-100 text-white fw-bold py-3 mt-4 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s;">
+                      CALCULAR PRECIO
+                    </button>
                   </div>
 
-                  <!-- QUÉ INCLUYE EL DISEÑO (Nueva Sección Solicitada) -->
+                  <!-- QUÉ INCLUYE EL DISEÑO -->
                   <div class="mt-4 pt-4 border-top" style="border-color: rgba(255,255,255,0.08) !important;">
                     <h6 class="text-white mb-3" style="font-size: 0.85rem;">¿Qué incluye el diseño?</h6>
                     <ul class="list-unstyled text-secondary m-0" style="font-size: 0.75rem;">
-                      <li class="mb-2 d-flex gap-2"><span class="flex-shrink-0">✅</span> Propuesta arquitectónica moderna y personalizada.</li>
-                      <li class="mb-2 d-flex gap-2"><span class="flex-shrink-0">✅</span> Selección de materiales y acabados.</li>
-                      <li class="mb-2 d-flex gap-2"><span class="flex-shrink-0">✅</span> Diseño de puertas, ventanas y balcones.</li>
-                      <li class="mb-2 d-flex gap-2"><span class="flex-shrink-0">✅</span> Iluminación arquitectónica.</li>
-                      <li class="mb-2 d-flex gap-2"><span class="flex-shrink-0">✅</span> Fachadas listas para integrarse a tus planos.</li>
-                      <li class="d-flex gap-2"><span class="flex-shrink-0">✅</span> Una ronda de ajustes menores.</li>
+                      <li class="mb-2 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Propuesta arquitectónica moderna y personalizada.
+                      </li>
+                      <li class="mb-2 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Selección de materiales y acabados.
+                      </li>
+                      <li class="mb-2 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Diseño de puertas, ventanas y balcones.
+                      </li>
+                      <li class="mb-2 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Iluminación arquitectónica.
+                      </li>
+                      <li class="mb-2 d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Fachadas listas para integrarse a tus planos.
+                      </li>
+                      <li class="d-flex gap-2 align-items-start">
+                        <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                        Una ronda de ajustes menores.
+                      </li>
                     </ul>
                   </div>
 
@@ -856,9 +877,18 @@
                 </div>
                 <h5 class="text-white mb-3 text-start">Incluye cálculo de:</h5>
                 <ul class="list-unstyled no-bullets text-secondary mb-4 text-start">
-                  <li class="mb-2">✓ Concreto, Acero, Block / Ladrillo</li>
-                  <li class="mb-2">✓ Cubierta, Piso, Cielo falso</li>
-                  <li class="mb-2">✓ Puertas, Ventanas, Pintura, Acabados</li>
+                  <li class="mb-2 d-flex gap-2 align-items-center">
+                    <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                    Concreto, Acero, Block / Ladrillo
+                  </li>
+                  <li class="mb-2 d-flex gap-2 align-items-center">
+                    <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                    Cubierta, Piso, Cielo falso
+                  </li>
+                  <li class="mb-2 d-flex gap-2 align-items-center">
+                    <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                    Puertas, Ventanas, Pintura, Acabados
+                  </li>
                 </ul>
               </div>
             </div>
@@ -922,27 +952,20 @@
 
     <!-- BOTONES FLOTANTES ESQUINA DERECHA (Contacto) -->
     <div style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px;">
-      
       <a href="https://wa.me/18329774150?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #25d366';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.1)'; this.style.color='#25d366'; this.style.border='1px solid rgba(37, 211, 102, 0.4);'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
       </a>
-
       <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Escríbenos por Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;">
-          <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
       </a>
-      
     </div>
 
-    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma) -->
+    <!-- BOTÓN FLOTANTE ESQUINA IZQUIERDA (Selector de Idioma Sin Emojis) -->
     <div class="lang-float-container" id="langContainer">
       <ul class="lang-float-menu" id="langMenu">
-        <li><a class="lang-item active" href="index.html"><span style="font-size: 1.2rem;">🇪🇸</span> Español</a></li>
-        <li><a class="lang-item" href="index-en.html"><span style="font-size: 1.2rem;">🇺🇸</span> English</a></li>
-        <li><a class="lang-item" href="index-pt.html"><span style="font-size: 1.2rem;">🇧🇷</span> Português</a></li>
+        <li><a class="lang-item active" href="index.html"><span class="badge bg-secondary me-2">ES</span> Español</a></li>
+        <li><a class="lang-item" href="index-en.html"><span class="badge bg-secondary me-2">EN</span> English</a></li>
+        <li><a class="lang-item" href="index-pt.html"><span class="badge bg-secondary me-2">PT</span> Português</a></li>
       </ul>
       <button class="lang-float-btn" id="langBtn" aria-label="Cambiar Idioma">
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
@@ -987,10 +1010,11 @@
           });
       }
 
-      // ==========================================
-      // COTIZADOR GENERAL DE TERRENOS (HASTA 300m2)
-      // ==========================================
       document.addEventListener('DOMContentLoaded', function() {
+        
+        // ==========================================
+        // 1. COTIZADOR GENERAL DE TERRENOS (HASTA 300m2)
+        // ==========================================
         const servicioSelect = document.getElementById('calcServicioSelect');
         const anchoInput = document.getElementById('calcAncho');
         const largoInput = document.getElementById('calcLargo');
@@ -1045,7 +1069,7 @@
               avisoPagoDirecto.style.display = 'none';
             }
 
-            const mensaje = encodeURIComponent(`Hola, me interesa el servicio de: *${servicioNombre}*.\nDimensiones: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: ${precioFormateado} USD.\n¿Cómo procedemos?`);
+            const mensaje = encodeURIComponent(`Hola Evolution Design. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: ${precioFormateado} USD.\nMe gustaría continuar con mi proyecto.`);
             btnEnviarCotizacion.href = `https://wa.me/18329774150?text=${mensaje}`;
           } else {
             totalDisplay.textContent = "0.00";
@@ -1062,7 +1086,7 @@
         }
 
         // ==========================================
-        // CALCULADORA DE FACHADAS (NUEVO)
+        // 2. CALCULADORA INTELIGENTE DE FACHADAS
         // ==========================================
         const fAncho = document.getElementById('f-ancho');
         const fAltura = document.getElementById('f-altura');
@@ -1080,10 +1104,17 @@
         const fTotal = document.getElementById('f-total');
         
         const fRadiosComplejidad = document.querySelectorAll('input[name="f-complejidad"]');
+        const fRadiosTipo = document.querySelectorAll('input[name="f-tipo"]');
+        const fRadiosNiveles = document.querySelectorAll('input[name="f-niveles"]');
         const fRenderToggle = document.getElementById('f-render');
-        const btnFachadaWa = document.getElementById('btnFachadaWa');
+        const btnFachadaAccion = document.getElementById('btnFachadaAccion');
+
+        let calculoFachadaInteractuado = false;
+        let urlWhatsAppFachada = "#";
 
         function actualizarCalculadoraFachada() {
+          if (!fAncho || !fAltura) return;
+
           const ancho = parseFloat(fAncho.value);
           const altura = parseFloat(fAltura.value);
           
@@ -1091,31 +1122,36 @@
           const complejidad = parseFloat(complejidadRadio.value);
           const complejidadTexto = complejidadRadio.getAttribute('data-label');
           
+          const tipoTexto = document.querySelector('input[name="f-tipo"]:checked').value.toLowerCase();
+          const nivelesTexto = document.querySelector('input[name="f-niveles"]:checked').value;
+          
           const renderOn = fRenderToggle.checked;
 
-          // 1. Mostrar valores en UI y Wireframe
+          // Mostrar valores UI y Wireframe
           fValAncho.textContent = ancho.toFixed(2);
           fValAltura.textContent = altura.toFixed(2);
           wfWidth.textContent = ancho.toFixed(2) + ' m';
           wfHeight.textContent = altura.toFixed(2) + ' m';
 
-          // 2. Cálculos base
+          // Cálculos base
           const area = ancho * altura;
           const precioBase = area * 1.50; // USD $1.50 por m2
           
-          // 3. Subtotal con multiplicador
+          // Subtotal con multiplicador
           let subtotal = precioBase * complejidad;
           
-          // Aplicar restricción de precio mínimo de $80
-          if (subtotal < 80) subtotal = 80;
+          // Mínimo garantizado de $80
+          if (subtotal < 80) {
+            subtotal = 80;
+          }
 
-          // 4. Render 3D ($35.00)
+          // Render 3D ($35.00)
           const costoRender = renderOn ? 35.00 : 0.00;
           
-          // 5. Total Estimado
+          // Total Estimado
           const totalFinal = subtotal + costoRender;
 
-          // Actualizar Textos
+          // Actualizar Textos HTML
           fAreaText.textContent = area.toFixed(2) + ' m²';
           fBaseText.textContent = '$' + precioBase.toFixed(2);
           fComplexLabel.textContent = 'Nivel (' + complejidadTexto + ')';
@@ -1124,19 +1160,53 @@
           fRenderText.textContent = '$' + costoRender.toFixed(2);
           fTotal.textContent = '$' + totalFinal.toFixed(2);
 
-          // Generar Mensaje de WhatsApp
-          const waMessage = encodeURIComponent(`Hola, me interesa cotizar el diseño de una *Fachada*.\n\n📐 Ancho: ${ancho.toFixed(2)}m\n📏 Altura: ${altura.toFixed(2)}m\n🔹 Área: ${area.toFixed(2)} m²\n💎 Nivel de diseño: ${complejidadTexto}\n🖼️ 3 Renders Profesionales: ${renderOn ? 'Sí (+$35.00)' : 'No'}\n\n💵 *Total Estimado: $${totalFinal.toFixed(2)} USD*\n\n¿Cómo procedemos?`);
-          btnFachadaWa.href = `https://wa.me/18329774150?text=${waMessage}`;
+          // Armar Mensaje de WhatsApp dinámico
+          let articulo = tipoTexto === "vivienda" ? "una" : "un";
+          let pluralNiveles = nivelesTexto === "1" ? "1 nivel" : nivelesTexto + " niveles";
+          let textoRender = renderOn ? "con Render 3D" : "sin Render 3D";
+
+          const waMessage = encodeURIComponent(`Hola Evolution Design. Acabo de utilizar la calculadora de fachadas en su sitio web. Mi proyecto tiene un área aproximada de ${area.toFixed(2)} m², es ${articulo} ${tipoTexto} de ${pluralNiveles}, seleccioné el paquete ${complejidadTexto} ${textoRender}. El precio estimado fue de USD $${totalFinal.toFixed(2)}. Me gustaría continuar con mi proyecto.`);
+          
+          urlWhatsAppFachada = `https://wa.me/18329774150?text=${waMessage}`;
         }
 
-        // Escuchar cambios en los inputs
-        fAncho.addEventListener('input', actualizarCalculadoraFachada);
-        fAltura.addEventListener('input', actualizarCalculadoraFachada);
-        fRenderToggle.addEventListener('change', actualizarCalculadoraFachada);
-        fRadiosComplejidad.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
-        
-        // Llamada inicial para calcular el valor por defecto
-        actualizarCalculadoraFachada();
+        // Función para cambiar el estado del botón tras la primera interacción
+        function registrarInteraccion() {
+          actualizarCalculadoraFachada();
+          if (!calculoFachadaInteractuado) {
+            calculoFachadaInteractuado = true;
+            btnFachadaAccion.style.backgroundColor = '#25D366';
+            btnFachadaAccion.style.borderColor = '#25D366';
+            btnFachadaAccion.innerHTML = `<svg width="20" height="20" fill="currentColor" class="flex-shrink-0" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg> CONTINUAR POR WHATSAPP`;
+          }
+        }
+
+        // Lógica del botón principal
+        if (btnFachadaAccion) {
+          btnFachadaAccion.addEventListener('click', function(e) {
+            if (!calculoFachadaInteractuado) {
+              e.preventDefault();
+              registrarInteraccion(); // Simula el click de calcular
+            } else {
+              // Si ya calculó, lo mandamos a WhatsApp
+              window.open(urlWhatsAppFachada, '_blank');
+            }
+          });
+        }
+
+        // Escuchar cambios en los inputs para auto-calcular
+        if(fAncho && fAltura) {
+          fAncho.addEventListener('input', registrarInteraccion);
+          fAltura.addEventListener('input', registrarInteraccion);
+          fRenderToggle.addEventListener('change', registrarInteraccion);
+          fRadiosComplejidad.forEach(radio => radio.addEventListener('change', registrarInteraccion));
+          fRadiosTipo.forEach(radio => radio.addEventListener('change', registrarInteraccion));
+          fRadiosNiveles.forEach(radio => radio.addEventListener('change', registrarInteraccion));
+          
+          // Ejecutar matemáticas silentes al cargar la web
+          actualizarCalculadoraFachada();
+        }
+
       });
     </script>
 
