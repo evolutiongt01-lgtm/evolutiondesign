@@ -60,6 +60,14 @@
       }
 
       /* =========================================
+         OCULTAR BARRA FEA DE GOOGLE TRANSLATE
+         ========================================= */
+      .goog-te-banner-frame.skiptranslate { display: none !important; }
+      body { top: 0px !important; position: static !important; }
+      #goog-gt-tt { display: none !important; box-shadow: none !important; }
+      .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+
+      /* =========================================
          NAVEGACIÓN ESCRITORIO (Mac/PC) - TIPO CÁPSULA
          ========================================= */
       .desktop-nav {
@@ -441,6 +449,12 @@
         100% { border-color: rgba(212, 184, 149, 0.4); box-shadow: 0 0 20px rgba(212, 184, 149, 0.15); }
       }
 
+      @keyframes glass-shine {
+        0% { left: -150%; }
+        20% { left: 200%; }
+        100% { left: 200%; }
+      }
+
       .glass-container-bg {
         background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,1) 80%);
       }
@@ -452,7 +466,7 @@
       }
 
       /* =========================================
-         DISEÑO PRO COTIZADOR INTELIGENTE (ANCHURA AJUSTADA)
+         DISEÑO PRO COTIZADOR INTELIGENTE
          ========================================= */
       .calc-pro-container {
         position: relative;
@@ -530,7 +544,7 @@
       }
       
       /* =========================================
-         BOTÓN FLOTANTE DE IDIOMA (CORRECCIÓN PREMIUM)
+         BOTÓN FLOTANTE DE IDIOMA (CORRECCIÓN PREMIUM Y ENGINE)
          ========================================= */
       .lang-float-container {
         position: fixed;
@@ -569,7 +583,7 @@
         border: 1px solid rgba(255,255,255,0.1) !important;
         border-radius: 16px !important;
         padding: 0.5rem !important;
-        min-width: 150px !important;
+        min-width: 160px !important;
         margin-bottom: 15px !important;
         box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
       }
@@ -589,7 +603,7 @@
         transition: all 0.2s ease !important;
         background: transparent !important;
         font-weight: 500 !important;
-        font-size: 0.9rem !important;
+        font-size: 0.95rem !important;
       }
       .lang-item:hover, .lang-item.active {
         background: rgba(255, 255, 255, 0.1) !important;
@@ -599,6 +613,9 @@
   </head>
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
+
+    <!-- MOTOR INVISIBLE DE GOOGLE TRANSLATE -->
+    <div id="google_translate_element" style="display:none;"></div>
 
     <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) - CÁPSULA LIMPIA -->
     <nav class="desktop-nav fixed-top" id="navScroll">
@@ -1142,14 +1159,39 @@
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
       </button>
       <ul class="dropdown-menu dropdown-menu-dark lang-float-menu" aria-labelledby="langMenuBtn">
-        <li><a class="dropdown-item lang-item active" href="#"><span style="font-size: 1.2rem;">🇪🇸</span> Español</a></li>
-        <li><a class="dropdown-item lang-item" href="#"><span style="font-size: 1.2rem;">🇺🇸</span> English</a></li>
-        <li><a class="dropdown-item lang-item" href="#"><span style="font-size: 1.2rem;">🇧🇷</span> Português</a></li>
+        <li><a class="dropdown-item lang-item active" href="#" onclick="changeLanguage('es', this); return false;"><span style="font-size: 1.2rem;">🇪🇸</span> Español</a></li>
+        <li><a class="dropdown-item lang-item" href="#" onclick="changeLanguage('en', this); return false;"><span style="font-size: 1.2rem;">🇺🇸</span> English</a></li>
+        <li><a class="dropdown-item lang-item" href="#" onclick="changeLanguage('pt', this); return false;"><span style="font-size: 1.2rem;">🇧🇷</span> Português</a></li>
       </ul>
     </div>
 
     <!-- LÓGICA INTELIGENTE CONDICIONAL -->
     <script>
+      // Lógica de Traducción
+      function changeLanguage(langCode, element) {
+        var selectField = document.querySelector('select.goog-te-combo');
+        if (selectField) {
+          selectField.value = langCode;
+          selectField.dispatchEvent(new Event('change'));
+        }
+        
+        // Actualizar visualmente la opción seleccionada
+        document.querySelectorAll('.lang-item').forEach(function(item) {
+          item.classList.remove('active');
+        });
+        element.classList.add('active');
+      }
+
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'es', 
+          includedLanguages: 'en,pt,es', 
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
+          autoDisplay: false
+        }, 'google_translate_element');
+      }
+
+      // Lógica del Cotizador
       document.addEventListener('DOMContentLoaded', function() {
         const servicioSelect = document.getElementById('calcServicioSelect');
         const anchoInput = document.getElementById('calcAncho');
@@ -1222,7 +1264,9 @@
         }
       });
     </script>
-
+    
+    <!-- Script Oficial de Google Translate -->
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/aos.js"></script>
     <script>
