@@ -118,6 +118,38 @@
       }
 
       /* =========================================
+         WIDGET HORA MIAMI (ESTILO APPLE MINIMALISTA)
+         ========================================= */
+      .apple-clock-widget {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        color: #ddd;
+        font-weight: 400;
+        letter-spacing: 0.3px;
+      }
+      .apple-clock-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #34c759;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(52, 199, 89, 0.6);
+        animation: pulse-dot 2s infinite;
+      }
+      @keyframes pulse-dot {
+        0% { transform: scale(0.95); opacity: 0.8; }
+        50% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(0.95); opacity: 0.8; }
+      }
+
+      /* =========================================
          NAVEGACIÓN MÓVIL TIPO APP
          ========================================= */
       .mobile-app-nav {
@@ -410,7 +442,6 @@
         pointer-events: none;
       }
 
-      /* EFECTO PREMIUM VIP BRILLANTE Y LLAMATIVO */
       .glass-panel-vip {
         background: linear-gradient(145deg, rgba(212, 184, 149, 0.08) 0%, rgba(10, 10, 10, 0.9) 100%) !important;
         backdrop-filter: blur(25px) saturate(180%);
@@ -523,7 +554,7 @@
       }
       
       /* =========================================
-         BOTÓN FLOTANTE DE IDIOMA (SIN PUNTOS BLANCOS)
+         BOTÓN FLOTANTE DE IDIOMA
          ========================================= */
       .lang-float-container {
         position: fixed;
@@ -621,8 +652,14 @@
             <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
           </div>
 
-          <!-- BOTÓN (DERECHA) -->
-          <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Descargar Software &rarr;</a>
+          <!-- WIDGET HORA MIAMI + BOTÓN -->
+          <div class="d-flex align-items-center gap-3">
+            <div class="apple-clock-widget d-none d-xl-flex">
+              <div class="apple-clock-dot"></div>
+              <span>Miami <strong id="miamiClock">--:--:--</strong></span>
+            </div>
+            <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Descargar Software &rarr;</a>
+          </div>
 
         </div>
       </div>
@@ -634,6 +671,10 @@
         <a href="#" class="icon-btn" aria-label="Menú">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
         </a>
+        <div class="apple-clock-widget d-flex d-xl-none" style="padding: 0.3rem 0.8rem; font-size: 0.75rem;">
+          <div class="apple-clock-dot"></div>
+          <span>Miami <strong id="miamiClockMob">--:--:--</strong></span>
+        </div>
         <a href="index.html">
           <img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;">
         </a>
@@ -1151,8 +1192,20 @@
       </button>
     </div>
 
-    <!-- LÓGICA INTELIGENTE CONDICIONAL Y COTIZADOR -->
+    <!-- LÓGICA INTELIGENTE (HORA MIAMI + IDIOMA + COTIZADOR) -->
     <script>
+      // Reloj Miami en vivo estilo Apple
+      function updateMiamiTime() {
+        const options = { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        const timeString = new Intl.DateTimeFormat('en-US', options).format(new Date());
+        const clockEl = document.getElementById('miamiClock');
+        const clockMobEl = document.getElementById('miamiClockMob');
+        if (clockEl) clockEl.textContent = timeString;
+        if (clockMobEl) clockMobEl.textContent = timeString;
+      }
+      setInterval(updateMiamiTime, 1000);
+      updateMiamiTime();
+
       const langBtn = document.getElementById('langBtn');
       const langMenu = document.getElementById('langMenu');
       const langContainer = document.getElementById('langContainer');
