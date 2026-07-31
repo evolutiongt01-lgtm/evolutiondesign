@@ -118,11 +118,11 @@
       }
 
       /* =========================================
-         WIDGETS DE RELOJES (ESTILO APPLE ESQUINA SUPERIOR DERECHA)
+         WIDGETS DE RELOJES (ESTILO APPLE BAJO LA NAVBAR)
          ========================================= */
       .clock-float-container {
         position: fixed;
-        top: 30px;
+        top: 100px; /* Bajado para no chocar con la barra */
         right: 30px;
         z-index: 9998;
       }
@@ -134,11 +134,11 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        background: rgba(15, 15, 15, 0.8);
+        background: rgba(15, 15, 15, 0.85);
         border: 1px solid rgba(255, 255, 255, 0.12);
         backdrop-filter: blur(20px) saturate(200%);
         -webkit-backdrop-filter: blur(20px) saturate(200%);
-        padding: 0.6rem 1.1rem;
+        padding: 0.5rem 1rem;
         border-radius: 50px;
         font-size: 0.8rem;
         color: #fff;
@@ -653,7 +653,7 @@
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-    <!-- WIDGETS DE RELOJES GT Y MIA (ESQUINA SUPERIOR DERECHA) -->
+    <!-- WIDGETS DE RELOJES GT Y MIA (ESQUINA SUPERIOR DERECHA - OCULTO EN MÓVIL) -->
     <div class="clock-float-container d-none d-lg-block">
       <div class="apple-clock-group">
         <div class="apple-clock-widget">
@@ -1217,7 +1217,7 @@
 
     <!-- LÓGICA INTELIGENTE (RELOJES GT & MIA FORMATO 24H + IDIOMA + COTIZADOR) -->
     <script>
-      // Relojes en vivo formato 24 hrs
+      // Relojes en vivo formato 24 horas (Guatemala y Miami)
       function updateClocks() {
         const options24 = { timeZone: 'America/Guatemala', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
         const gtString = new Intl.DateTimeFormat('es-GT', options24).format(new Date());
