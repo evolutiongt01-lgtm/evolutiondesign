@@ -3,7 +3,6 @@
 
   <head>
     <meta charset="utf-8">
-    <!-- AGREGADO: viewport-fit=cover para que la página abarque toda la pantalla, incluyendo el notch -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
     <meta name="description" content="Evolution Design - Estudio de Visualización Arquitectónica, Planos 2D y Cuantificación de Materiales">
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
@@ -109,7 +108,6 @@
          ========================================= */
       .desktop-nav {
         display: none !important;
-        /* Adaptación por si hay notch en MacBooks nuevas */
         padding-top: calc(25px + env(safe-area-inset-top)); 
         pointer-events: none; 
       }
@@ -152,7 +150,7 @@
       }
 
       /* =========================================
-         NAVEGACIÓN MÓVIL TIPO APP (CON SOPORTE PARA NOTCH)
+         NAVEGACIÓN MÓVIL TIPO APP
          ========================================= */
       .mobile-app-nav {
         background: rgba(10, 10, 10, 0.5) !important; 
@@ -162,7 +160,6 @@
         top: 0; 
         z-index: 1030; 
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        /* AQUÍ ESTÁ LA MAGIA DEL NOTCH: Empuja el contenido hacia abajo pero deja el fondo hasta arriba */
         padding-top: env(safe-area-inset-top); 
       }
       @media (min-width: 992px) { .mobile-app-nav { display: none !important; } }
@@ -272,63 +269,53 @@
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
       /* =========================================
-         SELECTORES FLOTANTES (Moneda e Idioma con margen de seguridad inferior)
+         BOTONES FLOTANTES CIRCULARES (Moneda e Idioma)
          ========================================= */
-      .currency-float-container { 
-        position: fixed; 
-        /* Ajuste de margen inferior para esquivar la barra de inicio en iOS */
-        bottom: calc(30px + env(safe-area-inset-bottom)); 
-        left: 30px; 
-        z-index: 9999; 
-      }
-      .currency-selector-wrap {
-        background: rgba(15, 15, 15, 0.85);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        border: 1px solid rgba(212, 184, 149, 0.3);
-        border-radius: 30px;
-        padding: 0.4rem 1rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-      }
-      .currency-selector-wrap select {
-        background: transparent;
-        border: none;
-        color: #d4b895;
-        font-size: 0.85rem;
-        font-weight: 600;
-        outline: none;
-        cursor: pointer;
-      }
-      .currency-selector-wrap select option {
-        background: #111;
-        color: #fff;
-      }
-
-      .lang-float-container { 
-        position: fixed; 
-        /* Ajuste de margen inferior para esquivar la barra de inicio en iOS */
-        bottom: calc(30px + env(safe-area-inset-bottom)); 
-        right: 30px; 
-        z-index: 9999; 
-        display: flex; 
+      .currency-float-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom)); left: 30px; z-index: 9999; }
+      .currency-wrapper { position: relative; width: 50px; height: 50px; }
+      
+      .currency-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212, 184, 149, 0.4) !important; background-color: rgba(212, 184, 149, 0.1) !important; color: #d4b895 !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
+      .currency-float-btn:hover { transform: scale(1.1); background-color: rgba(212, 184, 149, 0.8) !important; color: #000 !important; }
+      
+      .currency-float-menu { 
+        display: none; 
         flex-direction: column; 
-        gap: 12px; 
-        align-items: flex-end; 
+        position: absolute; 
+        bottom: 62px; /* Se abre directamente hacia arriba */
+        left: 0; 
+        background: rgba(15, 15, 15, 0.95) !important; 
+        backdrop-filter: blur(20px) !important; 
+        -webkit-backdrop-filter: blur(20px) !important; 
+        border: 1px solid rgba(255,255,255,0.1) !important; 
+        border-radius: 16px !important; 
+        padding: 0.5rem !important; 
+        min-width: 140px !important; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; 
+        gap: 5px; 
+        list-style: none !important;
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+        transform-origin: bottom left;
+        transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       }
+      .currency-float-menu li { list-style: none !important; }
+      .currency-float-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+      .currency-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 10px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+      .currency-item:hover, .currency-item.active { background: rgba(212, 184, 149, 0.15) !important; color: #fff !important; }
+
+
+      .lang-float-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom)); right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
       .lang-wrapper { position: relative; width: 50px; height: 50px; }
       .lang-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2) !important; background-color: rgba(255, 255, 255, 0.05) !important; color: #fff !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
       .lang-float-btn:hover { transform: scale(1.1); background-color: rgba(255, 255, 255, 0.15) !important; }
       
-      /* MENÚ DE IDIOMA: DESPLIEGUE A LA IZQUIERDA DEL BOTÓN */
+      /* MENÚ DE IDIOMA: SE ABRE RECTO HACIA ARRIBA */
       .lang-float-menu { 
         display: none; 
         flex-direction: column; 
         position: absolute; 
-        bottom: 0px; 
-        right: 65px; /* Se desplaza hacia la izquierda para dejar libre el botón */
+        bottom: 62px; 
+        right: 0; 
         background: rgba(15, 15, 15, 0.95) !important; 
         backdrop-filter: blur(20px) !important; 
         -webkit-backdrop-filter: blur(20px) !important; 
@@ -340,23 +327,17 @@
         gap: 5px; 
         list-style: none !important;
         opacity: 0;
-        transform: translateX(15px) scale(0.95);
-        transform-origin: right bottom;
-        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        transform: translateY(10px) scale(0.97);
+        transform-origin: bottom right;
+        transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       }
       .lang-float-menu li { list-style: none !important; }
-      .lang-float-menu.show { 
-        display: flex; 
-        opacity: 1;
-        transform: translateX(0) scale(1);
-      }
+      .lang-float-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
       .lang-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .lang-item:hover, .lang-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
       /* FOOTER SAFE AREA FIX PARA IOS */
-      footer {
-        padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important;
-      }
+      footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important; }
     </style>
   </head>
 
@@ -1115,28 +1096,31 @@
       </div>
     </footer>
 
-    <!-- BOTONES FLOTANTES ESQUINA IZQUIERDA (Selector de Moneda) -->
+    <!-- BOTONES FLOTANTES ESQUINA IZQUIERDA (Selector de Moneda con Despliegue Vertical) -->
     <div class="currency-float-container" id="currencyContainer">
-      <div class="currency-selector-wrap">
-        <svg width="14" height="14" fill="none" stroke="#d4b895" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-        <select id="currencySelect" aria-label="Seleccionar Moneda">
-          <option value="USD" selected>USD ($)</option>
-          <option value="EUR">EUR (€)</option>
-          <option value="GTQ">GTQ (Q)</option>
-          <option value="MXN">MXN ($)</option>
-          <option value="CNY">CNY (¥)</option>
-          <option value="AED">AED (د.إ)</option>
-          <option value="BRL">BRL (R$)</option>
-          <option value="JPY">JPY (¥)</option>
-        </select>
+      <div class="currency-wrapper">
+        <!-- Menú de Monedas -->
+        <ul class="currency-float-menu" id="currencyMenu">
+          <li><a class="currency-item active" href="#" data-curr="USD"><span class="badge bg-secondary me-2">$</span> USD</a></li>
+          <li><a class="currency-item" href="#" data-curr="EUR"><span class="badge bg-secondary me-2">€</span> EUR</a></li>
+          <li><a class="currency-item" href="#" data-curr="GTQ"><span class="badge bg-secondary me-2">Q</span> GTQ</a></li>
+          <li><a class="currency-item" href="#" data-curr="MXN"><span class="badge bg-secondary me-2">$</span> MXN</a></li>
+          <li><a class="currency-item" href="#" data-curr="CNY"><span class="badge bg-secondary me-2">¥</span> CNY</a></li>
+          <li><a class="currency-item" href="#" data-curr="AED"><span class="badge bg-secondary me-2">د.إ</span> AED</a></li>
+          <li><a class="currency-item" href="#" data-curr="BRL"><span class="badge bg-secondary me-2">R$</span> BRL</a></li>
+          <li><a class="currency-item" href="#" data-curr="JPY"><span class="badge bg-secondary me-2">¥</span> JPY</a></li>
+        </ul>
+        <button class="currency-float-btn" id="currencyBtn" aria-label="Cambiar Moneda">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        </button>
       </div>
     </div>
 
-    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp, Telegram y Selector de Idioma) -->
+    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp, Telegram y Selector de Idioma Desplegándose Hacia la Izquierda) -->
     <div class="lang-float-container" id="langContainer">
       
       <!-- Contenedor independiente para el Botón y Menú de Idiomas -->
-      <div style="position: relative; width: 50px; height: 50px;">
+      <div class="lang-wrapper">
         <button class="lang-float-btn" id="langBtn" aria-label="Cambiar Idioma">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
         </button>
@@ -1167,16 +1151,42 @@
       const langBtn = document.getElementById('langBtn');
       const langMenu = document.getElementById('langMenu');
       const langContainer = document.getElementById('langContainer');
-      const currencySelect = document.getElementById('currencySelect');
+      const currencyBtn = document.getElementById('currencyBtn');
+      const currencyMenu = document.getElementById('currencyMenu');
+      const currencyContainer = document.getElementById('currencyContainer');
+      
+      let currentCurrency = 'USD';
 
+      // Lógica Selector de Idioma
       if(langBtn && langMenu) {
           langBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             langMenu.classList.toggle('show');
+            if(currencyMenu && currencyMenu.classList.contains('show')) {
+               currencyMenu.classList.remove('show');
+            }
             e.stopPropagation();
           });
           document.addEventListener('click', function(e) {
             if (!langContainer.contains(e.target)) {
               langMenu.classList.remove('show');
+            }
+          });
+      }
+
+      // Lógica Selector de Moneda Custom
+      if(currencyBtn && currencyMenu) {
+          currencyBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            currencyMenu.classList.toggle('show');
+            if(langMenu && langMenu.classList.contains('show')) {
+               langMenu.classList.remove('show');
+            }
+            e.stopPropagation();
+          });
+          document.addEventListener('click', function(e) {
+            if (!currencyContainer.contains(e.target)) {
+              currencyMenu.classList.remove('show');
             }
           });
       }
@@ -1194,13 +1204,12 @@
       };
 
       function updateAllCurrencies() {
-        const selectedCurr = currencySelect.value;
-        const config = exchangeRates[selectedCurr];
+        const config = exchangeRates[currentCurrency];
 
         document.querySelectorAll('.price-val').forEach(el => {
           const usdVal = parseFloat(el.getAttribute('data-usd'));
           const converted = usdVal * config.rate;
-          const decimals = selectedCurr === 'JPY' ? 0 : 2;
+          const decimals = currentCurrency === 'JPY' ? 0 : 2;
           el.textContent = converted.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
         });
 
@@ -1209,9 +1218,20 @@
         });
       }
 
-      if(currencySelect) {
-        currencySelect.addEventListener('change', updateAllCurrencies);
-      }
+      const currencyItems = document.querySelectorAll('.currency-item');
+      currencyItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          currencyItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+          currentCurrency = this.getAttribute('data-curr');
+          updateAllCurrencies();
+          // Actualizamos también las calculadoras si existen
+          if(typeof window.actualizarCotizacionTerrenoGlobal === 'function') window.actualizarCotizacionTerrenoGlobal();
+          if(typeof window.actualizarCalculadoraFachadaGlobal === 'function') window.actualizarCalculadoraFachadaGlobal();
+          currencyMenu.classList.remove('show');
+        });
+      });
 
       document.addEventListener('DOMContentLoaded', function() {
         
@@ -1258,10 +1278,9 @@
               precioFinalUSD = areaTotal * 3.25;
             }
 
-            const currentCurr = currencySelect.value;
-            const config = exchangeRates[currentCurr];
+            const config = exchangeRates[currentCurrency];
             const convertedFinal = precioFinalUSD * config.rate;
-            const decimals = currentCurr === 'JPY' ? 0 : 2;
+            const decimals = currentCurrency === 'JPY' ? 0 : 2;
 
             precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
@@ -1282,12 +1301,13 @@
             avisoPagoDirecto.style.display = 'block';
           }
         }
+        
+        window.actualizarCotizacionTerrenoGlobal = actualizarCotizacionTerreno;
 
         if (anchoInput && largoInput && servicioSelect) {
           anchoInput.addEventListener('input', actualizarCotizacionTerreno);
           largoInput.addEventListener('input', actualizarCotizacionTerreno);
           servicioSelect.addEventListener('change', actualizarCotizacionTerreno);
-          currencySelect.addEventListener('change', actualizarCotizacionTerreno);
         }
 
         const fAncho = document.getElementById('f-ancho');
@@ -1348,13 +1368,12 @@
           const costoRender = renderOn ? 40.00 : 0.00;
           const totalFinalUSD = subtotal + costoNiveles + costoRender;
 
-          const currentCurr = currencySelect.value;
-          const config = exchangeRates[currentCurr];
+          const config = exchangeRates[currentCurrency];
           const convertedTotal = totalFinalUSD * config.rate;
           const convertedBase = precioBase * config.rate;
           const convertedRender = costoRender * config.rate;
           const convertedNiveles = costoNiveles * config.rate;
-          const decimals = currentCurr === 'JPY' ? 0 : 2;
+          const decimals = currentCurrency === 'JPY' ? 0 : 2;
 
           fAreaText.textContent = area.toFixed(2) + ' m²';
           fBaseText.textContent = `${config.symbol} ${convertedBase.toFixed(decimals)}`;
@@ -1384,6 +1403,8 @@
           
           urlWhatsAppFachada = `https://wa.me/18329774150?text=${waMessage}`;
         }
+        
+        window.actualizarCalculadoraFachadaGlobal = actualizarCalculadoraFachada;
 
         function registrarInteraccion() {
           actualizarCalculadoraFachada();
@@ -1415,7 +1436,6 @@
           fRadiosComplejidad.forEach(radio => radio.addEventListener('change', registrarInteraccion));
           fRadiosTipo.forEach(radio => radio.addEventListener('change', registrarInteraccion));
           fRadiosNiveles.forEach(radio => radio.addEventListener('change', registrarInteraccion));
-          currencySelect.addEventListener('change', actualizarCalculadoraFachada);
           
           actualizarCalculadoraFachada();
         }
