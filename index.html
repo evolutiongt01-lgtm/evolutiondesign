@@ -186,10 +186,15 @@
          TARJETAS GENERALES Y PREMIUM VIP
          ========================================= */
       .glass-panel { background: rgba(255, 255, 255, 0.03) !important; backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%); border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); position: relative; overflow: hidden; }
+      .glass-panel::before { content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); animation: glass-shine 8s infinite; pointer-events: none; }
       .glass-panel-accent { background: rgba(212, 184, 149, 0.05) !important; backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%); border: 1px solid rgba(212, 184, 149, 0.3) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4); position: relative; overflow: hidden; }
-      .glass-panel-vip { background: linear-gradient(145deg, rgba(212, 184, 149, 0.08) 0%, rgba(10, 10, 10, 0.9) 100%) !important; border: 2px solid rgba(212, 184, 149, 0.6) !important; animation: vip-pulse 4s infinite ease-in-out; }
+      .glass-panel-accent::before { content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(212, 184, 149, 0.08) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); animation: glass-shine 8s infinite 1.5s; pointer-events: none; }
+      .glass-panel-vip { background: linear-gradient(145deg, rgba(212, 184, 149, 0.08) 0%, rgba(10, 10, 10, 0.9) 100%) !important; backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%); border: 2px solid rgba(212, 184, 149, 0.6) !important; animation: vip-pulse 4s infinite ease-in-out; }
       @keyframes vip-pulse { 0% { border-color: rgba(212, 184, 149, 0.4); box-shadow: 0 0 20px rgba(212, 184, 149, 0.15); } 50% { border-color: rgba(212, 184, 149, 0.9); box-shadow: 0 0 40px rgba(212, 184, 149, 0.35); } 100% { border-color: rgba(212, 184, 149, 0.4); box-shadow: 0 0 20px rgba(212, 184, 149, 0.15); } }
+      @keyframes glass-shine { 0% { left: -150%; } 20% { left: 200%; } 100% { left: 200%; } }
       .glass-container-bg { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,1) 80%); }
+
+      @media (max-width: 991px) { .mobile-remove-border { border-left: none !important; } }
 
       /* =========================================
          DISEÑO PRO COTIZADOR TERRENO (GENERAL)
@@ -202,6 +207,8 @@
       .calc-select-field option { background-color: #111; color: #fff; }
       .calc-input-field::placeholder { color: rgba(255, 255, 255, 0.3); }
       .calc-result-display-box { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; text-align: left; }
+      .features-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+      @media(min-width: 992px) { .features-grid-3 { grid-template-columns: repeat(3, 1fr); } }
 
       /* =========================================
          NUEVA CALCULADORA DE FACHADAS (ESTILO OSCURO)
@@ -366,44 +373,128 @@
       <!-- HERO -->
       <div class="hero-app">
         <div class="hero-content">
+
           <div style="width: 40px; height: 2px; background-color: #fff; margin-bottom: 1.5rem;"></div>
-          <h1 class="display-3 fw-bold lh-1 mb-4">Visualizamos<br>tu <span class="accent-text">visión.</span></h1>
-          <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.</p>
+          
+          <h1 class="display-3 fw-bold lh-1 mb-4">
+            Visualizamos<br>
+            tu <span class="accent-text">visión.</span>
+          </h1>
+          
+          <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">
+            Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.
+          </p>
+
+          <!-- BOTONES DE PAQUETES LIQUID GLASS -->
           <div class="grid-buttons">
-            <a href="#visualizacion" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>3D &rarr;</span></a>
-            <a href="#servicios-tecnicos" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>2D &rarr;</span></a>
+            <a href="#visualizacion" class="sq-btn">
+              <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              <span class="text-center fw-medium">Ver Paquetes<br>3D &rarr;</span>
+            </a>
+            
+            <a href="#servicios-tecnicos" class="sq-btn">
+              <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
+              <span class="text-center fw-medium">Ver Paquetes<br>2D &rarr;</span>
+            </a>
           </div>
+
+          <!-- INSIGNIAS DE CONFIANZA -->
           <div class="trust-badges">
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg><span>Calidad<br>Garantizada</span></div>
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Entrega<br>Puntual</span></div>
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg><span>Asesoría<br>Personalizada</span></div>
+            <div class="trust-item">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+              <span>Calidad<br>Garantizada</span>
+            </div>
+            <div class="trust-item">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>Entrega<br>Puntual</span>
+            </div>
+            <div class="trust-item">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg>
+              <span>Asesoría<br>Personalizada</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- SERVICIOS VIDEOS -->
+      <!-- NUEVA SECCIÓN DE SERVICIOS CON VIDEOS (CARRUSEL MÓVIL / GRID PC) -->
       <section id="servicios-destacados" class="services-section">
         <div class="container px-vw-5">
+          
           <div class="row align-items-end mb-5" data-aos="fade">
             <div class="col-12 col-lg-8">
               <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">NUESTROS SERVICIOS</span>
               <h2 class="display-4 fw-bold text-white mb-0">Soluciones visuales para cada etapa de tu proyecto.</h2>
             </div>
             <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
-              <a href="#visualizacion" class="text-white text-decoration-none small fw-medium d-inline-flex align-items-center gap-1" style="opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">Ver todos los servicios &rarr;</a>
+              <a href="#visualizacion" class="text-white text-decoration-none small fw-medium d-inline-flex align-items-center gap-1" style="opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                Ver todos los servicios &rarr;
+              </a>
             </div>
           </div>
+
           <div class="services-scroll-container" data-aos="fade-up">
-            <div class="service-card"><video src="vid/servicio-3d.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Visualización 3D</h5><p class="text-secondary small mb-4">Renders fotorrealistas que muestran cada detalle antes de construir.</p></div><a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-2d.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Planos 2D</h5><p class="text-secondary small mb-4">Planos arquitectónicos precisos y listos para construcción.</p></div><a href="#servicios-tecnicos" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-recorrido.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Recorridos Virtuales</h5><p class="text-secondary small mb-4">Experiencias inmersivas que permiten recorrer tu proyecto en 360°.</p></div><a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-cuantificacion.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Cuantificación</h5><p class="text-secondary small mb-4">Cómputos detallados de materiales y presupuestos precisos.</p></div><a href="#cuantificacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-supervision.mp4" class="service-card-video" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Supervisión</h5><p class="text-secondary small mb-4">Control y supervisión profesional para asegurar la calidad del proyecto.</p></div><a href="#contacto" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
+            
+            <div class="service-card">
+              <video src="vid/servicio-3d.mp4" class="service-card-video" autoplay muted loop playsinline></video>
+              <div class="service-card-body">
+                <div>
+                  <h5 class="text-white fw-bold mb-2 fs-6">Visualización 3D</h5>
+                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Renders fotorrealistas que muestran cada detalle antes de construir.</p>
+                </div>
+                <a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
+              </div>
+            </div>
+
+            <div class="service-card">
+              <video src="vid/servicio-2d.mp4" class="service-card-video" autoplay muted loop playsinline></video>
+              <div class="service-card-body">
+                <div>
+                  <h5 class="text-white fw-bold mb-2 fs-6">Planos 2D</h5>
+                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Planos arquitectónicos precisos y listos para construcción.</p>
+                </div>
+                <a href="#servicios-tecnicos" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
+              </div>
+            </div>
+
+            <div class="service-card">
+              <video src="vid/servicio-recorrido.mp4" class="service-card-video" autoplay muted loop playsinline></video>
+              <div class="service-card-body">
+                <div>
+                  <h5 class="text-white fw-bold mb-2 fs-6">Recorridos Virtuales</h5>
+                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Experiencias inmersivas que permiten recorrer tu proyecto en 360°.</p>
+                </div>
+                <a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
+              </div>
+            </div>
+
+            <div class="service-card">
+              <video src="vid/servicio-cuantificacion.mp4" class="service-card-video" autoplay muted loop playsinline></video>
+              <div class="service-card-body">
+                <div>
+                  <h5 class="text-white fw-bold mb-2 fs-6">Cuantificación</h5>
+                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Cómputos detallados de materiales y presupuestos precisos.</p>
+                </div>
+                <a href="#cuantificacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
+              </div>
+            </div>
+
+            <div class="service-card">
+              <video src="vid/servicio-supervision.mp4" class="service-card-video" autoplay muted loop playsinline></video>
+              <div class="service-card-body">
+                <div>
+                  <h5 class="text-white fw-bold mb-2 fs-6">Supervisión</h5>
+                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Control y supervisión profesional para asegurar la calidad del proyecto.</p>
+                </div>
+                <a href="#contacto" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
+              </div>
+            </div>
+
           </div>
+
         </div>
       </section>
 
-      <!-- PAQUETES 3D -->
+      <!-- SECCIÓN DE PAQUETES 3D -->
       <div id="visualizacion" class="py-vh-5 glass-container-bg">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -447,7 +538,7 @@
             </div>
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="2000">
               <div class="glass-panel-vip p-5 rounded-5 h-100">
-                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MÁXIMO NIVEL / VIP</span>
+                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">👑 MÁXIMO NIVEL / VIP</span>
                 <h3 class="fw-lighter text-center mt-3 text-white">PREMIUM</h3>
                 <p class="text-center accent-text small fw-medium">EL PAQUETE DEFINITIVO</p>
                 <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold accent-text">$799 <span class="fs-6 text-secondary">USD</span></h2></div>
@@ -559,7 +650,7 @@
             <div class="row g-4 g-lg-5 align-items-start">
               
               <!-- PANEL IZQUIERDO: CONTROLES -->
-              <div class="col-12 col-lg-6 d-flex flex-column gap-3">
+              <div class="col-12 col-lg-6 d-flex flex-column gap-4"> <!-- Modificado a gap-4 para más espacio general -->
                 
                 <!-- Ancho -->
                 <div class="facade-box">
@@ -598,8 +689,8 @@
                 </div>
 
                 <!-- Niveles -->
-                <div>
-                  <div class="d-flex align-items-start gap-2 mb-2">
+                <div class="mb-4">
+                  <div class="d-flex align-items-start gap-2 mb-3">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon mt-1" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M4 12h16M12 4v16"></path></svg>
                     <div>
                       <h6 class="text-white mb-0" style="font-size: 0.8rem;">CANTIDAD DE NIVELES</h6>
@@ -615,8 +706,8 @@
                 </div>
 
                 <!-- Tipo -->
-                <div class="mt-2">
-                  <div class="d-flex align-items-start gap-2 mb-2">
+                <div class="mb-4">
+                  <div class="d-flex align-items-start gap-2 mb-3">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon mt-1" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
                     <div>
                       <h6 class="text-white mb-0" style="font-size: 0.8rem;">TIPO DE PROYECTO</h6>
@@ -631,8 +722,8 @@
                 </div>
 
                 <!-- Complejidad -->
-                <div class="mt-2">
-                  <div class="d-flex align-items-start gap-2 mb-2">
+                <div class="mb-4">
+                  <div class="d-flex align-items-start gap-2 mb-3">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon mt-1" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
                     <div>
                       <h6 class="text-white mb-0" style="font-size: 0.8rem;">NIVEL DE COMPLEJIDAD</h6>
@@ -647,7 +738,7 @@
                 </div>
 
                 <!-- Render 3D Toggle -->
-                <div class="facade-box d-flex justify-content-between align-items-center py-3 mt-2">
+                <div class="facade-box d-flex justify-content-between align-items-center py-4 mt-2">
                   <div class="d-flex align-items-center gap-2">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
                     <div>
@@ -721,8 +812,15 @@
                       <span class="text-secondary" style="font-size: 0.9rem;">Subtotal Diseño</span>
                       <span class="text-white fw-bold text-end" id="f-subtotal-text" style="font-size: 0.9rem;">$102.77</span>
                     </div>
+                    
+                    <!-- Fila Dinámica Niveles Extra -->
+                    <div id="row-niveles-extra" class="d-flex justify-content-between align-items-center mb-2 w-100" style="display: none !important;">
+                      <span class="text-secondary" id="f-niveles-label" style="font-size: 0.9rem;">Cargo por Niveles</span>
+                      <span class="text-white fw-bold text-end" id="f-niveles-costo" style="font-size: 0.9rem;">+$0.00</span>
+                    </div>
+
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                      <span class="text-secondary" style="font-size: 0.9rem;">3 Renders 3D Profesionales</span>
+                      <span class="text-secondary" style="font-size: 0.9rem;">3 Renders Profesionales</span>
                       <span class="text-white fw-bold text-end" id="f-render-text" style="font-size: 0.9rem;">$35.00</span>
                     </div>
 
@@ -742,27 +840,27 @@
                     </button>
                   </div>
 
-                  <!-- QUÉ INCLUYE EL DISEÑO -->
-                  <div class="mt-4 pt-4 border-top" style="border-color: rgba(255,255,255,0.08) !important;">
-                    <h6 class="text-white mb-3" style="font-size: 0.85rem;">¿Qué incluye el diseño?</h6>
+                  <!-- QUÉ INCLUYE EL DISEÑO (Sección Espaciada) -->
+                  <div class="mt-5 pt-5 border-top" style="border-color: rgba(255,255,255,0.08) !important;">
+                    <h6 class="text-white mb-4" style="font-size: 0.85rem;">¿Qué incluye el diseño?</h6>
                     <ul class="list-unstyled text-secondary m-0" style="font-size: 0.75rem;">
-                      <li class="mb-2 d-flex gap-2 align-items-start">
+                      <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
                         Propuesta arquitectónica moderna y personalizada.
                       </li>
-                      <li class="mb-2 d-flex gap-2 align-items-start">
+                      <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
                         Selección de materiales y acabados.
                       </li>
-                      <li class="mb-2 d-flex gap-2 align-items-start">
+                      <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
                         Diseño de puertas, ventanas y balcones.
                       </li>
-                      <li class="mb-2 d-flex gap-2 align-items-start">
+                      <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
                         Iluminación arquitectónica.
                       </li>
-                      <li class="mb-2 d-flex gap-2 align-items-start">
+                      <li class="mb-3 d-flex gap-2 align-items-start">
                         <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
                         Fachadas listas para integrarse a tus planos.
                       </li>
@@ -877,15 +975,15 @@
                 </div>
                 <h5 class="text-white mb-3 text-start">Incluye cálculo de:</h5>
                 <ul class="list-unstyled no-bullets text-secondary mb-4 text-start">
-                  <li class="mb-2 d-flex gap-2 align-items-center">
+                  <li class="mb-3 d-flex gap-2 align-items-center">
                     <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
                     Concreto, Acero, Block / Ladrillo
                   </li>
-                  <li class="mb-2 d-flex gap-2 align-items-center">
+                  <li class="mb-3 d-flex gap-2 align-items-center">
                     <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
                     Cubierta, Piso, Cielo falso
                   </li>
-                  <li class="mb-2 d-flex gap-2 align-items-center">
+                  <li class="mb-3 d-flex gap-2 align-items-center">
                     <svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 
                     Puertas, Ventanas, Pintura, Acabados
                   </li>
@@ -1137,6 +1235,17 @@
           const area = ancho * altura;
           const precioBase = area * 1.50; // USD $1.50 por m2
           
+          // Lógica de costo por niveles adicionales
+          let costoNiveles = 0;
+          let labelNiveles = "";
+          if (nivelesTexto === "3") {
+            costoNiveles = 25.00;
+            labelNiveles = "Cargo por 3 Niveles";
+          } else if (nivelesTexto === "4") {
+            costoNiveles = 30.00;
+            labelNiveles = "Cargo por 4+ Niveles";
+          }
+          
           // Subtotal con multiplicador
           let subtotal = precioBase * complejidad;
           
@@ -1149,7 +1258,7 @@
           const costoRender = renderOn ? 35.00 : 0.00;
           
           // Total Estimado
-          const totalFinal = subtotal + costoRender;
+          const totalFinal = subtotal + costoNiveles + costoRender;
 
           // Actualizar Textos HTML
           fAreaText.textContent = area.toFixed(2) + ' m²';
@@ -1157,6 +1266,20 @@
           fComplexLabel.textContent = 'Nivel (' + complejidadTexto + ')';
           fComplexText.textContent = complejidad.toFixed(2) + 'x';
           fSubtotalText.textContent = '$' + subtotal.toFixed(2);
+          
+          // Fila dinámica para niveles extra
+          const rowNivelesExtra = document.getElementById('row-niveles-extra');
+          const fNivelesLabelUI = document.getElementById('f-niveles-label');
+          const fNivelesCostoUI = document.getElementById('f-niveles-costo');
+          
+          if (costoNiveles > 0) {
+            rowNivelesExtra.style.setProperty('display', 'flex', 'important');
+            fNivelesLabelUI.textContent = labelNiveles;
+            fNivelesCostoUI.textContent = '+$' + costoNiveles.toFixed(2);
+          } else {
+            rowNivelesExtra.style.setProperty('display', 'none', 'important');
+          }
+
           fRenderText.textContent = '$' + costoRender.toFixed(2);
           fTotal.textContent = '$' + totalFinal.toFixed(2);
 
@@ -1186,9 +1309,8 @@
           btnFachadaAccion.addEventListener('click', function(e) {
             if (!calculoFachadaInteractuado) {
               e.preventDefault();
-              registrarInteraccion(); // Simula el click de calcular
+              registrarInteraccion(); 
             } else {
-              // Si ya calculó, lo mandamos a WhatsApp
               window.open(urlWhatsAppFachada, '_blank');
             }
           });
