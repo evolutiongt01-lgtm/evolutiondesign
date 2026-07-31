@@ -60,7 +60,7 @@
       }
 
       /* =========================================
-         NAVEGACIÓN ESCRITORIO (Mac/PC) - TIPO CÁPSULA
+         NAVEGACIÓN ESCRITORIO (Mac/PC)
          ========================================= */
       .desktop-nav {
         display: none !important;
@@ -83,13 +83,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        max-width: 1150px;
+        max-width: 1100px;
         margin: 0 auto;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
       }
       .nav-pill-links {
         display: flex;
-        gap: 2rem;
+        gap: 2.5rem;
         align-items: center;
       }
       .nav-pill-link {
@@ -118,39 +118,48 @@
       }
 
       /* =========================================
-         WIDGETS DE RELOJES DENTRO DE LA CÁPSULA PC
+         WIDGETS DE RELOJES PC
          ========================================= */
+      .clock-float-container {
+        position: fixed;
+        top: 100px;
+        right: 30px;
+        z-index: 9998;
+      }
       .apple-clock-group {
         display: flex;
-        gap: 8px;
+        gap: 10px;
       }
       .apple-clock-widget {
         display: flex;
         align-items: center;
-        gap: 6px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 0.4rem 0.8rem;
-        border-radius: 30px;
-        font-size: 0.75rem;
-        color: #ddd;
+        gap: 8px;
+        background: rgba(15, 15, 15, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(20px) saturate(200%);
+        -webkit-backdrop-filter: blur(20px) saturate(200%);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        color: #fff;
         font-weight: 400;
         letter-spacing: 0.3px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       }
       .apple-clock-dot-gt {
-        width: 5px;
-        height: 5px;
+        width: 6px;
+        height: 6px;
         background-color: #34c759;
         border-radius: 50%;
-        box-shadow: 0 0 6px rgba(52, 199, 89, 0.8);
+        box-shadow: 0 0 8px rgba(52, 199, 89, 0.8);
         animation: pulse-dot 2s infinite;
       }
       .apple-clock-dot-mia {
-        width: 5px;
-        height: 5px;
+        width: 6px;
+        height: 6px;
         background-color: #0a84ff;
         border-radius: 50%;
-        box-shadow: 0 0 6px rgba(10, 132, 255, 0.8);
+        box-shadow: 0 0 8px rgba(10, 132, 255, 0.8);
         animation: pulse-dot 2s infinite;
       }
       @keyframes pulse-dot {
@@ -160,7 +169,7 @@
       }
 
       /* =========================================
-         ESTILO PARA FONDO ATENUADO EN PLANOS 2D (img/planos-bg.jpg)
+         FONDO ATENUADO PLANOS 2D
          ========================================= */
       .section-planos-bg {
         position: relative;
@@ -180,9 +189,7 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
       }
       @media (min-width: 992px) {
-        .mobile-app-nav {
-          display: none !important;
-        }
+        .mobile-app-nav { display: none !important; }
       }
       .app-nav-top {
         display: flex;
@@ -190,506 +197,236 @@
         align-items: center;
         padding: 1rem 1.5rem;
       }
-      
       .icon-btn {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
-        color: #fff;
-        text-decoration: none !important;
-        transition: all 0.3s ease;
-        -webkit-tap-highlight-color: transparent !important;
-        outline: none !important;
+        width: 45px; height: 45px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); color: #fff; text-decoration: none !important;
       }
-      .icon-btn:hover, .icon-btn:focus, .icon-btn:active {
-        background-color: #fff !important;
-        color: #000 !important;
-        border-color: #fff !important;
-        transform: scale(1.05);
-      }
-
       .app-tabs {
-        display: flex;
-        overflow-x: auto;
-        scrollbar-width: none;
-        padding: 0 1.5rem;
-        gap: 2rem;
-        justify-content: space-around;
+        display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 1.5rem; gap: 2rem; justify-content: space-around;
       }
-      .app-tabs::-webkit-scrollbar {
-        display: none;
-      }
-
+      .app-tabs::-webkit-scrollbar { display: none; }
       .tab-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #888 !important; 
-        text-decoration: none !important;
-        font-size: 0.75rem;
-        padding-bottom: 0.8rem;
-        border-bottom: 2px solid transparent;
-        white-space: nowrap;
-        transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
-        -webkit-tap-highlight-color: transparent !important; 
-        outline: none !important;
+        display: flex; flex-direction: column; align-items: center; color: #888 !important; text-decoration: none !important; font-size: 0.75rem; padding-bottom: 0.8rem; border-bottom: 2px solid transparent; white-space: nowrap;
       }
-      .tab-item svg { 
-        margin-bottom: 6px; 
-        opacity: 0.7; 
-        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
-      }
-      .tab-item:hover, .tab-item:focus, .tab-item:active {
-        color: #fff !important;
-      }
-      .tab-item.active { 
-        color: #fff !important; 
-        border-bottom-color: #fff; 
-      }
-      .tab-item.active svg { 
-        opacity: 1; 
-        transform: scale(1.15); 
-      }
+      .tab-item.active { color: #fff !important; border-bottom-color: #fff; }
 
       /* =========================================
          HERO SECTION
          ========================================= */
       .hero-app {
-        position: relative;
-        padding: 2rem 0 4rem;
-        min-height: 85vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        position: relative; padding: 2rem 0 4rem; min-height: 85vh; display: flex; flex-direction: column; justify-content: center;
         background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%), url('img/hero-movil.jpg') center/cover no-repeat;
       }
-      
-      .hero-content {
-        width: 100%;
-        padding: 0 1.5rem;
-      }
-
+      .hero-content { width: 100%; padding: 0 1.5rem; }
       @media (min-width: 992px) {
-        .hero-app {
-          min-height: 100vh;
-          background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/hero-pc.jpg') right center/cover no-repeat;
-          padding-top: 100px;
-        }
-        .hero-content {
-          max-width: 550px; 
-          padding: 0;
-          margin-left: 5vw;
-        }
+        .hero-app { min-height: 100vh; background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/hero-pc.jpg') right center/cover no-repeat; padding-top: 100px; }
+        .hero-content { max-width: 550px; padding: 0; margin-left: 5vw; }
       }
-
       .accent-text { color: #d4b895; }
-      
-      .grid-buttons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-top: 2.5rem;
-      }
+      .grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
       .sq-btn {
-        border-radius: 16px;
-        padding: 1.5rem 1.2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;      
-        justify-content: center;  
-        gap: 12px;                
-        min-height: 160px;
-        text-decoration: none !important;
-        transition: all 0.3s ease;
-        background-color: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #fff !important; 
-        -webkit-tap-highlight-color: transparent !important;
+        border-radius: 16px; padding: 1.5rem 1.2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: 160px; text-decoration: none !important; background-color: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff !important; transition: all 0.3s ease;
       }
-      .sq-btn:hover, .sq-btn:active { 
-        transform: translateY(-5px); 
-        background-color: #fff !important; 
-        color: #000 !important; 
-        border-color: #fff;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      }
-      
-      .trust-badges {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 16px;
-        padding: 1.2rem;
-        margin-top: 3rem;
-        background: rgba(255,255,255,0.03);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-      .trust-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        font-size: 0.7rem;
-        color: #aaa;
-        flex: 1;
-      }
+      .sq-btn:hover { background-color: #fff !important; color: #000 !important; }
+      .trust-badges { display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.2rem; margin-top: 3rem; background: rgba(255,255,255,0.03); }
+      .trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 0.7rem; color: #aaa; flex: 1; }
       .trust-item:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.1); }
-      @media (min-width: 768px) {
-        .trust-item { flex-direction: row; gap: 10px; font-size: 0.85rem; justify-content: center; }
-        .trust-item svg { margin-bottom: 0; }
-      }
-
-      .no-bullets {
-        list-style-type: none !important;
-        padding-left: 0 !important;
-        margin-left: 0 !important;
-      }
+      @media (min-width: 768px) { .trust-item { flex-direction: row; gap: 10px; font-size: 0.85rem; justify-content: center; } }
+      .no-bullets { list-style-type: none !important; padding-left: 0 !important; }
 
       /* =========================================
-         SECCIÓN DE NUESTROS SERVICIOS (VIDEOS CON CARRUSEL MÓVIL / GRID PC)
+         SERVICIOS CARRUSEL
          ========================================= */
-      .services-section {
-        padding: 6rem 0;
-        background: #000;
-      }
-      .services-scroll-container {
-        display: flex;
-        gap: 1.5rem;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        padding-bottom: 1rem;
-      }
-      .services-scroll-container::-webkit-scrollbar {
-        display: none;
-      }
-      .service-card {
-        flex: 0 0 280px;
-        scroll-snap-align: start;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        transition: transform 0.3s ease, border-color 0.3s ease;
-      }
-      .service-card:hover {
-        border-color: rgba(212, 184, 149, 0.5);
-        transform: translateY(-5px);
-      }
-      .service-card-video {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-      }
-      .service-card-body {
-        padding: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        justify-content: space-between;
-      }
+      .services-section { padding: 6rem 0; background: #000; }
+      .services-scroll-container { display: flex; gap: 1.5rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 1rem; }
+      .services-scroll-container::-webkit-scrollbar { display: none; }
+      .service-card { flex: 0 0 280px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
+      .service-card-video { width: 100%; height: 180px; object-fit: cover; }
+      .service-card-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
       @media (min-width: 992px) {
-        .services-scroll-container {
-          display: grid;
-          grid-template-columns: repeat(5, 1fr);
-          overflow-x: visible;
-          gap: 1.5rem;
-        }
-        .service-card {
-          flex: none;
-          width: 100%;
-        }
+        .services-scroll-container { display: grid; grid-template-columns: repeat(5, 1fr); overflow-x: visible; }
+        .service-card { flex: none; width: 100%; }
       }
 
       /* =========================================
-         TARJETAS GENERALES Y EFECTO PREMIUM VIP
+         TARJETAS GENERALES Y PREMIUM VIP
          ========================================= */
-      .glass-panel {
-        background: rgba(255, 255, 255, 0.03) !important;
-        backdrop-filter: blur(20px) saturate(150%);
-        -webkit-backdrop-filter: blur(20px) saturate(150%);
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        position: relative;
-        overflow: hidden;
-      }
-      .glass-panel::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -150%;
-        width: 50%;
-        height: 100%;
-        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 100%);
-        transform: skewX(-25deg);
-        animation: glass-shine 8s infinite;
-        pointer-events: none;
-      }
-
-      .glass-panel-accent {
-        background: rgba(212, 184, 149, 0.05) !important; 
-        backdrop-filter: blur(20px) saturate(150%);
-        -webkit-backdrop-filter: blur(20px) saturate(150%);
-        border: 1px solid rgba(212, 184, 149, 0.3) !important;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-        position: relative;
-        overflow: hidden;
-      }
-      .glass-panel-accent::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -150%;
-        width: 50%;
-        height: 100%;
-        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(212, 184, 149, 0.08) 50%, rgba(255,255,255,0) 100%);
-        transform: skewX(-25deg);
-        animation: glass-shine 8s infinite 1.5s; 
-        pointer-events: none;
-      }
-
-      .glass-panel-vip {
-        background: linear-gradient(145deg, rgba(212, 184, 149, 0.08) 0%, rgba(10, 10, 10, 0.9) 100%) !important;
-        backdrop-filter: blur(25px) saturate(180%);
-        -webkit-backdrop-filter: blur(25px) saturate(180%);
-        border: 2px solid rgba(212, 184, 149, 0.6) !important;
-        box-shadow: 0 0 35px rgba(212, 184, 149, 0.25), 0 10px 40px rgba(0, 0, 0, 0.6);
-        position: relative;
-        overflow: visible !important;
-        animation: vip-pulse 4s infinite ease-in-out;
-      }
-
+      .glass-panel { background: rgba(255, 255, 255, 0.03) !important; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+      .glass-panel-accent { background: rgba(212, 184, 149, 0.05) !important; backdrop-filter: blur(20px); border: 1px solid rgba(212, 184, 149, 0.3) !important; }
+      .glass-panel-vip { background: linear-gradient(145deg, rgba(212, 184, 149, 0.08) 0%, rgba(10, 10, 10, 0.9) 100%) !important; border: 2px solid rgba(212, 184, 149, 0.6) !important; animation: vip-pulse 4s infinite ease-in-out; }
       @keyframes vip-pulse {
         0% { border-color: rgba(212, 184, 149, 0.4); box-shadow: 0 0 20px rgba(212, 184, 149, 0.15); }
         50% { border-color: rgba(212, 184, 149, 0.9); box-shadow: 0 0 40px rgba(212, 184, 149, 0.35); }
         100% { border-color: rgba(212, 184, 149, 0.4); box-shadow: 0 0 20px rgba(212, 184, 149, 0.15); }
       }
-
-      @keyframes glass-shine {
-        0% { left: -150%; }
-        20% { left: 200%; }
-        100% { left: 200%; }
-      }
-
-      .glass-container-bg {
-        background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,1) 80%);
-      }
-
-      @media (max-width: 991px) {
-        .mobile-remove-border {
-          border-left: none !important;
-        }
-      }
+      .glass-container-bg { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,1) 80%); }
 
       /* =========================================
-         DISEÑO PRO COTIZADOR INTELIGENTE (ANCHURA AJUSTADA)
+         DISEÑO PRO COTIZADOR INTELIGENTE (BÁSICO)
          ========================================= */
-      .calc-pro-container {
-        position: relative;
-        border-radius: 24px;
-        background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.8) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
+      .calc-pro-container { position: relative; border-radius: 24px; background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.8) 100%); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px); width: 100%; }
+      @media (min-width: 992px) { .calc-divider-vertical { border-left: 1px solid rgba(255, 255, 255, 0.1); padding-left: 3rem; } }
+      .calc-input-group-pro { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; display: flex; align-items: center; padding: 0.5rem 1rem; }
+      .calc-input-field, .calc-select-field { background: transparent; border: none; color: #fff; width: 100%; outline: none; }
+      .calc-select-field option { background-color: #111; color: #fff; }
+      .calc-result-display-box { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; text-align: left; }
+      .features-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+      @media(min-width: 992px) { .features-grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+      /* =========================================
+         NUEVA CALCULADORA DE FACHADAS (PANEL OSCURO)
+         ========================================= */
+      .facade-calc-bg {
+        background: linear-gradient(to bottom, #0a0a0a, #000);
+      }
+      .facade-calc-card {
+        background: #0d0d0d;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         overflow: hidden;
-        width: 100%;
       }
-
-      @media (min-width: 992px) {
-        .calc-divider-vertical {
-          border-left: 1px solid rgba(255, 255, 255, 0.1);
-          padding-left: 3rem;
-        }
-      }
-
-      .calc-input-group-pro {
-        position: relative;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        padding: 0.5rem 1rem;
-        transition: all 0.3s ease;
-      }
-      .calc-input-group-pro:focus-within {
-        border-color: #d4b895;
-        background: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 0 20px rgba(212, 184, 149, 0.25);
-      }
-      .calc-input-field, .calc-select-field {
-        background: transparent;
-        border: none;
-        color: #fff;
-        font-size: 1.1rem;
-        width: 100%;
-        outline: none;
-        padding: 0.4rem 0;
-      }
-      .calc-select-field option {
-        background-color: #111;
-        color: #fff;
-      }
-      .calc-input-field::placeholder {
-        color: rgba(255, 255, 255, 0.3);
-      }
-      .calc-input-field::-webkit-outer-spin-button,
-      .calc-input-field::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-
-      .calc-result-display-box {
-        background: rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 1.5rem;
-        text-align: left;
-      }
-
-      .features-grid-3 {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        margin-bottom: 3rem;
-      }
-      @media(min-width: 992px) {
-        .features-grid-3 {
-          grid-template-columns: repeat(3, 1fr);
-        }
+      .facade-box {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 1.2rem;
       }
       
+      /* Sliders */
+      .facade-slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 4px;
+        border-radius: 2px;
+        background: rgba(255,255,255,0.2);
+        outline: none;
+      }
+      .facade-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        cursor: pointer;
+        box-shadow: 0 0 5px rgba(0,0,0,0.5);
+      }
+      
+      /* Radio Buttons as Boxes */
+      .facade-radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+      .facade-radio-group input[type="radio"] { display: none; }
+      .facade-radio-label {
+        flex: 1;
+        text-align: center;
+        padding: 0.6rem 0.5rem;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 8px;
+        font-size: 0.8rem;
+        color: #aaa;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin: 0;
+      }
+      .facade-radio-group input[type="radio"]:checked + .facade-radio-label {
+        border-color: #d4b895;
+        color: #fff;
+        background: rgba(212, 184, 149, 0.05);
+      }
+      
+      /* Complex Radio specific */
+      .complex-label {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+      }
+
+      /* iOS Toggle */
+      .facade-switch {
+        position: relative; display: inline-block; width: 46px; height: 26px;
+      }
+      .facade-switch input { opacity: 0; width: 0; height: 0; }
+      .f-slider-toggle {
+        position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #333; transition: .4s; border-radius: 34px;
+      }
+      .f-slider-toggle:before {
+        position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+        background-color: white; transition: .4s; border-radius: 50%;
+      }
+      input:checked + .f-slider-toggle { background-color: #d4b895; }
+      input:checked + .f-slider-toggle:before { transform: translateX(20px); }
+
+      /* Wireframe graphic */
+      .facade-wireframe {
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto;
+        opacity: 0.6;
+      }
+
+      /* Features footer in calc */
+      .f-feature-icon {
+        color: #d4b895;
+        margin-right: 10px;
+      }
+
       /* =========================================
          SELECTOR DE IDIOMA
          ========================================= */
       .lang-float-container {
-        position: fixed;
-        bottom: 30px;
-        left: 30px;
-        z-index: 9999;
+        position: fixed; bottom: 30px; left: 30px; z-index: 9999;
       }
       .lang-float-btn {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        background-color: rgba(255, 255, 255, 0.05) !important;
-        color: #fff !important;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        padding: 0;
-        outline: none;
+        width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2) !important; background-color: rgba(255, 255, 255, 0.05) !important; color: #fff !important; backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none;
       }
-      .lang-float-btn:hover {
-        transform: scale(1.1);
-        background-color: rgba(255, 255, 255, 0.15) !important;
-      }
+      .lang-float-btn:hover { transform: scale(1.1); background-color: rgba(255, 255, 255, 0.15) !important; }
       .lang-float-menu {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        bottom: 65px;
-        left: 0;
-        background: rgba(15, 15, 15, 0.95) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: 16px !important;
-        padding: 0.5rem !important;
-        min-width: 160px !important;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
-        gap: 5px;
-        list-style: none !important;
+        display: none; flex-direction: column; position: absolute; bottom: 65px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 160px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; list-style: none !important;
       }
-      .lang-float-menu li {
-        list-style: none !important;
-      }
-      .lang-float-menu.show {
-        display: flex;
-        animation: popUp 0.3s ease;
-      }
-      @keyframes popUp {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+      .lang-float-menu li { list-style: none !important; }
+      .lang-float-menu.show { display: flex; animation: popUp 0.3s ease; }
+      @keyframes popUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       .lang-item {
-        color: #ddd !important;
-        text-decoration: none !important;
-        padding: 0.6rem 1rem !important;
-        border-radius: 10px !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 12px !important;
-        transition: all 0.2s ease !important;
-        background: transparent !important;
-        font-weight: 500 !important;
-        font-size: 0.95rem !important;
+        color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important;
       }
-      .lang-item:hover, .lang-item.active {
-        background: rgba(255, 255, 255, 0.1) !important;
-        color: #fff !important;
-      }
+      .lang-item:hover, .lang-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
     </style>
   </head>
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-    <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) - CÁPSULA LIMPIA CON RELOJES INTEGRADOS -->
+    <!-- WIDGETS DE RELOJES GT Y MIA (ESQUINA SUPERIOR DERECHA - SÓLO PC) -->
+    <div class="clock-float-container d-none d-lg-block">
+      <div class="apple-clock-group">
+        <div class="apple-clock-widget">
+          <div class="apple-clock-dot-gt"></div>
+          <span>GT <strong id="gtClock">--:--</strong></span>
+        </div>
+        <div class="apple-clock-widget">
+          <div class="apple-clock-dot-mia"></div>
+          <span>MIA <strong id="miamiClock">--:--</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) -->
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
-          
-          <!-- LOGO (IZQUIERDA) -->
           <a href="index.html" class="d-flex align-items-center">
             <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
           </a>
-
-          <!-- ENLACES (CENTRO) -->
           <div class="nav-pill-links d-none d-xl-flex">
             <a href="index.html" class="nav-pill-link active">Inicio</a>
             <a href="#servicios-destacados" class="nav-pill-link">Servicios</a>
             <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
             <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
           </div>
-
-          <!-- RELOJES GT / MIA + BOTÓN (DERECHA) -->
-          <div class="d-flex align-items-center gap-3">
-            <div class="apple-clock-group d-none d-lg-flex">
-              <div class="apple-clock-widget">
-                <div class="apple-clock-dot-gt"></div>
-                <span>GT <strong id="gtClock">--:--:--</strong></span>
-              </div>
-              <div class="apple-clock-widget">
-                <div class="apple-clock-dot-mia"></div>
-                <span>MIA <strong id="miamiClock">--:--:--</strong></span>
-              </div>
-            </div>
-            <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Descargar Software &rarr;</a>
-          </div>
-
+          <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Descargar Software &rarr;</a>
         </div>
       </div>
     </nav>
 
-    <!-- NAVEGACIÓN MÓVIL TIPO APP (SIN RELOJES) -->
+    <!-- NAVEGACIÓN MÓVIL -->
     <nav class="mobile-app-nav">
       <div class="app-nav-top">
         <a href="#" class="icon-btn" aria-label="Menú">
@@ -727,148 +464,86 @@
     </nav>
 
     <main>
-      <!-- SECCIÓN HERO DE ALTO IMPACTO -->
+      <!-- HERO -->
       <div class="hero-app">
         <div class="hero-content">
-
           <div style="width: 40px; height: 2px; background-color: #fff; margin-bottom: 1.5rem;"></div>
-          
-          <h1 class="display-3 fw-bold lh-1 mb-4">
-            Visualizamos<br>
-            tu <span class="accent-text">visión.</span>
-          </h1>
-          
-          <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">
-            Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.
-          </p>
-
-          <!-- BOTONES DE PAQUETES LIQUID GLASS -->
+          <h1 class="display-3 fw-bold lh-1 mb-4">Visualizamos<br>tu <span class="accent-text">visión.</span></h1>
+          <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.</p>
           <div class="grid-buttons">
-            <a href="#visualizacion" class="sq-btn">
-              <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-              <span class="text-center fw-medium">Ver Paquetes<br>3D &rarr;</span>
-            </a>
-            
-            <a href="#servicios-tecnicos" class="sq-btn">
-              <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
-              <span class="text-center fw-medium">Ver Paquetes<br>2D &rarr;</span>
-            </a>
+            <a href="#visualizacion" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>3D &rarr;</span></a>
+            <a href="#servicios-tecnicos" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>2D &rarr;</span></a>
           </div>
-
-          <!-- INSIGNIAS DE CONFIANZA -->
           <div class="trust-badges">
-            <div class="trust-item">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
-              <span>Calidad<br>Garantizada</span>
-            </div>
-            <div class="trust-item">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              <span>Entrega<br>Puntual</span>
-            </div>
-            <div class="trust-item">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg>
-              <span>Asesoría<br>Personalizada</span>
-            </div>
+            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg><span>Calidad<br>Garantizada</span></div>
+            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Entrega<br>Puntual</span></div>
+            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg><span>Asesoría<br>Personalizada</span></div>
           </div>
         </div>
       </div>
 
-      <!-- NUEVA SECCIÓN DE SERVICIOS CON VIDEOS (CARRUSEL MÓVIL / GRID PC) -->
+      <!-- SERVICIOS -->
       <section id="servicios-destacados" class="services-section">
         <div class="container px-vw-5">
-          
           <div class="row align-items-end mb-5" data-aos="fade">
             <div class="col-12 col-lg-8">
               <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">NUESTROS SERVICIOS</span>
               <h2 class="display-4 fw-bold text-white mb-0">Soluciones visuales para cada etapa de tu proyecto.</h2>
             </div>
             <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
-              <a href="#visualizacion" class="text-white text-decoration-none small fw-medium d-inline-flex align-items-center gap-1" style="opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
-                Ver todos los servicios &rarr;
-              </a>
+              <a href="#visualizacion" class="text-white text-decoration-none small fw-medium d-inline-flex align-items-center gap-1" style="opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">Ver todos los servicios &rarr;</a>
             </div>
           </div>
-
-          <!-- Contenedor Carrusel Horizontal (Móvil) / Grid (PC) -->
           <div class="services-scroll-container" data-aos="fade-up">
-            
-            <!-- Tarjeta 1 -->
             <div class="service-card">
               <video src="vid/servicio-3d.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
-                <div>
-                  <h5 class="text-white fw-bold mb-2 fs-6">Visualización 3D</h5>
-                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Renders fotorrealistas que muestran cada detalle antes de construir.</p>
-                </div>
+                <div><h5 class="text-white fw-bold mb-2 fs-6">Visualización 3D</h5><p class="text-secondary small mb-4">Renders fotorrealistas que muestran cada detalle antes de construir.</p></div>
                 <a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
               </div>
             </div>
-
-            <!-- Tarjeta 2 -->
             <div class="service-card">
               <video src="vid/servicio-2d.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
-                <div>
-                  <h5 class="text-white fw-bold mb-2 fs-6">Planos 2D</h5>
-                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Planos arquitectónicos precisos y listos para construcción.</p>
-                </div>
+                <div><h5 class="text-white fw-bold mb-2 fs-6">Planos 2D</h5><p class="text-secondary small mb-4">Planos arquitectónicos precisos y listos para construcción.</p></div>
                 <a href="#servicios-tecnicos" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
               </div>
             </div>
-
-            <!-- Tarjeta 3 -->
             <div class="service-card">
               <video src="vid/servicio-recorrido.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
-                <div>
-                  <h5 class="text-white fw-bold mb-2 fs-6">Recorridos Virtuales</h5>
-                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Experiencias inmersivas que permiten recorrer tu proyecto en 360°.</p>
-                </div>
+                <div><h5 class="text-white fw-bold mb-2 fs-6">Recorridos Virtuales</h5><p class="text-secondary small mb-4">Experiencias inmersivas que permiten recorrer tu proyecto en 360°.</p></div>
                 <a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
               </div>
             </div>
-
-            <!-- Tarjeta 4 -->
             <div class="service-card">
               <video src="vid/servicio-cuantificacion.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
-                <div>
-                  <h5 class="text-white fw-bold mb-2 fs-6">Cuantificación</h5>
-                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Cómputos detallados de materiales y presupuestos precisos.</p>
-                </div>
+                <div><h5 class="text-white fw-bold mb-2 fs-6">Cuantificación</h5><p class="text-secondary small mb-4">Cómputos detallados de materiales y presupuestos precisos.</p></div>
                 <a href="#cuantificacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
               </div>
             </div>
-
-            <!-- Tarjeta 5 -->
             <div class="service-card">
               <video src="vid/servicio-supervision.mp4" class="service-card-video" autoplay muted loop playsinline></video>
               <div class="service-card-body">
-                <div>
-                  <h5 class="text-white fw-bold mb-2 fs-6">Supervisión</h5>
-                  <p class="text-secondary small mb-4" style="font-size: 0.8rem;">Control y supervisión profesional para asegurar la calidad del proyecto.</p>
-                </div>
+                <div><h5 class="text-white fw-bold mb-2 fs-6">Supervisión</h5><p class="text-secondary small mb-4">Control y supervisión profesional para asegurar la calidad del proyecto.</p></div>
                 <a href="#contacto" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a>
               </div>
             </div>
-
           </div>
-
         </div>
       </section>
 
-      <!-- SECCIÓN DE PAQUETES 3D Y COTIZADOR -->
+      <!-- PAQUETES 3D -->
       <div id="visualizacion" class="py-vh-5 glass-container-bg">
-        
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
             <span class="h5 text-secondary fw-lighter">Renderismo y Modelado</span>
             <h2 class="display-4 fw-bold">Paquetes 3D</h2>
             <p class="text-secondary">Proyectos residenciales de hasta 300 m² de construcción. (Nota: El servicio incluye estrictamente modelado y renders; contáctanos para enviarnos tus planos o adquiere primero tus planos 2D).</p>
           </div>
-
           <div class="row gx-4 g-5 align-items-stretch">
-            <!-- PAQUETE BÁSICO -->
+            <!-- BÁSICO -->
             <div class="col-12 col-lg-4" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 h-100">
                 <h3 class="fw-lighter text-center">BÁSICO</h3>
@@ -884,13 +559,10 @@
                   <li class="mb-2">✓ Materiales e iluminación básicos</li>
                   <li class="mb-2">✓ 1 revisión incluida</li>
                 </ul>
-                <div class="text-center">
-                  <a href="https://www.paypal.com/ncp/payment/VNATBWUJSX8XA" target="_blank" class="btn btn-outline-light w-100 rounded-pill">Adquirir Básico</a>
-                </div>
+                <div class="text-center"><a href="https://www.paypal.com/ncp/payment/VNATBWUJSX8XA" target="_blank" class="btn btn-outline-light w-100 rounded-pill">Adquirir Básico</a></div>
               </div>
             </div>
-
-            <!-- PAQUETE PROFESIONAL -->
+            <!-- PROFESIONAL -->
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="1500">
               <div class="glass-panel-accent p-5 rounded-5 h-100">
                 <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MÁS POPULAR</span>
@@ -909,13 +581,10 @@
                   <li class="mb-2">✓ Entrega en alta resolución</li>
                   <li class="mb-2">✓ 2 revisiones incluidas</li>
                 </ul>
-                <div class="text-center" style="position: relative; z-index: 10;">
-                  <a href="https://www.paypal.com/ncp/payment/T5GGC93YAXSWG" target="_blank" class="btn w-100 text-black fw-bold rounded-pill" style="background-color: #d4b895;">Adquirir Profesional</a>
-                </div>
+                <div class="text-center" style="position: relative; z-index: 10;"><a href="https://www.paypal.com/ncp/payment/T5GGC93YAXSWG" target="_blank" class="btn w-100 text-black fw-bold rounded-pill" style="background-color: #d4b895;">Adquirir Profesional</a></div>
               </div>
             </div>
-
-            <!-- PAQUETE PREMIUM -->
+            <!-- PREMIUM -->
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="2000">
               <div class="glass-panel-vip p-5 rounded-5 h-100">
                 <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">👑 MÁXIMO NIVEL / VIP</span>
@@ -935,27 +604,22 @@
                   <li class="mb-2">✓ Resolución 4K</li>
                   <li class="mb-2">✓ 3 revisiones incluidas</li>
                 </ul>
-                <div class="text-center" style="position: relative; z-index: 10;">
-                  <a href="https://www.paypal.com/ncp/payment/H657UM6NM3LHY" target="_blank" class="btn w-100 text-black fw-bold rounded-pill shadow" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Adquirir Premium VIP</a>
-                </div>
+                <div class="text-center" style="position: relative; z-index: 10;"><a href="https://www.paypal.com/ncp/payment/H657UM6NM3LHY" target="_blank" class="btn w-100 text-black fw-bold rounded-pill shadow" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%);">Adquirir Premium VIP</a></div>
               </div>
             </div>
           </div>
         </div> 
 
-        <!-- COTIZADOR INTELIGENTE (ALINEADO Y CENTRADO) -->
+        <!-- COTIZADOR INTELIGENTE GENERAL -->
         <div class="container mt-5 pt-4" data-aos="fade-up">
           <div class="row justify-content-center">
             <div class="col-12">
               <div class="calc-pro-container p-4 p-lg-5">
                 <div class="row g-5 align-items-center">
-                  
-                  <!-- Panel Izquierdo: Textos y Select Centrados -->
                   <div class="col-12 col-lg-5 text-center d-flex flex-column justify-content-center">
                     <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">COTIZADOR INTELIGENTE</span>
                     <h3 class="fw-bold text-white mb-3 px-2" style="font-size: 1.8rem; line-height: 1.2;">¿Tu terreno supera los 300 m²?</h3>
                     <p class="text-secondary small mb-4 px-3">Selecciona el servicio e ingresa tus medidas exactas para cotizar el excedente o tus planos 2D y cuantificaciones.</p>
-                    
                     <div class="text-center px-2">
                       <span class="small text-secondary d-block mb-1">Seleccionar Servicio</span>
                       <div class="calc-input-group-pro text-start mx-auto" style="max-width: 100%;">
@@ -970,12 +634,8 @@
                       </div>
                     </div>
                   </div>
-
-                  <!-- Panel Derecho: Inputs y Resultados Balanceados -->
                   <div class="col-12 col-lg-7 calc-divider-vertical">
                     <div class="row g-4">
-                      
-                      <!-- Columna Interna Izquierda (Inputs Medidas) -->
                       <div class="col-12 col-md-6 d-flex flex-column gap-3">
                         <div>
                           <span class="small text-secondary d-block mb-1">Ancho del terreno (m)</span>
@@ -985,11 +645,9 @@
                             <span class="text-secondary small ms-2">m</span>
                           </div>
                         </div>
-
                         <div class="text-center text-secondary my-n3 d-none d-md-block">
                           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </div>
-
                         <div>
                           <span class="small text-secondary d-block mb-1">Largo del terreno (m)</span>
                           <div class="calc-input-group-pro">
@@ -999,8 +657,6 @@
                           </div>
                         </div>
                       </div>
-
-                      <!-- Columna Interna Derecha (Pantallas de Resultados) -->
                       <div class="col-12 col-md-6 d-flex flex-column gap-3">
                         <div class="calc-result-display-box flex-fill d-flex flex-column justify-content-center">
                           <span class="small text-secondary d-block mb-1">Área Total</span>
@@ -1009,7 +665,6 @@
                             <span class="ms-1 text-secondary small">m²</span>
                           </div>
                         </div>
-
                         <div class="calc-result-display-box flex-fill d-flex flex-column justify-content-center" style="background: rgba(212, 184, 149, 0.05); border-color: rgba(212, 184, 149, 0.3);">
                           <span class="accent-text small d-block mb-1" id="labelCostoFinal">Costo Estimado Final</span>
                           <div class="d-flex align-items-baseline">
@@ -1018,22 +673,16 @@
                           </div>
                         </div>
                       </div>
-
                     </div>
-
-                    <!-- Botón Enviar Cotización -->
                     <div id="wrapperBtnCotizar" class="mt-4" style="display: none;">
-                      <a id="btnEnviarCotizacion" href="https://wa.me/18329774150?text=Hola,%20me%20interesa%20cotizar%20un%20proyecto" target="_blank" class="btn btn-light w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
+                      <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn btn-light w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
                         Enviar cotización por WhatsApp
                       </a>
                     </div>
                     <div id="avisoPagoDirecto" class="mt-3 text-secondary small text-center text-lg-start" style="opacity: 0.8;">
                       * Tu terreno es de 300 m² o menos. Puedes adquirir tu paquete 3D directamente arriba con nuestros botones de pago seguro.
                     </div>
-
                   </div>
-
                 </div>
               </div>
             </div>
@@ -1042,7 +691,234 @@
 
       </div>
 
-      <!-- SECCIÓN DE PLANOS 2D CON FONDO ATENUADO (img/planos-bg.jpg) -->
+      <!-- SECCIÓN CALCULADORA DE FACHADAS -->
+      <div id="calculadora-fachadas" class="facade-calc-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
+        <div class="container">
+          <div class="text-center mb-5" data-aos="fade">
+            <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">CALCULADORA DE FACHADA</span>
+            <h2 class="display-4 fw-bold text-white mb-3">Calcula el precio de tu fachada</h2>
+            <p class="text-secondary mx-auto" style="max-width: 600px;">Obtén una estimación inmediata según las dimensiones y características de tu proyecto.</p>
+          </div>
+
+          <div class="facade-calc-card p-4 p-lg-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
+            <div class="row g-5">
+              
+              <!-- IZQUIERDA: CONTROLES -->
+              <div class="col-12 col-lg-6 d-flex flex-column gap-4">
+                
+                <!-- Ancho -->
+                <div class="facade-box">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary" viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M5 12h14"></path></svg>
+                      <div>
+                        <h6 class="text-white mb-0" style="font-size: 0.85rem;">ANCHO DE LA FACHADA</h6>
+                        <span class="text-secondary" style="font-size: 0.7rem;">Ingresa el ancho total de la fachada</span>
+                      </div>
+                    </div>
+                    <div class="fw-bold text-white"><span id="f-val-ancho">8.50</span> m</div>
+                  </div>
+                  <input type="range" id="f-ancho" class="facade-slider" min="3" max="15" step="0.1" value="8.50">
+                  <div class="d-flex justify-content-between text-secondary mt-2" style="font-size: 0.7rem;">
+                    <span>3 m</span><span>5 m</span><span>8.5 m</span><span>12 m</span><span>15 m</span>
+                  </div>
+                </div>
+
+                <!-- Altura -->
+                <div class="facade-box">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary" viewBox="0 0 24 24"><path d="M15 8l-3-3-3 3M15 16l-3 3-3-3M12 5v14"></path></svg>
+                      <div>
+                        <h6 class="text-white mb-0" style="font-size: 0.85rem;">ALTURA TOTAL</h6>
+                        <span class="text-secondary" style="font-size: 0.7rem;">Ingresa la altura total de la fachada</span>
+                      </div>
+                    </div>
+                    <div class="fw-bold text-white"><span id="f-val-altura">6.20</span> m</div>
+                  </div>
+                  <input type="range" id="f-altura" class="facade-slider" min="3" max="10" step="0.1" value="6.20">
+                  <div class="d-flex justify-content-between text-secondary mt-2" style="font-size: 0.7rem;">
+                    <span>3 m</span><span>5 m</span><span>6.2 m</span><span>8 m</span><span>10 m</span>
+                  </div>
+                </div>
+
+                <!-- Niveles -->
+                <div>
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M4 12h16M12 4v16"></path></svg>
+                    <div>
+                      <h6 class="text-white mb-0" style="font-size: 0.8rem;">CANTIDAD DE NIVELES</h6>
+                      <span class="text-secondary" style="font-size: 0.65rem;">Selecciona la cantidad de niveles</span>
+                    </div>
+                  </div>
+                  <div class="facade-radio-group">
+                    <input type="radio" id="niv1" name="f-niveles" value="1"><label class="facade-radio-label" for="niv1">1 Nivel</label>
+                    <input type="radio" id="niv2" name="f-niveles" value="2" checked><label class="facade-radio-label" for="niv2">2 Niveles</label>
+                    <input type="radio" id="niv3" name="f-niveles" value="3"><label class="facade-radio-label" for="niv3">3 Niveles</label>
+                    <input type="radio" id="niv4" name="f-niveles" value="4"><label class="facade-radio-label" for="niv4">4+ Niveles</label>
+                  </div>
+                </div>
+
+                <!-- Tipo -->
+                <div>
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                    <div>
+                      <h6 class="text-white mb-0" style="font-size: 0.8rem;">TIPO DE PROYECTO</h6>
+                      <span class="text-secondary" style="font-size: 0.65rem;">Selecciona el tipo de proyecto</span>
+                    </div>
+                  </div>
+                  <div class="facade-radio-group">
+                    <input type="radio" id="tipo1" name="f-tipo" value="Vivienda" checked><label class="facade-radio-label" for="tipo1">Vivienda</label>
+                    <input type="radio" id="tipo2" name="f-tipo" value="Comercio"><label class="facade-radio-label" for="tipo2">Comercio</label>
+                    <input type="radio" id="tipo3" name="f-tipo" value="Edificio"><label class="facade-radio-label" for="tipo3">Edificio</label>
+                  </div>
+                </div>
+
+                <!-- Complejidad -->
+                <div>
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    <div>
+                      <h6 class="text-white mb-0" style="font-size: 0.8rem;">NIVEL DE COMPLEJIDAD</h6>
+                      <span class="text-secondary" style="font-size: 0.65rem;">Elige el nivel de detalle del diseño</span>
+                    </div>
+                  </div>
+                  <div class="facade-radio-group">
+                    <input type="radio" id="comp1" name="f-complejidad" value="1.0" data-label="Estándar"><label class="facade-radio-label complex-label" for="comp1"><span>Estándar</span><span style="font-size: 0.65rem; opacity: 0.6;">1.00x</span></label>
+                    <input type="radio" id="comp2" name="f-complejidad" value="1.3" data-label="Profesional" checked><label class="facade-radio-label complex-label" for="comp2"><span>Profesional</span><span style="font-size: 0.65rem; opacity: 0.6;">1.30x</span></label>
+                    <input type="radio" id="comp3" name="f-complejidad" value="1.6" data-label="Premium"><label class="facade-radio-label complex-label" for="comp3"><span>Premium</span><span style="font-size: 0.65rem; opacity: 0.6;">1.60x</span></label>
+                  </div>
+                </div>
+
+                <!-- Render 3D Toggle -->
+                <div class="facade-box d-flex justify-content-between align-items-center py-3">
+                  <div class="d-flex align-items-center gap-2">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                    <div>
+                      <h6 class="text-white mb-0" style="font-size: 0.85rem;">RENDER 3D</h6>
+                      <span class="text-secondary" style="font-size: 0.7rem;">Incluye visualización 3D realista</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center gap-3">
+                    <span class="text-white" style="font-size: 0.8rem;">+$30.00</span>
+                    <label class="facade-switch">
+                      <input type="checkbox" id="f-render" checked>
+                      <span class="f-slider-toggle"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Nota Info -->
+                <div class="d-flex align-items-center gap-2 text-secondary" style="font-size: 0.7rem;">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+                  <span>El precio mínimo por proyecto es de USD $80.00</span>
+                </div>
+
+              </div>
+
+              <!-- DERECHA: RESULTADOS -->
+              <div class="col-12 col-lg-6 d-flex flex-column">
+                <div class="facade-box flex-grow-1 d-flex flex-column h-100 p-4" style="background: rgba(0,0,0,0.4); border: none;">
+                  <div class="d-flex align-items-center gap-2 mb-4">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" class="accent-text" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0H5a2 2 0 0 1-2-2v-4m6 6h10a2 2 0 0 0 2-2v-4"></path></svg>
+                    <h6 class="accent-text mb-0" style="letter-spacing: 1px;">ESTIMACIÓN DEL PROYECTO</h6>
+                  </div>
+
+                  <!-- Gráfico Wireframe -->
+                  <div class="facade-wireframe position-relative my-4">
+                    <svg viewBox="0 0 400 250" style="width:100%; height:auto; stroke:rgba(255,255,255,0.2); fill:none; stroke-width:1.5;">
+                      <rect x="60" y="50" width="280" height="180"></rect>
+                      <line x1="60" y1="120" x2="340" y2="120"></line>
+                      <line x1="160" y1="50" x2="160" y2="230"></line>
+                      <line x1="260" y1="120" x2="260" y2="230"></line>
+                      <rect x="80" y="70" width="60" height="30"></rect>
+                      <rect x="180" y="70" width="140" height="30"></rect>
+                      <rect x="80" y="150" width="60" height="80"></rect>
+                      <rect x="180" y="150" width="60" height="50"></rect>
+                    </svg>
+                    <!-- Etiquetas del wireframe -->
+                    <div class="position-absolute d-flex align-items-center gap-2" style="left: -10px; top: 50%; transform: translateY(-50%);">
+                      <div style="width: 1px; height: 60px; background: #fff;"></div>
+                      <span id="wf-height" class="text-white" style="font-size: 0.75rem;">6.20 m</span>
+                    </div>
+                    <div class="position-absolute d-flex flex-column align-items-center gap-1" style="bottom: -15px; left: 50%; transform: translateX(-50%);">
+                      <div style="width: 100px; height: 1px; background: #fff;"></div>
+                      <span id="wf-width" class="text-white" style="font-size: 0.75rem;">8.50 m</span>
+                    </div>
+                  </div>
+
+                  <!-- Desglose de Costos -->
+                  <div class="mt-4 pt-3 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
+                    <div class="d-flex justify-content-between mb-2">
+                      <span class="text-secondary" style="font-size: 0.8rem;">Área de fachada</span>
+                      <span class="text-white" id="f-area-text" style="font-size: 0.8rem;">52.70 m²</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <span class="text-secondary" style="font-size: 0.8rem;">Precio base (1.50 USD/m²)</span>
+                      <span class="text-white" id="f-base-text" style="font-size: 0.8rem;">$79.05</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 pb-3 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;">
+                      <span class="text-secondary" id="f-complex-label" style="font-size: 0.8rem;">Nivel de complejidad (Profesional)</span>
+                      <span class="text-white" id="f-complex-text" style="font-size: 0.8rem;">1.30x</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <span class="text-secondary" style="font-size: 0.85rem;">Subtotal</span>
+                      <span class="text-white fw-bold" id="f-subtotal-text" style="font-size: 0.85rem;">$102.77</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-4">
+                      <span class="text-secondary" style="font-size: 0.85rem;">Render 3D</span>
+                      <span class="text-white fw-bold" id="f-render-text" style="font-size: 0.85rem;">$30.00</span>
+                    </div>
+
+                    <!-- Total Estimado -->
+                    <div class="text-center mt-auto pt-3">
+                      <span class="text-white fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">TOTAL ESTIMADO</span>
+                      <div class="d-flex justify-content-center align-items-baseline gap-1 mb-1">
+                        <h1 class="fw-bold text-white mb-0" id="f-total" style="font-size: 2.5rem;">$132.77</h1>
+                        <span class="text-secondary small">USD</span>
+                      </div>
+                      <span class="text-secondary d-block" style="font-size: 0.65rem;">* Precio estimado sujeto a revisión</span>
+                    </div>
+                    
+                    <a id="btnFachadaWa" href="#" target="_blank" class="btn w-100 text-white fw-bold py-3 mt-4" style="background-color: #25D366; border-radius: 12px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                      <svg width="20" height="20" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
+                      SOLICITAR COTIZACIÓN POR WHATSAPP
+                    </a>
+                    
+                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.65rem;">
+                      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                      Tus datos están protegidos y son confidenciales
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Features Footer del Calculador -->
+            <div class="row text-center mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
+              <div class="col-12 col-md-4 d-flex flex-column align-items-center mb-4 mb-md-0">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="f-feature-icon mb-2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                <h6 class="text-white mb-1" style="font-size: 0.8rem;">Entrega rápida</h6>
+                <span class="text-secondary" style="font-size: 0.7rem;">De 3 a 5 días hábiles</span>
+              </div>
+              <div class="col-12 col-md-4 d-flex flex-column align-items-center mb-4 mb-md-0">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="f-feature-icon mb-2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
+                <h6 class="text-white mb-1" style="font-size: 0.8rem;">Diseños personalizados</h6>
+                <span class="text-secondary" style="font-size: 0.7rem;">Ajustados a tus necesidades</span>
+              </div>
+              <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="f-feature-icon mb-2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <h6 class="text-white mb-1" style="font-size: 0.8rem;">Calidad garantizada</h6>
+                <span class="text-secondary" style="font-size: 0.7rem;">Diseños profesionales y detallados</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN DE PLANOS 2D CON FONDO ATENUADO -->
       <div id="servicios-tecnicos" class="section-planos-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           
@@ -1212,8 +1088,11 @@
       </button>
     </div>
 
-    <!-- LÓGICA INTELIGENTE -->
+    <!-- SCRIPTS INTELIGENTES -->
     <script>
+      // ==========================================
+      // RELOJES EN VIVO (GUATEMALA Y MIAMI - 24HRS)
+      // ==========================================
       function updateClocks() {
         const options24 = { timeZone: 'America/Guatemala', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
         const gtString = new Intl.DateTimeFormat('es-GT', options24).format(new Date());
@@ -1228,6 +1107,9 @@
       setInterval(updateClocks, 1000);
       updateClocks();
 
+      // ==========================================
+      // SELECTOR DE IDIOMA
+      // ==========================================
       const langBtn = document.getElementById('langBtn');
       const langMenu = document.getElementById('langMenu');
       const langContainer = document.getElementById('langContainer');
@@ -1244,6 +1126,9 @@
           });
       }
 
+      // ==========================================
+      // COTIZADOR GENERAL DE TERRENOS (HASTA 300m2)
+      // ==========================================
       document.addEventListener('DOMContentLoaded', function() {
         const servicioSelect = document.getElementById('calcServicioSelect');
         const anchoInput = document.getElementById('calcAncho');
@@ -1254,7 +1139,7 @@
         const avisoPagoDirecto = document.getElementById('avisoPagoDirecto');
         const btnEnviarCotizacion = document.getElementById('btnEnviarCotizacion');
 
-        function actualizarCotizacion() {
+        function actualizarCotizacionTerreno() {
           const ancho = parseFloat(anchoInput.value) || 0;
           const largo = parseFloat(largoInput.value) || 0;
           const areaTotal = ancho * largo;
@@ -1310,10 +1195,80 @@
         }
 
         if (anchoInput && largoInput && servicioSelect) {
-          anchoInput.addEventListener('input', actualizarCotizacion);
-          largoInput.addEventListener('input', actualizarCotizacion);
-          servicioSelect.addEventListener('change', actualizarCotizacion);
+          anchoInput.addEventListener('input', actualizarCotizacionTerreno);
+          largoInput.addEventListener('input', actualizarCotizacionTerreno);
+          servicioSelect.addEventListener('change', actualizarCotizacionTerreno);
         }
+
+        // ==========================================
+        // CALCULADORA DE FACHADAS
+        // ==========================================
+        const fAncho = document.getElementById('f-ancho');
+        const fAltura = document.getElementById('f-altura');
+        const fValAncho = document.getElementById('f-val-ancho');
+        const fValAltura = document.getElementById('f-val-altura');
+        const wfWidth = document.getElementById('wf-width');
+        const wfHeight = document.getElementById('wf-height');
+        
+        const fAreaText = document.getElementById('f-area-text');
+        const fBaseText = document.getElementById('f-base-text');
+        const fComplexLabel = document.getElementById('f-complex-label');
+        const fComplexText = document.getElementById('f-complex-text');
+        const fSubtotalText = document.getElementById('f-subtotal-text');
+        const fRenderText = document.getElementById('f-render-text');
+        const fTotal = document.getElementById('f-total');
+        
+        const fRadiosComplejidad = document.querySelectorAll('input[name="f-complejidad"]');
+        const fRenderToggle = document.getElementById('f-render');
+        const btnFachadaWa = document.getElementById('btnFachadaWa');
+
+        function actualizarCalculadoraFachada() {
+          const ancho = parseFloat(fAncho.value);
+          const altura = parseFloat(fAltura.value);
+          const complejidadRadio = document.querySelector('input[name="f-complejidad"]:checked');
+          const complejidad = parseFloat(complejidadRadio.value);
+          const complejidadTexto = complejidadRadio.getAttribute('data-label');
+          const renderOn = fRenderToggle.checked;
+
+          // Mostrar valores en UI y Wireframe
+          fValAncho.textContent = ancho.toFixed(2);
+          fValAltura.textContent = altura.toFixed(2);
+          wfWidth.textContent = ancho.toFixed(2) + ' m';
+          wfHeight.textContent = altura.toFixed(2) + ' m';
+
+          // Cálculos
+          const area = ancho * altura;
+          const precioBase = area * 1.50; // $1.50 USD/m2
+          let subtotal = precioBase * complejidad;
+          
+          // Mínimo de $80 aplicado al subtotal
+          if (subtotal < 80) subtotal = 80;
+
+          const costoRender = renderOn ? 30.00 : 0.00;
+          const totalFinal = subtotal + costoRender;
+
+          // Actualizar Textos
+          fAreaText.textContent = area.toFixed(2) + ' m²';
+          fBaseText.textContent = '$' + precioBase.toFixed(2);
+          fComplexLabel.textContent = 'Nivel de complejidad (' + complejidadTexto + ')';
+          fComplexText.textContent = complejidad.toFixed(2) + 'x';
+          fSubtotalText.textContent = '$' + subtotal.toFixed(2);
+          fRenderText.textContent = '$' + costoRender.toFixed(2);
+          fTotal.textContent = '$' + totalFinal.toFixed(2);
+
+          // Link de WhatsApp
+          const waMessage = encodeURIComponent(`Hola, me interesa cotizar una *Fachada*.\n📐 Ancho: ${ancho.toFixed(2)}m\n📏 Altura: ${altura.toFixed(2)}m\n🔹 Área: ${area.toFixed(2)} m²\n💎 Nivel: ${complejidadTexto}\n🖼️ Render 3D: ${renderOn ? 'Sí' : 'No'}\n💵 *Total Estimado: $${totalFinal.toFixed(2)} USD*.\n¿Cómo empezamos?`);
+          btnFachadaWa.href = `https://wa.me/18329774150?text=${waMessage}`;
+        }
+
+        // Listeners Fachada
+        fAncho.addEventListener('input', actualizarCalculadoraFachada);
+        fAltura.addEventListener('input', actualizarCalculadoraFachada);
+        fRenderToggle.addEventListener('change', actualizarCalculadoraFachada);
+        fRadiosComplejidad.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
+        
+        // Llamada inicial
+        actualizarCalculadoraFachada();
       });
     </script>
 
