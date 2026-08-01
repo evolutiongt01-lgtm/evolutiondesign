@@ -192,6 +192,35 @@
         color: #fff !important;
         transform: scale(0.95); 
       }
+
+      /* MENÚ DESPLEGABLE MÓVIL (HAMBURGUESA) */
+      .mobile-dropdown-menu { 
+        display: none; 
+        flex-direction: column; 
+        position: absolute; 
+        top: 55px; 
+        left: 0; 
+        background: rgba(15, 15, 15, 0.95) !important; 
+        backdrop-filter: blur(20px) !important; 
+        -webkit-backdrop-filter: blur(20px) !important; 
+        border: 1px solid rgba(255,255,255,0.1) !important; 
+        border-radius: 16px !important; 
+        padding: 0.5rem !important; 
+        min-width: 180px !important; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; 
+        gap: 5px; 
+        list-style: none !important;
+        margin: 0;
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+        transform-origin: top left;
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        z-index: 1050;
+      }
+      .mobile-dropdown-menu li { list-style: none !important; }
+      .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+      .menu-item:hover, .menu-item:focus, .menu-item:active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
       
       .app-tabs { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 1.5rem; gap: 2rem; justify-content: space-around; }
       .app-tabs::-webkit-scrollbar { display: none; }
@@ -410,12 +439,40 @@
     <!-- NAVEGACIÓN MÓVIL TIPO APP -->
     <nav class="mobile-app-nav">
       <div class="app-nav-top">
-        <a href="#" class="icon-btn" aria-label="Menú">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
-        </a>
+        
+        <!-- MENÚ DESPLEGABLE HAMBURGUESA -->
+        <div style="position: relative;">
+          <a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+          </a>
+          
+          <!-- Lista de opciones del Menú Hamburguesa -->
+          <ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
+            <li>
+              <a class="menu-item" href="index.html">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Inicio
+              </a>
+            </li>
+            <li>
+              <a class="menu-item" href="#contacto">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Sobre Nosotros
+              </a>
+            </li>
+            <li>
+              <a class="menu-item" href="#contacto">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                Feedback
+              </a>
+            </li>
+          </ul>
+        </div>
+
         <a href="index.html">
           <img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;">
         </a>
+        
         <!-- BOTÓN DE USUARIO EN MÓVIL CONECTADO AL PORTAL -->
         <a href="portal.html" class="icon-btn" aria-label="Portal de Entregas">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -1197,6 +1254,31 @@
       const currencyMenu = document.getElementById('currencyMenu');
       const currencyContainer = document.getElementById('currencyContainer');
       
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
+
+      // Lógica Menú Hamburguesa Móvil
+      if(mobileMenuBtn && mobileDropdownMenu) {
+          mobileMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            mobileDropdownMenu.classList.toggle('show');
+            e.stopPropagation();
+          });
+          document.addEventListener('click', function(e) {
+            // Verifica que el clic no sea dentro del botón ni del menú
+            if (!mobileMenuBtn.contains(e.target) && !mobileDropdownMenu.contains(e.target)) {
+              mobileDropdownMenu.classList.remove('show');
+            }
+          });
+          // Para que el menú se cierre al hacer clic en un enlace
+          const menuItems = mobileDropdownMenu.querySelectorAll('.menu-item');
+          menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+              mobileDropdownMenu.classList.remove('show');
+            });
+          });
+      }
+
       let currentCurrency = 'USD';
 
       // Lógica Selector de Idioma
