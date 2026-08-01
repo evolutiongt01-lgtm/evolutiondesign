@@ -1,0 +1,259 @@
+<!doctype html>
+<html class="h-100" lang="es">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="description" content="Portal de Entregas Digitales - Evolution Design">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
+    <meta name="author" content="Evolution Design">
+    <title>Portal de Entregas - Evolution Design</title>
+    <link rel="stylesheet" href="css/theme.min.css">
+
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: local(''), url('fonts/inter-v12-latin-300.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local(''), url('fonts/inter-v12-latin-regular.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: local(''), url('fonts/inter-v12-latin-500.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: local(''), url('fonts/inter-v12-latin-700.woff2') format('woff2');
+      }
+
+      html { scroll-behavior: smooth; }
+      body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+
+      .accent-text { color: #d4b895; }
+
+      /* BOTÓN LIQUID GLASS */
+      .btn-liquid-glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(212, 184, 149, 0.4);
+        color: #d4b895;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        text-decoration: none !important;
+        font-weight: 500;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+        text-align: center;
+      }
+      .btn-liquid-glass:hover, .btn-liquid-glass:focus {
+        background: #fff;
+        color: #000 !important;
+        border-color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      }
+
+      /* PANELES DE CRISTAL */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        border-radius: 24px;
+      }
+
+      .glass-input {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        color: #fff;
+        padding: 0.8rem 1.2rem;
+        width: 100%;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+      .glass-input:focus {
+        border-color: #d4b895;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 20px rgba(212, 184, 149, 0.2);
+      }
+      .glass-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+      /* ESTADOS DE VISTA */
+      #dashboardView { display: none; }
+    </style>
+  </head>
+
+  <body class="h-100">
+
+    <!-- BARRA SUPERIOR MINIMALISTA -->
+    <header class="py-4 px-4 px-md-5 d-flex justify-content-between align-items-center border-bottom" style="border-color: rgba(255,255,255,0.08) !important;">
+      <a href="index.html" class="d-flex align-items-center text-decoration-none">
+        <img src="img/logo.png" alt="Evolution Design" style="max-height: 32px; width: auto;">
+      </a>
+      <a href="index.html" class="text-secondary small text-decoration-none" style="transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">&larr; Volver al sitio principal</a>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container my-auto py-5" style="max-width: 800px;">
+      
+      <!-- 1. VISTA DE LOGIN -->
+      <div id="loginView" class="row justify-content-center" data-aos="fade-up">
+        <div class="col-12 col-md-8 col-lg-6">
+          <div class="glass-panel p-4 p-md-5 text-center">
+            <div class="mb-4">
+              <span class="small text-secondary fw-lighter text-uppercase d-block mb-1" style="letter-spacing: 2px;">ÁREA DE CLIENTES</span>
+              <h3 class="fw-bold text-white mb-2">Portal de Entregas</h3>
+              <p class="text-secondary small">Ingresa tu correo registrado o código de proyecto para acceder a tus archivos.</p>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+              <div class="mb-3 text-start">
+                <label class="small text-secondary mb-1">Correo Electrónico</label>
+                <input type="email" id="clientEmail" class="glass-input" placeholder="tucorreo@ejemplo.com" required>
+              </div>
+              <div class="mb-4 text-start">
+                <label class="small text-secondary mb-1">Código de Proyecto / Acceso</label>
+                <input type="text" id="projectCode" class="glass-input" placeholder="Ej. EVO-3D-884" required>
+              </div>
+              <button type="submit" class="btn-liquid-glass w-100 py-3 fw-bold" style="border: none; background: #d4b895; color: #000;">
+                Acceder al Portal
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. VISTA DEL PANEL DE CLIENTE (DASHBOARD) -->
+      <div id="dashboardView" data-aos="fade">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+          <div>
+            <span class="accent-text small fw-medium text-uppercase d-block mb-1" style="letter-spacing: 1px;">Bienvenido de nuevo</span>
+            <h2 class="fw-bold text-white mb-0" id="clientNameDisplay">Cliente Evolution Design</h2>
+          </div>
+          <button onclick="handleLogout()" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-2" style="font-size: 0.75rem;">Cerrar Sesión</button>
+        </div>
+
+        <!-- TARJETA DE PROYECTO ACTIVO -->
+        <div class="glass-panel p-4 p-md-5 mb-4">
+          <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+            <div>
+              <span class="badge px-3 py-2 rounded-pill fw-medium mb-2" style="background: rgba(212, 184, 149, 0.15); color: #d4b895; border: 1px solid rgba(212, 184, 149, 0.3);">Proyecto Activo</span>
+              <h4 class="fw-bold text-white mb-1">Residencia Unifamiliar - Paquete Profesional</h4>
+              <p class="text-secondary small mb-0">Panajachel, Sololá • Código: <span class="text-white" id="activeCodeDisplay">EVO-3D-884</span></p>
+            </div>
+            <span class="text-success small fw-medium d-flex align-items-center gap-1">
+              <span style="width: 8px; height: 8px; background-color: #28a745; border-radius: 50%; display: inline-block;"></span> Entregado
+            </span>
+          </div>
+
+          <hr class="border-secondary opacity-25 my-4">
+
+          <!-- LISTA DE ARCHIVOS Y DESCARGAS -->
+          <h6 class="text-white fw-bold mb-3" style="font-size: 0.9rem;">Archivos y Entregables Listos:</h6>
+          <div class="d-flex flex-column gap-3">
+            
+            <!-- Item 1: Renders -->
+            <div class="d-flex align-items-center justify-content-between p-3 rounded-4" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);">
+              <div class="d-flex align-items-center gap-3">
+                <div class="p-2 rounded-3" style="background: rgba(255,255,255,0.05); color: #d4b895;">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                </div>
+                <div>
+                  <h6 class="text-white mb-0" style="font-size: 0.85rem;">Carpeta de Renders Fotorrealistas (16 Unidades)</h6>
+                  <span class="text-secondary" style="font-size: 0.7rem;">Alta Resolución • Formato ZIP (142 MB)</span>
+                </div>
+              </div>
+              <a href="#" class="btn btn-sm btn-light text-black fw-bold px-3 py-2 rounded-pill" style="font-size: 0.75rem;" onclick="alert('Iniciando descarga segura de renders...'); return false;">Descargar</a>
+            </div>
+
+            <!-- Item 2: Videos -->
+            <div class="d-flex align-items-center justify-content-between p-3 rounded-4" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);">
+              <div class="d-flex align-items-center gap-3">
+                <div class="p-2 rounded-3" style="background: rgba(255,255,255,0.05); color: #d4b895;">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                </div>
+                <div>
+                  <h6 class="text-white mb-0" style="font-size: 0.85rem;">Videos Realistas del Proyecto (3 Clips de 8s)</h6>
+                  <span class="text-secondary" style="font-size: 0.7rem;">Formato MP4 4K (85 MB)</span>
+                </div>
+              </div>
+              <a href="#" class="btn btn-sm btn-light text-black fw-bold px-3 py-2 rounded-pill" style="font-size: 0.75rem;" onclick="alert('Iniciando descarga segura de clips de video...'); return false;">Descargar</a>
+            </div>
+
+            <!-- Item 3: Planos -->
+            <div class="d-flex align-items-center justify-content-between p-3 rounded-4" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);">
+              <div class="d-flex align-items-center gap-3">
+                <div class="p-2 rounded-3" style="background: rgba(255,255,255,0.05); color: #d4b895;">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <div>
+                  <h6 class="text-white mb-0" style="font-size: 0.85rem;">Juego de Planos Arquitectónicos y Fachadas</h6>
+                  <span class="text-secondary" style="font-size: 0.7rem;">Formatos PDF y DWG (24 MB)</span>
+                </div>
+              </div>
+              <a href="#" class="btn btn-sm btn-light text-black fw-bold px-3 py-2 rounded-pill" style="font-size: 0.75rem;" onclick="alert('Iniciando descarga de planos...'); return false;">Descargar</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-center py-4 border-top" style="border-color: #222 !important;">
+      <p class="text-secondary small mb-0" style="font-size: 0.75rem;">© 2026 Evolution Design. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- LÓGICA DEL PORTAL -->
+    <script>
+      function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('clientEmail').value;
+        const code = document.getElementById('projectCode').value;
+
+        // Simulación de acceso exitoso (aquí puedes conectar tu backend o Shopify más adelante)
+        if(email && code) {
+          document.getElementById('loginView').style.display = 'none';
+          document.getElementById('dashboardView').style.display = 'block';
+          document.getElementById('clientNameDisplay').textContent = email.split('@')[0].toUpperCase();
+          document.getElementById('activeCodeDisplay').textContent = code.toUpperCase();
+        }
+      }
+
+      function handleLogout() {
+        document.getElementById('dashboardView').style.display = 'none';
+        document.getElementById('loginView').style.display = 'flex';
+        document.getElementById('loginForm').reset();
+      }
+    </script>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script>
+      AOS.init({ duration: 800 });
+    </script>
+  </body>
+</html>
