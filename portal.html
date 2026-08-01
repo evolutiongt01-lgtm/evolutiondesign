@@ -228,17 +228,20 @@
           <p class="text-secondary mb-0" style="font-size: 0.9rem; line-height: 1.5;">Ingresa tu correo registrado o código de proyecto para acceder a tus archivos.</p>
         </div>
 
+        <!-- Se añadió autocomplete="off" para evitar que el navegador guarde y rellene solo -->
         <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
+          
           <label class="form-label-custom">Correo Electrónico</label>
           <div class="input-wrapper">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="input-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            <input type="email" id="clientEmail" class="glass-input" value="matzarcesar01@hotmail.com" onclick="if(this.value=='matzarcesar01@hotmail.com')this.value='';" autocomplete="off" required>
+            <!-- Usamos un nombre falso y autocomplete new-password para bloquear el autocompletado agresivo de Chrome/Brave -->
+            <input type="text" id="clientEmail" name="evo_user_login" class="glass-input" placeholder="tucorreo@ejemplo.com" autocomplete="new-password" required>
           </div>
 
           <label class="form-label-custom">Código de Proyecto / Acceso</label>
           <div class="input-wrapper mb-4">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="input-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            <input type="text" id="projectCode" class="glass-input" value="DESIGN-01" onclick="if(this.value=='DESIGN-01')this.value='';" autocomplete="off" required>
+            <input type="text" id="projectCode" name="evo_project_pass" class="glass-input" placeholder="Ej. DESIGN-01" autocomplete="new-password" required>
           </div>
 
           <button type="submit" class="btn-gold">
@@ -355,6 +358,14 @@
       }
     ];
 
+    // Limpieza forzada al cargar la página para evitar que los navegadores guarden basura en los inputs
+    document.addEventListener("DOMContentLoaded", function() {
+      const emailField = document.getElementById('clientEmail');
+      const codeField = document.getElementById('projectCode');
+      if(emailField) emailField.value = "";
+      if(codeField) codeField.value = "";
+    });
+
     function handleLogin(event) {
       event.preventDefault();
       const emailInput = document.getElementById('clientEmail').value.trim().toLowerCase();
@@ -396,11 +407,13 @@
     }
 
     function handleLogout() {
+      // Limpiamos los inputs al salir
+      document.getElementById('clientEmail').value = "";
+      document.getElementById('projectCode').value = "";
+      
       document.getElementById('dashboardView').style.display = 'none';
       document.getElementById('loginView').style.display = 'block';
-      // Restablece los inputs con los valores de ejemplo originales al cerrar sesión
-      document.getElementById('clientEmail').value = "matzarcesar01@hotmail.com";
-      document.getElementById('projectCode').value = "DESIGN-01";
+      document.getElementById('loginForm').reset();
     }
   </script>
 
