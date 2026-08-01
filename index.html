@@ -112,10 +112,11 @@
       .facade-switch input:disabled + .f-slider-toggle { opacity: 0.5; cursor: not-allowed; }
 
       /* CAJA DE PAGO CON ESTILO LIQUID GLASS */
-      .paypal-white-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+      .paypal-white-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
 
-      /* ANIMACIÓN DEL CANDADO DE SEGURIDAD */
-      .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(6px); border-radius: 20px; display: flex; align-items: center; justify-content: center; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+      /* ANIMACIÓN DEL CANDADO DE SEGURIDAD (MEJORADO PARA NO TAPAR PAGOS) */
+      .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 24px; display: flex; align-items: center; justify-content: flex-start; padding-left: 22%; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+      @media (max-width: 991px) { .lock-overlay { padding-left: 0; justify-content: center; align-items: flex-start; padding-top: 20%; } }
       .lock-overlay.active { opacity: 1; pointer-events: auto; }
       .lock-icon-container { width: 70px; height: 70px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(212, 184, 149, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #d4b895; box-shadow: 0 0 30px rgba(212, 184, 149, 0.3); animation: lock-bounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
       @keyframes lock-bounce { 0% { transform: scale(0.3); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
@@ -144,7 +145,7 @@
       input:checked + .f-slider-toggle:before { transform: translateX(22px); }
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
-      /* BOTÓN FLOTANTE DE MONEDA */
+      /* BOTÓN Y MENÚ FLOTANTE DE MONEDA (SIN PUNTOS) */
       .currency-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
       .currency-wrapper { position: relative; width: 50px; height: 50px; }
       .currency-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212, 184, 149, 0.4) !important; background-color: rgba(212, 184, 149, 0.1) !important; color: #d4b895 !important; backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; }
@@ -413,7 +414,8 @@
                 </div>
               </div>
 
-              <div class="col-12 col-lg-6">
+              <!-- Z-INDEX ALTO PARA QUE EL PANEL DERECHO QUEDE SOBRE EL CANDADO -->
+              <div class="col-12 col-lg-6" style="position: relative; z-index: 30;">
                 <div class="facade-results-panel d-flex flex-column h-100">
                   <div class="d-flex justify-content-center mb-5">
                     <h6 class="accent-text mb-0" style="letter-spacing: 1px;">TU ESTIMACIÓN DE PLANOS</h6>
@@ -456,7 +458,7 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL TIPO LIQUID GLASS -->
+                      <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
                       <div id="paypal-container-wrapper-2d" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-2d" class="w-100"></div>
@@ -652,7 +654,8 @@
                 </div>
               </div>
 
-              <div class="col-12 col-lg-6">
+              <!-- Z-INDEX ALTO PARA QUE EL PANEL DERECHO QUEDE SOBRE EL CANDADO -->
+              <div class="col-12 col-lg-6" style="position: relative; z-index: 30;">
                 <div class="facade-results-panel d-flex flex-column h-100">
                   <div class="d-flex justify-content-center mb-5">
                     <h6 class="accent-text mb-0" style="letter-spacing: 1px;">TU ESTIMACIÓN</h6>
@@ -949,7 +952,9 @@
                         </div>
                         
                       </div>
-                      <div class="col-12 col-md-6 d-flex flex-column gap-3">
+
+                      <!-- Z-INDEX ALTO PARA QUE EL PANEL DERECHO QUEDE SOBRE EL CANDADO -->
+                      <div class="col-12 col-md-6 d-flex flex-column gap-3" style="position: relative; z-index: 30;">
                         <div class="calc-result-display-box flex-fill d-flex flex-column justify-content-center">
                           <span class="small text-secondary d-block mb-1">Área Total Calculada</span>
                           <div class="d-flex align-items-baseline">
@@ -967,12 +972,19 @@
                       </div>
                     </div>
                     
-                    <!-- BOTÓN DE PAYPAL DINÁMICO CON BLOQUEO (3D / CUANTIFICACIÓN) -->
-                    <div id="wrapperPagoDirecto3D" class="mt-4" style="display: none;">
+                    <!-- BOTÓN WHATSAPP PARA CUANTIFICACIÓN -->
+                    <div id="wrapperBtnCotizar" class="mt-4" style="display: none; position: relative; z-index: 30;">
+                      <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
+                        CONTINUAR CON MI PROYECTO
+                      </a>
+                    </div>
+                    
+                    <!-- MENSAJE Y BOTÓN DE PAGO DIRECTO PAYPAL -->
+                    <div id="wrapperPagoDirecto3D" class="mt-4" style="display: none; position: relative; z-index: 30;">
                       <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-3d" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
                           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Proyecto listo para pago seguro!
+                          ¡Aprobado! Tu proyecto es elegible.
                         </span>
                       </div>
                       
@@ -981,7 +993,7 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL TIPO LIQUID GLASS -->
+                      <!-- CONTENEDOR DE PAYPAL OCULTO -->
                       <div id="paypal-container-wrapper-3d" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-3d" class="w-100"></div>
@@ -994,7 +1006,7 @@
                       </button>
                     </div>
 
-                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
+                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem; position: relative; z-index: 30;">
                       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                       Transacción segura facturada en USD
                     </div>
