@@ -106,6 +106,11 @@
       .features-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
       @media(min-width: 992px) { .features-grid-3 { grid-template-columns: repeat(3, 1fr); } }
 
+      /* ESTILOS DE BLOQUEO PARA INPUTS DESHABILITADOS */
+      input:disabled, select:disabled { opacity: 0.5; cursor: not-allowed; }
+      .facade-radio-group input[type="radio"]:disabled + .facade-radio-label { opacity: 0.4; cursor: not-allowed; border-color: rgba(255,255,255,0.05); }
+      .facade-switch input:disabled + .f-slider-toggle { opacity: 0.5; cursor: not-allowed; }
+
       /* CALCULADORAS TIPO FACHADA Y PLANOS 2D */
       .facade-calc-bg { background: linear-gradient(to bottom, #080808, #000); }
       .facade-calc-card { background: #0d0d0d; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.8); overflow: hidden; }
@@ -429,8 +434,18 @@
                         </span>
                       </div>
                       
-                      <!-- BOTÓN OFICIAL DE PAYPAL (CON SDK JS) PARA PLANOS 2D -->
-                      <div id="paypal-button-container-2d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
+                      <!-- BOTÓN INICIAL PARA BLOQUEAR -->
+                      <button id="btnProceder2D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
+                        PROCEDER AL PAGO SEGURO
+                      </button>
+
+                      <!-- CONTENEDOR DE PAYPAL OCULTO -->
+                      <div id="paypal-button-container-2d" class="w-100 mt-2" style="position: relative; z-index: 10; display: none;"></div>
+
+                      <!-- BOTÓN CANCELAR/EDITAR -->
+                      <button id="btnCancelar2D" type="button" class="btn w-100 btn-sm btn-link text-secondary mt-2" style="display: none; text-decoration: underline;">
+                        Editar medidas o paquete
+                      </button>
                     </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
@@ -651,7 +666,6 @@
                       <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión</span>
                     </div>
                     
-                    <!-- BOTÓN DE PAYPAL NUEVA PESTAÑA (FACHADAS) -->
                     <div id="wrapperPagoDirectoFachadas" class="mt-2" style="display: none;">
                       <div class="text-center p-3 rounded-3 mb-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
@@ -659,8 +673,19 @@
                           ¡Listo para pago!
                         </span>
                       </div>
-                      <!-- BOTÓN OFICIAL DE PAYPAL PARA FACHADAS -->
-                      <div id="paypal-button-container-fachada" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
+
+                      <!-- BOTÓN INICIAL PARA BLOQUEAR -->
+                      <button id="btnProcederFachadas" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
+                        PROCEDER AL PAGO SEGURO
+                      </button>
+
+                      <!-- CONTENEDOR DE PAYPAL OCULTO -->
+                      <div id="paypal-button-container-fachada" class="w-100 mt-2" style="position: relative; z-index: 10; display: none;"></div>
+                      
+                      <!-- BOTÓN CANCELAR/EDITAR -->
+                      <button id="btnCancelarFachadas" type="button" class="btn w-100 btn-sm btn-link text-secondary mt-2" style="display: none; text-decoration: underline;">
+                        Editar medidas o características
+                      </button>
                     </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
@@ -903,17 +928,34 @@
                       </div>
                     </div>
                     
-                    <!-- BOTÓN DE PAYPAL NUEVA PESTAÑA (SIEMPRE DISPONIBLE PARA 3D) -->
+                    <!-- BOTÓN WHATSAPP PARA CUANTIFICACIÓN -->
+                    <div id="wrapperBtnCotizar" class="mt-4" style="display: none;">
+                      <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
+                        CONTINUAR CON MI PROYECTO
+                      </a>
+                    </div>
+                    
+                    <!-- MENSAJE Y BOTÓN DE PAGO DIRECTO PAYPAL -->
                     <div id="wrapperPagoDirecto3D" class="mt-4" style="display: none;">
                       <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-3d" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
                           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Proyecto en rango base! Listo para pago.
+                          ¡Aprobado! Tu proyecto es elegible.
                         </span>
                       </div>
                       
-                      <!-- BOTÓN OFICIAL DE PAYPAL PARA 3D -->
-                      <div id="paypal-button-container-3d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
+                      <!-- BOTÓN INICIAL PARA BLOQUEAR -->
+                      <button id="btnProceder3D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
+                        PROCEDER AL PAGO SEGURO
+                      </button>
+
+                      <!-- CONTENEDOR DE PAYPAL OCULTO -->
+                      <div id="paypal-button-container-3d" class="w-100 mt-2" style="position: relative; z-index: 10; display: none;"></div>
+
+                      <!-- BOTÓN CANCELAR/EDITAR -->
+                      <button id="btnCancelar3D" type="button" class="btn w-100 btn-sm btn-link text-secondary mt-2" style="display: none; text-decoration: underline;">
+                        Editar medidas o paquete
+                      </button>
                     </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
@@ -1061,9 +1103,21 @@
         const cRadiosNiveles = document.querySelectorAll('input[name="c-niveles"]');
         const totalDisplay = document.getElementById('calcTotal');
         const precioFinalDisplay = document.getElementById('calcPrecioFinal');
+        const wrapperBtnCotizar = document.getElementById('wrapperBtnCotizar');
+        const btnEnviarCotizacion = document.getElementById('btnEnviarCotizacion');
         
         const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
         const mensajeRango3d = document.getElementById('mensaje-rango-3d');
+        const btnProceder3D = document.getElementById('btnProceder3D');
+        const paypalContainer3D = document.getElementById('paypal-button-container-3d');
+        const btnCancelar3D = document.getElementById('btnCancelar3D');
+
+        function toggleLock3D(locked) {
+          if(servicioSelect) servicioSelect.disabled = locked;
+          if(anchoInput) anchoInput.disabled = locked;
+          if(largoInput) largoInput.disabled = locked;
+          cRadiosNiveles.forEach(r => r.disabled = locked);
+        }
 
         function actualizarCotizacionTerreno() {
           if(!anchoInput || !largoInput || !servicioSelect) return;
@@ -1100,23 +1154,35 @@
             if(precioFinalDisplay) precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
             if (esServicio3D) {
-              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.setProperty('display', 'block', 'important');
+              if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'none';
+              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'block';
+              
+              if(btnProceder3D) btnProceder3D.style.display = 'block';
+              if(paypalContainer3D) paypalContainer3D.style.display = 'none';
+              if(btnCancelar3D) btnCancelar3D.style.display = 'none';
+
               if (areaTotal > 400) {
-                mensajeRango3d.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Área excedente calculada. Total actualizado listo para pago.</span>`;
-                mensajeRango3d.style.background = 'rgba(255, 193, 7, 0.1)';
-                mensajeRango3d.style.borderColor = 'rgba(255, 193, 7, 0.2)';
+                if(mensajeRango3d) {
+                  mensajeRango3d.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Área excedente calculada. Total actualizado listo para pago.</span>`;
+                  mensajeRango3d.style.background = 'rgba(255, 193, 7, 0.1)';
+                  mensajeRango3d.style.borderColor = 'rgba(255, 193, 7, 0.2)';
+                }
               } else {
-                mensajeRango3d.innerHTML = `<span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>¡Proyecto en rango base! Listo para pago.</span>`;
-                mensajeRango3d.style.background = 'rgba(40, 167, 69, 0.1)';
-                mensajeRango3d.style.borderColor = 'rgba(40, 167, 69, 0.2)';
+                if(mensajeRango3d) {
+                  mensajeRango3d.innerHTML = `<span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>¡Proyecto en rango base! Listo para pago.</span>`;
+                  mensajeRango3d.style.background = 'rgba(40, 167, 69, 0.1)';
+                  mensajeRango3d.style.borderColor = 'rgba(40, 167, 69, 0.2)';
+                }
               }
             } else {
-              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.setProperty('display', 'none', 'important');
+              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'none';
+              if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'block';
             }
           } else {
             if(totalDisplay) totalDisplay.textContent = "0.00"; 
             if(precioFinalDisplay) precioFinalDisplay.textContent = "0.00"; 
-            if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.setProperty('display', 'none', 'important');
+            if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'none'; 
+            if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'none';
             window.montoPago3D = "0.00";
           }
         }
@@ -1128,6 +1194,25 @@
           servicioSelect.addEventListener('change', actualizarCotizacionTerreno);
           cRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCotizacionTerreno));
           actualizarCotizacionTerreno();
+        }
+
+        if(btnProceder3D) {
+          btnProceder3D.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleLock3D(true);
+            btnProceder3D.style.display = 'none';
+            if(paypalContainer3D) paypalContainer3D.style.display = 'block';
+            if(btnCancelar3D) btnCancelar3D.style.display = 'block';
+          });
+        }
+        if(btnCancelar3D) {
+          btnCancelar3D.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleLock3D(false);
+            if(btnProceder3D) btnProceder3D.style.display = 'block';
+            if(paypalContainer3D) paypalContainer3D.style.display = 'none';
+            btnCancelar3D.style.display = 'none';
+          });
         }
 
         // --- CALCULADORA DE PLANOS 2D ---
@@ -1144,6 +1229,16 @@
         
         const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
         const mensajeRangoPlanos = document.getElementById('mensaje-rango-planos');
+        const btnProceder2D = document.getElementById('btnProceder2D');
+        const paypalContainer2D = document.getElementById('paypal-button-container-2d');
+        const btnCancelar2D = document.getElementById('btnCancelar2D');
+
+        function toggleLock2D(locked) {
+          if(pAncho) pAncho.disabled = locked;
+          if(pLargo) pLargo.disabled = locked;
+          pRadiosNiveles.forEach(r => r.disabled = locked);
+          pRadiosPaquete.forEach(r => r.disabled = locked);
+        }
 
         function actualizarCalculadoraPlanos() {
           if(!pAncho || !pLargo) return;
@@ -1203,6 +1298,9 @@
 
           if(areaTotal > 0) {
             if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
+            if(btnProceder2D) btnProceder2D.style.display = 'block';
+            if(paypalContainer2D) paypalContainer2D.style.display = 'none';
+            if(btnCancelar2D) btnCancelar2D.style.display = 'none';
           } else {
              if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
              window.montoPago2D = "0.00";
@@ -1220,6 +1318,25 @@
           actualizarCalculadoraPlanos();
         }
 
+        if(btnProceder2D) {
+          btnProceder2D.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleLock2D(true);
+            btnProceder2D.style.display = 'none';
+            if(paypalContainer2D) paypalContainer2D.style.display = 'block';
+            if(btnCancelar2D) btnCancelar2D.style.display = 'block';
+          });
+        }
+        if(btnCancelar2D) {
+          btnCancelar2D.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleLock2D(false);
+            if(btnProceder2D) btnProceder2D.style.display = 'block';
+            if(paypalContainer2D) paypalContainer2D.style.display = 'none';
+            btnCancelar2D.style.display = 'none';
+          });
+        }
+
         // --- CALCULADORA DE FACHADAS ---
         const fAncho = document.getElementById('f-ancho');
         const fAltura = document.getElementById('f-altura');
@@ -1235,29 +1352,37 @@
         const fRenderToggle = document.getElementById('f-render');
         
         const wrapperPagoDirectoFachadas = document.getElementById('wrapperPagoDirectoFachadas');
+        const btnProcederFachadas = document.getElementById('btnProcederFachadas');
+        const paypalContainerFachada = document.getElementById('paypal-button-container-fachada');
+        const btnCancelarFachadas = document.getElementById('btnCancelarFachadas');
+
+        function toggleLockFachadas(locked) {
+          if(fAncho) fAncho.disabled = locked;
+          if(fAltura) fAltura.disabled = locked;
+          fRadiosComplejidad.forEach(r => r.disabled = locked);
+          fRadiosTipo.forEach(r => r.disabled = locked);
+          fRadiosNiveles.forEach(r => r.disabled = locked);
+          if(fRenderToggle) fRenderToggle.disabled = locked;
+        }
 
         function actualizarCalculadoraFachada() {
           if (!fAncho || !fAltura) return;
-
-          let ancho = parseFloat(fAncho.value) || 0; let altura = parseFloat(fAltura.value) || 0;
+          let ancho = parseFloat(fAncho.value) || 0;
+          let altura = parseFloat(fAltura.value) || 0;
           
           let compVal = 1.3; let compText = 'Profesional';
           const checkedComp = document.querySelector('input[name="f-complejidad"]:checked');
           if(checkedComp) { compVal = parseFloat(checkedComp.value); compText = checkedComp.getAttribute('data-label'); }
-
-          let tipoVal = 'Vivienda';
-          const checkedTipo = document.querySelector('input[name="f-tipo"]:checked');
-          if(checkedTipo) tipoVal = checkedTipo.value;
-
-          let nivelesVal = '2';
-          const checkedFNiv = document.querySelector('input[name="f-niveles"]:checked');
-          if(checkedFNiv) nivelesVal = checkedFNiv.value;
 
           const renderOn = fRenderToggle ? fRenderToggle.checked : true;
 
           const area = ancho * altura;
           const precioBase = area * 1.50;
           
+          let nivelesVal = '2';
+          const checkedFNiv = document.querySelector('input[name="f-niveles"]:checked');
+          if(checkedFNiv) nivelesVal = checkedFNiv.value;
+
           let costoNiveles = 0; let labelNiveles = "";
           if (nivelesVal === "3") { costoNiveles = 25.00; labelNiveles = "Cargo por 3 Niveles"; } 
           else if (nivelesVal === "4") { costoNiveles = 30.00; labelNiveles = "Cargo por 4+ Niveles"; }
@@ -1299,6 +1424,9 @@
 
           if(area > 0) {
             if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'block', 'important');
+            if(btnProcederFachadas) btnProcederFachadas.style.display = 'block';
+            if(paypalContainerFachada) paypalContainerFachada.style.display = 'none';
+            if(btnCancelarFachadas) btnCancelarFachadas.style.display = 'none';
           } else {
             if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'none', 'important');
             window.montoPagoFachada = "0.00";
@@ -1314,6 +1442,25 @@
           fRadiosTipo.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
           fRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
           actualizarCalculadoraFachada();
+        }
+
+        if(btnProcederFachadas) {
+          btnProcederFachadas.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleLockFachadas(true);
+            btnProcederFachadas.style.display = 'none';
+            if(paypalContainerFachada) paypalContainerFachada.style.display = 'block';
+            if(btnCancelarFachadas) btnCancelarFachadas.style.display = 'block';
+          });
+        }
+        if(btnCancelarFachadas) {
+          btnCancelarFachadas.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleLockFachadas(false);
+            if(btnProcederFachadas) btnProcederFachadas.style.display = 'block';
+            if(paypalContainerFachada) paypalContainerFachada.style.display = 'none';
+            btnCancelarFachadas.style.display = 'none';
+          });
         }
 
         // --- RENDERIZAR BOTONES DE PAYPAL AL INICIO ---
