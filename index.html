@@ -112,7 +112,7 @@
       .facade-switch input:disabled + .f-slider-toggle { opacity: 0.5; cursor: not-allowed; }
 
       /* CAJA DE PAGO CON ESTILO LIQUID GLASS (CRISTAL LÍQUIDO) */
-      .paypal-white-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+      .paypal-white-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
 
       /* CALCULADORAS TIPO FACHADA Y PLANOS 2D */
       .facade-calc-bg { background: linear-gradient(to bottom, #080808, #000); }
@@ -138,12 +138,13 @@
       input:checked + .f-slider-toggle:before { transform: translateX(22px); }
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
-      /* BOTÓN FLOTANTE DE MONEDA */
+      /* BOTÓN Y MENÚ FLOTANTE DE MONEDA (SIN PUNTOS) */
       .currency-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
       .currency-wrapper { position: relative; width: 50px; height: 50px; }
       .currency-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212, 184, 149, 0.4) !important; background-color: rgba(212, 184, 149, 0.1) !important; color: #d4b895 !important; backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; }
       .currency-float-btn:hover { transform: scale(1.1); background-color: rgba(212, 184, 149, 0.8) !important; color: #000 !important; }
-      .currency-float-menu { display: none; flex-direction: column; position: absolute; bottom: 62px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 140px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; opacity: 0; transform: translateY(10px) scale(0.97); transform-origin: bottom left; transition: all 0.25s; }
+      .currency-float-menu { display: none; flex-direction: column; position: absolute; bottom: 62px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 140px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; list-style: none !important; margin: 0; opacity: 0; transform: translateY(10px) scale(0.97); transform-origin: bottom left; transition: all 0.25s; }
+      .currency-float-menu li { list-style: none !important; }
       .currency-float-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
       .currency-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 10px !important; transition: all 0.2s ease !important; }
       .currency-item:hover, .currency-item.active { background: rgba(212, 184, 149, 0.15) !important; color: #fff !important; }
@@ -442,7 +443,7 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL TIPO LIQUID GLASS -->
+                      <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
                       <div id="paypal-container-wrapper-2d" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-2d" class="w-100"></div>
@@ -686,7 +687,7 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL TIPO LIQUID GLASS -->
+                      <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
                       <div id="paypal-container-wrapper-fachada" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-fachada" class="w-100"></div>
@@ -953,7 +954,7 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL TIPO LIQUID GLASS -->
+                      <!-- CONTENEDOR DE PAYPAL CON ESTILO LIQUID GLASS -->
                       <div id="paypal-container-wrapper-3d" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-3d" class="w-100"></div>
