@@ -108,7 +108,7 @@
          ========================================= */
       .desktop-nav {
         display: none !important;
-        padding-top: max(25px, env(safe-area-inset-top)); 
+        padding-top: calc(25px + env(safe-area-inset-top, 0px)); 
         pointer-events: none; 
       }
       @media (min-width: 992px) {
@@ -150,10 +150,9 @@
       }
 
       /* =========================================
-         NAVEGACIÓN MÓVIL TIPO APP (FIX DEFINITIVO ANDROID/IOS)
+         NAVEGACIÓN MÓVIL TIPO APP
          ========================================= */
       .mobile-app-nav {
-        /* Un poco más de opacidad para que el texto de abajo no compita con los iconos al scrollear */
         background: rgba(10, 10, 10, 0.85) !important; 
         backdrop-filter: blur(20px) saturate(150%); 
         -webkit-backdrop-filter: blur(20px) saturate(150%); 
@@ -168,7 +167,6 @@
         display: flex; 
         justify-content: space-between; 
         align-items: center; 
-        /* EL FIX DE ANDROID: max() asegura al menos 38px de padding si el env() reporta 0 */
         padding: max(38px, env(safe-area-inset-top)) 1.5rem 0.8rem 1.5rem; 
       }
       
@@ -203,7 +201,6 @@
          ========================================= */
       .hero-app {
         position: relative; 
-        /* Ajuste para que el inicio de la página no quede oculto detrás de la nueva barra fija */
         padding: max(145px, calc(110px + env(safe-area-inset-top))) 1.5rem 4rem; 
         min-height: 85vh; 
         display: flex; flex-direction: column; justify-content: center;
@@ -301,11 +298,18 @@
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
       /* =========================================
-         BOTONES FLOTANTES CIRCULARES (Moneda e Idioma)
+         BOTONES FLOTANTES CIRCULARES (Base sólida para Android)
          ========================================= */
-      .currency-float-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); left: 30px; z-index: 9999; }
-      .currency-wrapper { position: relative; width: 50px; height: 50px; }
+      .currency-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
+      .lang-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
       
+      /* FIX EXCLUSIVO PARA iOS (Para esquivar la barra de inicio del iPhone) */
+      @supports (-webkit-touch-callout: none) {
+        .currency-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); }
+        .lang-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); }
+      }
+
+      .currency-wrapper { position: relative; width: 50px; height: 50px; }
       .currency-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212, 184, 149, 0.4) !important; background-color: rgba(212, 184, 149, 0.1) !important; color: #d4b895 !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
       .currency-float-btn:hover { transform: scale(1.1); background-color: rgba(212, 184, 149, 0.8) !important; color: #000 !important; }
       
@@ -335,8 +339,6 @@
       .currency-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 10px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .currency-item:hover, .currency-item.active { background: rgba(212, 184, 149, 0.15) !important; color: #fff !important; }
 
-
-      .lang-float-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
       .lang-wrapper { position: relative; width: 50px; height: 50px; }
       .lang-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2) !important; background-color: rgba(255, 255, 255, 0.05) !important; color: #fff !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
       .lang-float-btn:hover { transform: scale(1.1); background-color: rgba(255, 255, 255, 0.15) !important; }
@@ -367,8 +369,6 @@
       .lang-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .lang-item:hover, .lang-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
-      /* FOOTER SAFE AREA FIX PARA IOS */
-      footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important; }
     </style>
   </head>
 
