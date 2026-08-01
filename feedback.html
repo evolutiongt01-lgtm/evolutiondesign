@@ -120,13 +120,45 @@
       }
       @media (min-width: 992px) { .mobile-app-nav { display: none !important; } }
       .app-nav-top { display: flex; justify-content: space-between; align-items: center; padding: max(38px, env(safe-area-inset-top)) 1.5rem 0.8rem 1.5rem; }
-      .icon-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); color: #fff !important; text-decoration: none !important; transition: all 0.3s ease; }
+      
+      .icon-btn { 
+        width: 42px; height: 42px; 
+        border-radius: 50%; 
+        border: 1px solid rgba(255, 255, 255, 0.15); 
+        display: flex; align-items: center; justify-content: center; 
+        background: rgba(255, 255, 255, 0.05); color: #fff !important; 
+        text-decoration: none !important; transition: all 0.3s ease; 
+        -webkit-tap-highlight-color: transparent !important; outline: none !important; 
+      }
       .icon-btn:hover, .icon-btn:focus { background-color: rgba(255, 255, 255, 0.15) !important; transform: scale(1.05); }
 
-      /* MENÚS DESPLEGABLES MÓVIL */
-      .mobile-dropdown-menu { display: none; flex-direction: column; position: absolute; top: 55px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 180px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; opacity: 0; transform: translateY(-10px) scale(0.95); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 1050; }
+      /* MENÚ DESPLEGABLE MÓVIL (HAMBURGUESA) */
+      .mobile-dropdown-menu { 
+        display: none; 
+        flex-direction: column; 
+        position: absolute; 
+        top: 55px; 
+        left: 0; 
+        background: rgba(15, 15, 15, 0.95) !important; 
+        backdrop-filter: blur(20px) !important; 
+        -webkit-backdrop-filter: blur(20px) !important; 
+        border: 1px solid rgba(255,255,255,0.1) !important; 
+        border-radius: 16px !important; 
+        padding: 0.5rem !important; 
+        min-width: 180px !important; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; 
+        gap: 5px; 
+        list-style: none !important;
+        margin: 0;
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+        transform-origin: top left;
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        z-index: 1050;
+      }
+      .mobile-dropdown-menu li { list-style: none !important; }
       .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
-      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .menu-item:hover, .menu-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
       .app-tabs { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 1.5rem; gap: 2rem; justify-content: space-around; }
@@ -254,7 +286,7 @@
 
     <div class="page-bg"></div>
 
-    <!-- NAVEGACIÓN ESCRITORIO (Sin botón de hamburguesa) -->
+    <!-- NAVEGACIÓN ESCRITORIO -->
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
@@ -272,28 +304,66 @@
       </div>
     </nav>
 
-    <!-- NAVEGACIÓN MÓVIL TIPO APP (Mantiene su menú táctil) -->
+    <!-- NAVEGACIÓN MÓVIL TIPO APP (CON MENÚ HAMBURGUESA IDÉNTICO AL INDEX) -->
     <nav class="mobile-app-nav">
       <div class="app-nav-top">
         <div style="position: relative;">
           <a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
           </a>
+          
           <ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
-            <li><a class="menu-item" href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
-            <li><a class="menu-item" href="sobre-nosotros.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
-            <li><a class="menu-item active" href="feedback.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
+            <li>
+              <a class="menu-item" href="index.html">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="menu-item" href="sobre-nosotros.html">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Sobre Nosotros
+              </a>
+            </li>
+            <li>
+              <a class="menu-item active" href="feedback.html">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                Feedback
+              </a>
+            </li>
           </ul>
         </div>
-        <a href="index.html"><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;"></a>
-        <a href="portal.html" class="icon-btn" aria-label="Portal de Entregas"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
+
+        <a href="index.html">
+          <img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;">
+        </a>
+        
+        <a href="portal.html" class="icon-btn" aria-label="Portal de Entregas">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
       </div>
+
       <div class="app-tabs">
-        <a href="index.html" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Inicio</a>
-        <a href="index.html#servicios-destacados" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Servicios</a>
-        <a href="index.html#servicios-tecnicos" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg> Planos</a>
-        <a href="index.html#visualizacion" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Tarifas 3D</a>
-        <a href="index.html#cuantificacion" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg> Cuantif.</a>
+        <a href="index.html" class="tab-item">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Inicio
+        </a>
+        <a href="index.html#servicios-destacados" class="tab-item">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Servicios
+        </a>
+        <a href="index.html#servicios-tecnicos" class="tab-item">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
+          Planos
+        </a>
+        <a href="index.html#visualizacion" class="tab-item">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          Tarifas 3D
+        </a>
+        <a href="index.html#cuantificacion" class="tab-item">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg>
+          Cuantif.
+        </a>
       </div>
     </nav>
 
@@ -539,6 +609,7 @@
     </div>
 
     <script>
+      // Lógica Menú Hamburguesa Móvil (Idéntica al Index)
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
 
@@ -553,6 +624,58 @@
               mobileDropdownMenu.classList.remove('show');
             }
           });
+          const menuItems = mobileDropdownMenu.querySelectorAll('.menu-item');
+          menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+              mobileDropdownMenu.classList.remove('show');
+            });
+          });
+      }
+
+      // Lógica de calificación por estrellas
+      const stars = document.querySelectorAll('.rating-stars span');
+      const ratingInput = document.getElementById('fbRating');
+
+      stars.forEach(star => {
+        star.addEventListener('click', function() {
+          const val = this.getAttribute('data-value');
+          ratingInput.value = val;
+          
+          stars.forEach(s => {
+            const starSvg = s.querySelector('svg');
+            if(s.getAttribute('data-value') <= val) {
+              s.classList.add('selected');
+              starSvg.setAttribute('fill', 'currentColor');
+            } else {
+              s.classList.remove('selected');
+              starSvg.setAttribute('fill', 'none');
+            }
+          });
+        });
+      });
+
+      // Contador de caracteres dinámico
+      const fbMessage = document.getElementById('fbMessage');
+      const charCount = document.getElementById('charCount');
+      fbMessage.addEventListener('input', function() {
+        charCount.innerText = this.value.length + '/500';
+      });
+
+      // Envío de formulario a WhatsApp
+      function enviarFeedback(event) {
+        event.preventDefault();
+        const name = document.getElementById('fbName').value;
+        const email = document.getElementById('fbEmail').value;
+        const rating = document.getElementById('fbRating').value;
+        const message = document.getElementById('fbMessage').value;
+
+        if (rating === "0") {
+          alert("Por favor, selecciona una calificación de estrellas antes de enviar.");
+          return;
+        }
+
+        const textoWa = encodeURIComponent(`Hola, soy ${name} (${email}). Acabo de dejar un feedback en el sitio web.\n\nCalificación del servicio: ${rating}/5 estrellas.\n\nComentario:\n"${message}"`);
+        window.open(`https://wa.me/18329774150?text=${textoWa}`, '_blank');
       }
     </script>
 
