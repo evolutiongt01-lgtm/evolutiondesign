@@ -72,13 +72,19 @@
         z-index: -1;
       }
 
-      /* ESPACIADO RESPONSIVO */
+      /* ESPACIADO RESPONSIVO ROBUSTO PARA MÓVIL Y PC */
       .main-content-spaced {
-        margin-top: 180px; 
-        margin-bottom: 50px;
+        margin-top: 200px; /* Margen seguro para que el iPhone no oculte contenido */
+        margin-bottom: 60px;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
       }
       @media (min-width: 992px) {
-        .main-content-spaced { margin-top: 130px; }
+        .main-content-spaced { 
+          margin-top: 130px; 
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
       }
 
       /* NAVEGACIÓN ESCRITORIO */
@@ -124,7 +130,7 @@
       }
       .icon-btn:hover, .icon-btn:focus { background-color: rgba(255, 255, 255, 0.15) !important; transform: scale(1.05); }
 
-      /* MENÚ DESPLEGABLE MÓVIL (HAMBURGUESA) */
+      /* MENÚ DESPLEGABLE MÓVIL */
       .mobile-dropdown-menu { 
         display: none; 
         flex-direction: column; 
@@ -188,7 +194,7 @@
 
     <div class="page-bg"></div>
 
-    <!-- NAVEGACIÓN ESCRITORIO (Sin botón de hamburguesa) -->
+    <!-- NAVEGACIÓN ESCRITORIO -->
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
@@ -206,7 +212,7 @@
       </div>
     </nav>
 
-    <!-- NAVEGACIÓN MÓVIL TIPO APP (CON MENÚ HAMBURGUESA TÁCTIL) -->
+    <!-- NAVEGACIÓN MÓVIL TIPO APP -->
     <nav class="mobile-app-nav">
       <div class="app-nav-top">
         <div style="position: relative;">
@@ -269,16 +275,16 @@
       </div>
     </nav>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="container flex-grow-1 main-content-spaced">
+    <!-- CONTENIDO PRINCIPAL CON MÁRGENES Y PADDING SEGURO EN MÓVIL -->
+    <main class="container flex-grow-1 main-content-spaced px-3 px-md-4">
       <div class="row justify-content-center">
         <div class="col-12 col-xl-11">
 
           <!-- ENCABEZADO -->
           <div class="text-center mb-5 pb-3">
             <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">CONOCE NUESTRA HISTORIA</span>
-            <h1 class="display-3 fw-bold text-white mb-3">Sobre Nosotros</h1>
-            <p class="text-secondary mx-auto" style="max-width: 550px; line-height: 1.6;">Precisión en cada línea, valor en cada detalle. Transformamos ideas complejas en realidades arquitectónicas tangibles.</p>
+            <h1 class="display-4 display-md-3 fw-bold text-white mb-3">Sobre Nosotros</h1>
+            <p class="text-secondary mx-auto px-2" style="max-width: 550px; line-height: 1.6;">Precisión en cada línea, valor en cada detalle. Transformamos ideas complejas en realidades arquitectónicas tangibles.</p>
           </div>
 
           <!-- PANEL DE ESTADÍSTICAS -->
@@ -346,7 +352,7 @@
               </div>
 
               <!-- Texto Derecha -->
-              <div class="col-12 col-lg-7 pl-lg-4">
+              <div class="col-12 col-lg-7 px-lg-4">
                 <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.75rem;">NUESTRA HISTORIA Y EVOLUCIÓN</span>
                 <h2 class="fw-bold text-white mb-4" style="font-size: 2rem;">Diseño de élite impulsado por tecnología de vanguardia.</h2>
                 
@@ -401,7 +407,6 @@
     </div>
 
     <script>
-      // Lógica Menú Hamburguesa Móvil idéntica al Index
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
 
