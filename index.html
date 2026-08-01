@@ -16,7 +16,7 @@
     <!-- GOOGLE RECAPTCHA V3 SCRIPT -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LewmG4tAAAAADBNcF1z4t7NvP_YFyA7P57xx9uM"></script>
 
-    <!-- PAYPAL SDK: ¡REEMPLAZA 'TU_ID_DE_CLIENTE_AQUI' POR EL ID DE TU CAPTURA DE PANTALLA! -->
+    <!-- PAYPAL SDK CON TU CLIENT ID -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20&currency=USD"></script>
 
     <style>
@@ -429,7 +429,14 @@
                       <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión de terreno</span>
                     </div>
                     
-                    <!-- BOTÓN DINÁMICO DE PAYPAL PARA PLANOS -->
+                    <!-- BOTÓN DINÁMICO DE WHATSAPP PARA EXCEDENTES -->
+                    <div id="wrapper-btn-planos" class="mt-2" style="display: none;">
+                      <button id="btnPlanosAccion" type="button" class="btn w-100 text-white fw-bold py-3 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s; font-size: 1.1rem;">
+                        CONTINUAR CON MI PROYECTO
+                      </button>
+                    </div>
+
+                    <!-- BOTÓN DINÁMICO DE PAYPAL PARA PLANOS (RANGO BASE) -->
                     <div id="wrapperPagoDirectoPlanos" class="mt-2" style="display: none;">
                       <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
@@ -437,7 +444,6 @@
                           ¡Aprobado! Tu proyecto es elegible.
                         </span>
                       </div>
-                      <!-- AQUÍ SE RENDERIZA EL BOTÓN DE PAYPAL 2D -->
                       <div id="paypal-button-container-2d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
                     </div>
 
@@ -874,7 +880,7 @@
                           </div>
                         </div>
                         
-                        <!-- NUEVO SELECTOR DE NIVELES PARA 3D/GENERAL -->
+                        <!-- SELECTOR DE NIVELES PARA 3D/GENERAL -->
                         <div class="mt-2 text-start">
                           <span class="small text-secondary d-block mb-2">Cantidad de niveles</span>
                           <div class="facade-radio-group mt-0">
@@ -920,7 +926,7 @@
                         </span>
                       </div>
                       
-                      <!-- AQUÍ SE RENDERIZA EL BOTÓN DE PAYPAL 3D -->
+                      <!-- BOTÓN DE PAYPAL 3D -->
                       <div id="paypal-button-container-3d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
                     </div>
 
@@ -1048,7 +1054,6 @@
 
       const exchangeRates = { USD: { rate: 1.0, symbol: 'USD' }, EUR: { rate: 0.92, symbol: 'EUR' }, GTQ: { rate: 7.85, symbol: 'GTQ' }, MXN: { rate: 18.50, symbol: 'MXN' }, CNY: { rate: 7.25, symbol: 'CNY' }, AED: { rate: 3.67, symbol: 'AED' }, BRL: { rate: 5.40, symbol: 'BRL' }, JPY: { rate: 155.0, symbol: 'JPY' } };
 
-      // VARIABLES GLOBALES PARA PAYPAL
       window.montoPago3D = "0.00";
       window.montoPago2D = "0.00";
 
@@ -1090,10 +1095,10 @@
         const precioFinalDisplay = document.getElementById('calcPrecioFinal');
         const wrapperBtnCotizar = document.getElementById('wrapperBtnCotizar');
         const btnEnviarCotizacion = document.getElementById('btnEnviarCotizacion');
-        
         const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
 
         function actualizarCotizacionTerreno() {
+          if(!anchoInput || !largoInput || !servicioSelect) return;
           const ancho = parseFloat(anchoInput.value) || 0;
           const largo = parseFloat(largoInput.value) || 0;
           let niveles = 1;
@@ -1102,11 +1107,11 @@
 
           const areaTotal = ancho * largo * niveles;
           const servicioOption = servicioSelect.options[servicioSelect.selectedIndex];
-          const servicioNombre = servicioOption.text;
+          const servicioNombre = servicioOption ? servicioOption.text : '';
           const servicioVal = servicioSelect.value;
 
           if (areaTotal > 0) {
-            totalDisplay.textContent = areaTotal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if(totalDisplay) totalDisplay.textContent = areaTotal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             let precioFinalUSD = 0;
             let esServicio3D = (servicioVal === 'basico' || servicioVal === 'profesional' || servicioVal === 'premium');
 
@@ -1120,39 +1125,39 @@
               precioFinalUSD = areaTotal * 1.75;
             }
 
-            // Actualizamos la variable global de PayPal (siempre en USD)
             window.montoPago3D = precioFinalUSD.toFixed(2);
 
             const config = exchangeRates[currentCurrency];
             const convertedFinal = precioFinalUSD * config.rate;
             const decimals = currentCurrency === 'JPY' ? 0 : 2;
 
-            precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+            if(precioFinalDisplay) precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
-            if (esServicio3D && areaTotal > 0) {
-              wrapperBtnCotizar.style.display = 'none'; 
-              wrapperPagoDirecto3D.style.display = 'block';
+            if (esServicio3D && areaTotal <= 400) {
+              if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'none'; 
+              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'block';
             } else {
-              wrapperBtnCotizar.style.display = 'block'; 
-              wrapperPagoDirecto3D.style.display = 'none';
+              if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'block'; 
+              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'none';
             }
 
             const mensaje = encodeURIComponent(`Hola. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m x ${niveles} niveles (Área total: ${areaTotal.toFixed(2)} m²).\nCosto estimado: $${precioFinalUSD.toFixed(2)} USD.\nMe gustaría continuar con mi proyecto.`);
-            btnEnviarCotizacion.href = `https://wa.me/18329774150?text=${mensaje}`;
+            if(btnEnviarCotizacion) btnEnviarCotizacion.href = `https://wa.me/18329774150?text=${mensaje}`;
           } else {
-            totalDisplay.textContent = "0.00"; precioFinalDisplay.textContent = "0.00"; 
-            wrapperBtnCotizar.style.display = 'none'; wrapperPagoDirecto3D.style.display = 'none';
+            if(totalDisplay) totalDisplay.textContent = "0.00"; 
+            if(precioFinalDisplay) precioFinalDisplay.textContent = "0.00"; 
+            if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'none'; 
+            if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'none';
             window.montoPago3D = "0.00";
           }
         }
         window.actualizarCotizacionTerrenoGlobal = actualizarCotizacionTerreno;
 
-        if (anchoInput && largoInput && servicioSelect) {
-          anchoInput.addEventListener('input', actualizarCotizacionTerreno);
-          largoInput.addEventListener('input', actualizarCotizacionTerreno);
-          servicioSelect.addEventListener('change', actualizarCotizacionTerreno);
-          cRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCotizacionTerreno));
-        }
+        anchoInput.addEventListener('input', actualizarCotizacionTerreno);
+        largoInput.addEventListener('input', actualizarCotizacionTerreno);
+        servicioSelect.addEventListener('change', actualizarCotizacionTerreno);
+        cRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCotizacionTerreno));
+        actualizarCotizacionTerreno();
 
         // --- CALCULADORA DE PLANOS 2D ---
         const pAncho = document.getElementById('p-ancho');
@@ -1169,7 +1174,6 @@
         
         const btnPlanosAccion = document.getElementById('btnPlanosAccion');
         const wrapperBtnPlanos = document.getElementById('wrapper-btn-planos');
-        
         const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
         const mensajeRangoPlanos = document.getElementById('mensaje-rango-planos');
         
@@ -1180,8 +1184,13 @@
           if(!pAncho || !pLargo) return;
           let ancho = parseFloat(pAncho.value) || 0;
           let largo = parseFloat(pLargo.value) || 0;
-          let niveles = parseInt(document.querySelector('input[name="p-niveles"]:checked').value);
-          let paquete = document.querySelector('input[name="p-paquete"]:checked').value;
+          let niveles = 2;
+          const checkedPNiv = document.querySelector('input[name="p-niveles"]:checked');
+          if(checkedPNiv) niveles = parseInt(checkedPNiv.value);
+
+          let paquete = 'basico';
+          const checkedPPaq = document.querySelector('input[name="p-paquete"]:checked');
+          if(checkedPPaq) paquete = checkedPPaq.value;
 
           let areaTotal = ancho * largo * niveles;
           let basePrecioUSD = paquete === 'basico' ? 390 : 800;
@@ -1197,8 +1206,6 @@
           }
 
           let totalFinalUSD = basePrecioUSD + costoExcedenteUSD;
-          
-          // Actualizamos la variable global de PayPal 2D (siempre en USD)
           window.montoPago2D = totalFinalUSD.toFixed(2);
 
           const config = exchangeRates[currentCurrency];
@@ -1207,69 +1214,54 @@
           const convertedExcedente = costoExcedenteUSD * config.rate;
           const decimals = currentCurrency === 'JPY' ? 0 : 2;
 
-          pAreaText.textContent = areaTotal.toFixed(2) + ' m²';
-          pBaseText.textContent = `${config.symbol} ${convertedBase.toFixed(decimals)}`;
+          if(pAreaText) pAreaText.textContent = areaTotal.toFixed(2) + ' m²';
+          if(pBaseText) pBaseText.textContent = `${config.symbol} ${convertedBase.toFixed(decimals)}`;
 
           if(costoExcedenteUSD > 0) {
-            rowPlanosExcedente.style.setProperty('display', 'flex', 'important');
-            pExcedenteLabel.textContent = `Metros excedentes (${metrosExcedentes.toFixed(2)} m²)`;
-            pExcedenteText.textContent = `+${config.symbol} ${convertedExcedente.toFixed(decimals)}`;
+            if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'flex', 'important');
+            if(pExcedenteLabel) pExcedenteLabel.textContent = `Metros excedentes (${metrosExcedentes.toFixed(2)} m²)`;
+            if(pExcedenteText) pExcedenteText.textContent = `+${config.symbol} ${convertedExcedente.toFixed(decimals)}`;
             
-            mensajeRangoPlanos.style.setProperty('display', 'none', 'important');
+            if(wrapperBtnPlanos) wrapperBtnPlanos.style.setProperty('display', 'block', 'important');
+            if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
           } else {
-            rowPlanosExcedente.style.setProperty('display', 'none', 'important');
+            if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'none', 'important');
             
+            if(wrapperBtnPlanos) wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
             if(areaTotal > 0) {
-              mensajeRangoPlanos.style.setProperty('display', 'block', 'important');
+              if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
             } else {
-              mensajeRangoPlanos.style.setProperty('display', 'none', 'important');
+              if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
             }
           }
 
-          if(areaTotal > 0) {
-            wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
-            wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
-          } else {
-             wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
-             wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
-             window.montoPago2D = "0.00";
-          }
+          if(pTotal) pTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
 
-          pTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
-
-          const waMessagePlanos = encodeURIComponent(`Hola. Usé la calculadora de Planos 2D. Mi proyecto tiene un área total de ${areaTotal.toFixed(2)} m² (${niveles} niveles) y seleccioné el paquete ${nombrePaquete}. El costo estimado por el excedente y diseño base es de $${totalFinalUSD.toFixed(2)} USD. Me gustaría proceder.`);
+          const waMessagePlanos = encodeURIComponent(`Hola. Usé la calculadora de Planos 2D. Mi proyecto tiene un área total de ${areaTotal.toFixed(2)} m² (${niveles} niveles) y seleccioné el paquete ${nombrePaquete}. El costo estimado es de $${totalFinalUSD.toFixed(2)} USD. Me gustaría proceder.`);
           urlWhatsAppPlanos = `https://wa.me/18329774150?text=${waMessagePlanos}`;
         }
         window.actualizarCalculadoraPlanosGlobal = actualizarCalculadoraPlanos;
 
-        function registrarInteraccionPlanos() {
-          actualizarCalculadoraPlanos();
-          if (!calculoPlanosInteractuado) {
-            calculoPlanosInteractuado = true;
-            btnPlanosAccion.style.backgroundColor = '#d4b895';
-            btnPlanosAccion.style.borderColor = '#d4b895';
-            btnPlanosAccion.classList.remove('text-white');
-            btnPlanosAccion.classList.add('text-black');
-            btnPlanosAccion.innerHTML = `CONTINUAR CON MI PROYECTO`;
-          }
-        }
+        pAncho.addEventListener('input', actualizarCalculadoraPlanos);
+        pLargo.addEventListener('input', actualizarCalculadoraPlanos);
+        pRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraPlanos));
+        pRadiosPaquete.forEach(radio => radio.addEventListener('change', actualizarCalculadoraPlanos));
+        actualizarCalculadoraPlanos();
 
         if (btnPlanosAccion) {
           btnPlanosAccion.addEventListener('click', function(e) {
             if (!calculoPlanosInteractuado) {
-              e.preventDefault(); registrarInteraccionPlanos(); 
+              e.preventDefault();
+              calculoPlanosInteractuado = true;
+              btnPlanosAccion.style.backgroundColor = '#d4b895';
+              btnPlanosAccion.style.borderColor = '#d4b895';
+              btnPlanosAccion.classList.remove('text-white');
+              btnPlanosAccion.classList.add('text-black');
+              btnPlanosAccion.innerHTML = `CONTINUAR CON MI PROYECTO`;
             } else {
               window.open(urlWhatsAppPlanos, '_blank');
             }
           });
-        }
-
-        if(pAncho && pLargo) {
-          pAncho.addEventListener('input', registrarInteraccionPlanos);
-          pLargo.addEventListener('input', registrarInteraccionPlanos);
-          pRadiosNiveles.forEach(radio => radio.addEventListener('change', registrarInteraccionPlanos));
-          pRadiosPaquete.forEach(radio => radio.addEventListener('change', registrarInteraccionPlanos));
-          actualizarCalculadoraPlanos();
         }
 
         // --- CALCULADORA DE FACHADAS ---
@@ -1292,24 +1284,31 @@
 
         function actualizarCalculadoraFachada() {
           if (!fAncho || !fAltura) return;
-
-          let ancho = parseFloat(fAncho.value); let altura = parseFloat(fAltura.value);
-          if (isNaN(ancho)) ancho = 0; if (isNaN(altura)) altura = 0;
+          let ancho = parseFloat(fAncho.value) || 0;
+          let altura = parseFloat(fAltura.value) || 0;
           
-          const complejidadRadio = document.querySelector('input[name="f-complejidad"]:checked');
-          const complejidad = parseFloat(complejidadRadio.value); const complejidadTexto = complejidadRadio.getAttribute('data-label');
-          const tipoTexto = document.querySelector('input[name="f-tipo"]:checked').value.toLowerCase();
-          const nivelesTexto = document.querySelector('input[name="f-niveles"]:checked').value;
-          const renderOn = fRenderToggle.checked;
+          let compVal = 1.3; let compText = 'Profesional';
+          const checkedComp = document.querySelector('input[name="f-complejidad"]:checked');
+          if(checkedComp) { compVal = parseFloat(checkedComp.value); compText = checkedComp.getAttribute('data-label'); }
+
+          let tipoVal = 'Vivienda';
+          const checkedTipo = document.querySelector('input[name="f-tipo"]:checked');
+          if(checkedTipo) tipoVal = checkedTipo.value;
+
+          let nivelesVal = '2';
+          const checkedFNiv = document.querySelector('input[name="f-niveles"]:checked');
+          if(checkedFNiv) nivelesVal = checkedFNiv.value;
+
+          const renderOn = fRenderToggle ? fRenderToggle.checked : true;
 
           const area = ancho * altura;
           const precioBase = area * 1.50;
           
           let costoNiveles = 0; let labelNiveles = "";
-          if (nivelesTexto === "3") { costoNiveles = 25.00; labelNiveles = "Cargo por 3 Niveles"; } 
-          else if (nivelesTexto === "4") { costoNiveles = 30.00; labelNiveles = "Cargo por 4+ Niveles"; }
+          if (nivelesVal === "3") { costoNiveles = 25.00; labelNiveles = "Cargo por 3 Niveles"; } 
+          else if (nivelesVal === "4") { costoNiveles = 30.00; labelNiveles = "Cargo por 4+ Niveles"; }
           
-          let subtotal = precioBase * complejidad;
+          let subtotal = precioBase * compVal;
           if (subtotal < 80) subtotal = 80;
 
           const costoRender = renderOn ? 40.00 : 0.00;
@@ -1322,106 +1321,97 @@
           const convertedNiveles = costoNiveles * config.rate;
           const decimals = currentCurrency === 'JPY' ? 0 : 2;
 
-          fAreaText.textContent = area.toFixed(2) + ' m²';
-          fBaseText.textContent = `${config.symbol} ${convertedBase.toFixed(decimals)}`;
-          fComplexLabel.textContent = `Nivel de complejidad (${complejidadTexto} ${complejidad.toFixed(2)}x)`;
-          fSubtotalText.textContent = `${config.symbol} ${(subtotal * config.rate).toFixed(decimals)}`;
+          if(fAreaText) fAreaText.textContent = area.toFixed(2) + ' m²';
+          if(fBaseText) fBaseText.textContent = `${config.symbol} ${convertedBase.toFixed(decimals)}`;
+          if(fComplexLabel) fComplexLabel.textContent = `Nivel de complejidad (${compText} ${compVal.toFixed(2)}x)`;
+          if(fSubtotalText) fSubtotalText.textContent = `${config.symbol} ${(subtotal * config.rate).toFixed(decimals)}`;
           
           const rowNivelesExtra = document.getElementById('row-niveles-extra');
           const fNivelesLabelUI = document.getElementById('f-niveles-label');
           const fNivelesCostoUI = document.getElementById('f-niveles-costo');
           
           if (costoNiveles > 0) {
-            rowNivelesExtra.style.setProperty('display', 'flex', 'important');
-            fNivelesLabelUI.textContent = labelNiveles;
-            fNivelesCostoUI.textContent = `+${config.symbol} ${convertedNiveles.toFixed(decimals)}`;
+            if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'flex', 'important');
+            if(fNivelesLabelUI) fNivelesLabelUI.textContent = labelNiveles;
+            if(fNivelesCostoUI) fNivelesCostoUI.textContent = `+${config.symbol} ${convertedNiveles.toFixed(decimals)}`;
           } else {
-            rowNivelesExtra.style.setProperty('display', 'none', 'important');
+            if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
           }
 
-          fRenderText.textContent = `${config.symbol} ${convertedRender.toFixed(decimals)}`;
-          fTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
+          if(fRenderText) fRenderText.textContent = `${config.symbol} ${convertedRender.toFixed(decimals)}`;
+          if(fTotal) fTotal.textContent = `${config.symbol} ${convertedConvertedTotal = convertedTotal.toFixed(decimals)}`;
+          if(fTotal) fTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
 
-          let articulo = tipoTexto === "vivienda" ? "una" : "un";
-          let pluralNiveles = nivelesTexto === "1" ? "1 nivel" : nivelesTexto + " niveles";
+          let articulo = tipoVal.toLowerCase() === "vivienda" ? "una" : "un";
+          let pluralNiveles = nivelesVal === "1" ? "1 nivel" : nivelesVal + " niveles";
           let textoRender = renderOn ? "con 3 Renders fotorealistas" : "sin Renders";
 
-          const waMessage = encodeURIComponent(`Hola. Acabo de utilizar la calculadora de fachadas en su sitio web. Mi proyecto tiene un área aproximada de ${area.toFixed(2)} m², es ${articulo} ${tipoTexto} de ${pluralNiveles}, seleccioné el paquete ${complejidadTexto} ${textoRender}. El precio estimado fue de $${totalFinalUSD.toFixed(2)} USD. Me gustaría continuar con mi proyecto.`);
+          const waMessage = encodeURIComponent(`Hola. Acabo de utilizar la calculadora de fachadas en su sitio web. Mi proyecto tiene un área aproximada de ${area.toFixed(2)} m², es ${articulo} ${tipoVal.toLowerCase()} de ${pluralNiveles}, seleccioné el paquete ${compText} ${textoRender}. El precio estimado fue de $${totalFinalUSD.toFixed(2)} USD. Me gustaría continuar con mi proyecto.`);
           urlWhatsAppFachada = `https://wa.me/18329774150?text=${waMessage}`;
         }
         window.actualizarCalculadoraFachadaGlobal = actualizarCalculadoraFachada;
 
-        function registrarInteraccionFachada() {
-          actualizarCalculadoraFachada();
-          if (!calculoFachadaInteractuado) {
-            calculoFachadaInteractuado = true;
-            btnFachadaAccion.style.backgroundColor = '#d4b895';
-            btnFachadaAccion.style.borderColor = '#d4b895';
-            btnFachadaAccion.classList.remove('text-white');
-            btnFachadaAccion.classList.add('text-black');
-            btnFachadaAccion.innerHTML = `CONTINUAR CON MI PROYECTO`;
-          }
-        }
+        fAncho.addEventListener('input', actualizarCalculadoraFachada);
+        fAltura.addEventListener('input', actualizarCalculadoraFachada);
+        if(fRenderToggle) fRenderToggle.addEventListener('change', actualizarCalculadoraFachada);
+        fRadiosComplejidad.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
+        fRadiosTipo.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
+        fRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
+        actualizarCalculadoraFachada();
 
         if (btnFachadaAccion) {
           btnFachadaAccion.addEventListener('click', function(e) {
             if (!calculoFachadaInteractuado) {
-              e.preventDefault(); registrarInteraccionFachada(); 
+              e.preventDefault();
+              calculoFachadaInteractuado = true;
+              btnFachadaAccion.style.backgroundColor = '#d4b895';
+              btnFachadaAccion.style.borderColor = '#d4b895';
+              btnFachadaAccion.classList.remove('text-white');
+              btnFachadaAccion.classList.add('text-black');
+              btnFachadaAccion.innerHTML = `CONTINUAR CON MI PROYECTO`;
             } else {
               window.open(urlWhatsAppFachada, '_blank');
             }
           });
         }
 
-        if(fAncho && fAltura) {
-          fAncho.addEventListener('input', registrarInteraccionFachada);
-          fAltura.addEventListener('input', registrarInteraccionFachada);
-          fRenderToggle.addEventListener('change', registrarInteraccionFachada);
-          fRadiosComplejidad.forEach(radio => radio.addEventListener('change', registrarInteraccionFachada));
-          fRadiosTipo.forEach(radio => radio.addEventListener('change', registrarInteraccionFachada));
-          fRadiosNiveles.forEach(radio => radio.addEventListener('change', registrarInteraccionFachada));
-          actualizarCalculadoraFachada();
-        }
-
-        // --- INTEGRACIÓN DE BOTONES INTELIGENTES DE PAYPAL ---
+        // --- RENDERIZAR BOTONES DE PAYPAL ---
         if(typeof paypal !== 'undefined') {
-          // Botón para la Calculadora General 3D
-          paypal.Buttons({
-            createOrder: function(data, actions) {
-              return actions.order.create({
-                purchase_units: [{
-                  amount: { value: window.montoPago3D }
-                }]
-              });
-            },
-            onApprove: function(data, actions) {
-              return actions.order.capture().then(function(details) {
-                const nombreCliente = details.payer.name.given_name;
-                const montoCobrado = window.montoPago3D;
-                const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${montoCobrado} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi proyecto 3D.`);
-                window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
-              });
-            }
-          }).render('#paypal-button-container-3d');
+          // PayPal 3D
+          const container3D = document.getElementById('paypal-button-container-3d');
+          if(container3D && !container3D.hasChildNodes()) {
+            paypal.Buttons({
+              createOrder: function(data, actions) {
+                return actions.order.create({ purchase_units: [{ amount: { value: window.montoPago3D } }] });
+              },
+              onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                  const nombreCliente = details.payer.name.given_name;
+                  const montoCobrado = window.montoPago3D;
+                  const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${montoCobrado} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi proyecto.`);
+                  window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+                });
+              }
+            }).render('#paypal-button-container-3d');
+          }
 
-          // Botón para la Calculadora de Planos 2D
-          paypal.Buttons({
-            createOrder: function(data, actions) {
-              return actions.order.create({
-                purchase_units: [{
-                  amount: { value: window.montoPago2D }
-                }]
-              });
-            },
-            onApprove: function(data, actions) {
-              return actions.order.capture().then(function(details) {
-                const nombreCliente = details.payer.name.given_name;
-                const montoCobrado = window.montoPago2D;
-                const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${montoCobrado} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mis planos 2D.`);
-                window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
-              });
-            }
-          }).render('#paypal-button-container-2d');
+          // PayPal 2D
+          const container2D = document.getElementById('paypal-button-container-2d');
+          if(container2D && !container2D.hasChildNodes()) {
+            paypal.Buttons({
+              createOrder: function(data, actions) {
+                return actions.order.create({ purchase_units: [{ amount: { value: window.montoPago2D } }] });
+              },
+              onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                  const nombreCliente = details.payer.name.given_name;
+                  const montoCobrado = window.montoPago2D;
+                  const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${montoCobrado} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mis planos 2D.`);
+                  window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+                });
+              }
+            }).render('#paypal-button-container-2d');
+          }
         }
 
       });
