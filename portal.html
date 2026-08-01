@@ -232,14 +232,12 @@
           <label class="form-label-custom">Correo Electrónico</label>
           <div class="input-wrapper">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="input-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            <!-- Placeholder genérico -->
             <input type="email" id="clientEmail" name="evo_login_alpha" class="glass-input" placeholder="Ej. tucorreo@ejemplo.com" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
           </div>
 
           <label class="form-label-custom">Código de Proyecto / Acceso</label>
           <div class="input-wrapper mb-4">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="input-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            <!-- Placeholder genérico -->
             <input type="text" id="projectCode" name="evo_pass_beta" class="glass-input" placeholder="Ej. EVO-3D-884" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
           </div>
 
@@ -275,7 +273,7 @@
           <div>
             <span class="badge px-3 py-2 fw-medium mb-3" style="background: rgba(212, 184, 149, 0.1); color: #d4b895; border: 1px solid rgba(212, 184, 149, 0.2); border-radius: 8px;">Proyecto Activo</span>
             <h5 class="fw-bold text-white mb-1" id="projectTitleDisplay">Diseño de Fachadas</h5>
-            <p class="text-secondary small mb-1">Una fachada impresionante es la carta de presentación de tu hogar o negocio. Creamos diseños que combinan estética funcional y los mejores materiales. Te entregamos 3 propuestas distintas y montaje digital en tu terreno.</p>
+            <p class="text-secondary small mb-1" id="projectDescDisplay">Una fachada impresionante es la carta de presentación de tu hogar o negocio. Creamos diseños que combinan estética funcional y los mejores materiales.</p>
             <p class="text-secondary small mb-0">Código: <span class="text-white" id="activeCodeDisplay">DESIGN-01</span></p>
           </div>
           <span class="text-success small fw-medium d-flex align-items-center gap-2 px-3 py-2 rounded-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
@@ -284,7 +282,7 @@
         </div>
 
         <div class="mt-4 pt-3">
-          <h6 class="text-white fw-bold mb-3" style="font-size: 0.9rem;">Tus 3 Propuestas y Archivos:</h6>
+          <h6 class="text-white fw-bold mb-3" style="font-size: 0.9rem;">Archivos de Entrega:</h6>
           <div class="d-flex flex-column gap-3" id="downloadsContainer">
             <!-- Dinámico -->
           </div>
@@ -349,10 +347,25 @@
         codigo: "DESIGN-01",
         nombre: "César",
         proyecto: "Diseño de Fachadas",
+        descripcion: "Una fachada impresionante es la carta de presentación de tu hogar o negocio. Creamos diseños que combinan estética funcional y los mejores materiales. Te entregamos 3 propuestas distintas y montaje digital en tu terreno.",
         entregas: [
           { titulo: "Propuesta 1 - Diseño de Fachada", tipo: "Carpeta en Google Drive", link: "https://drive.google.com/drive/folders/165m1vK6sp1xxUl0u-OBePFPXJGRcjcmQ?usp=drive_link" },
           { titulo: "Propuesta 2 - Diseño de Fachada", tipo: "Carpeta en Google Drive", link: "https://drive.google.com/drive/folders/1LtsmXuFmwdY01WMxdMkkVa5qqKs0CYrQ?usp=drive_link" },
           { titulo: "Propuesta 3 - Diseño de Fachada", tipo: "Carpeta en Google Drive", link: "https://drive.google.com/drive/folders/1sTwQw7Hj4QsJsHGL6P3VZvoetBPQGegl?usp=drive_link" }
+        ]
+      },
+      {
+        email: "tepaz2025@gmail.com",
+        codigo: "EVO-PRO-2026",
+        nombre: "Cliente Tepaz",
+        proyecto: "Modelado 3D & Renders Hiperrealistas",
+        descripcion: "Visualización arquitectónica de máxima calidad. Paquete que incluye modelado estructural en formato SketchUp, perspectivas fotográficas de las 3 fachadas (Izquierda, Central y Derecha) y un recorrido virtual cinematográfico para experimentar el espacio antes de ser construido.",
+        entregas: [
+          { titulo: "Modelo 3D Original (.SKP)", tipo: "Archivo de SketchUp", link: "https://drive.google.com/file/d/1XH_TRrMsKObjfPfLH_amNRxr81iDPNGB/view?usp=drive_link" },
+          { titulo: "Render Hiperrealista - Fachada Izquierda", tipo: "Imagen en Alta Resolución", link: "https://drive.google.com/file/d/1RldiEv9z1fNR55GEnEDfXnBNW-biNgIW/view?usp=drive_link" },
+          { titulo: "Render Hiperrealista - Fachada Central", tipo: "Imagen en Alta Resolución", link: "https://drive.google.com/file/d/1AdAPn9OGn4t0-Uobns4RuN-vw8UtGk6q/view?usp=drive_link" },
+          { titulo: "Render Hiperrealista - Fachada Derecha", tipo: "Imagen en Alta Resolución", link: "https://drive.google.com/file/d/1ROZwOftYVsRjVb27sYNqBAqX2hT0rF65/view?usp=drive_link" },
+          { titulo: "Recorrido Virtual Cinematográfico", tipo: "Video Hiperrealista (32s)", link: "https://drive.google.com/file/d/1n_2erRnS2-lIw2i1oz4hkitFWSJiGUHs/view?usp=drive_link" }
         ]
       }
     ];
@@ -380,6 +393,7 @@
         
         document.getElementById('clientNameDisplay').textContent = cliente.nombre;
         document.getElementById('projectTitleDisplay').textContent = cliente.proyecto;
+        document.getElementById('projectDescDisplay').textContent = cliente.descripcion;
         document.getElementById('activeCodeDisplay').textContent = cliente.codigo;
 
         const container = document.getElementById('downloadsContainer');
@@ -397,7 +411,7 @@
                   <span class="text-secondary" style="font-size: 0.75rem;">${item.tipo}</span>
                 </div>
               </div>
-              <a href="${item.link}" target="_blank" class="btn-gold px-3 py-2 text-decoration-none" style="width: auto; font-size: 0.75rem; border-radius: 8px;">Ver Propuesta</a>
+              <a href="${item.link}" target="_blank" class="btn-gold px-3 py-2 text-decoration-none" style="width: auto; font-size: 0.75rem; border-radius: 8px;">Abrir Archivo</a>
             </div>
           `;
         });
