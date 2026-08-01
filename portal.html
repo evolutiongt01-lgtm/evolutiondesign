@@ -189,17 +189,14 @@
       font-size: 0.75rem;
     }
 
-    /* VISTAS */
     #dashboardView { display: none; }
   </style>
 </head>
 
 <body>
 
-  <!-- FONDO -->
   <div class="portal-bg"></div>
 
-  <!-- HEADER SUPERIOR -->
   <header class="portal-header">
     <div class="d-flex align-items-center gap-4">
       <a href="index.html">
@@ -216,15 +213,11 @@
     </div>
   </header>
 
-  <!-- CONTENIDO CENTRAL -->
   <main class="container flex-grow-1 d-flex flex-column justify-content-center py-4">
 
-    <!-- ==========================================
-         VISTA DE LOGIN
-         ========================================== -->
+    <!-- LOGIN -->
     <div id="loginView">
       <div class="portal-card login-card-width">
-        
         <div class="icon-circle">
           <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         </div>
@@ -236,21 +229,18 @@
         </div>
 
         <form id="loginForm" onsubmit="handleLogin(event)">
-          <!-- Correo -->
           <label class="form-label-custom">Correo Electrónico</label>
           <div class="input-wrapper">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="input-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            <input type="email" id="clientEmail" class="glass-input" placeholder="tucorreo@ejemplo.com" required>
+            <input type="email" id="clientEmail" class="glass-input" placeholder="matzarcesar01@hotmail.com" required>
           </div>
 
-          <!-- Código -->
           <label class="form-label-custom">Código de Proyecto / Acceso</label>
           <div class="input-wrapper mb-4">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="input-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            <input type="text" id="projectCode" class="glass-input" placeholder="Ej. DESIGN-01" required>
+            <input type="text" id="projectCode" class="glass-input" placeholder="DESIGN-01" required>
           </div>
 
-          <!-- Botón Acceder -->
           <button type="submit" class="btn-gold">
             Acceder al Portal
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -267,9 +257,7 @@
     </div>
 
 
-    <!-- ==========================================
-         VISTA DEL DASHBOARD (PANEL DE CLIENTE)
-         ========================================== -->
+    <!-- DASHBOARD -->
     <div id="dashboardView">
       <div class="portal-card dashboard-card-width p-4 p-md-5">
         
@@ -284,7 +272,8 @@
         <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
           <div>
             <span class="badge px-3 py-2 fw-medium mb-3" style="background: rgba(212, 184, 149, 0.1); color: #d4b895; border: 1px solid rgba(212, 184, 149, 0.2); border-radius: 8px;">Proyecto Activo</span>
-            <h5 class="fw-bold text-white mb-1" id="projectTitleDisplay">Proyecto 3 Diseños de Fachada</h5>
+            <h5 class="fw-bold text-white mb-1" id="projectTitleDisplay">Diseño de Fachadas</h5>
+            <p class="text-secondary small mb-1">Una fachada impresionante es la carta de presentación de tu hogar o negocio. Creamos diseños que combinan estética funcional y los mejores materiales. Te entregamos 3 propuestas distintas y montaje digital en tu terreno.</p>
             <p class="text-secondary small mb-0">Código: <span class="text-white" id="activeCodeDisplay">DESIGN-01</span></p>
           </div>
           <span class="text-success small fw-medium d-flex align-items-center gap-2 px-3 py-2 rounded-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
@@ -293,9 +282,9 @@
         </div>
 
         <div class="mt-4 pt-3">
-          <h6 class="text-white fw-bold mb-3" style="font-size: 0.9rem;">Tus Carpetas de Entregas:</h6>
+          <h6 class="text-white fw-bold mb-3" style="font-size: 0.9rem;">Tus 3 Propuestas y Archivos:</h6>
           <div class="d-flex flex-column gap-3" id="downloadsContainer">
-            <!-- Se inyecta dinámicamente desde el script -->
+            <!-- Dinámico -->
           </div>
         </div>
 
@@ -303,12 +292,9 @@
     </div>
 
 
-    <!-- ==========================================
-         CARACTERÍSTICAS INFERIORES
-         ========================================== -->
+    <!-- CARACTERÍSTICAS -->
     <div class="features-row">
       <div class="row">
-        <!-- 1 -->
         <div class="col-12 col-md-6 col-lg-3">
           <div class="feature-item">
             <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="feature-icon"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
@@ -318,7 +304,6 @@
             </div>
           </div>
         </div>
-        <!-- 2 -->
         <div class="col-12 col-md-6 col-lg-3">
           <div class="feature-item">
             <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="feature-icon"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -328,7 +313,6 @@
             </div>
           </div>
         </div>
-        <!-- 3 -->
         <div class="col-12 col-md-6 col-lg-3">
           <div class="feature-item">
             <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="feature-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -338,7 +322,6 @@
             </div>
           </div>
         </div>
-        <!-- 4 -->
         <div class="col-12 col-md-6 col-lg-3">
           <div class="feature-item">
             <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="feature-icon"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg>
@@ -357,19 +340,17 @@
     © 2026 Evolution Design. Todos los derechos reservados.
   </footer>
 
-  <!-- LÓGICA DEL PORTAL -->
   <script>
-    // Base de datos local con tus accesos y carpetas
     const baseDeDatosClientes = [
       {
         email: "matzarcesar01@hotmail.com",
         codigo: "DESIGN-01",
         nombre: "César",
-        proyecto: "Proyecto 3 Diseños de Fachada",
+        proyecto: "Diseño de Fachadas",
         entregas: [
-          { titulo: "Diseño 1 de Fachada", tipo: "Carpeta en Google Drive", link: "https://drive.google.com/drive/folders/165m1vK6sp1xxUl0u-OBePFPXJGRcjcmQ?usp=drive_link" },
-          { titulo: "Diseño 2 de Fachada", tipo: "Carpeta en Google Drive", link: "https://drive.google.com/drive/folders/1LtsmXuFmwdY01WMxdMkkVa5qqKs0CYrQ?usp=drive_link" },
-          { titulo: "Diseño 3 de Fachada", tipo: "Carpeta en Google Drive", link: "https://drive.google.com/drive/folders/1sTwQw7Hj4QsJsHGL6P3VZvoetBPQGegl?usp=drive_link" }
+          { titulo: "Propuesta 1 - Diseño de Fachada", tipo: "Carpeta en Google Drive", link: "https://drive.google.com/drive/folders/165m1vK6sp1xxUl0u-OBePFPXJGRcjcmQ?usp=drive_link" },
+          { titulo: "Propuesta 2 - Diseño de Fachada", tipo: "Carpeta en Google Drive", link: "https://drive.google.com/drive/folders/1LtsmXuFmwdY01WMxdMkkVa5qqKs0CYrQ?usp=drive_link" },
+          { titulo: "Propuesta 3 - Diseño de Fachada", tipo: "Carpeta en Google Drive", link: "https://drive.google.com/drive/folders/1sTwQw7Hj4QsJsHGL6P3VZvoetBPQGegl?usp=drive_link" }
         ]
       }
     ];
@@ -404,7 +385,7 @@
                   <span class="text-secondary" style="font-size: 0.75rem;">${item.tipo}</span>
                 </div>
               </div>
-              <a href="${item.link}" target="_blank" class="btn-gold px-3 py-2 text-decoration-none" style="width: auto; font-size: 0.75rem; border-radius: 8px;">Ver Carpeta</a>
+              <a href="${item.link}" target="_blank" class="btn-gold px-3 py-2 text-decoration-none" style="width: auto; font-size: 0.75rem; border-radius: 8px;">Ver Propuesta</a>
             </div>
           `;
         });
