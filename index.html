@@ -111,6 +111,9 @@
       .facade-radio-group input[type="radio"]:disabled + .facade-radio-label { opacity: 0.4; cursor: not-allowed; border-color: rgba(255,255,255,0.05); }
       .facade-switch input:disabled + .f-slider-toggle { opacity: 0.5; cursor: not-allowed; }
 
+      /* CAJA DE PAGO CON FONDO BLANCO LIMPIO PARA EL SDK DE PAYPAL */
+      .paypal-white-card { background: #ffffff; padding: 20px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
       /* CALCULADORAS TIPO FACHADA Y PLANOS 2D */
       .facade-calc-bg { background: linear-gradient(to bottom, #080808, #000); }
       .facade-calc-card { background: #0d0d0d; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.8); overflow: hidden; }
@@ -439,8 +442,12 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL OCULTO -->
-                      <div id="paypal-button-container-2d" class="w-100 mt-2" style="position: relative; z-index: 10; display: none;"></div>
+                      <!-- CONTENEDOR DE PAYPAL CON FONDO BLANCO LIMPIO -->
+                      <div id="paypal-container-wrapper-2d" class="w-100 mt-2" style="display: none;">
+                        <div class="paypal-white-card">
+                          <div id="paypal-button-container-2d" class="w-100"></div>
+                        </div>
+                      </div>
 
                       <!-- BOTÓN CANCELAR/EDITAR -->
                       <button id="btnCancelar2D" type="button" class="btn w-100 btn-sm btn-link text-secondary mt-2" style="display: none; text-decoration: underline;">
@@ -679,8 +686,12 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL OCULTO -->
-                      <div id="paypal-button-container-fachada" class="w-100 mt-2" style="position: relative; z-index: 10; display: none;"></div>
+                      <!-- CONTENEDOR DE PAYPAL CON FONDO BLANCO -->
+                      <div id="paypal-container-wrapper-fachada" class="w-100 mt-2" style="display: none;">
+                        <div class="paypal-white-card">
+                          <div id="paypal-button-container-fachada" class="w-100"></div>
+                        </div>
+                      </div>
                       
                       <!-- BOTÓN CANCELAR/EDITAR -->
                       <button id="btnCancelarFachadas" type="button" class="btn w-100 btn-sm btn-link text-secondary mt-2" style="display: none; text-decoration: underline;">
@@ -942,8 +953,12 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL OCULTO -->
-                      <div id="paypal-button-container-3d" class="w-100 mt-2" style="position: relative; z-index: 10; display: none;"></div>
+                      <!-- CONTENEDOR DE PAYPAL CON FONDO BLANCO -->
+                      <div id="paypal-container-wrapper-3d" class="w-100 mt-2" style="display: none;">
+                        <div class="paypal-white-card">
+                          <div id="paypal-button-container-3d" class="w-100"></div>
+                        </div>
+                      </div>
 
                       <!-- BOTÓN CANCELAR/EDITAR -->
                       <button id="btnCancelar3D" type="button" class="btn w-100 btn-sm btn-link text-secondary mt-2" style="display: none; text-decoration: underline;">
@@ -1100,6 +1115,7 @@
         const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
         const mensajeRango3d = document.getElementById('mensaje-rango-3d');
         const btnProceder3D = document.getElementById('btnProceder3D');
+        const paypalWrapper3D = document.getElementById('paypal-container-wrapper-3d');
         const paypalContainer3D = document.getElementById('paypal-button-container-3d');
         const btnCancelar3D = document.getElementById('btnCancelar3D');
 
@@ -1147,7 +1163,7 @@
             
             if (!btnProceder3D.disabled) {
               btnProceder3D.style.display = 'block';
-              if(paypalContainer3D) paypalContainer3D.style.display = 'none';
+              if(paypalWrapper3D) paypalWrapper3D.style.display = 'none';
               if(btnCancelar3D) btnCancelar3D.style.display = 'none';
             }
 
@@ -1186,8 +1202,8 @@
             e.preventDefault();
             toggleLock3D(true);
             btnProceder3D.style.display = 'none';
-            if(paypalContainer3D) {
-              paypalContainer3D.style.display = 'block';
+            if(paypalWrapper3D) {
+              paypalWrapper3D.style.display = 'block';
               paypalContainer3D.innerHTML = '';
               renderizarPayPal3D(window.montoPago3D, '#paypal-button-container-3d');
             }
@@ -1199,7 +1215,7 @@
             e.preventDefault();
             toggleLock3D(false);
             if(btnProceder3D) btnProceder3D.style.display = 'block';
-            if(paypalContainer3D) paypalContainer3D.style.display = 'none';
+            if(paypalWrapper3D) paypalWrapper3D.style.display = 'none';
             btnCancelar3D.style.display = 'none';
           });
         }
@@ -1219,6 +1235,7 @@
         const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
         const mensajeRangoPlanos = document.getElementById('mensaje-rango-planos');
         const btnProceder2D = document.getElementById('btnProceder2D');
+        const paypalWrapper2D = document.getElementById('paypal-container-wrapper-2d');
         const paypalContainer2D = document.getElementById('paypal-button-container-2d');
         const btnCancelar2D = document.getElementById('btnCancelar2D');
 
@@ -1289,7 +1306,7 @@
             if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
             if(!btnProceder2D.disabled) {
               btnProceder2D.style.display = 'block';
-              if(paypalContainer2D) paypalContainer2D.style.display = 'none';
+              if(paypalWrapper2D) paypalWrapper2D.style.display = 'none';
               if(btnCancelar2D) btnCancelar2D.style.display = 'none';
             }
           } else {
@@ -1314,8 +1331,8 @@
             e.preventDefault();
             toggleLock2D(true);
             btnProceder2D.style.display = 'none';
-            if(paypalContainer2D) {
-              paypalContainer2D.style.display = 'block';
+            if(paypalWrapper2D) {
+              paypalWrapper2D.style.display = 'block';
               paypalContainer2D.innerHTML = '';
               renderizarPayPal2D(window.montoPago2D, '#paypal-button-container-2d');
             }
@@ -1327,7 +1344,7 @@
             e.preventDefault();
             toggleLock2D(false);
             if(btnProceder2D) btnProceder2D.style.display = 'block';
-            if(paypalContainer2D) paypalContainer2D.style.display = 'none';
+            if(paypalWrapper2D) paypalWrapper2D.style.display = 'none';
             btnCancelar2D.style.display = 'none';
           });
         }
@@ -1348,6 +1365,7 @@
         
         const wrapperPagoDirectoFachadas = document.getElementById('wrapperPagoDirectoFachadas');
         const btnProcederFachadas = document.getElementById('btnProcederFachadas');
+        const paypalWrapperFachada = document.getElementById('paypal-container-wrapper-fachada');
         const paypalContainerFachada = document.getElementById('paypal-button-container-fachada');
         const btnCancelarFachadas = document.getElementById('btnCancelarFachadas');
 
@@ -1420,7 +1438,7 @@
             if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'block', 'important');
             if(!btnProcederFachadas.disabled) {
               btnProcederFachadas.style.display = 'block';
-              if(paypalContainerFachada) paypalContainerFachada.style.display = 'none';
+              if(paypalWrapperFachada) paypalWrapperFachada.style.display = 'none';
               if(btnCancelarFachadas) btnCancelarFachadas.style.display = 'none';
             }
           } else {
@@ -1445,8 +1463,8 @@
             e.preventDefault();
             toggleLockFachadas(true);
             btnProcederFachadas.style.display = 'none';
-            if(paypalContainerFachada) {
-              paypalContainerFachada.style.display = 'block';
+            if(paypalWrapperFachada) {
+              paypalWrapperFachada.style.display = 'block';
               paypalContainerFachada.innerHTML = '';
               renderizarPayPalFachada(window.montoPagoFachada, '#paypal-button-container-fachada');
             }
@@ -1458,16 +1476,16 @@
             e.preventDefault();
             toggleLockFachadas(false);
             if(btnProcederFachadas) btnProcederFachadas.style.display = 'block';
-            if(paypalContainerFachada) paypalContainerFachada.style.display = 'none';
+            if(paypalWrapperFachada) paypalWrapperFachada.style.display = 'none';
             btnCancelarFachadas.style.display = 'none';
           });
         }
 
-        // --- FUNCIONES PARA RENDERIZAR BOTONES DE PAYPAL CON COLOR CLARO/BLANCO ---
+        // --- FUNCIONES PARA RENDERIZAR BOTONES DE PAYPAL CON ESTILO ---
         function renderizarPayPal3D(monto, selector) {
           if (typeof paypal === 'undefined') return;
           paypal.Buttons({
-            style: { layout: 'vertical', color: 'white', shape: 'pill', label: 'pay' },
+            style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
             createOrder: function(data, actions) {
               return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
             },
@@ -1484,7 +1502,7 @@
         function renderizarPayPal2D(monto, selector) {
           if (typeof paypal === 'undefined') return;
           paypal.Buttons({
-            style: { layout: 'vertical', color: 'white', shape: 'pill', label: 'pay' },
+            style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
             createOrder: function(data, actions) {
               return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
             },
@@ -1501,7 +1519,7 @@
         function renderizarPayPalFachada(monto, selector) {
           if (typeof paypal === 'undefined') return;
           paypal.Buttons({
-            style: { layout: 'vertical', color: 'white', shape: 'pill', label: 'pay' },
+            style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
             createOrder: function(data, actions) {
               return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
             },
