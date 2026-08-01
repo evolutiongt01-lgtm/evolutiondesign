@@ -94,7 +94,7 @@
         backdrop-filter: blur(25px) saturate(200%);
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
         border-radius: 100px;
-        padding: 0.6rem 0.8rem 0.6rem 1.5rem;
+        padding: 0.6rem 0.8rem 0.6rem 2rem;
         display: flex; justify-content: space-between; align-items: center;
         max-width: 1150px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
       }
@@ -115,9 +115,9 @@
       .icon-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); color: #fff !important; text-decoration: none !important; transition: all 0.3s ease; }
       .icon-btn:hover, .icon-btn:focus { background-color: rgba(255, 255, 255, 0.15) !important; transform: scale(1.05); }
 
-      /* MENÚS DESPLEGABLES */
-      .desktop-dropdown-menu, .mobile-dropdown-menu { display: none; flex-direction: column; position: absolute; top: 55px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 180px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; opacity: 0; transform: translateY(-10px) scale(0.95); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 1050; }
-      .desktop-dropdown-menu.show, .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+      /* MENÚS DESPLEGABLES MÓVIL */
+      .mobile-dropdown-menu { display: none; flex-direction: column; position: absolute; top: 55px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 180px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; opacity: 0; transform: translateY(-10px) scale(0.95); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 1050; }
+      .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
       .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .menu-item:hover, .menu-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
@@ -156,26 +156,14 @@
 
     <div class="page-bg"></div>
 
-    <!-- NAVEGACIÓN ESCRITORIO -->
+    <!-- NAVEGACIÓN ESCRITORIO (Sin botón de hamburguesa) -->
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
-          <div class="d-flex align-items-center gap-3">
-            <div style="position: relative;">
-              <a href="#" class="icon-btn" id="desktopMenuBtn" aria-label="Menú">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
-              </a>
-              <ul class="desktop-dropdown-menu" id="desktopDropdownMenu">
-                <li><a class="menu-item" href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
-                <li><a class="menu-item active" href="sobre-nosotros.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
-                <li><a class="menu-item" href="feedback.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
-              </ul>
-            </div>
-            <a href="index.html" class="d-flex align-items-center">
-              <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
-            </a>
-          </div>
-          <div class="nav-pill-links d-none d-xl-flex">
+          <a href="index.html" class="d-flex align-items-center">
+            <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
+          </a>
+          <div class="nav-pill-links">
             <a href="index.html" class="nav-pill-link">Inicio</a>
             <a href="sobre-nosotros.html" class="nav-pill-link active">Sobre Nosotros</a>
             <a href="feedback.html" class="nav-pill-link">Feedback</a>
@@ -186,7 +174,7 @@
       </div>
     </nav>
 
-    <!-- NAVEGACIÓN MÓVIL TIPO APP -->
+    <!-- NAVEGACIÓN MÓVIL TIPO APP (Mantiene su menú hamburguesa táctil) -->
     <nav class="mobile-app-nav">
       <div class="app-nav-top">
         <div style="position: relative;">
@@ -223,7 +211,7 @@
             <p class="text-secondary mx-auto" style="max-width: 550px; line-height: 1.6;">Precisión en cada línea, valor en cada detalle. Transformamos ideas complejas en realidades arquitectónicas tangibles.</p>
           </div>
 
-          <!-- PANEL DE ESTADÍSTICAS (Íconos arriba y centrados) -->
+          <!-- PANEL DE ESTADÍSTICAS -->
           <div class="glass-panel p-4 p-lg-5 mb-5">
             <div class="row g-4 justify-content-center">
               
@@ -270,7 +258,7 @@
             </div>
           </div>
 
-          <!-- PANEL FILOSOFÍA E HISTORIA PRO MAX -->
+          <!-- PANEL FILOSOFÍA E HISTORIA -->
           <div class="glass-panel p-4 p-lg-5 mb-5">
             <div class="row g-5 align-items-center">
               
@@ -282,12 +270,12 @@
                   <!-- Tarjeta Flotante -->
                   <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; background: rgba(10,10,10,0.85); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1.5rem; border-radius: 16px; display: flex; gap: 15px; align-items: flex-start;">
                     <svg width="24" height="24" fill="currentColor" class="accent-text flex-shrink-0 mt-1" viewBox="0 0 24 24"><path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"/></svg>
-                    <p class="text-white mb-0" style="font-size: 0.9rem; line-height: 1.5; font-style: italic;">"Diseñamos espacios que inspiran, construimos un prestigio y una confianza que perduran."</p>
+                    <p class="text-white mb-0" style="font-size: 0.9rem; line-height: 1.5; font-style: italic;">"Diseñamos espacios que inspiran, construimos un prestigio y una confianza que perdura."</p>
                   </div>
                 </div>
               </div>
 
-              <!-- Texto Derecha (Historia, IA, y Ejecución) -->
+              <!-- Texto Derecha -->
               <div class="col-12 col-lg-7 pl-lg-4">
                 <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.75rem;">NUESTRA HISTORIA Y EVOLUCIÓN</span>
                 <h2 class="fw-bold text-white mb-4" style="font-size: 2rem;">Diseño de élite impulsado por tecnología de vanguardia.</h2>
@@ -345,8 +333,6 @@
     <script>
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
-      const desktopMenuBtn = document.getElementById('desktopMenuBtn');
-      const desktopDropdownMenu = document.getElementById('desktopDropdownMenu');
 
       if(mobileMenuBtn && mobileDropdownMenu) {
           mobileMenuBtn.addEventListener('click', function(e) {
@@ -357,19 +343,6 @@
           document.addEventListener('click', function(e) {
             if (!mobileMenuBtn.contains(e.target) && !mobileDropdownMenu.contains(e.target)) {
               mobileDropdownMenu.classList.remove('show');
-            }
-          });
-      }
-
-      if(desktopMenuBtn && desktopDropdownMenu) {
-          desktopMenuBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            desktopDropdownMenu.classList.toggle('show');
-            e.stopPropagation();
-          });
-          document.addEventListener('click', function(e) {
-            if (!desktopMenuBtn.contains(e.target) && !desktopDropdownMenu.contains(e.target)) {
-              desktopDropdownMenu.classList.remove('show');
             }
           });
       }
