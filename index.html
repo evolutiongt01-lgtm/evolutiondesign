@@ -111,12 +111,18 @@
       .facade-radio-group input[type="radio"]:disabled + .facade-radio-label { opacity: 0.4; cursor: not-allowed; border-color: rgba(255,255,255,0.05); }
       .facade-switch input:disabled + .f-slider-toggle { opacity: 0.5; cursor: not-allowed; }
 
-      /* CAJA DE PAGO CON ESTILO LIQUID GLASS (CRISTAL LÍQUIDO) */
-      .paypal-white-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+      /* CAJA DE PAGO CON ESTILO LIQUID GLASS */
+      .paypal-white-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+
+      /* ANIMACIÓN DEL CANDADO DE SEGURIDAD */
+      .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(6px); border-radius: 20px; display: flex; align-items: center; justify-content: center; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+      .lock-overlay.active { opacity: 1; pointer-events: auto; }
+      .lock-icon-container { width: 70px; height: 70px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(212, 184, 149, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #d4b895; box-shadow: 0 0 30px rgba(212, 184, 149, 0.3); animation: lock-bounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+      @keyframes lock-bounce { 0% { transform: scale(0.3); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 
       /* CALCULADORAS TIPO FACHADA Y PLANOS 2D */
       .facade-calc-bg { background: linear-gradient(to bottom, #080808, #000); }
-      .facade-calc-card { background: #0d0d0d; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.8); overflow: hidden; }
+      .facade-calc-card { background: #0d0d0d; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.8); overflow: hidden; position: relative; }
       .facade-box-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 2rem; height: 100%; }
       .facade-icon { flex-shrink: 0; color: rgba(255,255,255,0.5); }
       .facade-input-wrap { display: flex; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; width: 120px; transition: border-color 0.3s; }
@@ -138,7 +144,7 @@
       input:checked + .f-slider-toggle:before { transform: translateX(22px); }
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
-      /* BOTÓN Y MENÚ FLOTANTE DE MONEDA (SIN PUNTOS) */
+      /* BOTÓN FLOTANTE DE MONEDA */
       .currency-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
       .currency-wrapper { position: relative; width: 50px; height: 50px; }
       .currency-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212, 184, 149, 0.4) !important; background-color: rgba(212, 184, 149, 0.1) !important; color: #d4b895 !important; backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; }
@@ -337,6 +343,13 @@
           </div>
 
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
+            <!-- OVERLAY DE CANDADO ANIMADO PARA PLANOS -->
+            <div id="lockOverlay2D" class="lock-overlay">
+              <div class="lock-icon-container">
+                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+            </div>
+
             <div class="row g-4 g-lg-5 align-items-start">
               
               <div class="col-12 col-lg-6"> 
@@ -443,7 +456,7 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
+                      <!-- CONTENEDOR DE PAYPAL TIPO LIQUID GLASS -->
                       <div id="paypal-container-wrapper-2d" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-2d" class="w-100"></div>
@@ -538,6 +551,13 @@
           </div>
 
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
+            <!-- OVERLAY DE CANDADO ANIMADO PARA FACHADAS -->
+            <div id="lockOverlayFachadas" class="lock-overlay">
+              <div class="lock-icon-container">
+                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+            </div>
+
             <div class="row g-4 g-lg-5 align-items-start">
               <div class="col-12 col-lg-6"> 
                 <div class="facade-box-panel d-flex flex-column gap-4">
@@ -687,7 +707,7 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
+                      <!-- CONTENEDOR DE PAYPAL TIPO LIQUID GLASS -->
                       <div id="paypal-container-wrapper-fachada" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-fachada" class="w-100"></div>
@@ -873,6 +893,13 @@
           <div class="row justify-content-center">
             <div class="col-12">
               <div class="calc-pro-container p-4 p-lg-5">
+                <!-- OVERLAY DE CANDADO ANIMADO PARA 3D -->
+                <div id="lockOverlay3D" class="lock-overlay">
+                  <div class="lock-icon-container">
+                    <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  </div>
+                </div>
+
                 <div class="row g-5 align-items-center">
                   <div class="col-12 col-lg-5 text-center d-flex flex-column justify-content-center">
                     <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">COTIZADOR INTELIGENTE</span>
@@ -954,7 +981,7 @@
                         PROCEDER AL PAGO SEGURO
                       </button>
 
-                      <!-- CONTENEDOR DE PAYPAL CON ESTILO LIQUID GLASS -->
+                      <!-- CONTENEDOR DE PAYPAL TIPO LIQUID GLASS -->
                       <div id="paypal-container-wrapper-3d" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-3d" class="w-100"></div>
@@ -1119,12 +1146,17 @@
         const paypalWrapper3D = document.getElementById('paypal-container-wrapper-3d');
         const paypalContainer3D = document.getElementById('paypal-button-container-3d');
         const btnCancelar3D = document.getElementById('btnCancelar3D');
+        const lockOverlay3D = document.getElementById('lockOverlay3D');
 
         function toggleLock3D(locked) {
           if(servicioSelect) servicioSelect.disabled = locked;
           if(anchoInput) anchoInput.disabled = locked;
           if(largoInput) largoInput.disabled = locked;
           cRadiosNiveles.forEach(r => r.disabled = locked);
+          if(lockOverlay3D) {
+            if(locked) lockOverlay3D.classList.add('active');
+            else lockOverlay3D.classList.remove('active');
+          }
         }
 
         function actualizarCotizacionTerreno() {
@@ -1239,12 +1271,17 @@
         const paypalWrapper2D = document.getElementById('paypal-container-wrapper-2d');
         const paypalContainer2D = document.getElementById('paypal-button-container-2d');
         const btnCancelar2D = document.getElementById('btnCancelar2D');
+        const lockOverlay2D = document.getElementById('lockOverlay2D');
 
         function toggleLock2D(locked) {
           if(pAncho) pAncho.disabled = locked;
           if(pLargo) pLargo.disabled = locked;
           pRadiosNiveles.forEach(r => r.disabled = locked);
           pRadiosPaquete.forEach(r => r.disabled = locked);
+          if(lockOverlay2D) {
+            if(locked) lockOverlay2D.classList.add('active');
+            else lockOverlay2D.classList.remove('active');
+          }
         }
 
         function actualizarCalculadoraPlanos() {
@@ -1369,6 +1406,7 @@
         const paypalWrapperFachada = document.getElementById('paypal-container-wrapper-fachada');
         const paypalContainerFachada = document.getElementById('paypal-button-container-fachada');
         const btnCancelarFachadas = document.getElementById('btnCancelarFachadas');
+        const lockOverlayFachadas = document.getElementById('lockOverlayFachadas');
 
         function toggleLockFachadas(locked) {
           if(fAncho) fAncho.disabled = locked;
@@ -1377,6 +1415,10 @@
           fRadiosTipo.forEach(r => r.disabled = locked);
           fRadiosNiveles.forEach(r => r.disabled = locked);
           if(fRenderToggle) fRenderToggle.disabled = locked;
+          if(lockOverlayFachadas) {
+            if(locked) lockOverlayFachadas.classList.add('active');
+            else lockOverlayFachadas.classList.remove('active');
+          }
         }
 
         function actualizarCalculadoraFachada() {
