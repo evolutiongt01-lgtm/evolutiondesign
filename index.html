@@ -16,7 +16,7 @@
     <!-- GOOGLE RECAPTCHA V3 SCRIPT -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LewmG4tAAAAADBNcF1z4t7NvP_YFyA7P57xx9uM"></script>
 
-    <!-- PAYPAL SDK CON TU CLIENT ID -->
+    <!-- PAYPAL SDK: CON TU CLIENT ID OFICIAL -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20&currency=USD"></script>
 
     <style>
@@ -259,7 +259,7 @@
           </div>
 
           <div class="row gx-4 g-5 align-items-stretch justify-content-center">
-            <!-- PAQUETE BÁSICO / ESENCIAL -->
+            
             <div class="col-12 col-lg-6" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
                 <div>
@@ -275,7 +275,7 @@
                     <li class="mb-2">✓ Plano Acotado (medidas para albañilería)</li>
                     <li class="mb-2">✓ Plano de Cortes (1 longitudinal y 1 transversal)</li>
                     <li class="mb-2">✓ Plano de Fachadas (los 4 lados de la edificación)</li>
-                    <li class="mb-2">✓ Formato de hoja carta (estándar en Guatemala) listo para obra e impresión (PDF / CAD)</li>
+                    <li class="mb-2">✓ Formato de hoja carta listo para obra e impresión (PDF / CAD)</li>
                   </ul>
                 </div>
                 <div class="text-center pt-3 border-top" style="border-color: rgba(255,255,255,0.08) !important;">
@@ -284,7 +284,6 @@
               </div>
             </div>
 
-            <!-- PAQUETE PREMIUM / INTEGRAL -->
             <div class="col-12 col-lg-6" data-aos="zoom-in-up" data-aos-duration="1200">
               <div class="glass-panel-accent p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
                 <div>
@@ -303,11 +302,8 @@
                     <li class="mb-2">✓ Plano de Cimentación con detalles constructivos</li>
                     <li class="mb-2">✓ Plano de Columnas, Cadenas y Armados</li>
                     <li class="mb-2">✓ Plano de Losas / Entrepiso y Techo</li>
-                    <li class="mb-2">✓ Plano Hidráulico (isométrico, materiales y símbolos)</li>
-                    <li class="mb-2">✓ Plano de Drenajes (tabla de materiales y símbolos)</li>
-                    <li class="mb-2">✓ Plano Eléctrico (distribución, materiales y símbolos)</li>
+                    <li class="mb-2">✓ Plano Hidráulico, Drenajes y Eléctrico completos</li>
                     <li class="mb-2">✓ Plano de Acabados, Puertas y Ventanas</li>
-                    <li class="mb-2">✓ Plano de Ubicación y Localización</li>
                     <li class="mb-2">✓ Formato hoja carta (PDF / CAD) para trámites y obra</li>
                   </ul>
                 </div>
@@ -316,6 +312,7 @@
                 </div>
               </div>
             </div>
+
           </div>
 
           <div class="row mt-5">
@@ -323,6 +320,7 @@
               <a href="#calculadora-planos" class="btn-liquid-glass">↓ Calcular los metros y excedentes de mi plano</a>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -429,14 +427,14 @@
                       <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión de terreno</span>
                     </div>
                     
-                    <!-- BOTÓN DINÁMICO DE WHATSAPP PARA EXCEDENTES -->
+                    <!-- BOTÓN WHATSAPP PARA EXCEDENTES -->
                     <div id="wrapper-btn-planos" class="mt-2" style="display: none;">
                       <button id="btnPlanosAccion" type="button" class="btn w-100 text-white fw-bold py-3 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s; font-size: 1.1rem;">
                         CONTINUAR CON MI PROYECTO
                       </button>
                     </div>
 
-                    <!-- BOTÓN DINÁMICO DE PAYPAL PARA PLANOS (RANGO BASE) -->
+                    <!-- BOTÓN DE PAYPAL NUEVA PESTAÑA (RANGO BASE) -->
                     <div id="wrapperPagoDirectoPlanos" class="mt-2" style="display: none;">
                       <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
@@ -444,7 +442,11 @@
                           ¡Aprobado! Tu proyecto es elegible.
                         </span>
                       </div>
-                      <div id="paypal-button-container-2d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
+                      <!-- ENLACE DIRECTO SEGURO -->
+                      <a id="btnPagoDirectoPlanos" href="#" target="_blank" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow d-flex justify-content-center align-items-center gap-2" style="background-color: #ffc439; transition: transform 0.3s ease;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106z"/></svg>
+                        Pagar con PayPal
+                      </a>
                     </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
@@ -530,6 +532,7 @@
 
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
             <div class="row g-4 g-lg-5 align-items-start">
+              
               <div class="col-12 col-lg-6"> 
                 <div class="facade-box-panel d-flex flex-column gap-4">
                   <div class="facade-row">
@@ -880,7 +883,7 @@
                           </div>
                         </div>
                         
-                        <!-- SELECTOR DE NIVELES PARA 3D/GENERAL -->
+                        <!-- NUEVO SELECTOR DE NIVELES PARA 3D/GENERAL -->
                         <div class="mt-2 text-start">
                           <span class="small text-secondary d-block mb-2">Cantidad de niveles</span>
                           <div class="facade-radio-group mt-0">
@@ -926,7 +929,7 @@
                         </span>
                       </div>
                       
-                      <!-- BOTÓN DE PAYPAL 3D -->
+                      <!-- AQUÍ SE RENDERIZA EL BOTÓN DE PAYPAL 3D -->
                       <div id="paypal-button-container-3d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
                     </div>
 
@@ -1033,7 +1036,7 @@
           <li><a class="lang-item" href="index-ja.html"><span class="badge bg-secondary me-2">JA</span> 日本語</a></li>
         </ul>
       </div>
-      <a href="https://wa.me/50231256942?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #25d366';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.1)'; this.style.color='#25d366'; this.style.border='1px solid rgba(37, 211, 102, 0.4);'"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg></a>
+      <a href="https://wa.me/18329774150?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto" target="_blank" aria-label="Escríbenos por WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #25d366';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(37, 211, 102, 0.1)'; this.style.color='#25d366'; this.style.border='1px solid rgba(37, 211, 102, 0.4);'"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg></a>
       <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Escríbenos por Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);'"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg></a>
     </div>
 
@@ -1054,6 +1057,7 @@
 
       const exchangeRates = { USD: { rate: 1.0, symbol: 'USD' }, EUR: { rate: 0.92, symbol: 'EUR' }, GTQ: { rate: 7.85, symbol: 'GTQ' }, MXN: { rate: 18.50, symbol: 'MXN' }, CNY: { rate: 7.25, symbol: 'CNY' }, AED: { rate: 3.67, symbol: 'AED' }, BRL: { rate: 5.40, symbol: 'BRL' }, JPY: { rate: 155.0, symbol: 'JPY' } };
 
+      // VARIABLES GLOBALES PARA PAYPAL
       window.montoPago3D = "0.00";
       window.montoPago2D = "0.00";
 
@@ -1095,6 +1099,7 @@
         const precioFinalDisplay = document.getElementById('calcPrecioFinal');
         const wrapperBtnCotizar = document.getElementById('wrapperBtnCotizar');
         const btnEnviarCotizacion = document.getElementById('btnEnviarCotizacion');
+        
         const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
 
         function actualizarCotizacionTerreno() {
@@ -1125,8 +1130,6 @@
               precioFinalUSD = areaTotal * 1.75;
             }
 
-            window.montoPago3D = precioFinalUSD.toFixed(2);
-
             const config = exchangeRates[currentCurrency];
             const convertedFinal = precioFinalUSD * config.rate;
             const decimals = currentCurrency === 'JPY' ? 0 : 2;
@@ -1136,6 +1139,7 @@
             if (esServicio3D && areaTotal <= 400) {
               if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'none'; 
               if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'block';
+              renderizarPayPal3D(precioFinalUSD.toFixed(2));
             } else {
               if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'block'; 
               if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'none';
@@ -1148,7 +1152,6 @@
             if(precioFinalDisplay) precioFinalDisplay.textContent = "0.00"; 
             if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'none'; 
             if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'none';
-            window.montoPago3D = "0.00";
           }
         }
         window.actualizarCotizacionTerrenoGlobal = actualizarCotizacionTerreno;
@@ -1206,7 +1209,6 @@
           }
 
           let totalFinalUSD = basePrecioUSD + costoExcedenteUSD;
-          window.montoPago2D = totalFinalUSD.toFixed(2);
 
           const config = exchangeRates[currentCurrency];
           const convertedTotal = totalFinalUSD * config.rate;
@@ -1230,6 +1232,7 @@
             if(wrapperBtnPlanos) wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
             if(areaTotal > 0) {
               if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
+              renderizarPayPal2D(totalFinalUSD.toFixed(2));
             } else {
               if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
             }
@@ -1339,7 +1342,6 @@
           }
 
           if(fRenderText) fRenderText.textContent = `${config.symbol} ${convertedRender.toFixed(decimals)}`;
-          if(fTotal) fTotal.textContent = `${config.symbol} ${convertedConvertedTotal = convertedTotal.toFixed(decimals)}`;
           if(fTotal) fTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
 
           let articulo = tipoVal.toLowerCase() === "vivienda" ? "una" : "un";
@@ -1375,44 +1377,62 @@
           });
         }
 
-        // --- RENDERIZAR BOTONES DE PAYPAL ---
-        if(typeof paypal !== 'undefined') {
-          // PayPal 3D
-          const container3D = document.getElementById('paypal-button-container-3d');
-          if(container3D && !container3D.hasChildNodes()) {
-            paypal.Buttons({
-              createOrder: function(data, actions) {
-                return actions.order.create({ purchase_units: [{ amount: { value: window.montoPago3D } }] });
-              },
-              onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                  const nombreCliente = details.payer.name.given_name;
-                  const montoCobrado = window.montoPago3D;
-                  const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${montoCobrado} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi proyecto.`);
-                  window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
-                });
-              }
-            }).render('#paypal-button-container-3d');
-          }
-
-          // PayPal 2D
-          const container2D = document.getElementById('paypal-button-container-2d');
-          if(container2D && !container2D.hasChildNodes()) {
-            paypal.Buttons({
-              createOrder: function(data, actions) {
-                return actions.order.create({ purchase_units: [{ amount: { value: window.montoPago2D } }] });
-              },
-              onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                  const nombreCliente = details.payer.name.given_name;
-                  const montoCobrado = window.montoPago2D;
-                  const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${montoCobrado} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mis planos 2D.`);
-                  window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
-                });
-              }
-            }).render('#paypal-button-container-2d');
-          }
+        // --- SISTEMA DINÁMICO DE PAYPAL (DESTRUYE Y RECONSTRUYE BOTONES) ---
+        let ultimoMonto3D = null;
+        function renderizarPayPal3D(monto) {
+          if (typeof paypal === 'undefined') return;
+          if (ultimoMonto3D === monto) return; // Si el precio no cambió, no recarga el botón
+          
+          const container = document.getElementById('paypal-button-container-3d');
+          if(!container) return;
+          
+          container.innerHTML = ''; // Limpia el botón anterior
+          
+          paypal.Buttons({
+            createOrder: function(data, actions) {
+              return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
+            },
+            onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                const nombreCliente = details.payer.name.given_name;
+                const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${monto} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi proyecto 3D/Cuantificación.`);
+                window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+              });
+            }
+          }).render('#paypal-button-container-3d');
+          
+          ultimoMonto3D = monto;
         }
+
+        let ultimoMonto2D = null;
+        function renderizarPayPal2D(monto) {
+          if (typeof paypal === 'undefined') return;
+          if (ultimoMonto2D === monto) return; // Si el precio no cambió, no recarga el botón
+          
+          const container = document.getElementById('paypal-button-container-2d');
+          if(!container) return;
+          
+          container.innerHTML = ''; // Limpia el botón anterior
+          
+          paypal.Buttons({
+            createOrder: function(data, actions) {
+              return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
+            },
+            onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                const nombreCliente = details.payer.name.given_name;
+                const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${monto} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mis planos 2D.`);
+                window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+              });
+            }
+          }).render('#paypal-button-container-2d');
+          
+          ultimoMonto2D = monto;
+        }
+        
+        // Exponemos las funciones al objeto window para llamarlas desde arriba
+        window.renderizarPayPal3D = renderizarPayPal3D;
+        window.renderizarPayPal2D = renderizarPayPal2D;
 
       });
     </script>
