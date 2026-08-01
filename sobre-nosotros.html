@@ -72,22 +72,16 @@
         z-index: -1;
       }
 
-      /* =========================================
-         ESPACIADO RESPONSIVO DEL CONTENIDO
-         ========================================= */
+      /* ESPACIADO RESPONSIVO */
       .main-content-spaced {
         margin-top: 180px; 
         margin-bottom: 50px;
       }
       @media (min-width: 992px) {
-        .main-content-spaced {
-          margin-top: 130px; 
-        }
+        .main-content-spaced { margin-top: 130px; }
       }
 
-      /* =========================================
-         NAVEGACIÓN ESCRITORIO (Mac/PC)
-         ========================================= */
+      /* NAVEGACIÓN ESCRITORIO */
       .desktop-nav {
         display: none !important;
         padding-top: calc(25px + env(safe-area-inset-top, 0px)); 
@@ -109,9 +103,7 @@
       .nav-pill-link:hover, .nav-pill-link.active { color: #fff; }
       .nav-pill-link.active::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px; background-color: #fff; border-radius: 2px; }
 
-      /* =========================================
-         NAVEGACIÓN MÓVIL TIPO APP
-         ========================================= */
+      /* NAVEGACIÓN MÓVIL */
       .mobile-app-nav {
         background: rgba(10, 10, 10, 0.85) !important; 
         backdrop-filter: blur(20px) saturate(150%); 
@@ -136,9 +128,7 @@
       .tab-item.active { color: #fff !important; border-bottom-color: #fff; }
       .tab-item.active svg { opacity: 1; transform: scale(1.15); }
 
-      /* =========================================
-         ESTILOS DE PÁGINA (GLASS PANELS)
-         ========================================= */
+      /* ESTILOS DE PÁGINA */
       .glass-panel { 
         background: rgba(15, 15, 15, 0.6) !important; 
         backdrop-filter: blur(25px) saturate(180%); 
@@ -157,23 +147,6 @@
         flex-shrink: 0;
         color: #d4b895;
       }
-
-      .btn-gold-pill {
-        background: linear-gradient(135deg, #e3cba8 0%, #c4a47a 100%);
-        color: #000;
-        font-weight: 700;
-        border: none;
-        border-radius: 50px;
-        padding: 1rem 2rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 1rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        text-decoration: none;
-        cursor: pointer;
-      }
-      .btn-gold-pill:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(212, 184, 149, 0.4); color: #000; }
 
       /* BOTONES FLOTANTES REDES */
       .lang-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
@@ -250,7 +223,7 @@
           <div class="text-center mb-5 pb-3">
             <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">CONOCE NUESTRA HISTORIA</span>
             <h1 class="display-3 fw-bold text-white mb-3">Sobre Nosotros</h1>
-            <p class="text-secondary mx-auto" style="max-width: 500px; line-height: 1.6;">Precisión en cada línea, valor en cada detalle. Transformamos ideas complejas en realidades arquitectónicas tangibles.</p>
+            <p class="text-secondary mx-auto" style="max-width: 550px; line-height: 1.6;">Precisión en cada línea, valor en cada detalle. Transformamos ideas complejas en realidades arquitectónicas tangibles.</p>
           </div>
 
           <!-- PANEL DE ESTADÍSTICAS -->
@@ -274,19 +247,19 @@
                 </div>
                 <div>
                   <h3 class="fw-bold accent-text mb-1" style="font-size: 1.6rem; line-height: 1;">+8</h3>
-                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Años de experiencia</h6>
-                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Comprometidos con la excelencia y la innovación.</p>
+                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Años de trayectoria</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Desde 2021 innovando en el diseño y la construcción.</p>
                 </div>
               </div>
               <!-- Item 3 -->
               <div class="col-12 col-md-6 col-lg-3 d-flex align-items-start gap-3">
                 <div class="f-icon-circle flex-shrink-0">
-                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 </div>
                 <div>
-                  <h3 class="fw-bold accent-text mb-1" style="font-size: 1.6rem; line-height: 1;">100%</h3>
-                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Precisión en cada proyecto</h6>
-                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Documentación técnica detallada y coordinación BIM.</p>
+                  <h3 class="fw-bold accent-text mb-1" style="font-size: 1.6rem; line-height: 1;">Global</h3>
+                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Proyectos internacionales</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Colombia, España, EE. UU., Japón, Emiratos Árabes y más.</p>
                 </div>
               </div>
               <!-- Item 4 -->
@@ -295,21 +268,21 @@
                   <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
                 </div>
                 <div>
-                  <h3 class="fw-bold accent-text mb-1" style="font-size: 1.6rem; line-height: 1;">Soporte</h3>
-                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Personalizado</h6>
-                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Acompañamiento profesional en cada etapa del proyecto.</p>
+                  <h3 class="fw-bold accent-text mb-1" style="font-size: 1.6rem; line-height: 1;">100%</h3>
+                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Enfoque Arquitectónico</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Dedicados por completo al diseño y la construcción.</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- PANEL FILOSOFÍA -->
+          <!-- PANEL FILOSOFÍA E HISTORIA -->
           <div class="glass-panel p-4 p-lg-5 mb-5">
             <div class="row g-5 align-items-center">
               
               <!-- Imagen Izquierda -->
               <div class="col-12 col-lg-5">
-                <div style="position: relative; border-radius: 20px; overflow: hidden; height: 100%; min-height: 380px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
+                <div style="position: relative; border-radius: 20px; overflow: hidden; height: 100%; min-height: 420px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
                   <img src="img/hero-pc.jpg" alt="Evolution Design" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0.85;">
                   
                   <!-- Tarjeta Flotante -->
@@ -320,21 +293,20 @@
                 </div>
               </div>
 
-              <!-- Texto Derecha -->
+              <!-- Texto Derecha (Historia y Evolución) -->
               <div class="col-12 col-lg-7 pl-lg-4">
-                <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.75rem;">NUESTRA FILOSOFÍA</span>
-                <h2 class="fw-bold text-white mb-4" style="font-size: 2rem;">Diseño con propósito, ingeniería con precisión.</h2>
+                <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.75rem;">NUESTRA HISTORIA Y EVOLUCIÓN</span>
+                <h2 class="fw-bold text-white mb-4" style="font-size: 2rem;">De la tecnología a la creación de espacios únicos.</h2>
                 
-                <p class="text-secondary" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">
-                  En <strong class="text-white fw-medium">Evolution Design</strong> somos un estudio especializado en visualización arquitectónica, diseño de planos técnicos precisos y cuantificación inteligente de materiales. Nuestro enfoque combina el rigor de la ingeniería civil con la máxima expresión estética del diseño contemporáneo.
+                <p class="text-secondary" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.2rem;">
+                  Fundada en <strong class="text-white fw-medium">2021</strong>, <strong class="text-white fw-medium">Evolution Design</strong> nació con una visión clara: impulsar el talento técnico y creativo. Iniciamos comercializando y proveyendo programas especializados como SketchUp y AutoCAD, conectando con creadores y profesionales de la construcción.
                 </p>
-                <p class="text-secondary" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 2.5rem;">
-                  Creemos firmemente que cada proyecto merece ser visualizado con absoluta claridad antes de colocar el primer block en la obra. Por ello, ayudamos a propietarios, constructores y desarrolladores a optimizar sus recursos, evitar sobrecostos y construir con confianza.
+                <p class="text-secondary" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.2rem;">
+                  Esa misma pasión nos llevó a dar el salto y ejecutar proyectos de diseño y arquitectura a nivel internacional. Con el tiempo, hemos tenido el privilegio de colaborar con clientes en <strong class="text-white">Colombia, España, Estados Unidos, Guatemala, Perú, Emiratos Árabes Unidos</strong> y hasta en <strong class="text-white">Japón</strong> (¡donde rompimos fronteras apoyándonos con traductores!).
                 </p>
-
-                <a href="index.html#contacto" class="btn-gold-pill" style="max-width: max-content; margin: 0; padding: 0.8rem 1.8rem; font-size: 0.9rem;">
-                  Conoce más sobre nuestro proceso &rarr;
-                </a>
+                <p class="text-secondary" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0;">
+                  Hoy en día, dedicamos el <strong class="text-white">100% de nuestro sitio web y esfuerzo a la arquitectura y el diseño</strong>. Combinamos el rigor de la ingeniería civil con la máxima expresión estética contemporánea, ayudando a que cada cliente visualice su proyecto con absoluta claridad antes de construir.
+                </p>
               </div>
 
             </div>
@@ -371,7 +343,7 @@
       <a href="https://wa.me/50231256942?text=Hola,%20me%20gustaría%20saber%20más%20sobre%20Evolution%20Design" target="_blank" aria-label="WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
       </a>
-      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);'">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
       </a>
     </div>
