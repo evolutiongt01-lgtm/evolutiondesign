@@ -254,7 +254,7 @@
           </div>
 
           <div class="row gx-4 g-5 align-items-stretch justify-content-center">
-            
+            <!-- PAQUETE BÁSICO / ESENCIAL -->
             <div class="col-12 col-lg-6" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
                 <div>
@@ -279,6 +279,7 @@
               </div>
             </div>
 
+            <!-- PAQUETE PREMIUM / INTEGRAL -->
             <div class="col-12 col-lg-6" data-aos="zoom-in-up" data-aos-duration="1200">
               <div class="glass-panel-accent p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
                 <div>
@@ -307,7 +308,6 @@
                 </div>
               </div>
             </div>
-
           </div>
 
           <div class="row mt-5">
@@ -315,7 +315,6 @@
               <a href="#calculadora-planos" class="btn-liquid-glass">↓ Calcular los metros y excedentes de mi plano</a>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -422,26 +421,16 @@
                       <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión de terreno</span>
                     </div>
                     
-                    <!-- BOTÓN WHATSAPP PARA EXCEDENTES -->
-                    <div id="wrapper-btn-planos" class="mt-2" style="display: none;">
-                      <button id="btnPlanosAccion" type="button" class="btn w-100 text-white fw-bold py-3 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s; font-size: 1.1rem;">
-                        CONTINUAR CON MI PROYECTO
-                      </button>
-                    </div>
-
-                    <!-- BOTÓN DE PAYPAL NUEVA PESTAÑA (RANGO BASE) -->
                     <div id="wrapperPagoDirectoPlanos" class="mt-2" style="display: none;">
                       <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
                           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Aprobado! Tu proyecto es elegible.
+                          ¡Proyecto en rango base! Listo para pago.
                         </span>
                       </div>
-                      <!-- ENLACE DIRECTO SEGURO CREADO POR JS -->
-                      <a id="btnPagoDirectoPlanos" href="#" target="_blank" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow d-flex justify-content-center align-items-center gap-2" style="background-color: #ffc439; transition: transform 0.3s ease;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106z"/></svg>
-                        Pagar con PayPal
-                      </a>
+                      
+                      <!-- BOTÓN OFICIAL DE PAYPAL (CON SDK JS) PARA PLANOS 2D -->
+                      <div id="paypal-button-container-2d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
                     </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
@@ -662,13 +651,21 @@
                       <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión</span>
                     </div>
                     
-                    <button id="btnFachadaAccion" type="button" class="btn w-100 text-white fw-bold py-3 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s; font-size: 1.1rem;">
-                      CALCULAR PRECIO
-                    </button>
+                    <!-- BOTÓN DE PAYPAL NUEVA PESTAÑA (FACHADAS) -->
+                    <div id="wrapperPagoDirectoFachadas" class="mt-2" style="display: none;">
+                      <div class="text-center p-3 rounded-3 mb-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
+                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
+                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                          ¡Listo para pago!
+                        </span>
+                      </div>
+                      <!-- BOTÓN OFICIAL DE PAYPAL PARA FACHADAS -->
+                      <div id="paypal-button-container-fachada" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
+                    </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
                       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                      Tus datos están protegidos y son confidenciales
+                      Transacción segura facturada en USD
                     </div>
                   </div>
 
@@ -906,27 +903,17 @@
                       </div>
                     </div>
                     
-                    <!-- BOTÓN WHATSAPP PARA EXCEDENTES O CUANTIFICACIÓN -->
-                    <div id="wrapperBtnCotizar" class="mt-4" style="display: none;">
-                      <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
-                        CONTINUAR CON MI PROYECTO
-                      </a>
-                    </div>
-                    
-                    <!-- MENSAJE Y BOTÓN DE PAGO DIRECTO (RANGO BASE) -->
+                    <!-- BOTÓN DE PAYPAL NUEVA PESTAÑA (SIEMPRE DISPONIBLE PARA 3D) -->
                     <div id="wrapperPagoDirecto3D" class="mt-4" style="display: none;">
-                      <div class="text-center p-3 rounded-3 mb-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
+                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-3d" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
                           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Aprobado! Tu proyecto es elegible.
+                          ¡Proyecto en rango base! Listo para pago.
                         </span>
                       </div>
                       
-                      <!-- ENLACE DIRECTO SEGURO -->
-                      <a id="btnPagoDirecto3D" href="#" target="_blank" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow d-flex justify-content-center align-items-center gap-2" style="background-color: #ffc439; transition: transform 0.3s ease;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106z"/></svg>
-                        Pagar con PayPal
-                      </a>
+                      <!-- BOTÓN OFICIAL DE PAYPAL PARA 3D -->
+                      <div id="paypal-button-container-3d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
                     </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
@@ -1035,8 +1022,9 @@
 
       const exchangeRates = { USD: { rate: 1.0, symbol: 'USD' }, EUR: { rate: 0.92, symbol: 'EUR' }, GTQ: { rate: 7.85, symbol: 'GTQ' }, MXN: { rate: 18.50, symbol: 'MXN' }, CNY: { rate: 7.25, symbol: 'CNY' }, AED: { rate: 3.67, symbol: 'AED' }, BRL: { rate: 5.40, symbol: 'BRL' }, JPY: { rate: 155.0, symbol: 'JPY' } };
 
-      const paypalLinks3D = { basico: 'https://www.paypal.com/ncp/payment/VNATBWUJSX8XA', profesional: 'https://www.paypal.com/ncp/payment/T5GGC93YAXSWG', premium: 'https://www.paypal.com/ncp/payment/H657UM6NM3LHY' };
-      const paypalLinks2D = { basico: '#', premium: '#' };
+      window.montoPago3D = "0.00";
+      window.montoPago2D = "0.00";
+      window.montoPagoFachada = "0.00";
 
       function updateAllCurrencies() {
         const config = exchangeRates[currentCurrency];
@@ -1073,10 +1061,9 @@
         const cRadiosNiveles = document.querySelectorAll('input[name="c-niveles"]');
         const totalDisplay = document.getElementById('calcTotal');
         const precioFinalDisplay = document.getElementById('calcPrecioFinal');
-        const wrapperBtnCotizar = document.getElementById('wrapperBtnCotizar');
-        const btnEnviarCotizacion = document.getElementById('btnEnviarCotizacion');
+        
         const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
-        const btnPagoDirecto3D = document.getElementById('btnPagoDirecto3D');
+        const mensajeRango3d = document.getElementById('mensaje-rango-3d');
 
         function actualizarCotizacionTerreno() {
           if(!anchoInput || !largoInput || !servicioSelect) return;
@@ -1087,8 +1074,6 @@
           if (checkedRadio) niveles = parseInt(checkedRadio.value);
 
           const areaTotal = ancho * largo * niveles;
-          const servicioOption = servicioSelect.options[servicioSelect.selectedIndex];
-          const servicioNombre = servicioOption ? servicioOption.text : '';
           const servicioVal = servicioSelect.value;
 
           if (areaTotal > 0) {
@@ -1106,28 +1091,33 @@
               precioFinalUSD = areaTotal * 1.75;
             }
 
+            window.montoPago3D = precioFinalUSD.toFixed(2);
+
             const config = exchangeRates[currentCurrency];
             const convertedFinal = precioFinalUSD * config.rate;
             const decimals = currentCurrency === 'JPY' ? 0 : 2;
 
             if(precioFinalDisplay) precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
-            if (esServicio3D && areaTotal <= 400) {
-              if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'none'; 
-              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'block';
-              if(btnPagoDirecto3D) btnPagoDirecto3D.href = paypalLinks3D[servicioVal];
+            if (esServicio3D) {
+              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.setProperty('display', 'block', 'important');
+              if (areaTotal > 400) {
+                mensajeRango3d.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Área excedente calculada. Total actualizado listo para pago.</span>`;
+                mensajeRango3d.style.background = 'rgba(255, 193, 7, 0.1)';
+                mensajeRango3d.style.borderColor = 'rgba(255, 193, 7, 0.2)';
+              } else {
+                mensajeRango3d.innerHTML = `<span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>¡Proyecto en rango base! Listo para pago.</span>`;
+                mensajeRango3d.style.background = 'rgba(40, 167, 69, 0.1)';
+                mensajeRango3d.style.borderColor = 'rgba(40, 167, 69, 0.2)';
+              }
             } else {
-              if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'block'; 
-              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'none';
+              if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.setProperty('display', 'none', 'important');
             }
-
-            const mensaje = encodeURIComponent(`Hola. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m x ${niveles} niveles (Área total: ${areaTotal.toFixed(2)} m²).\nCosto estimado: $${precioFinalUSD.toFixed(2)} USD.\nMe gustaría continuar con mi proyecto.`);
-            if(btnEnviarCotizacion) btnEnviarCotizacion.href = `https://wa.me/18329774150?text=${mensaje}`;
           } else {
             if(totalDisplay) totalDisplay.textContent = "0.00"; 
             if(precioFinalDisplay) precioFinalDisplay.textContent = "0.00"; 
-            if(wrapperBtnCotizar) wrapperBtnCotizar.style.display = 'none'; 
-            if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.display = 'none';
+            if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.setProperty('display', 'none', 'important');
+            window.montoPago3D = "0.00";
           }
         }
         window.actualizarCotizacionTerrenoGlobal = actualizarCotizacionTerreno;
@@ -1151,14 +1141,9 @@
         const pExcedenteLabel = document.getElementById('p-excedente-label');
         const rowPlanosExcedente = document.getElementById('row-planos-excedente');
         const pTotal = document.getElementById('p-total');
-        const btnPlanosAccion = document.getElementById('btnPlanosAccion');
-        const wrapperBtnPlanos = document.getElementById('wrapper-btn-planos');
-        const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
-        const btnPagoDirectoPlanos = document.getElementById('btnPagoDirectoPlanos');
-        const mensajeRangoPlanos = document.getElementById('mensaje-rango-planos');
         
-        let calculoPlanosInteractuado = false;
-        let urlWhatsAppPlanos = "#";
+        const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
+        const mensajeRangoPlanos = document.getElementById('mensaje-rango-planos');
 
         function actualizarCalculadoraPlanos() {
           if(!pAncho || !pLargo) return;
@@ -1175,7 +1160,6 @@
           let areaTotal = ancho * largo * niveles;
           let basePrecioUSD = paquete === 'basico' ? 390 : 800;
           let costoExtraPerM2 = paquete === 'basico' ? 1.10 : 2.00;
-          let nombrePaquete = paquete === 'basico' ? 'Básico 2D' : 'Premium 2D';
 
           let metrosExcedentes = 0;
           let costoExcedenteUSD = 0;
@@ -1186,6 +1170,7 @@
           }
 
           let totalFinalUSD = basePrecioUSD + costoExcedenteUSD;
+          window.montoPago2D = totalFinalUSD.toFixed(2);
 
           const config = exchangeRates[currentCurrency];
           const convertedTotal = totalFinalUSD * config.rate;
@@ -1200,23 +1185,30 @@
             if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'flex', 'important');
             if(pExcedenteLabel) pExcedenteLabel.textContent = `Metros excedentes (${metrosExcedentes.toFixed(2)} m²)`;
             if(pExcedenteText) pExcedenteText.textContent = `+${config.symbol} ${convertedExcedente.toFixed(decimals)}`;
-            if(wrapperBtnPlanos) wrapperBtnPlanos.style.setProperty('display', 'block', 'important');
-            if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
+            
+            if(mensajeRangoPlanos) {
+              mensajeRangoPlanos.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Área excedente calculada. Total actualizado listo para pago.</span>`;
+              mensajeRangoPlanos.style.background = 'rgba(255, 193, 7, 0.1)';
+              mensajeRangoPlanos.style.borderColor = 'rgba(255, 193, 7, 0.2)';
+            }
           } else {
             if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'none', 'important');
-            if(wrapperBtnPlanos) wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
-            if(areaTotal > 0) {
-              if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
-              if(btnPagoDirectoPlanos) btnPagoDirectoPlanos.href = paypalLinks2D[paquete];
-            } else {
-              if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
+            
+            if(mensajeRangoPlanos) {
+              mensajeRangoPlanos.innerHTML = `<span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>¡Proyecto en rango base! Listo para pago.</span>`;
+              mensajeRangoPlanos.style.background = 'rgba(40, 167, 69, 0.1)';
+              mensajeRangoPlanos.style.borderColor = 'rgba(40, 167, 69, 0.2)';
             }
           }
 
-          if(pTotal) pTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
+          if(areaTotal > 0) {
+            if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
+          } else {
+             if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
+             window.montoPago2D = "0.00";
+          }
 
-          const waMessagePlanos = encodeURIComponent(`Hola. Usé la calculadora de Planos 2D. Mi proyecto tiene un área total de ${areaTotal.toFixed(2)} m² (${niveles} niveles) y seleccioné el paquete ${nombrePaquete}. El costo estimado es de $${totalFinalUSD.toFixed(2)} USD. Me gustaría proceder.`);
-          urlWhatsAppPlanos = `https://wa.me/18329774150?text=${waMessagePlanos}`;
+          if(pTotal) pTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
         }
         window.actualizarCalculadoraPlanosGlobal = actualizarCalculadoraPlanos;
 
@@ -1226,22 +1218,6 @@
           pRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraPlanos));
           pRadiosPaquete.forEach(radio => radio.addEventListener('change', actualizarCalculadoraPlanos));
           actualizarCalculadoraPlanos();
-        }
-
-        if (btnPlanosAccion) {
-          btnPlanosAccion.addEventListener('click', function(e) {
-            if (!calculoPlanosInteractuado) {
-              e.preventDefault();
-              calculoPlanosInteractuado = true;
-              btnPlanosAccion.style.backgroundColor = '#d4b895';
-              btnPlanosAccion.style.borderColor = '#d4b895';
-              btnPlanosAccion.classList.remove('text-white');
-              btnPlanosAccion.classList.add('text-black');
-              btnPlanosAccion.innerHTML = `CONTINUAR CON MI PROYECTO`;
-            } else {
-              window.open(urlWhatsAppPlanos, '_blank');
-            }
-          });
         }
 
         // --- CALCULADORA DE FACHADAS ---
@@ -1257,15 +1233,13 @@
         const fRadiosTipo = document.querySelectorAll('input[name="f-tipo"]');
         const fRadiosNiveles = document.querySelectorAll('input[name="f-niveles"]');
         const fRenderToggle = document.getElementById('f-render');
-        const btnFachadaAccion = document.getElementById('btnFachadaAccion');
-
-        let calculoFachadaInteractuado = false;
-        let urlWhatsAppFachada = "#";
+        
+        const wrapperPagoDirectoFachadas = document.getElementById('wrapperPagoDirectoFachadas');
 
         function actualizarCalculadoraFachada() {
           if (!fAncho || !fAltura) return;
-          let ancho = parseFloat(fAncho.value) || 0;
-          let altura = parseFloat(fAltura.value) || 0;
+
+          let ancho = parseFloat(fAncho.value) || 0; let altura = parseFloat(fAltura.value) || 0;
           
           let compVal = 1.3; let compText = 'Profesional';
           const checkedComp = document.querySelector('input[name="f-complejidad"]:checked');
@@ -1293,6 +1267,8 @@
 
           const costoRender = renderOn ? 40.00 : 0.00;
           const totalFinalUSD = subtotal + costoNiveles + costoRender;
+          
+          window.montoPagoFachada = totalFinalUSD.toFixed(2);
 
           const config = exchangeRates[currentCurrency];
           const convertedTotal = totalFinalUSD * config.rate;
@@ -1321,12 +1297,12 @@
           if(fRenderText) fRenderText.textContent = `${config.symbol} ${convertedRender.toFixed(decimals)}`;
           if(fTotal) fTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
 
-          let articulo = tipoVal.toLowerCase() === "vivienda" ? "una" : "un";
-          let pluralNiveles = nivelesVal === "1" ? "1 nivel" : nivelesVal + " niveles";
-          let textoRender = renderOn ? "con 3 Renders fotorealistas" : "sin Renders";
-
-          const waMessage = encodeURIComponent(`Hola. Acabo de utilizar la calculadora de fachadas en su sitio web. Mi proyecto tiene un área aproximada de ${area.toFixed(2)} m², es ${articulo} ${tipoVal.toLowerCase()} de ${pluralNiveles}, seleccioné el paquete ${compText} ${textoRender}. El precio estimado fue de $${totalFinalUSD.toFixed(2)} USD. Me gustaría continuar con mi proyecto.`);
-          urlWhatsAppFachada = `https://wa.me/18329774150?text=${waMessage}`;
+          if(area > 0) {
+            if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'block', 'important');
+          } else {
+            if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'none', 'important');
+            window.montoPagoFachada = "0.00";
+          }
         }
         window.actualizarCalculadoraFachadaGlobal = actualizarCalculadoraFachada;
 
@@ -1340,21 +1316,60 @@
           actualizarCalculadoraFachada();
         }
 
-        if (btnFachadaAccion) {
-          btnFachadaAccion.addEventListener('click', function(e) {
-            if (!calculoFachadaInteractuado) {
-              e.preventDefault();
-              calculoFachadaInteractuado = true;
-              btnFachadaAccion.style.backgroundColor = '#d4b895';
-              btnFachadaAccion.style.borderColor = '#d4b895';
-              btnFachadaAccion.classList.remove('text-white');
-              btnFachadaAccion.classList.add('text-black');
-              btnFachadaAccion.innerHTML = `CONTINUAR CON MI PROYECTO`;
-            } else {
-              window.open(urlWhatsAppFachada, '_blank');
-            }
-          });
+        // --- RENDERIZAR BOTONES DE PAYPAL AL INICIO ---
+        if(typeof paypal !== 'undefined') {
+          // PayPal 3D
+          if(document.getElementById('paypal-button-container-3d')) {
+            paypal.Buttons({
+              style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
+              createOrder: function(data, actions) {
+                return actions.order.create({ purchase_units: [{ amount: { value: window.montoPago3D } }] });
+              },
+              onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                  const nombreCliente = details.payer.name.given_name;
+                  const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${window.montoPago3D} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi proyecto.`);
+                  window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+                });
+              }
+            }).render('#paypal-button-container-3d');
+          }
+
+          // PayPal 2D
+          if(document.getElementById('paypal-button-container-2d')) {
+            paypal.Buttons({
+              style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
+              createOrder: function(data, actions) {
+                return actions.order.create({ purchase_units: [{ amount: { value: window.montoPago2D } }] });
+              },
+              onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                  const nombreCliente = details.payer.name.given_name;
+                  const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${window.montoPago2D} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mis planos 2D.`);
+                  window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+                });
+              }
+            }).render('#paypal-button-container-2d');
+          }
+
+          // PayPal Fachadas
+          if(document.getElementById('paypal-button-container-fachada')) {
+            paypal.Buttons({
+              style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
+              createOrder: function(data, actions) {
+                return actions.order.create({ purchase_units: [{ amount: { value: window.montoPagoFachada } }] });
+              },
+              onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                  const nombreCliente = details.payer.name.given_name;
+                  const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${window.montoPagoFachada} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi diseño de fachada.`);
+                  window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+                });
+              }
+            }).render('#paypal-button-container-fachada');
+          }
         }
+
       });
     </script>
 
