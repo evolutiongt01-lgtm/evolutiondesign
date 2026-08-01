@@ -63,7 +63,7 @@
       .btn-liquid-glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(212, 184, 149, 0.4); color: #d4b895; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none !important; font-weight: 500; font-size: 0.85rem; transition: all 0.3s ease; display: inline-block; text-align: center; white-space: normal; }
       .btn-liquid-glass:hover { background: #fff; color: #000 !important; border-color: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
 
-      /* NAVEGACIÓN ESCRITORIO Y MÓVIL (Acortado por brevedad, igual que el original) */
+      /* NAVEGACIÓN ESCRITORIO Y MÓVIL */
       .desktop-nav { display: none !important; padding-top: calc(25px + env(safe-area-inset-top, 0px)); pointer-events: none; }
       @media (min-width: 992px) { .desktop-nav { display: block !important; } }
       .nav-pill { pointer-events: auto; background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1150px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
@@ -91,6 +91,7 @@
       .tab-item:hover, .tab-item.active { color: #fff !important; border-bottom-color: #fff; }
       .tab-item.active svg { opacity: 1; transform: scale(1.15); }
 
+      /* HERO SECTION */
       .hero-app { position: relative; padding: max(145px, calc(110px + env(safe-area-inset-top))) 1.5rem 4rem; min-height: 85vh; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%), url('img/hero-movil.jpg') center/cover no-repeat; }
       .hero-content { width: 100%; padding: 0; }
       @media (min-width: 992px) { .hero-app { min-height: 100vh; background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/hero-pc.jpg') right center/cover no-repeat; padding: calc(100px + env(safe-area-inset-top, 0px)) 0 4rem; } .hero-content { max-width: 550px; padding: 0; margin-left: 5vw; } }
@@ -471,10 +472,20 @@
                       <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión de terreno</span>
                     </div>
                     
-                    <!-- BOTÓN DINÁMICO PLANOS -->
-                    <button id="btnPlanosAccion" type="button" class="btn w-100 text-white fw-bold py-3 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s; font-size: 1.1rem;">
-                      CALCULAR PLANOS
-                    </button>
+                    <!-- BOTÓN DINÁMICO PLANOS / MENSAJE DE RANGO -->
+                    <div id="wrapper-btn-planos" style="display: none;">
+                      <button id="btnPlanosAccion" type="button" class="btn w-100 text-white fw-bold py-3 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s; font-size: 1.1rem;">
+                        CALCULAR EXCEDENTE
+                      </button>
+                    </div>
+
+                    <!-- MENSAJE DE FELICITACIÓN (RANGO BASE) -->
+                    <div id="mensaje-rango-planos" class="text-center p-3 rounded-3 mt-2" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2); display: none;">
+                      <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        ¡Excelente! Tu proyecto entra en el rango de los 250 m². Puedes adquirir tu paquete directamente arriba.
+                      </span>
+                    </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
                       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
@@ -1154,7 +1165,10 @@
         const pExcedenteLabel = document.getElementById('p-excedente-label');
         const rowPlanosExcedente = document.getElementById('row-planos-excedente');
         const pTotal = document.getElementById('p-total');
+        
         const btnPlanosAccion = document.getElementById('btnPlanosAccion');
+        const wrapperBtnPlanos = document.getElementById('wrapper-btn-planos');
+        const mensajeRangoPlanos = document.getElementById('mensaje-rango-planos');
         
         let calculoPlanosInteractuado = false;
         let urlWhatsAppPlanos = "#";
@@ -1194,13 +1208,21 @@
             rowPlanosExcedente.style.setProperty('display', 'flex', 'important');
             pExcedenteLabel.textContent = `Metros excedentes (${metrosExcedentes.toFixed(2)} m²)`;
             pExcedenteText.textContent = `+${config.symbol} ${convertedExcedente.toFixed(decimals)}`;
+            
+            // Mostrar botón para excedentes, ocultar mensaje
+            wrapperBtnPlanos.style.setProperty('display', 'block', 'important');
+            mensajeRangoPlanos.style.setProperty('display', 'none', 'important');
           } else {
             rowPlanosExcedente.style.setProperty('display', 'none', 'important');
+            
+            // Mostrar mensaje de éxito, ocultar botón
+            wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
+            mensajeRangoPlanos.style.setProperty('display', 'block', 'important');
           }
 
           pTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
 
-          const waMessagePlanos = encodeURIComponent(`Hola. Usé la calculadora de Planos 2D. Mi proyecto tiene un área total de ${areaTotal.toFixed(2)} m² (${niveles} niveles) y seleccioné el paquete ${nombrePaquete}. El costo estimado es de $${totalFinalUSD.toFixed(2)} USD. Me gustaría proceder.`);
+          const waMessagePlanos = encodeURIComponent(`Hola. Usé la calculadora de Planos 2D. Mi proyecto tiene un área total de ${areaTotal.toFixed(2)} m² (${niveles} niveles) y seleccioné el paquete ${nombrePaquete}. El costo estimado por el excedente y diseño base es de $${totalFinalUSD.toFixed(2)} USD. Me gustaría proceder.`);
           urlWhatsAppPlanos = `https://wa.me/18329774150?text=${waMessagePlanos}`;
         }
         window.actualizarCalculadoraPlanosGlobal = actualizarCalculadoraPlanos;
