@@ -121,7 +121,7 @@
         -webkit-backdrop-filter: blur(25px) saturate(200%);
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
         border-radius: 100px;
-        padding: 0.6rem 0.8rem 0.6rem 2rem;
+        padding: 0.6rem 0.8rem 0.6rem 1.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -140,6 +140,35 @@
       .nav-pill-link.active::after {
         content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px; background-color: #fff; border-radius: 2px;
       }
+
+      /* MENÚ DESPLEGABLE ESCRITORIO Y MÓVIL */
+      .desktop-dropdown-menu, .mobile-dropdown-menu { 
+        display: none; 
+        flex-direction: column; 
+        position: absolute; 
+        top: 55px; 
+        left: 0; 
+        background: rgba(15, 15, 15, 0.95) !important; 
+        backdrop-filter: blur(20px) !important; 
+        -webkit-backdrop-filter: blur(20px) !important; 
+        border: 1px solid rgba(255,255,255,0.1) !important; 
+        border-radius: 16px !important; 
+        padding: 0.5rem !important; 
+        min-width: 180px !important; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; 
+        gap: 5px; 
+        list-style: none !important;
+        margin: 0;
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+        transform-origin: top left;
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        z-index: 1050;
+      }
+      .desktop-dropdown-menu li, .mobile-dropdown-menu li { list-style: none !important; }
+      .desktop-dropdown-menu.show, .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+      .menu-item:hover, .menu-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
       /* =========================================
          FONDO ATENUADO PLANOS 2D
@@ -179,9 +208,7 @@
         text-decoration: none !important; transition: all 0.3s ease; 
         -webkit-tap-highlight-color: transparent !important; outline: none !important; 
       }
-      .icon-btn:visited {
-        color: #fff !important;
-      }
+      .icon-btn:visited { color: #fff !important; }
       .icon-btn:hover, .icon-btn:focus { 
         background-color: rgba(255, 255, 255, 0.15) !important; 
         color: #fff !important;
@@ -192,35 +219,6 @@
         color: #fff !important;
         transform: scale(0.95); 
       }
-
-      /* MENÚ DESPLEGABLE MÓVIL (HAMBURGUESA) */
-      .mobile-dropdown-menu { 
-        display: none; 
-        flex-direction: column; 
-        position: absolute; 
-        top: 55px; 
-        left: 0; 
-        background: rgba(15, 15, 15, 0.95) !important; 
-        backdrop-filter: blur(20px) !important; 
-        -webkit-backdrop-filter: blur(20px) !important; 
-        border: 1px solid rgba(255,255,255,0.1) !important; 
-        border-radius: 16px !important; 
-        padding: 0.5rem !important; 
-        min-width: 180px !important; 
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; 
-        gap: 5px; 
-        list-style: none !important;
-        margin: 0;
-        opacity: 0;
-        transform: translateY(-10px) scale(0.95);
-        transform-origin: top left;
-        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        z-index: 1050;
-      }
-      .mobile-dropdown-menu li { list-style: none !important; }
-      .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
-      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
-      .menu-item:hover, .menu-item:focus, .menu-item:active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
       
       .app-tabs { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 1.5rem; gap: 2rem; justify-content: space-around; }
       .app-tabs::-webkit-scrollbar { display: none; }
@@ -417,9 +415,39 @@
       <div class="container px-0">
         <div class="nav-pill">
           
-          <a href="index.html" class="d-flex align-items-center">
-            <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
-          </a>
+          <!-- CONTENEDOR IZQUIERDO: MENÚ HAMBURGUESA Y LOGOTIPO -->
+          <div class="d-flex align-items-center gap-3">
+            <div style="position: relative;">
+              <a href="#" class="icon-btn" id="desktopMenuBtn" aria-label="Menú">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+              </a>
+              <!-- Menú Desplegable de Escritorio -->
+              <ul class="desktop-dropdown-menu" id="desktopDropdownMenu">
+                <li>
+                  <a class="menu-item active" href="index.html">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a class="menu-item" href="sobre-nosotros.html">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    Sobre Nosotros
+                  </a>
+                </li>
+                <li>
+                  <a class="menu-item" href="feedback.html">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    Feedback
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <a href="index.html" class="d-flex align-items-center">
+              <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
+            </a>
+          </div>
 
           <div class="nav-pill-links d-none d-xl-flex">
             <a href="index.html" class="nav-pill-link active">Inicio</a>
@@ -440,16 +468,15 @@
     <nav class="mobile-app-nav">
       <div class="app-nav-top">
         
-        <!-- MENÚ DESPLEGABLE HAMBURGUESA -->
+        <!-- MENÚ DESPLEGABLE HAMBURGUESA MÓVIL -->
         <div style="position: relative;">
           <a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
           </a>
           
-          <!-- Lista de opciones del Menú Hamburguesa enlazadas a páginas específicas -->
           <ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
             <li>
-              <a class="menu-item" href="index.html">
+              <a class="menu-item active" href="index.html">
                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 Home
               </a>
@@ -1256,6 +1283,8 @@
       
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
+      const desktopMenuBtn = document.getElementById('desktopMenuBtn');
+      const desktopDropdownMenu = document.getElementById('desktopDropdownMenu');
 
       // Lógica Menú Hamburguesa Móvil
       if(mobileMenuBtn && mobileDropdownMenu) {
@@ -1269,11 +1298,19 @@
               mobileDropdownMenu.classList.remove('show');
             }
           });
-          const menuItems = mobileDropdownMenu.querySelectorAll('.menu-item');
-          menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-              mobileDropdownMenu.classList.remove('show');
-            });
+      }
+
+      // Lógica Menú Hamburguesa Escritorio (PC)
+      if(desktopMenuBtn && desktopDropdownMenu) {
+          desktopMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            desktopDropdownMenu.classList.toggle('show');
+            e.stopPropagation();
+          });
+          document.addEventListener('click', function(e) {
+            if (!desktopMenuBtn.contains(e.target) && !desktopDropdownMenu.contains(e.target)) {
+              desktopDropdownMenu.classList.remove('show');
+            }
           });
       }
 
