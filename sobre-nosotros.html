@@ -51,12 +51,10 @@
              url('fonts/inter-v12-latin-700.woff') format('woff');
       }
 
-      html {
-        scroll-behavior: smooth;
-      }
+      html { scroll-behavior: smooth; }
 
       body {
-        background-color: #000;
+        background-color: #050505;
         color: #fff;
         font-family: 'Inter', sans-serif;
         min-height: 100vh;
@@ -70,8 +68,21 @@
       .page-bg {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 100%), url('img/hero-pc.jpg') center/cover no-repeat;
+        background: linear-gradient(180deg, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0.98) 100%), url('img/hero-pc.jpg') center/cover no-repeat;
         z-index: -1;
+      }
+
+      /* =========================================
+         ESPACIADO RESPONSIVO DEL CONTENIDO
+         ========================================= */
+      .main-content-spaced {
+        margin-top: 180px; 
+        margin-bottom: 50px;
+      }
+      @media (min-width: 992px) {
+        .main-content-spaced {
+          margin-top: 130px; 
+        }
       }
 
       /* =========================================
@@ -82,35 +93,21 @@
         padding-top: calc(25px + env(safe-area-inset-top, 0px)); 
         pointer-events: none; 
       }
-      @media (min-width: 992px) {
-        .desktop-nav { display: block !important; }
-      }
+      @media (min-width: 992px) { .desktop-nav { display: block !important; } }
       .nav-pill {
         pointer-events: auto; 
         background: rgba(15, 15, 15, 0.75) !important;
         backdrop-filter: blur(25px) saturate(200%);
-        -webkit-backdrop-filter: blur(25px) saturate(200%);
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
         border-radius: 100px;
-        padding: 0.6rem 0.8rem 0.6rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1150px;
-        margin: 0 auto;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        padding: 0.6rem 0.8rem 0.6rem 1.5rem;
+        display: flex; justify-content: space-between; align-items: center;
+        max-width: 1150px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
       }
-      .nav-pill-links {
-        display: flex; gap: 2rem; align-items: center;
-      }
-      .nav-pill-link {
-        color: rgba(255, 255, 255, 0.65);
-        text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: color 0.3s; position: relative;
-      }
+      .nav-pill-links { display: flex; gap: 2rem; align-items: center; }
+      .nav-pill-link { color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: color 0.3s; position: relative; }
       .nav-pill-link:hover, .nav-pill-link.active { color: #fff; }
-      .nav-pill-link.active::after {
-        content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px; background-color: #fff; border-radius: 2px;
-      }
+      .nav-pill-link.active::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px; background-color: #fff; border-radius: 2px; }
 
       /* =========================================
          NAVEGACIÓN MÓVIL TIPO APP
@@ -118,95 +115,74 @@
       .mobile-app-nav {
         background: rgba(10, 10, 10, 0.85) !important; 
         backdrop-filter: blur(20px) saturate(150%); 
-        -webkit-backdrop-filter: blur(20px) saturate(150%); 
-        position: fixed; 
-        top: 0; left: 0; width: 100%;
-        z-index: 1030; 
+        position: fixed; top: 0; left: 0; width: 100%; z-index: 1030; 
         border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
       }
       @media (min-width: 992px) { .mobile-app-nav { display: none !important; } }
-      
-      .app-nav-top { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        padding: max(38px, env(safe-area-inset-top)) 1.5rem 0.8rem 1.5rem; 
-      }
-      
-      .icon-btn { 
-        width: 42px; height: 42px; 
-        border-radius: 50%; 
-        border: 1px solid rgba(255, 255, 255, 0.15); 
-        display: flex; align-items: center; justify-content: center; 
-        background: rgba(255, 255, 255, 0.05); color: #fff !important; 
-        text-decoration: none !important; transition: all 0.3s ease; 
-        -webkit-tap-highlight-color: transparent !important; outline: none !important; 
-      }
-      .icon-btn:visited { color: #fff !important; }
-      .icon-btn:hover, .icon-btn:focus { 
-        background-color: rgba(255, 255, 255, 0.15) !important; 
-        color: #fff !important;
-        transform: scale(1.05); 
-      }
-      .icon-btn:active { 
-        background-color: rgba(255, 255, 255, 0.25) !important; 
-        color: #fff !important;
-        transform: scale(0.95); 
-      }
+      .app-nav-top { display: flex; justify-content: space-between; align-items: center; padding: max(38px, env(safe-area-inset-top)) 1.5rem 0.8rem 1.5rem; }
+      .icon-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); color: #fff !important; text-decoration: none !important; transition: all 0.3s ease; }
+      .icon-btn:hover, .icon-btn:focus { background-color: rgba(255, 255, 255, 0.15) !important; transform: scale(1.05); }
 
-      /* MENÚ DESPLEGABLE MÓVIL */
-      .mobile-dropdown-menu { 
-        display: none; 
-        flex-direction: column; 
-        position: absolute; 
-        top: 55px; 
-        left: 0; 
-        background: rgba(15, 15, 15, 0.95) !important; 
-        backdrop-filter: blur(20px) !important; 
-        -webkit-backdrop-filter: blur(20px) !important; 
-        border: 1px solid rgba(255,255,255,0.1) !important; 
-        border-radius: 16px !important; 
-        padding: 0.5rem !important; 
-        min-width: 180px !important; 
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; 
-        gap: 5px; 
-        list-style: none !important;
-        margin: 0;
-        opacity: 0;
-        transform: translateY(-10px) scale(0.95);
-        transform-origin: top left;
-        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        z-index: 1050;
-      }
-      .mobile-dropdown-menu li { list-style: none !important; }
-      .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
-      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+      /* MENÚS DESPLEGABLES */
+      .desktop-dropdown-menu, .mobile-dropdown-menu { display: none; flex-direction: column; position: absolute; top: 55px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 180px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; opacity: 0; transform: translateY(-10px) scale(0.95); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 1050; }
+      .desktop-dropdown-menu.show, .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .menu-item:hover, .menu-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
-      /* TABS INFERIORES MÓVIL */
       .app-tabs { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 1.5rem; gap: 2rem; justify-content: space-around; }
       .app-tabs::-webkit-scrollbar { display: none; }
-      .tab-item { display: flex; flex-direction: column; align-items: center; color: #888 !important; text-decoration: none !important; font-size: 0.75rem; padding-bottom: 0.8rem; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); -webkit-tap-highlight-color: transparent !important; outline: none !important; }
-      .tab-item svg { margin-bottom: 6px; opacity: 0.7; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; }
-      .tab-item:hover, .tab-item:focus, .tab-item:active { color: #fff !important; }
+      .tab-item { display: flex; flex-direction: column; align-items: center; color: #888 !important; text-decoration: none !important; font-size: 0.75rem; padding-bottom: 0.8rem; border-bottom: 2px solid transparent; transition: all 0.4s; }
+      .tab-item svg { margin-bottom: 6px; opacity: 0.7; }
       .tab-item.active { color: #fff !important; border-bottom-color: #fff; }
       .tab-item.active svg { opacity: 1; transform: scale(1.15); }
 
-      /* ESTILOS DE TARJETAS GLASS */
-      .glass-panel { background: rgba(255, 255, 255, 0.03) !important; backdrop-filter: blur(20px) saturate(150%); border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 24px; padding: 3rem; }
-      .glass-panel-accent { background: rgba(212, 184, 149, 0.05) !important; backdrop-filter: blur(20px) saturate(150%); border: 1px solid rgba(212, 184, 149, 0.3) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4); border-radius: 24px; padding: 3rem; }
-
-      /* BOTONES FLOTANTES */
-      .lang-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
-      @supports (-webkit-touch-callout: none) {
-        .lang-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); }
+      /* =========================================
+         ESTILOS DE PÁGINA (GLASS PANELS)
+         ========================================= */
+      .glass-panel { 
+        background: rgba(15, 15, 15, 0.6) !important; 
+        backdrop-filter: blur(25px) saturate(180%); 
+        -webkit-backdrop-filter: blur(25px) saturate(180%); 
+        border: 1px solid rgba(255, 255, 255, 0.1) !important; 
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
+        border-radius: 24px; 
+      }
+      
+      .f-icon-circle {
+        width: 48px; height: 48px;
+        border-radius: 50%;
+        background: rgba(212,184,149,0.05);
+        border: 1px solid rgba(212,184,149,0.2);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        color: #d4b895;
       }
 
+      .btn-gold-pill {
+        background: linear-gradient(135deg, #e3cba8 0%, #c4a47a 100%);
+        color: #000;
+        font-weight: 700;
+        border: none;
+        border-radius: 50px;
+        padding: 1rem 2rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .btn-gold-pill:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(212, 184, 149, 0.4); color: #000; }
+
+      /* BOTONES FLOTANTES REDES */
+      .lang-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+      @supports (-webkit-touch-callout: none) { .lang-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); } }
       footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important; }
     </style>
   </head>
 
-  <body>
+  <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
     <div class="page-bg"></div>
 
@@ -214,9 +190,21 @@
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
-          <a href="index.html" class="d-flex align-items-center">
-            <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
-          </a>
+          <div class="d-flex align-items-center gap-3">
+            <div style="position: relative;">
+              <a href="#" class="icon-btn" id="desktopMenuBtn" aria-label="Menú">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+              </a>
+              <ul class="desktop-dropdown-menu" id="desktopDropdownMenu">
+                <li><a class="menu-item" href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
+                <li><a class="menu-item active" href="sobre-nosotros.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
+                <li><a class="menu-item" href="feedback.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
+              </ul>
+            </div>
+            <a href="index.html" class="d-flex align-items-center">
+              <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
+            </a>
+          </div>
           <div class="nav-pill-links d-none d-xl-flex">
             <a href="index.html" class="nav-pill-link">Inicio</a>
             <a href="sobre-nosotros.html" class="nav-pill-link active">Sobre Nosotros</a>
@@ -236,96 +224,119 @@
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
           </a>
           <ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
-            <li>
-              <a class="menu-item" href="index.html">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                Home
-              </a>
-            </li>
-            <li>
-              <a class="menu-item active" href="sobre-nosotros.html">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                Sobre Nosotros
-              </a>
-            </li>
-            <li>
-              <a class="menu-item" href="feedback.html">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                Feedback
-              </a>
-            </li>
+            <li><a class="menu-item" href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
+            <li><a class="menu-item active" href="sobre-nosotros.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
+            <li><a class="menu-item" href="feedback.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
           </ul>
         </div>
-
-        <a href="index.html">
-          <img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;">
-        </a>
-
-        <a href="portal.html" class="icon-btn" aria-label="Portal de Entregas">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        </a>
+        <a href="index.html"><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;"></a>
+        <a href="portal.html" class="icon-btn" aria-label="Portal de Entregas"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
       </div>
       <div class="app-tabs">
-        <a href="index.html" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-          Inicio
-        </a>
-        <a href="index.html#servicios-destacados" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-          Servicios
-        </a>
-        <a href="index.html#servicios-tecnicos" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
-          Planos
-        </a>
-        <a href="index.html#visualizacion" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-          Tarifas 3D
-        </a>
-        <a href="index.html#cuantificacion" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg>
-          Cuantif.
-        </a>
+        <a href="index.html" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Inicio</a>
+        <a href="index.html#servicios-destacados" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Servicios</a>
+        <a href="index.html#servicios-tecnicos" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg> Planos</a>
+        <a href="index.html#visualizacion" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Tarifas 3D</a>
+        <a href="index.html#cuantificacion" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg> Cuantif.</a>
       </div>
     </nav>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="container my-5 pt-5 flex-grow-1">
-      <div class="row justify-content-center py-5">
-        <div class="col-12 col-lg-10">
-          
-          <div class="text-center mb-5">
+    <main class="container flex-grow-1 main-content-spaced">
+      <div class="row justify-content-center">
+        <div class="col-12 col-xl-11">
+
+          <!-- ENCABEZADO -->
+          <div class="text-center mb-5 pb-3">
             <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">CONOCE NUESTRA HISTORIA</span>
             <h1 class="display-3 fw-bold text-white mb-3">Sobre Nosotros</h1>
-            <p class="text-secondary mx-auto" style="max-width: 650px;">Precisión en cada línea, valor en cada detalle. Transformamos ideas complejas en realidades arquitectónicas tangibles.</p>
+            <p class="text-secondary mx-auto" style="max-width: 500px; line-height: 1.6;">Precisión en cada línea, valor en cada detalle. Transformamos ideas complejas en realidades arquitectónicas tangibles.</p>
           </div>
 
-          <div class="glass-panel mb-5">
-            <h3 class="fw-bold text-white mb-4">¿Quiénes Somos?</h3>
-            <p class="text-secondary lh-lg mb-4">
-              En <strong class="text-white">Evolution Design</strong> somos un estudio especializado en visualización arquitectónica, diseño de planos técnicos precisos y cuantificación inteligente de materiales. Nuestro enfoque combina el rigor de la ingeniería civil con la máxima expresión estética del diseño contemporáneo.
-            </p>
-            <p class="text-secondary lh-lg mb-0">
-              Creemos firmemente que cada proyecto merece ser visualizado con absoluta claridad antes de colocar el primer block en la obra. Por ello, ayudamos a propietarios, constructores y desarrolladores a optimizar sus recursos, evitar sobrecostos y materializar espacios únicos con un estándar de calidad superior.
-            </p>
-          </div>
-
-          <div class="row g-4">
-            <div class="col-12 col-md-6">
-              <div class="glass-panel-accent h-100 p-4">
-                <h4 class="fw-bold text-white mb-3">Nuestra Misión</h4>
-                <p class="text-secondary small lh-lg mb-0">
-                  Proveer soluciones técnicas y visuales de alta precisión que garanticen el éxito de cada construcción, reduciendo la incertidumbre y brindando herramientas digitales de primer nivel tanto para profesionales como para clientes particulares.
-                </p>
+          <!-- PANEL DE ESTADÍSTICAS -->
+          <div class="glass-panel p-4 p-lg-5 mb-5">
+            <div class="row g-4">
+              <!-- Item 1 -->
+              <div class="col-12 col-md-6 col-lg-3 d-flex align-items-start gap-3">
+                <div class="f-icon-circle flex-shrink-0">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                </div>
+                <div>
+                  <h3 class="fw-bold accent-text mb-1" style="font-size: 1.6rem; line-height: 1;">+250</h3>
+                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Proyectos completados</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Residenciales, comerciales e institucionales.</p>
+                </div>
+              </div>
+              <!-- Item 2 -->
+              <div class="col-12 col-md-6 col-lg-3 d-flex align-items-start gap-3">
+                <div class="f-icon-circle flex-shrink-0">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <div>
+                  <h3 class="fw-bold accent-text mb-1" style="font-size: 1.6rem; line-height: 1;">+8</h3>
+                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Años de experiencia</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Comprometidos con la excelencia y la innovación.</p>
+                </div>
+              </div>
+              <!-- Item 3 -->
+              <div class="col-12 col-md-6 col-lg-3 d-flex align-items-start gap-3">
+                <div class="f-icon-circle flex-shrink-0">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                </div>
+                <div>
+                  <h3 class="fw-bold accent-text mb-1" style="font-size: 1.6rem; line-height: 1;">100%</h3>
+                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Precisión en cada proyecto</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Documentación técnica detallada y coordinación BIM.</p>
+                </div>
+              </div>
+              <!-- Item 4 -->
+              <div class="col-12 col-md-6 col-lg-3 d-flex align-items-start gap-3">
+                <div class="f-icon-circle flex-shrink-0">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                </div>
+                <div>
+                  <h3 class="fw-bold accent-text mb-1" style="font-size: 1.6rem; line-height: 1;">Soporte</h3>
+                  <h6 class="text-white fw-bold mb-2" style="font-size: 0.9rem;">Personalizado</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Acompañamiento profesional en cada etapa del proyecto.</p>
+                </div>
               </div>
             </div>
-            <div class="col-12 col-md-6">
-              <div class="glass-panel h-100 p-4">
-                <h4 class="fw-bold text-white mb-3">Nuestra Visión</h4>
-                <p class="text-secondary small lh-lg mb-0">
-                  Consolidarnos como el estudio de referencia internacional en el desarrollo de renders fotorrealistas, optimización de presupuestos de obra y servicios de ingeniería digital, manteniendo siempre un compromiso inquebrantable con la excelencia.
-                </p>
+          </div>
+
+          <!-- PANEL FILOSOFÍA -->
+          <div class="glass-panel p-4 p-lg-5 mb-5">
+            <div class="row g-5 align-items-center">
+              
+              <!-- Imagen Izquierda -->
+              <div class="col-12 col-lg-5">
+                <div style="position: relative; border-radius: 20px; overflow: hidden; height: 100%; min-height: 380px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
+                  <img src="img/hero-pc.jpg" alt="Evolution Design" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0.85;">
+                  
+                  <!-- Tarjeta Flotante -->
+                  <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; background: rgba(10,10,10,0.85); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1.5rem; border-radius: 16px; display: flex; gap: 15px; align-items: flex-start;">
+                    <svg width="24" height="24" fill="currentColor" class="accent-text flex-shrink-0 mt-1" viewBox="0 0 24 24"><path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"/></svg>
+                    <p class="text-white mb-0" style="font-size: 0.9rem; line-height: 1.5; font-style: italic;">"Diseñamos espacios que inspiran, construimos confianza que perdura."</p>
+                  </div>
+                </div>
               </div>
+
+              <!-- Texto Derecha -->
+              <div class="col-12 col-lg-7 pl-lg-4">
+                <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.75rem;">NUESTRA FILOSOFÍA</span>
+                <h2 class="fw-bold text-white mb-4" style="font-size: 2rem;">Diseño con propósito, ingeniería con precisión.</h2>
+                
+                <p class="text-secondary" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">
+                  En <strong class="text-white fw-medium">Evolution Design</strong> somos un estudio especializado en visualización arquitectónica, diseño de planos técnicos precisos y cuantificación inteligente de materiales. Nuestro enfoque combina el rigor de la ingeniería civil con la máxima expresión estética del diseño contemporáneo.
+                </p>
+                <p class="text-secondary" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 2.5rem;">
+                  Creemos firmemente que cada proyecto merece ser visualizado con absoluta claridad antes de colocar el primer block en la obra. Por ello, ayudamos a propietarios, constructores y desarrolladores a optimizar sus recursos, evitar sobrecostos y construir con confianza.
+                </p>
+
+                <a href="index.html#contacto" class="btn-gold-pill" style="max-width: max-content; margin: 0; padding: 0.8rem 1.8rem; font-size: 0.9rem;">
+                  Conoce más sobre nuestro proceso &rarr;
+                </a>
+              </div>
+
             </div>
           </div>
 
@@ -334,7 +345,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer id="contacto" class="bg-black border-top pt-5 pb-4" style="border-color: #222 !important;">
+    <footer id="contacto" class="bg-black border-top pt-5 pb-4 mt-auto" style="border-color: #222 !important;">
       <div class="container text-secondary fw-lighter">
         <div class="row g-4">
           <div class="col-12 col-lg-5 text-center text-lg-start">
@@ -355,16 +366,21 @@
       </div>
     </footer>
 
-    <!-- BOTONES FLOTANTES (WhatsApp / Telegram) -->
+    <!-- BOTONES FLOTANTES REDES -->
     <div class="lang-float-container">
       <a href="https://wa.me/50231256942?text=Hola,%20me%20gustaría%20saber%20más%20sobre%20Evolution%20Design" target="_blank" aria-label="WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
+      </a>
+      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
       </a>
     </div>
 
     <script>
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
+      const desktopMenuBtn = document.getElementById('desktopMenuBtn');
+      const desktopDropdownMenu = document.getElementById('desktopDropdownMenu');
 
       if(mobileMenuBtn && mobileDropdownMenu) {
           mobileMenuBtn.addEventListener('click', function(e) {
@@ -378,9 +394,20 @@
             }
           });
       }
+
+      if(desktopMenuBtn && desktopDropdownMenu) {
+          desktopMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            desktopDropdownMenu.classList.toggle('show');
+            e.stopPropagation();
+          });
+          document.addEventListener('click', function(e) {
+            if (!desktopMenuBtn.contains(e.target) && !desktopDropdownMenu.contains(e.target)) {
+              desktopDropdownMenu.classList.remove('show');
+            }
+          });
+      }
     </script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script>AOS.init({ duration: 800 });</script>
+
   </body>
 </html>
