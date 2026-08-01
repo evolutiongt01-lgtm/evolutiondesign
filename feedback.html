@@ -73,6 +73,19 @@
       }
 
       /* =========================================
+         ESPACIADO RESPONSIVO DEL CONTENIDO
+         ========================================= */
+      .main-content-spaced {
+        margin-top: 180px; /* Margen amplio para celular (esquiva las dos barras) */
+        margin-bottom: 50px;
+      }
+      @media (min-width: 992px) {
+        .main-content-spaced {
+          margin-top: 130px; /* Margen más compacto para PC */
+        }
+      }
+
+      /* =========================================
          NAVEGACIÓN ESCRITORIO (Mac/PC)
          ========================================= */
       .desktop-nav {
@@ -190,7 +203,7 @@
         pointer-events: none;
       }
 
-      /* ESTRELLAS DE CALIFICACIÓN (HUECAS A SÓLIDAS) */
+      /* ESTRELLAS DE CALIFICACIÓN */
       .rating-stars { display: flex; gap: 8px; cursor: pointer; }
       .star-icon { width: 32px; height: 32px; color: #555; transition: color 0.2s, transform 0.2s; }
       .rating-stars span:hover .star-icon, .rating-stars span.selected .star-icon { color: #d4b895; transform: scale(1.1); }
@@ -296,8 +309,8 @@
       </div>
     </nav>
 
-    <!-- CONTENIDO PRINCIPAL CON MARGEN SUPERIOR FORZADO -->
-    <main class="container flex-grow-1" style="margin-top: 130px; margin-bottom: 50px;">
+    <!-- CONTENIDO PRINCIPAL (MARGENES AMPLIOS RESPONSIVOS PARA EVITAR NAV MÓVIL) -->
+    <main class="container flex-grow-1 main-content-spaced">
       <div class="row justify-content-center">
         <div class="col-12 col-xl-10">
           
@@ -308,7 +321,7 @@
             <p class="text-secondary mx-auto" style="max-width: 600px;">Tu experiencia nos ayuda a mejorar cada día. Cuéntanos qué te pareció nuestro servicio de diseño o entregas.</p>
           </div>
 
-          <!-- TARJETAS DE BENEFICIOS (GRID 4 COLUMNAS CON MARGEN INFERIOR FORZADO) -->
+          <!-- TARJETAS DE BENEFICIOS (CON MARGEN INDIVIDUAL MB-4 EN CADA COLUMNA) -->
           <div class="row mb-5">
             <div class="col-12 col-md-6 col-lg-3 mb-4">
               <div class="feature-glass-card">
@@ -417,7 +430,7 @@
             </form>
           </div>
 
-          <!-- SECCIÓN DE REFERENCIAS / TESTIMONIOS (MÁRGENES FORZADOS) -->
+          <!-- SECCIÓN DE REFERENCIAS / TESTIMONIOS (CON MARGEN INDIVIDUAL MB-4 EN CADA COLUMNA) -->
           <div class="mt-5 pt-4">
             <h3 class="text-center text-white fw-bold mb-5 pb-2" style="font-size: 1.5rem;">Lo que dicen nuestros clientes</h3>
             
@@ -532,7 +545,7 @@
       <a href="https://wa.me/50231256942?text=Hola,%20quiero%20dejar%20un%20comentario%20sobre%20mi%20proyecto" target="_blank" aria-label="WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
       </a>
-      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);'">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
       </a>
     </div>
@@ -570,7 +583,7 @@
           });
       }
 
-      // Lógica de calificación por estrellas
+      // Lógica de calificación por estrellas (Relleno sólido SVG al seleccionar)
       const stars = document.querySelectorAll('.rating-stars span');
       const ratingInput = document.getElementById('fbRating');
 
