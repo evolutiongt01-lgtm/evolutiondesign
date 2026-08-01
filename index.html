@@ -17,42 +17,10 @@
     <script src="https://www.google.com/recaptcha/api.js?render=6LewmG4tAAAAADBNcF1z4t7NvP_YFyA7P57xx9uM"></script>
 
     <style>
-      @font-face {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 300;
-        font-display: swap;
-        src: local(''),
-             url('fonts/inter-v12-latin-300.woff2') format('woff2'),
-             url('fonts/inter-v12-latin-300.woff') format('woff');
-      }
-      @font-face {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: local(''),
-             url('fonts/inter-v12-latin-regular.woff2') format('woff2'),
-             url('fonts/inter-v12-latin-regular.woff') format('woff');
-      }
-      @font-face {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 500;
-        font-display: swap;
-        src: local(''),
-             url('fonts/inter-v12-latin-500.woff2') format('woff2'),
-             url('fonts/inter-v12-latin-500.woff') format('woff');
-      }
-      @font-face {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 700;
-        font-display: swap;
-        src: local(''),
-             url('fonts/inter-v12-latin-700.woff2') format('woff2'),
-             url('fonts/inter-v12-latin-700.woff') format('woff');
-      }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: local(''), url('fonts/inter-v12-latin-300.woff2') format('woff2'), url('fonts/inter-v12-latin-300.woff') format('woff'); }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: local(''), url('fonts/inter-v12-latin-regular.woff2') format('woff2'), url('fonts/inter-v12-latin-regular.woff') format('woff'); }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: local(''), url('fonts/inter-v12-latin-500.woff2') format('woff2'), url('fonts/inter-v12-latin-500.woff') format('woff'); }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: local(''), url('fonts/inter-v12-latin-700.woff2') format('woff2'), url('fonts/inter-v12-latin-700.woff') format('woff'); }
 
       html { scroll-behavior: smooth; }
       body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; }
@@ -297,7 +265,7 @@
                   <h3 class="fw-bold text-white mb-3">Básico 2D</h3>
                   <div class="my-4">
                     <h2 class="display-4 fw-bold text-white mb-1"><span class="price-val" data-usd="390">390</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2>
-                    <p class="text-secondary small mb-0">Área total construida de hasta 250 m²<br><span style="font-size: 0.75rem;">(Excedente: +$1.10 USD por m² extra)</span></p>
+                    <p class="text-secondary small mb-0">Área total construida de hasta 350 m²<br><span style="font-size: 0.75rem;">(Excedente: +$1.10 USD por m² extra)</span></p>
                   </div>
                   <ul class="list-unstyled no-bullets text-secondary mb-4 small" style="line-height: 1.8;">
                     <li class="mb-2 text-white">✓ Estilo minimalista contemporáneo</li>
@@ -309,7 +277,7 @@
                   </ul>
                 </div>
                 <div class="text-center pt-3 border-top" style="border-color: rgba(255,255,255,0.08) !important;">
-                  <a href="https://wa.me/50231256942?text=Hola,%20me%20interesa%20adquirir%20el%20Paquete%20Básico%202D%20($390%20USD)." target="_blank" class="btn btn-outline-light w-100 rounded-pill py-3 fw-bold">Solicitar Paquete Básico</a>
+                  <a href="#calculadora-planos" onclick="document.getElementById('ppaq1').checked=true; setTimeout(()=>window.actualizarCalculadoraPlanosGlobal(), 100);" class="btn btn-outline-light w-100 rounded-pill py-3 fw-bold">Verificar medidas para adquirir</a>
                 </div>
               </div>
             </div>
@@ -323,7 +291,7 @@
                   <h3 class="fw-bold text-white mb-3">Premium 2D</h3>
                   <div class="my-4">
                     <h2 class="display-4 fw-bold text-white mb-1"><span class="price-val" data-usd="800">800</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2>
-                    <p class="text-secondary small mb-0">Área total construida de hasta 250 m²<br><span style="font-size: 0.75rem;">(Excedente: +$2.00 USD por m² extra)</span></p>
+                    <p class="text-secondary small mb-0">Área total construida de hasta 350 m²<br><span style="font-size: 0.75rem;">(Excedente: +$2.00 USD por m² extra)</span></p>
                   </div>
                   <ul class="list-unstyled no-bullets text-secondary mb-4 small" style="line-height: 1.8;">
                     <li class="mb-2 text-white">✓ Arquitectura minimalista contemporánea de alta gama</li>
@@ -342,20 +310,12 @@
                   </ul>
                 </div>
                 <div class="text-center pt-3 border-top" style="border-color: rgba(212,184,149,0.2) !important;">
-                  <a href="https://wa.me/50231256942?text=Hola,%20me%20interesa%20adquirir%20el%20Paquete%20Premium%202D%20($800%20USD)." target="_blank" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background-color: #d4b895;">Solicitar Paquete Premium</a>
+                  <a href="#calculadora-planos" onclick="document.getElementById('ppaq2').checked=true; setTimeout(()=>window.actualizarCalculadoraPlanosGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background-color: #d4b895;">Verificar medidas para adquirir</a>
                 </div>
               </div>
             </div>
 
           </div>
-
-          <!-- BOTÓN A NUEVA CALCULADORA 2D -->
-          <div class="row mt-5">
-            <div class="col-12 text-center" data-aos="fade">
-              <a href="#calculadora-planos" class="btn-liquid-glass">↓ Calcular los metros y excedentes de mi plano</a>
-            </div>
-          </div>
-
         </div>
       </div>
 
@@ -365,7 +325,7 @@
           <div class="text-center mb-5" data-aos="fade">
             <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">CALCULADORA DE PLANOS 2D</span>
             <h2 class="display-4 fw-bold text-white mb-3">Calcula el área y excedentes</h2>
-            <p class="text-secondary mx-auto" style="max-width: 600px;">Si la construcción de tu proyecto abarca varios niveles y crees que supera los 250 m², ingresa tus datos aquí para conocer la estimación exacta.</p>
+            <p class="text-secondary mx-auto" style="max-width: 600px;">Si la construcción de tu proyecto abarca varios niveles o crees que supera los 350 m², ingresa tus datos aquí para validar y conocer la estimación exacta.</p>
           </div>
 
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
@@ -452,7 +412,7 @@
                       <span class="text-white text-end fw-medium" id="p-area-text" style="font-size: 0.9rem;">0.00 m²</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                      <span class="text-secondary" style="font-size: 0.85rem;">Precio base (hasta 250 m²)</span>
+                      <span class="text-secondary" style="font-size: 0.85rem;">Precio base (hasta 350 m²)</span>
                       <span class="text-white text-end fw-medium" id="p-base-text" style="font-size: 0.9rem;">$0.00</span>
                     </div>
                     
@@ -479,12 +439,17 @@
                       </button>
                     </div>
 
-                    <!-- MENSAJE DE FELICITACIÓN (RANGO BASE) -->
-                    <div id="mensaje-rango-planos" class="text-center p-3 rounded-3 mt-2" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2); display: none;">
-                      <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        ¡Excelente! Tu proyecto entra en el rango de los 250 m². Puedes adquirir tu paquete directamente arriba.
-                      </span>
+                    <!-- MENSAJE DE FELICITACIÓN Y PAGO DIRECTO (RANGO BASE) -->
+                    <div id="wrapperPagoDirectoPlanos" class="mt-4" style="display: none;">
+                      <div class="text-center p-3 rounded-3 mb-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
+                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
+                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                          ¡Aprobado! Tu proyecto entra en el rango de los 350 m².
+                        </span>
+                      </div>
+                      <a id="btnPagoDirectoPlanos" href="#" target="_blank" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #d4b895; transition: transform 0.3s ease;">
+                        PAGAR PAQUETE SELECCIONADO
+                      </a>
                     </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
@@ -500,7 +465,7 @@
         </div>
       </section>
 
-      <!-- 3. SECCIÓN DE DISEÑO DE FACHADAS -->
+      <!-- 3. SECCIÓN DE DISEÑO DE FACHADAS (Igual que antes) -->
       <div id="fachadas" class="py-vh-5 glass-container-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -559,7 +524,7 @@
         </div>
       </div>
 
-      <!-- 7. CALCULADORA DE FACHADAS -->
+      <!-- 7. CALCULADORA DE FACHADAS (Igual que antes) -->
       <section id="calculadora-fachadas" class="facade-calc-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -571,11 +536,8 @@
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
             <div class="row g-4 g-lg-5 align-items-start">
               
-              <!-- PANEL IZQUIERDO: CONTROLES -->
               <div class="col-12 col-lg-6"> 
                 <div class="facade-box-panel d-flex flex-column gap-4">
-                  
-                  <!-- Ancho -->
                   <div class="facade-row">
                     <div class="d-flex align-items-center gap-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M5 12h14"></path></svg>
@@ -590,7 +552,6 @@
                     </div>
                   </div>
 
-                  <!-- Altura -->
                   <div class="facade-row">
                     <div class="d-flex align-items-center gap-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M15 8l-3-3-3 3M15 16l-3 3-3-3M12 5v14"></path></svg>
@@ -605,7 +566,6 @@
                     </div>
                   </div>
 
-                  <!-- Niveles -->
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M4 12h16M12 4v16"></path></svg>
@@ -621,7 +581,6 @@
                     </div>
                   </div>
 
-                  <!-- Tipo -->
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
@@ -636,7 +595,6 @@
                     </div>
                   </div>
 
-                  <!-- Complejidad -->
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
@@ -652,7 +610,6 @@
                     </div>
                   </div>
 
-                  <!-- Render 3D Toggle -->
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center gap-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
@@ -673,14 +630,11 @@
                 </div>
               </div>
 
-              <!-- PANEL DERECHO: RESULTADOS Y LISTA DE INCLUSIONES -->
               <div class="col-12 col-lg-6">
                 <div class="facade-results-panel d-flex flex-column h-100">
                   <div class="d-flex justify-content-center mb-5">
                     <h6 class="accent-text mb-0" style="letter-spacing: 1px;">TU ESTIMACIÓN</h6>
                   </div>
-
-                  <!-- DESGLOSE MATEMÁTICO -->
                   <div class="mt-2">
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
                       <span class="text-secondary" style="font-size: 0.85rem;">Área de fachada</span>
@@ -699,7 +653,6 @@
                       <span class="text-white fw-medium text-end" id="f-subtotal-text" style="font-size: 0.9rem;">$0.00</span>
                     </div>
                     
-                    <!-- Fila Dinámica Niveles Extra -->
                     <div id="row-niveles-extra" class="d-flex justify-content-between align-items-center mb-4 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important; display: none !important;">
                       <span class="text-secondary" id="f-niveles-label" style="font-size: 0.85rem;">Cargo por Niveles Adicionales</span>
                       <span class="text-white fw-medium text-end" id="f-niveles-costo" style="font-size: 0.9rem;">+$0.00</span>
@@ -710,7 +663,6 @@
                       <span class="text-white fw-medium text-end" id="f-render-text" style="font-size: 0.9rem;">$0.00</span>
                     </div>
 
-                    <!-- TOTAL -->
                     <div class="text-center mt-4">
                       <span class="accent-text fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">TOTAL ESTIMADO</span>
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
@@ -720,7 +672,6 @@
                       <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión</span>
                     </div>
                     
-                    <!-- BOTÓN DINÁMICO -->
                     <button id="btnFachadaAccion" type="button" class="btn w-100 text-white fw-bold py-3 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s; font-size: 1.1rem;">
                       CALCULAR PRECIO
                     </button>
@@ -731,7 +682,6 @@
                     </div>
                   </div>
 
-                  <!-- QUÉ INCLUYE EL DISEÑO -->
                   <div class="mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
                     <h6 class="text-white mb-4 fw-bold" style="font-size: 0.9rem;">¿Qué incluye el diseño?</h6>
                     <ul class="list-unstyled text-secondary m-0" style="font-size: 0.8rem;">
@@ -752,7 +702,7 @@
         </div>
       </section>
 
-      <!-- 4. SECCIÓN DE CUANTIFICACIÓN DE MATERIALES -->
+      <!-- 4. SECCIÓN DE CUANTIFICACIÓN DE MATERIALES (Igual) -->
       <div id="cuantificacion" class="py-vh-5 section-planos-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -812,67 +762,83 @@
         </div>
       </div>
 
-      <!-- 5. PAQUETES 3D -->
+      <!-- 5. PAQUETES 3D (RANGO SUBIDO A 350M2 Y BOTONES DE VERIFICACIÓN) -->
       <div id="visualizacion" class="py-vh-5 glass-container-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
             <span class="h5 text-secondary fw-lighter">Renderismo y Modelado</span>
             <h2 class="display-4 fw-bold">Paquetes 3D</h2>
-            <p class="text-secondary">Proyectos residenciales de hasta 300 m² de construcción. (Nota: El servicio incluye estrictamente modelado y renders; contáctanos para enviarnos tus planos o adquiere primero tus planos 2D).</p>
+            <p class="text-secondary">Proyectos residenciales de hasta 350 m² de construcción. (Nota: El servicio incluye estrictamente modelado y renders; contáctanos para enviarnos tus planos o adquiere primero tus planos 2D).</p>
           </div>
           <div class="row gx-4 g-5 align-items-stretch">
+            
             <div class="col-12 col-lg-4" data-aos="zoom-in-up">
-              <div class="glass-panel p-5 rounded-5 h-100">
-                <h3 class="fw-lighter text-center">BÁSICO</h3>
-                <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold"><span class="price-val" data-usd="300">300</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
-                <ul class="list-unstyled no-bullets text-secondary mb-5">
-                  <li class="mb-2">✓ Modelado 3D profesional</li>
-                  <li class="mb-2">✓ 8 Renders realistas</li>
-                  <li class="mb-2">✓ Fachada incluida</li>
-                  <li class="mb-2">✓ Resolución HD</li>
-                  <li class="mb-2">✓ Materiales e iluminación básicos</li>
-                  <li class="mb-2">✓ 1 revisión incluida</li>
-                </ul>
-                <div class="text-center"><a href="https://www.paypal.com/ncp/payment/VNATBWUJSX8XA" target="_blank" class="btn btn-outline-light w-100 rounded-pill">Adquirir Básico</a></div>
+              <div class="glass-panel p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <h3 class="fw-lighter text-center">BÁSICO</h3>
+                  <p class="text-center text-secondary small">PAQUETE</p>
+                  <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 350 m²</span><h2 class="display-5 fw-bold"><span class="price-val" data-usd="300">300</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
+                  <ul class="list-unstyled no-bullets text-secondary mb-5">
+                    <li class="mb-2">✓ Modelado 3D profesional</li>
+                    <li class="mb-2">✓ 8 Renders realistas</li>
+                    <li class="mb-2">✓ Fachada incluida</li>
+                    <li class="mb-2">✓ Resolución HD</li>
+                    <li class="mb-2">✓ Materiales e iluminación básicos</li>
+                    <li class="mb-2">✓ 1 revisión incluida</li>
+                  </ul>
+                </div>
+                <div class="text-center">
+                  <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='basico'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn btn-outline-light w-100 rounded-pill fw-bold py-3">Verificar medidas para adquirir</a>
+                </div>
               </div>
             </div>
+
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="1500">
-              <div class="glass-panel-accent p-5 rounded-5 h-100">
-                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MÁS POPULAR</span>
-                <h3 class="fw-lighter text-center mt-3">PROFESIONAL</h3>
-                <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold text-white"><span class="price-val" data-usd="499">499</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
-                <ul class="list-unstyled no-bullets text-secondary mb-5">
-                  <li class="mb-2">✓ Modelado 3D completo</li>
-                  <li class="mb-2">✓ 16 Renders realistas</li>
-                  <li class="mb-2">✓ Fachada frontal y posterior</li>
-                  <li class="mb-2">✓ 3 videos realistas de 8 segundos</li>
-                  <li class="mb-2">✓ Entrega en alta resolución</li>
-                  <li class="mb-2">✓ 2 revisiones incluidas</li>
-                </ul>
-                <div class="text-center" style="position: relative; z-index: 10;"><a href="https://www.paypal.com/ncp/payment/T5GGC93YAXSWG" target="_blank" class="btn w-100 text-black fw-bold rounded-pill" style="background-color: #d4b895;">Adquirir Profesional</a></div>
+              <div class="glass-panel-accent p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MÁS POPULAR</span>
+                  <h3 class="fw-lighter text-center mt-3">PROFESIONAL</h3>
+                  <p class="text-center text-secondary small">PAQUETE</p>
+                  <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 350 m²</span><h2 class="display-5 fw-bold text-white"><span class="price-val" data-usd="499">499</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
+                  <ul class="list-unstyled no-bullets text-secondary mb-5">
+                    <li class="mb-2">✓ Modelado 3D completo</li>
+                    <li class="mb-2">✓ 16 Renders realistas</li>
+                    <li class="mb-2">✓ Fachada frontal y posterior</li>
+                    <li class="mb-2">✓ 3 videos realistas de 8 segundos</li>
+                    <li class="mb-2">✓ Entrega en alta resolución</li>
+                    <li class="mb-2">✓ 2 revisiones incluidas</li>
+                  </ul>
+                </div>
+                <div class="text-center" style="position: relative; z-index: 10;">
+                  <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='profesional'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background-color: #d4b895;">Verificar medidas para adquirir</a>
+                </div>
               </div>
             </div>
+
             <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="2000">
-              <div class="glass-panel-vip p-5 rounded-5 h-100">
-                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MÁXIMO NIVEL / VIP</span>
-                <h3 class="fw-lighter text-center mt-3 text-white">PREMIUM</h3>
-                <p class="text-center accent-text small fw-medium">EL PAQUETE DEFINITIVO</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 300 m²</span><h2 class="display-5 fw-bold accent-text"><span class="price-val" data-usd="949">949</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
-                <ul class="list-unstyled no-bullets text-light mb-5" style="opacity: 0.9;">
-                  <li class="mb-2">✓ Modelado 3D completo</li>
-                  <li class="mb-2">✓ 26 Renders realistas</li>
-                  <li class="mb-2">✓ Recorrido virtual de 1 min 44 s (13 clips de 8s)</li>
-                  <li class="mb-2">✓ Plano amueblado</li>
-                  <li class="mb-2">✓ Iluminación avanzada</li>
-                  <li class="mb-2">✓ Diseño de paisaje conceptual</li>
-                  <li class="mb-2">✓ Resolución 4K</li>
-                  <li class="mb-2">✓ 3 revisiones incluidas</li>
-                </ul>
-                <div class="text-center" style="position: relative; z-index: 10;"><a href="https://www.paypal.com/ncp/payment/H657UM6NM3LHY" target="_blank" class="btn w-100 text-black fw-bold rounded-pill shadow" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); transition: transform 0.3s ease;">Adquirir Premium VIP</a></div>
+              <div class="glass-panel-vip p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MÁXIMO NIVEL / VIP</span>
+                  <h3 class="fw-lighter text-center mt-3 text-white">PREMIUM</h3>
+                  <p class="text-center accent-text small fw-medium">EL PAQUETE DEFINITIVO</p>
+                  <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 350 m²</span><h2 class="display-5 fw-bold accent-text"><span class="price-val" data-usd="949">949</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
+                  <ul class="list-unstyled no-bullets text-light mb-5" style="opacity: 0.9;">
+                    <li class="mb-2">✓ Modelado 3D completo</li>
+                    <li class="mb-2">✓ 26 Renders realistas</li>
+                    <li class="mb-2">✓ Recorrido virtual de 1 min 44 s (13 clips de 8s)</li>
+                    <li class="mb-2">✓ Plano amueblado</li>
+                    <li class="mb-2">✓ Iluminación avanzada</li>
+                    <li class="mb-2">✓ Diseño de paisaje conceptual</li>
+                    <li class="mb-2">✓ Resolución 4K</li>
+                    <li class="mb-2">✓ 3 revisiones incluidas</li>
+                  </ul>
+                </div>
+                <div class="text-center" style="position: relative; z-index: 10;">
+                  <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='premium'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); transition: transform 0.3s ease;">Verificar medidas para adquirir</a>
+                </div>
               </div>
             </div>
+
           </div>
         </div> 
       </div>
@@ -886,7 +852,7 @@
                 <div class="row g-5 align-items-center">
                   <div class="col-12 col-lg-5 text-center d-flex flex-column justify-content-center">
                     <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">COTIZADOR INTELIGENTE</span>
-                    <h3 class="fw-bold text-white mb-3 px-2" style="font-size: 1.8rem; line-height: 1.2;">¿Tu terreno supera los 300 m²?</h3>
+                    <h3 class="fw-bold text-white mb-3 px-2" style="font-size: 1.8rem; line-height: 1.2;">¿Tu terreno supera los 350 m²?</h3>
                     <p class="text-secondary small mb-4 px-3">Selecciona el servicio e ingresa tus medidas exactas para cotizar el excedente de tu proyecto 3D o para calcular los metros de tu cuantificación de materiales.</p>
                     <div class="text-center px-2">
                       <span class="small text-secondary d-block mb-1">Seleccionar Servicio</span>
@@ -938,14 +904,27 @@
                         </div>
                       </div>
                     </div>
+                    
+                    <!-- BOTÓN WHATSAPP PARA EXCEDENTES O CUANTIFICACIÓN -->
                     <div id="wrapperBtnCotizar" class="mt-4" style="display: none;">
                       <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
                         CONTINUAR CON MI PROYECTO
                       </a>
                     </div>
-                    <div id="avisoPagoDirecto" class="mt-3 text-secondary small text-center text-lg-start" style="opacity: 0.8;">
-                      * Tu terreno es de 300 m² o menos. Puedes adquirir tu paquete 3D directamente arriba con nuestros botones de pago seguro (aceptamos cualquier moneda).
+                    
+                    <!-- MENSAJE Y BOTÓN DE PAGO DIRECTO (RANGO BASE) -->
+                    <div id="wrapperPagoDirecto3D" class="mt-4" style="display: none;">
+                      <div class="text-center p-3 rounded-3 mb-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
+                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
+                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                          ¡Aprobado! Tu proyecto entra en el rango de los 350 m².
+                        </span>
+                      </div>
+                      <a id="btnPagoDirecto3D" href="#" target="_blank" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #d4b895; transition: transform 0.3s ease;">
+                        PAGAR PAQUETE SELECCIONADO
+                      </a>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -1066,6 +1045,18 @@
 
       const exchangeRates = { USD: { rate: 1.0, symbol: 'USD' }, EUR: { rate: 0.92, symbol: 'EUR' }, GTQ: { rate: 7.85, symbol: 'GTQ' }, MXN: { rate: 18.50, symbol: 'MXN' }, CNY: { rate: 7.25, symbol: 'CNY' }, AED: { rate: 3.67, symbol: 'AED' }, BRL: { rate: 5.40, symbol: 'BRL' }, JPY: { rate: 155.0, symbol: 'JPY' } };
 
+      // ENLACES DE PAGO PAYPAL GLOBALES
+      const paypalLinks3D = {
+        basico: 'https://www.paypal.com/ncp/payment/VNATBWUJSX8XA',
+        profesional: 'https://www.paypal.com/ncp/payment/T5GGC93YAXSWG',
+        premium: 'https://www.paypal.com/ncp/payment/H657UM6NM3LHY'
+      };
+      
+      const paypalLinks2D = {
+        basico: '#', // INGRESAR LINK PAYPAL BASICO 2D AQUI
+        premium: '#' // INGRESAR LINK PAYPAL PREMIUM 2D AQUI
+      };
+
       function updateAllCurrencies() {
         const config = exchangeRates[currentCurrency];
         document.querySelectorAll('.price-val').forEach(el => {
@@ -1101,8 +1092,10 @@
         const totalDisplay = document.getElementById('calcTotal');
         const precioFinalDisplay = document.getElementById('calcPrecioFinal');
         const wrapperBtnCotizar = document.getElementById('wrapperBtnCotizar');
-        const avisoPagoDirecto = document.getElementById('avisoPagoDirecto');
         const btnEnviarCotizacion = document.getElementById('btnEnviarCotizacion');
+        
+        const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
+        const btnPagoDirecto3D = document.getElementById('btnPagoDirecto3D');
 
         function actualizarCotizacionTerreno() {
           const ancho = parseFloat(anchoInput.value) || 0;
@@ -1118,11 +1111,11 @@
             let esServicio3D = (servicioVal === 'basico' || servicioVal === 'profesional' || servicioVal === 'premium');
 
             if (servicioVal === 'basico') {
-              let base = 300; if (areaTotal > 300) base += (areaTotal - 300) * 3.00; precioFinalUSD = base;
+              let base = 300; if (areaTotal > 350) base += (areaTotal - 350) * 3.00; precioFinalUSD = base;
             } else if (servicioVal === 'profesional') {
-              let base = 499; if (areaTotal > 300) base += (areaTotal - 300) * 3.00; precioFinalUSD = base;
+              let base = 499; if (areaTotal > 350) base += (areaTotal - 350) * 3.00; precioFinalUSD = base;
             } else if (servicioVal === 'premium') {
-              let base = 949; if (areaTotal > 300) base += (areaTotal - 300) * 3.00; precioFinalUSD = base;
+              let base = 949; if (areaTotal > 350) base += (areaTotal - 350) * 3.00; precioFinalUSD = base;
             } else if (servicioVal === 'cuantificacion') {
               precioFinalUSD = areaTotal * 1.75;
             }
@@ -1133,16 +1126,19 @@
 
             precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
-            if (esServicio3D && areaTotal <= 300) {
-              wrapperBtnCotizar.style.display = 'none'; avisoPagoDirecto.style.display = 'block';
+            if (esServicio3D && areaTotal <= 350) {
+              wrapperBtnCotizar.style.display = 'none'; 
+              wrapperPagoDirecto3D.style.display = 'block';
+              btnPagoDirecto3D.href = paypalLinks3D[servicioVal];
             } else {
-              wrapperBtnCotizar.style.display = 'block'; avisoPagoDirecto.style.display = 'none';
+              wrapperBtnCotizar.style.display = 'block'; 
+              wrapperPagoDirecto3D.style.display = 'none';
             }
 
             const mensaje = encodeURIComponent(`Hola. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m (${areaTotal.toFixed(2)} m²).\nCosto estimado: $${precioFinalUSD.toFixed(2)} USD.\nMe gustaría continuar con mi proyecto.`);
             btnEnviarCotizacion.href = `https://wa.me/18329774150?text=${mensaje}`;
           } else {
-            totalDisplay.textContent = "0.00"; precioFinalDisplay.textContent = "0.00"; wrapperBtnCotizar.style.display = 'none'; avisoPagoDirecto.style.display = 'block';
+            totalDisplay.textContent = "0.00"; precioFinalDisplay.textContent = "0.00"; wrapperBtnCotizar.style.display = 'none'; wrapperPagoDirecto3D.style.display = 'none';
           }
         }
         window.actualizarCotizacionTerrenoGlobal = actualizarCotizacionTerreno;
@@ -1168,7 +1164,9 @@
         
         const btnPlanosAccion = document.getElementById('btnPlanosAccion');
         const wrapperBtnPlanos = document.getElementById('wrapper-btn-planos');
-        const mensajeRangoPlanos = document.getElementById('mensaje-rango-planos');
+        
+        const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
+        const btnPagoDirectoPlanos = document.getElementById('btnPagoDirectoPlanos');
         
         let calculoPlanosInteractuado = false;
         let urlWhatsAppPlanos = "#";
@@ -1188,8 +1186,8 @@
           let metrosExcedentes = 0;
           let costoExcedenteUSD = 0;
 
-          if (areaTotal > 250) {
-            metrosExcedentes = areaTotal - 250;
+          if (areaTotal > 350) {
+            metrosExcedentes = areaTotal - 350;
             costoExcedenteUSD = metrosExcedentes * costoExtraPerM2;
           }
 
@@ -1209,15 +1207,20 @@
             pExcedenteLabel.textContent = `Metros excedentes (${metrosExcedentes.toFixed(2)} m²)`;
             pExcedenteText.textContent = `+${config.symbol} ${convertedExcedente.toFixed(decimals)}`;
             
-            // Mostrar botón para excedentes, ocultar mensaje
+            // Mostrar botón WhatsApp para excedentes, ocultar PayPal
             wrapperBtnPlanos.style.setProperty('display', 'block', 'important');
-            mensajeRangoPlanos.style.setProperty('display', 'none', 'important');
+            wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
           } else {
             rowPlanosExcedente.style.setProperty('display', 'none', 'important');
             
-            // Mostrar mensaje de éxito, ocultar botón
+            // Mostrar Pago Directo PayPal si está dentro del rango 350
             wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
-            mensajeRangoPlanos.style.setProperty('display', 'block', 'important');
+            if(areaTotal > 0) {
+              wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
+              btnPagoDirectoPlanos.href = paypalLinks2D[paquete];
+            } else {
+              wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
+            }
           }
 
           pTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
@@ -1309,7 +1312,7 @@
 
           fAreaText.textContent = area.toFixed(2) + ' m²';
           fBaseText.textContent = `${config.symbol} ${convertedBase.toFixed(decimals)}`;
-          fComplexLabel.textContent = `Nivel de complejidad (${complejidadTexto} ${complejidad.toFixed(2)}x)`;
+          fComplexLabel.textContent = `Nivel de complexity (${complejidadTexto} ${complejidad.toFixed(2)}x)`;
           fSubtotalText.textContent = `${config.symbol} ${(subtotal * config.rate).toFixed(decimals)}`;
           
           const rowNivelesExtra = document.getElementById('row-niveles-extra');
