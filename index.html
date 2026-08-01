@@ -108,7 +108,7 @@
          ========================================= */
       .desktop-nav {
         display: none !important;
-        padding-top: calc(25px + env(safe-area-inset-top, 0px)); 
+        padding-top: max(25px, env(safe-area-inset-top)); 
         pointer-events: none; 
       }
       @media (min-width: 992px) {
@@ -150,13 +150,14 @@
       }
 
       /* =========================================
-         NAVEGACIÓN MÓVIL TIPO APP (OPTIMIZADA ANDROID/IOS)
+         NAVEGACIÓN MÓVIL TIPO APP (FIX DEFINITIVO ANDROID/IOS)
          ========================================= */
       .mobile-app-nav {
-        background: rgba(10, 10, 10, 0.6) !important; 
+        /* Un poco más de opacidad para que el texto de abajo no compita con los iconos al scrollear */
+        background: rgba(10, 10, 10, 0.85) !important; 
         backdrop-filter: blur(20px) saturate(150%); 
         -webkit-backdrop-filter: blur(20px) saturate(150%); 
-        position: fixed; /* Fija para que el Hero pase por debajo gloriosamente */
+        position: fixed; 
         top: 0; left: 0; width: 100%;
         z-index: 1030; 
         border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -167,8 +168,8 @@
         display: flex; 
         justify-content: space-between; 
         align-items: center; 
-        /* 15px de colchón + safe-area para que Android y el Notch respiren bien */
-        padding: calc(15px + env(safe-area-inset-top, 0px)) 1.5rem 0.8rem; 
+        /* EL FIX DE ANDROID: max() asegura al menos 38px de padding si el env() reporta 0 */
+        padding: max(38px, env(safe-area-inset-top)) 1.5rem 0.8rem 1.5rem; 
       }
       
       .icon-btn { 
@@ -198,12 +199,12 @@
       .tab-item.active svg { opacity: 1; transform: scale(1.15); }
 
       /* =========================================
-         HERO SECTION (AJUSTADO PARA NO CHOCAR)
+         HERO SECTION
          ========================================= */
       .hero-app {
         position: relative; 
-        /* Padding top brutal para asegurar que el texto quede libre de la barra en móviles */
-        padding: calc(130px + env(safe-area-inset-top, 0px)) 1.5rem 4rem; 
+        /* Ajuste para que el inicio de la página no quede oculto detrás de la nueva barra fija */
+        padding: max(145px, calc(110px + env(safe-area-inset-top))) 1.5rem 4rem; 
         min-height: 85vh; 
         display: flex; flex-direction: column; justify-content: center;
         background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%), url('img/hero-movil.jpg') center/cover no-repeat;
@@ -217,7 +218,6 @@
         }
         .hero-content { max-width: 550px; padding: 0; margin-left: 5vw; }
       }
-      
       .accent-text { color: #d4b895; }
       .grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
       .sq-btn { border-radius: 16px; padding: 1.5rem 1.2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: 160px; text-decoration: none !important; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff !important; -webkit-tap-highlight-color: transparent !important; }
@@ -335,12 +335,12 @@
       .currency-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 10px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .currency-item:hover, .currency-item.active { background: rgba(212, 184, 149, 0.15) !important; color: #fff !important; }
 
+
       .lang-float-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
       .lang-wrapper { position: relative; width: 50px; height: 50px; }
       .lang-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2) !important; background-color: rgba(255, 255, 255, 0.05) !important; color: #fff !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; outline: none; }
       .lang-float-btn:hover { transform: scale(1.1); background-color: rgba(255, 255, 255, 0.15) !important; }
       
-      /* MENÚ DE IDIOMA: DESPLIEGUE A LA IZQUIERDA DEL BOTÓN (SIN CHOCAR) */
       .lang-float-menu { 
         display: none; 
         flex-direction: column; 
