@@ -16,6 +16,9 @@
     <!-- GOOGLE RECAPTCHA V3 SCRIPT -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LewmG4tAAAAADBNcF1z4t7NvP_YFyA7P57xx9uM"></script>
 
+    <!-- PAYPAL SDK: ¡REEMPLAZA 'TU_ID_DE_CLIENTE_AQUI' POR EL ID DE TU CAPTURA DE PANTALLA! -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20&currency=USD"></script>
+
     <style>
       @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: local(''), url('fonts/inter-v12-latin-300.woff2') format('woff2'), url('fonts/inter-v12-latin-300.woff') format('woff'); }
       @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: local(''), url('fonts/inter-v12-latin-regular.woff2') format('woff2'), url('fonts/inter-v12-latin-regular.woff') format('woff'); }
@@ -256,7 +259,6 @@
           </div>
 
           <div class="row gx-4 g-5 align-items-stretch justify-content-center">
-            
             <!-- PAQUETE BÁSICO / ESENCIAL -->
             <div class="col-12 col-lg-6" data-aos="zoom-in-up">
               <div class="glass-panel p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
@@ -314,16 +316,13 @@
                 </div>
               </div>
             </div>
-
           </div>
 
-          <!-- BOTÓN A NUEVA CALCULADORA 2D -->
           <div class="row mt-5">
             <div class="col-12 text-center" data-aos="fade">
               <a href="#calculadora-planos" class="btn-liquid-glass">↓ Calcular los metros y excedentes de mi plano</a>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -339,11 +338,8 @@
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
             <div class="row g-4 g-lg-5 align-items-start">
               
-              <!-- PANEL IZQUIERDO: CONTROLES PLANOS 2D -->
               <div class="col-12 col-lg-6"> 
                 <div class="facade-box-panel d-flex flex-column gap-4">
-                  
-                  <!-- Ancho del Terreno/Construcción -->
                   <div class="facade-row">
                     <div class="d-flex align-items-center gap-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M5 12h14"></path></svg>
@@ -358,7 +354,6 @@
                     </div>
                   </div>
 
-                  <!-- Largo del Terreno/Construcción -->
                   <div class="facade-row">
                     <div class="d-flex align-items-center gap-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M12 2v20M7 2h10M7 22h10"></path></svg>
@@ -373,7 +368,6 @@
                     </div>
                   </div>
 
-                  <!-- Niveles -->
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M4 12h16M12 4v16"></path></svg>
@@ -389,7 +383,6 @@
                     </div>
                   </div>
 
-                  <!-- Paquete Seleccionado -->
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
@@ -406,14 +399,12 @@
                 </div>
               </div>
 
-              <!-- PANEL DERECHO: RESULTADOS PLANOS 2D -->
               <div class="col-12 col-lg-6">
                 <div class="facade-results-panel d-flex flex-column h-100">
                   <div class="d-flex justify-content-center mb-5">
                     <h6 class="accent-text mb-0" style="letter-spacing: 1px;">TU ESTIMACIÓN DE PLANOS</h6>
                   </div>
 
-                  <!-- DESGLOSE MATEMÁTICO PLANOS -->
                   <div class="mt-2">
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
                       <span class="text-secondary" style="font-size: 0.85rem;">Área total construida</span>
@@ -424,13 +415,11 @@
                       <span class="text-white text-end fw-medium" id="p-base-text" style="font-size: 0.9rem;">$0.00</span>
                     </div>
                     
-                    <!-- Fila Dinámica Excedente -->
                     <div id="row-planos-excedente" class="d-flex justify-content-between align-items-center mb-5 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important; display: none !important;">
                       <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes (0 m²)</span>
                       <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">+$0.00</span>
                     </div>
 
-                    <!-- TOTAL PLANOS -->
                     <div class="text-center mt-2">
                       <span class="accent-text fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">TOTAL ESTIMADO</span>
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
@@ -440,29 +429,21 @@
                       <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión de terreno</span>
                     </div>
                     
-                    <!-- BOTÓN DINÁMICO PLANOS / MENSAJE DE RANGO -->
-                    <div id="wrapper-btn-planos" style="display: none;">
-                      <button id="btnPlanosAccion" type="button" class="btn w-100 text-white fw-bold py-3 d-flex align-items-center justify-content-center gap-2" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; transition: all 0.3s; font-size: 1.1rem;">
-                        CALCULAR EXCEDENTE
-                      </button>
-                    </div>
-
-                    <!-- MENSAJE DE FELICITACIÓN Y PAGO DIRECTO (RANGO BASE) -->
-                    <div id="wrapperPagoDirectoPlanos" class="mt-4" style="display: none;">
-                      <div class="text-center p-3 rounded-3 mb-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
+                    <!-- BOTÓN DINÁMICO DE PAYPAL PARA PLANOS -->
+                    <div id="wrapperPagoDirectoPlanos" class="mt-2" style="display: none;">
+                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
                           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Aprobado! Tu proyecto entra en el rango de los 400 m².
+                          ¡Aprobado! Tu proyecto es elegible.
                         </span>
                       </div>
-                      <a id="btnPagoDirectoPlanos" href="#" target="_blank" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #d4b895; transition: transform 0.3s ease;">
-                        PAGAR PAQUETE SELECCIONADO
-                      </a>
+                      <!-- AQUÍ SE RENDERIZA EL BOTÓN DE PAYPAL 2D -->
+                      <div id="paypal-button-container-2d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
                     </div>
 
                     <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
                       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                      Tus datos están protegidos y son confidenciales
+                      Transacción segura facturada en USD
                     </div>
                   </div>
                 </div>
@@ -522,7 +503,7 @@
                   <h2 class="display-5 fw-bold text-white mb-0">+<span class="price-val" data-usd="40.00">40.00</span></h2>
                   <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span></span>
                 </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Mejora tu presentation agregando <strong>3 Renders hiperrealistas</strong> de tu fachada elegida para visualizar la iluminación y materiales a la perfección.</p>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Mejora tu presentación agregando <strong>3 Renders hiperrealistas</strong> de tu fachada elegida para visualizar la iluminación y materiales a la perfección.</p>
                 <div class="mt-4 pt-2">
                   <a href="#calculadora-fachadas" class="btn-liquid-glass">↓ Calcula el precio exacto de tu fachada abajo</a>
                 </div>
@@ -543,7 +524,6 @@
 
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
             <div class="row g-4 g-lg-5 align-items-start">
-              
               <div class="col-12 col-lg-6"> 
                 <div class="facade-box-panel d-flex flex-column gap-4">
                   <div class="facade-row">
@@ -582,10 +562,10 @@
                       </div>
                     </div>
                     <div class="facade-radio-group">
-                      <input type="radio" id="niv1" name="f-niveles" value="1"><label class="facade-radio-label" for="niv1">1 Nivel</label>
-                      <input type="radio" id="niv2" name="f-niveles" value="2" checked><label class="facade-radio-label" for="niv2">2 Niveles</label>
-                      <input type="radio" id="niv3" name="f-niveles" value="3"><label class="facade-radio-label" for="niv3">3 Niveles</label>
-                      <input type="radio" id="niv4" name="f-niveles" value="4"><label class="facade-radio-label" for="niv4">4+ Niveles</label>
+                      <input type="radio" id="fniv1" name="f-niveles" value="1"><label class="facade-radio-label" for="fniv1">1 Nivel</label>
+                      <input type="radio" id="fniv2" name="f-niveles" value="2" checked><label class="facade-radio-label" for="fniv2">2 Niveles</label>
+                      <input type="radio" id="fniv3" name="f-niveles" value="3"><label class="facade-radio-label" for="fniv3">3 Niveles</label>
+                      <input type="radio" id="fniv4" name="f-niveles" value="4"><label class="facade-radio-label" for="fniv4">4+ Niveles</label>
                     </div>
                   </div>
 
@@ -634,7 +614,6 @@
                       </label>
                     </div>
                   </div>
-
                 </div>
               </div>
 
@@ -770,7 +749,7 @@
         </div>
       </div>
 
-      <!-- 5. PAQUETES 3D (RANGO 400M2 Y BOTONES DE VERIFICACIÓN) -->
+      <!-- 5. PAQUETES 3D -->
       <div id="visualizacion" class="py-vh-5 glass-container-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -932,19 +911,23 @@
                       </a>
                     </div>
                     
-                    <!-- MENSAJE Y BOTÓN DE PAGO DIRECTO (RANGO BASE) -->
+                    <!-- MENSAJE Y BOTÓN DE PAGO DIRECTO PAYPAL (RANGO BASE) -->
                     <div id="wrapperPagoDirecto3D" class="mt-4" style="display: none;">
                       <div class="text-center p-3 rounded-3 mb-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
                           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Aprobado! Tu proyecto entra en el rango de los 400 m².
+                          ¡Aprobado! Tu proyecto es elegible.
                         </span>
                       </div>
-                      <a id="btnPagoDirecto3D" href="#" target="_blank" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #d4b895; transition: transform 0.3s ease;">
-                        PAGAR PAQUETE SELECCIONADO
-                      </a>
+                      
+                      <!-- AQUÍ SE RENDERIZA EL BOTÓN DE PAYPAL 3D -->
+                      <div id="paypal-button-container-3d" class="w-100 mt-2" style="position: relative; z-index: 10;"></div>
                     </div>
 
+                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                      Transacción segura facturada en USD
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1065,17 +1048,9 @@
 
       const exchangeRates = { USD: { rate: 1.0, symbol: 'USD' }, EUR: { rate: 0.92, symbol: 'EUR' }, GTQ: { rate: 7.85, symbol: 'GTQ' }, MXN: { rate: 18.50, symbol: 'MXN' }, CNY: { rate: 7.25, symbol: 'CNY' }, AED: { rate: 3.67, symbol: 'AED' }, BRL: { rate: 5.40, symbol: 'BRL' }, JPY: { rate: 155.0, symbol: 'JPY' } };
 
-      // ENLACES DE PAGO PAYPAL GLOBALES
-      const paypalLinks3D = {
-        basico: 'https://www.paypal.com/ncp/payment/VNATBWUJSX8XA',
-        profesional: 'https://www.paypal.com/ncp/payment/T5GGC93YAXSWG',
-        premium: 'https://www.paypal.com/ncp/payment/H657UM6NM3LHY'
-      };
-      
-      const paypalLinks2D = {
-        basico: '#', // INGRESAR LINK PAYPAL BASICO 2D AQUI
-        premium: '#' // INGRESAR LINK PAYPAL PREMIUM 2D AQUI
-      };
+      // VARIABLES GLOBALES PARA PAYPAL
+      window.montoPago3D = "0.00";
+      window.montoPago2D = "0.00";
 
       function updateAllCurrencies() {
         const config = exchangeRates[currentCurrency];
@@ -1117,7 +1092,6 @@
         const btnEnviarCotizacion = document.getElementById('btnEnviarCotizacion');
         
         const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
-        const btnPagoDirecto3D = document.getElementById('btnPagoDirecto3D');
 
         function actualizarCotizacionTerreno() {
           const ancho = parseFloat(anchoInput.value) || 0;
@@ -1146,16 +1120,18 @@
               precioFinalUSD = areaTotal * 1.75;
             }
 
+            // Actualizamos la variable global de PayPal (siempre en USD)
+            window.montoPago3D = precioFinalUSD.toFixed(2);
+
             const config = exchangeRates[currentCurrency];
             const convertedFinal = precioFinalUSD * config.rate;
             const decimals = currentCurrency === 'JPY' ? 0 : 2;
 
             precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
-            if (esServicio3D && areaTotal <= 400) {
+            if (esServicio3D && areaTotal > 0) {
               wrapperBtnCotizar.style.display = 'none'; 
               wrapperPagoDirecto3D.style.display = 'block';
-              btnPagoDirecto3D.href = paypalLinks3D[servicioVal];
             } else {
               wrapperBtnCotizar.style.display = 'block'; 
               wrapperPagoDirecto3D.style.display = 'none';
@@ -1164,7 +1140,9 @@
             const mensaje = encodeURIComponent(`Hola. Me interesa el servicio de: ${servicioNombre}.\nDimensiones: ${ancho}m x ${largo}m x ${niveles} niveles (Área total: ${areaTotal.toFixed(2)} m²).\nCosto estimado: $${precioFinalUSD.toFixed(2)} USD.\nMe gustaría continuar con mi proyecto.`);
             btnEnviarCotizacion.href = `https://wa.me/18329774150?text=${mensaje}`;
           } else {
-            totalDisplay.textContent = "0.00"; precioFinalDisplay.textContent = "0.00"; wrapperBtnCotizar.style.display = 'none'; wrapperPagoDirecto3D.style.display = 'none';
+            totalDisplay.textContent = "0.00"; precioFinalDisplay.textContent = "0.00"; 
+            wrapperBtnCotizar.style.display = 'none'; wrapperPagoDirecto3D.style.display = 'none';
+            window.montoPago3D = "0.00";
           }
         }
         window.actualizarCotizacionTerrenoGlobal = actualizarCotizacionTerreno;
@@ -1193,7 +1171,7 @@
         const wrapperBtnPlanos = document.getElementById('wrapper-btn-planos');
         
         const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
-        const btnPagoDirectoPlanos = document.getElementById('btnPagoDirectoPlanos');
+        const mensajeRangoPlanos = document.getElementById('mensaje-rango-planos');
         
         let calculoPlanosInteractuado = false;
         let urlWhatsAppPlanos = "#";
@@ -1219,6 +1197,9 @@
           }
 
           let totalFinalUSD = basePrecioUSD + costoExcedenteUSD;
+          
+          // Actualizamos la variable global de PayPal 2D (siempre en USD)
+          window.montoPago2D = totalFinalUSD.toFixed(2);
 
           const config = exchangeRates[currentCurrency];
           const convertedTotal = totalFinalUSD * config.rate;
@@ -1234,18 +1215,24 @@
             pExcedenteLabel.textContent = `Metros excedentes (${metrosExcedentes.toFixed(2)} m²)`;
             pExcedenteText.textContent = `+${config.symbol} ${convertedExcedente.toFixed(decimals)}`;
             
-            wrapperBtnPlanos.style.setProperty('display', 'block', 'important');
-            wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
+            mensajeRangoPlanos.style.setProperty('display', 'none', 'important');
           } else {
             rowPlanosExcedente.style.setProperty('display', 'none', 'important');
             
-            wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
             if(areaTotal > 0) {
-              wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
-              btnPagoDirectoPlanos.href = paypalLinks2D[paquete];
+              mensajeRangoPlanos.style.setProperty('display', 'block', 'important');
             } else {
-              wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
+              mensajeRangoPlanos.style.setProperty('display', 'none', 'important');
             }
+          }
+
+          if(areaTotal > 0) {
+            wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
+            wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
+          } else {
+             wrapperBtnPlanos.style.setProperty('display', 'none', 'important');
+             wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
+             window.montoPago2D = "0.00";
           }
 
           pTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
@@ -1394,6 +1381,47 @@
           fRadiosTipo.forEach(radio => radio.addEventListener('change', registrarInteraccionFachada));
           fRadiosNiveles.forEach(radio => radio.addEventListener('change', registrarInteraccionFachada));
           actualizarCalculadoraFachada();
+        }
+
+        // --- INTEGRACIÓN DE BOTONES INTELIGENTES DE PAYPAL ---
+        if(typeof paypal !== 'undefined') {
+          // Botón para la Calculadora General 3D
+          paypal.Buttons({
+            createOrder: function(data, actions) {
+              return actions.order.create({
+                purchase_units: [{
+                  amount: { value: window.montoPago3D }
+                }]
+              });
+            },
+            onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                const nombreCliente = details.payer.name.given_name;
+                const montoCobrado = window.montoPago3D;
+                const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${montoCobrado} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi proyecto 3D.`);
+                window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+              });
+            }
+          }).render('#paypal-button-container-3d');
+
+          // Botón para la Calculadora de Planos 2D
+          paypal.Buttons({
+            createOrder: function(data, actions) {
+              return actions.order.create({
+                purchase_units: [{
+                  amount: { value: window.montoPago2D }
+                }]
+              });
+            },
+            onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                const nombreCliente = details.payer.name.given_name;
+                const montoCobrado = window.montoPago2D;
+                const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${montoCobrado} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mis planos 2D.`);
+                window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+              });
+            }
+          }).render('#paypal-button-container-2d');
         }
 
       });
