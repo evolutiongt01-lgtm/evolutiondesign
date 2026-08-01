@@ -228,18 +228,19 @@
           <p class="text-secondary mb-0" style="font-size: 0.9rem; line-height: 1.5;">Ingresa tu correo registrado o código de proyecto para acceder a tus archivos.</p>
         </div>
 
-        <!-- Se aplica el hack de READONLY. Empiezan bloqueados para evitar el autocompletado y se desbloquean al tocarlos. -->
         <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
           <label class="form-label-custom">Correo Electrónico</label>
           <div class="input-wrapper">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="input-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <!-- Placeholder genérico -->
             <input type="email" id="clientEmail" name="evo_login_alpha" class="glass-input" placeholder="Ej. tucorreo@ejemplo.com" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
           </div>
 
           <label class="form-label-custom">Código de Proyecto / Acceso</label>
           <div class="input-wrapper mb-4">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="input-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            <input type="text" id="projectCode" name="evo_pass_beta" class="glass-input" placeholder="Ej. DESIGN-01" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
+            <!-- Placeholder genérico -->
+            <input type="text" id="projectCode" name="evo_pass_beta" class="glass-input" placeholder="Ej. EVO-3D-884" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
           </div>
 
           <button type="submit" class="btn-gold">
