@@ -1463,11 +1463,11 @@
           });
         }
 
-        // --- FUNCIONES PARA RENDERIZAR BOTONES DE PAYPAL CON MONTO DINÁMICO ---
+        // --- FUNCIONES PARA RENDERIZAR BOTONES DE PAYPAL CON COLOR CLARO/BLANCO ---
         function renderizarPayPal3D(monto, selector) {
           if (typeof paypal === 'undefined') return;
           paypal.Buttons({
-            style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
+            style: { layout: 'vertical', color: 'white', shape: 'pill', label: 'pay' },
             createOrder: function(data, actions) {
               return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
             },
@@ -1484,7 +1484,7 @@
         function renderizarPayPal2D(monto, selector) {
           if (typeof paypal === 'undefined') return;
           paypal.Buttons({
-            style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
+            style: { layout: 'vertical', color: 'white', shape: 'pill', label: 'pay' },
             createOrder: function(data, actions) {
               return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
             },
@@ -1501,7 +1501,7 @@
         function renderizarPayPalFachada(monto, selector) {
           if (typeof paypal === 'undefined') return;
           paypal.Buttons({
-            style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
+            style: { layout: 'vertical', color: 'white', shape: 'pill', label: 'pay' },
             createOrder: function(data, actions) {
               return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
             },
