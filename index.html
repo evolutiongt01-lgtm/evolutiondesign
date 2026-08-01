@@ -335,7 +335,7 @@
 
       .lang-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
       
-      /* FIX EXCLUSIVO PARA iOS (Para esquivar la barra de inicio del iPhone manteniendo Android fijo a 30px) */
+      /* FIX EXCLUSIVO PARA iOS */
       @supports (-webkit-touch-callout: none) {
         .currency-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); }
         .lang-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); }
@@ -393,7 +393,6 @@
             <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
             <a href="#fachadas" class="nav-pill-link">Fachadas</a>
             <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
-            <!-- ENLACE AL PORTAL DE ENTREGAS EN ESCRITORIO -->
             <a href="portal.html" class="nav-pill-link" style="color: #d4b895;">Portal de Entregas</a>
           </div>
 
@@ -434,9 +433,9 @@
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
           Tarifas 3D
         </a>
-        <a href="portal.html" class="tab-item" style="color: #d4b895 !important;">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
-          Entregas
+        <a href="#cuantificacion" class="tab-item">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg>
+          Cuantif.
         </a>
       </div>
     </nav>
@@ -1134,8 +1133,8 @@
       </div>
     </footer>
 
-    <!-- BOTONES FLOTANTES ESQUINA IZQUIERDA (Selector de Moneda con Posición Fija Anti-Salto) -->
-    <div class="currency-float-container" id="currencyContainer" style="position: fixed; bottom: 30px; left: 30px; z-index: 9999;">
+    <!-- BOTONES FLOTANTES ESQUINA IZQUIERDA (Selector de Moneda con Despliegue Vertical) -->
+    <div class="currency-float-container" id="currencyContainer">
       <div class="currency-wrapper">
         <!-- Menú de Monedas -->
         <ul class="currency-float-menu" id="currencyMenu">
@@ -1154,8 +1153,8 @@
       </div>
     </div>
 
-    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp, Telegram, Idioma - Posición Fija Anti-Salto) -->
-    <div class="lang-float-container" id="langContainer" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end;">
+    <!-- BOTONES FLOTANTES ESQUINA DERECHA (WhatsApp, Telegram y Selector de Idioma Despliegue a la Izquierda) -->
+    <div class="lang-float-container" id="langContainer">
       
       <!-- Contenedor independiente para el Botón y Menú de Idiomas -->
       <div class="lang-wrapper">
@@ -1264,7 +1263,6 @@
           this.classList.add('active');
           currentCurrency = this.getAttribute('data-curr');
           updateAllCurrencies();
-          // Actualizamos también las calculadoras si existen
           if(typeof window.actualizarCotizacionTerrenoGlobal === 'function') window.actualizarCotizacionTerrenoGlobal();
           if(typeof window.actualizarCalculadoraFachadaGlobal === 'function') window.actualizarCalculadoraFachadaGlobal();
           currencyMenu.classList.remove('show');
