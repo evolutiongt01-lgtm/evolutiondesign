@@ -51,12 +51,10 @@
              url('fonts/inter-v12-latin-700.woff') format('woff');
       }
 
-      html {
-        scroll-behavior: smooth;
-      }
+      html { scroll-behavior: smooth; }
 
       body {
-        background-color: #000;
+        background-color: #050505;
         color: #fff;
         font-family: 'Inter', sans-serif;
         min-height: 100vh;
@@ -70,7 +68,7 @@
       .page-bg {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 100%), url('img/hero-pc.jpg') center/cover no-repeat;
+        background: linear-gradient(180deg, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0.98) 100%), url('img/hero-pc.jpg') center/cover no-repeat;
         z-index: -1;
       }
 
@@ -82,35 +80,21 @@
         padding-top: calc(25px + env(safe-area-inset-top, 0px)); 
         pointer-events: none; 
       }
-      @media (min-width: 992px) {
-        .desktop-nav { display: block !important; }
-      }
+      @media (min-width: 992px) { .desktop-nav { display: block !important; } }
       .nav-pill {
         pointer-events: auto; 
         background: rgba(15, 15, 15, 0.75) !important;
         backdrop-filter: blur(25px) saturate(200%);
-        -webkit-backdrop-filter: blur(25px) saturate(200%);
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
         border-radius: 100px;
-        padding: 0.6rem 0.8rem 0.6rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1150px;
-        margin: 0 auto;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        padding: 0.6rem 0.8rem 0.6rem 1.5rem;
+        display: flex; justify-content: space-between; align-items: center;
+        max-width: 1150px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
       }
-      .nav-pill-links {
-        display: flex; gap: 2rem; align-items: center;
-      }
-      .nav-pill-link {
-        color: rgba(255, 255, 255, 0.65);
-        text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: color 0.3s; position: relative;
-      }
+      .nav-pill-links { display: flex; gap: 2rem; align-items: center; }
+      .nav-pill-link { color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: color 0.3s; position: relative; }
       .nav-pill-link:hover, .nav-pill-link.active { color: #fff; }
-      .nav-pill-link.active::after {
-        content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px; background-color: #fff; border-radius: 2px;
-      }
+      .nav-pill-link.active::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px; background-color: #fff; border-radius: 2px; }
 
       /* =========================================
          NAVEGACIÓN MÓVIL TIPO APP
@@ -118,131 +102,141 @@
       .mobile-app-nav {
         background: rgba(10, 10, 10, 0.85) !important; 
         backdrop-filter: blur(20px) saturate(150%); 
-        -webkit-backdrop-filter: blur(20px) saturate(150%); 
-        position: fixed; 
-        top: 0; left: 0; width: 100%;
-        z-index: 1030; 
+        position: fixed; top: 0; left: 0; width: 100%; z-index: 1030; 
         border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
       }
       @media (min-width: 992px) { .mobile-app-nav { display: none !important; } }
-      
-      .app-nav-top { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        padding: max(38px, env(safe-area-inset-top)) 1.5rem 0.8rem 1.5rem; 
-      }
-      
-      .icon-btn { 
-        width: 42px; height: 42px; 
-        border-radius: 50%; 
-        border: 1px solid rgba(255, 255, 255, 0.15); 
-        display: flex; align-items: center; justify-content: center; 
-        background: rgba(255, 255, 255, 0.05); color: #fff !important; 
-        text-decoration: none !important; transition: all 0.3s ease; 
-        -webkit-tap-highlight-color: transparent !important; outline: none !important; 
-      }
-      .icon-btn:visited { color: #fff !important; }
-      .icon-btn:hover, .icon-btn:focus { 
-        background-color: rgba(255, 255, 255, 0.15) !important; 
-        color: #fff !important;
-        transform: scale(1.05); 
-      }
-      .icon-btn:active { 
-        background-color: rgba(255, 255, 255, 0.25) !important; 
-        color: #fff !important;
-        transform: scale(0.95); 
-      }
+      .app-nav-top { display: flex; justify-content: space-between; align-items: center; padding: max(38px, env(safe-area-inset-top)) 1.5rem 0.8rem 1.5rem; }
+      .icon-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); color: #fff !important; text-decoration: none !important; transition: all 0.3s ease; }
+      .icon-btn:hover, .icon-btn:focus { background-color: rgba(255, 255, 255, 0.15) !important; transform: scale(1.05); }
 
-      /* MENÚ DESPLEGABLE MÓVIL */
-      .mobile-dropdown-menu { 
-        display: none; 
-        flex-direction: column; 
-        position: absolute; 
-        top: 55px; 
-        left: 0; 
-        background: rgba(15, 15, 15, 0.95) !important; 
-        backdrop-filter: blur(20px) !important; 
-        -webkit-backdrop-filter: blur(20px) !important; 
-        border: 1px solid rgba(255,255,255,0.1) !important; 
-        border-radius: 16px !important; 
-        padding: 0.5rem !important; 
-        min-width: 180px !important; 
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; 
-        gap: 5px; 
-        list-style: none !important;
-        margin: 0;
-        opacity: 0;
-        transform: translateY(-10px) scale(0.95);
-        transform-origin: top left;
-        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        z-index: 1050;
-      }
-      .mobile-dropdown-menu li { list-style: none !important; }
-      .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
-      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+      /* MENÚS DESPLEGABLES */
+      .desktop-dropdown-menu, .mobile-dropdown-menu { display: none; flex-direction: column; position: absolute; top: 55px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 180px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; opacity: 0; transform: translateY(-10px) scale(0.95); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 1050; }
+      .desktop-dropdown-menu.show, .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; font-weight: 500 !important; font-size: 0.95rem !important; }
       .menu-item:hover, .menu-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
-      /* TABS INFERIORES MÓVIL */
       .app-tabs { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 1.5rem; gap: 2rem; justify-content: space-around; }
       .app-tabs::-webkit-scrollbar { display: none; }
-      .tab-item { display: flex; flex-direction: column; align-items: center; color: #888 !important; text-decoration: none !important; font-size: 0.75rem; padding-bottom: 0.8rem; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); -webkit-tap-highlight-color: transparent !important; outline: none !important; }
-      .tab-item svg { margin-bottom: 6px; opacity: 0.7; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; }
-      .tab-item:hover, .tab-item:focus, .tab-item:active { color: #fff !important; }
+      .tab-item { display: flex; flex-direction: column; align-items: center; color: #888 !important; text-decoration: none !important; font-size: 0.75rem; padding-bottom: 0.8rem; border-bottom: 2px solid transparent; transition: all 0.4s; }
+      .tab-item svg { margin-bottom: 6px; opacity: 0.7; }
       .tab-item.active { color: #fff !important; border-bottom-color: #fff; }
       .tab-item.active svg { opacity: 1; transform: scale(1.15); }
 
-      /* ESTILOS DE TARJETAS Y FORMULARIO */
-      .glass-panel { background: rgba(255, 255, 255, 0.03) !important; backdrop-filter: blur(20px) saturate(150%); border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 24px; padding: 3rem; }
-      
-      .form-label-custom { color: #aaa; font-size: 0.85rem; margin-bottom: 0.5rem; display: block; }
-      .glass-input {
+      /* =========================================
+         TARJETAS DE BENEFICIOS (Features)
+         ========================================= */
+      .feature-glass-card {
         background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        backdrop-filter: blur(15px);
+        transition: transform 0.3s ease, border-color 0.3s ease;
+        height: 100%;
+      }
+      .feature-glass-card:hover { border-color: rgba(212, 184, 149, 0.4); transform: translateY(-3px); }
+      .f-icon-circle {
+        width: 45px; height: 45px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        color: #d4b895;
+      }
+      .f-text h6 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; color: #fff; }
+      .f-text p { font-size: 0.75rem; color: #aaa; margin: 0; line-height: 1.4; }
+
+      /* =========================================
+         FORMULARIO GLASSMORPHISM
+         ========================================= */
+      .main-form-glass {
+        background: rgba(15, 15, 15, 0.6);
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 24px;
+        padding: 3rem;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      }
+      
+      .form-label-custom { color: #ddd; font-size: 0.85rem; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 8px; }
+      .glass-input {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px;
         color: #fff;
         width: 100%;
-        padding: 1rem;
+        padding: 1rem 1.2rem;
         font-size: 0.95rem;
         transition: all 0.3s ease;
       }
-      .glass-input:focus { border-color: #d4b895; outline: none; background: rgba(255,255,255,0.06); box-shadow: 0 0 15px rgba(212,184,149,0.1); }
-      .glass-input::placeholder { color: #555; }
+      .glass-input:focus { border-color: #d4b895; outline: none; background: rgba(255,255,255,0.08); box-shadow: 0 0 15px rgba(212,184,149,0.1); }
+      .glass-input::placeholder { color: #666; }
+      
+      textarea.glass-input { resize: none; }
 
-      .btn-gold {
-        background: #d4b895;
+      .char-counter {
+        position: absolute;
+        bottom: 12px;
+        right: 15px;
+        font-size: 0.75rem;
+        color: #666;
+        pointer-events: none;
+      }
+
+      /* ESTRELLAS DE CALIFICACIÓN (HUECAS A SÓLIDAS) */
+      .rating-stars { display: flex; gap: 8px; cursor: pointer; }
+      .star-icon { width: 32px; height: 32px; color: #555; transition: color 0.2s, transform 0.2s; }
+      .rating-stars span:hover .star-icon, .rating-stars span.selected .star-icon { color: #d4b895; transform: scale(1.1); }
+      
+      /* BOTÓN DORADO PILL */
+      .btn-gold-pill {
+        background: linear-gradient(135deg, #e3cba8 0%, #c4a47a 100%);
         color: #000;
-        font-weight: 600;
+        font-weight: 700;
         border: none;
-        border-radius: 12px;
-        padding: 1rem;
+        border-radius: 50px;
+        padding: 1rem 2rem;
         width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 8px;
-        font-size: 0.95rem;
+        gap: 10px;
+        font-size: 1rem;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
-        text-decoration: none;
       }
-      .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 184, 149, 0.3); color: #000; }
+      .btn-gold-pill:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(212, 184, 149, 0.4); }
 
-      /* ESTRELLAS DE CALIFICACIÓN */
-      .rating-stars { display: flex; gap: 10px; cursor: pointer; font-size: 1.8rem; color: #555; }
-      .rating-stars span.selected, .rating-stars span:hover { color: #d4b895; }
+      /* =========================================
+         TARJETAS DE REFERENCIAS (TESTIMONIOS)
+         ========================================= */
+      .ref-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 1.5rem;
+        height: 100%;
+        transition: border-color 0.3s, transform 0.3s;
+      }
+      .ref-card:hover { border-color: rgba(212, 184, 149, 0.3); transform: translateY(-5px); }
+      .ref-stars svg { width: 16px; height: 16px; color: #d4b895; margin-right: 2px; }
 
-      /* BOTONES FLOTANTES */
+      /* BOTONES FLOTANTES REDES */
       .lang-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
-      @supports (-webkit-touch-callout: none) {
-        .lang-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); }
-      }
-
+      @supports (-webkit-touch-callout: none) { .lang-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); } }
       footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important; }
     </style>
   </head>
 
-  <body>
+  <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
     <div class="page-bg"></div>
 
@@ -250,9 +244,21 @@
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
-          <a href="index.html" class="d-flex align-items-center">
-            <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
-          </a>
+          <div class="d-flex align-items-center gap-3">
+            <div style="position: relative;">
+              <a href="#" class="icon-btn" id="desktopMenuBtn" aria-label="Menú">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+              </a>
+              <ul class="desktop-dropdown-menu" id="desktopDropdownMenu">
+                <li><a class="menu-item" href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
+                <li><a class="menu-item" href="sobre-nosotros.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
+                <li><a class="menu-item active" href="feedback.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
+              </ul>
+            </div>
+            <a href="index.html" class="d-flex align-items-center">
+              <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
+            </a>
+          </div>
           <div class="nav-pill-links d-none d-xl-flex">
             <a href="index.html" class="nav-pill-link">Inicio</a>
             <a href="sobre-nosotros.html" class="nav-pill-link">Sobre Nosotros</a>
@@ -272,106 +278,202 @@
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
           </a>
           <ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
-            <li>
-              <a class="menu-item" href="index.html">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                Home
-              </a>
-            </li>
-            <li>
-              <a class="menu-item" href="sobre-nosotros.html">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                Sobre Nosotros
-              </a>
-            </li>
-            <li>
-              <a class="menu-item active" href="feedback.html">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                Feedback
-              </a>
-            </li>
+            <li><a class="menu-item" href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
+            <li><a class="menu-item" href="sobre-nosotros.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
+            <li><a class="menu-item active" href="feedback.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
           </ul>
         </div>
-
-        <a href="index.html">
-          <img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;">
-        </a>
-
-        <a href="portal.html" class="icon-btn" aria-label="Portal de Entregas">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        </a>
+        <a href="index.html"><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;"></a>
+        <a href="portal.html" class="icon-btn" aria-label="Portal de Entregas"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
       </div>
       <div class="app-tabs">
-        <a href="index.html" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-          Inicio
-        </a>
-        <a href="index.html#servicios-destacados" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-          Servicios
-        </a>
-        <a href="index.html#servicios-tecnicos" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
-          Planos
-        </a>
-        <a href="index.html#visualizacion" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-          Tarifas 3D
-        </a>
-        <a href="index.html#cuantificacion" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg>
-          Cuantif.
-        </a>
+        <a href="index.html" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Inicio</a>
+        <a href="index.html#servicios-destacados" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Servicios</a>
+        <a href="index.html#servicios-tecnicos" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg> Planos</a>
+        <a href="index.html#visualizacion" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Tarifas 3D</a>
+        <a href="index.html#cuantificacion" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg> Cuantif.</a>
       </div>
     </nav>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="container my-5 pt-5 flex-grow-1">
       <div class="row justify-content-center py-4">
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-xl-10">
           
+          <!-- ENCABEZADO -->
           <div class="text-center mb-5">
             <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">VALORAMOS TU OPINIÓN</span>
             <h1 class="display-3 fw-bold text-white mb-3">Déjanos tu Feedback</h1>
             <p class="text-secondary mx-auto" style="max-width: 600px;">Tu experiencia nos ayuda a mejorar cada día. Cuéntanos qué te pareció nuestro servicio de diseño o entregas.</p>
           </div>
 
-          <div class="glass-panel">
-            <form id="feedbackForm" onsubmit="enviarFeedback(event)">
-              
-              <div class="mb-4">
-                <label class="form-label-custom">Tu Nombre o Empresa</label>
-                <input type="text" id="fbName" class="glass-input" placeholder="Ej. Juan Pérez" required>
-              </div>
-
-              <div class="mb-4">
-                <label class="form-label-custom">Correo Electrónico</label>
-                <input type="email" id="fbEmail" class="glass-input" placeholder="tucorreo@ejemplo.com" required>
-              </div>
-
-              <div class="mb-4">
-                <label class="form-label-custom">Calificación del Servicio</label>
-                <div class="rating-stars" id="starContainer">
-                  <span data-value="1">★</span>
-                  <span data-value="2">★</span>
-                  <span data-value="3">★</span>
-                  <span data-value="4">★</span>
-                  <span data-value="5">★</span>
+          <!-- TARJETAS DE BENEFICIOS (GRID 4 COLUMNAS) -->
+          <div class="row g-3 mb-5">
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="feature-glass-card">
+                <div class="f-icon-circle">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path><line x1="9" y1="12" x2="15" y2="12"></line><line x1="12" y1="9" x2="12" y2="15"></line></svg>
                 </div>
-                <input type="hidden" id="fbRating" value="5">
+                <div class="f-text">
+                  <h6>Tu opinión importa</h6>
+                  <p>Cada comentario nos ayuda a mejorar nuestros servicios.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="feature-glass-card">
+                <div class="f-icon-circle">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                </div>
+                <div class="f-text">
+                  <h6>Calidad y compromiso</h6>
+                  <p>Trabajamos para superar tus expectativas.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="feature-glass-card">
+                <div class="f-icon-circle">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <div class="f-text">
+                  <h6>Respuesta rápida</h6>
+                  <p>Leemos cada mensaje y te respondemos pronto.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="feature-glass-card">
+                <div class="f-icon-circle">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <div class="f-text">
+                  <h6>Información segura</h6>
+                  <p>Tus datos están protegidos y son confidenciales.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FORMULARIO PRINCIPAL -->
+          <div class="main-form-glass mb-5">
+            <form id="feedbackForm" onsubmit="enviarFeedback(event)">
+              <div class="row g-4 mb-4">
+                
+                <div class="col-12 col-md-6">
+                  <label class="form-label-custom">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    Tu Nombre o Empresa
+                  </label>
+                  <input type="text" id="fbName" class="glass-input" placeholder="Ej. Juan Pérez" required>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label class="form-label-custom">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    Correo Electrónico
+                  </label>
+                  <input type="email" id="fbEmail" class="glass-input" placeholder="tuemail@ejemplo.com" required>
+                </div>
+
+                <div class="col-12 mt-4">
+                  <label class="form-label-custom mb-3">Calificación del Servicio</label>
+                  <div class="rating-stars" id="starContainer">
+                    <span data-value="1">
+                      <!-- Estrella SVG hueca que se llena al seleccionar -->
+                      <svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </span>
+                    <span data-value="2">
+                      <svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </span>
+                    <span data-value="3">
+                      <svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </span>
+                    <span data-value="4">
+                      <svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </span>
+                    <span data-value="5">
+                      <svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </span>
+                  </div>
+                  <input type="hidden" id="fbRating" value="0">
+                </div>
+
+                <div class="col-12 mt-4" style="position: relative;">
+                  <label class="form-label-custom">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Tu Comentario
+                  </label>
+                  <textarea id="fbMessage" class="glass-input" rows="5" maxlength="500" placeholder="Cuéntanos tu experiencia, sugerencias o cualquier comentario..." required></textarea>
+                  <div class="char-counter" id="charCount">0/500</div>
+                </div>
+
               </div>
 
-              <div class="mb-4">
-                <label class="form-label-custom">Tus Comentarios o Sugerencias</label>
-                <textarea id="fbMessage" class="glass-input" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+              <div class="mt-5 text-center">
+                <button type="submit" class="btn-gold-pill">
+                  Enviar Feedback
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+                <div class="mt-3 text-secondary d-flex justify-content-center align-items-center gap-2" style="font-size: 0.75rem;">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  Tus datos están protegidos y no serán compartidos.
+                </div>
               </div>
-
-              <button type="submit" class="btn-gold">
-                Enviar Feedback
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-              </button>
 
             </form>
+          </div>
+
+          <!-- SECCIÓN DE REFERENCIAS / TESTIMONIOS -->
+          <div class="mt-5 pt-4">
+            <h3 class="text-center text-white fw-bold mb-4 pb-2" style="font-size: 1.5rem;">Lo que dicen nuestros clientes</h3>
+            <div class="row g-4">
+              <!-- Referencia 1 -->
+              <div class="col-12 col-md-4">
+                <div class="ref-card">
+                  <div class="ref-stars mb-2">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  </div>
+                  <p class="text-secondary small mb-3" style="line-height: 1.6;">"Excelente servicio. Me entregaron mis renders 3D justo a tiempo y la calidad superó por completo mis expectativas. Ahora estoy mucho más seguro de mi inversión."</p>
+                  <h6 class="text-white fw-bold mb-0" style="font-size: 0.85rem;">Carlos M.</h6>
+                  <span class="text-muted" style="font-size: 0.7rem;">Proyecto Residencial</span>
+                </div>
+              </div>
+              <!-- Referencia 2 -->
+              <div class="col-12 col-md-4">
+                <div class="ref-card">
+                  <div class="ref-stars mb-2">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  </div>
+                  <p class="text-secondary small mb-3" style="line-height: 1.6;">"El portal de entregas es una maravilla. Pude descargar todos mis planos en PDF desde mi teléfono en la obra sin ninguna complicación. Totalmente recomendados."</p>
+                  <h6 class="text-white fw-bold mb-0" style="font-size: 0.85rem;">Constructora Sur</h6>
+                  <span class="text-muted" style="font-size: 0.7rem;">Planos 2D y Cuantificación</span>
+                </div>
+              </div>
+              <!-- Referencia 3 -->
+              <div class="col-12 col-md-4">
+                <div class="ref-card">
+                  <div class="ref-stars mb-2">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  </div>
+                  <p class="text-secondary small mb-3" style="line-height: 1.6;">"Me encantó que me mandaran 3 propuestas diferentes para mi fachada. Nos ayudó muchísimo a decidir los acabados antes de comprar los materiales."</p>
+                  <h6 class="text-white fw-bold mb-0" style="font-size: 0.85rem;">Ana G.</h6>
+                  <span class="text-muted" style="font-size: 0.7rem;">Diseño de Fachada</span>
+                </div>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -379,7 +481,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer id="contacto" class="bg-black border-top pt-5 pb-4" style="border-color: #222 !important;">
+    <footer id="contacto" class="bg-black border-top pt-5 pb-4 mt-auto" style="border-color: #222 !important;">
       <div class="container text-secondary fw-lighter">
         <div class="row g-4">
           <div class="col-12 col-lg-5 text-center text-lg-start">
@@ -400,17 +502,22 @@
       </div>
     </footer>
 
-    <!-- BOTONES FLOTANTES -->
+    <!-- BOTONES FLOTANTES REDES -->
     <div class="lang-float-container">
       <a href="https://wa.me/50231256942?text=Hola,%20quiero%20dejar%20un%20comentario%20sobre%20mi%20proyecto" target="_blank" aria-label="WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
       </a>
+      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
+      </a>
     </div>
 
     <script>
-      // Lógica Menú Hamburguesa Móvil
+      // Lógica Menús Desplegables
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
+      const desktopMenuBtn = document.getElementById('desktopMenuBtn');
+      const desktopDropdownMenu = document.getElementById('desktopDropdownMenu');
 
       if(mobileMenuBtn && mobileDropdownMenu) {
           mobileMenuBtn.addEventListener('click', function(e) {
@@ -425,7 +532,20 @@
           });
       }
 
-      // Lógica de calificación por estrellas
+      if(desktopMenuBtn && desktopDropdownMenu) {
+          desktopMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            desktopDropdownMenu.classList.toggle('show');
+            e.stopPropagation();
+          });
+          document.addEventListener('click', function(e) {
+            if (!desktopMenuBtn.contains(e.target) && !desktopDropdownMenu.contains(e.target)) {
+              desktopDropdownMenu.classList.remove('show');
+            }
+          });
+      }
+
+      // Lógica de calificación por estrellas (Relleno sólido SVG al seleccionar)
       const stars = document.querySelectorAll('.rating-stars span');
       const ratingInput = document.getElementById('fbRating');
 
@@ -433,19 +553,28 @@
         star.addEventListener('click', function() {
           const val = this.getAttribute('data-value');
           ratingInput.value = val;
+          
           stars.forEach(s => {
+            const starSvg = s.querySelector('svg');
             if(s.getAttribute('data-value') <= val) {
               s.classList.add('selected');
+              starSvg.setAttribute('fill', 'currentColor'); // Rellenar
             } else {
               s.classList.remove('selected');
+              starSvg.setAttribute('fill', 'none'); // Vaciar
             }
           });
         });
       });
 
-      // Seleccionar por defecto las 5 estrellas al cargar
-      stars.forEach(s => s.classList.add('selected'));
+      // Contador de caracteres dinámico
+      const fbMessage = document.getElementById('fbMessage');
+      const charCount = document.getElementById('charCount');
+      fbMessage.addEventListener('input', function() {
+        charCount.innerText = this.value.length + '/500';
+      });
 
+      // Envío de formulario a WhatsApp
       function enviarFeedback(event) {
         event.preventDefault();
         const name = document.getElementById('fbName').value;
@@ -453,12 +582,15 @@
         const rating = document.getElementById('fbRating').value;
         const message = document.getElementById('fbMessage').value;
 
-        const textoWa = encodeURIComponent(`Hola, soy ${name} (${email}). Calificación del servicio: ${rating}/5 estrellas.\n\nComentario:\n${message}`);
-        window.open(`https://wa.me/50231256942?text=${textoWa}`, '_blank');
+        if (rating === "0") {
+          alert("Por favor, selecciona una calificación de estrellas antes de enviar.");
+          return;
+        }
+
+        const textoWa = encodeURIComponent(`Hola, soy ${name} (${email}). Acabo de dejar un feedback en el sitio web.\n\nCalificación del servicio: ${rating}/5 estrellas.\n\nComentario:\n"${message}"`);
+        window.open(`https://wa.me/18329774150?text=${textoWa}`, '_blank');
       }
     </script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script>AOS.init({ duration: 800 });</script>
+
   </body>
 </html>
