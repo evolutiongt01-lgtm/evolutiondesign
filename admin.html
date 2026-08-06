@@ -41,9 +41,11 @@ import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase
 import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {getFirestore,collection,collectionGroup,getDocs,doc,getDoc,setDoc,updateDoc,deleteDoc,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {getStorage,ref as sRef,uploadBytesResumable,getBlob,getDownloadURL,deleteObject,listAll} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+import {getFunctions,httpsCallable} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
 
 const cfg={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
-const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app),storage=getStorage(app);
+const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app),storage=getStorage(app),functions=getFunctions(app,"us-central1");
+const adminListAuthUsersCallable=httpsCallable(functions,"adminListAuthUsers");
 const ADMIN_EMAILS=new Set(['evolutiongt01@gmail.com','tepaz2025@gmail.com']);
 let data={metrics:{},clients:[],projects:[],countries:[]},selected=null;
 const $=id=>document.getElementById(id);
@@ -64,23 +66,97 @@ function projectRow(p){return `<tr><td><div class="strong">${esc(p.projectTitle|
 function renderProjects(){const term=$('projectSearch').value.toLowerCase(),st=$('statusFilter').value;const rows=data.projects.filter(p=>(!st||p.status===st)&&(!term||[p.projectTitle,p.ownerEmail,p.payerName,p.displayOrderId,p.transactionId,p.payerCountry,p.lastGeo?.country].some(x=>String(x||'').toLowerCase().includes(term))));$('projectsBody').innerHTML=rows.map(projectRow).join('')||'<tr><td colspan="8">Sin resultados.</td></tr>'}
 function renderRecent(){const rows=data.projects.slice(0,8);$('recentProjects').innerHTML=rows.length?`<table><thead><tr><th>Proyecto</th><th>Cliente</th><th>Venta</th><th>Estado</th><th></th></tr></thead><tbody>${rows.map(p=>`<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)}</div></td><td>${esc(p.ownerEmail||p.payerName||'')}</td><td>${usd(p.baseUsd)}</td><td>${pill(p.status)}</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`).join('')}</tbody></table>`:'<div class="loading">Aún no hay proyectos.</div>'}
 function renderCountries(){const max=Math.max(1,...data.countries.map(x=>x.count));$('countryList').innerHTML=data.countries.length?data.countries.map(x=>`<div class="country-row"><div class="country-name">${esc(x.country)}</div><div class="country-track"><div class="country-bar" style="width:${Math.round(x.count/max*100)}%"></div></div><div class="country-count">${x.count}</div></div>`).join(''):'<div class="sub">Aún no hay ubicaciones registradas.</div>'}
-function renderClients(){const term=$('clientSearch').value.toLowerCase();const clients=data.clients.filter(c=>!term||[c.displayName,c.email,c.country,c.lastGeo?.city,c.lastGeo?.region].some(x=>String(x||'').toLowerCase().includes(term)));$('clientsBody').innerHTML=clients.map(c=>`<tr><td><div class="strong">${esc(c.displayName||c.email||'Cliente')}</div><div class="sub">${esc(c.email||c.uid)}</div></td><td>${esc([c.lastGeo?.city,c.lastGeo?.region,c.country].filter(Boolean).join(', ')||'No reportado')}</td><td><div>${c.createdAt?'Registrado':''}</div><div class="sub">Última actividad ${c.lastSeenAt?'registrada':'—'}</div></td><td>${c.computedOrders||0}</td><td><span class="strong">${usd(c.computedSpentUsd||0)}</span></td><td><button class="mini" onclick="showClientProjects('${esc(c.uid)}')">Ver proyectos</button></td></tr>`).join('')||'<tr><td colspan="6">Sin clientes.</td></tr>';const sel=$('customClient'),current=sel.value;sel.innerHTML='<option value="">Selecciona un cliente</option>'+data.clients.map(c=>`<option value="${esc(c.uid)}">${esc(c.displayName||c.email||c.uid)} · ${esc(c.email||'')}</option>`).join('');if([...sel.options].some(o=>o.value===current))sel.value=current}
+function authProviderLabel(c){const p=Array.isArray(c.providers)?c.providers:[];if(p.includes('google.com'))return 'Google';if(p.includes('password'))return 'Correo';if(p.includes('phone'))return 'Teléfono';return p[0]||'Firebase';}
+function niceDate(v){if(!v)return '—';const d=new Date(v);if(Number.isNaN(d.getTime()))return '—';return d.toLocaleDateString('es-GT',{day:'2-digit',month:'short',year:'numeric'})}
+function renderClients(){
+  const term=$('clientSearch').value.toLowerCase();
+  const clients=data.clients.filter(c=>!term||[c.displayName,c.email,c.country,c.lastGeo?.city,c.lastGeo?.region,authProviderLabel(c)].some(x=>String(x||'').toLowerCase().includes(term)));
+  $('clientsBody').innerHTML=clients.map(c=>`<tr>
+    <td><div class="strong">${esc(c.displayName||c.email||'Cliente')}</div><div class="sub">${esc(c.email||c.uid)} · ${esc(authProviderLabel(c))}${c.disabled?' · DESHABILITADO':''}</div></td>
+    <td>${esc([c.lastGeo?.city,c.lastGeo?.region,c.country].filter(Boolean).join(', ')||'No reportado')}</td>
+    <td><div>Registro ${esc(niceDate(c.authCreatedAt||c.createdAt))}</div><div class="sub">Último login ${esc(niceDate(c.authLastSignInAt||c.lastSeenAt))}</div></td>
+    <td>${c.computedOrders||0}</td>
+    <td><span class="strong">${usd(c.computedSpentUsd||0)}</span></td>
+    <td><button class="mini" onclick="showClientProjects('${esc(c.uid)}')">Ver proyectos</button></td>
+  </tr>`).join('')||'<tr><td colspan="6">Sin clientes.</td></tr>';
+  const sel=$('customClient'),current=sel.value;
+  sel.innerHTML='<option value="">Selecciona un cliente</option>'+data.clients.map(c=>`<option value="${esc(c.uid)}">${esc(c.displayName||c.email||c.uid)} · ${esc(c.email||'')} · ${esc(authProviderLabel(c))}</option>`).join('');
+  if([...sel.options].some(o=>o.value===current))sel.value=current;
+}
 window.showClientProjects=function(uid){switchView('projects');const c=data.clients.find(x=>x.uid===uid);$('projectSearch').value=c?.email||uid;renderProjects()};
 
 function showSystemError(err){const box=$('systemAlert');if(!box)return;const raw=String(err?.message||err||'Error desconocido').replace(/^FirebaseError:\s*/,'');const code=String(err?.code||'');let help='Este panel ahora lee Firestore directamente. Publica firestore.rules y storage.rules del paquete v4.';if(code.includes('permission-denied'))help='Firestore rechazó permisos. Publica las reglas v4 y vuelve a entrar con uno de los correos administradores.';box.innerHTML=`<strong>El panel abrió, pero Firestore no pudo leer los datos.</strong><br>${esc(raw)}${code?` <code>[${esc(code)}]</code>`:''}<br><span style="color:#aaa">${esc(help)}</span><br><button class="retry" id="retryFirebaseBtn">Reintentar conexión</button>`;box.classList.add('show');setTimeout(()=>{const b=$('retryFirebaseBtn');if(b)b.onclick=()=>refresh()},0)}
 function clearSystemError(){const box=$('systemAlert');if(box){box.classList.remove('show');box.innerHTML=''}}
 
 async function loadDashboardDirect(){
-  const [usersSnap,projectsSnap,metaSnap]=await Promise.all([getDocs(collection(db,'users')),getDocs(collectionGroup(db,'projects')),getDocs(collection(db,'adminProjectData'))]);
+  // Firestore aporta país, actividad, proyectos y métricas.
+  const [usersSnap,projectsSnap,metaSnap]=await Promise.all([
+    getDocs(collection(db,'users')),
+    getDocs(collectionGroup(db,'projects')),
+    getDocs(collection(db,'adminProjectData'))
+  ]);
+
+  // Firebase Authentication es la fuente real de TODAS las cuentas registradas.
+  // Si la Function todavía no está desplegada, el panel conserva fallback a Firestore.
+  let authUsers=[];
+  let authUsersError=null;
+  try{
+    const result=await adminListAuthUsersCallable({});
+    authUsers=Array.isArray(result?.data?.users)?result.data.users:[];
+  }catch(e){
+    authUsersError=e;
+    console.warn('No se pudo listar Firebase Authentication; usando perfiles Firestore como fallback.',e);
+  }
+
   const metaMap=new Map(metaSnap.docs.map(d=>{const x=d.data();return [`${x.ownerUid}__${x.projectId}`,x]}));
   const projects=projectsSnap.docs.map(d=>{const x=d.data(),parts=d.ref.path.split('/'),ownerUid=x.ownerUid||parts[1]||'';return {id:d.id,ownerUid,...x,adminMeta:metaMap.get(`${ownerUid}__${d.id}`)||{}}}).sort((a,b)=>dateMs(b.createdAt)-dateMs(a.createdAt));
-  const byUid=new Map();for(const p of projects){if(!byUid.has(p.ownerUid))byUid.set(p.ownerUid,{orders:0,spent:0,country:''});const s=byUid.get(p.ownerUid);if(p.paymentStatus==='paid'){s.orders++;s.spent+=Number(p.baseUsd||0)}if(!s.country)s.country=p.payerCountry||p.lastGeo?.country||''}
-  const clients=usersSnap.docs.map(d=>{const x=d.data(),s=byUid.get(d.id)||{orders:0,spent:0,country:''};return {uid:d.id,...x,computedOrders:s.orders,computedSpentUsd:s.spent,country:x.payerCountry||x.lastGeo?.country||s.country||'No reportado'}}).sort((a,b)=>dateMs(b.lastSeenAt)-dateMs(a.lastSeenAt));
-  let gross=0,cost=0,active=0,delivered=0,pending=0;for(const p of projects){if(p.paymentStatus==='paid')gross+=Number(p.baseUsd||0);cost+=Number(p.adminMeta?.internalCostUsd||0);if(p.status==='delivered')delivered++;else if(p.status==='awaiting_payment')pending++;else if(p.status!=='cancelled')active++}
+  const byUid=new Map();
+  for(const p of projects){
+    if(!byUid.has(p.ownerUid))byUid.set(p.ownerUid,{orders:0,spent:0,country:''});
+    const st=byUid.get(p.ownerUid);
+    if(p.paymentStatus==='paid'){st.orders++;st.spent+=Number(p.baseUsd||0)}
+    if(!st.country)st.country=p.payerCountry||p.lastGeo?.country||'';
+  }
+
+  const firestoreProfiles=new Map(usersSnap.docs.map(d=>[d.id,{uid:d.id,...d.data()}]));
+  const authMap=new Map(authUsers.map(u=>[u.uid,u]));
+  const allUids=new Set([...firestoreProfiles.keys(),...authMap.keys()]);
+  const clients=[...allUids].map(uid=>{
+    const profile=firestoreProfiles.get(uid)||{};
+    const authUser=authMap.get(uid)||{};
+    const st=byUid.get(uid)||{orders:0,spent:0,country:''};
+    return {
+      uid,
+      ...profile,
+      ...authUser,
+      // Firestore conserva información enriquecida del sitio; Auth conserva identidad real.
+      email:authUser.email||profile.email||'',
+      displayName:authUser.displayName||profile.displayName||'',
+      photoURL:authUser.photoURL||profile.photoURL||'',
+      computedOrders:st.orders,
+      computedSpentUsd:st.spent,
+      country:profile.payerCountry||profile.lastGeo?.country||st.country||'No reportado',
+      hasFirestoreProfile:firestoreProfiles.has(uid)
+    };
+  }).sort((a,b)=>dateMs(b.authLastSignInAt||b.lastSeenAt)-dateMs(a.authLastSignInAt||a.lastSeenAt));
+
+  let gross=0,cost=0,active=0,delivered=0,pending=0;
+  for(const p of projects){
+    if(p.paymentStatus==='paid')gross+=Number(p.baseUsd||0);
+    cost+=Number(p.adminMeta?.internalCostUsd||0);
+    if(p.status==='delivered')delivered++;
+    else if(p.status==='awaiting_payment')pending++;
+    else if(p.status!=='cancelled')active++;
+  }
   const countriesMap={};clients.forEach(c=>countriesMap[c.country]=(countriesMap[c.country]||0)+1);
-  return {metrics:{clients:clients.length,projects:projects.length,active,delivered,pendingPayments:pending,grossRevenueUsd:gross,internalCostUsd:cost,profitUsd:gross-cost},clients,projects,countries:Object.entries(countriesMap).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count)};
+  return {
+    metrics:{clients:clients.length,projects:projects.length,active,delivered,pendingPayments:pending,grossRevenueUsd:gross,internalCostUsd:cost,profitUsd:gross-cost},
+    clients,projects,
+    countries:Object.entries(countriesMap).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count),
+    authUsersError
+  };
 }
-async function refresh(){try{$('refreshBtn').disabled=true;$('refreshBtn').textContent='Actualizando…';data=await loadDashboardDirect();renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();clearSystemError();return true}catch(e){console.error('Firestore dashboard:',e);showSystemError(e);toast('No se pudieron leer los datos de Firestore.');return false}finally{$('refreshBtn').disabled=false;$('refreshBtn').textContent='Actualizar datos'}}
+async function refresh(){try{$('refreshBtn').disabled=true;$('refreshBtn').textContent='Actualizando…';data=await loadDashboardDirect();renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();clearSystemError();if(data.authUsersError){showSystemError({message:'No se pudo consultar Firebase Authentication. Despliega la Function adminListAuthUsers para ver también las cuentas antiguas que aún no tienen perfil en Firestore.',code:'functions/not-deployed'});}return true}catch(e){console.error('Firestore dashboard:',e);showSystemError(e);toast('No se pudieron leer los datos de Firestore.');return false}finally{$('refreshBtn').disabled=false;$('refreshBtn').textContent='Actualizar datos'}}
 $('refreshBtn').onclick=()=>refresh();$('projectSearch').oninput=renderProjects;$('statusFilter').onchange=renderProjects;$('clientSearch').oninput=renderClients;
 
 window.openProject=async function(uid,id){selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id);if(!selected)return;$('drawerTitle').textContent=selected.projectTitle||'Proyecto';$('drawerSub').textContent=`${selected.displayOrderId||id} · ${selected.ownerEmail||''}`;$('drawerDetails').innerHTML=[['Cliente',selected.payerName||selected.ownerEmail],['País',selected.payerCountry||selected.lastGeo?.country||'No reportado'],['Venta',usd(selected.baseUsd)],['Pago',selected.paymentMethod||selected.paymentStatus],['Transacción',selected.transactionId||'Pendiente'],['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados`]].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');$('editStatus').value=selected.status||'waiting_files';$('editArchitect').value=selected.architectName||'';$('editCost').value=Number(selected.adminMeta?.internalCostUsd||0);$('editProfit').value=usd(projectProfit(selected));$('editDeliveryNote').value=selected.deliveryNote||'';$('editAdminNotes').value=selected.adminMeta?.adminNotes||'';$('includedList').innerHTML=(selected.projectConfig?.includedHighlights||[]).map(x=>`<span>${esc(x)}</span>`).join('')||'<span>Orden personalizada</span>';$('projectModal').classList.add('show');await loadFiles()};
