@@ -1574,6 +1574,10 @@
             estimatedDeliveryAt=d;
           }
 
+          // Solo el botón Guardar/Enviar debe cerrar la ficha.
+          // Subidas, borrados y actualizaciones en segundo plano NO la cerrarán.
+          collapseProjectOnNextSnapshot.add(projectId);
+
           await updateDoc(pRef,{
             clientComments:comments?.value||'',
             status:current.status&&['assigned','in_progress','review','delivered'].includes(current.status)?current.status:'files_received',
@@ -1587,6 +1591,7 @@
             feedback.className='files-feedback success';
           }
         }catch(e){
+          collapseProjectOnNextSnapshot.delete(projectId);
           console.error(e);
           if(feedback){
             feedback.textContent=e?.message?.replace(/^FirebaseError:\s*/,'')||'No pudimos guardar tu información.';
@@ -1603,6 +1608,79 @@
 
       function emptyState(title,text){const c=document.getElementById('lista-proyectos-container'),e=document.getElementById('sin-proyectos-msg');if(c)c.innerHTML='';if(e){e.style.display='block';const h=e.querySelector('h4'),p=e.querySelector('p');if(h)h.textContent=title;if(p)p.textContent=text;}}
       function clearFileListeners(){while(fileListeners.length){try{fileListeners.pop()();}catch{}}}
+
+      // Mantiene abierta la ficha que el cliente está editando aunque Firestore
+      // actualice contadores, archivos, estado o datos del proyecto en segundo plano.
+      const collapseProjectOnNextSnapshot=new Set();
+
+      function getProjectElement(container,projectId){
+        if(!container)return null;
+        return Array.from(container.querySelectorAll('[data-project-id]'))
+          .find(el=>el.dataset.projectId===String(projectId))||null;
+      }
+
+      function captureProjectUiState(container){
+        const state={
+          openProjects:new Set(),
+          comments:new Map(),
+          anchorProjectId:null,
+          anchorTop:null,
+          scrollY:window.scrollY
+        };
+        if(!container)return state;
+
+        container.querySelectorAll('[data-project-id]').forEach(projectEl=>{
+          const projectId=projectEl.dataset.projectId;
+          if(!projectId)return;
+
+          if(projectEl.matches('details.project-archive')&&projectEl.open){
+            state.openProjects.add(projectId);
+          }
+
+          const comments=projectEl.querySelector('textarea[id^="comments-"]');
+          if(comments)state.comments.set(projectId,comments.value);
+        });
+
+        const focusedProject=document.activeElement?.closest?.('[data-project-id]');
+        const firstOpen=container.querySelector('details.project-archive[open][data-project-id]');
+        const anchor=focusedProject||firstOpen;
+        if(anchor){
+          state.anchorProjectId=anchor.dataset.projectId||null;
+          state.anchorTop=anchor.getBoundingClientRect().top;
+        }
+        return state;
+      }
+
+      function restoreProjectUiState(container,state,collapseIds=new Set()){
+        if(!container||!state)return;
+
+        state.openProjects.forEach(projectId=>{
+          if(collapseIds.has(projectId))return;
+          const projectEl=getProjectElement(container,projectId);
+          if(projectEl?.matches('details.project-archive'))projectEl.open=true;
+        });
+
+        state.comments.forEach((value,projectId)=>{
+          const projectEl=getProjectElement(container,projectId);
+          const comments=projectEl?.querySelector('textarea[id^="comments-"]');
+          if(comments)comments.value=value;
+        });
+
+        requestAnimationFrame(()=>{
+          if(state.anchorProjectId&&!collapseIds.has(state.anchorProjectId)&&Number.isFinite(state.anchorTop)){
+            const anchor=getProjectElement(container,state.anchorProjectId);
+            if(anchor){
+              const delta=anchor.getBoundingClientRect().top-state.anchorTop;
+              if(Math.abs(delta)>.5)window.scrollBy(0,delta);
+              return;
+            }
+          }
+          if(state.openProjects.size&&Number.isFinite(state.scrollY)){
+            window.scrollTo({top:state.scrollY,left:0,behavior:'auto'});
+          }
+        });
+      }
+
       let projectsResolved=false;
       const loadingWatchdog=setTimeout(()=>{
         if(projectsResolved)return;
@@ -1618,10 +1696,31 @@
         });
         const projectsCol=collection(db,'users',user.uid,'projects'),container=document.getElementById('lista-proyectos-container'),empty=document.getElementById('sin-proyectos-msg');
         unsubscribeProjects=onSnapshot(projectsCol,snap=>{
-          projectsResolved=true;clearTimeout(loadingWatchdog);clearFileListeners();
+          projectsResolved=true;clearTimeout(loadingWatchdog);
+
+          // Firestore vuelve a emitir el proyecto cuando cambia clientFileCount,
+          // deliveryFileCount, estado, etc. Antes de reconstruir el HTML guardamos
+          // la ficha abierta, comentarios sin guardar y posición visual.
+          const uiState=captureProjectUiState(container);
+          const collapseIds=new Set(collapseProjectOnNextSnapshot);
+          collapseProjectOnNextSnapshot.clear();
+          collapseIds.forEach(id=>uiState.openProjects.delete(id));
+
+          clearFileListeners();
           const projects=snap.docs.map(d=>({id:d.id,ownerUid:user.uid,...d.data()})).sort((a,b)=>dateValue(b.createdAt)-dateValue(a.createdAt));
           if(!projects.length){emptyState('Aún no tienes proyectos u órdenes','Cuando compres una tarifa o Evolution Design cree una orden personalizada para ti, aparecerá aquí.');return;}
-          if(empty)empty.style.display='none';if(container)container.innerHTML=projects.map(renderProject).join('');projects.forEach(p=>{if((p.paymentStatus==='paid'||(!p.paymentStatus&&p.transactionId)))attachFiles(user,p);});
+
+          if(empty)empty.style.display='none';
+          if(container)container.innerHTML=projects.map(renderProject).join('');
+
+          // Reabre exactamente las fichas que ya estaban abiertas. Así subir una
+          // foto, eliminar un archivo o recibir una actualización del admin no
+          // obliga al cliente a volver a desplegar y desplazarse hacia abajo.
+          restoreProjectUiState(container,uiState,collapseIds);
+
+          projects.forEach(p=>{
+            if((p.paymentStatus==='paid'||(!p.paymentStatus&&p.transactionId)))attachFiles(user,p);
+          });
         },e=>{projectsResolved=true;clearTimeout(loadingWatchdog);console.error('Firestore projects:',e);emptyState('No pudimos cargar tus proyectos',e?.code==='permission-denied'?'Firebase rechazó el acceso. Publica las reglas nuevas de Firestore y vuelve a intentarlo.':'Revisa tu conexión o la configuración de Firestore.');});
       }
       onAuthStateChanged(auth,listen);
