@@ -1,0 +1,148 @@
+<!doctype html>
+<html class="h-100" lang="es">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="description" content="Evolution Design - Mis Proyectos y Gestión de Archivos">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
+    <meta name="author" content="Evolution Design">
+    <title>Evolution Design - Mis Proyectos</title>
+    
+    <link rel="preload" href="css/theme.min.css" as="style">
+    <link rel="stylesheet" href="css/theme.min.css">
+
+    <style>
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: local(''), url('fonts/inter-v12-latin-300.woff2') format('woff2'), url('fonts/inter-v12-latin-300.woff') format('woff'); }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: local(''), url('fonts/inter-v12-latin-regular.woff2') format('woff2'), url('fonts/inter-v12-latin-regular.woff') format('woff'); }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: local(''), url('fonts/inter-v12-latin-500.woff2') format('woff2'), url('fonts/inter-v12-latin-500.woff') format('woff'); }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: local(''), url('fonts/inter-v12-latin-700.woff2') format('woff2'), url('fonts/inter-v12-latin-700.woff') format('woff'); }
+
+      html { scroll-behavior: smooth; }
+      body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; }
+
+      .accent-text { color: #d4b895; }
+      .btn-liquid-glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(212, 184, 149, 0.4); color: #d4b895; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none !important; font-weight: 500; font-size: 0.85rem; transition: all 0.3s ease; display: inline-block; text-align: center; }
+      .btn-liquid-glass:hover { background: #fff; color: #000 !important; border-color: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+
+      .glass-panel { background: rgba(255, 255, 255, 0.03) !important; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 24px; padding: 2.5rem; position: relative; }
+      
+      .upload-dropzone { border: 2px dashed rgba(212, 184, 149, 0.4); background: rgba(255, 255, 255, 0.02); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; cursor: pointer; }
+      .upload-dropzone:hover { background: rgba(212, 184, 149, 0.05); border-color: #d4b895; }
+
+      .desktop-nav { padding-top: calc(25px + env(safe-area-inset-top, 0px)); }
+      .nav-pill { background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1150px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- NAVEGACIÓN SUPERIOR -->
+    <nav class="desktop-nav fixed-top">
+      <div class="container px-0">
+        <div class="nav-pill">
+          <div class="d-flex align-items-center gap-3">
+            <a href="index.html" class="d-flex align-items-center"><img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;" loading="lazy"></a>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <a href="index.html" class="nav-pill-link text-white text-decoration-none small">&larr; Volver al Inicio</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container" style="padding-top: 140px; padding-bottom: 5rem;">
+      
+      <!-- ENCABEZADO DE SECCIÓN -->
+      <div class="row mb-5">
+        <div class="col-12 text-center">
+          <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">PANEL DE CLIENTE</span>
+          <h1 class="display-4 fw-bold text-white mb-2">Mis Proyectos y Órdenes</h1>
+          <p class="text-secondary mx-auto" style="max-width: 650px;">Sube aquí tus archivos requeridos (Planos 2D en PDF/AutoCAD, dibujos a mano alzada o fotos de referencia de tu terreno) para que podamos dar marcha a tu proyecto.</p>
+        </div>
+      </div>
+
+      <!-- CONTENEDOR DINÁMICO DE PROYECTOS -->
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+          
+          <!-- ESTADO: SIN PROYECTOS (O CARGANDO) -->
+          <div id="sin-proyectos-msg" class="glass-panel text-center py-5 mb-4" style="display: none;">
+            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary mb-3" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
+            <h4 class="text-white fw-bold mb-2">Aún no tienes proyectos pagados</h4>
+            <p class="text-secondary small mb-4">Cuando realices una cotización y completes tu pago seguro, tu orden aparecerá listada en este apartado.</p>
+            <a href="index.html#servicios-tecnicos" class="btn-liquid-glass">Ir a cotizar un proyecto</a>
+          </div>
+
+          <!-- TARJETA DE PROYECTO EJEMPLO (Se generará con JS al conectar con Firebase) -->
+          <div id="lista-proyectos-container">
+            <div class="glass-panel mb-4">
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 pb-4 border-bottom border-secondary border-opacity-25 mb-4">
+                <div>
+                  <span class="badge px-3 py-1 rounded-pill mb-2" style="background: rgba(212, 184, 149, 0.15); color: #d4b895; border: 1px solid rgba(212,184,149,0.3);">En Proceso de Revisión</span>
+                  <h3 class="fw-bold text-white mb-1 fs-4">Paquete Planos 2D - Premium</h3>
+                  <p class="text-secondary small mb-0">Orden ID: <span class="text-white">#EVO-98243</span> &bull; Fecha: 06 de Agosto, 2026</p>
+                </div>
+                <div class="text-md-end">
+                  <span class="text-secondary small d-block">Inversión Total</span>
+                  <h3 class="fw-bold text-white mb-0">$800.00 <span class="fs-6 accent-text">USD</span></h3>
+                </div>
+              </div>
+
+              <!-- ZONA DE SUBIDA DE ARCHIVOS -->
+              <div class="row g-4 align-items-center">
+                <div class="col-12 col-lg-7">
+                  <h5 class="text-white fw-bold mb-2 fs-6">Documentación Requerida</h5>
+                  <p class="text-secondary small mb-3">Sube tu archivo AutoCAD (DWG/DWF), PDF de medidas o imagen de tu dibujo a mano alzada.</p>
+                  
+                  <div class="upload-dropzone" onclick="document.getElementById('fileInput1').click();">
+                    <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" class="accent-text mb-2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+                    <p class="text-white small mb-1 fw-medium">Haz clic aquí para adjuntar archivos</p>
+                    <p class="text-secondary" style="font-size: 0.7rem;">PDF, DWG, DWF, PNG, JPG (Máx. 50MB)</p>
+                    <input type="file" id="fileInput1" class="d-none" multiple onchange="mostrarNombreArchivo(this)">
+                  </div>
+                  <div id="archivo-seleccionado-1" class="text-success small mt-2 fw-medium" style="display: none;"></div>
+                </div>
+
+                <div class="col-12 col-lg-5">
+                  <div class="p-4 rounded-4" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06);">
+                    <h6 class="text-white fw-bold mb-2" style="font-size: 0.85rem;">Estado de Entrega</h6>
+                    <ul class="list-unstyled text-secondary small mb-3" style="line-height: 1.6;">
+                      <li>✓ Pago verificado por PayPal</li>
+                      <li class="text-white">⏳ Pendiente de recepción de archivos</li>
+                      <li>🔒 En espera de asignación a arquitecto</li>
+                    </ul>
+                    <button type="button" class="btn w-100 fw-bold py-2 rounded-pill text-black" style="background-color: #d4b895; font-size: 0.85rem;" onclick="alert('Función de subida conectada correctamente. ¡Pronto tus archivos llegarán a nuestro sistema!')">
+                      Subir y Notificar a Equipo
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- SCRIPT AUXILIAR PARA MOSTRAR ARCHIVO SELECCIONADO -->
+    <script>
+      function mostrarNombreArchivo(input) {
+        const div = document.getElementById('archivo-seleccionado-1');
+        if (input.files && input.files.length > 0) {
+          let nombres = Array.from(input.files).map(f => f.name).join(', ');
+          div.textContent = `Archivo(s) listo(s): ${nombres}`;
+          div.style.display = 'block';
+        }
+      }
+    </script>
+
+    <script src="js/bootstrap.bundle.min.js" defer></script>
+  </body>
+</html>
