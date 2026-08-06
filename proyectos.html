@@ -1188,8 +1188,12 @@
                               <span class="client-payment-value transaction" id="id-transaccion">#TXN-000000</span>
                             </div>
                             <div class="client-payment-row">
-                              <span class="client-payment-label">Nacionalidad</span>
-                              <span class="client-payment-value" id="nacionalidad-cliente">No registrada</span>
+                              <span class="client-payment-label">País del Cliente</span>
+                              <span class="client-payment-value" id="pais-cliente-paypal">Pendiente de PayPal</span>
+                            </div>
+                            <div class="client-payment-row">
+                              <span class="client-payment-label">Método de Pago</span>
+                              <span class="client-payment-value" id="metodo-pago-paypal">PayPal</span>
                             </div>
                             <div class="client-payment-row">
                               <span class="client-payment-label">Ubicación por IP</span>
@@ -1340,8 +1344,54 @@
           fechaEl.innerHTML = `Entrega estimada: <span class="accent-text">${calcularFechaEntrega(3)}</span>`;
         }
 
+        // --- DATOS DEL PAGO PAYPAL ---
+        // Este panel queda listo para recibir los datos reales guardados por el checkout.
+        // Cuando conectemos el index, tras un pago aprobado guardaremos un objeto en:
+        // localStorage["evolution_paypal_payment"]
+        // Campos admitidos: payerName, transactionId, payerCountry, paymentMethod,
+        // amount, currency y orderId.
+        function cargarDatosPagoPayPal() {
+          const nombreEl = document.getElementById('nombre-cliente');
+          const transaccionEl = document.getElementById('id-transaccion');
+          const paisEl = document.getElementById('pais-cliente-paypal');
+          const metodoEl = document.getElementById('metodo-pago-paypal');
+
+          let paymentData = null;
+
+          try {
+            const raw = localStorage.getItem('evolution_paypal_payment');
+            if (raw) paymentData = JSON.parse(raw);
+          } catch (error) {
+            console.log('No fue posible leer los datos guardados de PayPal:', error);
+          }
+
+          // Compatibilidad adicional con parámetros de URL para futuras integraciones.
+          const params = new URLSearchParams(window.location.search);
+          paymentData = paymentData || {};
+          paymentData.payerName = paymentData.payerName || params.get('payer_name');
+          paymentData.transactionId = paymentData.transactionId || params.get('transaction_id');
+          paymentData.payerCountry = paymentData.payerCountry || params.get('payer_country');
+          paymentData.paymentMethod = paymentData.paymentMethod || params.get('payment_method');
+
+          if (nombreEl && paymentData.payerName) {
+            nombreEl.textContent = paymentData.payerName;
+          }
+          if (transaccionEl && paymentData.transactionId) {
+            transaccionEl.textContent = paymentData.transactionId;
+          }
+          if (paisEl && paymentData.payerCountry) {
+            paisEl.textContent = paymentData.payerCountry;
+            paisEl.title = 'País reportado por PayPal para el pagador o la dirección de facturación';
+          }
+          if (metodoEl && paymentData.paymentMethod) {
+            metodoEl.textContent = paymentData.paymentMethod;
+          }
+        }
+
+        cargarDatosPagoPayPal();
+
         // --- UBICACIÓN APROXIMADA POR IP + REGLA DE WHATSAPP ---
-        // La IP permite estimar ciudad/región/país. No determina la nacionalidad real del cliente.
+        // La IP estima dónde se conecta el cliente; PayPal aporta por separado el país del pagador/facturación.
         const ubicacionIpEl = document.getElementById('ubicacion-ip-cliente');
 
         fetch('https://ipapi.co/json/')
