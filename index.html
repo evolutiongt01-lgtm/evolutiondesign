@@ -33,6 +33,9 @@
   <link rel="dns-prefetch" href="//www.paypal.com">
   <script src="https://www.paypal.com/sdk/js?client-id=BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20&currency=USD&intent=capture"></script>
 
+  <!-- AWS SDK: comprobantes de Binance/transferencia hacia Cloudflare R2 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1390.0/aws-sdk.min.js"></script>
+
   <!-- ORKA CHAT SCRIPT (CARGA ASÍNCRONA DIFERIDA) -->
   <script type="text/javascript">
     window.ORKA_APP_ID = "6a6e1491fcaf85963eaf05d6";
@@ -154,6 +157,45 @@
     .paypal-white-card iframe { background: #ffffff !important; }
     .paypal-currency-note { margin-top: 10px; color: #6b6b6b; font-size: .69rem; line-height: 1.45; text-align: center; }
     .paypal-currency-note strong { color: #111; font-weight: 700; }
+
+    /* MÉTODOS DE PAGO: PayPal, Binance y transferencia bancaria GT */
+    .payment-checkout-card { background: rgba(10,10,10,.94); border: 1px solid rgba(255,255,255,.10); border-radius: 18px; padding: 14px; box-shadow: 0 18px 42px rgba(0,0,0,.38); }
+    .payment-method-title { font-size: .72rem; color: #aaa; text-align: center; margin-bottom: 10px; }
+    .payment-method-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+    .payment-method-grid.has-bank { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .payment-method-btn { min-height: 48px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.035); color: #eee; font-size: .72rem; font-weight: 700; cursor: pointer; padding: 9px 10px; transition: .2s ease; display:flex;align-items:center;justify-content:center;gap:7px;text-align:center; }
+    .payment-method-btn:hover,.payment-method-btn.active { border-color: rgba(212,184,149,.5); background: rgba(212,184,149,.09); color: #fff; }
+    .payment-method-btn.binance { color: #f3ba2f; }
+    .payment-method-btn.bank { color: #d4b895; }
+    .payment-method-panel { margin-top: 12px; }
+    .manual-payment-card { border: 1px solid rgba(255,255,255,.09); border-radius: 15px; background: rgba(255,255,255,.025); padding: 15px; color: #e9e9ea; }
+    .manual-payment-head { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px; }
+    .manual-payment-head strong { font-size:.82rem; }
+    .manual-payment-amount { color:#d4b895;font-weight:800;font-size:1.05rem;white-space:nowrap; }
+    .manual-payment-copy { color:#999;font-size:.70rem;line-height:1.55;margin-bottom:12px; }
+    .binance-qr-img { display:block;width:min(100%,310px);margin:0 auto 12px;border-radius:14px;background:#191a1f; }
+    .manual-meta { display:grid;gap:7px;margin:10px 0 13px; }
+    .manual-meta-row { display:flex;justify-content:space-between;gap:12px;padding:9px 10px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(0,0,0,.18);font-size:.69rem; }
+    .manual-meta-row span:first-child { color:#777; }
+    .manual-meta-row strong { color:#eee;text-align:right;overflow-wrap:anywhere; }
+    .bank-choice-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:11px; }
+    .bank-choice { border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.025);color:#bbb;border-radius:10px;padding:10px 7px;font-size:.66rem;font-weight:700;cursor:pointer; }
+    .bank-choice.active { border-color:rgba(212,184,149,.55);background:rgba(212,184,149,.08);color:#fff; }
+    .manual-field { margin-top:9px;text-align:left; }
+    .manual-field label { display:block;color:#777;font-size:.62rem;margin:0 0 5px;text-transform:uppercase;letter-spacing:.06em; }
+    .manual-input { width:100%;border:1px solid rgba(255,255,255,.11);background:#09090a;color:#fff;padding:10px 11px;border-radius:10px;outline:none;font-size:.74rem; }
+    .manual-input:focus { border-color:rgba(212,184,149,.5);box-shadow:0 0 0 3px rgba(212,184,149,.05); }
+    .manual-file { padding:9px; }
+    .manual-submit { width:100%;margin-top:12px;border:0;border-radius:11px;padding:11px;background:#d4b895;color:#111;font-weight:800;font-size:.73rem;cursor:pointer; }
+    .manual-submit:disabled { opacity:.45;cursor:not-allowed; }
+    .manual-warning { margin-top:10px;color:#9a7d46;background:rgba(212,184,149,.08);border:1px solid rgba(212,184,149,.18);border-radius:10px;padding:9px 10px;font-size:.66rem;line-height:1.5; }
+    .manual-status { margin-top:10px;padding:9px 10px;border-radius:10px;font-size:.68rem;line-height:1.45;text-align:center;display:none; }
+    .manual-status.info { display:block;color:#bea574;background:rgba(212,184,149,.08);border:1px solid rgba(212,184,149,.18); }
+    .manual-status.ok { display:block;color:#52d783;background:rgba(43,200,102,.06);border:1px solid rgba(43,200,102,.18); }
+    .manual-status.error { display:block;color:#ff9099;background:rgba(255,102,115,.06);border:1px solid rgba(255,102,115,.18); }
+    .payment-gt-only-note { margin-top:8px;color:#6f6f75;font-size:.61rem;text-align:center; }
+    @media(max-width:575.98px){.payment-method-grid.has-bank{grid-template-columns:1fr}.payment-method-grid{grid-template-columns:1fr 1fr}.bank-choice-grid{grid-template-columns:1fr}.payment-checkout-card{padding:10px}.manual-payment-card{padding:12px}}
+
 
     /* ANIMACIÓN DEL CANDADO DE SEGURIDAD */
     .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 24px; display: flex; align-items: center; justify-content: flex-start; padding-left: 22%; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
@@ -1085,7 +1127,7 @@
 
                     <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
                     <div id="paypal-container-wrapper-2d" class="w-100 mt-2" style="display: none;">
-                      <div class="paypal-white-card">
+                      <div class="payment-checkout-card">
                         <div id="paypal-button-container-2d" class="w-100"></div>
                       </div>
                     </div>
@@ -1098,7 +1140,7 @@
 
                   <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    Transacción segura facturada en <span class="paypal-billing-currency">USD</span>
+                    Métodos de pago disponibles según tu ubicación · PayPal procesa en <span class="paypal-billing-currency">USD</span>
                   </div>
                 </div>
               </div>
@@ -1333,7 +1375,7 @@
 
                     <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
                     <div id="paypal-container-wrapper-fachada" class="w-100 mt-2" style="display: none;">
-                      <div class="paypal-white-card">
+                      <div class="payment-checkout-card">
                         <div id="paypal-button-container-fachada" class="w-100"></div>
                       </div>
                     </div>
@@ -1346,7 +1388,7 @@
 
                   <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    Transacción segura facturada en <span class="paypal-billing-currency">USD</span>
+                    Métodos de pago disponibles según tu ubicación · PayPal procesa en <span class="paypal-billing-currency">USD</span>
                   </div>
                 </div>
 
@@ -1615,7 +1657,7 @@
 
                     <!-- CONTENEDOR DE PAYPAL OCULTO -->
                     <div id="paypal-container-wrapper-3d" class="w-100 mt-2" style="display: none;">
-                      <div class="paypal-white-card">
+                      <div class="payment-checkout-card">
                         <div id="paypal-button-container-3d" class="w-100"></div>
                       </div>
                     </div>
@@ -1628,7 +1670,7 @@
 
                   <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem; position: relative; z-index: 30;">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    Transacción segura facturada en <span class="paypal-billing-currency">USD</span>
+                    Métodos de pago disponibles según tu ubicación · PayPal procesa en <span class="paypal-billing-currency">USD</span>
                   </div>
                 </div>
               </div>
@@ -2353,6 +2395,36 @@
     const db = getFirestore(app);
     const providerGoogle = new GoogleAuthProvider();
 
+    // === COMPROBANTES MANUALES (BINANCE / TRANSFERENCIAS) ===
+    // Se conserva la misma infraestructura R2 que ya usa Mis Proyectos/Admin.
+    // IMPORTANTE DE PRODUCCIÓN: una credencial R2 escrita en frontend es visible para el navegador.
+    // Conviene migrar esta subida a URLs firmadas/Worker cuando quieras endurecer seguridad.
+    const R2_ACCOUNT_ID = "d94e264f8a09f87496e21e72bd3731aa";
+    const R2_ACCESS_KEY_ID = "ea76378ab014694c3f387477de604782";
+    const R2_SECRET_ACCESS_KEY = "cf9a573453b35a875f4adb07c88374f942047b9ae9e358c3a3c11a629a0af4f6";
+    const R2_BUCKET_NAME = "evolution-design-files";
+    let paymentR2 = null;
+    if (window.AWS) {
+      window.AWS.config.update({accessKeyId:R2_ACCESS_KEY_ID,secretAccessKey:R2_SECRET_ACCESS_KEY,region:'auto',signatureVersion:'v4'});
+      paymentR2 = new window.AWS.S3({endpoint:new window.AWS.Endpoint(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`)});
+    }
+
+    const BINANCE_PAYMENT = {
+      alias: 'Evolution Desing',
+      asset: 'USDT',
+      qrImage: 'img/binance-pay.jpeg'
+    };
+
+    // DATOS BANCARIOS: la lógica ya está lista y SOLO se muestra si IP=Guatemala.
+    // Faltan tus números/tipo/titular reales. No se inventan datos bancarios.
+    // Reemplaza los campos vacíos cuando me los compartas.
+    const BANK_TRANSFER_ACCOUNTS = {
+      banrural: { bank:'Banrural', accountHolder:'', accountNumber:'', accountType:'', currency:'GTQ' },
+      promerica: { bank:'Promerica', accountHolder:'', accountNumber:'', accountType:'', currency:'GTQ' },
+      bac: { bank:'BAC Credomatic', accountHolder:'', accountNumber:'', accountType:'', currency:'GTQ' }
+    };
+
+
     // FUNCIÓN GLOBAL PARA CERRAR SESIÓN Y REINICIAR LAS CALCULADORAS
     window.cerrarSesionGlobal = function() {
       signOut(auth).then(() => {
@@ -2921,6 +2993,165 @@
       return { projectId, displayOrderId, ...pago };
     }
 
+
+    function bankAccountConfigured(account) {
+      return Boolean(account?.accountHolder && account?.accountNumber && account?.accountType);
+    }
+
+    function manualPaymentProjectId(method) {
+      const code = String(method||'manual').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0,24) || 'manual';
+      const random = (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,'').slice(-36);
+      return `${code}_${random}`;
+    }
+
+    function manualStatus(panel, message, type='info') {
+      const el = panel?.querySelector('.manual-status');
+      if(!el)return;
+      el.className=`manual-status ${type}`;
+      el.textContent=message;
+    }
+
+    async function uploadManualReceipt(user, projectId, file, onProgress) {
+      if(!paymentR2) throw new Error('El servidor de comprobantes R2 no está disponible.');
+      if(!file) throw new Error('Adjunta el comprobante del pago.');
+      if(file.size > 12*1024*1024) throw new Error('El comprobante no puede superar 12 MB.');
+      const allowed = /^image\//i.test(file.type) || file.type === 'application/pdf';
+      if(!allowed) throw new Error('El comprobante debe ser imagen o PDF.');
+
+      const fileId=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,'');
+      const safeName=String(file.name||'comprobante').replace(/[\\/]+/g,'_').slice(-160);
+      const path=`projects/${user.uid}/${projectId}/payment/${fileId}/${safeName}`;
+      const request=paymentR2.putObject({Bucket:R2_BUCKET_NAME,Key:path,Body:file,ContentType:file.type||'application/octet-stream'});
+      request.on('httpUploadProgress',p=>{if(p.total>0&&typeof onProgress==='function')onProgress(Math.round(p.loaded/p.total*100));});
+      await request.promise();
+      return {storagePath:path,name:file.name||safeName,size:file.size,contentType:file.type||'application/octet-stream'};
+    }
+
+    async function registrarPagoManualEnFirebase({tipoProyecto,monto,method,reference,payerName,receipt,bankKey=''}) {
+      const user=auth.currentUser;
+      if(!user?.uid) throw new Error('Debes iniciar sesión antes de enviar el comprobante.');
+      const baseUsd=Number(monto||0);
+      if(!Number.isFinite(baseUsd)||baseUsd<=0) throw new Error('Monto de pago inválido.');
+      const cfgOriginal=capturarConfiguracionProyecto(tipoProyecto);
+      if(!cfgOriginal) throw new Error('No se pudo leer la configuración del proyecto.');
+      const projectConfig=limpiarConfiguracionFirestore({...cfgOriginal,baseUsd});
+      const geo=window.evolutionGeo||{};
+      const projectId=manualPaymentProjectId(method);
+      const projectRef=doc(db,'users',user.uid,'projects',projectId);
+      const cleanReference=String(reference||'').trim().slice(0,140);
+      if(!cleanReference) throw new Error('Ingresa el ID o referencia de la transacción.');
+
+      const receiptInfo=await uploadManualReceipt(user,projectId,receipt);
+      const isBank=method==='bank_transfer';
+      const gtqRate=Number(window.exchangeRates?.GTQ?.rate || 0) || 7.65;
+      const paymentCurrency=isBank?'GTQ':'USDT';
+      const paymentAmount=isBank?(baseUsd*gtqRate):baseUsd;
+      const bank=BANK_TRANSFER_ACCOUNTS[bankKey]||null;
+      const displayOrderId=`#EVO-M${Date.now().toString().slice(-7)}`;
+      const paymentMethod=isBank?`Transferencia bancaria - ${bank?.bank||'Guatemala'}`:'Binance Pay';
+
+      const projectData={
+        ownerUid:user.uid,
+        ownerEmail:user.email||'',
+        payerName:String(payerName||user.displayName||user.email||'Cliente').trim().slice(0,120),
+        payerEmail:user.email||'',
+        payerRegion:geo.region||geo.city||'No reportada',
+        payerCountry:geo.country||'No reportado',
+        payerCountryCode:String(geo.countryCode||'').toUpperCase(),
+        transactionId:cleanReference,
+        manualPaymentReference:cleanReference,
+        paymentMethod,
+        paymentProvider:isBank?'bank_transfer':'binance_pay',
+        bankKey:isBank?bankKey:'',
+        bankName:isBank?(bank?.bank||''):'',
+        amount:paymentAmount.toFixed(2),
+        currency:paymentCurrency,
+        baseUsd,
+        expectedAmount:paymentAmount.toFixed(2),
+        expectedCurrency:paymentCurrency,
+        displayOrderId,
+        projectType:projectConfig.category||tipoProyecto,
+        projectTitle:projectConfig.packageName||tipoProyecto,
+        projectConfig,
+        source:isBank?'index-bank-manual':'index-binance-manual',
+        customOrder:false,
+        paymentStatus:'pending_review',
+        paymentReviewStatus:'pending',
+        status:'awaiting_payment',
+        paymentVerifiedByAdmin:false,
+        receiptStoragePath:receiptInfo.storagePath,
+        receiptName:receiptInfo.name,
+        receiptSize:receiptInfo.size,
+        receiptContentType:receiptInfo.contentType,
+        architectName:'Pendiente',
+        clientFileCount:0,
+        deliveryFileCount:0,
+        clientComments:'',
+        deliveryNote:'',
+        lastGeo:{city:geo.city||'',region:geo.region||'',country:geo.country||'',countryCode:geo.countryCode||'',currency:geo.currency||window.currentCurrency||''},
+        createdAt:serverTimestamp(),
+        updatedAt:serverTimestamp(),
+        paymentSubmittedAt:serverTimestamp()
+      };
+      await setDoc(projectRef,projectData,{merge:true});
+      try{await setDoc(doc(db,'users',user.uid),{uid:user.uid,email:user.email||'',displayName:user.displayName||payerName||'',lastGeo:projectData.lastGeo,lastManualPaymentMethod:paymentMethod,lastManualPaymentAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true});}catch(e){console.info('Proyecto manual registrado; perfil no actualizado:',e)}
+      return {projectId,displayOrderId,paymentMethod,paymentAmount,paymentCurrency};
+    }
+
+    function renderManualPayment(panel,{tipoProyecto,monto,method}) {
+      if(!panel)return;
+      const user=auth.currentUser;
+      const geo=window.evolutionGeo||{};
+      const isBank=method==='bank_transfer';
+      if(isBank && String(geo.countryCode||'').toUpperCase()!=='GT') {
+        panel.innerHTML='<div class="manual-warning">Transferencia bancaria está disponible únicamente para clientes detectados en Guatemala.</div>';
+        return;
+      }
+      const gtqRate=Number(window.exchangeRates?.GTQ?.rate||7.65);
+      const amount=isBank?Number(monto)*gtqRate:Number(monto);
+      const currency=isBank?'GTQ':'USDT';
+      const amountText=isBank?`Q ${amount.toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2})}`:`${amount.toFixed(2)} USDT`;
+      const banks=Object.entries(BANK_TRANSFER_ACCOUNTS);
+      const firstConfigured=banks.find(([,b])=>bankAccountConfigured(b))?.[0] || banks[0]?.[0] || '';
+
+      panel.innerHTML=`<div class="manual-payment-card" data-manual-method="${method}">
+        <div class="manual-payment-head"><strong>${isBank?'Transferencia bancaria':'Binance Pay · verificación manual'}</strong><span class="manual-payment-amount">${amountText}</span></div>
+        <div class="manual-payment-copy">${isBank?'Transfiere exactamente el monto indicado. Después adjunta el comprobante para que administración valide el depósito.':'Escanea el QR desde Binance, envía exactamente el monto indicado en USDT y luego adjunta el comprobante. Tu proyecto quedará en revisión hasta que administración confirme el ingreso.'}</div>
+        ${isBank?`<div class="bank-choice-grid">${banks.map(([key,b])=>`<button type="button" class="bank-choice ${key===firstConfigured?'active':''}" data-bank-key="${key}">${b.bank}</button>`).join('')}</div><div class="bank-account-details"></div>`:`<img class="binance-qr-img" src="${BINANCE_PAYMENT.qrImage}" alt="QR Binance Pay Evolution Design"><div class="manual-meta"><div class="manual-meta-row"><span>Alias</span><strong>${BINANCE_PAYMENT.alias}</strong></div><div class="manual-meta-row"><span>Activo</span><strong>${BINANCE_PAYMENT.asset}</strong></div><div class="manual-meta-row"><span>Monto exacto</span><strong>${amountText}</strong></div></div>`}
+        <div class="manual-field"><label>Nombre de quien realizó el pago</label><input class="manual-input manual-payer-name" value="${String(user?.displayName||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" placeholder="Nombre del pagador"></div>
+        <div class="manual-field"><label>ID / referencia de la transacción</label><input class="manual-input manual-reference" placeholder="Copia aquí la referencia del pago"></div>
+        <div class="manual-field"><label>Comprobante</label><input class="manual-input manual-file" type="file" accept="image/*,application/pdf"></div>
+        <button type="button" class="manual-submit">Enviar comprobante para revisión</button>
+        <div class="manual-status"></div>
+      </div>`;
+
+      let selectedBank=firstConfigured;
+      const detailsBox=panel.querySelector('.bank-account-details');
+      const submit=panel.querySelector('.manual-submit');
+      const refreshBank=()=>{
+        if(!isBank)return;
+        const b=BANK_TRANSFER_ACCOUNTS[selectedBank];
+        const configured=bankAccountConfigured(b);
+        detailsBox.innerHTML=configured?`<div class="manual-meta"><div class="manual-meta-row"><span>Banco</span><strong>${b.bank}</strong></div><div class="manual-meta-row"><span>Titular</span><strong>${b.accountHolder}</strong></div><div class="manual-meta-row"><span>Tipo</span><strong>${b.accountType}</strong></div><div class="manual-meta-row"><span>No. cuenta</span><strong>${b.accountNumber}</strong></div><div class="manual-meta-row"><span>Monto</span><strong>${amountText}</strong></div></div>`:`<div class="manual-warning">${b?.bank||'Este banco'} está preparado en el sistema, pero faltan el titular, tipo y número de cuenta reales antes de activarlo.</div>`;
+        submit.disabled=!configured;
+      };
+      if(isBank){panel.querySelectorAll('.bank-choice').forEach(btn=>btn.addEventListener('click',()=>{selectedBank=btn.dataset.bankKey;panel.querySelectorAll('.bank-choice').forEach(x=>x.classList.toggle('active',x===btn));refreshBank()}));refreshBank()}
+
+      submit.addEventListener('click',async()=>{
+        const reference=panel.querySelector('.manual-reference')?.value.trim();
+        const payerName=panel.querySelector('.manual-payer-name')?.value.trim();
+        const receipt=panel.querySelector('.manual-file')?.files?.[0];
+        if(!reference){manualStatus(panel,'Ingresa el ID o referencia de la transacción.','error');return}
+        if(!receipt){manualStatus(panel,'Adjunta una captura o PDF del comprobante.','error');return}
+        const old=submit.textContent;submit.disabled=true;submit.textContent='Subiendo comprobante…';manualStatus(panel,'Guardando comprobante en Evolution Group…','info');
+        try{
+          const result=await registrarPagoManualEnFirebase({tipoProyecto,monto,method,reference,payerName,receipt,bankKey:selectedBank});
+          manualStatus(panel,`Comprobante recibido. Orden ${result.displayOrderId}. Te llevamos a Mis Proyectos…`,'ok');
+          setTimeout(()=>{window.location.href='proyectos.html'},900);
+        }catch(e){console.error(e);manualStatus(panel,e?.message||'No se pudo registrar el comprobante.','error');submit.disabled=false;submit.textContent=old}
+      });
+    }
+
     function setCurrencyNote(selector, displayCurrency, checkoutCurrency) {
       const target = document.querySelector(selector);
       if (!target) return;
@@ -2980,7 +3211,7 @@
       }
     }
 
-    async function renderizarBotonPayPal(monto, selector, tipoProyecto) {
+    async function renderizarPayPalDirecto(monto, selector, tipoProyecto) {
       try {
         if (window.currencyReadyPromise) await window.currencyReadyPromise.catch(() => {});
 
@@ -3114,16 +3345,42 @@
       }
     }
 
+
+    async function renderizarMetodosPago(monto, selector, tipoProyecto) {
+      if(window.currencyReadyPromise) await window.currencyReadyPromise.catch(()=>{});
+      const host=document.querySelector(selector);
+      if(!host)return;
+      const geo=window.evolutionGeo||{};
+      const isGuatemala=String(geo.countryCode||'').toUpperCase()==='GT';
+      host.innerHTML=`<div class="payment-method-title">Elige cómo quieres pagar</div><div class="payment-method-grid ${isGuatemala?'has-bank':''}"><button type="button" class="payment-method-btn active" data-pay-method="paypal">Tarjeta · PayPal</button><button type="button" class="payment-method-btn binance" data-pay-method="binance">◆ Binance Pay</button>${isGuatemala?'<button type="button" class="payment-method-btn bank" data-pay-method="bank">Transferencia bancaria</button>':''}</div><div class="payment-method-panel"></div>${isGuatemala?'<div class="payment-gt-only-note">Transferencias habilitadas porque tu IP fue detectada en Guatemala.</div>':''}`;
+      const panel=host.querySelector('.payment-method-panel');
+      const selectMethod=method=>{
+        host.querySelectorAll('.payment-method-btn').forEach(b=>b.classList.toggle('active',b.dataset.payMethod===method));
+        panel.innerHTML='';
+        if(method==='paypal'){
+          const paypalId=`${host.id}-paypal-direct`;
+          panel.innerHTML=`<div class="paypal-white-card"><div id="${paypalId}"></div></div>`;
+          renderizarPayPalDirecto(monto,`#${paypalId}`,tipoProyecto);
+        }else if(method==='binance'){
+          renderManualPayment(panel,{tipoProyecto,monto,method:'binance_pay'});
+        }else if(method==='bank'){
+          renderManualPayment(panel,{tipoProyecto,monto,method:'bank_transfer'});
+        }
+      };
+      host.querySelectorAll('.payment-method-btn').forEach(btn=>btn.addEventListener('click',()=>selectMethod(btn.dataset.payMethod)));
+      selectMethod('paypal');
+    }
+
     window.renderizarPayPal3D = function(monto, selector) {
-      renderizarBotonPayPal(monto, selector, 'Visualización 3D');
+      renderizarMetodosPago(monto, selector, 'Visualización 3D');
     };
 
     window.renderizarPayPal2D = function(monto, selector) {
-      renderizarBotonPayPal(monto, selector, 'Planos 2D');
+      renderizarMetodosPago(monto, selector, 'Planos 2D');
     };
 
     window.renderizarPayPalFachada = function(monto, selector) {
-      renderizarBotonPayPal(monto, selector, 'Diseño de Fachada');
+      renderizarMetodosPago(monto, selector, 'Diseño de Fachada');
     };
   </script>
 
