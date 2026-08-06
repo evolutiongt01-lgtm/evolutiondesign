@@ -949,6 +949,46 @@
         .btn-liquid-glass { min-height: 44px; }
       }
 
+
+
+      /* PROYECTOS DINÁMICOS: resumen exacto de la tarifa comprada */
+      .included-card { margin-top: 1rem; padding: 1.45rem; }
+      .included-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .65rem;
+        margin: .9rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .included-list li {
+        position: relative;
+        min-width: 0;
+        padding: .72rem .78rem .72rem 2rem;
+        border: 1px solid var(--line-soft);
+        border-radius: 12px;
+        background: rgba(255,255,255,.018);
+        color: #c9c9cc;
+        font-size: .7rem;
+        line-height: 1.45;
+      }
+      .included-list li::before {
+        content: '✓';
+        position: absolute;
+        left: .75rem;
+        top: .72rem;
+        color: var(--accent);
+        font-weight: 800;
+      }
+      .project-shell + .project-shell { margin-top: 1.25rem; }
+      .project-loading { padding: 3rem 1rem; text-align: center; color: var(--muted); }
+      .delivery-date { display: block; color: #fff; font-size: .82rem; font-weight: 600; }
+      .project-hero .mini-meta { max-width: 780px; }
+      @media (max-width: 767.98px) {
+        .included-list { grid-template-columns: 1fr; }
+        .included-card { padding: 1.1rem; }
+      }
+
       @media (max-width: 390px) {
         .nav-pill { padding-left: .72rem; }
         .nav-pill img { max-width: 112px; }
@@ -1154,273 +1194,268 @@
             <a href="index.html#servicios-tecnicos" class="btn-liquid-glass">Ir a cotizar un proyecto</a>
           </div>
 
-          <!-- TARJETA DE PROYECTO -->
+          <!-- PROYECTOS DEL CLIENTE: se generan desde las compras aprobadas -->
           <div id="lista-proyectos-container">
-            <section class="project-shell">
-              <div class="row g-0">
-
-                <!-- CONTENIDO PRINCIPAL -->
-                <div class="col-12 col-lg-8 project-content-col">
-                  <div class="project-main">
-
-                    <div class="project-hero">
-                      <div class="hero-copy">
-                        <span class="project-badge">En Preparación de Archivos</span>
-                        <h2 class="project-name fw-bold text-white">Paquete Planos 2D - Premium</h2>
-                        <div class="order-id">Orden ID: <span>#EVO-98243</span></div>
-                      </div>
-                    </div>
-
-                    <div class="content-grid">
-                      <!-- INVERSIÓN -->
-                      <div class="ui-card price-card">
-                        <div>
-                          <div class="price-label">Inversión Total</div>
-                          <p class="price-value">$800.00 <span class="price-currency">USD</span></p>
-
-                          <div class="client-payment-meta">
-                            <div class="client-payment-row">
-                              <span class="client-payment-label">Cliente</span>
-                              <span class="client-payment-value" id="nombre-cliente">Nombre del cliente</span>
-                            </div>
-                            <div class="client-payment-row">
-                              <span class="client-payment-label">ID de Transacción</span>
-                              <span class="client-payment-value transaction" id="id-transaccion">#TXN-000000</span>
-                            </div>
-                            <div class="client-payment-row">
-                              <span class="client-payment-label">País del Cliente</span>
-                              <span class="client-payment-value" id="pais-cliente-paypal">Pendiente de PayPal</span>
-                            </div>
-                            <div class="client-payment-row">
-                              <span class="client-payment-label">Método de Pago</span>
-                              <span class="client-payment-value" id="metodo-pago-paypal">PayPal</span>
-                            </div>
-                            <div class="client-payment-row">
-                              <span class="client-payment-label">Ubicación por IP</span>
-                              <span class="client-payment-value location is-loading" id="ubicacion-ip-cliente">Detectando...</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="verified-note">
-                          <span class="verified-dot">✓</span>
-                          <span>Pago seguro procesado correctamente.</span>
-                        </div>
-                      </div>
-
-                      <!-- ARCHIVOS -->
-                      <div class="ui-card upload-card">
-                        <h3 class="section-heading">
-                          <span class="section-icon">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
-                          </span>
-                          Archivos Requeridos
-                        </h3>
-                        <p class="section-copy">Sube tu archivo AutoCAD (DWG/DWF), PDF de medidas o la imagen clara de tu dibujo a mano alzada.</p>
-
-                        <div class="upload-dropzone" onclick="document.getElementById('fileInput1').click();">
-                          <svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.3" class="accent-text mb-3" viewBox="0 0 24 24"><path d="M16 16l-4-4-4 4M12 12v9"></path><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"></path></svg>
-                          <div class="upload-title">Arrastra o selecciona tus archivos</div>
-                          <div class="upload-sub">PDF, DWG, DWF, PNG, JPG · Máx. 50MB</div>
-                          <span class="upload-action">Seleccionar Archivos</span>
-                          <input type="file" id="fileInput1" class="d-none" hidden multiple onchange="mostrarNombreArchivo(this)">
-                        </div>
-                        <div id="archivo-seleccionado-1" class="file-ready small mt-3 fw-medium" style="display: none;"></div>
-                      </div>
-                    </div>
-
-                    <!-- COMENTARIOS -->
-                    <div class="ui-card comments-card">
-                      <h3 class="section-heading">
-                        <span class="section-icon">
-                          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"></path></svg>
-                        </span>
-                        Comentarios del Cliente
-                      </h3>
-                      <p class="section-copy">Añade especificaciones o notas especiales para el arquitecto.</p>
-                      <textarea id="comentarios-cliente" class="custom-textarea" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás..."></textarea>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- ESTADO DEL PROYECTO -->
-                <div class="col-12 col-lg-4 project-status-col">
-                  <div class="status-wrap">
-                    <aside class="status-panel">
-                      <div class="status-title-row">
-                        <h3 class="status-heading">Estado del Proyecto</h3>
-                      </div>
-
-                      <div class="tracker-container">
-                        <div class="tracker-step completed" id="step-pago">
-                          <div class="tracker-icon">✓</div>
-                          <div class="tracker-text">
-                            <div class="tracker-title">Pago Verificado</div>
-                            <p class="tracker-desc">Transacción segura procesada correctamente.</p>
-                          </div>
-                        </div>
-
-                        <div class="tracker-step active" id="step-archivos">
-                          <div class="tracker-icon">2</div>
-                          <div class="tracker-text">
-                            <div class="tracker-title">Esperando Archivos</div>
-                            <p class="tracker-desc">Sube la información solicitada en la sección izquierda.</p>
-                          </div>
-                        </div>
-
-                        <div class="tracker-step" id="step-arqui">
-                          <div class="tracker-icon">3</div>
-                          <div class="tracker-text">
-                            <div class="tracker-title">Asignación de Arquitecto</div>
-                            <p class="tracker-desc">Arquitecto delegado: <span id="arqui-name" class="text-white fw-medium">Pendiente</span></p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="delivery-card">
-                        <div class="delivery-label">
-                          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
-                          Entrega estimada
-                        </div>
-                        <span id="texto-fecha-entrega">Calculando entrega...</span>
-                        <span class="delivery-help">Tiempo de proceso: 3 días hábiles desde el envío de archivos.</span>
-                      </div>
-
-                      <div class="status-actions">
-                        <button type="button" class="send-btn" onclick="alert('Función conectada. ¡Pronto tus archivos llegarán al sistema!')">Enviar Archivos al Equipo</button>
-
-                        <!-- BOTÓN WHATSAPP PARA ESTADOS UNIDOS (OCULTO POR DEFECTO) -->
-                        <div id="btn-whatsapp-us" class="whatsapp-wrap" style="display: none;">
-                          <a href="https://wa.me/18329774150?text=Hola,%20soy%20cliente%20y%20me%20gustar%C3%ADa%20hablar%20sobre%20mi%20proyecto" target="_blank" class="btn w-100 fw-bold py-2 mt-2 d-flex justify-content-center align-items-center gap-2" style="background-color: transparent; border: 1px solid #25D366; color: #25D366; font-size: 0.72rem;">
-                          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                            Solicitar Asesoría por Teléfono
-                          </a>
-                        </div>
-                      </div>
-                    </aside>
-                  </div>
-                </div>
-              </div>
-            </section>
+            <div class="project-loading">Cargando tus proyectos…</div>
           </div>
         </div>
       </div>
     </main>
 
-    <!-- SCRIPT AUXILIAR PARA ARCHIVOS, FECHA Y GEOLOCALIZACIÓN -->
+    <!-- PROYECTOS DINÁMICOS: cada usuario ve únicamente sus compras locales -->
     <script>
-      // Muestra los nombres de los archivos subidos
-      function mostrarNombreArchivo(input) {
-        const div = document.getElementById('archivo-seleccionado-1');
-        if (input.files && input.files.length > 0) {
-          let nombres = Array.from(input.files).map(f => f.name).join(', ');
-          div.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="me-1 mb-1" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Archivo(s) listo(s): <span class="text-white">${nombres}</span>`;
+      function escapeHTML(value) {
+        return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+      }
+
+      function safeId(value) {
+        return String(value || Math.random().toString(36).slice(2)).replace(/[^A-Za-z0-9_-]/g, '').slice(-24);
+      }
+
+      function formatMoney(amount, currency) {
+        const value = Number(amount || 0);
+        const code = String(currency || 'USD').toUpperCase();
+        try {
+          return new Intl.NumberFormat('es-GT', { style: 'currency', currency: code, maximumFractionDigits: ['JPY','HUF','TWD'].includes(code) ? 0 : 2 }).format(value);
+        } catch (e) {
+          return `${value.toFixed(2)} ${code}`;
+        }
+      }
+
+      function calcularFechaEntrega(diasHabiles) {
+        const fecha = new Date();
+        let agregados = 0;
+        while (agregados < diasHabiles) {
+          fecha.setDate(fecha.getDate() + 1);
+          if (fecha.getDay() !== 0 && fecha.getDay() !== 6) agregados++;
+        }
+        const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
+        const f = fecha.toLocaleDateString('es-GT', opciones);
+        return f.charAt(0).toUpperCase() + f.slice(1);
+      }
+
+      function renderSpecs(specs) {
+        if (!Array.isArray(specs) || !specs.length) return '';
+        return `<div class="mini-meta">${specs.map(item => `
+          <span class="mini-meta-item"><span class="mini-meta-dot"></span><strong>${escapeHTML(item.label)}:</strong> ${escapeHTML(item.value)}</span>
+        `).join('')}</div>`;
+      }
+
+      function renderIncluded(items) {
+        if (!Array.isArray(items) || !items.length) return '';
+        return `
+          <div class="ui-card included-card">
+            <h3 class="section-heading">
+              <span class="section-icon">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
+              </span>
+              Tu tarifa incluye
+            </h3>
+            <p class="section-copy mb-0">Estos son los beneficios incluidos en la tarifa que adquiriste.</p>
+            <ul class="included-list">${items.map(x => `<li>${escapeHTML(x)}</li>`).join('')}</ul>
+          </div>`;
+      }
+
+      function renderProject(project, index) {
+        const cfg = project.projectConfig || {};
+        const unique = safeId(project.transactionId || project.orderId || `project-${index}`);
+        const orderId = project.displayOrderId || `#EVO-${unique.slice(-8).toUpperCase()}`;
+        const title = project.projectTitle || cfg.packageName || project.projectType || 'Proyecto Evolution Design';
+        const uploadTitle = cfg.uploadTitle || 'Archivos Requeridos';
+        const uploadCopy = cfg.uploadCopy || 'Sube los archivos y referencias necesarios para iniciar tu proyecto.';
+        const uploadFormats = cfg.uploadFormats || 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB';
+        const fileInputId = `file-${unique}`;
+        const fileReadyId = `ready-${unique}`;
+        const commentId = `comments-${unique}`;
+        const payerCountry = project.payerCountry || 'No reportado';
+        const method = project.paymentMethod || 'PayPal';
+        const payerName = project.payerName || 'Cliente';
+        const transaction = project.transactionId || project.orderId || 'Pendiente';
+        const amount = formatMoney(project.amount, project.currency);
+        const currency = String(project.currency || 'USD').toUpperCase();
+
+        return `
+          <section class="project-shell" data-project-id="${escapeHTML(unique)}">
+            <div class="row g-0">
+              <div class="col-12 col-lg-8 project-content-col">
+                <div class="project-main">
+                  <div class="project-hero">
+                    <div class="hero-copy">
+                      <span class="project-badge">En Preparación de Archivos</span>
+                      <h2 class="project-name fw-bold text-white">${escapeHTML(title)}</h2>
+                      <div class="order-id">Orden ID: <span>${escapeHTML(orderId)}</span></div>
+                      ${renderSpecs(cfg.specs)}
+                    </div>
+                  </div>
+
+                  <div class="content-grid">
+                    <div class="ui-card price-card">
+                      <div>
+                        <div class="price-label">Inversión Total</div>
+                        <p class="price-value">${escapeHTML(amount)} <span class="price-currency">${escapeHTML(currency)}</span></p>
+                        <div class="client-payment-meta">
+                          <div class="client-payment-row"><span class="client-payment-label">Cliente</span><span class="client-payment-value">${escapeHTML(payerName)}</span></div>
+                          <div class="client-payment-row"><span class="client-payment-label">ID de Transacción</span><span class="client-payment-value transaction">${escapeHTML(transaction)}</span></div>
+                          <div class="client-payment-row"><span class="client-payment-label">País del Cliente</span><span class="client-payment-value">${escapeHTML(payerCountry)}</span></div>
+                          <div class="client-payment-row"><span class="client-payment-label">Método de Pago</span><span class="client-payment-value">${escapeHTML(method)}</span></div>
+                          <div class="client-payment-row"><span class="client-payment-label">Ubicación por IP</span><span class="client-payment-value location is-loading ubicacion-ip-cliente">Detectando…</span></div>
+                        </div>
+                      </div>
+                      <div class="verified-note"><span class="verified-dot">✓</span><span>Pago seguro procesado correctamente.</span></div>
+                    </div>
+
+                    <div class="ui-card upload-card">
+                      <h3 class="section-heading">
+                        <span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg></span>
+                        ${escapeHTML(uploadTitle)}
+                      </h3>
+                      <p class="section-copy">${escapeHTML(uploadCopy)}</p>
+                      <div class="upload-dropzone" onclick="document.getElementById('${fileInputId}').click();">
+                        <svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.3" class="accent-text mb-3" viewBox="0 0 24 24"><path d="M16 16l-4-4-4 4M12 12v9"></path><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"></path></svg>
+                        <div class="upload-title">Arrastra o selecciona tus archivos</div>
+                        <div class="upload-sub">${escapeHTML(uploadFormats)}</div>
+                        <span class="upload-action">Seleccionar Archivos</span>
+                        <input type="file" id="${fileInputId}" hidden multiple accept=".pdf,.dwg,.dwf,.png,.jpg,.jpeg" onchange="mostrarNombreArchivo(this, '${fileReadyId}')">
+                      </div>
+                      <div id="${fileReadyId}" class="file-ready small mt-3 fw-medium" style="display:none;"></div>
+                    </div>
+                  </div>
+
+                  ${renderIncluded(cfg.includedHighlights)}
+
+                  <div class="ui-card comments-card">
+                    <h3 class="section-heading">
+                      <span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"></path></svg></span>
+                      Comentarios del Cliente
+                    </h3>
+                    <p class="section-copy">Añade especificaciones o notas especiales para el arquitecto.</p>
+                    <textarea id="${commentId}" class="custom-textarea" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás…"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-4 project-status-col">
+                <div class="status-wrap">
+                  <aside class="status-panel">
+                    <div class="status-title-row"><h3 class="status-heading">Estado del Proyecto</h3></div>
+                    <div class="tracker-container">
+                      <div class="tracker-step completed"><div class="tracker-icon">✓</div><div class="tracker-text"><div class="tracker-title">Pago Verificado</div><p class="tracker-desc">Transacción segura procesada correctamente.</p></div></div>
+                      <div class="tracker-step active"><div class="tracker-icon">2</div><div class="tracker-text"><div class="tracker-title">Esperando Archivos</div><p class="tracker-desc">Sube la información específica solicitada para esta tarifa.</p></div></div>
+                      <div class="tracker-step"><div class="tracker-icon">3</div><div class="tracker-text"><div class="tracker-title">Asignación de Arquitecto</div><p class="tracker-desc">Arquitecto delegado: <span class="text-white fw-medium">Pendiente</span></p></div></div>
+                    </div>
+                    <div class="delivery-card">
+                      <div class="delivery-label"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg> Entrega estimada</div>
+                      <span class="delivery-date">Entrega estimada: <span class="accent-text">${escapeHTML(calcularFechaEntrega(3))}</span></span>
+                      <span class="delivery-help">Tiempo de proceso: 3 días hábiles desde el envío de archivos.</span>
+                    </div>
+                    <div class="status-actions">
+                      <button type="button" class="send-btn" onclick="alert('Archivos preparados para ${escapeHTML(title).replace(/'/g, "\\'")}. Conecta aquí tu backend de almacenamiento cuando esté listo.')">Enviar Archivos al Equipo</button>
+                      <div class="whatsapp-wrap btn-whatsapp-us" style="display:none;">
+                        <a href="https://wa.me/18329774150?text=Hola,%20soy%20cliente%20y%20me%20gustar%C3%ADa%20hablar%20sobre%20mi%20proyecto" target="_blank" class="btn w-100 fw-bold py-2 d-flex justify-content-center align-items-center gap-2" style="background-color:transparent;border:1px solid #25D366;color:#25D366;font-size:.72rem;">Solicitar Asesoría</a>
+                      </div>
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      function mostrarNombreArchivo(input, readyId) {
+        const div = document.getElementById(readyId);
+        if (!div) return;
+        if (input.files && input.files.length) {
+          const names = Array.from(input.files).map(f => f.name).join(', ');
+          div.innerHTML = `✓ Archivo(s) listo(s): <span class="text-white">${escapeHTML(names)}</span>`;
           div.style.display = 'block';
         } else {
           div.style.display = 'none';
         }
       }
 
-      document.addEventListener("DOMContentLoaded", function() {
-        // --- CÁLCULO DE 3 DÍAS HÁBILES ---
-        function calcularFechaEntrega(diasHabiles) {
-          let fecha = new Date(); 
-          let agregados = 0;
-          
-          while (agregados < diasHabiles) {
-            fecha.setDate(fecha.getDate() + 1);
-            // 0 es Domingo, 6 es Sábado. Solo sumamos si es Lunes-Viernes
-            if (fecha.getDay() !== 0 && fecha.getDay() !== 6) {
-              agregados++;
-            }
-          }
-          
-          const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
-          let fechaFormateada = fecha.toLocaleDateString('es-GT', opciones);
-          return fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
+      function mostrarEstadoVacio(titulo, texto) {
+        const container = document.getElementById('lista-proyectos-container');
+        const empty = document.getElementById('sin-proyectos-msg');
+        if (container) container.innerHTML = '';
+        if (empty) {
+          empty.style.display = 'block';
+          const h = empty.querySelector('h4');
+          const p = empty.querySelector('p');
+          if (h) h.textContent = titulo;
+          if (p) p.textContent = texto;
+        }
+      }
+
+      function cargarProyectosUsuario(user) {
+        const container = document.getElementById('lista-proyectos-container');
+        const empty = document.getElementById('sin-proyectos-msg');
+        if (!container) return;
+
+        const ownerKey = user?.uid || user?.email || '';
+        if (!ownerKey) {
+          mostrarEstadoVacio('Inicia sesión para ver tus proyectos', 'Tus compras aparecerán aquí después de iniciar sesión con la misma cuenta que utilizaste antes de pagar.');
+          return;
         }
 
-        const fechaEl = document.getElementById('texto-fecha-entrega');
-        if (fechaEl) {
-          fechaEl.innerHTML = `Entrega estimada: <span class="accent-text">${calcularFechaEntrega(3)}</span>`;
-        }
+        const storageKey = `evolution_projects_v1:${ownerKey}`;
+        let projects = [];
+        try {
+          const raw = localStorage.getItem(storageKey);
+          projects = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(projects)) projects = [];
+        } catch (e) { projects = []; }
 
-        // --- DATOS DEL PAGO PAYPAL ---
-        // Este panel queda listo para recibir los datos reales guardados por el checkout.
-        // Cuando conectemos el index, tras un pago aprobado guardaremos un objeto en:
-        // localStorage["evolution_paypal_payment"]
-        // Campos admitidos: payerName, transactionId, payerCountry, paymentMethod,
-        // amount, currency y orderId.
-        function cargarDatosPagoPayPal() {
-          const nombreEl = document.getElementById('nombre-cliente');
-          const transaccionEl = document.getElementById('id-transaccion');
-          const paisEl = document.getElementById('pais-cliente-paypal');
-          const metodoEl = document.getElementById('metodo-pago-paypal');
-
-          let paymentData = null;
-
+        // Migra una compra real de la versión anterior, sin volver a mostrar el ejemplo estático.
+        if (!projects.length) {
           try {
-            const raw = localStorage.getItem('evolution_paypal_payment');
-            if (raw) paymentData = JSON.parse(raw);
-          } catch (error) {
-            console.log('No fue posible leer los datos guardados de PayPal:', error);
-          }
-
-          // Compatibilidad adicional con parámetros de URL para futuras integraciones.
-          const params = new URLSearchParams(window.location.search);
-          paymentData = paymentData || {};
-          paymentData.payerName = paymentData.payerName || params.get('payer_name');
-          paymentData.transactionId = paymentData.transactionId || params.get('transaction_id');
-          paymentData.payerCountry = paymentData.payerCountry || params.get('payer_country');
-          paymentData.paymentMethod = paymentData.paymentMethod || params.get('payment_method');
-
-          if (nombreEl && paymentData.payerName) {
-            nombreEl.textContent = paymentData.payerName;
-          }
-          if (transaccionEl && paymentData.transactionId) {
-            transaccionEl.textContent = paymentData.transactionId;
-          }
-          if (paisEl && paymentData.payerCountry) {
-            paisEl.textContent = paymentData.payerCountry;
-            paisEl.title = 'País reportado por PayPal para el pagador o la dirección de facturación';
-          }
-          if (metodoEl && paymentData.paymentMethod) {
-            metodoEl.textContent = paymentData.paymentMethod;
-          }
+            const legacyRaw = localStorage.getItem('evolution_paypal_payment');
+            const legacy = legacyRaw ? JSON.parse(legacyRaw) : null;
+            const isReal = legacy && legacy.transactionId && legacy.transactionId !== '#TXN-000000' && legacy.paidAt;
+            const belongs = !legacy?.ownerUid || legacy.ownerUid === user.uid || legacy.ownerEmail === user.email;
+            if (isReal && belongs) {
+              projects = [legacy];
+              localStorage.setItem(storageKey, JSON.stringify(projects));
+            }
+          } catch (e) {}
         }
 
-        cargarDatosPagoPayPal();
+        if (!projects.length) {
+          mostrarEstadoVacio('Aún no tienes proyectos pagados', 'Cuando completes un pago desde una tarifa del inicio, esa compra aparecerá aquí automáticamente con sus requisitos y beneficios.');
+          return;
+        }
 
-        // --- UBICACIÓN APROXIMADA POR IP + REGLA DE WHATSAPP ---
-        // La IP estima dónde se conecta el cliente; PayPal aporta por separado el país del pagador/facturación.
-        const ubicacionIpEl = document.getElementById('ubicacion-ip-cliente');
+        if (empty) empty.style.display = 'none';
+        container.innerHTML = projects.map(renderProject).join('');
+        detectarUbicacionIp();
+      }
 
+      function detectarUbicacionIp() {
         fetch('https://ipapi.co/json/')
-          .then(response => {
-            if (!response.ok) throw new Error('No se pudo consultar la ubicación');
-            return response.json();
-          })
+          .then(r => { if (!r.ok) throw new Error('IP'); return r.json(); })
           .then(data => {
-            if (ubicacionIpEl) {
-              const partes = [data.city, data.region, data.country_name].filter(Boolean);
-              ubicacionIpEl.textContent = partes.length ? partes.join(', ') : 'No disponible';
-              ubicacionIpEl.classList.remove('is-loading');
-              ubicacionIpEl.title = 'Ubicación aproximada detectada por dirección IP';
-            }
-
-            // Conserva el comportamiento existente para clientes detectados en Estados Unidos.
-            if (data.country_code === 'US') {
-              const waBtn = document.getElementById('btn-whatsapp-us');
-              if (waBtn) waBtn.style.display = 'block';
-            }
+            const location = [data.city, data.region, data.country_name].filter(Boolean).join(', ') || 'No disponible';
+            document.querySelectorAll('.ubicacion-ip-cliente').forEach(el => { el.textContent = location; el.classList.remove('is-loading'); });
+            if (data.country_code === 'US') document.querySelectorAll('.btn-whatsapp-us').forEach(el => el.style.display = 'block');
           })
-          .catch(error => {
-            if (ubicacionIpEl) {
-              ubicacionIpEl.textContent = 'No disponible';
-              ubicacionIpEl.classList.remove('is-loading');
-            }
-            console.log('No fue posible detectar la ubicación aproximada por IP:', error);
-          });
-      });
+          .catch(() => document.querySelectorAll('.ubicacion-ip-cliente').forEach(el => { el.textContent = 'No disponible'; el.classList.remove('is-loading'); }));
+      }
+    </script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",
+        authDomain: "evolution-design-9b63b.firebaseapp.com",
+        projectId: "evolution-design-9b63b",
+        storageBucket: "evolution-design-9b63b.firebasestorage.app",
+        messagingSenderId: "433474708581",
+        appId: "1:433474708581:web:cff7830077fb7d0e8a128c"
+      };
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      onAuthStateChanged(auth, user => cargarProyectosUsuario(user));
     </script>
 
     <script src="js/bootstrap.bundle.min.js" defer></script>
