@@ -1359,7 +1359,7 @@
       function fileRows(files,project,role){
         const active=files.filter(f=>f.availability!=='deleted');
         if(!active.length)return `<div class="file-empty">${role==='delivery'?'Aún no hay archivos de entrega.':'Aún no has subido archivos.'}</div>`;
-        return active.map(f=>`<div class="project-file-row"><div class="project-file-icon">${esc(ext(f.name))}</div><div class="project-file-info"><div class="project-file-name">${esc(f.label||f.name)}</div><div class="project-file-meta">${esc(bytes(f.size))} · ${role==='delivery'?'Entregado por Evolution Design':'Subido por ti'}</div></div><button class="file-download-btn" onclick="descargarArchivoR2('${esc(f.storagePath)}','${esc(f.label||f.name)}',this)">Descargar</button></div>`).join('');
+        return active.map(f=>`<div class="project-file-row"><div class="project-file-icon">${esc(ext(f.name))}</div><div class="project-file-info"><div class="project-file-name">${esc(f.label||f.name)}</div><div class="project-file-meta">${esc(bytes(f.size))} · ${role==='delivery'?'Entregado por Evolution Design':'Subido por ti'}</div></div><button class="file-download-btn" onclick="descargarArchivoR2('${esc(f.storagePath)}','${esc(f.label||f.name)}',this)">Descargar</button>${role==='client' ? `<button class="file-download-btn" style="border-color:rgba(255,100,100,0.3);color:#ff8888;margin-left:5px" onclick="eliminarArchivoR2Cliente('${esc(project.id)}','${esc(f.id)}','${esc(f.storagePath)}',this)">✕</button>` : ''}</div>`).join('');
       }
 
       function attachFiles(user,project){
@@ -1367,6 +1367,28 @@
         if(clientEl){const q=collection(db,'users',user.uid,'projects',project.id,'clientFiles');fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.uploadedAt)-dateValue(a.uploadedAt));clientEl.innerHTML=fileRows(files,project,'client')},e=>clientEl.innerHTML='<div class="file-empty">No se pudieron cargar los archivos.</div>'));}
         if(deliveryCard){const q=collection(db,'users',user.uid,'projects',project.id,'deliveryFiles');fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.uploadedAt)-dateValue(a.uploadedAt));const active=files.filter(f=>f.availability!=='deleted');deliveryCard.innerHTML=active.length?`<div class="ui-card delivery-files-card"><h3 class="section-heading"><span class="section-icon" style="color:#55d981;background:rgba(43,200,102,.08);border-color:rgba(43,200,102,.16)">✓</span>Archivos de Entrega</h3><p class="section-copy">Evolution Design ha enviado ${active.length} archivo(s) para este proyecto.</p><div class="project-file-list">${fileRows(files,project,'delivery')}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`:'';}));}
       }
+
+      // === ELIMINAR ARCHIVO (BOTON X) DESDE CLIENTE ===
+      window.eliminarArchivoR2Cliente=async function(projectId,fileId,storagePath,button){
+        if(!confirm('¿Estás seguro de eliminar este archivo?'))return;
+        if(!s3)return;
+        const user=auth.currentUser;
+        const old=button.textContent;button.disabled=true;button.textContent='...';
+        try{
+          await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:storagePath}).promise().catch(e=>console.log(e));
+          await updateDoc(doc(db,'users',user.uid,'projects',projectId,'clientFiles',fileId),{availability:'deleted',deletedAt:serverTimestamp()});
+          const pRef=doc(db,'users',user.uid,'projects',projectId);
+          const snap=await getDoc(pRef);
+          if(snap.exists()){
+            const current=Math.max(0,Number(snap.data().clientFileCount||0)-1);
+            await updateDoc(pRef,{clientFileCount:current,updatedAt:serverTimestamp()});
+          }
+        }catch(e){
+          console.error(e);alert('No se pudo eliminar el archivo.');
+        }finally{
+          button.disabled=false;button.textContent=old;
+        }
+      };
 
       // === SUBIDA DIRECTA A CLOUDFLARE R2 DESDE EL CLIENTE (CON AWS SDK v2) ===
       window.subirArchivosProyecto=async function(projectId,input,progressId,feedbackId){
