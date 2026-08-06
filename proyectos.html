@@ -20,9 +20,9 @@
     
     <link rel="preload" href="css/theme.min.css" as="style">
     <link rel="stylesheet" href="css/theme.min.css">
-
-    <!-- SDK DE CLOUDFLARE R2 (AWS S3) -->
-    <script src="https://cdn.jsdelivr.net/npm/@aws-sdk/client-s3@3.500.0/dist/aws-sdk-s3.min.js"></script>
+    
+    <!-- SDK DE AWS v2 (Tanque de guerra para Cloudflare R2 en navegadores) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1390.0/aws-sdk.min.js"></script>
 
     <style>
       @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: local(''), url('fonts/inter-v12-latin-300.woff2') format('woff2'), url('fonts/inter-v12-latin-300.woff') format('woff'); }
@@ -1304,13 +1304,16 @@
       const R2_SECRET_ACCESS_KEY = "cf9a573453b35a875f4adb07c88374f942047b9ae9e358c3a3c11a629a0af4f6"; 
       const R2_BUCKET_NAME = "evolution-design-files";
 
-      const SDK = window.aws_sdk_s3 || window.AWSClientS3 || window.AWSS3;
-      let r2Client = null;
-      if (SDK) {
-        r2Client = new SDK.S3Client({
-          region: "auto",
-          endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-          credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY }
+      let s3 = null;
+      if (window.AWS) {
+        window.AWS.config.update({
+          accessKeyId: R2_ACCESS_KEY_ID,
+          secretAccessKey: R2_SECRET_ACCESS_KEY,
+          region: 'auto',
+          signatureVersion: 'v4'
+        });
+        s3 = new window.AWS.S3({
+          endpoint: new window.AWS.Endpoint(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`)
         });
       }
 
@@ -1365,13 +1368,14 @@
         if(deliveryCard){const q=collection(db,'users',user.uid,'projects',project.id,'deliveryFiles');fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.uploadedAt)-dateValue(a.uploadedAt));const active=files.filter(f=>f.availability!=='deleted');deliveryCard.innerHTML=active.length?`<div class="ui-card delivery-files-card"><h3 class="section-heading"><span class="section-icon" style="color:#55d981;background:rgba(43,200,102,.08);border-color:rgba(43,200,102,.16)">✓</span>Archivos de Entrega</h3><p class="section-copy">Evolution Design ha enviado ${active.length} archivo(s) para este proyecto.</p><div class="project-file-list">${fileRows(files,project,'delivery')}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`:'';}));}
       }
 
-      // === SUBIDA DIRECTA A CLOUDFLARE R2 DESDE EL CLIENTE ===
+      // === SUBIDA DIRECTA A CLOUDFLARE R2 DESDE EL CLIENTE (CON AWS SDK v2) ===
       window.subirArchivosProyecto=async function(projectId,input,progressId,feedbackId){
         const user=auth.currentUser, files=Array.from(input?.files||[]), progress=document.getElementById(progressId), feedback=document.getElementById(feedbackId); 
         if(!user||!files.length)return;
         
-        if(!r2Client || !SDK) {
-          if(feedback){feedback.textContent='Error de conexión: El motor de archivos R2 no cargó correctamente.';feedback.className='files-feedback error'}
+        if(!s3) {
+          alert('La librería de subida no cargó correctamente. Revisa tu conexión de red o recarga la página.');
+          if(feedback){feedback.textContent='Error de conexión: El motor de archivos R2 no está listo.';feedback.className='files-feedback error'}
           return;
         }
 
@@ -1380,15 +1384,26 @@
         for(const file of files){
           if(file.size>100*1024*1024){if(feedback){feedback.textContent=`${file.name} supera 100 MB.`;feedback.className='files-feedback error'}continue;}
           const fileId=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,''), clean=file.name.replace(/[\\/]+/g,'_').slice(-180), path=`projects/${user.uid}/${projectId}/client/${fileId}/${clean}`;
-          const row=document.createElement('div');row.className='file-progress-item';row.innerHTML=`<div class="file-progress-top"><span>${esc(file.name)}</span><span>Subiendo…</span></div><div class="file-progress-track"><div class="file-progress-bar" style="width:100%"></div></div>`;progress?.appendChild(row);const pct=row.querySelector('.file-progress-top span:last-child');
+          const row=document.createElement('div');row.className='file-progress-item';row.innerHTML=`<div class="file-progress-top"><span>${esc(file.name)}</span><span>0%</span></div><div class="file-progress-track"><div class="file-progress-bar" style="width:0%"></div></div>`;progress?.appendChild(row);const pct=row.querySelector('.file-progress-top span:last-child');
+          const bar=row.querySelector('.file-progress-bar');
           
           try {
-            await r2Client.send(new SDK.PutObjectCommand({
+            const request = s3.putObject({
               Bucket: R2_BUCKET_NAME,
               Key: path,
               Body: file,
               ContentType: file.type || 'application/octet-stream'
-            }));
+            });
+
+            request.on('httpUploadProgress', function (p) {
+              if (p.total > 0) {
+                const n = Math.round((p.loaded / p.total) * 100);
+                pct.textContent = `${n}%`;
+                bar.style.width = `${n}%`;
+              }
+            });
+
+            await request.promise();
 
             await setDoc(doc(db,'users',user.uid,'projects',projectId,'clientFiles',fileId),{ownerUid:user.uid,projectId,fileId,role:'client',storagePath:path,name:file.name,label:file.name,size:file.size,contentType:file.type||'',availability:'active',uploadedAt:serverTimestamp()});
             await updateDoc(doc(db,'users',user.uid,'projects',projectId),{clientFileCount:increment(1),updatedAt:serverTimestamp()});
@@ -1403,16 +1418,17 @@
 
       // === DESCARGA DESDE CLOUDFLARE R2 ===
       window.descargarArchivoR2=async function(storagePath, fileName, button){
-        if(!r2Client || !SDK) return;
+        if(!s3) return;
         const old=button?.textContent; if(button){button.disabled=true;button.textContent='Abriendo…'}
         try {
-          const data = await r2Client.send(new SDK.GetObjectCommand({ Bucket: R2_BUCKET_NAME, Key: storagePath }));
-          let blobObj;
-          if (data.Body.blob) { blobObj = await data.Body.blob(); } 
-          else if (data.Body.transformToByteArray) { blobObj = new Blob([await data.Body.transformToByteArray()], { type: data.ContentType }); } 
-          else { alert('Formato no soportado'); return; }
-          const url = URL.createObjectURL(blobObj), a = document.createElement('a'); a.href = url; a.download = fileName;
-          document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 15000);
+          const url = s3.getSignedUrl('getObject', {
+              Bucket: R2_BUCKET_NAME,
+              Key: storagePath,
+              Expires: 300,
+              ResponseContentDisposition: `attachment; filename="${fileName}"`
+          });
+          const a = document.createElement('a'); a.href = url; a.download = fileName;
+          document.body.appendChild(a); a.click(); a.remove();
         } catch(e){
           console.error(e); alert('No se pudo descargar el archivo.');
         } finally {
