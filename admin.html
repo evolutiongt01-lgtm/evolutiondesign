@@ -43,7 +43,6 @@
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {getFirestore,collection,collectionGroup,getDocs,doc,getDoc,setDoc,updateDoc,deleteDoc,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import {getFunctions,httpsCallable} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
 
 // CREDENCIALES DE CLOUDFLARE R2
 const R2_ACCOUNT_ID = "d94e264f8a09f87496e21e72bd3731aa";
@@ -62,8 +61,7 @@ if (window.AWSClientS3) {
 }
 
 const cfg={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
-const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app),functions=getFunctions(app,"us-central1");
-const adminListAuthUsersCallable=httpsCallable(functions,"adminListAuthUsers");
+const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
 const ADMIN_EMAILS=new Set(['evolutiongt01@gmail.com','tepaz2025@gmail.com']);
 let data={metrics:{},clients:[],projects:[],countries:[]},selected=null;
 const $=id=>document.getElementById(id);
@@ -103,7 +101,6 @@ function renderClients(){
 }
 window.showClientProjects=function(uid){switchView('projects');const c=data.clients.find(x=>x.uid===uid);$('projectSearch').value=c?.email||uid;renderProjects()};
 
-function showSystemError(err){const box=$('systemAlert');if(!box)return;const raw=String(err?.message||err||'Error desconocido').replace(/^FirebaseError:\s*/,'');const code=String(err?.code||'');let help='Este panel ahora lee Firestore directamente. Publica firestore.rules y storage.rules del paquete v4.';if(code.includes('permission-denied'))help='Firestore rechazó permisos. Publica las reglas v4 y vuelve a entrar con uno de los correos administradores.';box.innerHTML=`<strong>El panel abrió, pero Firestore no pudo leer los datos.</strong><br>${esc(raw)}${code?` <code>[${esc(code)}]</code>`:''}<br><span style="color:#aaa">${esc(help)}</span><br><button class="retry" id="retryFirebaseBtn">Reintentar conexión</button>`;box.classList.add('show');setTimeout(()=>{const b=$('retryFirebaseBtn');if(b)b.onclick=()=>refresh()},0)}
 function clearSystemError(){const box=$('systemAlert');if(box){box.classList.remove('show');box.innerHTML=''}}
 
 async function loadDashboardDirect(){
@@ -112,16 +109,6 @@ async function loadDashboardDirect(){
     getDocs(collectionGroup(db,'projects')),
     getDocs(collection(db,'adminProjectData'))
   ]);
-
-  let authUsers=[];
-  let authUsersError=null;
-  try{
-    const result=await adminListAuthUsersCallable({});
-    authUsers=Array.isArray(result?.data?.users)?result.data.users:[];
-  }catch(e){
-    authUsersError=e;
-    console.warn('No se pudo listar Firebase Authentication; usando perfiles Firestore como fallback.',e);
-  }
 
   const metaMap=new Map(metaSnap.docs.map(d=>{const x=d.data();return [`${x.ownerUid}__${x.projectId}`,x]}));
   const projects=projectsSnap.docs.map(d=>{const x=d.data(),parts=d.ref.path.split('/'),ownerUid=x.ownerUid||parts[1]||'';return {id:d.id,ownerUid,...x,adminMeta:metaMap.get(`${ownerUid}__${d.id}`)||{}}}).sort((a,b)=>dateMs(b.createdAt)-dateMs(a.createdAt));
@@ -134,25 +121,20 @@ async function loadDashboardDirect(){
   }
 
   const firestoreProfiles=new Map(usersSnap.docs.map(d=>[d.id,{uid:d.id,...d.data()}]));
-  const authMap=new Map(authUsers.map(u=>[u.uid,u]));
-  const allUids=new Set([...firestoreProfiles.keys(),...authMap.keys()]);
-  const clients=[...allUids].map(uid=>{
+  const clients=[...firestoreProfiles.keys()].map(uid=>{
     const profile=firestoreProfiles.get(uid)||{};
-    const authUser=authMap.get(uid)||{};
     const st=byUid.get(uid)||{orders:0,spent:0,country:''};
     return {
       uid,
       ...profile,
-      ...authUser,
-      email:authUser.email||profile.email||'',
-      displayName:authUser.displayName||profile.displayName||'',
-      photoURL:authUser.photoURL||profile.photoURL||'',
+      email:profile.email||'',
+      displayName:profile.displayName||'',
       computedOrders:st.orders,
       computedSpentUsd:st.spent,
       country:profile.payerCountry||profile.lastGeo?.country||st.country||'No reportado',
-      hasFirestoreProfile:firestoreProfiles.has(uid)
+      hasFirestoreProfile:true
     };
-  }).sort((a,b)=>dateMs(b.authLastSignInAt||b.lastSeenAt)-dateMs(a.authLastSignInAt||a.lastSeenAt));
+  }).sort((a,b)=>dateMs(b.lastSeenAt)-dateMs(a.lastSeenAt));
 
   let gross=0,cost=0,active=0,delivered=0,pending=0;
   for(const p of projects){
@@ -166,12 +148,32 @@ async function loadDashboardDirect(){
   return {
     metrics:{clients:clients.length,projects:projects.length,active,delivered,pendingPayments:pending,grossRevenueUsd:gross,internalCostUsd:cost,profitUsd:gross-cost},
     clients,projects,
-    countries:Object.entries(countriesMap).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count),
-    authUsersError
+    countries:Object.entries(countriesMap).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count)
   };
 }
-async function refresh(){try{$('refreshBtn').disabled=true;$('refreshBtn').textContent='Actualizando…';data=await loadDashboardDirect();renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();clearSystemError();if(data.authUsersError){showSystemError({message:'No se pudo consultar Firebase Authentication.',code:'functions/not-deployed'});}return true}catch(e){console.error('Firestore dashboard:',e);showSystemError(e);toast('No se pudieron leer los datos de Firestore.');return false}finally{$('refreshBtn').disabled=false;$('refreshBtn').textContent='Actualizar datos'}}
-$('refreshBtn').onclick=()=>refresh();$('projectSearch').oninput=renderProjects;$('statusFilter').onchange=renderProjects;$('clientSearch').oninput=renderClients;
+
+async function refresh(){
+  try{
+    $('refreshBtn').disabled=true;
+    $('refreshBtn').textContent='Actualizando…';
+    data=await loadDashboardDirect();
+    renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();
+    clearSystemError();
+    return true;
+  }catch(e){
+    console.error('Firestore dashboard:',e);
+    toast('No se pudieron leer los datos de Firestore.');
+    return false;
+  }finally{
+    $('refreshBtn').disabled=false;
+    $('refreshBtn').textContent='Actualizar datos';
+  }
+}
+
+$('refreshBtn').onclick=()=>refresh();
+$('projectSearch').oninput=renderProjects;
+$('statusFilter').onchange=renderProjects;
+$('clientSearch').oninput=renderClients;
 
 window.openProject=async function(uid,id){selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id);if(!selected)return;$('drawerTitle').textContent=selected.projectTitle||'Proyecto';$('drawerSub').textContent=`${selected.displayOrderId||id} · ${selected.ownerEmail||''}`;$('drawerDetails').innerHTML=[['Cliente',selected.payerName||selected.ownerEmail],['País',selected.payerCountry||selected.lastGeo?.country||'No reportado'],['Venta',usd(selected.baseUsd)],['Pago',selected.paymentMethod||selected.paymentStatus],['Transacción',selected.transactionId||'Pendiente'],['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados`]].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');$('editStatus').value=selected.status||'waiting_files';$('editArchitect').value=selected.architectName||'';$('editCost').value=Number(selected.adminMeta?.internalCostUsd||0);$('editProfit').value=usd(projectProfit(selected));$('editDeliveryNote').value=selected.deliveryNote||'';$('editAdminNotes').value=selected.adminMeta?.adminNotes||'';$('includedList').innerHTML=(selected.projectConfig?.includedHighlights||[]).map(x=>`<span>${esc(x)}</span>`).join('')||'<span>Orden personalizada</span>';$('projectModal').classList.add('show');await loadFiles()};
 window.closeProject=()=>{$('projectModal').classList.remove('show');selected=null};$('editCost').oninput=()=>{if(selected)$('editProfit').value=usd(Number(selected.baseUsd||0)-Number($('editCost').value||0))};
