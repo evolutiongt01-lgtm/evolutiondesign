@@ -240,7 +240,8 @@
                 <li><a class="menu-item active" href="index"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
                 <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
                 <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
-                <li><a class="menu-item" href="proyectos.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
+                <!-- Solo aparece al iniciar sesión -->
+                <li id="linkProyectosMenuDesktop" class="d-none"><a class="menu-item" href="proyectos.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
               </ul>
             </div>
             <a href="index" class="d-flex align-items-center"><img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;" loading="lazy"></a>
@@ -249,12 +250,12 @@
             <a href="index" class="nav-pill-link active">Inicio</a>
             <a href="#servicios-destacados" class="nav-pill-link">Servicios</a>
             <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
-            <a href="#fachadas" class="nav-pill-link">Fachadas</a>
+            <!-- Fachadas quitado solo de aquí en Desktop -->
             <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
-            <a href="proyectos.html" class="nav-pill-link" style="color: #fff;">Mis Proyectos</a>
             
             <!-- CONTENEDOR LOGIN Y LOGOUT DENTRO DE LA BARRA ESCRITORIO -->
             <div id="auth-desktop-wrapper" class="d-flex align-items-center">
+                <!-- Por defecto Login -->
                 <a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; white-space: nowrap;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>
             </div>
           </div>
@@ -279,7 +280,8 @@
             <li><a class="menu-item active" href="index"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
             <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
             <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
-            <li><a class="menu-item" href="proyectos.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
+            <!-- Solo aparece al iniciar sesión -->
+            <li id="linkProyectosMobile" class="d-none"><a class="menu-item" href="proyectos.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
           </ul>
         </div>
         <a href="index"><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;" loading="lazy"></a>
@@ -414,7 +416,7 @@
         </div>
       </div>
 
-      <!-- 2.5 NUEVA CALCULADORA DE PLANOS 2D -->
+      <!-- 2.5 CALCULADORA DE PLANOS 2D -->
       <section id="calculadora-planos" class="facade-calc-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -512,8 +514,8 @@
                     </div>
                     
                     <div id="row-planos-excedente" class="d-flex justify-content-between align-items-center mb-5 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important; display: none !important;">
-                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes (0 m²)</span>
-                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">+$0.00</span>
+                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes</span>
+                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">$--.--</span>
                     </div>
 
                     <div class="text-center mt-2">
@@ -521,19 +523,11 @@
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
                         <h1 class="fw-bold text-white mb-0" id="p-total" style="font-size: 3rem;">$--.--</h1>
                       </div>
-                      <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio calculado automáticamente (incluye excedentes si aplica)</span>
                     </div>
                     
-                    <div id="wrapperPagoDirectoPlanos" class="mt-2" style="display: block;">
-                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
-                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
-                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Proyecto listo para pago seguro!
-                        </span>
-                      </div>
-                      
+                    <div id="wrapperPagoDirectoPlanos" class="mt-4" style="display: block;">
                       <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProceder2D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
+                      <button id="btnProceder2D" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
                         ACCEDER PARA VISUALIZAR TARIFAS
                       </button>
 
@@ -550,10 +544,6 @@
                       </button>
                     </div>
 
-                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
-                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                      Transacción segura facturada en USD
-                    </div>
                   </div>
                 </div>
               </div>
@@ -772,14 +762,11 @@
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
                         <h1 class="fw-bold text-white mb-0" id="f-total" style="font-size: 3rem;">$--.--</h1>
                       </div>
-                      <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión</span>
                     </div>
                     
-                    <div id="wrapperPagoDirectoFachadas" class="mt-2" style="display: block;">
-                      <div class="text-center p-3 rounded-3 mb-3" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);"></div>
-
+                    <div id="wrapperPagoDirectoFachadas" class="mt-4" style="display: block;">
                       <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProcederFachadas" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                      <button id="btnProcederFachadas" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: rgba(212, 184, 149, 0.1); border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
                         ACCEDER PARA VISUALIZAR TARIFAS
                       </button>
 
@@ -1769,10 +1756,20 @@
         const profileDesktop = document.getElementById('floating-profile-desktop');
         const adminDesktop = document.getElementById('admin-badge-container-desktop');
         
+        // Elementos dinámicos "Mis Proyectos"
+        const pDesk = document.getElementById('linkProyectosDesktop');
+        const pMenuDesk = document.getElementById('linkProyectosMenuDesktop');
+        const pMob = document.getElementById('linkProyectosMobile');
+        
         if (user) {
           const userPhoto = user.photoURL ? user.photoURL : `https://ui-avatars.com/api/?name=${user.displayName || 'U'}&background=d4b895&color=fff`;
           let adminBtnMobile = "";
           let adminBtnDesktopStr = "";
+          
+          // Mostrar "Mis Proyectos"
+          if(pDesk) pDesk.classList.remove('d-none');
+          if(pMenuDesk) pMenuDesk.classList.remove('d-none');
+          if(pMob) pMob.classList.remove('d-none');
           
           // BOTÓN DE PANEL ADMIN SOLO PARA TI
           if (user.email === 'evolutiongt01@gmail.com') {
@@ -1784,9 +1781,8 @@
 
           // Desktop: Solo el botón de Cerrar Sesión en la barra
           const htmlLogueadoDesktop = `
-            <a href="#" onclick="cerrarSesionGlobal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; font-size: 0.85rem; white-space: nowrap;">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg> 
-              Cerrar sesión
+            <a href="#" onclick="cerrarSesionGlobal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; font-size: 0.9rem; white-space: nowrap;">
+              Salir <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
             </a>`;
             
           // Foto de perfil fuera de la barra en Desktop
@@ -1801,7 +1797,7 @@
               <img src="${userPhoto}" alt="Perfil" class="profile-pic-liquid" style="width: 30px; height: 30px;" onerror="this.src='https://ui-avatars.com/api/?name=U&background=d4b895&color=fff'">
               ${adminBtnMobile}
               <a href="#" onclick="cerrarSesionGlobal(); return false;" class="icon-btn" aria-label="Cerrar Sesión" style="width:30px; height:30px; color:#d4b895; border-color: rgba(212,184,149,0.4);">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg>
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
               </a>
             </div>`;
 
@@ -1811,6 +1807,11 @@
           if (adminDesktop) adminDesktop.innerHTML = adminBtnDesktopStr;
 
         } else {
+          // Ocultar "Mis Proyectos"
+          if(pDesk) pDesk.classList.add('d-none');
+          if(pMenuDesk) pMenuDesk.classList.add('d-none');
+          if(pMob) pMob.classList.add('d-none');
+            
           // Estado de NO logueado
           const htmlLoginDesktop = `<a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; white-space: nowrap;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>`;
           const htmlLoginMobile = `<a href="#" onclick="abrirAuthModal(); return false;" class="icon-btn" aria-label="Login"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg></a>`;
