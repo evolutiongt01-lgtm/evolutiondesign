@@ -230,7 +230,7 @@
       <div class="container px-0 position-relative">
         <div class="d-flex align-items-center justify-content-center gap-3 w-100">
           
-          <!-- BARRA PRINCIPAL -->
+          <!-- BARRA PRINCIPAL ANCHA -->
           <div class="nav-pill w-100" style="max-width: 1150px; position: relative;">
             <div class="d-flex align-items-center gap-3">
               <div style="position: relative;">
@@ -256,7 +256,9 @@
               <a href="#servicios-destacados" class="nav-pill-link">Servicios</a>
               <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
               <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
-              <a href="proyectos.html" class="nav-pill-link d-none" id="linkProyectosDesktop" style="white-space: nowrap;">Mis Proyectos</a>
+              
+              <!-- ENLACE A MIS PROYECTOS (SE MOSTRARÁ AL INICIAR SESIÓN) -->
+              <a href="proyectos.html" class="nav-pill-link d-none" id="linkProyectosDesktop" style="white-space: nowrap; color: #fff;">Mis Proyectos</a>
               
               <!-- CONTENEDOR LOGIN Y LOGOUT DENTRO DE LA BARRA ESCRITORIO -->
               <div id="auth-desktop-wrapper" class="d-flex align-items-center">
@@ -517,8 +519,8 @@
                     </div>
                     
                     <div id="row-planos-excedente" class="d-flex justify-content-between align-items-center mb-5 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important; display: none !important;">
-                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes</span>
-                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">$--.--</span>
+                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes (0 m²)</span>
+                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">+$0.00</span>
                     </div>
 
                     <div class="text-center mt-2">
@@ -526,11 +528,23 @@
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
                         <h1 class="fw-bold text-white mb-0" id="p-total" style="font-size: 3rem;">$--.--</h1>
                       </div>
+                      <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio calculado automáticamente (incluye excedentes si aplica)</span>
                     </div>
                     
-                    <div id="wrapperPagoDirectoPlanos" class="mt-4" style="display: block;">
+                    <div id="wrapperPagoDirectoPlanos" class="mt-2" style="display: block;">
+                      <!-- MENSAJES DINÁMICOS -->
+                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
+                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
+                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                          ¡Proyecto listo para pago seguro!
+                        </span>
+                      </div>
+                      
+                      <!-- INSTRUCCIONES DE SUBIDA -->
+                      <div id="instrucciones-subida-2d" class="text-center p-3 rounded-3 mb-3 text-secondary small" style="display:none; background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255,255,255,0.2);"></div>
+
                       <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProceder2D" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                      <button id="btnProceder2D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
                         ACCEDER PARA VISUALIZAR TARIFAS
                       </button>
 
@@ -547,6 +561,10 @@
                       </button>
                     </div>
 
+                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                      Transacción segura facturada en USD
+                    </div>
                   </div>
                 </div>
               </div>
@@ -765,11 +783,12 @@
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
                         <h1 class="fw-bold text-white mb-0" id="f-total" style="font-size: 3rem;">$--.--</h1>
                       </div>
+                      <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión</span>
                     </div>
                     
                     <div id="wrapperPagoDirectoFachadas" class="mt-4" style="display: block;">
                       <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProcederFachadas" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                      <button id="btnProcederFachadas" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: rgba(212, 184, 149, 0.1); border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
                         ACCEDER PARA VISUALIZAR TARIFAS
                       </button>
 
@@ -786,6 +805,10 @@
                       </button>
                     </div>
 
+                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                      Transacción segura facturada en USD
+                    </div>
                   </div>
 
                   <div class="mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
@@ -874,7 +897,7 @@
           <div class="text-center mb-5" data-aos="fade">
             <span class="h5 text-secondary fw-lighter">Renderismo y Modelado</span>
             <h2 class="display-4 fw-bold">Paquetes 3D</h2>
-            <p class="text-secondary">Proyectos residenciales de hasta 400 m² de construcción total. (Nota: El servicio incluye estrictamente modelado y renders; contáctanos para enviarnos tus planos o adquiere primero tus planos 2D).</p>
+            <p class="text-secondary">Proyectos residenciales de hasta 400 m² de construcción total. (Nota: El servicio incluye strictly modelado y renders; contáctanos para enviarnos tus planos o adquiere primero tus planos 2D).</p>
           </div>
           <div class="row gx-4 g-5 align-items-stretch">
             
@@ -1039,8 +1062,13 @@
                     
                     <!-- MENSAJE Y BOTÓN DE PAGO DIRECTO PAYPAL -->
                     <div id="wrapperPagoDirecto3D" class="mt-4" style="display: block; position: relative; z-index: 30;">
+                      
+                      <!-- MENSAJES DINÁMICOS -->
                       <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-3d" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);"></div>
                       
+                      <!-- INSTRUCCIONES DE SUBIDA -->
+                      <div id="instrucciones-subida-3d" class="text-center p-3 rounded-3 mb-3 text-secondary small" style="display:none; background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255,255,255,0.2);"></div>
+
                       <!-- BOTÓN INICIAL PARA BLOQUEAR -->
                       <button id="btnProceder3D" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: rgba(212, 184, 149, 0.1); border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
                         ACCEDER PARA VISUALIZAR TARIFAS
@@ -1276,6 +1304,7 @@
         const precioFinalDisplay = document.getElementById('calcPrecioFinal');
         const totalDisplay = document.getElementById('calcTotal');
         const msj3D = document.getElementById('mensaje-rango-3d');
+        const instrucciones3D = document.getElementById('instrucciones-subida-3d');
         const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
 
         if (areaTotal > 0) {
@@ -1293,12 +1322,14 @@
           if(!window.usuarioAutenticado) {
             if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">$--.--</span>`;
             if(msj3D) msj3D.style.display = 'none';
+            if(instrucciones3D) instrucciones3D.style.display = 'none';
           } else {
             if(precioFinalDisplay) precioFinalDisplay.innerHTML = `${convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })} <span class="ms-1 accent-text small">${exchangeRates[currentCurrency].symbol}</span>`;
+            
             if (areaTotal > 400) {
               if(msj3D) {
                 msj3D.style.display = 'block';
-                msj3D.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de $${baseUSD.toFixed(2)} USD listo para pago.</span>`;
+                msj3D.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculated de $${baseUSD.toFixed(2)} USD listo para pago.</span>`;
                 msj3D.style.background = 'rgba(255, 193, 7, 0.1)';
                 msj3D.style.borderColor = 'rgba(255, 193, 7, 0.2)';
               }
@@ -1310,11 +1341,24 @@
                 msj3D.style.borderColor = 'rgba(40, 167, 69, 0.2)';
               }
             }
+
+            // INSTRUCCIONES DE SUBIDA
+            if(instrucciones3D) {
+              instrucciones3D.style.display = 'block';
+              if (servicioVal === 'basico') {
+                  instrucciones3D.innerHTML = `<strong>Nota:</strong> Al completar el pago, serás redirigido a 'Mis Proyectos' para que subas tu archivo 2D (PDF, AutoCAD DWG/DWF, o una foto clara de tu plano).`;
+              } else if (servicioVal === 'profesional' || servicioVal === 'premium') {
+                  instrucciones3D.innerHTML = `<strong>Nota:</strong> Al completar el pago, serás redirigido a 'Mis Proyectos' para que subas tu archivo 2D (PDF, AutoCAD DWG/DWF, o foto de tu plano). Además, por tu tarifa, requerimos <strong>fotografías de referencia del lugar</strong> para el hiperrealismo.`;
+              } else {
+                  instrucciones3D.style.display = 'none';
+              }
+            }
           }
         } else {
           if(totalDisplay) totalDisplay.textContent = "0.00"; 
           if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">$--.--</span>`;
           if(msj3D) msj3D.style.display = 'none';
+          if(instrucciones3D) instrucciones3D.style.display = 'none';
           window.montoPago3D = "0.00";
         }
         
@@ -1371,6 +1415,7 @@
         const niveles = parseInt(document.querySelector('input[name="p-niveles"]:checked')?.value || 2);
         const paquete = document.querySelector('input[name="p-paquete"]:checked')?.value || 'basico';
         const msjPlanos = document.getElementById('mensaje-rango-planos');
+        const instrucciones2D = document.getElementById('instrucciones-subida-2d');
         const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
         
         let areaTotal = ancho * largo * niveles;
@@ -1402,6 +1447,7 @@
              if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'none', 'important');
           }
           if(msjPlanos) msjPlanos.style.display = 'none';
+          if(instrucciones2D) instrucciones2D.style.display = 'none';
         } else {
           if(pBaseText) pBaseText.textContent = `${symbol} ${(basePrecioUSD * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
           if(pTotal) pTotal.textContent = `${symbol} ${((basePrecioUSD + excedente) * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
@@ -1425,6 +1471,11 @@
               msjPlanos.style.background = 'rgba(40, 167, 69, 0.1)';
               msjPlanos.style.borderColor = 'rgba(40, 167, 69, 0.2)';
             }
+          }
+
+          if(instrucciones2D && areaTotal > 0) {
+              instrucciones2D.style.display = 'block';
+              instrucciones2D.innerHTML = `<strong>Nota:</strong> Al completar el pago, serás redirigido a 'Mis Proyectos' para que subas una foto de tu <strong>dibujo a mano alzada</strong> con medidas.`;
           }
         }
         
@@ -1765,13 +1816,13 @@
           let adminBtnMobile = "";
           let adminBtnDesktopStr = "";
           
-          // Mostrar "Mis Proyectos"
+          // Mostrar "Mis Proyectos" al estar autenticado
           if(pDesk) pDesk.classList.remove('d-none');
           if(pMenuDesk) pMenuDesk.classList.remove('d-none');
           if(pMob) pMob.classList.remove('d-none');
           
-          // BOTÓN DE PANEL ADMIN SOLO PARA TI
-          if (user.email === 'evolutiongt01@gmail.com') {
+          // BOTÓN DE PANEL ADMIN PARA CÉSAR Y ANTONIO
+          if (user.email === 'evolutiongt01@gmail.com' || user.email === 'tepaz2025@gmail.com') {
             adminBtnMobile = `<a href="admin.html" class="icon-btn ms-1 text-white border-danger" style="width:30px; height:30px; background: rgba(220,53,69,0.5);"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></a>`;
             
             // Botón Admin de escritorio, flotando abajo del logo
@@ -1806,7 +1857,7 @@
           if (adminDesktop) adminDesktop.innerHTML = adminBtnDesktopStr;
 
         } else {
-          // Ocultar "Mis Proyectos"
+          // Ocultar "Mis Proyectos" si no hay usuario
           if(pDesk) pDesk.classList.add('d-none');
           if(pMenuDesk) pMenuDesk.classList.add('d-none');
           if(pMob) pMob.classList.add('d-none');
@@ -1837,9 +1888,7 @@
           },
           onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-              const nombreCliente = details.payer.name.given_name;
-              const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${monto} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi proyecto.`);
-              window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+              window.location.href = 'proyectos.html';
             });
           }
         }).render(selector);
@@ -1854,9 +1903,7 @@
           },
           onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-              const nombreCliente = details.payer.name.given_name;
-              const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${monto} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mis planos 2D.`);
-              window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+              window.location.href = 'proyectos.html';
             });
           }
         }).render(selector);
@@ -1871,9 +1918,7 @@
           },
           onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-              const nombreCliente = details.payer.name.given_name;
-              const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${monto} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi diseño de fachada.`);
-              window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
+              window.location.href = 'proyectos.html';
             });
           }
         }).render(selector);
