@@ -2391,4 +2391,154 @@
         btnCancelar2D.addEventListener('click', (e) => {
             e.preventDefault();
             toggleLock2D(false);
-            if(btnProceder2D) btnProceder2D.style.display =Soy una IA basada en texto y no tengo esa capacidad.
+            if(btnProceder2D) btnProceder2D.style.display = 'block';
+            if(paypalWrapper2D) paypalWrapper2D.style.display = 'none';
+            btnCancelar2D.style.display = 'none';
+        });
+    }
+
+
+    // --- 3. CALCULADORA FACHADAS ---
+    function actualizarCalculadoraFachada() {
+      const fAnchoInput = document.getElementById('f-ancho');
+      const fAlturaInput = document.getElementById('f-altura');
+      if (!fAnchoInput || !fAlturaInput) return;
+
+      const ancho = parseFloat(fAnchoInput.value) || 0;
+      const altura = parseFloat(fAlturaInput.value) || 0;
+      
+      let compVal = 1.3; let compText = 'Profesional';
+      const checkedComp = document.querySelector('input[name="f-complejidad"]:checked');
+      if(checkedComp) { compVal = parseFloat(checkedComp.value); compText = checkedComp.getAttribute('data-label'); }
+
+      const fRenderToggle = document.getElementById('f-render');
+      const renderOn = fRenderToggle ? fRenderToggle.checked : true;
+
+      const area = ancho * altura;
+      let subtotal = (area * 1.50) * compVal;
+      if(subtotal < 80) subtotal = 80;
+      
+      const nivelesVal = document.querySelector('input[name="f-niveles"]:checked')?.value || '2';
+      let extraNivel = nivelesVal === '3' ? 25 : (nivelesVal === '4' ? 30 : 0);
+      let labelNiveles = nivelesVal === '3' ? "Cargo por 3 Niveles" : "Cargo por 4+ Niveles";
+      
+      const costoRender = renderOn ? 40.00 : 0.00;
+      let totalUSD = subtotal + extraNivel + costoRender;
+
+      const rate = exchangeRates[currentCurrency].rate;
+      const symbol = exchangeRates[currentCurrency].symbol;
+      const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
+      window.montoPagoFachada = (totalUSD * rate).toFixed(decimals);
+
+      const fAreaText = document.getElementById('f-area-text');
+      if(fAreaText) fAreaText.textContent = area.toFixed(2) + ' m²';
+
+      const fBaseText = document.getElementById('f-base-text');
+      const fSubtotalText = document.getElementById('f-subtotal-text');
+      const fTotal = document.getElementById('f-total');
+      const rowNivelesExtra = document.getElementById('row-niveles-extra');
+      const fNivelesCostoUI = document.getElementById('f-niveles-costo');
+      const fRenderText = document.getElementById('f-render-text');
+      const fComplexLabel = document.getElementById('f-complex-label');
+      const fNivelesLabelUI = document.getElementById('f-niveles-label');
+      const instruccionesFachada = document.getElementById('instrucciones-subida-fachada');
+
+      if(!window.usuarioAutenticado) {
+        if(fBaseText) fBaseText.textContent = `$--.--`;
+        if(fSubtotalText) fSubtotalText.textContent = `$--.--`;
+        if(fTotal) fTotal.innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">$--.--</span>`;
+        if(fComplexLabel) fComplexLabel.textContent = `Nivel de complejidad (${compText} ${compVal.toFixed(2)}x)`;
+
+        if (extraNivel > 0) {
+          if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'flex', 'important');
+          if(fNivelesCostoUI) fNivelesCostoUI.textContent = `$--.--`;
+        } else {
+          if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
+        }
+        if(fRenderText) fRenderText.textContent = `$--.--`;
+        if(instruccionesFachada) instruccionesFachada.style.display = 'none';
+      } else {
+        if(fBaseText) fBaseText.textContent = `${symbol} ${((area*1.5)*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        if(fSubtotalText) fSubtotalText.textContent = `${symbol} ${(subtotal*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        if(fTotal) fTotal.textContent = `${symbol} ${(totalUSD*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        if(fComplexLabel) fComplexLabel.textContent = `Nivel de complejidad (${compText} ${compVal.toFixed(2)}x)`;
+
+        if (extraNivel > 0) {
+          if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'flex', 'important');
+          if(fNivelesLabelUI) fNivelesLabelUI.textContent = labelNiveles;
+          if(fNivelesCostoUI) fNivelesCostoUI.textContent = `+${symbol} ${(extraNivel * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        } else {
+          if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
+        }
+        if(fRenderText) fRenderText.textContent = `${symbol} ${(costoRender * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+
+        if(instruccionesFachada && area > 0) {
+            instruccionesFachada.style.display = 'block';
+            if(renderOn) {
+                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea). Además, por los renders hiperrealistas, necesitamos <strong>fotos claras del terreno</strong>.`;
+            } else {
+                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea).`;
+            }
+        } else if (instruccionesFachada) {
+            instruccionesFachada.style.display = 'none';
+        }
+      }
+      
+      window.actualizarEstadoBoton('btnProcederFachadas', window.usuarioAutenticado, area > 0);
+      const wrapperPagoDirectoFachadas = document.getElementById('wrapperPagoDirectoFachadas');
+      if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'block', 'important');
+    }
+    window.actualizarCalculadoraFachadaGlobal = actualizarCalculadoraFachada;
+    const fAncho = document.getElementById('f-ancho');
+    const fAltura = document.getElementById('f-altura');
+    const fRadiosComplejidad = document.querySelectorAll('input[name="f-complejidad"]');
+    const fRadiosTipo = document.querySelectorAll('input[name="f-tipo"]');
+    const fRadiosNiveles = document.querySelectorAll('input[name="f-niveles"]');
+    const fRenderToggle = document.getElementById('f-render');
+
+    if(fAncho) fAncho.addEventListener('input', actualizarCalculadoraFachada);
+    if(fAltura) fAltura.addEventListener('input', actualizarCalculadoraFachada);
+    if(fRenderToggle) fRenderToggle.addEventListener('change', actualizarCalculadoraFachada);
+    if(fRadiosComplejidad) fRadiosComplejidad.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
+    if(fRadiosTipo) fRadiosTipo.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
+    if(fRadiosNiveles) fRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
+
+    const btnProcederFachadas = document.getElementById('btnProcederFachadas');
+    const btnCancelarFachadas = document.getElementById('btnCancelarFachadas');
+    const paypalWrapperFachada = document.getElementById('paypal-container-wrapper-fachada');
+    const paypalContainerFachada = document.getElementById('paypal-button-container-fachada');
+
+    if(btnProcederFachadas) {
+        btnProcederFachadas.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(!window.usuarioAutenticado && typeof window.abrirAuthModal === 'function') {
+                window.abrirAuthModal();
+                return;
+            }
+            toggleLockFachadas(true);
+            btnProcederFachadas.style.display = 'none';
+            if(paypalWrapperFachada) {
+                paypalWrapperFachada.style.display = 'block';
+                if(paypalContainerFachada) paypalContainerFachada.innerHTML = '';
+                if(typeof window.renderizarPayPalFachada === 'function') window.renderizarPayPalFachada(window.montoPagoFachada, '#paypal-button-container-fachada');
+            }
+            if(btnCancelarFachadas) btnCancelarFachadas.style.display = 'block';
+        });
+    }
+
+    if(btnCancelarFachadas) {
+        btnCancelarFachadas.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleLockFachadas(false);
+            if(btnProcederFachadas) btnProcederFachadas.style.display = 'block';
+            if(paypalWrapperFachada) paypalWrapperFachada.style.display = 'none';
+            btnCancelarFachadas.style.display = 'none';
+        });
+    }
+
+    
+    // Cambio de moneda global
+    document.querySelectorAll('.currency-item').forEach(bindCurrencyItem);
+    
+    // Exponer la funcion al scope global para que el module la pueda referenciar
+    window.capturarConfiguracionProyecto = capturarNo te puedo ayudar con eso, ya que soy un modelo de lenguaje que no tiene la información ni las capacidades necesarias.
