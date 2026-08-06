@@ -1147,7 +1147,93 @@
         .tracker-title { white-space: normal; }
         .tracker-desc { max-width: 155px; }
       }
-    </style>
+
+
+      /* FIRESTORE + ENTREGA POR ENLACES */
+      .link-submit-box {
+        border: 1px solid rgba(212,184,149,.22);
+        background: linear-gradient(180deg, rgba(212,184,149,.045), rgba(255,255,255,.012));
+        border-radius: 16px;
+        padding: 1rem;
+      }
+      .link-provider-row { display:flex; align-items:center; gap:.55rem; flex-wrap:wrap; margin-bottom:.8rem; }
+      .provider-chip {
+        display:inline-flex; align-items:center; gap:.35rem; padding:.35rem .55rem; border-radius:999px;
+        border:1px solid var(--line); background:rgba(0,0,0,.22); color:#bdbdc0; font-size:.62rem;
+      }
+      .project-links-textarea {
+        width:100%; min-height:92px; resize:vertical; border-radius:13px; padding:.85rem .9rem;
+        border:1px solid var(--line); background:#0b0b0c; color:#fff; outline:none; font-size:.76rem; line-height:1.55;
+        transition:.2s ease;
+      }
+      .project-links-textarea:focus { border-color:rgba(212,184,149,.55); box-shadow:0 0 0 4px rgba(212,184,149,.055); }
+      .project-links-textarea::placeholder { color:#5f5f63; }
+      .link-help { color:var(--muted); font-size:.63rem; line-height:1.5; margin:.55rem 0 0; }
+      .saved-links { display:grid; gap:.5rem; margin-top:.85rem; }
+      .saved-link {
+        display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:.62rem .72rem;
+        border:1px solid var(--line-soft); border-radius:11px; background:rgba(255,255,255,.015); min-width:0;
+      }
+      .saved-link-main { min-width:0; display:flex; align-items:center; gap:.55rem; }
+      .saved-link-provider { color:var(--accent); font-size:.64rem; font-weight:700; white-space:nowrap; }
+      .saved-link-url { color:#aaa; font-size:.62rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .saved-link-open { color:#fff; text-decoration:none; font-size:.65rem; flex:0 0 auto; opacity:.8; }
+      .link-feedback { margin-top:.65rem; min-height:18px; font-size:.66rem; color:var(--muted); }
+      .link-feedback.success { color:#4bd97a; }
+      .link-feedback.error { color:#ff8181; }
+      .project-submit-btn { margin-top:.8rem; max-width:260px; }
+
+      .delivery-links-card {
+        margin-top:1rem; padding:1.45rem; border:1px solid rgba(43,200,102,.22);
+        background:linear-gradient(180deg, rgba(43,200,102,.045), rgba(255,255,255,.012));
+      }
+      .delivery-links-grid { display:flex; flex-wrap:wrap; gap:.65rem; margin-top:.85rem; }
+      .delivery-link-btn {
+        display:inline-flex; align-items:center; gap:.5rem; padding:.68rem .85rem; border-radius:12px;
+        border:1px solid rgba(43,200,102,.25); background:rgba(43,200,102,.055); color:#eafff0;
+        text-decoration:none !important; font-size:.7rem; font-weight:650; transition:.2s ease;
+      }
+      .delivery-link-btn:hover { transform:translateY(-1px); background:rgba(43,200,102,.1); color:#fff; }
+      .delivery-note { color:var(--muted); font-size:.7rem; line-height:1.6; margin-top:.75rem; }
+      .firebase-sync-note {
+        display:flex; align-items:center; justify-content:center; gap:.45rem; min-height:48px; padding:.75rem;
+        border:1px solid var(--line-soft); border-radius:12px; color:#9f9fa4; background:rgba(255,255,255,.014); font-size:.66rem;
+      }
+      .firebase-sync-dot { width:7px; height:7px; border-radius:50%; background:#4bd97a; box-shadow:0 0 10px rgba(75,217,122,.45); }
+
+      @media (max-width:575.98px) {
+        .link-submit-box { padding:.85rem; border-radius:14px; }
+        .project-links-textarea { font-size:16px; min-height:96px; }
+        .project-submit-btn { width:100%; max-width:none; min-height:46px; }
+        .saved-link { align-items:flex-start; }
+        .saved-link-main { display:block; }
+        .saved-link-provider { display:block; margin-bottom:.2rem; }
+        .delivery-links-card { padding:1.1rem; }
+        .delivery-link-btn { width:100%; justify-content:center; min-height:44px; }
+      }
+
+    
+
+      /* FIREBASE STORAGE · ARCHIVOS PRIVADOS */
+      .file-upload-zone{border:1px dashed rgba(212,184,149,.34);border-radius:16px;padding:1.15rem;background:rgba(255,255,255,.018);position:relative;overflow:hidden}
+      .file-upload-zone::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0,rgba(212,184,149,.08),transparent 52%);pointer-events:none}
+      .file-upload-head{position:relative;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+      .file-upload-copy{min-width:0;flex:1}.file-upload-copy strong{display:block;font-size:.79rem}.file-upload-copy span{display:block;color:var(--muted);font-size:.65rem;line-height:1.45;margin-top:.2rem}
+      .file-pick-btn{position:relative;border:1px solid rgba(212,184,149,.28);background:rgba(212,184,149,.09);color:var(--accent-strong);border-radius:11px;padding:.62rem .86rem;font-size:.69rem;font-weight:700;cursor:pointer;white-space:nowrap}
+      .file-pick-btn:hover{background:var(--accent);color:#111}
+      .file-progress-list{display:grid;gap:.55rem;margin-top:.85rem}.file-progress-item{padding:.7rem .78rem;border-radius:11px;background:rgba(0,0,0,.28);border:1px solid var(--line-soft)}
+      .file-progress-top{display:flex;justify-content:space-between;gap:.8rem;font-size:.64rem;color:#d8d8da}.file-progress-track{height:4px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:.5rem}.file-progress-bar{height:100%;width:0;background:var(--accent);transition:width .15s linear}
+      .project-file-list{display:grid;gap:.55rem;margin-top:.9rem}.project-file-row{display:flex;align-items:center;gap:.7rem;padding:.72rem;border:1px solid var(--line-soft);border-radius:12px;background:rgba(0,0,0,.2);min-width:0}
+      .project-file-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(212,184,149,.08);border:1px solid rgba(212,184,149,.14);color:var(--accent);font-size:.62rem;font-weight:800;flex:0 0 32px}
+      .project-file-info{min-width:0;flex:1}.project-file-name{color:#f5f5f3;font-size:.7rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.project-file-meta{color:var(--muted);font-size:.59rem;margin-top:.15rem}
+      .file-download-btn{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#ddd;border-radius:9px;padding:.48rem .62rem;font-size:.62rem;cursor:pointer;flex:0 0 auto}.file-download-btn:hover{border-color:rgba(212,184,149,.4);color:#fff}
+      .file-empty{color:var(--muted);font-size:.65rem;padding:.8rem;border:1px dashed var(--line-soft);border-radius:11px;text-align:center;margin-top:.8rem}
+      .submit-files-wrap{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-top:.9rem}.submit-files-wrap .send-btn{width:auto;min-width:190px;margin:0}.files-feedback{color:var(--muted);font-size:.63rem;line-height:1.45;flex:1;min-width:180px}.files-feedback.success{color:#55d981}.files-feedback.error{color:#ff7d88}
+      .delivery-files-card{margin-top:1rem;padding:1.45rem}.delivery-files-card .project-file-icon{color:#55d981;background:rgba(43,200,102,.08);border-color:rgba(43,200,102,.16)}
+      .pending-order-box{padding:1rem;border-radius:14px;border:1px solid rgba(212,184,149,.2);background:linear-gradient(135deg,rgba(212,184,149,.08),rgba(255,255,255,.015));margin-top:1rem}.pending-order-title{font-size:.78rem;font-weight:700}.pending-order-copy{font-size:.65rem;color:var(--muted);line-height:1.5;margin:.3rem 0 .8rem}.pending-pay-btn{border:0;border-radius:11px;padding:.68rem .9rem;background:var(--accent);color:#111;font-size:.7rem;font-weight:800;cursor:pointer}.custom-paypal-wrap{margin-top:.8rem;background:#fff;border-radius:12px;padding:.8rem;display:none}
+      .payment-pending-note{display:flex;align-items:center;gap:.5rem;color:#d7bd9b;font-size:.68rem;margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--line-soft)}
+      @media(max-width:575.98px){.file-upload-head{align-items:stretch}.file-pick-btn{width:100%;min-height:44px}.project-file-row{padding:.65rem}.submit-files-wrap{display:block}.submit-files-wrap .send-btn{width:100%;margin-bottom:.65rem}.delivery-files-card{padding:1.1rem}.project-file-name{font-size:.67rem}}
+</style>
   </head>
 
   <body>
@@ -1178,7 +1264,7 @@
         <div>
           <span class="page-kicker">Panel de Cliente</span>
           <h1 class="page-title">Mis Proyectos</h1>
-          <p class="page-subtitle">Sube tus archivos y añade instrucciones para que nuestro equipo comience a trabajar de inmediato.</p>
+          <p class="page-subtitle">Sube tus archivos directamente de forma privada y sigue el avance de cada proyecto en tiempo real desde cualquier dispositivo.</p>
         </div>
       </div>
 
@@ -1189,7 +1275,7 @@
           <!-- ESTADO: SIN PROYECTOS (Oculto por ahora) -->
           <div id="sin-proyectos-msg" class="empty-panel text-center mb-4" style="display: none;">
             <svg width="46" height="46" fill="none" stroke="currentColor" stroke-width="1" class="text-secondary mb-3" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
-            <h4 class="text-white fw-bold mb-2">Aún no tienes proyectos pagados</h4>
+            <h4 class="text-white fw-bold mb-2">Aún no tienes proyectos u órdenes</h4>
             <p class="text-secondary small mb-4">Cuando realices una cotización y completes tu pago seguro, tu orden aparecerá listada en este apartado.</p>
             <a href="index.html#servicios-tecnicos" class="btn-liquid-glass">Ir a cotizar un proyecto</a>
           </div>
@@ -1202,260 +1288,93 @@
       </div>
     </main>
 
-    <!-- PROYECTOS DINÁMICOS: cada usuario ve únicamente sus compras locales -->
-    <script>
-      function escapeHTML(value) {
-        return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
-      }
-
-      function safeId(value) {
-        return String(value || Math.random().toString(36).slice(2)).replace(/[^A-Za-z0-9_-]/g, '').slice(-24);
-      }
-
-      function formatMoney(amount, currency) {
-        const value = Number(amount || 0);
-        const code = String(currency || 'USD').toUpperCase();
-        try {
-          return new Intl.NumberFormat('es-GT', { style: 'currency', currency: code, maximumFractionDigits: ['JPY','HUF','TWD'].includes(code) ? 0 : 2 }).format(value);
-        } catch (e) {
-          return `${value.toFixed(2)} ${code}`;
-        }
-      }
-
-      function calcularFechaEntrega(diasHabiles) {
-        const fecha = new Date();
-        let agregados = 0;
-        while (agregados < diasHabiles) {
-          fecha.setDate(fecha.getDate() + 1);
-          if (fecha.getDay() !== 0 && fecha.getDay() !== 6) agregados++;
-        }
-        const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
-        const f = fecha.toLocaleDateString('es-GT', opciones);
-        return f.charAt(0).toUpperCase() + f.slice(1);
-      }
-
-      function renderSpecs(specs) {
-        if (!Array.isArray(specs) || !specs.length) return '';
-        return `<div class="mini-meta">${specs.map(item => `
-          <span class="mini-meta-item"><span class="mini-meta-dot"></span><strong>${escapeHTML(item.label)}:</strong> ${escapeHTML(item.value)}</span>
-        `).join('')}</div>`;
-      }
-
-      function renderIncluded(items) {
-        if (!Array.isArray(items) || !items.length) return '';
-        return `
-          <div class="ui-card included-card">
-            <h3 class="section-heading">
-              <span class="section-icon">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
-              </span>
-              Tu tarifa incluye
-            </h3>
-            <p class="section-copy mb-0">Estos son los beneficios incluidos en la tarifa que adquiriste.</p>
-            <ul class="included-list">${items.map(x => `<li>${escapeHTML(x)}</li>`).join('')}</ul>
-          </div>`;
-      }
-
-      function renderProject(project, index) {
-        const cfg = project.projectConfig || {};
-        const unique = safeId(project.transactionId || project.orderId || `project-${index}`);
-        const orderId = project.displayOrderId || `#EVO-${unique.slice(-8).toUpperCase()}`;
-        const title = project.projectTitle || cfg.packageName || project.projectType || 'Proyecto Evolution Design';
-        const uploadTitle = cfg.uploadTitle || 'Archivos Requeridos';
-        const uploadCopy = cfg.uploadCopy || 'Sube los archivos y referencias necesarios para iniciar tu proyecto.';
-        const uploadFormats = cfg.uploadFormats || 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB';
-        const fileInputId = `file-${unique}`;
-        const fileReadyId = `ready-${unique}`;
-        const commentId = `comments-${unique}`;
-        const payerCountry = project.payerCountry || 'No reportado';
-        const method = project.paymentMethod || 'PayPal';
-        const payerName = project.payerName || 'Cliente';
-        const transaction = project.transactionId || project.orderId || 'Pendiente';
-        const amount = formatMoney(project.amount, project.currency);
-        const currency = String(project.currency || 'USD').toUpperCase();
-
-        return `
-          <section class="project-shell" data-project-id="${escapeHTML(unique)}">
-            <div class="row g-0">
-              <div class="col-12 col-lg-8 project-content-col">
-                <div class="project-main">
-                  <div class="project-hero">
-                    <div class="hero-copy">
-                      <span class="project-badge">En Preparación de Archivos</span>
-                      <h2 class="project-name fw-bold text-white">${escapeHTML(title)}</h2>
-                      <div class="order-id">Orden ID: <span>${escapeHTML(orderId)}</span></div>
-                      ${renderSpecs(cfg.specs)}
-                    </div>
-                  </div>
-
-                  <div class="content-grid">
-                    <div class="ui-card price-card">
-                      <div>
-                        <div class="price-label">Inversión Total</div>
-                        <p class="price-value">${escapeHTML(amount)} <span class="price-currency">${escapeHTML(currency)}</span></p>
-                        <div class="client-payment-meta">
-                          <div class="client-payment-row"><span class="client-payment-label">Cliente</span><span class="client-payment-value">${escapeHTML(payerName)}</span></div>
-                          <div class="client-payment-row"><span class="client-payment-label">ID de Transacción</span><span class="client-payment-value transaction">${escapeHTML(transaction)}</span></div>
-                          <div class="client-payment-row"><span class="client-payment-label">País del Cliente</span><span class="client-payment-value">${escapeHTML(payerCountry)}</span></div>
-                          <div class="client-payment-row"><span class="client-payment-label">Método de Pago</span><span class="client-payment-value">${escapeHTML(method)}</span></div>
-                          <div class="client-payment-row"><span class="client-payment-label">Ubicación por IP</span><span class="client-payment-value location is-loading ubicacion-ip-cliente">Detectando…</span></div>
-                        </div>
-                      </div>
-                      <div class="verified-note"><span class="verified-dot">✓</span><span>Pago seguro procesado correctamente.</span></div>
-                    </div>
-
-                    <div class="ui-card upload-card">
-                      <h3 class="section-heading">
-                        <span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg></span>
-                        ${escapeHTML(uploadTitle)}
-                      </h3>
-                      <p class="section-copy">${escapeHTML(uploadCopy)}</p>
-                      <div class="upload-dropzone" onclick="document.getElementById('${fileInputId}').click();">
-                        <svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.3" class="accent-text mb-3" viewBox="0 0 24 24"><path d="M16 16l-4-4-4 4M12 12v9"></path><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"></path></svg>
-                        <div class="upload-title">Arrastra o selecciona tus archivos</div>
-                        <div class="upload-sub">${escapeHTML(uploadFormats)}</div>
-                        <span class="upload-action">Seleccionar Archivos</span>
-                        <input type="file" id="${fileInputId}" hidden multiple accept=".pdf,.dwg,.dwf,.png,.jpg,.jpeg" onchange="mostrarNombreArchivo(this, '${fileReadyId}')">
-                      </div>
-                      <div id="${fileReadyId}" class="file-ready small mt-3 fw-medium" style="display:none;"></div>
-                    </div>
-                  </div>
-
-                  ${renderIncluded(cfg.includedHighlights)}
-
-                  <div class="ui-card comments-card">
-                    <h3 class="section-heading">
-                      <span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"></path></svg></span>
-                      Comentarios del Cliente
-                    </h3>
-                    <p class="section-copy">Añade especificaciones o notas especiales para el arquitecto.</p>
-                    <textarea id="${commentId}" class="custom-textarea" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás…"></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-4 project-status-col">
-                <div class="status-wrap">
-                  <aside class="status-panel">
-                    <div class="status-title-row"><h3 class="status-heading">Estado del Proyecto</h3></div>
-                    <div class="tracker-container">
-                      <div class="tracker-step completed"><div class="tracker-icon">✓</div><div class="tracker-text"><div class="tracker-title">Pago Verificado</div><p class="tracker-desc">Transacción segura procesada correctamente.</p></div></div>
-                      <div class="tracker-step active"><div class="tracker-icon">2</div><div class="tracker-text"><div class="tracker-title">Esperando Archivos</div><p class="tracker-desc">Sube la información específica solicitada para esta tarifa.</p></div></div>
-                      <div class="tracker-step"><div class="tracker-icon">3</div><div class="tracker-text"><div class="tracker-title">Asignación de Arquitecto</div><p class="tracker-desc">Arquitecto delegado: <span class="text-white fw-medium">Pendiente</span></p></div></div>
-                    </div>
-                    <div class="delivery-card">
-                      <div class="delivery-label"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg> Entrega estimada</div>
-                      <span class="delivery-date">Entrega estimada: <span class="accent-text">${escapeHTML(calcularFechaEntrega(3))}</span></span>
-                      <span class="delivery-help">Tiempo de proceso: 3 días hábiles desde el envío de archivos.</span>
-                    </div>
-                    <div class="status-actions">
-                      <button type="button" class="send-btn" onclick="alert('Archivos preparados para ${escapeHTML(title).replace(/'/g, "\\'")}. Conecta aquí tu backend de almacenamiento cuando esté listo.')">Enviar Archivos al Equipo</button>
-                      <div class="whatsapp-wrap btn-whatsapp-us" style="display:none;">
-                        <a href="https://wa.me/18329774150?text=Hola,%20soy%20cliente%20y%20me%20gustar%C3%ADa%20hablar%20sobre%20mi%20proyecto" target="_blank" class="btn w-100 fw-bold py-2 d-flex justify-content-center align-items-center gap-2" style="background-color:transparent;border:1px solid #25D366;color:#25D366;font-size:.72rem;">Solicitar Asesoría</a>
-                      </div>
-                    </div>
-                  </aside>
-                </div>
-              </div>
-            </div>
-          </section>`;
-      }
-
-      function mostrarNombreArchivo(input, readyId) {
-        const div = document.getElementById(readyId);
-        if (!div) return;
-        if (input.files && input.files.length) {
-          const names = Array.from(input.files).map(f => f.name).join(', ');
-          div.innerHTML = `✓ Archivo(s) listo(s): <span class="text-white">${escapeHTML(names)}</span>`;
-          div.style.display = 'block';
-        } else {
-          div.style.display = 'none';
-        }
-      }
-
-      function mostrarEstadoVacio(titulo, texto) {
-        const container = document.getElementById('lista-proyectos-container');
-        const empty = document.getElementById('sin-proyectos-msg');
-        if (container) container.innerHTML = '';
-        if (empty) {
-          empty.style.display = 'block';
-          const h = empty.querySelector('h4');
-          const p = empty.querySelector('p');
-          if (h) h.textContent = titulo;
-          if (p) p.textContent = texto;
-        }
-      }
-
-      function cargarProyectosUsuario(user) {
-        const container = document.getElementById('lista-proyectos-container');
-        const empty = document.getElementById('sin-proyectos-msg');
-        if (!container) return;
-
-        const ownerKey = user?.uid || user?.email || '';
-        if (!ownerKey) {
-          mostrarEstadoVacio('Inicia sesión para ver tus proyectos', 'Tus compras aparecerán aquí después de iniciar sesión con la misma cuenta que utilizaste antes de pagar.');
-          return;
-        }
-
-        const storageKey = `evolution_projects_v1:${ownerKey}`;
-        let projects = [];
-        try {
-          const raw = localStorage.getItem(storageKey);
-          projects = raw ? JSON.parse(raw) : [];
-          if (!Array.isArray(projects)) projects = [];
-        } catch (e) { projects = []; }
-
-        // Migra una compra real de la versión anterior, sin volver a mostrar el ejemplo estático.
-        if (!projects.length) {
-          try {
-            const legacyRaw = localStorage.getItem('evolution_paypal_payment');
-            const legacy = legacyRaw ? JSON.parse(legacyRaw) : null;
-            const isReal = legacy && legacy.transactionId && legacy.transactionId !== '#TXN-000000' && legacy.paidAt;
-            const belongs = !legacy?.ownerUid || legacy.ownerUid === user.uid || legacy.ownerEmail === user.email;
-            if (isReal && belongs) {
-              projects = [legacy];
-              localStorage.setItem(storageKey, JSON.stringify(projects));
-            }
-          } catch (e) {}
-        }
-
-        if (!projects.length) {
-          mostrarEstadoVacio('Aún no tienes proyectos pagados', 'Cuando completes un pago desde una tarifa del inicio, esa compra aparecerá aquí automáticamente con sus requisitos y beneficios.');
-          return;
-        }
-
-        if (empty) empty.style.display = 'none';
-        container.innerHTML = projects.map(renderProject).join('');
-        detectarUbicacionIp();
-      }
-
-      function detectarUbicacionIp() {
-        fetch('https://ipapi.co/json/')
-          .then(r => { if (!r.ok) throw new Error('IP'); return r.json(); })
-          .then(data => {
-            const location = [data.city, data.region, data.country_name].filter(Boolean).join(', ') || 'No disponible';
-            document.querySelectorAll('.ubicacion-ip-cliente').forEach(el => { el.textContent = location; el.classList.remove('is-loading'); });
-            if (data.country_code === 'US') document.querySelectorAll('.btn-whatsapp-us').forEach(el => el.style.display = 'block');
-          })
-          .catch(() => document.querySelectorAll('.ubicacion-ip-cliente').forEach(el => { el.textContent = 'No disponible'; el.classList.remove('is-loading'); }));
-      }
-    </script>
-
+    <!-- PROYECTOS + FIREBASE STORAGE PRIVADO -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+      import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
+      import { getStorage, ref as storageRef, uploadBytesResumable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",
-        authDomain: "evolution-design-9b63b.firebaseapp.com",
-        projectId: "evolution-design-9b63b",
-        storageBucket: "evolution-design-9b63b.firebasestorage.app",
-        messagingSenderId: "433474708581",
-        appId: "1:433474708581:web:cff7830077fb7d0e8a128c"
+      const firebaseConfig={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
+      const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), functions=getFunctions(app,'us-central1'), storage=getStorage(app);
+      const registerClientFile=httpsCallable(functions,'registerClientFile');
+      const submitProjectFiles=httpsCallable(functions,'submitProjectFiles');
+      const getFileUrl=httpsCallable(functions,'getProjectFileDownloadUrl');
+      const createCustomOrder=httpsCallable(functions,'createCustomPayPalOrder');
+      const capturePayPalOrder=httpsCallable(functions,'capturePayPalOrder');
+      const syncClientProfile=httpsCallable(functions,'syncClientProfile');
+      let unsubscribeProjects=null; const fileListeners=[]; let currentGeo={};
+
+      const PAYPAL_CLIENT_ID='BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20';
+      const PAYPAL_SUPPORTED=new Set(['AUD','BRL','CAD','CNY','CZK','DKK','EUR','HKD','HUF','ILS','JPY','MYR','MXN','TWD','NZD','NOK','PHP','PLN','GBP','SGD','SEK','CHF','THB','USD']);
+      const paypalPromises={}; let detectedCurrency='USD';
+
+      function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+      function safeId(v){return String(v||Math.random().toString(36).slice(2)).replace(/[^A-Za-z0-9_-]/g,'').slice(-48);}
+      function money(a,c){const n=Number(a||0),code=String(c||'USD').toUpperCase();try{return new Intl.NumberFormat('es-GT',{style:'currency',currency:code,maximumFractionDigits:['JPY','HUF','TWD'].includes(code)?0:2}).format(n)}catch{return `${n.toFixed(2)} ${code}`}}
+      function bytes(n){n=Number(n||0);if(n<1024)return `${n} B`;if(n<1048576)return `${(n/1024).toFixed(1)} KB`;return `${(n/1048576).toFixed(1)} MB`;}
+      function dateValue(v){if(!v)return null;if(typeof v.toDate==='function')return v.toDate();const d=new Date(v);return Number.isNaN(d.getTime())?null:d;}
+      function dateText(v){const d=dateValue(v);if(!d)return '';return new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'numeric',month:'long'}).format(d).replace(/^./,x=>x.toUpperCase());}
+      function ext(name){const p=String(name||'').split('.');return p.length>1?p.pop().slice(0,4).toUpperCase():'FILE';}
+      function renderSpecs(items){return Array.isArray(items)&&items.length?`<div class="mini-meta">${items.map(x=>`<span class="mini-meta-item"><span class="mini-meta-dot"></span><strong>${esc(x.label)}:</strong> ${esc(x.value)}</span>`).join('')}</div>`:'';}
+      function renderIncluded(items){return Array.isArray(items)&&items.length?`<div class="ui-card included-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg></span>Tu tarifa incluye</h3><p class="section-copy mb-0">Estos son exactamente los servicios incluidos en tu compra.</p><ul class="included-list">${items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';}
+      function statusInfo(p){const labels={awaiting_payment:'Pago pendiente',waiting_files:'Esperando archivos',files_received:'Archivos recibidos',assigned:'Arquitecto asignado',in_progress:'En desarrollo',review:'En revisión',delivered:'Entregado',cancelled:'Cancelado'};return {status:p.status||'waiting_files',label:labels[p.status]||'En proceso'};}
+
+      function paymentBox(project,unique){
+        if(project.paymentStatus==='pending') return `<div class="pending-order-box"><div class="pending-order-title">Orden personalizada pendiente de pago</div><div class="pending-order-copy">Esta cotización fue creada especialmente para tu cuenta. Completa el pago para habilitar la carga privada de archivos y comenzar el proyecto.</div><button class="pending-pay-btn" onclick="prepararPagoPersonalizado('${esc(project.id)}','paypal-custom-${unique}',this)">Pagar orden con PayPal</button><div id="paypal-custom-${unique}" class="custom-paypal-wrap"></div></div>`;
+        return '';
+      }
+
+      function renderProject(p,index){
+        const cfg=p.projectConfig||{},unique=safeId(p.id||p.transactionId||`p-${index}`),paid=p.paymentStatus==='paid'||(!p.paymentStatus&&!!p.transactionId),info=statusInfo(p);
+        const title=p.projectTitle||cfg.packageName||p.projectType||'Proyecto Evolution Design',orderId=p.displayOrderId||`#EVO-${unique.slice(-8).toUpperCase()}`;
+        const amount=money(p.amount||p.baseUsd,p.currency||'USD'), currency=String(p.currency||'USD').toUpperCase(), country=p.payerCountry||p.lastGeo?.country||'No reportado';
+        const hasFiles=Number(p.clientFileCount||0)>0||['files_received','assigned','in_progress','review','delivered'].includes(info.status), assigned=(p.architectName&&p.architectName!=='Pendiente')||['assigned','in_progress','review','delivered'].includes(info.status), delivered=info.status==='delivered';
+        const due=p.estimatedDeliveryAt?dateText(p.estimatedDeliveryAt):'';
+        const step1=paid?'completed':'active',step2=!paid?'':(hasFiles?'completed':'active'),step3=delivered?'completed':(assigned?'active':'');
+        const step1Title=paid?'Pago Verificado':'Pago Pendiente', step2Title=hasFiles?'Archivos Recibidos':'Esperando Archivos', step3Title=delivered?'Proyecto Entregado':(assigned?'En Desarrollo':'Asignación de Arquitecto');
+        const uploader=paid?`<div class="ui-card upload-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M16 16l-4-4-4 4M12 12v9"></path><path d="M20.4 18.4A5 5 0 0018 9h-1.3A8 8 0 103 16.3"></path></svg></span>${esc(cfg.uploadTitle||'Archivos requeridos')}</h3><p class="section-copy">${esc(cfg.uploadCopy||'Sube los archivos necesarios para iniciar tu proyecto.')}</p><div class="file-upload-zone"><div class="file-upload-head"><div class="file-upload-copy"><strong>Carga privada a Evolution Design</strong><span>Hasta 15 archivos · Máx. 100 MB por archivo. Solo tú y el equipo autorizado pueden acceder.</span></div><button class="file-pick-btn" onclick="document.getElementById('file-input-${unique}').click()">Seleccionar archivos</button><input id="file-input-${unique}" type="file" multiple hidden onchange="subirArchivosProyecto('${esc(p.id)}',this,'progress-${unique}','file-feedback-${unique}')"></div><div id="progress-${unique}" class="file-progress-list"></div></div><div id="client-files-${unique}" class="project-file-list"><div class="file-empty">Cargando archivos…</div></div></div>`:`<div class="ui-card upload-card"><h3 class="section-heading"><span class="section-icon">⌁</span>Archivos del proyecto</h3><p class="section-copy">La carga de archivos se habilitará automáticamente cuando completes el pago de esta orden.</p>${paymentBox(p,unique)}</div>`;
+        const comments=paid?`<div class="ui-card comments-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"></path></svg></span>Comentarios del Cliente</h3><p class="section-copy">Añade especificaciones o notas especiales para el arquitecto y confirma cuando hayas terminado de cargar tus archivos.</p><textarea id="comments-${unique}" class="custom-textarea" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás…">${esc(p.clientComments||'')}</textarea><div class="submit-files-wrap"><button class="send-btn" onclick="enviarArchivosProyecto('${esc(p.id)}','comments-${unique}','file-feedback-${unique}',this)">${hasFiles?'Actualizar información':'Enviar archivos al equipo'}</button><div id="file-feedback-${unique}" class="files-feedback">Tus archivos se almacenan de forma privada en Firebase Storage.</div></div></div>`:'';
+        return `<section class="project-shell" data-project-id="${esc(p.id)}"><div class="row g-0"><div class="col-12 col-lg-8 project-content-col"><div class="project-main"><div class="project-hero"><div class="hero-copy"><span class="project-badge">${esc(info.label)}</span><h2 class="project-name fw-bold text-white">${esc(title)}</h2><div class="order-id">Orden ID: <span>${esc(orderId)}</span></div>${renderSpecs(cfg.specs)}</div></div><div class="content-grid"><div class="ui-card price-card"><div><div class="price-label">${paid?'Inversión Total':'Cotización'}</div><p class="price-value">${esc(amount)} <span class="price-currency">${esc(currency)}</span></p><div class="client-payment-meta"><div class="client-payment-row"><span class="client-payment-label">Cliente</span><span class="client-payment-value">${esc(p.payerName||auth.currentUser?.displayName||'Cliente')}</span></div><div class="client-payment-row"><span class="client-payment-label">ID de Transacción</span><span class="client-payment-value transaction">${esc(p.transactionId||'Pendiente de pago')}</span></div><div class="client-payment-row"><span class="client-payment-label">País</span><span class="client-payment-value">${esc(country)}</span></div><div class="client-payment-row"><span class="client-payment-label">Método de Pago</span><span class="client-payment-value">${esc(p.paymentMethod||'Pendiente')}</span></div></div></div>${paid?`<div class="verified-note"><span class="verified-dot">✓</span><span>Pago verificado por el servidor de PayPal.</span></div>`:`<div class="payment-pending-note">◷ Esta orden aún no ha sido pagada.</div>`}</div>${uploader}</div>${renderIncluded(cfg.includedHighlights)}<div id="delivery-files-card-${unique}"></div>${comments}</div></div><div class="col-12 col-lg-4 project-status-col"><div class="status-wrap"><aside class="status-panel"><div class="status-title-row"><h3 class="status-heading">Estado del Proyecto</h3><span class="status-pill">${esc(info.label)}</span></div><div class="tracker-container"><div class="tracker-step ${step1}"><div class="tracker-icon">${paid?'✓':'1'}</div><div class="tracker-text"><div class="tracker-title">${step1Title}</div><p class="tracker-desc">${paid?'Transacción confirmada y proyecto habilitado.':'Completa la orden personalizada para iniciar.'}</p></div></div><div class="tracker-step ${step2}"><div class="tracker-icon">${hasFiles?'✓':'2'}</div><div class="tracker-text"><div class="tracker-title">${step2Title}</div><p class="tracker-desc">${paid?(hasFiles?'Tu información ya está disponible para el equipo.':'Sube directamente los archivos requeridos.'):'Disponible después del pago.'}</p></div></div><div class="tracker-step ${step3}"><div class="tracker-icon">${delivered?'✓':'3'}</div><div class="tracker-text"><div class="tracker-title">${step3Title}</div><p class="tracker-desc">Arquitecto delegado: <span class="text-white fw-medium">${esc(p.architectName||'Pendiente')}</span></p></div></div></div><div class="delivery-card"><div class="delivery-label">◷ Entrega estimada</div><span class="delivery-date">${due?`Entrega estimada: <span class="accent-text">${esc(due)}</span>`:(paid?'Se calcula al enviar tus archivos.':'Se habilita después del pago.')}</span><span class="delivery-help">El tiempo de proceso comienza cuando recibimos todos los archivos necesarios.</span></div><div class="status-actions"><div class="firebase-sync-note"><span class="firebase-sync-dot"></span>Firebase sincronizado en tiempo real</div></div></aside></div></div></div></section>`;
+      }
+
+      function fileRows(files,project,role){
+        const active=files.filter(f=>f.availability!=='deleted');
+        if(!active.length)return `<div class="file-empty">${role==='delivery'?'Aún no hay archivos de entrega.':'Aún no has subido archivos.'}</div>`;
+        return active.map(f=>`<div class="project-file-row"><div class="project-file-icon">${esc(ext(f.name))}</div><div class="project-file-info"><div class="project-file-name">${esc(f.label||f.name)}</div><div class="project-file-meta">${esc(bytes(f.size))} · ${role==='delivery'?'Entregado por Evolution Design':'Subido por ti'}</div></div><button class="file-download-btn" onclick="descargarArchivoProyecto('${esc(project.ownerUid)}','${esc(project.id)}','${esc(f.id)}','${role}',this)">Descargar</button></div>`).join('');
+      }
+
+      function attachFiles(user,project){
+        const unique=safeId(project.id), clientEl=document.getElementById(`client-files-${unique}`), deliveryCard=document.getElementById(`delivery-files-card-${unique}`);
+        if(clientEl){const q=query(collection(db,'users',user.uid,'projects',project.id,'clientFiles'),orderBy('uploadedAt','desc'));fileListeners.push(onSnapshot(q,snap=>clientEl.innerHTML=fileRows(snap.docs.map(d=>({id:d.id,...d.data()})),project,'client')));}
+        if(deliveryCard){const q=query(collection(db,'users',user.uid,'projects',project.id,'deliveryFiles'),orderBy('uploadedAt','desc'));fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()}));const active=files.filter(f=>f.availability!=='deleted');deliveryCard.innerHTML=active.length?`<div class="ui-card delivery-files-card"><h3 class="section-heading"><span class="section-icon" style="color:#55d981;background:rgba(43,200,102,.08);border-color:rgba(43,200,102,.16)">✓</span>Archivos de Entrega</h3><p class="section-copy">Evolution Design ha enviado ${active.length} archivo(s) para este proyecto.</p><div class="project-file-list">${fileRows(files,project,'delivery')}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`:'';}));}
+      }
+
+      window.subirArchivosProyecto=async function(projectId,input,progressId,feedbackId){
+        const user=auth.currentUser, files=Array.from(input?.files||[]), progress=document.getElementById(progressId), feedback=document.getElementById(feedbackId); if(!user||!files.length)return;
+        if(files.length>15){if(feedback){feedback.textContent='Máximo 15 archivos por carga.';feedback.className='files-feedback error'}return;}
+        for(const file of files){
+          if(file.size>100*1024*1024){if(feedback){feedback.textContent=`${file.name} supera 100 MB.`;feedback.className='files-feedback error'}continue;}
+          const fileId=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,''), clean=file.name.replace(/[\\/]+/g,'_').slice(-180), path=`projects/${user.uid}/${projectId}/client/${fileId}/${clean}`;
+          const row=document.createElement('div');row.className='file-progress-item';row.innerHTML=`<div class="file-progress-top"><span>${esc(file.name)}</span><span>0%</span></div><div class="file-progress-track"><div class="file-progress-bar"></div></div>`;progress?.appendChild(row);const pct=row.querySelector('.file-progress-top span:last-child'),bar=row.querySelector('.file-progress-bar');
+          try{await new Promise((resolve,reject)=>{const task=uploadBytesResumable(storageRef(storage,path),file,{contentType:file.type||'application/octet-stream',customMetadata:{ownerUid:user.uid,projectId,fileId,role:'client'}});task.on('state_changed',s=>{const n=Math.round(s.bytesTransferred/s.totalBytes*100);pct.textContent=`${n}%`;bar.style.width=`${n}%`;},reject,resolve)});await registerClientFile({projectId,fileId,storagePath:path,name:file.name,contentType:file.type||''});pct.textContent='Listo';bar.style.width='100%';}catch(e){console.error(e);pct.textContent='Error';row.style.borderColor='rgba(255,80,90,.4)';if(feedback){feedback.textContent=e?.message?.replace(/^FirebaseError:\s*/,'')||`No se pudo subir ${file.name}.`;feedback.className='files-feedback error';}}
+        }
+        input.value='';if(feedback&&!feedback.classList.contains('error')){feedback.textContent='✓ Archivos cargados. Cuando termines, presiona “Enviar archivos al equipo”.';feedback.className='files-feedback success';}
       };
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      onAuthStateChanged(auth, user => cargarProyectosUsuario(user));
+
+      window.enviarArchivosProyecto=async function(projectId,commentsId,feedbackId,button){const feedback=document.getElementById(feedbackId),comments=document.getElementById(commentsId);if(button){button.disabled=true;button.textContent='Enviando…'}try{await submitProjectFiles({projectId,comments:comments?.value||''});if(feedback){feedback.textContent='✓ Archivos confirmados. El equipo ya puede descargarlos desde el panel administrativo.';feedback.className='files-feedback success';}}catch(e){console.error(e);if(feedback){feedback.textContent=e?.message?.replace(/^FirebaseError:\s*/,'')||'No pudimos confirmar tus archivos.';feedback.className='files-feedback error';}}finally{if(button){button.disabled=false;button.textContent='Actualizar información';}}};
+
+      window.descargarArchivoProyecto=async function(ownerUid,projectId,fileId,role,button){const old=button?.textContent;if(button){button.disabled=true;button.textContent='Abriendo…'}try{const r=await getFileUrl({ownerUid,projectId,fileId,role});if(r.data?.url)window.open(r.data.url,'_blank','noopener');}catch(e){alert(e?.message?.replace(/^FirebaseError:\s*/,'')||'El archivo no está disponible.');}finally{if(button){button.disabled=false;button.textContent=old||'Descargar';}}};
+
+      async function detectGeo(){try{const r=await fetch('https://ipapi.co/json/',{cache:'no-store'});if(r.ok){const g=await r.json();currentGeo={city:g.city||'',region:g.region||'',country:g.country_name||'',countryCode:g.country_code||'',currency:g.currency||''};detectedCurrency=PAYPAL_SUPPORTED.has(String(g.currency||'').toUpperCase())?String(g.currency).toUpperCase():'USD';}}catch{}return currentGeo;}
+      function loadPayPal(currency){currency=PAYPAL_SUPPORTED.has(currency)?currency:'USD';if(paypalPromises[currency])return paypalPromises[currency];const ns=`paypal_projects_${currency}`;paypalPromises[currency]=new Promise((resolve,reject)=>{if(window[ns]?.Buttons)return resolve(window[ns]);const sc=document.createElement('script');sc.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=${currency}&components=buttons&intent=capture`;sc.dataset.namespace=ns;sc.onload=()=>window[ns]?.Buttons?resolve(window[ns]):reject(new Error('PayPal no cargó.'));sc.onerror=reject;document.head.appendChild(sc);});return paypalPromises[currency];}
+      window.prepararPagoPersonalizado=async function(projectId,containerId,button){const box=document.getElementById(containerId);if(!box)return;if(button)button.style.display='none';box.style.display='block';box.innerHTML='Preparando pago seguro…';try{await detectGeo();const currency=detectedCurrency||'USD',sdk=await loadPayPal(currency);box.innerHTML='';await sdk.Buttons({style:{layout:'vertical',color:'gold',shape:'rect',height:44},createOrder:async()=>{const r=await createCustomOrder({projectId,requestedCurrency:currency,clientGeo:currentGeo});return r.data.orderId;},onApprove:async d=>{box.innerHTML='Confirmando pago…';await capturePayPalOrder({orderId:d.orderID});},onError:e=>{console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo completar el pago.</div>';if(button)button.style.display='inline-block';}}).render(`#${containerId}`);}catch(e){console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo preparar PayPal.</div>';if(button)button.style.display='inline-block';}};
+
+      function emptyState(title,text){const c=document.getElementById('lista-proyectos-container'),e=document.getElementById('sin-proyectos-msg');if(c)c.innerHTML='';if(e){e.style.display='block';const h=e.querySelector('h4'),p=e.querySelector('p');if(h)h.textContent=title;if(p)p.textContent=text;}}
+      function clearFileListeners(){while(fileListeners.length){try{fileListeners.pop()();}catch{}}}
+      async function listen(user){if(unsubscribeProjects){unsubscribeProjects();unsubscribeProjects=null}clearFileListeners();if(!user){emptyState('Inicia sesión para ver tus proyectos','Tus compras y órdenes personalizadas aparecerán aquí al iniciar sesión con la misma cuenta.');return;}detectGeo().then(g=>syncClientProfile({geo:g}).catch(()=>{}));const q=query(collection(db,'users',user.uid,'projects'),orderBy('createdAt','desc')),container=document.getElementById('lista-proyectos-container'),empty=document.getElementById('sin-proyectos-msg');unsubscribeProjects=onSnapshot(q,snap=>{clearFileListeners();const projects=snap.docs.map(d=>({id:d.id,...d.data()}));if(!projects.length){emptyState('Aún no tienes proyectos u órdenes','Cuando compres una tarifa o Evolution Design cree una orden personalizada para ti, aparecerá aquí.');return;}if(empty)empty.style.display='none';if(container)container.innerHTML=projects.map(renderProject).join('');projects.forEach(p=>{if((p.paymentStatus==='paid'||(!p.paymentStatus&&p.transactionId)))attachFiles(user,p);});},e=>{console.error(e);emptyState('No pudimos cargar tus proyectos','Revisa tu conexión o la configuración de Firebase.');});}
+      onAuthStateChanged(auth,listen);
     </script>
 
     <script src="js/bootstrap.bundle.min.js" defer></script>
