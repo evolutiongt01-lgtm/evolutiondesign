@@ -59,9 +59,9 @@
       .btn-close-modal:hover { color: #fff; }
 
       /* NAVEGACIÓN ESCRITORIO Y MÓVIL */
-      .desktop-nav { display: none !important; padding-top: calc(25px + env(safe-area-inset-top, 0px)); pointer-events: none; }
+      .desktop-nav { display: none !important; padding-top: calc(25px + env(safe-area-inset-top, 0px)); pointer-events: none; z-index: 1040; }
       @media (min-width: 992px) { .desktop-nav { display: block !important; } }
-      .nav-pill { pointer-events: auto; background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1150px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
+      .nav-pill { pointer-events: auto; background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
       .nav-pill-links { display: flex; gap: 2rem; align-items: center; }
       .nav-pill-link { color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: color 0.3s; position: relative; }
       .nav-pill-link:hover, .nav-pill-link.active { color: #fff; }
@@ -135,7 +135,7 @@
       /* CAJA DE PAGO CON ESTILO LIQUID GLASS */
       .paypal-white-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
 
-      /* ANIMACIÓN DEL CANDADO DE SEGURIDAD (MEJORADO PARA NO TAPAR PAGOS) */
+      /* ANIMACIÓN DEL CANDADO DE SEGURIDAD */
       .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 24px; display: flex; align-items: center; justify-content: flex-start; padding-left: 22%; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
       @media (max-width: 991px) { .lock-overlay { padding-left: 0; justify-content: center; align-items: flex-start; padding-top: 20%; } }
       .lock-overlay.active { opacity: 1; pointer-events: auto; }
@@ -166,7 +166,7 @@
       input:checked + .f-slider-toggle:before { transform: translateX(22px); }
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
-      /* BOTÓN Y MENÚ FLOTANTE DE MONEDA (SIN PUNTOS) */
+      /* BOTÓN Y MENÚ FLOTANTE DE MONEDA */
       .currency-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
       .currency-wrapper { position: relative; width: 50px; height: 50px; }
       .currency-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212, 184, 149, 0.4) !important; background-color: rgba(212, 184, 149, 0.1) !important; color: #d4b895 !important; backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; }
@@ -227,8 +227,10 @@
 
     <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) -->
     <nav class="desktop-nav fixed-top" id="navScroll">
-      <div class="container px-0">
-        <div class="nav-pill">
+      <div class="container px-0 d-flex justify-content-center align-items-center gap-3" style="position: relative;">
+        
+        <!-- BARRA PRINCIPAL -->
+        <div class="nav-pill flex-grow-1" style="max-width: 1150px; position: relative;">
           <div class="d-flex align-items-center gap-3">
             <div style="position: relative;">
               <a href="#" class="icon-btn" id="desktopMenuBtn" aria-label="Menú">
@@ -248,13 +250,21 @@
             <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
             <a href="#fachadas" class="nav-pill-link">Fachadas</a>
             <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
-            <!-- CONTENEDOR LOGIN Y PERFIL ESCRITORIO -->
+            
+            <!-- CONTENEDOR LOGIN Y LOGOUT DENTRO DE LA BARRA ESCRITORIO -->
             <div id="auth-desktop-wrapper" class="d-flex align-items-center">
                 <a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>
             </div>
           </div>
           <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Catálogo de Software &rarr;</a>
+          
+          <!-- BOTÓN ADMIN FLOTANDO EXACTAMENTE DEBAJO DEL LOGO (MAC) -->
+          <div id="admin-badge-container-desktop" style="position: absolute; top: calc(100% + 12px); left: 3.5rem; z-index: 10;"></div>
         </div>
+
+        <!-- FOTO DE PERFIL LIQUID GLASS A LA PAR DE LA BARRA (MAC) -->
+        <div id="floating-profile-desktop" class="shrink-0 d-none d-lg-block"></div>
+
       </div>
     </nav>
 
@@ -305,7 +315,7 @@
         </div>
       </div>
 
-      <!-- 1. SERVICIOS VIDEOS (OPTIMIZADOS CON PRELOAD NONE) -->
+      <!-- 1. SERVICIOS VIDEOS -->
       <section id="servicios-destacados" class="services-section">
         <div class="container px-vw-5">
           <div class="row align-items-end mb-5" data-aos="fade">
@@ -327,7 +337,7 @@
         </div>
       </section>
 
-      <!-- 2. SECCIÓN DE PLANOS 2D (PAQUETES FIJOS) -->
+      <!-- 2. SECCIÓN DE PLANOS 2D -->
       <div id="servicios-tecnicos" class="section-planos-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -401,7 +411,7 @@
         </div>
       </div>
 
-      <!-- 2.5 NUEVA CALCULADORA DE PLANOS 2D -->
+      <!-- 2.5 CALCULADORA DE PLANOS 2D -->
       <section id="calculadora-planos" class="facade-calc-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -499,8 +509,8 @@
                     </div>
                     
                     <div id="row-planos-excedente" class="d-flex justify-content-between align-items-center mb-5 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important; display: none !important;">
-                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes (0 m²)</span>
-                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">+$0.00</span>
+                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes</span>
+                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">$--.--</span>
                     </div>
 
                     <div class="text-center mt-2">
@@ -512,9 +522,11 @@
                     </div>
                     
                     <div id="wrapperPagoDirectoPlanos" class="mt-2" style="display: block;">
+                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);"></div>
+                      
                       <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProceder2D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
-                        PROCEDER AL PAGO SEGURO
+                      <button id="btnProceder2D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                        ACCEDER PARA VISUALIZAR TARIFAS
                       </button>
 
                       <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
@@ -756,16 +768,11 @@
                     </div>
                     
                     <div id="wrapperPagoDirectoFachadas" class="mt-2" style="display: block;">
-                      <div class="text-center p-3 rounded-3 mb-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
-                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
-                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Listo para pago!
-                        </span>
-                      </div>
+                      <div class="text-center p-3 rounded-3 mb-3" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);"></div>
 
                       <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProcederFachadas" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
-                        PROCEDER AL PAGO SEGURO
+                      <button id="btnProcederFachadas" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                        ACCEDER PARA VISUALIZAR TARIFAS
                       </button>
 
                       <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
@@ -1024,7 +1031,6 @@
                           <span class="accent-text small d-block mb-1" id="labelCostoFinal">Tu Inversión</span>
                           <div class="d-flex align-items-baseline">
                             <h2 class="fw-bold accent-text mb-0" id="calcPrecioFinal" style="font-size: 1.8rem;">$--.--</h2>
-                            <span class="ms-1 accent-text small curr-symbol">USD</span>
                           </div>
                         </div>
                       </div>
@@ -1039,16 +1045,11 @@
                     
                     <!-- MENSAJE Y BOTÓN DE PAGO DIRECTO PAYPAL -->
                     <div id="wrapperPagoDirecto3D" class="mt-4" style="display: block; position: relative; z-index: 30;">
-                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-3d" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
-                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
-                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Aprobado! Tu proyecto es elegible.
-                        </span>
-                      </div>
+                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-3d" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);"></div>
                       
                       <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProceder3D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
-                        INICIAR SESIÓN PARA VER PRECIOS Y PAGAR
+                      <button id="btnProceder3D" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: rgba(212, 184, 149, 0.1); border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                        ACCEDER PARA VISUALIZAR TARIFAS
                       </button>
 
                       <!-- CONTENEDOR DE PAYPAL OCULTO -->
@@ -1177,23 +1178,43 @@
         if(currencyMenu && !currencyContainer.contains(e.target)) currencyMenu.classList.remove('show'); 
       });
 
-      // FUNCIONES DE CALCULADORAS
-      function aplicarEstiloBotonBloqueado(btn) {
-        if(!btn) return;
-        btn.textContent = "INICIAR SESIÓN PARA COTIZAR Y PAGAR";
-        btn.style.background = "rgba(212, 184, 149, 0.1)";
-        btn.style.color = "#d4b895";
-        btn.style.border = "1px solid #d4b895";
-        btn.classList.remove('text-black');
+      function updateAllCurrencies() {
+        const config = exchangeRates[currentCurrency];
+        document.querySelectorAll('.price-val').forEach(el => {
+          const usdVal = parseFloat(el.getAttribute('data-usd'));
+          const converted = usdVal * config.rate;
+          const decimals = currentCurrency === 'JPY' ? 0 : 2;
+          el.textContent = converted.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+        });
+        document.querySelectorAll('.curr-symbol').forEach(el => { el.textContent = config.symbol; });
       }
 
-      function aplicarEstiloBotonNormal(btn) {
+      // Función maestra para el estado visual de los botones de pago
+      window.actualizarEstadoBoton = function(btnId, isAuth, hasData) {
+        const btn = document.getElementById(btnId);
         if(!btn) return;
-        btn.textContent = "PROCEDER AL PAGO SEGURO";
-        btn.style.background = "#ffc439";
-        btn.style.color = "#000";
-        btn.style.border = "none";
-        btn.classList.add('text-black');
+        if (!isAuth) {
+            btn.textContent = "ACCEDER PARA VISUALIZAR TARIFAS";
+            btn.style.background = "rgba(212, 184, 149, 0.1)";
+            btn.style.color = "#d4b895";
+            btn.style.border = "1px solid #d4b895";
+            btn.classList.remove('text-black');
+            btn.disabled = false;
+        } else if (!hasData) {
+            btn.textContent = "INGRESA TUS DATOS PARA CONTINUAR";
+            btn.style.background = "rgba(255, 255, 255, 0.05)";
+            btn.style.color = "#aaa";
+            btn.style.border = "1px solid rgba(255,255,255,0.2)";
+            btn.classList.remove('text-black');
+            btn.disabled = true; // Bloqueado hasta que metan números
+        } else {
+            btn.textContent = "PROCEDER AL PAGO SEGURO";
+            btn.style.background = "#ffc439";
+            btn.style.color = "#000";
+            btn.style.border = "none";
+            btn.classList.add('text-black');
+            btn.disabled = false;
+        }
       }
 
       function toggleLock3D(locked) {
@@ -1258,9 +1279,12 @@
         const niveles = parseInt(document.querySelector('input[name="c-niveles"]:checked')?.value || 1);
         const servicioVal = document.getElementById('calcServicioSelect')?.value;
         const areaTotal = ancho * largo * niveles;
+        const precioFinalDisplay = document.getElementById('calcPrecioFinal');
+        const totalDisplay = document.getElementById('calcTotal');
+        const msj3D = document.getElementById('mensaje-rango-3d');
+        const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
 
         if (areaTotal > 0) {
-          const totalDisplay = document.getElementById('calcTotal');
           if(totalDisplay) totalDisplay.textContent = areaTotal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
           let baseUSD = 0;
           if (servicioVal === 'basico') { baseUSD = 300 + (areaTotal > 400 ? (areaTotal - 400) * 3 : 0); }
@@ -1273,17 +1297,11 @@
           const convertedFinal = baseUSD * exchangeRates[currentCurrency].rate;
 
           if(!window.usuarioAutenticado) {
-            const precioFinalDisplay = document.getElementById('calcPrecioFinal');
             if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">$--.--</span>`;
-            aplicarEstiloBotonBloqueado(document.getElementById('btnProceder3D'));
-            if(document.getElementById('mensaje-rango-3d')) document.getElementById('mensaje-rango-3d').style.display = 'none';
+            if(msj3D) msj3D.style.display = 'none';
           } else {
-            const precioFinalDisplay = document.getElementById('calcPrecioFinal');
             if(precioFinalDisplay) precioFinalDisplay.innerHTML = `${convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })} <span class="ms-1 accent-text small">${exchangeRates[currentCurrency].symbol}</span>`;
-            aplicarEstiloBotonNormal(document.getElementById('btnProceder3D'));
-            
             if (areaTotal > 400) {
-              const msj3D = document.getElementById('mensaje-rango-3d');
               if(msj3D) {
                 msj3D.style.display = 'block';
                 msj3D.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de $${baseUSD.toFixed(2)} USD listo para pago.</span>`;
@@ -1291,7 +1309,6 @@
                 msj3D.style.borderColor = 'rgba(255, 193, 7, 0.2)';
               }
             } else {
-              const msj3D = document.getElementById('mensaje-rango-3d');
               if(msj3D) {
                 msj3D.style.display = 'block';
                 msj3D.innerHTML = `<span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>¡Proyecto en rango base! Listo para pago.</span>`;
@@ -1301,10 +1318,14 @@
             }
           }
         } else {
-            const precioFinalDisplay = document.getElementById('calcPrecioFinal');
-            if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">$--.--</span>`;
-            if(document.getElementById('mensaje-rango-3d')) document.getElementById('mensaje-rango-3d').style.display = 'none';
+          if(totalDisplay) totalDisplay.textContent = "0.00"; 
+          if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">$--.--</span>`;
+          if(msj3D) msj3D.style.display = 'none';
+          window.montoPago3D = "0.00";
         }
+        
+        window.actualizarEstadoBoton('btnProceder3D', window.usuarioAutenticado, areaTotal > 0);
+        if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.setProperty('display', 'block', 'important');
       }
       window.actualizarCotizacionTerrenoGlobal = actualizarCotizacionTerreno;
       const calcAncho = document.getElementById('calcAncho');
@@ -1355,6 +1376,8 @@
         const largo = parseFloat(document.getElementById('p-largo')?.value) || 0;
         const niveles = parseInt(document.querySelector('input[name="p-niveles"]:checked')?.value || 2);
         const paquete = document.querySelector('input[name="p-paquete"]:checked')?.value || 'basico';
+        const msjPlanos = document.getElementById('mensaje-rango-planos');
+        const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
         
         let areaTotal = ancho * largo * niveles;
         let basePrecioUSD = paquete === 'basico' ? 390 : 800;
@@ -1369,12 +1392,13 @@
         const pAreaText = document.getElementById('p-area-text');
         if(pAreaText) pAreaText.textContent = areaTotal.toFixed(2) + ' m²';
 
-        if(!window.usuarioAutenticado) {
-          const pBaseText = document.getElementById('p-base-text');
-          const pTotal = document.getElementById('p-total');
-          const rowPlanosExcedente = document.getElementById('row-planos-excedente');
-          const pExcedenteText = document.getElementById('p-excedente-text');
+        const pBaseText = document.getElementById('p-base-text');
+        const pTotal = document.getElementById('p-total');
+        const rowPlanosExcedente = document.getElementById('row-planos-excedente');
+        const pExcedenteText = document.getElementById('p-excedente-text');
+        const pExcedenteLabel = document.getElementById('p-excedente-label');
 
+        if(!window.usuarioAutenticado) {
           if(pBaseText) pBaseText.textContent = `$--.--`;
           if(pTotal) pTotal.innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">$--.--</span>`;
           if(excedente > 0) {
@@ -1383,24 +1407,17 @@
           } else {
              if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'none', 'important');
           }
-          aplicarEstiloBotonBloqueado(document.getElementById('btnProceder2D'));
-          if(document.getElementById('mensaje-rango-planos')) document.getElementById('mensaje-rango-planos').style.display = 'none';
+          if(msjPlanos) msjPlanos.style.display = 'none';
         } else {
-          const pBaseText = document.getElementById('p-base-text');
-          const pTotal = document.getElementById('p-total');
-          const rowPlanosExcedente = document.getElementById('row-planos-excedente');
-          const pExcedenteText = document.getElementById('p-excedente-text');
-          const pExcedenteLabel = document.getElementById('p-excedente-label');
-
           if(pBaseText) pBaseText.textContent = `${symbol} ${(basePrecioUSD * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
           if(pTotal) pTotal.textContent = `${symbol} ${((basePrecioUSD + excedente) * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+          
           if(excedente > 0) {
             if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'flex', 'important');
             if(pExcedenteLabel) pExcedenteLabel.textContent = `Metros excedentes (${(areaTotal - 400).toFixed(2)} m²)`;
             if(pExcedenteText) pExcedenteText.textContent = `+${symbol} ${(excedente * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
             
-            const msjPlanos = document.getElementById('mensaje-rango-planos');
-            if(msjPlanos) {
+            if(msjPlanos && areaTotal > 0) {
               msjPlanos.style.display = 'block';
               msjPlanos.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de $${(basePrecioUSD + excedente).toFixed(2)} USD listo para pago.</span>`;
               msjPlanos.style.background = 'rgba(255, 193, 7, 0.1)';
@@ -1408,16 +1425,17 @@
             }
           } else {
             if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'none', 'important');
-            const msjPlanos = document.getElementById('mensaje-rango-planos');
-            if(msjPlanos) {
+            if(msjPlanos && areaTotal > 0) {
               msjPlanos.style.display = 'block';
               msjPlanos.innerHTML = `<span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>¡Proyecto en rango base! Listo para pago.</span>`;
               msjPlanos.style.background = 'rgba(40, 167, 69, 0.1)';
               msjPlanos.style.borderColor = 'rgba(40, 167, 69, 0.2)';
             }
           }
-          aplicarEstiloBotonNormal(document.getElementById('btnProceder2D'));
         }
+        
+        window.actualizarEstadoBoton('btnProceder2D', window.usuarioAutenticado, areaTotal > 0);
+        if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
       }
       window.actualizarCalculadoraPlanosGlobal = actualizarCalculadoraPlanos;
       const pAncho = document.getElementById('p-ancho');
@@ -1498,15 +1516,16 @@
         const fAreaText = document.getElementById('f-area-text');
         if(fAreaText) fAreaText.textContent = area.toFixed(2) + ' m²';
 
-        if(!window.usuarioAutenticado) {
-          const fBaseText = document.getElementById('f-base-text');
-          const fSubtotalText = document.getElementById('f-subtotal-text');
-          const fTotal = document.getElementById('f-total');
-          const rowNivelesExtra = document.getElementById('row-niveles-extra');
-          const fNivelesCostoUI = document.getElementById('f-niveles-costo');
-          const fRenderText = document.getElementById('f-render-text');
-          const fComplexLabel = document.getElementById('f-complex-label');
+        const fBaseText = document.getElementById('f-base-text');
+        const fSubtotalText = document.getElementById('f-subtotal-text');
+        const fTotal = document.getElementById('f-total');
+        const rowNivelesExtra = document.getElementById('row-niveles-extra');
+        const fNivelesCostoUI = document.getElementById('f-niveles-costo');
+        const fRenderText = document.getElementById('f-render-text');
+        const fComplexLabel = document.getElementById('f-complex-label');
+        const fNivelesLabelUI = document.getElementById('f-niveles-label');
 
+        if(!window.usuarioAutenticado) {
           if(fBaseText) fBaseText.textContent = `$--.--`;
           if(fSubtotalText) fSubtotalText.textContent = `$--.--`;
           if(fTotal) fTotal.innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">$--.--</span>`;
@@ -1519,18 +1538,7 @@
             if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
           }
           if(fRenderText) fRenderText.textContent = `$--.--`;
-
-          aplicarEstiloBotonBloqueado(document.getElementById('btnProcederFachadas'));
         } else {
-          const fBaseText = document.getElementById('f-base-text');
-          const fSubtotalText = document.getElementById('f-subtotal-text');
-          const fTotal = document.getElementById('f-total');
-          const rowNivelesExtra = document.getElementById('row-niveles-extra');
-          const fNivelesLabelUI = document.getElementById('f-niveles-label');
-          const fNivelesCostoUI = document.getElementById('f-niveles-costo');
-          const fRenderText = document.getElementById('f-render-text');
-          const fComplexLabel = document.getElementById('f-complex-label');
-
           if(fBaseText) fBaseText.textContent = `${symbol} ${((area*1.5)*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
           if(fSubtotalText) fSubtotalText.textContent = `${symbol} ${(subtotal*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
           if(fTotal) fTotal.textContent = `${symbol} ${(totalUSD*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
@@ -1544,9 +1552,11 @@
             if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
           }
           if(fRenderText) fRenderText.textContent = `${symbol} ${(costoRender * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
-
-          aplicarEstiloBotonNormal(document.getElementById('btnProcederFachadas'));
         }
+        
+        window.actualizarEstadoBoton('btnProcederFachadas', window.usuarioAutenticado, area > 0);
+        const wrapperPagoDirectoFachadas = document.getElementById('wrapperPagoDirectoFachadas');
+        if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'block', 'important');
       }
       window.actualizarCalculadoraFachadaGlobal = actualizarCalculadoraFachada;
       const fAncho = document.getElementById('f-ancho');
@@ -1635,9 +1645,30 @@
       const auth = getAuth(app);
       const providerGoogle = new GoogleAuthProvider();
 
-      // FUNCIÓN GLOBAL PARA CERRAR SESIÓN
+      // FUNCIÓN GLOBAL PARA CERRAR SESIÓN Y REINICIAR LAS CALCULADORAS
       window.cerrarSesionGlobal = function() {
         signOut(auth).then(() => {
+           // Cerramos los contenedores de paypal si estaban abiertos
+           ['paypal-container-wrapper-3d', 'paypal-container-wrapper-2d', 'paypal-container-wrapper-fachada'].forEach(id => {
+              const el = document.getElementById(id);
+              if(el) el.style.display = 'none';
+           });
+           // Re-mostramos los botones de proceder
+           ['btnProceder3D', 'btnProceder2D', 'btnProcederFachadas'].forEach(id => {
+              const el = document.getElementById(id);
+              if(el) el.style.display = 'block';
+           });
+           // Ocultamos los de cancelar
+           ['btnCancelar3D', 'btnCancelar2D', 'btnCancelarFachadas'].forEach(id => {
+              const el = document.getElementById(id);
+              if(el) el.style.display = 'none';
+           });
+           
+           // Desbloqueamos los inputs
+           if(typeof toggleLock3D === 'function') toggleLock3D(false);
+           if(typeof toggleLock2D === 'function') toggleLock2D(false);
+           if(typeof toggleLockFachadas === 'function') toggleLockFachadas(false);
+
            if(window.actualizarCotizacionTerrenoGlobal) window.actualizarCotizacionTerrenoGlobal();
            if(window.actualizarCalculadoraPlanosGlobal) window.actualizarCalculadoraPlanosGlobal();
            if(window.actualizarCalculadoraFachadaGlobal) window.actualizarCalculadoraFachadaGlobal();
@@ -1721,28 +1752,42 @@
         });
       }
 
-      // VIGILANTE DE SESIÓN
+      // VIGILANTE DE SESIÓN Y RENDERIZADO DE MENÚS
       onAuthStateChanged(auth, (user) => {
         window.usuarioAutenticado = !!user;
 
         const btnDesktop = document.getElementById('auth-desktop-wrapper');
         const btnMobile = document.getElementById('auth-mobile-wrapper');
+        const profileDesktop = document.getElementById('floating-profile-desktop');
+        const adminDesktop = document.getElementById('admin-badge-container-desktop');
         
         if (user) {
           const userPhoto = user.photoURL ? user.photoURL : `https://ui-avatars.com/api/?name=${user.displayName || 'U'}&background=d4b895&color=fff`;
           let adminBtnMobile = "";
+          let adminBtnDesktopStr = "";
           
-          // BOTÓN DE PANEL ADMIN SOLO PARA TI (Y SOLO EN MÓVIL, SE QUITÓ EN MAC)
+          // BOTÓN DE PANEL ADMIN SOLO PARA TI
           if (user.email === 'evolutiongt01@gmail.com') {
             adminBtnMobile = `<a href="admin.html" class="icon-btn ms-1 text-white border-danger" style="width:30px; height:30px; background: rgba(220,53,69,0.5);"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></a>`;
+            
+            // Botón Admin de escritorio, flotando abajo del logo
+            adminBtnDesktopStr = `<a href="admin.html" class="admin-badge-btn shadow"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="me-1" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Panel Admin</a>`;
           }
 
+          // Desktop: Solo el botón de Cerrar Sesión en la barra
           const htmlLogueadoDesktop = `
             <a href="#" onclick="cerrarSesionGlobal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; font-size: 0.85rem;">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg> 
               Cerrar sesión
             </a>`;
             
+          // Foto de perfil fuera de la barra en Desktop
+          const profilePicHTML = `
+            <a href="perfil.html" title="Mi Perfil">
+              <img src="${userPhoto}" alt="Perfil" class="profile-pic-liquid" onerror="this.src='https://ui-avatars.com/api/?name=U&background=d4b895&color=fff'">
+            </a>`;
+            
+          // Mobile: Agrupa todo (foto, admin si aplica, y botón salir)
           const htmlLogueadoMobile = `
             <div class="d-flex align-items-center gap-2">
               <img src="${userPhoto}" alt="Perfil" class="profile-pic-liquid" style="width: 30px; height: 30px;" onerror="this.src='https://ui-avatars.com/api/?name=U&background=d4b895&color=fff'">
@@ -1754,15 +1799,21 @@
 
           if (btnDesktop) btnDesktop.innerHTML = htmlLogueadoDesktop;
           if (btnMobile) btnMobile.innerHTML = htmlLogueadoMobile;
+          if (profileDesktop) profileDesktop.innerHTML = profilePicHTML;
+          if (adminDesktop) adminDesktop.innerHTML = adminBtnDesktopStr;
+
         } else {
+          // Estado de NO logueado
           const htmlLoginDesktop = `<a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>`;
           const htmlLoginMobile = `<a href="#" onclick="abrirAuthModal(); return false;" class="icon-btn" aria-label="Login"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg></a>`;
           
           if (btnDesktop) btnDesktop.innerHTML = htmlLoginDesktop;
           if (btnMobile) btnMobile.innerHTML = htmlLoginMobile;
+          if (profileDesktop) profileDesktop.innerHTML = '';
+          if (adminDesktop) adminDesktop.innerHTML = '';
         }
 
-        // Actualiza calculadoras para desbloquear los precios
+        // Actualiza calculadoras para bloquear/desbloquear los precios
         if(typeof window.actualizarCotizacionTerrenoGlobal === 'function') window.actualizarCotizacionTerrenoGlobal();
         if(typeof window.actualizarCalculadoraPlanosGlobal === 'function') window.actualizarCalculadoraPlanosGlobal();
         if(typeof window.actualizarCalculadoraFachadaGlobal === 'function') window.actualizarCalculadoraFachadaGlobal();
