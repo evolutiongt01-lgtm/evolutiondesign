@@ -1,0 +1,20 @@
+{
+  "name": "evolution-design-functions",
+  "version": "1.0.0",
+  "description": "Firebase Cloud Functions backend for Evolution Design payments and project workflow",
+  "main": "index.js",
+  "private": true,
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^6.3.2"
+  }
+}
