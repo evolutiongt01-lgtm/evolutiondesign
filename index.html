@@ -2053,7 +2053,6 @@
                 window.abrirAuthModal();
                 return;
             }
-            toggleLock3D(true);
             btnProceder3D.style.display = 'none';
             if(paypalWrapper3D) {
                 paypalWrapper3D.style.display = 'block';
@@ -2170,7 +2169,6 @@
                 window.abrirAuthModal();
                 return;
             }
-            toggleLock2D(true);
             btnProceder2D.style.display = 'none';
             if(paypalWrapper2D) {
                 paypalWrapper2D.style.display = 'block';
@@ -2309,7 +2307,6 @@
                 window.abrirAuthModal();
                 return;
             }
-            toggleLockFachadas(true);
             btnProcederFachadas.style.display = 'none';
             if(paypalWrapperFachada) {
                 paypalWrapperFachada.style.display = 'block';
@@ -2942,14 +2939,66 @@
       }
     }
 
+    function mostrarEstadoPagoInline(selector, mensaje, tipo = 'error') {
+      const target = document.querySelector(selector);
+      if (!target) return;
+
+      let box = target.parentElement?.querySelector('.paypal-inline-status');
+      if (!box) {
+        box = document.createElement('div');
+        box.className = 'paypal-inline-status';
+        box.style.marginTop = '10px';
+        box.style.padding = '10px 12px';
+        box.style.borderRadius = '10px';
+        box.style.fontSize = '.76rem';
+        box.style.lineHeight = '1.45';
+        box.style.textAlign = 'center';
+        target.parentElement?.appendChild(box);
+      }
+
+      if (!mensaje) {
+        box.style.display = 'none';
+        box.textContent = '';
+        return;
+      }
+
+      box.style.display = 'block';
+      box.textContent = mensaje;
+
+      if (tipo === 'ok') {
+        box.style.color = '#0b6b37';
+        box.style.background = 'rgba(40,167,69,.10)';
+        box.style.border = '1px solid rgba(40,167,69,.25)';
+      } else if (tipo === 'info') {
+        box.style.color = '#6b5428';
+        box.style.background = 'rgba(212,184,149,.12)';
+        box.style.border = '1px solid rgba(212,184,149,.28)';
+      } else {
+        box.style.color = '#9b1c1c';
+        box.style.background = 'rgba(220,53,69,.08)';
+        box.style.border = '1px solid rgba(220,53,69,.22)';
+      }
+    }
+
     async function renderizarBotonPayPal(monto, selector, tipoProyecto) {
       try {
         if (window.currencyReadyPromise) await window.currencyReadyPromise.catch(() => {});
 
         const amountUsd = Number(monto || 0);
-        if (!Number.isFinite(amountUsd) || amountUsd <= 0) throw new Error('El monto calculado no es válido.');
-        if (!auth.currentUser?.uid || !window.evolutionCurrentUser?.uid) throw new Error('Debes iniciar sesión antes de pagar.');
-        if (typeof window.paypal === 'undefined' || !window.paypal?.Buttons) throw new Error('No se pudo cargar PayPal. Recarga la página e inténtalo nuevamente.');
+        if (!Number.isFinite(amountUsd) || amountUsd <= 0) {
+          mostrarEstadoPagoInline(selector, 'El monto calculado no es válido.');
+          return;
+        }
+
+        if (!auth.currentUser?.uid || !window.evolutionCurrentUser?.uid) {
+          mostrarEstadoPagoInline(selector, 'Debes iniciar sesión antes de pagar.');
+          return;
+        }
+
+        if (typeof window.paypal === 'undefined' || !window.paypal?.Buttons) {
+          mostrarEstadoPagoInline(selector, 'No se pudo cargar PayPal. Recarga la página e inténtalo nuevamente.');
+          return;
+        }
 
         const displayCurrency = String(window.currentCurrency || 'USD').toUpperCase();
         const checkoutCurrency = 'USD';
@@ -2957,27 +3006,51 @@
         setCurrencyNote(selector, displayCurrency, checkoutCurrency);
 
         const target = document.querySelector(selector);
-        if (!target) throw new Error('No se encontró el contenedor de PayPal.');
+        if (!target) return;
         target.innerHTML = '';
+        mostrarEstadoPagoInline(selector, '');
 
-        return window.paypal.Buttons({
-          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay', height: 45 },
+        /*
+          CHECKOUT EN LA MISMA PÁGINA:
+          Se fuerza el funding source CARD para que PayPal muestre el flujo de
+          tarjeta dentro de esta misma sección, evitando abrir el checkout de
+          cuenta PayPal en una ventana/popup externa.
+        */
+        const cardButtons = window.paypal.Buttons({
+          fundingSource: window.paypal.FUNDING.CARD,
+          style: {
+            layout: 'vertical',
+            color: 'black',
+            shape: 'rect',
+            label: 'pay',
+            height: 45
+          },
 
-          // Igual que autocad.html: creación directa de la orden.
           createOrder: function(data, actions) {
+            mostrarEstadoPagoInline(selector, 'Preparando pago seguro…', 'info');
+
             return actions.order.create({
               purchase_units: [{
-                amount: { currency_code: 'USD', value: amountUsd.toFixed(2) },
+                amount: {
+                  currency_code: 'USD',
+                  value: amountUsd.toFixed(2)
+                },
                 description: String(tipoProyecto || 'Proyecto Evolution Design').slice(0, 127)
               }]
             });
           },
 
-          // Igual que autocad.html: captura directa; después solo Firestore.
           onApprove: async function(data, actions) {
+            mostrarEstadoPagoInline(selector, 'Confirmando pago y registrando tu proyecto…', 'info');
+
             try {
               const details = await actions.order.capture();
-              const result = await registrarProyectoPagadoEnFirebase(tipoProyecto, amountUsd, details, data);
+              const result = await registrarProyectoPagadoEnFirebase(
+                tipoProyecto,
+                amountUsd,
+                details,
+                data
+              );
 
               console.info('Pago registrado:', {
                 projectId: result.projectId,
@@ -2987,26 +3060,57 @@
                 payerRegion: result.payerRegion
               });
 
-              // R2 se maneja exclusivamente dentro de proyectos.html.
-              window.location.href = 'proyectos.html';
+              mostrarEstadoPagoInline(
+                selector,
+                'Pago confirmado. Abriendo Mis Proyectos…',
+                'ok'
+              );
+
+              // R2 se usa únicamente en proyectos.html para archivos.
+              setTimeout(() => {
+                window.location.href = 'proyectos.html';
+              }, 650);
+
             } catch (error) {
               console.error('PAYPAL APROBÓ, PERO FIREBASE NO REGISTRÓ LA COMPRA:', error);
-              alert('El pago fue aprobado por PayPal, pero no pudimos registrar tu proyecto en Firebase. NO vuelvas a pagar. Contáctanos con tu ID de PayPal.');
+
+              const orderId = data?.orderID || '';
+              mostrarEstadoPagoInline(
+                selector,
+                `El pago fue aprobado por PayPal, pero no pudimos registrar el proyecto en Firebase. NO vuelvas a pagar.${orderId ? ' ID PayPal: ' + orderId : ''}`
+              );
             }
           },
 
           onCancel: function() {
-            console.info('Pago cancelado por el cliente.');
+            mostrarEstadoPagoInline(selector, 'Pago cancelado. Puedes volver a intentarlo cuando quieras.', 'info');
           },
 
           onError: function(err) {
             console.error('Error de PayPal:', err);
-            alert('No fue posible completar el pago con PayPal. Inténtalo nuevamente.');
+            mostrarEstadoPagoInline(
+              selector,
+              'No fue posible completar el pago. Revisa los datos de tu tarjeta e inténtalo nuevamente.'
+            );
           }
-        }).render(selector);
+        });
+
+        if (!cardButtons.isEligible()) {
+          mostrarEstadoPagoInline(
+            selector,
+            'El pago con tarjeta dentro de la página no está disponible para esta sesión o región. No se abrirá ninguna ventana externa.'
+          );
+          return;
+        }
+
+        return cardButtons.render(selector);
+
       } catch (err) {
         console.error('No se pudo preparar PayPal:', err);
-        alert(err?.message || 'No se pudo preparar el pago seguro.');
+        mostrarEstadoPagoInline(
+          selector,
+          err?.message || 'No se pudo preparar el pago seguro.'
+        );
       }
     }
 
