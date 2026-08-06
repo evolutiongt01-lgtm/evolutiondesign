@@ -291,6 +291,38 @@
         margin: 0;
       }
       .price-currency { font-size: .78rem; margin-left: .2rem; color: var(--accent); letter-spacing: .02em; }
+      .client-payment-meta {
+        display: grid;
+        gap: .6rem;
+        margin-top: 1.05rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--line-soft);
+      }
+      .client-payment-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-width: 0;
+      }
+      .client-payment-label {
+        color: var(--muted);
+        font-size: .68rem;
+        flex: 0 0 auto;
+      }
+      .client-payment-value {
+        color: #f4f4f2;
+        font-size: .72rem;
+        font-weight: 600;
+        text-align: right;
+        overflow-wrap: anywhere;
+      }
+      .client-payment-value.transaction {
+        color: var(--accent);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: .68rem;
+        letter-spacing: .02em;
+      }
       .verified-note {
         display: flex;
         gap: .55rem;
@@ -728,6 +760,18 @@
           white-space: nowrap;
         }
         .price-currency { font-size: .7rem; }
+        .client-payment-meta {
+          gap: .5rem;
+          margin-top: .85rem;
+          padding-top: .8rem;
+        }
+        .client-payment-row {
+          align-items: flex-start;
+          gap: .75rem;
+        }
+        .client-payment-label { font-size: .63rem; }
+        .client-payment-value { font-size: .67rem; }
+        .client-payment-value.transaction { font-size: .63rem; }
         .verified-note {
           margin-top: 1rem;
           padding-top: .9rem;
@@ -1075,6 +1119,17 @@
                         <div>
                           <div class="price-label">Inversión Total</div>
                           <p class="price-value">$800.00 <span class="price-currency">USD</span></p>
+
+                          <div class="client-payment-meta">
+                            <div class="client-payment-row">
+                              <span class="client-payment-label">Cliente</span>
+                              <span class="client-payment-value" id="nombre-cliente">Nombre del cliente</span>
+                            </div>
+                            <div class="client-payment-row">
+                              <span class="client-payment-label">ID de Transacción</span>
+                              <span class="client-payment-value transaction" id="id-transaccion">#TXN-000000</span>
+                            </div>
+                          </div>
                         </div>
                         <div class="verified-note">
                           <span class="verified-dot">✓</span>
