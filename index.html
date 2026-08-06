@@ -489,6 +489,235 @@
       .btn-liquid-glass { width: 100%; padding-left: 1rem; padding-right: 1rem; }
     }
 
+
+
+    /* =========================================================
+       REFINAMIENTO UI V2 — BOTONES, NOTAS Y NAVEGACIÓN MÓVIL
+       ========================================================= */
+
+    /* La navegación móvil se oculta suavemente al bajar y vuelve al subir. */
+    @media (max-width: 991.98px) {
+      .mobile-app-nav {
+        transition: transform .34s cubic-bezier(.22,.61,.36,1),
+                    background-color .25s ease,
+                    box-shadow .25s ease;
+        will-change: transform;
+      }
+      .mobile-app-nav.nav-hidden {
+        transform: translate3d(0, -105%, 0);
+        box-shadow: none;
+      }
+      .mobile-app-nav.nav-at-top {
+        box-shadow: none;
+      }
+
+      /* Acciones de sesión: más aire y círculos independientes. */
+      #auth-mobile-wrapper { flex-shrink: 0; }
+      .mobile-auth-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .mobile-profile-link,
+      .mobile-auth-action {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none !important;
+        background: rgba(255,255,255,.035);
+        border: 1px solid rgba(255,255,255,.13);
+        box-shadow: 0 6px 18px rgba(0,0,0,.22);
+      }
+      .mobile-profile-link {
+        border-color: rgba(212,184,149,.55);
+        background: rgba(212,184,149,.055);
+      }
+      .mobile-profile-link .profile-pic-liquid {
+        width: 28px !important;
+        height: 28px !important;
+        border-width: 1px;
+        box-shadow: none;
+      }
+      .mobile-auth-action {
+        color: #d4b895 !important;
+        border-color: rgba(212,184,149,.28);
+      }
+      .mobile-auth-action svg { width: 15px; height: 15px; }
+    }
+
+    @media (min-width: 1200px) {
+      #floating-profile-desktop { margin-left: .7rem; }
+    }
+
+    /* CTAs compactos: conservan jerarquía sin ocupar media tarjeta. */
+    a.btn.w-100.py-3,
+    button.btn.w-100.py-3,
+    #servicios-tecnicos a.btn.w-100,
+    #visualizacion a.btn.w-100,
+    #cuantificacion a.btn.w-100,
+    #btnProceder2D,
+    #btnProcederFachadas,
+    #btnProceder3D,
+    #btnEnviarCotizacion {
+      min-height: 44px;
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: .68rem 1.05rem !important;
+      font-size: .78rem !important;
+      line-height: 1.2;
+      letter-spacing: .015em;
+      border-radius: 999px !important;
+      box-shadow: 0 8px 22px rgba(0,0,0,.16) !important;
+    }
+
+    #btnProceder2D,
+    #btnProcederFachadas,
+    #btnProceder3D {
+      display: block;
+      font-weight: 700 !important;
+    }
+
+    /* El CTA de WhatsApp puede ser un poco más ancho, pero no gigante. */
+    #btnEnviarCotizacion { max-width: 420px; }
+
+    /* También compactamos el botón glass de la tarifa de cuantificación. */
+    #cuantificacion .btn-liquid-glass,
+    #visualizacion .btn-liquid-glass {
+      padding: .68rem 1.15rem;
+      font-size: .78rem;
+    }
+
+    /* Notas de tarifa: tarjeta editorial limpia, no párrafo suelto. */
+    .tariff-note {
+      position: relative;
+      max-width: 820px;
+      margin: 1rem auto 0 !important;
+      padding: .9rem 1rem .9rem 2.85rem;
+      border: 1px solid rgba(212,184,149,.18);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(212,184,149,.055), rgba(255,255,255,.018));
+      color: #a8a8ad !important;
+      font-size: .82rem !important;
+      line-height: 1.65;
+      text-align: left;
+    }
+    .tariff-note::before {
+      content: 'i';
+      position: absolute;
+      left: .95rem;
+      top: .9rem;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(212,184,149,.4);
+      background: rgba(212,184,149,.08);
+      color: #d4b895;
+      font-size: .72rem;
+      font-weight: 700;
+      font-family: Georgia, serif;
+    }
+    .tariff-note strong { color: #e4e4e5; font-weight: 600; }
+
+    /* Notas dinámicas de las calculadoras. */
+    #instrucciones-subida-2d,
+    #instrucciones-subida-fachada,
+    #instrucciones-subida-3d {
+      position: relative;
+      text-align: left !important;
+      padding: .9rem 1rem .9rem 2.85rem !important;
+      border: 1px solid rgba(212,184,149,.18) !important;
+      border-radius: 14px !important;
+      background: linear-gradient(135deg, rgba(212,184,149,.055), rgba(255,255,255,.018)) !important;
+      color: #a8a8ad !important;
+      line-height: 1.6;
+      font-size: .77rem !important;
+    }
+    #instrucciones-subida-2d::before,
+    #instrucciones-subida-fachada::before,
+    #instrucciones-subida-3d::before {
+      content: 'i';
+      position: absolute;
+      left: .95rem;
+      top: .85rem;
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(212,184,149,.38);
+      background: rgba(212,184,149,.08);
+      color: #d4b895;
+      font-family: Georgia, serif;
+      font-weight: 700;
+      font-size: .7rem;
+    }
+    #instrucciones-subida-2d strong,
+    #instrucciones-subida-fachada strong,
+    #instrucciones-subida-3d strong { color: #e8e8e8; }
+
+    /* Mensajes de rango más discretos y premium. */
+    #mensaje-rango-2d,
+    #mensaje-rango-fachada,
+    #mensaje-rango-3d {
+      padding: .72rem .9rem !important;
+      border-radius: 12px !important;
+      font-size: .76rem !important;
+    }
+
+    @media (max-width: 575.98px) {
+      a.btn.w-100.py-3,
+      button.btn.w-100.py-3,
+      #servicios-tecnicos a.btn.w-100,
+      #visualizacion a.btn.w-100,
+      #cuantificacion a.btn.w-100,
+      #btnProceder2D,
+      #btnProcederFachadas,
+      #btnProceder3D,
+      #btnEnviarCotizacion {
+        min-height: 42px;
+        max-width: 100%;
+        padding: .62rem .9rem !important;
+        font-size: .72rem !important;
+      }
+
+      .tariff-note {
+        padding: .78rem .82rem .78rem 2.55rem;
+        border-radius: 12px;
+        font-size: .75rem !important;
+        line-height: 1.55;
+      }
+      .tariff-note::before {
+        left: .78rem;
+        top: .78rem;
+        width: 22px;
+        height: 22px;
+      }
+
+      #instrucciones-subida-2d,
+      #instrucciones-subida-fachada,
+      #instrucciones-subida-3d {
+        padding: .78rem .82rem .78rem 2.55rem !important;
+        font-size: .72rem !important;
+      }
+      #instrucciones-subida-2d::before,
+      #instrucciones-subida-fachada::before,
+      #instrucciones-subida-3d::before {
+        left: .78rem;
+        top: .76rem;
+        width: 21px;
+        height: 21px;
+      }
+    }
+
   </style>
 </head>
 
@@ -684,7 +913,7 @@
                 </ul>
               </div>
               <div class="text-center pt-3 border-top" style="border-color: rgba(255,255,255,0.08) !important;">
-                <a href="#calculadora-planos" onclick="document.getElementById('ppaq1').checked=true; setTimeout(()=>window.actualizarCalculadoraPlanosGlobal(), 100);" class="btn btn-outline-light w-100 rounded-pill py-3 fw-bold">Verificar medidas para adquirir</a>
+                <a href="#calculadora-planos" onclick="document.getElementById('ppaq1').checked=true; setTimeout(()=>window.actualizarCalculadoraPlanosGlobal(), 100);" class="btn btn-outline-light w-100 rounded-pill py-2 fw-bold">Verificar medidas para adquirir</a>
               </div>
             </div>
           </div>
@@ -714,7 +943,7 @@
                 </ul>
               </div>
               <div class="text-center pt-3 border-top" style="border-color: rgba(212,184,149,0.2) !important;">
-                <a href="#calculadora-planos" onclick="document.getElementById('ppaq2').checked=true; setTimeout(()=>window.actualizarCalculadoraPlanosGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background-color: #d4b895;">Verificar medidas para adquirir</a>
+                <a href="#calculadora-planos" onclick="document.getElementById('ppaq2').checked=true; setTimeout(()=>window.actualizarCalculadoraPlanosGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-2 shadow" style="background-color: #d4b895;">Verificar medidas para adquirir</a>
               </div>
             </div>
           </div>
@@ -845,7 +1074,7 @@
                     <div id="instrucciones-subida-2d" class="text-center p-3 rounded-3 mb-3 text-secondary small" style="display:none; background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255,255,255,0.2);"></div>
 
                     <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                    <button id="btnProceder2D" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                    <button id="btnProceder2D" type="button" class="btn w-100 fw-bold py-2 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
                       ACCEDER PARA VISUALIZAR TARIFAS
                     </button>
 
@@ -1093,7 +1322,7 @@
                     <div id="instrucciones-subida-fachada" class="text-center p-3 rounded-3 mb-3 text-secondary small" style="display:none; background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255,255,255,0.2);"></div>
 
                     <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                    <button id="btnProcederFachadas" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                    <button id="btnProcederFachadas" type="button" class="btn w-100 fw-bold py-2 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
                       ACCEDER PARA VISUALIZAR TARIFAS
                     </button>
 
@@ -1185,7 +1414,7 @@
                 <h1 class="display-3 fw-bold text-white mb-0"><span class="price-val" data-usd="1.75">1.75</span></h1>
                 <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span>/m²</span>
               </div>
-              <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para el listado exacto de los materiales de tu obra. Contáctanos o calcúlalo en nuestro cotizador.</p>
+              <p class="tariff-note mb-0"><strong>Información de tarifa.</strong> La tarifa aplica al listado exacto de materiales de tu obra. Puedes calcular el valor estimado en el cotizador antes de continuar.</p>
               <div class="mt-4 pt-2">
                 <a href="#cotizador-general" class="btn-liquid-glass" onclick="document.getElementById('calcServicioSelect').value='cuantificacion'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);">↓ Ir al Cotizador Inteligente</a>
               </div>
@@ -1202,7 +1431,7 @@
         <div class="text-center mb-5" data-aos="fade">
           <span class="h5 text-secondary fw-lighter">Renderismo y Modelado</span>
           <h2 class="display-4 fw-bold">Paquetes 3D</h2>
-          <p class="text-secondary">Proyectos residenciales de hasta 400 m² de construcción total. (Nota: El servicio incluye estrictamente modelado y renders; contáctanos para enviarnos tus planos o adquiere primero tus planos 2D).</p>
+          <p class="tariff-note"><strong>Antes de adquirir.</strong> Los paquetes aplican a proyectos residenciales de hasta 400 m² de construcción total e incluyen exclusivamente modelado y renders. Para iniciar necesitaremos tus planos; si aún no los tienes, puedes adquirir primero el servicio de Planos 2D.</p>
         </div>
         <div class="row gx-4 g-5 align-items-stretch">
           
@@ -1222,7 +1451,7 @@
                 </ul>
               </div>
               <div class="text-center">
-                <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='basico'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn btn-outline-light w-100 rounded-pill fw-bold py-3">Verificar medidas para adquirir</a>
+                <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='basico'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn btn-outline-light w-100 rounded-pill fw-bold py-2">Verificar medidas para adquirir</a>
               </div>
             </div>
           </div>
@@ -1244,7 +1473,7 @@
                 </ul>
               </div>
               <div class="text-center" style="position: relative; z-index: 10;">
-                <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='profesional'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background-color: #d4b895;">Verificar medidas para adquirir</a>
+                <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='profesional'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-2 shadow" style="background-color: #d4b895;">Verificar medidas para adquirir</a>
               </div>
             </div>
           </div>
@@ -1268,7 +1497,7 @@
                 </ul>
               </div>
               <div class="text-center" style="position: relative; z-index: 10;">
-                <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='premium'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); transition: transform 0.3s ease;">Verificar medidas para adquirir</a>
+                <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='premium'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-2 shadow" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); transition: transform 0.3s ease;">Verificar medidas para adquirir</a>
               </div>
             </div>
           </div>
@@ -1360,7 +1589,7 @@
                   
                   <!-- BOTÓN WHATSAPP PARA CUANTIFICACIÓN -->
                   <div id="wrapperBtnCotizar" class="mt-4" style="display: none; position: relative; z-index: 30;">
-                    <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
+                    <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn w-100 fw-bold py-2 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
                       CONTINUAR CON MI PROYECTO
                     </a>
                   </div>
@@ -1375,7 +1604,7 @@
                     <div id="instrucciones-subida-3d" class="text-center p-3 rounded-3 mb-3 text-secondary small" style="display:none; background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255,255,255,0.2);"></div>
 
                     <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                    <button id="btnProceder3D" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: rgba(212, 184, 149, 0.1); border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                    <button id="btnProceder3D" type="button" class="btn w-100 fw-bold py-2 rounded-pill shadow" style="background-color: rgba(212, 184, 149, 0.1); border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
                       ACCEDER PARA VISUALIZAR TARIFAS
                     </button>
 
@@ -1504,6 +1733,51 @@
       if(desktopDropdownMenu && !desktopMenuBtn.contains(e.target) && !desktopDropdownMenu.contains(e.target)) desktopDropdownMenu.classList.remove('show'); 
       if(currencyMenu && !currencyContainer.contains(e.target)) currencyMenu.classList.remove('show'); 
     });
+
+
+    // NAV MÓVIL INTELIGENTE: visible al inicio y al subir; se aparta al bajar.
+    (() => {
+      const nav = document.querySelector('.mobile-app-nav');
+      if (!nav) return;
+      let lastY = Math.max(window.scrollY, 0);
+      let ticking = false;
+
+      const actualizarNavMovil = () => {
+        const y = Math.max(window.scrollY, 0);
+        const esMovil = window.matchMedia('(max-width: 991.98px)').matches;
+
+        if (!esMovil) {
+          nav.classList.remove('nav-hidden', 'nav-at-top');
+          lastY = y;
+          ticking = false;
+          return;
+        }
+
+        nav.classList.toggle('nav-at-top', y < 12);
+        const menuAbierto = mobileDropdownMenu && mobileDropdownMenu.classList.contains('show');
+
+        if (menuAbierto || y < 90) {
+          nav.classList.remove('nav-hidden');
+        } else if (y > lastY + 7) {
+          nav.classList.add('nav-hidden');
+        } else if (y < lastY - 7) {
+          nav.classList.remove('nav-hidden');
+        }
+
+        lastY = y;
+        ticking = false;
+      };
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(actualizarNavMovil);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      window.addEventListener('resize', actualizarNavMovil, { passive: true });
+      actualizarNavMovil();
+    })();
 
     function updateAllCurrencies() {
       const config = exchangeRates[currentCurrency];
@@ -1651,9 +1925,9 @@
           if(instrucciones3D) {
             instrucciones3D.style.display = 'block';
             if (servicioVal === 'basico') {
-                instrucciones3D.innerHTML = `<strong>Nota:</strong> Al completar el pago, serás redirigido a 'Mis Proyectos' para que subas tu archivo 2D (PDF, AutoCAD DWG/DWF, o una foto clara de tu plano).`;
+                instrucciones3D.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas tu archivo 2D (PDF, AutoCAD DWG/DWF, o una foto clara de tu plano).`;
             } else if (servicioVal === 'profesional' || servicioVal === 'premium') {
-                instrucciones3D.innerHTML = `<strong>Nota:</strong> Al completar el pago, serás redirigido a 'Mis Proyectos' para que subas tu archivo 2D (PDF, AutoCAD DWG/DWF, o foto de tu plano). Además, por tu tarifa, requerimos <strong>fotografías de referencia del lugar</strong> para el hiperrealismo.`;
+                instrucciones3D.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas tu archivo 2D (PDF, AutoCAD DWG/DWF, o foto de tu plano). Además, por tu tarifa, requerimos <strong>fotografías de referencia del lugar</strong> para el hiperrealismo.`;
             } else {
                 instrucciones3D.style.display = 'none';
             }
@@ -1780,7 +2054,7 @@
 
         if(instrucciones2D && areaTotal > 0) {
             instrucciones2D.style.display = 'block';
-            instrucciones2D.innerHTML = `<strong>Nota:</strong> Al completar el pago, serás redirigido a 'Mis Proyectos' para que subas una foto de tu <strong>dibujo a mano alzada</strong> con medidas.`;
+            instrucciones2D.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una foto de tu <strong>dibujo a mano alzada</strong> con medidas.`;
         }
       }
       
@@ -1908,9 +2182,9 @@
         if(instruccionesFachada && area > 0) {
             instruccionesFachada.style.display = 'block';
             if(renderOn) {
-                instruccionesFachada.innerHTML = `<strong>Nota:</strong> Al completar el pago, serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea). Además, por los renders hiperrealistas, necesitamos <strong>fotos claras del terreno</strong>.`;
+                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea). Además, por los renders hiperrealistas, necesitamos <strong>fotos claras del terreno</strong>.`;
             } else {
-                instruccionesFachada.innerHTML = `<strong>Nota:</strong> Al completar el pago, serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea).`;
+                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea).`;
             }
         } else if (instruccionesFachada) {
             instruccionesFachada.style.display = 'none';
@@ -2141,7 +2415,7 @@
         
         // BOTÓN DE PANEL ADMIN PARA CÉSAR Y ANTONIO
         if (user.email === 'evolutiongt01@gmail.com' || user.email === 'tepaz2025@gmail.com') {
-          adminBtnMobile = `<a href="admin.html" class="icon-btn ms-1 text-white border-danger" style="width:30px; height:30px; background: rgba(220,53,69,0.5);"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></a>`;
+          adminBtnMobile = `<a href="admin.html" class="mobile-auth-action text-white border-danger" style="background: rgba(220,53,69,0.28); border-color: rgba(220,53,69,.55);"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></a>`;
           
           // Botón Admin de escritorio, flotando abajo del logo
           adminBtnDesktopStr = `<a href="admin.html" class="admin-badge-btn shadow"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="me-1" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Panel Admin</a>`;
@@ -2161,11 +2435,13 @@
           
         // Mobile: Agrupa todo (foto, admin si aplica, y botón salir)
         const htmlLogueadoMobile = `
-          <div class="d-flex align-items-center gap-2">
-            <img src="${userPhoto}" alt="Perfil" class="profile-pic-liquid" style="width: 30px; height: 30px;" onerror="this.src='https://ui-avatars.com/api/?name=U&background=d4b895&color=fff'">
+          <div class="mobile-auth-actions">
+            <a href="perfil.html" class="mobile-profile-link" aria-label="Mi Perfil" title="Mi Perfil">
+              <img src="${userPhoto}" alt="Perfil" class="profile-pic-liquid" onerror="this.src='https://ui-avatars.com/api/?name=U&background=d4b895&color=fff'">
+            </a>
             ${adminBtnMobile}
-            <a href="#" onclick="cerrarSesionGlobal(); return false;" class="icon-btn" aria-label="Cerrar Sesión" style="width:30px; height:30px; color:#d4b895; border-color: rgba(212,184,149,0.4);">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            <a href="#" onclick="cerrarSesionGlobal(); return false;" class="mobile-auth-action" aria-label="Cerrar Sesión" title="Cerrar Sesión">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
             </a>
           </div>`;
 
