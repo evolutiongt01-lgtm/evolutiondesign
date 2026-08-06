@@ -61,8 +61,8 @@
       /* NAVEGACIÓN ESCRITORIO Y MÓVIL */
       .desktop-nav { display: none !important; padding-top: calc(25px + env(safe-area-inset-top, 0px)); pointer-events: none; z-index: 1040; }
       @media (min-width: 992px) { .desktop-nav { display: block !important; } }
-      .nav-pill { pointer-events: auto; background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
-      .nav-pill-links { display: flex; gap: 2rem; align-items: center; }
+      .nav-pill { pointer-events: auto; background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
+      .nav-pill-links { display: flex; gap: 1.5rem; align-items: center; }
       .nav-pill-link { color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: color 0.3s; position: relative; }
       .nav-pill-link:hover, .nav-pill-link.active { color: #fff; }
       .nav-pill-link.active::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px; background-color: #fff; border-radius: 2px; }
@@ -172,8 +172,8 @@
       .currency-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212, 184, 149, 0.4) !important; background-color: rgba(212, 184, 149, 0.1) !important; color: #d4b895 !important; backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; }
       .currency-float-btn:hover { transform: scale(1.1); background-color: rgba(212, 184, 149, 0.8) !important; color: #000 !important; }
       .currency-float-menu { display: none; flex-direction: column; position: absolute; bottom: 62px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 140px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; list-style: none !important; margin: 0; opacity: 0; transform: translateY(10px) scale(0.97); transform-origin: bottom left; transition: all 0.25s; }
-      .currency-float-menu li { list-style: none !important; }
       .currency-float-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+      .currency-float-menu li { list-style: none !important; }
       .currency-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 10px !important; transition: all 0.2s ease !important; }
       .currency-item:hover, .currency-item.active { background: rgba(212, 184, 149, 0.15) !important; color: #fff !important; }
 
@@ -230,7 +230,7 @@
       <div class="container px-0 d-flex justify-content-center align-items-center gap-3" style="position: relative;">
         
         <!-- BARRA PRINCIPAL -->
-        <div class="nav-pill flex-grow-1" style="max-width: 1150px; position: relative;">
+        <div class="nav-pill flex-grow-1" style="max-width: 1400px; position: relative;">
           <div class="d-flex align-items-center gap-3">
             <div style="position: relative;">
               <a href="#" class="icon-btn" id="desktopMenuBtn" aria-label="Menú">
@@ -240,6 +240,7 @@
                 <li><a class="menu-item active" href="index"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
                 <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
                 <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
+                <li><a class="menu-item" href="proyectos.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
               </ul>
             </div>
             <a href="index" class="d-flex align-items-center"><img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;" loading="lazy"></a>
@@ -250,13 +251,14 @@
             <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
             <a href="#fachadas" class="nav-pill-link">Fachadas</a>
             <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
+            <a href="proyectos.html" class="nav-pill-link" style="color: #fff;">Mis Proyectos</a>
             
             <!-- CONTENEDOR LOGIN Y LOGOUT DENTRO DE LA BARRA ESCRITORIO -->
             <div id="auth-desktop-wrapper" class="d-flex align-items-center">
-                <a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>
+                <a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; white-space: nowrap;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>
             </div>
           </div>
-          <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Catálogo de Software &rarr;</a>
+          <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem; white-space: nowrap;">Catálogo de Software &rarr;</a>
           
           <!-- BOTÓN ADMIN FLOTANDO EXACTAMENTE DEBAJO DEL LOGO (MAC) -->
           <div id="admin-badge-container-desktop" style="position: absolute; top: calc(100% + 12px); left: 3.5rem; z-index: 10;"></div>
@@ -277,6 +279,7 @@
             <li><a class="menu-item active" href="index"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
             <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
             <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
+            <li><a class="menu-item" href="proyectos.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
           </ul>
         </div>
         <a href="index"><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;" loading="lazy"></a>
@@ -411,7 +414,7 @@
         </div>
       </div>
 
-      <!-- 2.5 CALCULADORA DE PLANOS 2D -->
+      <!-- 2.5 NUEVA CALCULADORA DE PLANOS 2D -->
       <section id="calculadora-planos" class="facade-calc-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -441,7 +444,7 @@
                       </div>
                     </div>
                     <div class="facade-input-wrap">
-                      <input type="number" id="p-ancho" class="facade-num-input" value="10.00" min="1" step="any">
+                      <input type="number" id="p-ancho" class="facade-num-input" value="" placeholder="Ej: 10" min="1" step="any">
                       <div class="facade-unit">m</div>
                     </div>
                   </div>
@@ -455,7 +458,7 @@
                       </div>
                     </div>
                     <div class="facade-input-wrap">
-                      <input type="number" id="p-largo" class="facade-num-input" value="20.00" min="1" step="any">
+                      <input type="number" id="p-largo" class="facade-num-input" value="" placeholder="Ej: 20" min="1" step="any">
                       <div class="facade-unit">m</div>
                     </div>
                   </div>
@@ -509,8 +512,8 @@
                     </div>
                     
                     <div id="row-planos-excedente" class="d-flex justify-content-between align-items-center mb-5 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important; display: none !important;">
-                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes</span>
-                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">$--.--</span>
+                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes (0 m²)</span>
+                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">+$0.00</span>
                     </div>
 
                     <div class="text-center mt-2">
@@ -522,10 +525,15 @@
                     </div>
                     
                     <div id="wrapperPagoDirectoPlanos" class="mt-2" style="display: block;">
-                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);"></div>
+                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="display:none; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
+                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
+                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                          ¡Proyecto listo para pago seguro!
+                        </span>
+                      </div>
                       
                       <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProceder2D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                      <button id="btnProceder2D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
                         ACCEDER PARA VISUALIZAR TARIFAS
                       </button>
 
@@ -643,7 +651,7 @@
                       </div>
                     </div>
                     <div class="facade-input-wrap">
-                      <input type="number" id="f-ancho" class="facade-num-input" value="8.50" min="1" step="any">
+                      <input type="number" id="f-ancho" class="facade-num-input" value="" placeholder="Ej: 8.5" min="1" step="any">
                       <div class="facade-unit">m</div>
                     </div>
                   </div>
@@ -657,7 +665,7 @@
                       </div>
                     </div>
                     <div class="facade-input-wrap">
-                      <input type="number" id="f-altura" class="facade-num-input" value="6.20" min="1" step="any">
+                      <input type="number" id="f-altura" class="facade-num-input" value="" placeholder="Ej: 6.2" min="1" step="any">
                       <div class="facade-unit">m</div>
                     </div>
                   </div>
@@ -1776,7 +1784,7 @@
 
           // Desktop: Solo el botón de Cerrar Sesión en la barra
           const htmlLogueadoDesktop = `
-            <a href="#" onclick="cerrarSesionGlobal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; font-size: 0.85rem;">
+            <a href="#" onclick="cerrarSesionGlobal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; font-size: 0.85rem; white-space: nowrap;">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg> 
               Cerrar sesión
             </a>`;
@@ -1804,7 +1812,7 @@
 
         } else {
           // Estado de NO logueado
-          const htmlLoginDesktop = `<a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>`;
+          const htmlLoginDesktop = `<a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; white-space: nowrap;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>`;
           const htmlLoginMobile = `<a href="#" onclick="abrirAuthModal(); return false;" class="icon-btn" aria-label="Login"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg></a>`;
           
           if (btnDesktop) btnDesktop.innerHTML = htmlLoginDesktop;
