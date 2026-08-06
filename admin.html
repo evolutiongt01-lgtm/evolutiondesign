@@ -124,7 +124,7 @@ async function loadDashboardDirect(){
     if(!byUid.has(p.ownerUid))byUid.set(p.ownerUid,{orders:0,spent:0,country:''});
     const st=byUid.get(p.ownerUid);
     if(p.paymentStatus==='paid'){st.orders++;st.spent+=Number(p.baseUsd||0)}
-    if(!st.country)st.country=p.payerCountry||p.lastGeo?.country||'';
+    if(!st.country)st.country=p.payerCountry||p.lastGeo?.country||'No reportado';
   }
 
   const firestoreProfiles=new Map(usersSnap.docs.map(d=>[d.id,{uid:d.id,...d.data()}]));
@@ -190,7 +190,7 @@ let previewObjectUrls=[];
 function clearPreviewObjectUrls(){previewObjectUrls.forEach(url=>{try{URL.revokeObjectURL(url)}catch{}});previewObjectUrls=[]}
 function isImageFile(f){const type=String(f.contentType||'').toLowerCase(),name=String(f.name||'').toLowerCase();return type.startsWith('image/')||/\.(jpe?g|png|webp|gif|avif|bmp|svg)$/i.test(name)}
 function fileHTML(f,role){
-  if(f.availability==='deleted') return `<div class="file" style="opacity:.45"><div class="file-ico">DEL</div><div class="file-info"><div class="file-name">${esc(f.label||f.name)}</div><div class="file-meta">Eliminado de Cloudflare R2</div></div></div>`;
+  if(f.availability==='deleted') return '';
   const ext=String(f.name||'FILE').split('.').pop().slice(0,4).toUpperCase(),image=role==='client'&&isImageFile(f);
   const icon=image?`<div class="file-ico has-preview"><img class="file-preview-img" data-storage-path="${esc(f.storagePath)}" data-fallback="${esc(ext)}" alt="Vista previa de ${esc(f.label||f.name)}" loading="lazy"></div>`:`<div class="file-ico">${esc(ext)}</div>`;
   return `<div class="file">${icon}<div class="file-info"><div class="file-name">${esc(f.label||f.name)}</div><div class="file-meta">${bytes(f.size)} · ${role==='client'?'Cliente':'Evolution Design'}</div></div><div class="file-actions"><button class="mini" onclick="downloadR2File('${esc(f.storagePath)}','${esc(f.label||f.name)}',this)">Descargar</button><button class="mini delete" onclick="deleteR2File('${esc(f.fileId||f.id)}','${role}','${esc(f.storagePath)}')">Eliminar</button></div></div>`;
@@ -198,7 +198,7 @@ function fileHTML(f,role){
 async function hydrateImagePreviews(root){if(!s3||!root)return;const imgs=[...root.querySelectorAll('.file-preview-img[data-storage-path]')];imgs.forEach(img=>{if(img.dataset.loaded==='1')return;img.dataset.loaded='1';try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:img.dataset.storagePath,Expires:3600});img.src=url;img.onload=()=>img.classList.add('ready');img.onerror=()=>{const box=img.parentElement;if(box){box.classList.remove('has-preview');box.textContent=img.dataset.fallback||'IMG'}};}catch(e){console.info('Vista previa no disponible:',e);const box=img.parentElement;if(box){box.classList.remove('has-preview');box.textContent=img.dataset.fallback||'IMG'}}});}
 
 async function getProjectFiles(role){const col=role==='delivery'?'deliveryFiles':'clientFiles';const s=await getDocs(collection(db,'users',selected.ownerUid,'projects',selected.id,col));return s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateMs(b.uploadedAt)-dateMs(a.uploadedAt))}
-async function loadFiles(){if(!selected)return;try{clearPreviewObjectUrls();const [clientFiles,deliveryFiles]=await Promise.all([getProjectFiles('client'),getProjectFiles('delivery')]);$('clientFiles').innerHTML=clientFiles.map(f=>fileHTML(f,'client')).join('')||'<div class="sub">El cliente aún no ha subido archivos.</div>';$('deliveryFiles').innerHTML=deliveryFiles.map(f=>fileHTML(f,'delivery')).join('')||'<div class="sub">Aún no has enviado archivos al cliente.</div>';await Promise.allSettled([hydrateImagePreviews($('clientFiles')),hydrateImagePreviews($('deliveryFiles'))])}catch(e){console.error(e);$('clientFiles').innerHTML='<div class="sub">No se pudieron cargar los archivos.</div>'}}
+async function loadFiles(){if(!selected)return;try{clearPreviewObjectUrls();const [clientFilesAll,deliveryFilesAll]=await Promise.all([getProjectFiles('client'),getProjectFiles('delivery')]);const clientFiles=clientFilesAll.filter(f=>f.availability!=='deleted');const deliveryFiles=deliveryFilesAll.filter(f=>f.availability!=='deleted');$('clientFiles').innerHTML=clientFiles.map(f=>fileHTML(f,'client')).join('')||'<div class="sub">No hay archivos del cliente disponibles.</div>';$('deliveryFiles').innerHTML=deliveryFiles.map(f=>fileHTML(f,'delivery')).join('')||'<div class="sub">Aún no has enviado archivos al cliente.</div>';await Promise.allSettled([hydrateImagePreviews($('clientFiles')),hydrateImagePreviews($('deliveryFiles'))])}catch(e){console.error(e);$('clientFiles').innerHTML='<div class="sub">No se pudieron cargar los archivos.</div>'}}
 
 // === LÓGICA DE CLOUDFLARE R2 PARA DESCARGAR ARCHIVOS ===
 window.downloadR2File = async function(storagePath, fileName, btn) {
