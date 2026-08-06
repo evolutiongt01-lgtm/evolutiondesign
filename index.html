@@ -28,8 +28,9 @@
   <!-- GOOGLE RECAPTCHA V3 SCRIPT (CARGA DIFERIDA) -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LewmG4tAAAAADBNcF1z4t7NvP_YFyA7P57xx9uM" async defer></script>
 
-  <!-- PAYPAL SDK: CARGA ASÍNCRONA PARA NO BLOQUEAR LA WEB -->
-  <script src="https://www.paypal.com/sdk/js?client-id=BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20&currency=USD" async></script>
+  <!-- PAYPAL SDK: se carga dinámicamente según la divisa detectada/seleccionada -->
+  <link rel="preconnect" href="https://www.paypal.com">
+  <link rel="dns-prefetch" href="//www.paypal.com">
 
   <!-- ORKA CHAT SCRIPT (CARGA ASÍNCRONA DIFERIDA) -->
   <script type="text/javascript">
@@ -148,7 +149,10 @@
     .facade-switch input:disabled + .f-slider-toggle { opacity: 0.5; cursor: not-allowed; }
 
     /* CAJA DE PAGO CON ESTILO LIQUID GLASS */
-    .paypal-white-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+    .paypal-white-card { background: #ffffff !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border: 1px solid #ffffff !important; padding: 18px; border-radius: 16px; box-shadow: 0 16px 38px rgba(0,0,0,0.52); overflow: hidden; }
+    .paypal-white-card iframe { background: #ffffff !important; }
+    .paypal-currency-note { margin-top: 10px; color: #6b6b6b; font-size: .69rem; line-height: 1.45; text-align: center; }
+    .paypal-currency-note strong { color: #111; font-weight: 700; }
 
     /* ANIMACIÓN DEL CANDADO DE SEGURIDAD */
     .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 24px; display: flex; align-items: center; justify-content: flex-start; padding-left: 22%; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
@@ -426,6 +430,7 @@
       }
 
       .paypal-white-card {
+        background: #ffffff !important;
         padding: 12px;
         border-radius: 14px;
         max-width: 100%;
@@ -1093,7 +1098,7 @@
 
                   <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    Transacción segura facturada en USD
+                    Transacción segura facturada en <span class="paypal-billing-currency">USD</span>
                   </div>
                 </div>
               </div>
@@ -1341,7 +1346,7 @@
 
                   <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    Transacción segura facturada en USD
+                    Transacción segura facturada en <span class="paypal-billing-currency">USD</span>
                   </div>
                 </div>
 
@@ -1623,7 +1628,7 @@
 
                   <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem; position: relative; z-index: 30;">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    Transacción segura facturada en USD
+                    Transacción segura facturada en <span class="paypal-billing-currency">USD</span>
                   </div>
                 </div>
               </div>
@@ -1659,8 +1664,9 @@
             MÉTODOS DE PAGO SEGUROS: <span class="text-white fw-medium">Visa &bull; Mastercard &bull; American Express &bull; PayPal</span>
           </p>
           <p class="accent-text mb-0" style="font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3px;">
-            Múltiples divisas aceptadas. Procesamiento de pagos facturado en USD.
+            Moneda detectada automáticamente según tu ubicación. PayPal procesa el cobro en <span class="paypal-billing-currency">USD</span>.
           </p>
+          <p class="text-secondary mb-0 mt-1" style="font-size: 0.58rem; opacity: .55;">Tipos de cambio de referencia: <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener" class="text-secondary">ExchangeRate-API</a>.</p>
         </div>
       </div>
     </div>
@@ -1716,7 +1722,17 @@
   <script>
     window.usuarioAutenticado = false;
     let currentCurrency = 'USD';
-    const exchangeRates = { USD: { rate: 1.0, symbol: 'USD' }, EUR: { rate: 0.92, symbol: 'EUR' }, GTQ: { rate: 7.85, symbol: 'GTQ' }, MXN: { rate: 18.50, symbol: 'MXN' }, CNY: { rate: 7.25, symbol: 'CNY' }, AED: { rate: 3.67, symbol: 'AED' }, BRL: { rate: 5.40, symbol: 'BRL' }, JPY: { rate: 155.0, symbol: 'JPY' } };
+    const exchangeRates = {
+      USD:{rate:1,symbol:'USD'}, EUR:{rate:.92,symbol:'EUR'}, GTQ:{rate:7.85,symbol:'GTQ'}, MXN:{rate:18.5,symbol:'MXN'},
+      CNY:{rate:7.25,symbol:'CNY'}, AED:{rate:3.67,symbol:'AED'}, BRL:{rate:5.40,symbol:'BRL'}, JPY:{rate:155,symbol:'JPY'},
+      GBP:{rate:.79,symbol:'GBP'}, CAD:{rate:1.37,symbol:'CAD'}, AUD:{rate:1.52,symbol:'AUD'}, CHF:{rate:.81,symbol:'CHF'},
+      HKD:{rate:7.80,symbol:'HKD'}, SGD:{rate:1.29,symbol:'SGD'}, NZD:{rate:1.67,symbol:'NZD'}, SEK:{rate:9.55,symbol:'SEK'},
+      NOK:{rate:10.1,symbol:'NOK'}, DKK:{rate:6.86,symbol:'DKK'}, PLN:{rate:3.67,symbol:'PLN'}, CZK:{rate:21.1,symbol:'CZK'},
+      HUF:{rate:322,symbol:'HUF'}, ILS:{rate:3.28,symbol:'ILS'}, PHP:{rate:57.2,symbol:'PHP'}, THB:{rate:32.4,symbol:'THB'},
+      TWD:{rate:29.8,symbol:'TWD'}, MYR:{rate:4.18,symbol:'MYR'}
+    };
+    window.currentCurrency = currentCurrency;
+    window.exchangeRates = exchangeRates;
     window.montoPago3D = "0.00"; window.montoPago2D = "0.00"; window.montoPagoFachada = "0.00";
 
     // NAVEGACIÓN Y MENÚS
@@ -1784,11 +1800,83 @@
       document.querySelectorAll('.price-val').forEach(el => {
         const usdVal = parseFloat(el.getAttribute('data-usd'));
         const converted = usdVal * config.rate;
-        const decimals = currentCurrency === 'JPY' ? 0 : 2;
+        const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
         el.textContent = converted.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
       });
       document.querySelectorAll('.curr-symbol').forEach(el => { el.textContent = config.symbol; });
     }
+
+    function ensureCurrencyMenuItem(code) {
+      const menu = document.getElementById('currencyMenu');
+      if (!menu || !code || menu.querySelector(`[data-curr="${code}"]`)) return;
+      const li = document.createElement('li');
+      li.innerHTML = `<a class="currency-item" href="#" data-curr="${code}"><span class="badge bg-secondary me-2">¤</span> ${code}</a>`;
+      menu.appendChild(li);
+      bindCurrencyItem(li.querySelector('.currency-item'));
+    }
+
+    function applyCurrency(code, { auto = false } = {}) {
+      code = String(code || 'USD').toUpperCase();
+      if (!exchangeRates[code]) code = 'USD';
+      currentCurrency = code;
+      window.currentCurrency = code;
+      ensureCurrencyMenuItem(code);
+      document.querySelectorAll('.currency-item').forEach(i => i.classList.toggle('active', i.getAttribute('data-curr') === code));
+      updateAllCurrencies();
+      if (typeof window.actualizarCotizacionTerrenoGlobal === 'function') window.actualizarCotizacionTerrenoGlobal();
+      if (typeof window.actualizarCalculadoraPlanosGlobal === 'function') window.actualizarCalculadoraPlanosGlobal();
+      if (typeof window.actualizarCalculadoraFachadaGlobal === 'function') window.actualizarCalculadoraFachadaGlobal();
+      try { localStorage.setItem('evolution_currency', code); } catch(e) {}
+      if (auto) document.documentElement.dataset.detectedCurrency = code;
+    }
+    window.applyCurrency = applyCurrency;
+
+    function bindCurrencyItem(item) {
+      if (!item || item.dataset.currencyBound === '1') return;
+      item.dataset.currencyBound = '1';
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        applyCurrency(this.getAttribute('data-curr'));
+        const currMenu = document.getElementById('currencyMenu');
+        if (currMenu) currMenu.classList.remove('show');
+      });
+    }
+
+    // Moneda automática: IP pública -> moneda local. Las tasas se refrescan una vez por sesión.
+    window.currencyReadyPromise = (async function() {
+      try {
+        const rateResponse = await fetch('https://open.er-api.com/v6/latest/USD', { cache: 'force-cache' });
+        if (rateResponse.ok) {
+          const rateData = await rateResponse.json();
+          if (rateData && rateData.result === 'success' && rateData.rates) {
+            Object.keys(rateData.rates).forEach(code => {
+              if (!exchangeRates[code]) exchangeRates[code] = { rate: rateData.rates[code], symbol: code };
+              else exchangeRates[code].rate = rateData.rates[code];
+            });
+          }
+        }
+      } catch(e) { console.info('Se usarán tasas de respaldo.', e); }
+
+      let detectedCurrency = '';
+      try {
+        const geoResponse = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
+        if (geoResponse.ok) {
+          const geo = await geoResponse.json();
+          detectedCurrency = String(geo.currency || '').toUpperCase();
+          window.evolutionGeo = {
+            ip: geo.ip || '', city: geo.city || '', region: geo.region || '',
+            country: geo.country_name || '', countryCode: geo.country_code || '', currency: detectedCurrency
+          };
+        }
+      } catch(e) { console.info('No se pudo detectar la moneda por IP.', e); }
+
+      let stored = '';
+      try { stored = localStorage.getItem('evolution_currency') || ''; } catch(e) {}
+      const target = stored || detectedCurrency || 'USD';
+      if (target && exchangeRates[target]) applyCurrency(target, { auto: !stored });
+      else applyCurrency('USD', { auto: !stored });
+      return window.currentCurrency;
+    })();
 
     // Función maestra para el estado visual de los botones de pago
     window.actualizarEstadoBoton = function(btnId, isAuth, hasData) {
@@ -1895,7 +1983,7 @@
         else if (servicioVal === 'cuantificacion') { baseUSD = areaTotal * 1.75; }
 
         window.montoPago3D = baseUSD.toFixed(2);
-        const decimals = currentCurrency === 'JPY' ? 0 : 2;
+        const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
         const convertedFinal = baseUSD * exchangeRates[currentCurrency].rate;
 
         if(!window.usuarioAutenticado) {
@@ -2005,7 +2093,7 @@
       window.montoPago2D = (basePrecioUSD + excedente).toFixed(2);
       const rate = exchangeRates[currentCurrency].rate;
       const symbol = exchangeRates[currentCurrency].symbol;
-      const decimals = currentCurrency === 'JPY' ? 0 : 2;
+      const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
 
       const pAreaText = document.getElementById('p-area-text');
       if(pAreaText) pAreaText.textContent = areaTotal.toFixed(2) + ' m²';
@@ -2135,7 +2223,7 @@
       window.montoPagoFachada = totalUSD.toFixed(2);
       const rate = exchangeRates[currentCurrency].rate;
       const symbol = exchangeRates[currentCurrency].symbol;
-      const decimals = currentCurrency === 'JPY' ? 0 : 2;
+      const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
 
       const fAreaText = document.getElementById('f-area-text');
       if(fAreaText) fAreaText.textContent = area.toFixed(2) + ' m²';
@@ -2245,22 +2333,7 @@
 
     
     // Cambio de moneda global
-    const currencyItemsArray = document.querySelectorAll('.currency-item');
-    currencyItemsArray.forEach(item => {
-      item.addEventListener('click', function(e) {
-        e.preventDefault();
-        currencyItemsArray.forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-        currentCurrency = this.getAttribute('data-curr');
-        updateAllCurrencies();
-        
-        if(typeof window.actualizarCotizacionTerrenoGlobal === 'function') window.actualizarCotizacionTerrenoGlobal();
-        if(typeof window.actualizarCalculadoraPlanosGlobal === 'function') window.actualizarCalculadoraPlanosGlobal();
-        if(typeof window.actualizarCalculadoraFachadaGlobal === 'function') window.actualizarCalculadoraFachadaGlobal();
-        const currMenu = document.getElementById('currencyMenu');
-        if (currMenu) currMenu.classList.remove('show');
-      });
-    });
+    document.querySelectorAll('.currency-item').forEach(bindCurrencyItem);
     
   </script>
 
@@ -2535,27 +2608,100 @@
       }
     }
 
-    function renderizarBotonPayPal(monto, selector, tipoProyecto) {
-      if (typeof paypal === 'undefined') return;
+    const PAYPAL_CLIENT_ID = 'BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20';
+    const PAYPAL_SUPPORTED_CURRENCIES = new Set([
+      'AUD','BRL','CAD','CNY','CZK','DKK','EUR','HKD','HUF','ILS','JPY','MYR','MXN','TWD','NZD','NOK','PHP','PLN','GBP','SGD','SEK','CHF','THB','USD'
+    ]);
+    const PAYPAL_ZERO_DECIMAL = new Set(['JPY','HUF','TWD']);
+    const paypalSdkPromises = {};
 
-      paypal.Buttons({
-        style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{ amount: { value: Number(monto).toFixed(2), currency_code: 'USD' } }]
-          });
-        },
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(details) {
-            guardarDatosPagoPayPal(details, data, tipoProyecto, monto);
-            window.location.href = 'proyectos.html';
-          });
-        },
-        onError: function(err) {
-          console.error('Error de PayPal:', err);
-          alert('No fue posible completar el pago con PayPal. Inténtalo nuevamente.');
-        }
-      }).render(selector);
+    function getPayPalCheckoutCurrency() {
+      const selected = String(window.currentCurrency || 'USD').toUpperCase();
+      return PAYPAL_SUPPORTED_CURRENCIES.has(selected) ? selected : 'USD';
+    }
+
+    function updatePayPalCurrencyLabels(currency) {
+      document.querySelectorAll('.paypal-billing-currency').forEach(el => { el.textContent = currency; });
+    }
+
+    function loadPayPalSDK(currency) {
+      currency = String(currency || 'USD').toUpperCase();
+      const namespace = `paypal_${currency}`;
+      if (window[namespace] && window[namespace].Buttons) return Promise.resolve(window[namespace]);
+      if (paypalSdkPromises[currency]) return paypalSdkPromises[currency];
+
+      paypalSdkPromises[currency] = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=${encodeURIComponent(currency)}&components=buttons&intent=capture`;
+        script.async = true;
+        script.setAttribute('data-namespace', namespace);
+        script.onload = () => window[namespace] && window[namespace].Buttons ? resolve(window[namespace]) : reject(new Error('PayPal SDK no expuso Buttons.'));
+        script.onerror = () => reject(new Error('No se pudo cargar PayPal SDK.'));
+        document.head.appendChild(script);
+      });
+      return paypalSdkPromises[currency];
+    }
+
+    function getConvertedCheckoutAmount(baseUsd, currency) {
+      const rates = window.exchangeRates || {};
+      const rate = rates[currency] && Number(rates[currency].rate) ? Number(rates[currency].rate) : 1;
+      const converted = Number(baseUsd || 0) * rate;
+      return PAYPAL_ZERO_DECIMAL.has(currency) ? String(Math.round(converted)) : converted.toFixed(2);
+    }
+
+    function setCurrencyNote(selector, displayCurrency, checkoutCurrency) {
+      const target = document.querySelector(selector);
+      if (!target) return;
+      const card = target.closest('.paypal-white-card');
+      if (!card) return;
+      let note = card.querySelector('.paypal-currency-note');
+      if (!note) {
+        note = document.createElement('div');
+        note.className = 'paypal-currency-note';
+        card.appendChild(note);
+      }
+      if (displayCurrency === checkoutCurrency) {
+        note.innerHTML = `Cobro procesado en <strong>${checkoutCurrency}</strong>.`;
+      } else {
+        note.innerHTML = `Tus precios se muestran en <strong>${displayCurrency}</strong>. Esta divisa no está disponible para cobro directo en PayPal, por lo que el pago se procesa en <strong>${checkoutCurrency}</strong>.`;
+      }
+    }
+
+    async function renderizarBotonPayPal(monto, selector, tipoProyecto) {
+      try {
+        if (window.currencyReadyPromise) await window.currencyReadyPromise.catch(() => {});
+        const displayCurrency = String(window.currentCurrency || 'USD').toUpperCase();
+        const checkoutCurrency = getPayPalCheckoutCurrency();
+        updatePayPalCurrencyLabels(checkoutCurrency);
+        setCurrencyNote(selector, displayCurrency, checkoutCurrency);
+        const checkoutAmount = getConvertedCheckoutAmount(monto, checkoutCurrency);
+        const paypalSDK = await loadPayPalSDK(checkoutCurrency);
+
+        const target = document.querySelector(selector);
+        if (target) target.innerHTML = '';
+
+        return paypalSDK.Buttons({
+          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay', height: 45 },
+          createOrder: function(data, actions) {
+            return actions.order.create({
+              purchase_units: [{ amount: { value: checkoutAmount, currency_code: checkoutCurrency } }]
+            });
+          },
+          onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+              guardarDatosPagoPayPal(details, data, tipoProyecto, checkoutAmount);
+              window.location.href = 'proyectos.html';
+            });
+          },
+          onError: function(err) {
+            console.error('Error de PayPal:', err);
+            alert('No fue posible completar el pago con PayPal. Inténtalo nuevamente.');
+          }
+        }).render(selector);
+      } catch (err) {
+        console.error('No se pudo inicializar PayPal:', err);
+        alert('No se pudo cargar el módulo de pago. Revisa tu conexión e inténtalo nuevamente.');
+      }
     }
 
     window.renderizarPayPal3D = function(monto, selector) {
