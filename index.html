@@ -2339,7 +2339,6 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
     import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -2354,9 +2353,6 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const functions = getFunctions(app, 'us-central1');
-    const createPayPalOrderCallable = httpsCallable(functions, 'createPayPalOrder');
-    const capturePayPalOrderCallable = httpsCallable(functions, 'capturePayPalOrder');
     const providerGoogle = new GoogleAuthProvider();
 
     // FUNCIÓN GLOBAL PARA CERRAR SESIÓN Y REINICIAR LAS CALCULADORAS
@@ -2758,23 +2754,88 @@
       };
     }
 
-    // La creación/captura del pago y la creación del proyecto se realizan en
-    // Cloud Functions. El navegador ya no puede crear proyectos pagados por sí solo.
-    async function crearOrdenSegura(tipoProyecto, checkoutCurrency) {
-      const projectConfig = capturarConfiguracionProyecto(tipoProyecto);
-      if (!projectConfig || !projectConfig.pricingInput) throw new Error('No se pudo leer la configuración de la cotización.');
-      const response = await createPayPalOrderCallable({
-        type: tipoProyecto,
-        projectInput: projectConfig.pricingInput,
-        requestedCurrency: checkoutCurrency,
-        clientGeo: window.evolutionGeo ? { city:window.evolutionGeo.city||'', region:window.evolutionGeo.region||'', country:window.evolutionGeo.country||'', countryCode:window.evolutionGeo.countryCode||'', currency:window.evolutionGeo.currency||'' } : {}
-      });
-      return response.data;
+    // ===== PAYPAL DIRECTO EN EL NAVEGADOR (MISMO FLUJO FUNCIONAL DE DINGLOFT) =====
+    // PayPal crea y captura la orden desde su SDK. Conservamos una copia local de
+    // los metadatos del pago para que una compra aprobada no se pierda al redirigir.
+    function guardarProyectoComprado(paymentData) {
+      try {
+        const currentUser = window.evolutionCurrentUser || {};
+        const ownerKey = currentUser.uid || currentUser.email || paymentData.ownerUid || paymentData.ownerEmail || 'local';
+        const storageKey = `evolution_projects_v1:${ownerKey}`;
+        let projects = [];
+        try {
+          const raw = localStorage.getItem(storageKey);
+          projects = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(projects)) projects = [];
+        } catch (_) { projects = []; }
+
+        const identity = paymentData.transactionId || paymentData.orderId;
+        const exists = projects.some(p => (p.transactionId || p.orderId) === identity);
+        if (!exists) projects.unshift(paymentData);
+        else projects = projects.map(p => ((p.transactionId || p.orderId) === identity ? paymentData : p));
+
+        localStorage.setItem(storageKey, JSON.stringify(projects.slice(0, 50)));
+        localStorage.setItem('evolution_paypal_payment', JSON.stringify(paymentData));
+      } catch (error) {
+        console.warn('No se pudo guardar el respaldo local del pago:', error);
+      }
     }
 
-    async function capturarOrdenSegura(orderId) {
-      const response = await capturePayPalOrderCallable({ orderId });
-      return response.data;
+    function guardarDatosPagoPayPal(details, data, tipoProyecto, montoBaseUsd) {
+      try {
+        const payer = (details && details.payer) || {};
+        const payerName = payer.name || {};
+        const fullName = [payerName.given_name, payerName.surname].filter(Boolean).join(' ').trim();
+        const source = (details && details.payment_source) || {};
+        const purchaseUnit = details && details.purchase_units && details.purchase_units[0] ? details.purchase_units[0] : {};
+        const capture = purchaseUnit.payments && purchaseUnit.payments.captures && purchaseUnit.payments.captures[0]
+          ? purchaseUnit.payments.captures[0]
+          : {};
+        const currentUser = window.evolutionCurrentUser || {};
+        const projectConfig = capturarConfiguracionProyecto(tipoProyecto);
+
+        const countryCode =
+          (payer.address && payer.address.country_code) ||
+          (source.card && source.card.billing_address && source.card.billing_address.country_code) ||
+          (source.paypal && source.paypal.address && source.paypal.address.country_code) ||
+          (purchaseUnit.shipping && purchaseUnit.shipping.address && purchaseUnit.shipping.address.country_code) ||
+          '';
+
+        const finalAmount = capture.amount && capture.amount.value ? capture.amount.value : '';
+        const finalCurrency = capture.amount && capture.amount.currency_code ? capture.amount.currency_code : 'USD';
+        const transactionId = capture.id || (details && details.id) || (data && data.orderID) || '';
+        const shortId = String(transactionId || Date.now()).replace(/[^A-Za-z0-9]/g, '').slice(-8).toUpperCase();
+
+        const paymentData = {
+          version: 3,
+          ownerUid: currentUser.uid || '',
+          ownerEmail: currentUser.email || payer.email_address || '',
+          payerName: fullName || currentUser.displayName || payer.email_address || 'Cliente PayPal',
+          transactionId,
+          payerCountry: nombrePaisDesdeCodigo(countryCode),
+          payerCountryCode: countryCode || '',
+          paymentMethod: detectarMetodoPagoPayPal(details, data),
+          amount: finalAmount,
+          currency: finalCurrency,
+          baseUsd: Number(montoBaseUsd || 0),
+          orderId: (details && details.id) || (data && data.orderID) || '',
+          displayOrderId: `#EVO-${shortId}`,
+          projectType: projectConfig.category || tipoProyecto || '',
+          projectTitle: projectConfig.packageName || tipoProyecto || 'Proyecto Evolution Design',
+          projectConfig,
+          paymentStatus: 'paid',
+          status: 'waiting_files',
+          source: 'paypal-browser',
+          paidAt: new Date().toISOString(),
+          createdAt: new Date().toISOString()
+        };
+
+        guardarProyectoComprado(paymentData);
+        return paymentData;
+      } catch (error) {
+        console.warn('El pago fue aprobado, pero no se pudieron guardar los metadatos locales:', error);
+        return null;
+      }
     }
 
     const PAYPAL_CLIENT_ID = 'BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20';
@@ -2839,8 +2900,19 @@
     async function renderizarBotonPayPal(monto, selector, tipoProyecto) {
       try {
         if (window.currencyReadyPromise) await window.currencyReadyPromise.catch(() => {});
+
+        if (!window.evolutionCurrentUser?.uid) {
+          if (typeof window.abrirAuthModal === 'function') window.abrirAuthModal();
+          throw new Error('Debes iniciar sesión antes de pagar.');
+        }
+
         const displayCurrency = String(window.currentCurrency || 'USD').toUpperCase();
         const checkoutCurrency = getPayPalCheckoutCurrency();
+        const checkoutAmount = getConvertedCheckoutAmount(monto, checkoutCurrency);
+        const projectConfig = capturarConfiguracionProyecto(tipoProyecto);
+
+        if (!(Number(checkoutAmount) > 0)) throw new Error('El monto de pago no es válido.');
+
         updatePayPalCurrencyLabels(checkoutCurrency);
         setCurrencyNote(selector, displayCurrency, checkoutCurrency);
         const paypalSDK = await loadPayPalSDK(checkoutCurrency);
@@ -2850,35 +2922,56 @@
 
         return paypalSDK.Buttons({
           style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay', height: 45 },
-          createOrder: async function() {
-            if (!window.evolutionCurrentUser?.uid) {
-              throw new Error('Debes iniciar sesión antes de pagar.');
-            }
-            const serverOrder = await crearOrdenSegura(tipoProyecto, checkoutCurrency);
-            if (!serverOrder?.orderId) throw new Error('El servidor no devolvió una orden válida.');
-            return serverOrder.orderId;
+
+          // Igual que Dingloft: la orden se crea directamente con actions.order.create().
+          createOrder: function(data, actions) {
+            return actions.order.create({
+              intent: 'CAPTURE',
+              purchase_units: [{
+                description: String(projectConfig?.packageName || tipoProyecto || 'Evolution Design').slice(0, 127),
+                amount: {
+                  value: checkoutAmount,
+                  currency_code: checkoutCurrency
+                }
+              }],
+              application_context: {
+                brand_name: 'Evolution Design',
+                shipping_preference: 'NO_SHIPPING',
+                user_action: 'PAY_NOW'
+              }
+            });
           },
-          onApprove: async function(data) {
-            try {
-              const result = await capturarOrdenSegura(data.orderID);
-              if (!result?.projectId) throw new Error('El pago fue capturado pero no se creó el proyecto.');
+
+          // Igual que Dingloft: PayPal captura la orden desde el SDK del navegador.
+          onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+              const capture = details?.purchase_units?.[0]?.payments?.captures?.[0];
+              if (!capture || capture.status !== 'COMPLETED') {
+                throw new Error(`PayPal no confirmó la captura (${capture?.status || details?.status || 'sin estado'}).`);
+              }
+
+              guardarDatosPagoPayPal(details, data, tipoProyecto, monto);
               window.location.href = 'proyectos.html';
-            } catch (error) {
-              console.error('Error capturando pago en servidor:', error);
-              alert('PayPal aprobó la operación, pero no pudimos finalizar el registro del proyecto. No vuelvas a pagar; contáctanos con tu ID de orden de PayPal.');
-            }
+            }).catch(function(error) {
+              console.error('Error capturando el pago en PayPal:', error);
+              alert('PayPal aprobó la operación, pero no pudimos confirmar la captura. No vuelvas a pagar si ves el cargo; conserva tu ID de orden y contáctanos.');
+            });
           },
+
           onCancel: function() {
             console.info('Pago cancelado por el cliente.');
           },
+
           onError: function(err) {
             console.error('Error de PayPal:', err);
-            alert('No fue posible completar el pago. Revisa tu conexión e inténtalo nuevamente.');
+            const msg = err && err.message ? `\n\nDetalle: ${err.message}` : '';
+            alert(`No fue posible completar el pago con PayPal.${msg}`);
           }
         }).render(selector);
       } catch (err) {
-        console.error('No se pudo inicializar PayPal/Firebase:', err);
-        alert('No se pudo preparar el pago seguro. Verifica que Firebase Functions esté desplegado y vuelve a intentarlo.');
+        console.error('No se pudo inicializar PayPal:', err);
+        const msg = err && err.message ? `\n\nDetalle: ${err.message}` : '';
+        alert(`No se pudo preparar el pago.${msg}`);
       }
     }
 
