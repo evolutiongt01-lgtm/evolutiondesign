@@ -38,8 +38,21 @@
       .custom-textarea:focus { outline: none; border-color: #d4b895; background: rgba(255,255,255,0.05); }
       .custom-textarea::placeholder { color: rgba(255,255,255,0.3); }
 
-      .desktop-nav { padding-top: calc(25px + env(safe-area-inset-top, 0px)); }
-      .nav-pill { background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1150px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
+      /* TRACKER VISUAL MINIMALISTA */
+      .tracker-container { position: relative; padding-left: 1.5rem; margin-top: 1rem; }
+      .tracker-container::before { content: ''; position: absolute; left: 11px; top: 10px; bottom: 10px; width: 2px; background: rgba(255,255,255,0.1); }
+      .tracker-step { position: relative; margin-bottom: 1.2rem; opacity: 0.4; transition: all 0.3s ease; }
+      .tracker-step:last-child { margin-bottom: 0; }
+      .tracker-step.completed, .tracker-step.active { opacity: 1; }
+      .tracker-icon { position: absolute; left: -1.5rem; top: 0; width: 24px; height: 24px; border-radius: 50%; background: #111; border: 2px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; transform: translateX(-50%); z-index: 2; transition: all 0.3s ease; font-size: 0.7rem; color: transparent; }
+      .tracker-step.completed .tracker-icon { border-color: #28a745; background: rgba(40,167,69,0.15); color: #28a745; }
+      .tracker-step.active .tracker-icon { border-color: #d4b895; background: rgba(212,184,149,0.15); color: #d4b895; box-shadow: 0 0 10px rgba(212,184,149,0.3); }
+      .tracker-text { padding-left: 0.5rem; }
+      .tracker-title { font-size: 0.85rem; font-weight: 600; color: #fff; margin-bottom: 2px; }
+      .tracker-desc { font-size: 0.7rem; color: #aaa; margin-bottom: 0; }
+
+      .desktop-nav { padding-top: calc(25px + env(safe-area-inset-top, 0px)); z-index: 1040;}
+      .nav-pill { background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
     </style>
   </head>
 
@@ -113,40 +126,74 @@
                     <input type="file" id="fileInput1" class="d-none" multiple onchange="mostrarNombreArchivo(this)">
                   </div>
                   <div id="archivo-seleccionado-1" class="text-success small mt-3 fw-medium" style="display: none;"></div>
+
+                  <div class="mt-4">
+                    <h5 class="text-white mb-2 fs-6 d-flex align-items-center gap-2">
+                      <svg width="18" height="18" fill="none" stroke="#d4b895" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                      Comentarios del Cliente
+                    </h5>
+                    <p class="text-secondary small mb-2">Añade especificaciones o notas especiales para el arquitecto.</p>
+                    <textarea id="comentarios-cliente" class="custom-textarea" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás..."></textarea>
+                  </div>
                 </div>
 
-                <!-- COMENTARIOS Y ESTADO -->
+                <!-- INDICADOR VISUAL Y BOTÓN -->
                 <div class="col-12 col-lg-6">
-                  <div class="d-flex flex-column h-100 justify-content-between">
+                  <div class="p-4 rounded-4 h-100 d-flex flex-column justify-content-between" style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);">
                     <div>
-                      <h5 class="text-white mb-2 fs-6 d-flex align-items-center gap-2">
-                        <svg width="18" height="18" fill="none" stroke="#d4b895" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                        Instrucciones del Proyecto
-                      </h5>
-                      <p class="text-secondary small mb-3">Añade especificaciones, gustos de colores, detalles del terreno o notas para el arquitecto.</p>
-                      <textarea id="comentarios-cliente" class="custom-textarea mb-4" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás..."></textarea>
+                      <h6 class="text-white fw-bold mb-3" style="font-size: 0.9rem;">Estado del Proyecto</h6>
+                      
+                      <!-- TRACKER VISUAL -->
+                      <div class="tracker-container mb-4">
+                        <!-- Paso 1 (Siempre completado si ve esta tarjeta) -->
+                        <div class="tracker-step completed" id="step-pago">
+                          <div class="tracker-icon">✓</div>
+                          <div class="tracker-text">
+                            <div class="tracker-title">Pago Verificado</div>
+                            <p class="tracker-desc">Transacción segura procesada correctamente.</p>
+                          </div>
+                        </div>
+
+                        <!-- Paso 2 (Activo) -->
+                        <div class="tracker-step active" id="step-archivos">
+                          <div class="tracker-icon">2</div>
+                          <div class="tracker-text">
+                            <div class="tracker-title text-white">Esperando Archivos</div>
+                            <p class="tracker-desc">Sube la información solicitada en la sección izquierda.</p>
+                          </div>
+                        </div>
+
+                        <!-- Paso 3 (Pendiente) -->
+                        <div class="tracker-step" id="step-arqui">
+                          <div class="tracker-icon">3</div>
+                          <div class="tracker-text">
+                            <div class="tracker-title">Asignación de Arquitecto</div>
+                            <p class="tracker-desc">Arquitecto delegado: <span id="arqui-name" class="text-white fw-medium">Pendiente</span></p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="p-4 rounded-4" style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);">
-                      <div class="d-flex align-items-start gap-2 mb-3">
-                        <svg width="18" height="18" fill="none" stroke="#28a745" stroke-width="2" class="mt-1 flex-shrink-0" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        <div>
-                          <span class="text-white d-block small fw-medium">Pago Aprobado</span>
-                          <span class="text-secondary" style="font-size: 0.7rem;">Transacción verificada vía PayPal</span>
-                        </div>
-                      </div>
-                      
-                      <div class="d-flex align-items-start gap-2 mb-4">
-                        <svg width="18" height="18" fill="none" stroke="#ffc107" stroke-width="2" class="mt-1 flex-shrink-0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <div>
+                      <div class="d-flex align-items-start gap-2 mb-4 p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                        <svg width="20" height="20" fill="none" stroke="#d4b895" stroke-width="1.5" class="mt-1 flex-shrink-0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                         <div>
                           <span class="text-white d-block small fw-medium" id="texto-fecha-entrega">Calculando entrega...</span>
-                          <span class="text-secondary" style="font-size: 0.7rem;">(Tiempo estimado: 3 días hábiles desde envío de archivos)</span>
+                          <span class="text-secondary" style="font-size: 0.7rem;">(Tiempo de proceso: 3 días hábiles desde el envío de archivos)</span>
                         </div>
                       </div>
 
-                      <button type="button" class="btn w-100 fw-bold py-3 rounded-pill text-black" style="background-color: #d4b895; font-size: 0.85rem;" onclick="alert('Función de subida conectada correctamente. ¡Pronto tus archivos llegarán a nuestro sistema!')">
+                      <button type="button" class="btn w-100 fw-bold py-3 rounded-pill text-black mb-2" style="background-color: #d4b895; font-size: 0.85rem;" onclick="alert('Función conectada. ¡Pronto tus archivos llegarán al sistema!')">
                         Enviar Archivos al Equipo
                       </button>
+
+                      <!-- BOTÓN WHATSAPP PARA ESTADOS UNIDOS (OCULTO POR DEFECTO) -->
+                      <div id="btn-whatsapp-us" style="display: none;">
+                        <a href="https://wa.me/18329774150?text=Hola,%20soy%20cliente%20y%20me%20gustar%C3%ADa%20hablar%20sobre%20mi%20proyecto" target="_blank" class="btn w-100 fw-bold py-2 rounded-pill mt-2 d-flex justify-content-center align-items-center gap-2" style="background-color: transparent; border: 1px solid #25D366; color: #25D366; font-size: 0.8rem;">
+                          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                          Solicitar Asesoría por Teléfono
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -160,9 +207,9 @@
 
     </main>
 
-    <!-- SCRIPT AUXILIAR -->
+    <!-- SCRIPT AUXILIAR PARA ARCHIVOS, FECHA Y GEOLOCALIZACIÓN -->
     <script>
-      // Función para mostrar el nombre del archivo seleccionado
+      // Muestra los nombres de los archivos subidos
       function mostrarNombreArchivo(input) {
         const div = document.getElementById('archivo-seleccionado-1');
         if (input.files && input.files.length > 0) {
@@ -174,25 +221,22 @@
         }
       }
 
-      // Script inteligente para calcular 3 días HÁBILES (salta sábados y domingos)
       document.addEventListener("DOMContentLoaded", function() {
+        // --- CÁLCULO DE 3 DÍAS HÁBILES ---
         function calcularFechaEntrega(diasHabiles) {
-          let fecha = new Date(); // Fecha de hoy
+          let fecha = new Date(); 
           let agregados = 0;
           
           while (agregados < diasHabiles) {
             fecha.setDate(fecha.getDate() + 1);
-            // .getDay() devuelve 0 para Domingo y 6 para Sábado
+            // 0 es Domingo, 6 es Sábado. Solo sumamos si es Lunes-Viernes
             if (fecha.getDay() !== 0 && fecha.getDay() !== 6) {
               agregados++;
             }
           }
           
-          // Formatear fecha en español
           const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
           let fechaFormateada = fecha.toLocaleDateString('es-GT', opciones);
-          
-          // Capitalizar la primera letra del día
           return fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
         }
 
@@ -200,6 +244,18 @@
         if (fechaEl) {
           fechaEl.innerHTML = `Entrega estimada: <span class="accent-text">${calcularFechaEntrega(3)}</span>`;
         }
+
+        // --- DETECCIÓN DE PAÍS POR IP PARA WHATSAPP ---
+        // Usamos la API pública de ipapi.co para detectar si es de US
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            if(data.country_code === 'US') {
+              const waBtn = document.getElementById('btn-whatsapp-us');
+              if(waBtn) waBtn.style.display = 'block';
+            }
+          })
+          .catch(error => console.log('Bloqueador de anuncios previno la detección de IP, ignorando...'));
       });
     </script>
 
