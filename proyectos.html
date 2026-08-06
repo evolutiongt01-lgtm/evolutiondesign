@@ -69,6 +69,27 @@
       }
 
       a, button, input, textarea { font-family: inherit; }
+
+      /* El input de archivo nativo nunca debe ocupar espacio visual.
+         Se activa mediante el botón/dropzone personalizado. */
+      #fileInput1 {
+        display: none !important;
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+
+      /* Evita que controles con ancho intrínseco rompan el grid en móvil */
+      .content-grid,
+      .content-grid > *,
+      .upload-card,
+      .upload-dropzone {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .upload-card, .upload-dropzone { overflow: hidden; }
       .accent-text { color: var(--accent) !important; }
       .text-secondary { color: var(--muted) !important; }
 
@@ -739,6 +760,8 @@
           touch-action: manipulation;
         }
         .upload-dropzone:hover { transform: none; }
+        .upload-dropzone > * { max-width: 100%; }
+        .upload-title, .upload-sub { overflow-wrap: anywhere; }
         .upload-title { font-size: .76rem; }
         .upload-sub {
           max-width: 250px;
@@ -934,7 +957,7 @@
                           <div class="upload-title">Arrastra o selecciona tus archivos</div>
                           <div class="upload-sub">PDF, DWG, DWF, PNG, JPG · Máx. 50MB</div>
                           <span class="upload-action">Seleccionar Archivos</span>
-                          <input type="file" id="fileInput1" class="d-none" multiple onchange="mostrarNombreArchivo(this)">
+                          <input type="file" id="fileInput1" class="d-none" hidden multiple onchange="mostrarNombreArchivo(this)">
                         </div>
                         <div id="archivo-seleccionado-1" class="file-ready small mt-3 fw-medium" style="display: none;"></div>
                       </div>
