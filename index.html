@@ -2760,21 +2760,113 @@
 
     // La creación/captura del pago y la creación del proyecto se realizan en
     // Cloud Functions. El navegador ya no puede crear proyectos pagados por sí solo.
+    // IMPORTANTE: no se altera la lógica de precios ni el flujo de compra; únicamente
+    // se mejora el diagnóstico de errores para no confundir fallos del servidor con
+    // un simple problema de conexión del cliente.
+    function normalizarErrorPago(error) {
+      const rawCode = String(error?.code || error?.name || '').trim();
+      const code = rawCode.replace(/^functions\//, '') || 'unknown';
+      const message = String(error?.message || 'Error desconocido').trim();
+      const details = error?.details ?? null;
+
+      return {
+        code,
+        rawCode,
+        message,
+        details,
+        original: error
+      };
+    }
+
+    function registrarErrorPago(etapa, error, contexto = {}) {
+      const info = normalizarErrorPago(error);
+      console.groupCollapsed(`[Evolution Design · Pago] ${etapa}`);
+      console.error('Código:', info.rawCode || info.code);
+      console.error('Mensaje:', info.message);
+      if (info.details != null) console.error('Detalles:', info.details);
+      if (Object.keys(contexto).length) console.info('Contexto:', contexto);
+      console.error('Error original:', error);
+      console.groupEnd();
+      return info;
+    }
+
+    function mensajePagoParaUsuario(error, fallback) {
+      const info = normalizarErrorPago(error);
+      const code = info.code;
+
+      if (code === 'unauthenticated' || /iniciar sesi[oó]n/i.test(info.message)) {
+        return 'Tu sesión ya no es válida. Inicia sesión nuevamente antes de pagar.';
+      }
+      if (code === 'permission-denied') {
+        return 'El servidor rechazó la operación por permisos. Vuelve a iniciar sesión y reintenta.';
+      }
+      if (code === 'not-found') {
+        return 'El servicio de pago no está disponible en el servidor. Verifica el despliegue de Firebase Functions.';
+      }
+      if (code === 'unavailable' || code === 'deadline-exceeded') {
+        return 'El servicio de pago está temporalmente fuera de línea. Inténtalo nuevamente en unos momentos.';
+      }
+      if (code === 'invalid-argument' || code === 'failed-precondition' || code === 'out-of-range') {
+        return info.message || 'La cotización contiene datos que el servidor no pudo validar.';
+      }
+      if (code === 'internal' || code === 'unknown') {
+        return `${fallback}\n\nDetalle técnico: ${info.message}`;
+      }
+
+      return info.message && info.message !== 'Error desconocido'
+        ? `${fallback}\n\nDetalle técnico: ${info.message}`
+        : fallback;
+    }
+
     async function crearOrdenSegura(tipoProyecto, checkoutCurrency) {
       const projectConfig = capturarConfiguracionProyecto(tipoProyecto);
-      if (!projectConfig || !projectConfig.pricingInput) throw new Error('No se pudo leer la configuración de la cotización.');
-      const response = await createPayPalOrderCallable({
+      if (!projectConfig || !projectConfig.pricingInput) {
+        throw new Error('No se pudo leer la configuración de la cotización.');
+      }
+
+      const payload = {
         type: tipoProyecto,
         projectInput: projectConfig.pricingInput,
         requestedCurrency: checkoutCurrency,
-        clientGeo: window.evolutionGeo ? { city:window.evolutionGeo.city||'', region:window.evolutionGeo.region||'', country:window.evolutionGeo.country||'', countryCode:window.evolutionGeo.countryCode||'', currency:window.evolutionGeo.currency||'' } : {}
-      });
-      return response.data;
+        clientGeo: window.evolutionGeo ? {
+          city: window.evolutionGeo.city || '',
+          region: window.evolutionGeo.region || '',
+          country: window.evolutionGeo.country || '',
+          countryCode: window.evolutionGeo.countryCode || '',
+          currency: window.evolutionGeo.currency || ''
+        } : {}
+      };
+
+      try {
+        const response = await createPayPalOrderCallable(payload);
+        if (!response?.data) {
+          throw new Error('Firebase Functions respondió sin datos al crear la orden.');
+        }
+        return response.data;
+      } catch (error) {
+        window.__evolutionLastCreateOrderError = error;
+        registrarErrorPago('Error al crear la orden', error, {
+          tipoProyecto,
+          checkoutCurrency
+        });
+        throw error;
+      }
     }
 
     async function capturarOrdenSegura(orderId) {
-      const response = await capturePayPalOrderCallable({ orderId });
-      return response.data;
+      if (!orderId) throw new Error('PayPal no devolvió un ID de orden válido.');
+
+      try {
+        const response = await capturePayPalOrderCallable({ orderId });
+        if (!response?.data) {
+          throw new Error('Firebase Functions respondió sin datos al capturar la orden.');
+        }
+        return response.data;
+      } catch (error) {
+        window.__evolutionLastCaptureOrderError = error;
+        registrarErrorPago('Error al capturar la orden', error, { orderId });
+        throw error;
+      }
     }
 
     const PAYPAL_CLIENT_ID = 'BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20';
@@ -2851,34 +2943,76 @@
         return paypalSDK.Buttons({
           style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay', height: 45 },
           createOrder: async function() {
+            window.__evolutionLastCreateOrderError = null;
+
             if (!window.evolutionCurrentUser?.uid) {
-              throw new Error('Debes iniciar sesión antes de pagar.');
+              const authError = new Error('Debes iniciar sesión antes de pagar.');
+              window.__evolutionLastCreateOrderError = authError;
+              throw authError;
             }
-            const serverOrder = await crearOrdenSegura(tipoProyecto, checkoutCurrency);
-            if (!serverOrder?.orderId) throw new Error('El servidor no devolvió una orden válida.');
-            return serverOrder.orderId;
+
+            try {
+              const serverOrder = await crearOrdenSegura(tipoProyecto, checkoutCurrency);
+              if (!serverOrder?.orderId || typeof serverOrder.orderId !== 'string') {
+                throw new Error('El servidor no devolvió una orden válida.');
+              }
+              return serverOrder.orderId;
+            } catch (error) {
+              window.__evolutionLastCreateOrderError = error;
+              throw error;
+            }
           },
           onApprove: async function(data) {
+            const orderId = data?.orderID || '';
+            if (!orderId) {
+              const missingOrderError = new Error('PayPal aprobó el flujo pero no devolvió el ID de la orden.');
+              registrarErrorPago('Aprobación sin orderID', missingOrderError);
+              alert('No pudimos identificar la orden aprobada. No vuelvas a pagar; contáctanos para revisar la operación.');
+              return;
+            }
+
             try {
-              const result = await capturarOrdenSegura(data.orderID);
+              const result = await capturarOrdenSegura(orderId);
               if (!result?.projectId) throw new Error('El pago fue capturado pero no se creó el proyecto.');
               window.location.href = 'proyectos.html';
             } catch (error) {
-              console.error('Error capturando pago en servidor:', error);
-              alert('PayPal aprobó la operación, pero no pudimos finalizar el registro del proyecto. No vuelvas a pagar; contáctanos con tu ID de orden de PayPal.');
+              registrarErrorPago('Error después de la aprobación de PayPal', error, { orderId });
+              alert(`PayPal aprobó la operación, pero no pudimos finalizar el registro del proyecto.\n\nNO vuelvas a pagar. Conserva este ID de orden: ${orderId}\n\nContáctanos para revisar la operación.`);
             }
           },
-          onCancel: function() {
-            console.info('Pago cancelado por el cliente.');
+          onCancel: function(data) {
+            console.info('Pago cancelado por el cliente.', data || '');
           },
           onError: function(err) {
-            console.error('Error de PayPal:', err);
-            alert('No fue posible completar el pago. Revisa tu conexión e inténtalo nuevamente.');
+            const realError = window.__evolutionLastCreateOrderError || err;
+            registrarErrorPago('PayPal onError', realError, {
+              tipoProyecto,
+              displayCurrency,
+              checkoutCurrency
+            });
+
+            alert(
+              mensajePagoParaUsuario(
+                realError,
+                'No fue posible iniciar el pago seguro.'
+              )
+            );
+
+            window.__evolutionLastCreateOrderError = null;
           }
         }).render(selector);
       } catch (err) {
-        console.error('No se pudo inicializar PayPal/Firebase:', err);
-        alert('No se pudo preparar el pago seguro. Verifica que Firebase Functions esté desplegado y vuelve a intentarlo.');
+        registrarErrorPago('No se pudo inicializar PayPal/Firebase', err, {
+          tipoProyecto,
+          displayCurrency,
+          checkoutCurrency
+        });
+        alert(
+          mensajePagoParaUsuario(
+            err,
+            'No se pudo preparar el pago seguro. Verifica que Firebase Functions y PayPal estén disponibles.'
+          )
+        );
       }
     }
 
