@@ -2463,6 +2463,12 @@
     // VIGILANTE DE SESIÓN Y RENDERIZADO DE MENÚS
     onAuthStateChanged(auth, (user) => {
       window.usuarioAutenticado = !!user;
+      window.evolutionCurrentUser = user ? {
+        uid: user.uid || '',
+        email: user.email || '',
+        displayName: user.displayName || '',
+        photoURL: user.photoURL || ''
+      } : null;
 
       const btnDesktop = document.getElementById('auth-desktop-wrapper');
       const btnMobile = document.getElementById('auth-mobile-wrapper');
@@ -2567,6 +2573,182 @@
       return 'PayPal Checkout';
     }
 
+    function valorNumero(id) {
+      const el = document.getElementById(id);
+      return el ? (parseFloat(el.value) || 0) : 0;
+    }
+
+    function etiquetaRadio(name, fallback = '') {
+      const radio = document.querySelector(`input[name="${name}"]:checked`);
+      if (!radio) return fallback;
+      const label = document.querySelector(`label[for="${radio.id}"]`);
+      return label ? label.textContent.replace(/\s+/g, ' ').trim() : (radio.value || fallback);
+    }
+
+    function capturarConfiguracionProyecto(tipoProyecto) {
+      if (tipoProyecto === 'Planos 2D') {
+        const ancho = valorNumero('p-ancho');
+        const largo = valorNumero('p-largo');
+        const niveles = parseInt(document.querySelector('input[name="p-niveles"]:checked')?.value || '1', 10);
+        const paquete = document.querySelector('input[name="p-paquete"]:checked')?.value || 'basico';
+        const area = ancho * largo * niveles;
+        const premium = paquete === 'premium';
+
+        return {
+          category: 'Planos 2D',
+          packageCode: paquete,
+          packageName: premium ? 'Paquete Planos 2D - Premium' : 'Paquete Planos 2D - Básico',
+          shortPackageName: premium ? 'Premium 2D' : 'Básico 2D',
+          specs: [
+            { label: 'Terreno', value: `${ancho || 0} × ${largo || 0} m` },
+            { label: 'Niveles', value: `${niveles}` },
+            { label: 'Área total', value: `${area.toFixed(2)} m²` }
+          ],
+          uploadTitle: 'Archivos Requeridos',
+          uploadCopy: 'Sube tu archivo AutoCAD (DWG/DWF), PDF de medidas o una imagen clara de tu dibujo/plano.',
+          uploadFormats: 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB',
+          includedHighlights: premium ? [
+            'Arquitectura minimalista contemporánea de alta gama',
+            'Plano Arquitectónico Amueblado y Acotado por nivel',
+            '2 cortes longitudinales y 2 transversales',
+            'Fachadas de los 4 lados',
+            'Cimentación con detalles constructivos',
+            'Columnas, cadenas y armados',
+            'Losas / entrepiso y techo',
+            'Planos hidráulico, drenajes y eléctrico completos',
+            'Acabados, puertas y ventanas',
+            'Entrega PDF / CAD lista para trámites y obra'
+          ] : [
+            'Estilo minimalista contemporáneo',
+            'Plano Arquitectónico Amueblado por nivel',
+            'Plano Acotado para albañilería',
+            '1 corte longitudinal y 1 transversal',
+            'Fachadas de los 4 lados',
+            'Entrega PDF / CAD lista para obra e impresión'
+          ]
+        };
+      }
+
+      if (tipoProyecto === 'Visualización 3D') {
+        const select = document.getElementById('calcServicioSelect');
+        const servicio = select?.value || 'basico';
+        const ancho = valorNumero('calcAncho');
+        const largo = valorNumero('calcLargo');
+        const niveles = parseInt(document.querySelector('input[name="c-niveles"]:checked')?.value || '1', 10);
+        const area = ancho * largo * niveles;
+        const configs = {
+          basico: {
+            category: 'Visualización 3D',
+            packageName: 'Paquete 3D - Básico',
+            shortPackageName: 'Básico 3D',
+            uploadCopy: 'Sube tu archivo 2D en PDF, AutoCAD DWG/DWF o una imagen clara de tu plano.',
+            includedHighlights: ['Modelado 3D profesional','8 renders realistas','Fachada incluida','Resolución HD','Materiales e iluminación básicos','1 revisión incluida']
+          },
+          profesional: {
+            category: 'Visualización 3D',
+            packageName: 'Paquete 3D - Profesional',
+            shortPackageName: 'Profesional 3D',
+            uploadCopy: 'Sube tu archivo 2D (PDF, DWG/DWF o foto clara del plano) y fotografías de referencia del lugar para trabajar el hiperrealismo.',
+            includedHighlights: ['Modelado 3D completo','16 renders realistas','Fachada frontal y posterior','3 videos realistas de 8 segundos','Entrega en alta resolución','2 revisiones incluidas']
+          },
+          premium: {
+            category: 'Visualización 3D',
+            packageName: 'Paquete 3D - Premium',
+            shortPackageName: 'Premium 3D',
+            uploadCopy: 'Sube tu archivo 2D (PDF, DWG/DWF o foto clara del plano) y fotografías de referencia del lugar para el nivel de hiperrealismo Premium.',
+            includedHighlights: ['Modelado 3D completo','26 renders realistas','Recorrido virtual de 1 min 44 s (13 clips de 8 s)','Plano amueblado','Iluminación avanzada','Diseño de paisaje conceptual','Resolución 4K','3 revisiones incluidas']
+          },
+          cuantificacion: {
+            category: 'Cuantificación de Materiales',
+            packageName: 'Cuantificación de Materiales',
+            shortPackageName: 'Cuantificación',
+            uploadCopy: 'Sube los planos, medidas o archivos de referencia necesarios para calcular las cantidades de materiales de tu obra.',
+            includedHighlights: ['Listado exacto de materiales','Obra gris: cemento, arena, grava, block y ladrillo','Hierro para construcción, losa y lámina','Acabados: piso, repello, puertas, ventanas y pintura']
+          }
+        };
+        const cfg = configs[servicio] || configs.basico;
+        return {
+          ...cfg,
+          packageCode: servicio,
+          specs: [
+            { label: 'Terreno', value: `${ancho || 0} × ${largo || 0} m` },
+            { label: 'Niveles', value: `${niveles}` },
+            { label: 'Área total', value: `${area.toFixed(2)} m²` }
+          ],
+          uploadTitle: 'Archivos Requeridos',
+          uploadFormats: 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB'
+        };
+      }
+
+      if (tipoProyecto === 'Diseño de Fachada') {
+        const ancho = valorNumero('f-ancho');
+        const altura = valorNumero('f-altura');
+        const niveles = document.querySelector('input[name="f-niveles"]:checked')?.value || '2';
+        const tipo = document.querySelector('input[name="f-tipo"]:checked')?.value || 'Vivienda';
+        const complejidad = document.querySelector('input[name="f-complejidad"]:checked');
+        const complejidadNombre = complejidad?.getAttribute('data-label') || etiquetaRadio('f-complejidad', 'Profesional');
+        const renderOn = !!document.getElementById('f-render')?.checked;
+        const area = ancho * altura;
+
+        return {
+          category: 'Diseño de Fachada',
+          packageCode: String(complejidadNombre).toLowerCase(),
+          packageName: `Diseño de Fachada - ${complejidadNombre}`,
+          shortPackageName: complejidadNombre,
+          specs: [
+            { label: 'Fachada', value: `${ancho || 0} × ${altura || 0} m` },
+            { label: 'Niveles', value: niveles === '4' ? '4+' : niveles },
+            { label: 'Proyecto', value: tipo },
+            { label: 'Área', value: `${area.toFixed(2)} m²` },
+            { label: 'Renders', value: renderOn ? '3 hiperrealistas' : 'No incluidos' }
+          ],
+          uploadTitle: 'Referencias de Fachada',
+          uploadCopy: renderOn
+            ? 'Sube una foto clara de la fachada o terreno y sus medidas. También puedes adjuntar un dibujo de tu idea y fotografías claras del lugar para los renders hiperrealistas.'
+            : 'Sube una foto clara de tu fachada actual o terreno y sus medidas. Opcionalmente puedes adjuntar un dibujo a mano alzada de tu idea.',
+          uploadFormats: 'PDF, PNG, JPG, DWG, DWF · Máx. 50MB',
+          includedHighlights: [
+            `Nivel de diseño ${complejidadNombre}`,
+            '3 propuestas distintas de fachada',
+            'Diseño estético y funcional con selección de materiales',
+            ...(renderOn ? ['3 renders hiperrealistas de la propuesta elegida'] : [])
+          ]
+        };
+      }
+
+      return {
+        category: tipoProyecto || 'Proyecto',
+        packageCode: '',
+        packageName: tipoProyecto || 'Proyecto Evolution Design',
+        shortPackageName: tipoProyecto || 'Proyecto',
+        specs: [],
+        uploadTitle: 'Archivos Requeridos',
+        uploadCopy: 'Sube los archivos y referencias necesarios para iniciar tu proyecto.',
+        uploadFormats: 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB',
+        includedHighlights: []
+      };
+    }
+
+    function guardarProyectoComprado(paymentData) {
+      const currentUser = window.evolutionCurrentUser || {};
+      const ownerKey = currentUser.uid || currentUser.email || paymentData.ownerUid || paymentData.ownerEmail || 'local';
+      const storageKey = `evolution_projects_v1:${ownerKey}`;
+      let projects = [];
+      try {
+        const raw = localStorage.getItem(storageKey);
+        projects = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(projects)) projects = [];
+      } catch (e) { projects = []; }
+
+      const identity = paymentData.transactionId || paymentData.orderId;
+      const exists = projects.some(p => (p.transactionId || p.orderId) === identity);
+      if (!exists) projects.unshift(paymentData);
+      else projects = projects.map(p => ((p.transactionId || p.orderId) === identity ? paymentData : p));
+
+      localStorage.setItem(storageKey, JSON.stringify(projects.slice(0, 50)));
+      localStorage.setItem('evolution_paypal_payment', JSON.stringify(paymentData));
+    }
+
     function guardarDatosPagoPayPal(details, data, tipoProyecto, montoSolicitado) {
       try {
         const payer = (details && details.payer) || {};
@@ -2577,6 +2759,8 @@
         const capture = purchaseUnit.payments && purchaseUnit.payments.captures && purchaseUnit.payments.captures[0]
           ? purchaseUnit.payments.captures[0]
           : {};
+        const currentUser = window.evolutionCurrentUser || {};
+        const projectConfig = capturarConfiguracionProyecto(tipoProyecto);
 
         const countryCode =
           (payer.address && payer.address.country_code) ||
@@ -2587,23 +2771,35 @@
 
         const finalAmount = capture.amount && capture.amount.value ? capture.amount.value : String(montoSolicitado || '');
         const finalCurrency = capture.amount && capture.amount.currency_code ? capture.amount.currency_code : 'USD';
+        const transactionId = capture.id || (details && details.id) || (data && data.orderID) || '';
+        const shortId = String(transactionId || Date.now()).replace(/[^A-Za-z0-9]/g, '').slice(-8).toUpperCase();
 
         const paymentData = {
-          payerName: fullName || (payer.email_address || 'Cliente PayPal'),
-          transactionId: capture.id || (details && details.id) || (data && data.orderID) || '',
+          version: 2,
+          ownerUid: currentUser.uid || '',
+          ownerEmail: currentUser.email || payer.email_address || '',
+          payerName: fullName || currentUser.displayName || (payer.email_address || 'Cliente PayPal'),
+          transactionId,
           payerCountry: nombrePaisDesdeCodigo(countryCode),
           payerCountryCode: countryCode || '',
           paymentMethod: detectarMetodoPagoPayPal(details, data),
           amount: finalAmount,
           currency: finalCurrency,
           orderId: (details && details.id) || (data && data.orderID) || '',
-          projectType: tipoProyecto || '',
-          paidAt: new Date().toISOString()
+          displayOrderId: `#EVO-${shortId}`,
+          projectType: projectConfig.category || tipoProyecto || '',
+          projectTitle: projectConfig.packageName || tipoProyecto || 'Proyecto Evolution Design',
+          projectConfig,
+          status: 'waiting_files',
+          paidAt: new Date().toISOString(),
+          createdAt: new Date().toISOString()
         };
 
-        localStorage.setItem('evolution_paypal_payment', JSON.stringify(paymentData));
+        guardarProyectoComprado(paymentData);
+        return paymentData;
       } catch (error) {
         console.warn('El pago fue aprobado, pero no se pudieron guardar los metadatos locales:', error);
+        return null;
       }
     }
 
