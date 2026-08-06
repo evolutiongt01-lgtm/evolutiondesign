@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
     <meta name="description" content="Evolution Design - Estudio de Visualización Arquitectónica, Planos 2D y Cuantificación de Materiales">
     
-    <!-- GOOGLE SEARCH CONSOLE VERIFICATION -->
     <meta name="google-site-verification" content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
@@ -16,17 +15,11 @@
     <meta name="author" content="Evolution Design">
     <title>Evolution Design - Visualización, Planos y Cuantificación</title>
     
-    <!-- PRELOAD DE RECURSOS CLAVE PARA VELOCIDAD -->
     <link rel="preload" href="css/theme.min.css" as="style">
     <link rel="stylesheet" href="css/theme.min.css">
 
-    <!-- GOOGLE RECAPTCHA V3 SCRIPT (CARGA DIFERIDA) -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LewmG4tAAAAADBNcF1z4t7NvP_YFyA7P57xx9uM" async defer></script>
-
-    <!-- PAYPAL SDK: CARGA ASÍNCRONA PARA NO BLOQUEAR LA WEB -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20&currency=USD" async></script>
-
-    <!-- ORKA CHAT SCRIPT (CARGA ASÍNCRONA DIFERIDA) -->
     <script type="text/javascript">window.ORKA_APP_ID="6a6e1491fcaf85963eaf05d6";(function(){d=document;s=d.createElement("script");s.src="//widget.orka.chat/app.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
     <style>
@@ -44,22 +37,35 @@
       .btn-liquid-glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(212, 184, 149, 0.4); color: #d4b895; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none !important; font-weight: 500; font-size: 0.85rem; transition: all 0.3s ease; display: inline-block; text-align: center; white-space: normal; }
       .btn-liquid-glass:hover { background: #fff; color: #000 !important; border-color: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
 
-      /* NAVEGACIÓN ESCRITORIO Y MÓVIL */
-      .desktop-nav { display: none !important; padding-top: calc(25px + env(safe-area-inset-top, 0px)); pointer-events: none; }
+      /* FOTO DE PERFIL LIQUID GLASS Y ADMIN */
+      .profile-pic-liquid { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(212, 184, 149, 0.6); background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: transform 0.3s ease, border-color 0.3s ease; }
+      .profile-pic-liquid:hover { transform: scale(1.1); border-color: #fff; }
+      .admin-badge-btn { background: rgba(220, 53, 69, 0.2); backdrop-filter: blur(10px); border: 1px solid rgba(220, 53, 69, 0.5); color: #fff; text-decoration: none; padding: 0.4rem 0.8rem; border-radius: 50px; font-size: 0.75rem; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; gap: 5px; }
+      .admin-badge-btn:hover { background: rgba(220, 53, 69, 0.5); color: #fff; }
+
+      /* ESTILOS DEL MODAL DE LOGIN (NUEVO) */
+      .login-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 1050; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+      .login-modal-overlay.show { opacity: 1; pointer-events: auto; }
+      .login-glass-card { background: rgba(15, 15, 15, 0.85); border: 1px solid rgba(212, 184, 149, 0.4); border-radius: 24px; width: 90%; max-width: 400px; padding: 2.5rem 2rem; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.6); transform: translateY(20px); transition: transform 0.3s ease; }
+      .login-modal-overlay.show .login-glass-card { transform: translateY(0); }
+      .btn-close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #888; font-size: 1.5rem; cursor: pointer; transition: color 0.3s; }
+      .btn-close-modal:hover { color: #fff; }
+
+      /* NAVEGACIÓN Y MENÚS */
+      .desktop-nav { display: none !important; padding-top: calc(25px + env(safe-area-inset-top, 0px)); pointer-events: none; z-index: 1040; }
       @media (min-width: 992px) { .desktop-nav { display: block !important; } }
       .nav-pill { pointer-events: auto; background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1150px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
       .nav-pill-links { display: flex; gap: 2rem; align-items: center; }
       .nav-pill-link { color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: color 0.3s; position: relative; }
       .nav-pill-link:hover, .nav-pill-link.active { color: #fff; }
       .nav-pill-link.active::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px; background-color: #fff; border-radius: 2px; }
+      
       .desktop-dropdown-menu, .mobile-dropdown-menu { display: none; flex-direction: column; position: absolute; top: 55px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 180px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; list-style: none !important; margin: 0; opacity: 0; transform: translateY(-10px) scale(0.95); transform-origin: top left; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 1050; }
-      .desktop-dropdown-menu li, .mobile-dropdown-menu li { list-style: none !important; }
       .desktop-dropdown-menu.show, .mobile-dropdown-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
-      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; transition: all 0.2s ease !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
-      .menu-item:hover, .menu-item.active { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
+      .menu-item { color: #ddd !important; text-decoration: none !important; padding: 0.8rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 12px !important; background: transparent !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+      .menu-item:hover { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
       .section-planos-bg { position: relative; background: linear-gradient(180deg, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.80) 50%, rgba(0,0,0,0.90) 100%), url('img/planos-bg.jpg') center/cover no-repeat !important; }
-
       .mobile-app-nav { background: rgba(10, 10, 10, 0.85) !important; backdrop-filter: blur(20px) saturate(150%); position: fixed; top: 0; left: 0; width: 100%; z-index: 1030; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
       @media (min-width: 992px) { .mobile-app-nav { display: none !important; } }
       .app-nav-top { display: flex; justify-content: space-between; align-items: center; padding: max(38px, env(safe-area-inset-top)) 1.5rem 0.8rem 1.5rem; }
@@ -72,24 +78,23 @@
       .tab-item:hover, .tab-item.active { color: #fff !important; border-bottom-color: #fff; }
       .tab-item.active svg { opacity: 1; transform: scale(1.15); }
 
-      /* HERO SECTION */
+      /* HERO, TARJETAS Y CALCULADORAS */
       .hero-app { position: relative; padding: max(145px, calc(110px + env(safe-area-inset-top))) 1.5rem 4rem; min-height: 85vh; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%), url('img/hero-movil.jpg') center/cover no-repeat; }
       .hero-content { width: 100%; padding: 0; }
       @media (min-width: 992px) { .hero-app { min-height: 100vh; background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 45%, rgba(0,0,0,0) 100%), url('img/hero-pc.jpg') right center/cover no-repeat; padding: calc(100px + env(safe-area-inset-top, 0px)) 0 4rem; } .hero-content { max-width: 550px; padding: 0; margin-left: 5vw; } }
       .accent-text { color: #d4b895; }
       .grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
       .sq-btn { border-radius: 16px; padding: 1.5rem 1.2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: 160px; text-decoration: none !important; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff !important; }
-      .sq-btn:hover { transform: translateY(-5px); background-color: rgba(255, 255, 255, 0.15) !important; border-color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+      .sq-btn:hover { transform: translateY(-5px); background-color: rgba(255, 255, 255, 0.15) !important; border-color: #fff; }
       .trust-badges { display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.2rem; margin-top: 3rem; background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); }
       .trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 0.7rem; color: #aaa; flex: 1; }
-      .trust-item:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.1); }
-      @media (min-width: 768px) { .trust-item { flex-direction: row; gap: 10px; font-size: 0.85rem; justify-content: center; } .trust-item svg { margin-bottom: 0; } }
+      @media (min-width: 768px) { .trust-item { flex-direction: row; gap: 10px; font-size: 0.85rem; justify-content: center; } }
       .no-bullets { list-style-type: none !important; padding-left: 0 !important; margin-left: 0 !important; }
 
       .services-section { padding: 6rem 0; background: #000; }
       .services-scroll-container { display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 1rem; }
       .services-scroll-container::-webkit-scrollbar { display: none; }
-      .service-card { flex: 0 0 280px; scroll-snap-align: start; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s ease, border-color 0.3s ease; }
+      .service-card { flex: 0 0 280px; scroll-snap-align: start; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s ease; }
       .service-card:hover { border-color: rgba(212, 184, 149, 0.5); transform: translateY(-5px); }
       .service-card-video { width: 100%; height: 180px; object-fit: cover; }
       .service-card-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
@@ -101,7 +106,6 @@
       @keyframes vip-pulse { 0% { border-color: rgba(212, 184, 149, 0.4); box-shadow: 0 0 20px rgba(212, 184, 149, 0.15); } 50% { border-color: rgba(212, 184, 149, 0.9); box-shadow: 0 0 40px rgba(212, 184, 149, 0.35); } 100% { border-color: rgba(212, 184, 149, 0.4); box-shadow: 0 0 20px rgba(212, 184, 149, 0.15); } }
       .glass-container-bg { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,1) 80%); }
 
-      /* CALCULADORAS Y ESTILOS COMUNES */
       .calc-pro-container { position: relative; border-radius: 24px; background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.8) 100%); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px); width: 100%; }
       @media (min-width: 992px) { .calc-divider-vertical { border-left: 1px solid rgba(255, 255, 255, 0.1); padding-left: 3rem; } }
       .calc-input-group-pro { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; display: flex; align-items: center; padding: 0.5rem 1rem; transition: all 0.3s ease; }
@@ -113,22 +117,18 @@
       .features-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
       @media(min-width: 992px) { .features-grid-3 { grid-template-columns: repeat(3, 1fr); } }
 
-      /* ESTILOS DE BLOQUEO PARA INPUTS DESHABILITADOS */
       input:disabled, select:disabled { opacity: 0.5; cursor: not-allowed; }
       .facade-radio-group input[type="radio"]:disabled + .facade-radio-label { opacity: 0.4; cursor: not-allowed; border-color: rgba(255,255,255,0.05); }
       .facade-switch input:disabled + .f-slider-toggle { opacity: 0.5; cursor: not-allowed; }
 
-      /* CAJA DE PAGO CON ESTILO LIQUID GLASS */
       .paypal-white-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
 
-      /* ANIMACIÓN DEL CANDADO DE SEGURIDAD (MEJORADO PARA NO TAPAR PAGOS) */
       .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 24px; display: flex; align-items: center; justify-content: flex-start; padding-left: 22%; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
       @media (max-width: 991px) { .lock-overlay { padding-left: 0; justify-content: center; align-items: flex-start; padding-top: 20%; } }
       .lock-overlay.active { opacity: 1; pointer-events: auto; }
       .lock-icon-container { width: 70px; height: 70px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(212, 184, 149, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #d4b895; box-shadow: 0 0 30px rgba(212, 184, 149, 0.3); animation: lock-bounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
       @keyframes lock-bounce { 0% { transform: scale(0.3); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 
-      /* CALCULADORAS TIPO FACHADA Y PLANOS 2D */
       .facade-calc-bg { background: linear-gradient(to bottom, #080808, #000); }
       .facade-calc-card { background: #0d0d0d; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.8); overflow: hidden; position: relative; }
       .facade-box-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 2rem; height: 100%; }
@@ -137,8 +137,9 @@
       .facade-input-wrap:focus-within { border-color: #d4b895; }
       .facade-num-input { background: transparent; border: none; color: #fff; width: 100%; padding: 0.6rem 0.8rem; text-align: right; outline: none; -moz-appearance: textfield; font-weight: bold; font-size: 0.95rem; }
       .facade-unit { background: rgba(255,255,255,0.08); color: #aaa; padding: 0.6rem 0.8rem; font-size: 0.85rem; border-left: 1px solid rgba(255,255,255,0.05); }
-      .facade-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-      .facade-row-col { display: flex; flex-direction: column; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .facade-row, .facade-row-col { display: flex; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .facade-row { align-items: center; justify-content: space-between; }
+      .facade-row-col { flex-direction: column; }
       .facade-row:last-child, .facade-row-col:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
       .facade-radio-group { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 1rem; }
       .facade-radio-group input[type="radio"] { display: none; }
@@ -152,28 +153,61 @@
       input:checked + .f-slider-toggle:before { transform: translateX(22px); }
       .facade-results-panel { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 
-      /* BOTÓN Y MENÚ FLOTANTE DE MONEDA (SIN PUNTOS) */
       .currency-float-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
       .currency-wrapper { position: relative; width: 50px; height: 50px; }
       .currency-float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212, 184, 149, 0.4) !important; background-color: rgba(212, 184, 149, 0.1) !important; color: #d4b895 !important; backdrop-filter: blur(8px); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 0; }
       .currency-float-btn:hover { transform: scale(1.1); background-color: rgba(212, 184, 149, 0.8) !important; color: #000 !important; }
-      .currency-float-menu { display: none; flex-direction: column; position: absolute; bottom: 62px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 140px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; list-style: none !important; margin: 0; opacity: 0; transform: translateY(10px) scale(0.97); transform-origin: bottom left; transition: all 0.25s; }
-      .currency-float-menu li { list-style: none !important; }
+      .currency-float-menu { display: none; flex-direction: column; position: absolute; bottom: 62px; left: 0; background: rgba(15, 15, 15, 0.95) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; padding: 0.5rem !important; min-width: 140px !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; gap: 5px; opacity: 0; transform: translateY(10px) scale(0.97); transform-origin: bottom left; transition: all 0.25s; margin: 0; }
       .currency-float-menu.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+      .currency-float-menu li { list-style: none !important; }
       .currency-item { color: #ddd !important; text-decoration: none !important; padding: 0.6rem 1rem !important; border-radius: 10px !important; display: flex !important; align-items: center !important; gap: 10px !important; transition: all 0.2s ease !important; }
       .currency-item:hover, .currency-item.active { background: rgba(212, 184, 149, 0.15) !important; color: #fff !important; }
-
-      @supports (-webkit-touch-callout: none) {
-        .currency-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); }
-      }
-
+      @supports (-webkit-touch-callout: none) { .currency-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); } }
       footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important; }
     </style>
   </head>
 
   <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-    <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) -->
+    <!-- MODAL DE LOGIN (ESTILO LIQUID GLASS) -->
+    <div id="authModal" class="login-modal-overlay">
+      <div class="login-glass-card">
+        <button id="closeAuthModal" class="btn-close-modal" aria-label="Cerrar">&times;</button>
+        <div class="text-center mb-4">
+          <img src="img/logo.png" alt="Evolution Design" style="max-height: 25px; margin-bottom: 1rem;">
+          <h4 class="fw-bold text-white mb-1" id="authModalTitle">Iniciar Sesión</h4>
+          <p class="text-secondary small">Identifícate para ver precios y pagar</p>
+        </div>
+        
+        <button id="btnGoogleLogin" class="btn btn-light w-100 rounded-pill py-2 mb-3 fw-bold d-flex justify-content-center align-items-center gap-2 text-dark">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continuar con Google
+        </button>
+        
+        <div class="d-flex align-items-center my-3">
+          <hr class="flex-grow-1 border-secondary m-0">
+          <span class="px-2 text-secondary small">o con correo</span>
+          <hr class="flex-grow-1 border-secondary m-0">
+        </div>
+
+        <form id="authEmailForm">
+          <div class="mb-3">
+            <input type="email" id="authEmail" class="form-control calc-input-group-pro text-white" placeholder="Correo electrónico" required style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.6rem 1.2rem;">
+          </div>
+          <div class="mb-3">
+            <input type="password" id="authPassword" class="form-control calc-input-group-pro text-white" placeholder="Contraseña" required style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.6rem 1.2rem;">
+          </div>
+          <button type="submit" id="btnSubmitAuth" class="btn w-100 fw-bold rounded-pill py-2 mt-2" style="background-color: #d4b895; color: #000;">Ingresar</button>
+        </form>
+        
+        <div class="text-center mt-4">
+          <a href="#" id="toggleAuthMode" class="text-secondary small text-decoration-none">¿No tienes cuenta? <span class="accent-text fw-medium">Regístrate</span></a>
+        </div>
+        <div id="authError" class="text-danger small mt-2 text-center" style="display:none; background: rgba(220,53,69,0.1); border-radius: 10px; padding: 8px;"></div>
+      </div>
+    </div>
+
+    <!-- NAVEGACIÓN ESCRITORIO -->
     <nav class="desktop-nav fixed-top" id="navScroll">
       <div class="container px-0">
         <div class="nav-pill">
@@ -196,7 +230,12 @@
             <a href="#servicios-tecnicos" class="nav-pill-link">Planos 2D</a>
             <a href="#fachadas" class="nav-pill-link">Fachadas</a>
             <a href="#visualizacion" class="nav-pill-link">Tarifas 3D</a>
-            <a href="portal" class="nav-pill-link" style="color: #d4b895;">Portal de Entregas</a>
+            
+            <!-- CONTENEDOR LOGIN Y PERFIL ESCRITORIO -->
+            <div id="auth-desktop-wrapper" class="d-flex align-items-center">
+                <a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>
+            </div>
+            
           </div>
           <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Catálogo de Software &rarr;</a>
         </div>
@@ -215,7 +254,13 @@
           </ul>
         </div>
         <a href="index"><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;" loading="lazy"></a>
-        <a href="portal" class="icon-btn" aria-label="Portal de Entregas"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
+        
+        <!-- CONTENEDOR LOGIN Y PERFIL MÓVIL -->
+        <div id="auth-mobile-wrapper" class="d-flex align-items-center">
+            <a href="#" onclick="abrirAuthModal(); return false;" class="icon-btn" aria-label="Login">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg>
+            </a>
+        </div>
       </div>
       <div class="app-tabs">
         <a href="index" class="tab-item active"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Inicio</a>
@@ -237,15 +282,10 @@
             <a href="#visualizacion" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>3D &rarr;</span></a>
             <a href="#servicios-tecnicos" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>2D &rarr;</span></a>
           </div>
-          <div class="trust-badges">
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg><span>Calidad<br>Garantizada</span></div>
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Entrega<br>Puntual</span></div>
-            <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg><span>Asesoría<br>Personalizada</span></div>
-          </div>
         </div>
       </div>
 
-      <!-- 1. SERVICIOS VIDEOS (OPTIMIZADOS CON PRELOAD NONE) -->
+      <!-- 1. SERVICIOS VIDEOS -->
       <section id="servicios-destacados" class="services-section">
         <div class="container px-vw-5">
           <div class="row align-items-end mb-5" data-aos="fade">
@@ -253,105 +293,41 @@
               <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">NUESTROS SERVICIOS</span>
               <h2 class="display-4 fw-bold text-white mb-0">Soluciones visuales para cada etapa de tu proyecto.</h2>
             </div>
-            <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
-              <a href="#visualizacion" class="text-white text-decoration-none small fw-medium d-inline-flex align-items-center gap-1" style="opacity: 0.8;">Ver todos los servicios &rarr;</a>
-            </div>
           </div>
           <div class="services-scroll-container" data-aos="fade-up">
-            <div class="service-card"><video src="vid/servicio-3d.mp4" class="service-card-video" preload="none" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Visualización 3D</h5><p class="text-secondary small mb-4">Renders fotorrealistas que muestran cada detalle antes de construir.</p></div><a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-2d.mp4" class="service-card-video" preload="none" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Planos 2D</h5><p class="text-secondary small mb-4">Planos arquitectónicos precisos y listos para construcción.</p></div><a href="#servicios-tecnicos" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-recorrido.mp4" class="service-card-video" preload="none" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Recorridos Virtuales</h5><p class="text-secondary small mb-4">Experiencias inmersivas que permiten recorrer tu proyecto en 360°.</p></div><a href="#visualizacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-cuantificacion.mp4" class="service-card-video" preload="none" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Cuantificación</h5><p class="text-secondary small mb-4">Cómputos detallados de materiales y presupuestos precisos.</p></div><a href="#cuantificacion" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
-            <div class="service-card"><video src="vid/servicio-supervision.mp4" class="service-card-video" preload="none" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Supervisión</h5><p class="text-secondary small mb-4">Control y supervisión profesional para asegurar la calidad del proyecto.</p></div><a href="#contacto" class="text-white text-decoration-none small d-flex align-items-center gap-1" style="opacity: 0.7;">&rarr;</a></div></div>
+            <div class="service-card"><video src="vid/servicio-3d.mp4" class="service-card-video" preload="none" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Visualización 3D</h5><p class="text-secondary small mb-4">Renders fotorrealistas que muestran cada detalle antes de construir.</p></div></div></div>
+            <div class="service-card"><video src="vid/servicio-2d.mp4" class="service-card-video" preload="none" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Planos 2D</h5><p class="text-secondary small mb-4">Planos arquitectónicos precisos y listos para construcción.</p></div></div></div>
+            <div class="service-card"><video src="vid/servicio-recorrido.mp4" class="service-card-video" preload="none" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Recorridos Virtuales</h5><p class="text-secondary small mb-4">Experiencias inmersivas para recorrer tu proyecto en 360°.</p></div></div></div>
+            <div class="service-card"><video src="vid/servicio-cuantificacion.mp4" class="service-card-video" preload="none" autoplay muted loop playsinline></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Cuantificación</h5><p class="text-secondary small mb-4">Cómputos detallados de materiales y presupuestos precisos.</p></div></div></div>
           </div>
         </div>
       </section>
 
-      <!-- 2. SECCIÓN DE PLANOS 2D (PAQUETES FIJOS) -->
+      <!-- 2. SECCIÓN DE PLANOS 2D -->
       <div id="servicios-tecnicos" class="section-planos-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
             <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PRECISIÓN EN CADA LÍNEA</span>
             <h2 class="display-4 fw-bold mb-3 text-white">Paquetes de Planos 2D</h2>
-            <p class="text-secondary mx-auto" style="max-width: 700px;">Diseño arquitectónico minimalista contemporáneo, limpio y funcional. Perfectos para proyectos residenciales unifamiliares, AirBNB, comercios y edificios.</p>
+            <p class="text-secondary mx-auto" style="max-width: 700px;">Diseño arquitectónico minimalista contemporáneo, limpio y funcional.</p>
           </div>
-
-          <div class="row gx-4 g-5 align-items-stretch justify-content-center">
-            <!-- PAQUETE BÁSICO / ESENCIAL -->
-            <div class="col-12 col-lg-6" data-aos="zoom-in-up">
-              <div class="glass-panel p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
-                <div>
-                  <span class="accent-text text-uppercase fw-medium d-block mb-2" style="font-size: 0.75rem; letter-spacing: 1.5px;">PAQUETE ESENCIAL</span>
-                  <h3 class="fw-bold text-white mb-3">Básico 2D</h3>
-                  <div class="my-4">
-                    <h2 class="display-4 fw-bold text-white mb-1"><span class="price-val" data-usd="390">390</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2>
-                    <p class="text-secondary small mb-0">Área total construida de hasta 400 m²<br><span style="font-size: 0.75rem;">(Excedente: +$1.10 USD por m² extra)</span></p>
-                  </div>
-                  <ul class="list-unstyled no-bullets text-secondary mb-4 small" style="line-height: 1.8;">
-                    <li class="mb-2 text-white">✓ Estilo minimalista contemporáneo</li>
-                    <li class="mb-2">✓ Plano Arquitectónico Amueblado (por nivel)</li>
-                    <li class="mb-2">✓ Plano Acotado (medidas para albañilería)</li>
-                    <li class="mb-2">✓ Plano de Cortes (1 longitudinal y 1 transversal)</li>
-                    <li class="mb-2">✓ Plano de Fachadas (los 4 lados de la edificación)</li>
-                    <li class="mb-2">✓ Formato de hoja carta listo para obra e impresión (PDF / CAD)</li>
-                  </ul>
-                </div>
-                <div class="text-center pt-3 border-top" style="border-color: rgba(255,255,255,0.08) !important;">
-                  <a href="#calculadora-planos" onclick="document.getElementById('ppaq1').checked=true; setTimeout(()=>window.actualizarCalculadoraPlanosGlobal(), 100);" class="btn btn-outline-light w-100 rounded-pill py-3 fw-bold">Verificar medidas para adquirir</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- PAQUETE PREMIUM / INTEGRAL -->
-            <div class="col-12 col-lg-6" data-aos="zoom-in-up" data-aos-duration="1200">
-              <div class="glass-panel-accent p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
-                <div>
-                  <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">SOLUCIÓN DEFINITIVA</span>
-                  <span class="accent-text text-uppercase fw-medium d-block mb-2 mt-2" style="font-size: 0.75rem; letter-spacing: 1.5px;">PAQUETE INTEGRAL</span>
-                  <h3 class="fw-bold text-white mb-3">Premium 2D</h3>
-                  <div class="my-4">
-                    <h2 class="display-4 fw-bold text-white mb-1"><span class="price-val" data-usd="800">800</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2>
-                    <p class="text-secondary small mb-0">Área total construida de hasta 400 m²<br><span style="font-size: 0.75rem;">(Excedente: +$2.00 USD por m² extra)</span></p>
-                  </div>
-                  <ul class="list-unstyled no-bullets text-secondary mb-4 small" style="line-height: 1.8;">
-                    <li class="mb-2 text-white">✓ Arquitectura minimalista contemporánea de alta gama</li>
-                    <li class="mb-2">✓ Plano Arquitectónico Amueblado y Acotado (por nivel)</li>
-                    <li class="mb-2">✓ Plano de Cortes (2 longitudinales y 2 transversales)</li>
-                    <li class="mb-2">✓ Plano de Fachadas (los 4 lados de la edificación)</li>
-                    <li class="mb-2">✓ Plano de Cimentación con detalles constructivos</li>
-                    <li class="mb-2">✓ Plano de Columnas, Cadenas y Armados</li>
-                    <li class="mb-2">✓ Plano de Losas / Entrepiso y Techo</li>
-                    <li class="mb-2">✓ Plano Hidráulico, Drenajes y Eléctrico completos</li>
-                    <li class="mb-2">✓ Plano de Acabados, Puertas y Ventanas</li>
-                    <li class="mb-2">✓ Formato hoja carta (PDF / CAD) para trámites y obra</li>
-                  </ul>
-                </div>
-                <div class="text-center pt-3 border-top" style="border-color: rgba(212,184,149,0.2) !important;">
-                  <a href="#calculadora-planos" onclick="document.getElementById('ppaq2').checked=true; setTimeout(()=>window.actualizarCalculadoraPlanosGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background-color: #d4b895;">Verificar medidas para adquirir</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div class="row mt-5">
             <div class="col-12 text-center" data-aos="fade">
-              <a href="#calculadora-planos" class="btn-liquid-glass">↓ Calcular los metros y excedentes de mi plano</a>
+              <a href="#calculadora-planos" class="btn-liquid-glass">↓ Calcular los metros y cotizar mi plano</a>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 2.5 NUEVA CALCULADORA DE PLANOS 2D -->
+      <!-- 2.5 CALCULADORA DE PLANOS 2D -->
       <section id="calculadora-planos" class="facade-calc-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
             <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">CALCULADORA DE PLANOS 2D</span>
-            <h2 class="display-4 fw-bold text-white mb-3">Calcula el área y excedentes</h2>
-            <p class="text-secondary mx-auto" style="max-width: 600px;">Si la construcción de tu proyecto abarca varios niveles o crees que supera los 400 m², ingresa tus datos aquí para validar y conocer la estimación exacta.</p>
+            <h2 class="display-4 fw-bold text-white mb-3">Calcula tu inversión</h2>
           </div>
 
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
-            <!-- OVERLAY DE CANDADO ANIMADO PARA PLANOS -->
             <div id="lockOverlay2D" class="lock-overlay">
               <div class="lock-icon-container">
                 <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -359,7 +335,6 @@
             </div>
 
             <div class="row g-4 g-lg-5 align-items-start">
-              
               <div class="col-12 col-lg-6"> 
                 <div class="facade-box-panel d-flex flex-column gap-4">
                   <div class="facade-row">
@@ -367,7 +342,6 @@
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M5 12h14"></path></svg>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Ancho a construir</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Medida aproximada</span>
                       </div>
                     </div>
                     <div class="facade-input-wrap">
@@ -375,13 +349,11 @@
                       <div class="facade-unit">m</div>
                     </div>
                   </div>
-
                   <div class="facade-row">
                     <div class="d-flex align-items-center gap-3">
                       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M12 2v20M7 2h10M7 22h10"></path></svg>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Largo a construir</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Medida aproximada</span>
                       </div>
                     </div>
                     <div class="facade-input-wrap">
@@ -389,13 +361,9 @@
                       <div class="facade-unit">m</div>
                     </div>
                   </div>
-
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
-                      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M4 12h16M12 4v16"></path></svg>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Cantidad de niveles a diseñar</h6>
-                      </div>
+                      <h6 class="text-white mb-1" style="font-size: 0.85rem;">Cantidad de niveles a diseñar</h6>
                     </div>
                     <div class="facade-radio-group">
                       <input type="radio" id="pniv1" name="p-niveles" value="1"><label class="facade-radio-label" for="pniv1">1 Nivel</label>
@@ -404,30 +372,23 @@
                       <input type="radio" id="pniv4" name="p-niveles" value="4"><label class="facade-radio-label" for="pniv4">4 Niveles</label>
                     </div>
                   </div>
-
                   <div class="facade-row-col">
                     <div class="d-flex align-items-center gap-3 mb-3">
-                      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Paquete de Planos</h6>
-                      </div>
+                      <h6 class="text-white mb-1" style="font-size: 0.85rem;">Paquete de Planos</h6>
                     </div>
                     <div class="facade-radio-group">
                       <input type="radio" id="ppaq1" name="p-paquete" value="basico" checked><label class="facade-radio-label" for="ppaq1">Básico 2D</label>
                       <input type="radio" id="ppaq2" name="p-paquete" value="premium"><label class="facade-radio-label" for="ppaq2">Premium 2D</label>
                     </div>
                   </div>
-
                 </div>
               </div>
 
-              <!-- Z-INDEX ALTO PARA QUE EL PANEL DERECHO QUEDE SOBRE EL CANDADO -->
               <div class="col-12 col-lg-6" style="position: relative; z-index: 30;">
                 <div class="facade-results-panel d-flex flex-column h-100">
                   <div class="d-flex justify-content-center mb-5">
                     <h6 class="accent-text mb-0" style="letter-spacing: 1px;">TU ESTIMACIÓN DE PLANOS</h6>
                   </div>
-
                   <div class="mt-2">
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
                       <span class="text-secondary" style="font-size: 0.85rem;">Área total construida</span>
@@ -435,136 +396,52 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
                       <span class="text-secondary" style="font-size: 0.85rem;">Precio base / Total</span>
-                      <span class="text-white text-end fw-medium" id="p-base-text" style="font-size: 0.9rem;">$0.00</span>
+                      <span class="text-white text-end fw-medium" id="p-base-text" style="font-size: 0.9rem;">$--.--</span>
                     </div>
-                    
                     <div id="row-planos-excedente" class="d-flex justify-content-between align-items-center mb-5 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important; display: none !important;">
-                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes (0 m²)</span>
-                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">+$0.00</span>
+                      <span class="text-secondary" id="p-excedente-label" style="font-size: 0.85rem;">Metros excedentes</span>
+                      <span class="text-white fw-medium text-end" id="p-excedente-text" style="font-size: 0.9rem;">$--.--</span>
                     </div>
 
                     <div class="text-center mt-2">
                       <span class="accent-text fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">TOTAL ESTIMADO</span>
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
-                        <h1 class="fw-bold text-white mb-0" id="p-total" style="font-size: 3rem;">$0.00</h1>
-                        <span class="text-secondary curr-symbol" style="font-size: 0.9rem;">USD</span>
+                        <h1 class="fw-bold text-white mb-0" id="p-total" style="font-size: 3rem;">$--.--</h1>
                       </div>
-                      <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio calculado automáticamente (incluye excedentes si aplica)</span>
                     </div>
                     
-                    <div id="wrapperPagoDirectoPlanos" class="mt-2" style="display: none;">
-                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-planos" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
-                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
-                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Proyecto listo para pago seguro!
-                        </span>
-                      </div>
-                      
-                      <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProceder2D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
-                        PROCEDER AL PAGO SEGURO
+                    <div id="wrapperPagoDirectoPlanos" class="mt-4" style="display: block;">
+                      <button id="btnProceder2D" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                        INICIAR SESIÓN PARA VER PRECIOS Y PAGAR
                       </button>
-
-                      <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
                       <div id="paypal-container-wrapper-2d" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-2d" class="w-100"></div>
                         </div>
                       </div>
-
-                      <!-- BOTÓN CANCELAR/EDITAR -->
                       <button id="btnCancelar2D" type="button" class="btn w-100 btn-sm btn-link text-secondary mt-2" style="display: none; text-decoration: underline;">
                         Editar medidas o paquete
                       </button>
-                    </div>
-
-                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
-                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                      Transacción segura facturada en USD
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      <!-- 3. SECCIÓN DE DISEÑO DE FACHADAS -->
-      <div id="fachadas" class="py-vh-5 glass-container-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
-        <div class="container">
-          <div class="text-center mb-5" data-aos="fade">
-            <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">LA CARA DE TU PROYECTO</span>
-            <h2 class="display-4 fw-bold mb-3 text-white">Diseño de Fachadas</h2>
-            <p class="text-secondary mx-auto" style="max-width: 700px;">Una fachada impresionante es la carta de presentación de tu hogar o negocio. Creamos diseños que combinan estética funcional y los mejores materiales. <strong>En cualquier paquete que elijas, te entregamos 3 propuestas distintas.</strong> Además, si nos envías una foto de tu terreno, podemos montar el diseño digitalmente para que veas cómo lucirá en la vida real.</p>
-          </div>
-
-          <div class="features-grid-3">
-            <div class="glass-panel p-4 rounded-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3 h-100" data-aos="fade-up">
-              <div class="p-3 rounded-3 shrink-0" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-              </div>
-              <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">ESTÁNDAR</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Diseño común, funcional y estético. Perfecto para darle vida a tu proyecto con una inversión muy inteligente.</p>
-              </div>
-            </div>
-
-            <div class="glass-panel p-4 rounded-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3 h-100" data-aos="fade-up" data-aos-duration="1200">
-              <div class="p-3 rounded-3 shrink-0" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-              </div>
-              <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">PROFESIONAL</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Minimalismo contemporáneo puro. Líneas limpias, texturas modernas y una estética altamente elegante.</p>
-              </div>
-            </div>
-
-            <div class="glass-panel-accent p-4 rounded-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3 h-100" data-aos="fade-up" data-aos-duration="1500">
-              <div class="p-3 rounded-3 shrink-0" style="background: rgba(212,184,149,0.1); border: 1px solid rgba(212,184,149,0.3);">
-                <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-              </div>
-              <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">PREMIUM</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Belleza absoluta. El minimalismo contemporáneo llevado a su máxima expresión con acabados exclusivos.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="row justify-content-center mt-5">
-            <div class="col-12 col-lg-8" data-aos="zoom-in-up">
-              <div class="glass-panel p-5 rounded-5 text-center">
-                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">OPCIÓN HIPERREALISTA</span>
-                <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
-                  <h2 class="display-5 fw-bold text-white mb-0">+<span class="price-val" data-usd="40.00">40.00</span></h2>
-                  <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span></span>
-                </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Mejora tu presentación agregando <strong>3 Renders hiperrealistas</strong> de tu fachada elegida para visualizar la iluminación y materiales a la perfección.</p>
-                <div class="mt-4 pt-2">
-                  <a href="#calculadora-fachadas" class="btn-liquid-glass">↓ Calcula el precio exacto de tu fachada abajo</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 7. CALCULADORA DE FACHADAS -->
+      <!-- 3. FACHADAS & 7. CALCULADORA DE FACHADAS -->
       <section id="calculadora-fachadas" class="facade-calc-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
             <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">CALCULADORA DE FACHADA</span>
             <h2 class="display-4 fw-bold text-white mb-3">Calcula el precio de tu fachada</h2>
-            <p class="text-secondary mx-auto" style="max-width: 600px;">Ingresa las medidas y características de tu proyecto y obtén tu precio estimado al instante.</p>
           </div>
 
           <div class="facade-calc-card p-4 p-md-5 mx-auto" style="max-width: 1100px;" data-aos="fade-up">
-            <!-- OVERLAY DE CANDADO ANIMADO PARA FACHADAS -->
             <div id="lockOverlayFachadas" class="lock-overlay">
-              <div class="lock-icon-container">
-                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-              </div>
+              <div class="lock-icon-container"><svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
             </div>
 
             <div class="row g-4 g-lg-5 align-items-start">
@@ -572,96 +449,48 @@
                 <div class="facade-box-panel d-flex flex-column gap-4">
                   <div class="facade-row">
                     <div class="d-flex align-items-center gap-3">
-                      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M5 12h14"></path></svg>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Ancho de la fachada</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Medida total en metros</span>
-                      </div>
+                      <h6 class="text-white mb-1" style="font-size: 0.85rem;">Ancho de la fachada</h6>
                     </div>
                     <div class="facade-input-wrap">
                       <input type="number" id="f-ancho" class="facade-num-input" value="8.50" min="1" step="any">
                       <div class="facade-unit">m</div>
                     </div>
                   </div>
-
                   <div class="facade-row">
                     <div class="d-flex align-items-center gap-3">
-                      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M15 8l-3-3-3 3M15 16l-3 3-3-3M12 5v14"></path></svg>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Altura total</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Medida total en metros</span>
-                      </div>
+                      <h6 class="text-white mb-1" style="font-size: 0.85rem;">Altura total</h6>
                     </div>
                     <div class="facade-input-wrap">
                       <input type="number" id="f-altura" class="facade-num-input" value="6.20" min="1" step="any">
                       <div class="facade-unit">m</div>
                     </div>
                   </div>
-
                   <div class="facade-row-col">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M4 12h16M12 4v16"></path></svg>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Cantidad de niveles</h6>
-                      </div>
-                    </div>
+                    <h6 class="text-white mb-2" style="font-size: 0.85rem;">Cantidad de niveles</h6>
                     <div class="facade-radio-group">
                       <input type="radio" id="fniv1" name="f-niveles" value="1"><label class="facade-radio-label" for="fniv1">1 Nivel</label>
                       <input type="radio" id="fniv2" name="f-niveles" value="2" checked><label class="facade-radio-label" for="fniv2">2 Niveles</label>
                       <input type="radio" id="fniv3" name="f-niveles" value="3"><label class="facade-radio-label" for="fniv3">3 Niveles</label>
-                      <input type="radio" id="fniv4" name="f-niveles" value="4"><label class="facade-radio-label" for="fniv4">4+ Niveles</label>
                     </div>
                   </div>
-
                   <div class="facade-row-col">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Tipo de proyecto</h6>
-                      </div>
-                    </div>
+                    <h6 class="text-white mb-2" style="font-size: 0.85rem;">Tipo de proyecto</h6>
                     <div class="facade-radio-group">
                       <input type="radio" id="tipo1" name="f-tipo" value="Vivienda" checked><label class="facade-radio-label" for="tipo1">Vivienda</label>
                       <input type="radio" id="tipo2" name="f-tipo" value="Comercio"><label class="facade-radio-label" for="tipo2">Comercio</label>
-                      <input type="radio" id="tipo3" name="f-tipo" value="Edificio"><label class="facade-radio-label" for="tipo3">Edificio</label>
                     </div>
                   </div>
-
                   <div class="facade-row-col">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Nivel de complejidad</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">Elige el nivel de detalle del diseño</span>
-                      </div>
-                    </div>
+                    <h6 class="text-white mb-2" style="font-size: 0.85rem;">Nivel de complejidad</h6>
                     <div class="facade-radio-group">
-                      <input type="radio" id="comp1" name="f-complejidad" value="1.0" data-label="Estándar"><label class="facade-radio-label" for="comp1"><span class="d-block">Estándar</span><span class="d-block mt-1" style="font-size: 0.65rem; opacity: 0.6;">1.00x</span></label>
-                      <input type="radio" id="comp2" name="f-complejidad" value="1.3" data-label="Profesional" checked><label class="facade-radio-label" for="comp2"><span class="d-block">Profesional</span><span class="d-block mt-1" style="font-size: 0.65rem; opacity: 0.6;">1.30x</span></label>
-                      <input type="radio" id="comp3" name="f-complejidad" value="1.6" data-label="Premium"><label class="facade-radio-label" for="comp3"><span class="d-block">Premium</span><span class="d-block mt-1" style="font-size: 0.65rem; opacity: 0.6;">1.60x</span></label>
-                    </div>
-                  </div>
-
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-3">
-                      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" class="facade-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-white mb-1" style="font-size: 0.85rem; line-height: 1;">Incluir 3 Renders fotorealistas</h6>
-                        <span class="text-secondary" style="font-size: 0.75rem; line-height: 1;">(Opcional) Visualización de alta calidad</span>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-3">
-                      <span class="text-white fw-bold" style="font-size: 0.85rem; white-space: nowrap;">+ $<span class="price-val" data-usd="40.00">40.00</span></span>
-                      <label class="facade-switch">
-                        <input type="checkbox" id="f-render" checked>
-                        <span class="f-slider-toggle"></span>
-                      </label>
+                      <input type="radio" id="comp1" name="f-complejidad" value="1.0" data-label="Estándar"><label class="facade-radio-label" for="comp1"><span class="d-block">Estándar</span></label>
+                      <input type="radio" id="comp2" name="f-complejidad" value="1.3" data-label="Profesional" checked><label class="facade-radio-label" for="comp2"><span class="d-block">Profesional</span></label>
+                      <input type="radio" id="comp3" name="f-complejidad" value="1.6" data-label="Premium"><label class="facade-radio-label" for="comp3"><span class="d-block">Premium</span></label>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Z-INDEX ALTO PARA QUE EL PANEL DERECHO QUEDE SOBRE EL CANDADO -->
               <div class="col-12 col-lg-6" style="position: relative; z-index: 30;">
                 <div class="facade-results-panel d-flex flex-column h-100">
                   <div class="d-flex justify-content-center mb-5">
@@ -673,256 +502,64 @@
                       <span class="text-white text-end fw-medium" id="f-area-text" style="font-size: 0.9rem;">0.00 m²</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                      <span class="text-secondary" style="font-size: 0.85rem;">Precio base (<span class="price-val" data-usd="1.50">1.50</span> <span class="curr-symbol">USD</span>/m²)</span>
-                      <span class="text-white text-end fw-medium" id="f-base-text" style="font-size: 0.9rem;">$0.00</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                      <span class="text-secondary" id="f-complex-label" style="font-size: 0.85rem;">Nivel de complejidad</span>
-                      <span class="text-white text-end fw-medium" id="f-complex-text" style="font-size: 0.9rem;">1.00x</span>
+                      <span class="text-secondary" style="font-size: 0.85rem;">Precio base</span>
+                      <span class="text-white text-end fw-medium" id="f-base-text" style="font-size: 0.9rem;">$--.--</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important;">
                       <span class="text-secondary" style="font-size: 0.85rem;">Subtotal Diseño</span>
-                      <span class="text-white fw-medium text-end" id="f-subtotal-text" style="font-size: 0.9rem;">$0.00</span>
-                    </div>
-                    
-                    <div id="row-niveles-extra" class="d-flex justify-content-between align-items-center mb-4 pb-4 border-bottom w-100" style="border-color: rgba(255,255,255,0.05) !important; display: none !important;">
-                      <span class="text-secondary" id="f-niveles-label" style="font-size: 0.85rem;">Cargo por Niveles Adicionales</span>
-                      <span class="text-white fw-medium text-end" id="f-niveles-costo" style="font-size: 0.9rem;">+$0.00</span>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-items-center mb-5 pb-2 w-100">
-                      <span class="text-secondary" style="font-size: 0.85rem;">3 Renders fotorealistas</span>
-                      <span class="text-white fw-medium text-end" id="f-render-text" style="font-size: 0.9rem;">$0.00</span>
+                      <span class="text-white fw-medium text-end" id="f-subtotal-text" style="font-size: 0.9rem;">$--.--</span>
                     </div>
 
                     <div class="text-center mt-4">
                       <span class="accent-text fw-medium d-block mb-1" style="font-size: 0.85rem; letter-spacing: 1px;">TOTAL ESTIMADO</span>
                       <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2">
-                        <h1 class="fw-bold text-white mb-0" id="f-total" style="font-size: 3rem;">$0.00</h1>
-                        <span class="text-secondary curr-symbol" style="font-size: 0.9rem;">USD</span>
+                        <h1 class="fw-bold text-white mb-0" id="f-total" style="font-size: 3rem;">$--.--</h1>
                       </div>
-                      <span class="text-secondary d-block mb-4" style="font-size: 0.75rem;">* Precio estimado sujeto a revisión</span>
                     </div>
                     
-                    <div id="wrapperPagoDirectoFachadas" class="mt-2" style="display: none;">
-                      <div class="text-center p-3 rounded-3 mb-3" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
-                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
-                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Listo para pago!
-                        </span>
-                      </div>
-
-                      <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProcederFachadas" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
-                        PROCEDER AL PAGO SEGURO
+                    <div id="wrapperPagoDirectoFachadas" class="mt-4" style="display: block;">
+                      <button id="btnProcederFachadas" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                        INICIAR SESIÓN PARA VER PRECIOS Y PAGAR
                       </button>
-
-                      <!-- CONTENEDOR DE PAYPAL CON EFECTO LIQUID GLASS -->
                       <div id="paypal-container-wrapper-fachada" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-fachada" class="w-100"></div>
                         </div>
                       </div>
-                      
-                      <!-- BOTÓN CANCELAR/EDITAR -->
                       <button id="btnCancelarFachadas" type="button" class="btn w-100 btn-sm btn-link text-secondary mt-2" style="display: none; text-decoration: underline;">
-                        Editar medidas o características
+                        Editar medidas
                       </button>
                     </div>
-
-                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem;">
-                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                      Transacción segura facturada en USD
-                    </div>
                   </div>
-
-                  <div class="mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
-                    <h6 class="text-white mb-4 fw-bold" style="font-size: 0.9rem;">¿Qué incluye el diseño?</h6>
-                    <ul class="list-unstyled text-secondary m-0" style="font-size: 0.8rem;">
-                      <li class="mb-3 d-flex gap-2 align-items-start"><svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Propuesta arquitectónica moderna y personalizada.</li>
-                      <li class="mb-3 d-flex gap-2 align-items-start"><svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Selección de materiales y acabados.</li>
-                      <li class="mb-3 d-flex gap-2 align-items-start"><svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Diseño de puertas, ventanas y balcones.</li>
-                      <li class="mb-3 d-flex gap-2 align-items-start"><svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Iluminación arquitectónica.</li>
-                      <li class="mb-3 d-flex gap-2 align-items-start"><svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Fachadas listas para integrarse a tus planos.</li>
-                      <li class="d-flex gap-2 align-items-start"><svg width="16" height="16" fill="none" stroke="#d4b895" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Una ronda de ajustes menores.</li>
-                    </ul>
-                  </div>
-
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      <!-- 4. SECCIÓN DE CUANTIFICACIÓN DE MATERIALES -->
-      <div id="cuantificacion" class="py-vh-5 section-planos-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
-        <div class="container">
-          <div class="text-center mb-5" data-aos="fade">
-            <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">PROTEGE TU PRESUPUESTO</span>
-            <h2 class="display-4 fw-bold mb-3 text-white">Cálculo de Materiales</h2>
-            <p class="text-secondary mx-auto" style="max-width: 700px;">¿No sabes cuánto cemento o block comprar? Nosotros lo calculamos por ti. Obtén un listado exacto de los materiales que necesitas para evitar desperdicios, robos o compras innecesarias. Así cuidas cada centavo de tu inversión.</p>
-          </div>
-
-          <div class="features-grid-3">
-            <div class="glass-panel p-4 rounded-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3 h-100" data-aos="fade-up">
-              <div class="p-3 rounded-3 shrink-0" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-              </div>
-              <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">OBRA GRIS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Cemento, arena, grava, block y ladrillo.</p>
-              </div>
-            </div>
-
-            <div class="glass-panel p-4 rounded-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3 h-100" data-aos="fade-up" data-aos-duration="1200">
-              <div class="p-3 rounded-3 shrink-0" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-              </div>
-              <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">HIERRO Y TECHOS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Hierro para construcción, losa y lámina.</p>
-              </div>
-            </div>
-
-            <div class="glass-panel p-4 rounded-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center gap-3 h-100" data-aos="fade-up" data-aos-duration="1500">
-              <div class="p-3 rounded-3 shrink-0" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                <svg width="24" height="24" class="accent-text" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-              </div>
-              <div>
-                <h6 class="text-white mb-1 fw-bold" style="font-size: 0.8rem; letter-spacing: 0.5px;">ACABADOS</h6>
-                <p class="text-secondary small mb-0" style="font-size: 0.75rem;">Piso, repello, puertas, ventanas y pintura.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="row justify-content-center mt-5">
-            <div class="col-12 col-lg-8" data-aos="zoom-in-up">
-              <div class="glass-panel p-5 rounded-5 text-center">
-                <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">TARIFA DE CUANTIFICACIÓN</span>
-                <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
-                  <h1 class="display-3 fw-bold text-white mb-0"><span class="price-val" data-usd="1.75">1.75</span></h1>
-                  <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span>/m²</span>
-                </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">* La tarifa aplica para el listado exacto de los materiales de tu obra. Contáctanos o calcúlalo en nuestro cotizador.</p>
-                <div class="mt-4 pt-2">
-                  <a href="#cotizador-general" class="btn-liquid-glass" onclick="document.getElementById('calcServicioSelect').value='cuantificacion'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);">↓ Ir al Cotizador Inteligente</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- 5. PAQUETES 3D -->
-      <div id="visualizacion" class="py-vh-5 glass-container-bg border-top" style="border-color: rgba(255,255,255,0.05) !important;">
-        <div class="container">
-          <div class="text-center mb-5" data-aos="fade">
-            <span class="h5 text-secondary fw-lighter">Renderismo y Modelado</span>
-            <h2 class="display-4 fw-bold">Paquetes 3D</h2>
-            <p class="text-secondary">Proyectos residenciales de hasta 400 m² de construcción total. (Nota: El servicio incluye estrictamente modelado y renders; contáctanos para enviarnos tus planos o adquiere primero tus planos 2D).</p>
-          </div>
-          <div class="row gx-4 g-5 align-items-stretch">
-            
-            <div class="col-12 col-lg-4" data-aos="zoom-in-up">
-              <div class="glass-panel p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
-                <div>
-                  <h3 class="fw-lighter text-center">BÁSICO</h3>
-                  <p class="text-center text-secondary small">PAQUETE</p>
-                  <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 400 m²</span><h2 class="display-5 fw-bold"><span class="price-val" data-usd="300">300</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
-                  <ul class="list-unstyled no-bullets text-secondary mb-5">
-                    <li class="mb-2">✓ Modelado 3D profesional</li>
-                    <li class="mb-2">✓ 8 Renders realistas</li>
-                    <li class="mb-2">✓ Fachada incluida</li>
-                    <li class="mb-2">✓ Resolución HD</li>
-                    <li class="mb-2">✓ Materiales e iluminación básicos</li>
-                    <li class="mb-2">✓ 1 revisión incluida</li>
-                  </ul>
-                </div>
-                <div class="text-center">
-                  <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='basico'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn btn-outline-light w-100 rounded-pill fw-bold py-3">Verificar medidas para adquirir</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="1500">
-              <div class="glass-panel-accent p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
-                <div>
-                  <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MÁS POPULAR</span>
-                  <h3 class="fw-lighter text-center mt-3">PROFESIONAL</h3>
-                  <p class="text-center text-secondary small">PAQUETE</p>
-                  <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 400 m²</span><h2 class="display-5 fw-bold text-white"><span class="price-val" data-usd="499">499</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
-                  <ul class="list-unstyled no-bullets text-secondary mb-5">
-                    <li class="mb-2">✓ Modelado 3D completo</li>
-                    <li class="mb-2">✓ 16 Renders realistas</li>
-                    <li class="mb-2">✓ Fachada frontal y posterior</li>
-                    <li class="mb-2">✓ 3 videos realistas de 8 segundos</li>
-                    <li class="mb-2">✓ Entrega en alta resolución</li>
-                    <li class="mb-2">✓ 2 revisiones incluidas</li>
-                  </ul>
-                </div>
-                <div class="text-center" style="position: relative; z-index: 10;">
-                  <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='profesional'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background-color: #d4b895;">Verificar medidas para adquirir</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12 col-lg-4" data-aos="zoom-in-up" data-aos-duration="2000">
-              <div class="glass-panel-vip p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
-                <div>
-                  <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MÁXIMO NIVEL / VIP</span>
-                  <h3 class="fw-lighter text-center mt-3 text-white">PREMIUM</h3>
-                  <p class="text-center accent-text small fw-medium">EL PAQUETE DEFINITIVO</p>
-                  <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 400 m²</span><h2 class="display-5 fw-bold accent-text"><span class="price-val" data-usd="949">949</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
-                  <ul class="list-unstyled no-bullets text-light mb-5" style="opacity: 0.9;">
-                    <li class="mb-2">✓ Modelado 3D completo</li>
-                    <li class="mb-2">✓ 26 Renders realistas</li>
-                    <li class="mb-2">✓ Recorrido virtual de 1 min 44 s (13 clips de 8s)</li>
-                    <li class="mb-2">✓ Plano amueblado</li>
-                    <li class="mb-2">✓ Iluminación avanzada</li>
-                    <li class="mb-2">✓ Diseño de paisaje conceptual</li>
-                    <li class="mb-2">✓ Resolución 4K</li>
-                    <li class="mb-2">✓ 3 revisiones incluidas</li>
-                  </ul>
-                </div>
-                <div class="text-center" style="position: relative; z-index: 10;">
-                  <a href="#cotizador-general" onclick="document.getElementById('calcServicioSelect').value='premium'; setTimeout(()=>window.actualizarCotizacionTerrenoGlobal(), 100);" class="btn w-100 text-black fw-bold rounded-pill py-3 shadow" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); transition: transform 0.3s ease;">Verificar medidas para adquirir</a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div> 
-      </div>
-
-      <!-- 6. COTIZADOR GENERAL (SOLO PARA 3D Y CUANTIFICACIÓN) -->
+      <!-- 6. COTIZADOR GENERAL 3D Y CUANTIFICACIÓN -->
       <section id="cotizador-general" style="scroll-margin-top: 100px;">
         <div class="container mt-5 pt-4 mb-5" data-aos="fade-up">
           <div class="row justify-content-center">
             <div class="col-12">
               <div class="calc-pro-container p-4 p-lg-5">
-                <!-- OVERLAY DE CANDADO ANIMADO PARA 3D -->
                 <div id="lockOverlay3D" class="lock-overlay">
-                  <div class="lock-icon-container">
-                    <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                  </div>
+                  <div class="lock-icon-container"><svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
                 </div>
 
                 <div class="row g-5 align-items-center">
                   <div class="col-12 col-lg-5 text-center d-flex flex-column justify-content-center">
-                    <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">COTIZADOR INTELIGENTE</span>
+                    <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">COTIZADOR 3D / MATERIALES</span>
                     <h3 class="fw-bold text-white mb-3 px-2" style="font-size: 1.8rem; line-height: 1.2;">¿Tu terreno supera los 400 m²?</h3>
-                    <p class="text-secondary small mb-4 px-3">Selecciona el servicio e ingresa tus medidas exactas para cotizar el excedente de tu proyecto 3D o para calcular los metros de tu cuantificación de materiales.</p>
-                    <div class="text-center px-2">
+                    <div class="text-center px-2 mt-3">
                       <span class="small text-secondary d-block mb-1">Seleccionar Servicio</span>
                       <div class="calc-input-group-pro text-start mx-auto" style="max-width: 100%;">
                         <select id="calcServicioSelect" class="calc-select-field w-100">
-                          <option value="basico">Paquete 3D Básico ($300 base)</option>
-                          <option value="profesional">Paquete 3D Profesional ($499 base)</option>
-                          <option value="premium">Paquete 3D Premium ($949 base)</option>
-                          <option value="cuantificacion">Cuant. de Materiales ($1.75 / m²)</option>
+                          <option value="basico">Paquete 3D Básico</option>
+                          <option value="profesional">Paquete 3D Profesional</option>
+                          <option value="premium">Paquete 3D Premium</option>
+                          <option value="cuantificacion">Cuant. de Materiales</option>
                         </select>
                       </div>
                     </div>
@@ -933,34 +570,27 @@
                         <div>
                           <span class="small text-secondary d-block mb-1">Ancho del terreno (m)</span>
                           <div class="calc-input-group-pro">
-                            <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 12h20M2 7h20M2 17h20"></path></svg>
                             <input type="number" id="calcAncho" class="calc-input-field" placeholder="Ej. 10" min="0" step="any">
                             <span class="text-secondary small ms-2">m</span>
                           </div>
                         </div>
-                        <div class="text-center text-secondary my-n3 d-none d-md-block"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
                         <div>
                           <span class="small text-secondary d-block mb-1">Largo del terreno (m)</span>
                           <div class="calc-input-group-pro">
-                            <svg width="18" height="18" class="text-secondary me-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2v20M7 2h10M7 22h10"></path></svg>
                             <input type="number" id="calcLargo" class="calc-input-field" placeholder="Ej. 20" min="0" step="any">
                             <span class="text-secondary small ms-2">m</span>
                           </div>
                         </div>
-                        
                         <div class="mt-2 text-start">
                           <span class="small text-secondary d-block mb-2">Cantidad de niveles</span>
                           <div class="facade-radio-group mt-0">
-                            <input type="radio" id="cniv1" name="c-niveles" value="1" checked><label class="facade-radio-label py-2" for="cniv1">1 Nivel</label>
-                            <input type="radio" id="cniv2" name="c-niveles" value="2"><label class="facade-radio-label py-2" for="cniv2">2 Niveles</label>
-                            <input type="radio" id="cniv3" name="c-niveles" value="3"><label class="facade-radio-label py-2" for="cniv3">3 Niveles</label>
-                            <input type="radio" id="cniv4" name="c-niveles" value="4"><label class="facade-radio-label py-2" for="cniv4">4 Niveles</label>
+                            <input type="radio" id="cniv1" name="c-niveles" value="1" checked><label class="facade-radio-label py-2" for="cniv1">1</label>
+                            <input type="radio" id="cniv2" name="c-niveles" value="2"><label class="facade-radio-label py-2" for="cniv2">2</label>
+                            <input type="radio" id="cniv3" name="c-niveles" value="3"><label class="facade-radio-label py-2" for="cniv3">3</label>
                           </div>
                         </div>
-                        
                       </div>
 
-                      <!-- Z-INDEX ALTO PARA QUE EL PANEL DERECHO QUEDE SOBRE EL CANDADO -->
                       <div class="col-12 col-md-6 d-flex flex-column gap-3" style="position: relative; z-index: 30;">
                         <div class="calc-result-display-box flex-fill d-flex flex-column justify-content-center">
                           <span class="small text-secondary d-block mb-1">Área Total Calculada</span>
@@ -972,50 +602,24 @@
                         <div class="calc-result-display-box flex-fill d-flex flex-column justify-content-center" style="background: rgba(212, 184, 149, 0.05); border-color: rgba(212, 184, 149, 0.3);">
                           <span class="accent-text small d-block mb-1" id="labelCostoFinal">Tu Inversión</span>
                           <div class="d-flex align-items-baseline">
-                            <h2 class="fw-bold accent-text mb-0" id="calcPrecioFinal" style="font-size: 1.8rem;">$0.00</h2>
-                            <span class="ms-1 accent-text small curr-symbol">USD</span>
+                            <h2 class="fw-bold accent-text mb-0" id="calcPrecioFinal" style="font-size: 1.8rem;">$--.--</h2>
                           </div>
                         </div>
                       </div>
                     </div>
                     
-                    <!-- BOTÓN WHATSAPP PARA CUANTIFICACIÓN -->
-                    <div id="wrapperBtnCotizar" class="mt-4" style="display: none; position: relative; z-index: 30;">
-                      <a id="btnEnviarCotizacion" href="#" target="_blank" class="btn w-100 fw-bold py-3 rounded-pill text-black d-flex align-items-center justify-content-center gap-2" style="background-color: #d4b895; border: none;">
-                        CONTINUAR CON MI PROYECTO
-                      </a>
-                    </div>
-                    
-                    <!-- MENSAJE Y BOTÓN DE PAGO DIRECTO PAYPAL -->
-                    <div id="wrapperPagoDirecto3D" class="mt-4" style="display: none; position: relative; z-index: 30;">
-                      <div class="text-center p-3 rounded-3 mb-3" id="mensaje-rango-3d" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
-                        <span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2">
-                          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          ¡Aprobado! Tu proyecto es elegible.
-                        </span>
-                      </div>
-                      
-                      <!-- BOTÓN INICIAL PARA BLOQUEAR -->
-                      <button id="btnProceder3D" type="button" class="btn w-100 text-black fw-bold py-3 rounded-pill shadow" style="background-color: #ffc439; transition: transform 0.3s ease;">
-                        PROCEDER AL PAGO SEGURO
+                    <div id="wrapperPagoDirecto3D" class="mt-4" style="display: block; position: relative; z-index: 30;">
+                      <button id="btnProceder3D" type="button" class="btn w-100 fw-bold py-3 rounded-pill shadow" style="background-color: transparent; border: 1px solid #d4b895; color: #d4b895; transition: all 0.3s ease;">
+                        INICIAR SESIÓN PARA VER PRECIOS Y PAGAR
                       </button>
-
-                      <!-- CONTENEDOR DE PAYPAL OCULTO -->
                       <div id="paypal-container-wrapper-3d" class="w-100 mt-2" style="display: none;">
                         <div class="paypal-white-card">
                           <div id="paypal-button-container-3d" class="w-100"></div>
                         </div>
                       </div>
-
-                      <!-- BOTÓN CANCELAR/EDITAR -->
                       <button id="btnCancelar3D" type="button" class="btn w-100 btn-sm btn-link text-secondary mt-2" style="display: none; text-decoration: underline;">
-                        Editar medidas o paquete
+                        Editar medidas
                       </button>
-                    </div>
-
-                    <div class="text-center mt-3 text-secondary d-flex justify-content-center align-items-center gap-1" style="font-size: 0.75rem; position: relative; z-index: 30;">
-                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                      Transacción segura facturada en USD
                     </div>
                   </div>
                 </div>
@@ -1025,69 +629,9 @@
         </div>
       </section>
 
-      <!-- NUEVO APARTADO: ENLACE A DESCARGA DE SOFTWARE -->
-      <div class="container mb-4 text-center">
-        <div style="background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 1.5rem 2rem; display: inline-block; max-width: 900px; width: 100%;">
-          <div class="row align-items-center g-3">
-            <div class="col-12 col-md-8 text-md-start text-center">
-              <h6 class="text-white mb-1 fw-bold" style="font-size: 0.95rem; letter-spacing: 0.5px;">¿Buscas software DAW, Multitracks o programas de arquitectura y diseño?</h6>
-              <p class="text-secondary small mb-0" style="font-size: 0.8rem;">Explora nuestra plataforma especializada en herramientas profesionales para creadores e ingenieros.</p>
-            </div>
-            <div class="col-12 col-md-4 text-center text-md-end">
-              <a href="https://dingloft.com" target="_blank" class="btn-liquid-glass py-2 px-4" style="font-size: 0.8rem;">Catálogo de Software &rarr;</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- AVISO ESTILO LIQUID GLASS PARA RECAPTCHA Y MÉTODOS DE PAGO -->
-      <div class="container mb-5 text-center">
-        <div style="background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 1.2rem 1.5rem; display: inline-block; max-width: 750px; width: 100%;">
-          <p class="text-secondary mb-2" style="font-size: 0.72rem; letter-spacing: 0.3px; opacity: 0.7;">
-            Protegido por reCAPTCHA &bull; Se aplican las <a href="https://policies.google.com/privacy" target="_blank" class="text-secondary text-decoration-underline" style="opacity: 0.9;">Políticas</a> y los <a href="https://policies.google.com/terms" target="_blank" class="text-secondary text-decoration-underline" style="opacity: 0.9;">Términos</a> de Google
-          </p>
-          <div class="pt-2 border-top" style="border-color: rgba(255,255,255,0.06) !important;">
-            <p class="text-secondary mb-1" style="font-size: 0.7rem; letter-spacing: 0.5px;">
-              MÉTODOS DE PAGO SEGUROS: <span class="text-white fw-medium">Visa &bull; Mastercard &bull; American Express &bull; PayPal</span>
-            </p>
-            <p class="accent-text mb-0" style="font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3px;">
-              Múltiples divisas aceptadas. Procesamiento de pagos facturado en USD.
-            </p>
-          </div>
-        </div>
-      </div>
-
     </main>
 
-    <!-- FOOTER -->
-    <footer id="contacto" class="bg-black border-top pt-5 pb-4" style="border-color: #222 !important;">
-      <div class="container text-secondary fw-lighter">
-        <div class="row g-4">
-          <div class="col-12 col-lg-5 text-center text-lg-start">
-            <a href="index"><img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;" class="mb-3" loading="lazy"></a>
-            <p class="small">Precisión en cada línea, valor en cada detalle.</p>
-            <div class="d-flex justify-content-center justify-content-lg-start mt-4">
-              <a href="https://www.facebook.com/evolutiondesing.gt" target="_blank" class="text-secondary text-decoration-none" aria-label="Facebook" style="margin-right: 25px;"><svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg></a>
-              <a href="https://www.instagram.com/evolutiondesign.gt" target="_blank" class="text-secondary text-decoration-none" aria-label="Instagram"><svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-            </div>
-          </div>
-          <div class="col-12 col-lg-7 mt-5 mt-lg-0">
-            <div class="d-flex flex-column align-items-center align-items-lg-start" style="max-width: 300px; margin: 0 auto;">
-              <span class="h6 text-white mb-3 d-block text-center text-lg-start w-100">Contacto Directo</span>
-              <ul class="nav flex-column align-items-center align-items-lg-start">
-                <li class="nav-item mb-2 d-flex align-items-center"><svg width="16" height="16" fill="currentColor" class="me-2 text-white" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm8.239-4.133L9.197 8.243 15 11.801V4.697z"/></svg>support@evolutiondesing.com</li>
-                <li class="nav-item mb-1 d-flex align-items-center text-white"><svg width="16" height="16" fill="currentColor" class="me-2 text-white" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/></svg>+1 (832) 977-4150</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container text-center small py-vh-2 mt-4 border-top text-secondary" style="border-color: #111 !important;">
-        © 2026 Evolution Design. Todos los derechos reservados.
-      </div>
-    </footer>
-
-    <!-- BOTÓN FLOTANTE DE MONEDA -->
+    <!-- BOTÓN DE MONEDA FLOTANTE -->
     <div class="currency-float-container" id="currencyContainer">
       <div class="currency-wrapper">
         <ul class="currency-float-menu" id="currencyMenu">
@@ -1095,510 +639,324 @@
           <li><a class="currency-item" href="#" data-curr="EUR"><span class="badge bg-secondary me-2">€</span> EUR</a></li>
           <li><a class="currency-item" href="#" data-curr="GTQ"><span class="badge bg-secondary me-2">Q</span> GTQ</a></li>
           <li><a class="currency-item" href="#" data-curr="MXN"><span class="badge bg-secondary me-2">$</span> MXN</a></li>
-          <li><a class="currency-item" href="#" data-curr="CNY"><span class="badge bg-secondary me-2">¥</span> CNY</a></li>
-          <li><a class="currency-item" href="#" data-curr="AED"><span class="badge bg-secondary me-2">د.إ</span> AED</a></li>
-          <li><a class="currency-item" href="#" data-curr="BRL"><span class="badge bg-secondary me-2">R$</span> BRL</a></li>
-          <li><a class="currency-item" href="#" data-curr="JPY"><span class="badge bg-secondary me-2">¥</span> JPY</a></li>
         </ul>
         <button class="currency-float-btn" id="currencyBtn" aria-label="Cambiar Moneda"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></button>
       </div>
     </div>
 
+    <!-- SCRIPT DE INTERFAZ BÁSICA Y CALCULADORAS -->
     <script>
-      // LÓGICA DE MENÚ DE MONEDA Y NAVEGACIÓN
-      const currencyBtn = document.getElementById('currencyBtn'); const currencyMenu = document.getElementById('currencyMenu'); const currencyContainer = document.getElementById('currencyContainer');
+      window.usuarioAutenticado = false;
+      let currentCurrency = 'USD';
+      const exchangeRates = { USD: { rate: 1.0, symbol: 'USD' }, EUR: { rate: 0.92, symbol: 'EUR' }, GTQ: { rate: 7.85, symbol: 'GTQ' }, MXN: { rate: 18.50, symbol: 'MXN' } };
+      window.montoPago3D = "0.00"; window.montoPago2D = "0.00"; window.montoPagoFachada = "0.00";
+
+      // NAVEGACIÓN Y MENÚS
       const mobileMenuBtn = document.getElementById('mobileMenuBtn'); const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
       const desktopMenuBtn = document.getElementById('desktopMenuBtn'); const desktopDropdownMenu = document.getElementById('desktopDropdownMenu');
+      const currencyBtn = document.getElementById('currencyBtn'); const currencyMenu = document.getElementById('currencyMenu');
+      
+      if(mobileMenuBtn) mobileMenuBtn.addEventListener('click', e => { e.preventDefault(); mobileDropdownMenu.classList.toggle('show'); e.stopPropagation(); });
+      if(desktopMenuBtn) desktopMenuBtn.addEventListener('click', e => { e.preventDefault(); desktopDropdownMenu.classList.toggle('show'); e.stopPropagation(); });
+      if(currencyBtn) currencyBtn.addEventListener('click', e => { e.preventDefault(); currencyMenu.classList.toggle('show'); e.stopPropagation(); });
+      document.addEventListener('click', () => { if(mobileDropdownMenu) mobileDropdownMenu.classList.remove('show'); if(desktopDropdownMenu) desktopDropdownMenu.classList.remove('show'); if(currencyMenu) currencyMenu.classList.remove('show'); });
 
-      if(mobileMenuBtn && mobileDropdownMenu) { mobileMenuBtn.addEventListener('click', e => { e.preventDefault(); mobileDropdownMenu.classList.toggle('show'); e.stopPropagation(); }); document.addEventListener('click', e => { if (!mobileMenuBtn.contains(e.target) && !mobileDropdownMenu.contains(e.target)) mobileDropdownMenu.classList.remove('show'); }); }
-      if(desktopMenuBtn && desktopDropdownMenu) { desktopMenuBtn.addEventListener('click', e => { e.preventDefault(); desktopDropdownMenu.classList.toggle('show'); e.stopPropagation(); }); document.addEventListener('click', e => { if (!desktopMenuBtn.contains(e.target) && !desktopDropdownMenu.contains(e.target)) desktopDropdownMenu.classList.remove('show'); }); }
-
-      let currentCurrency = 'USD';
-
-      if(currencyBtn && currencyMenu) { currencyBtn.addEventListener('click', e => { e.preventDefault(); currencyMenu.classList.toggle('show'); e.stopPropagation(); }); document.addEventListener('click', e => { if (!currencyContainer.contains(e.target)) currencyMenu.classList.remove('show'); }); }
-
-      const exchangeRates = { USD: { rate: 1.0, symbol: 'USD' }, EUR: { rate: 0.92, symbol: 'EUR' }, GTQ: { rate: 7.85, symbol: 'GTQ' }, MXN: { rate: 18.50, symbol: 'MXN' }, CNY: { rate: 7.25, symbol: 'CNY' }, AED: { rate: 3.67, symbol: 'AED' }, BRL: { rate: 5.40, symbol: 'BRL' }, JPY: { rate: 155.0, symbol: 'JPY' } };
-
-      window.montoPago3D = "0.00";
-      window.montoPago2D = "0.00";
-      window.montoPagoFachada = "0.00";
-
-      function updateAllCurrencies() {
-        const config = exchangeRates[currentCurrency];
-        document.querySelectorAll('.price-val').forEach(el => {
-          const usdVal = parseFloat(el.getAttribute('data-usd'));
-          const converted = usdVal * config.rate;
-          const decimals = currentCurrency === 'JPY' ? 0 : 2;
-          el.textContent = converted.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
-        });
-        document.querySelectorAll('.curr-symbol').forEach(el => { el.textContent = config.symbol; });
+      // FUNCIONES DE CALCULADORAS
+      function aplicarEstiloBotonBloqueado(btn) {
+        if(!btn) return;
+        btn.textContent = "INICIAR SESIÓN PARA COTIZAR Y PAGAR";
+        btn.style.background = "rgba(212, 184, 149, 0.1)";
+        btn.style.color = "#d4b895";
+        btn.style.border = "1px solid #d4b895";
+        btn.classList.remove('text-black');
       }
 
-      const currencyItems = document.querySelectorAll('.currency-item');
-      currencyItems.forEach(item => {
+      function aplicarEstiloBotonNormal(btn) {
+        if(!btn) return;
+        btn.textContent = "PROCEDER AL PAGO SEGURO";
+        btn.style.background = "#ffc439";
+        btn.style.color = "#000";
+        btn.style.border = "none";
+        btn.classList.add('text-black');
+      }
+
+      // --- 1. CALCULADORA 3D ---
+      function actualizarCotizacionTerreno() {
+        const ancho = parseFloat(document.getElementById('calcAncho')?.value) || 0;
+        const largo = parseFloat(document.getElementById('calcLargo')?.value) || 0;
+        const niveles = parseInt(document.querySelector('input[name="c-niveles"]:checked')?.value || 1);
+        const servicioVal = document.getElementById('calcServicioSelect')?.value;
+        const areaTotal = ancho * largo * niveles;
+
+        if (areaTotal > 0) {
+          document.getElementById('calcTotal').textContent = areaTotal.toFixed(2);
+          let baseUSD = 0;
+          if (servicioVal === 'basico') { baseUSD = 300 + (areaTotal > 400 ? (areaTotal - 400) * 3 : 0); }
+          else if (servicioVal === 'profesional') { baseUSD = 499 + (areaTotal > 400 ? (areaTotal - 400) * 3 : 0); }
+          else if (servicioVal === 'premium') { baseUSD = 949 + (areaTotal > 400 ? (areaTotal - 400) * 3 : 0); }
+          else if (servicioVal === 'cuantificacion') { baseUSD = areaTotal * 1.75; }
+
+          window.montoPago3D = baseUSD.toFixed(2);
+          const convertedFinal = baseUSD * exchangeRates[currentCurrency].rate;
+
+          if(!window.usuarioAutenticado) {
+            document.getElementById('calcPrecioFinal').innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">$--.--</span>`;
+            aplicarEstiloBotonBloqueado(document.getElementById('btnProceder3D'));
+          } else {
+            document.getElementById('calcPrecioFinal').innerHTML = `${convertedFinal.toFixed(2)} <span class="ms-1 accent-text small">${exchangeRates[currentCurrency].symbol}</span>`;
+            aplicarEstiloBotonNormal(document.getElementById('btnProceder3D'));
+          }
+        }
+      }
+      window.actualizarCotizacionTerrenoGlobal = actualizarCotizacionTerreno;
+      document.getElementById('calcAncho')?.addEventListener('input', actualizarCotizacionTerreno);
+      document.getElementById('calcLargo')?.addEventListener('input', actualizarCotizacionTerreno);
+
+      // --- 2. CALCULADORA 2D ---
+      function actualizarCalculadoraPlanos() {
+        const ancho = parseFloat(document.getElementById('p-ancho')?.value) || 0;
+        const largo = parseFloat(document.getElementById('p-largo')?.value) || 0;
+        const niveles = parseInt(document.querySelector('input[name="p-niveles"]:checked')?.value || 2);
+        const paquete = document.querySelector('input[name="p-paquete"]:checked')?.value || 'basico';
+        
+        let areaTotal = ancho * largo * niveles;
+        let basePrecioUSD = paquete === 'basico' ? 390 : 800;
+        let costoExtra = paquete === 'basico' ? 1.10 : 2.00;
+        let excedente = areaTotal > 400 ? (areaTotal - 400) * costoExtra : 0;
+        
+        window.montoPago2D = (basePrecioUSD + excedente).toFixed(2);
+        const rate = exchangeRates[currentCurrency].rate;
+        const symbol = exchangeRates[currentCurrency].symbol;
+
+        document.getElementById('p-area-text').textContent = areaTotal.toFixed(2) + ' m²';
+
+        if(!window.usuarioAutenticado) {
+          document.getElementById('p-base-text').textContent = `$--.--`;
+          document.getElementById('p-total').innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">$--.--</span>`;
+          if(excedente > 0) {
+            document.getElementById('row-planos-excedente').style.display = 'flex';
+            document.getElementById('p-excedente-text').textContent = `$--.--`;
+          }
+          aplicarEstiloBotonBloqueado(document.getElementById('btnProceder2D'));
+        } else {
+          document.getElementById('p-base-text').textContent = `${symbol} ${(basePrecioUSD * rate).toFixed(2)}`;
+          document.getElementById('p-total').textContent = `${symbol} ${((basePrecioUSD + excedente) * rate).toFixed(2)}`;
+          if(excedente > 0) {
+            document.getElementById('row-planos-excedente').style.display = 'flex';
+            document.getElementById('p-excedente-text').textContent = `+${symbol} ${(excedente * rate).toFixed(2)}`;
+          } else {
+            document.getElementById('row-planos-excedente').style.display = 'none';
+          }
+          aplicarEstiloBotonNormal(document.getElementById('btnProceder2D'));
+        }
+      }
+      window.actualizarCalculadoraPlanosGlobal = actualizarCalculadoraPlanos;
+      document.getElementById('p-ancho')?.addEventListener('input', actualizarCalculadoraPlanos);
+      document.getElementById('p-largo')?.addEventListener('input', actualizarCalculadoraPlanos);
+
+      // --- 3. CALCULADORA FACHADAS ---
+      function actualizarCalculadoraFachada() {
+        const ancho = parseFloat(document.getElementById('f-ancho')?.value) || 0;
+        const altura = parseFloat(document.getElementById('f-altura')?.value) || 0;
+        const compVal = parseFloat(document.querySelector('input[name="f-complejidad"]:checked')?.value || 1.3);
+        const area = ancho * altura;
+        
+        let subtotal = (area * 1.50) * compVal;
+        if(subtotal < 80) subtotal = 80;
+        
+        const nivelesVal = document.querySelector('input[name="f-niveles"]:checked')?.value || '2';
+        let extraNivel = nivelesVal === '3' ? 25 : (nivelesVal === '4' ? 30 : 0);
+        let totalUSD = subtotal + extraNivel;
+
+        window.montoPagoFachada = totalUSD.toFixed(2);
+        const rate = exchangeRates[currentCurrency].rate;
+        const symbol = exchangeRates[currentCurrency].symbol;
+
+        document.getElementById('f-area-text').textContent = area.toFixed(2) + ' m²';
+
+        if(!window.usuarioAutenticado) {
+          document.getElementById('f-base-text').textContent = `$--.--`;
+          document.getElementById('f-subtotal-text').textContent = `$--.--`;
+          document.getElementById('f-total').innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">$--.--</span>`;
+          aplicarEstiloBotonBloqueado(document.getElementById('btnProcederFachadas'));
+        } else {
+          document.getElementById('f-base-text').textContent = `${symbol} ${((area*1.5)*rate).toFixed(2)}`;
+          document.getElementById('f-subtotal-text').textContent = `${symbol} ${(subtotal*rate).toFixed(2)}`;
+          document.getElementById('f-total').textContent = `${symbol} ${(totalUSD*rate).toFixed(2)}`;
+          aplicarEstiloBotonNormal(document.getElementById('btnProcederFachadas'));
+        }
+      }
+      window.actualizarCalculadoraFachadaGlobal = actualizarCalculadoraFachada;
+      document.getElementById('f-ancho')?.addEventListener('input', actualizarCalculadoraFachada);
+      document.getElementById('f-altura')?.addEventListener('input', actualizarCalculadoraFachada);
+
+      // EVENTOS DE BOTONES
+      ['btnProceder3D', 'btnProceder2D', 'btnProcederFachadas'].forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if(btn) {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(!window.usuarioAutenticado && typeof window.abrirAuthModal === 'function') {
+              window.abrirAuthModal();
+              return;
+            }
+            // Lógica de PayPal iría aquí una vez logueado (ya lo tenías configurado antes)
+            btn.style.display = 'none';
+            document.getElementById(btnId.replace('btnProceder', 'paypal-container-wrapper-').toLowerCase()).style.display = 'block';
+            document.getElementById(btnId.replace('btnProceder', 'btnCancelar')).style.display = 'block';
+          });
+        }
+      });
+      
+      // Cambio de moneda global
+      document.querySelectorAll('.currency-item').forEach(item => {
         item.addEventListener('click', function(e) {
           e.preventDefault();
-          currencyItems.forEach(i => i.classList.remove('active'));
+          document.querySelectorAll('.currency-item').forEach(i => i.classList.remove('active'));
           this.classList.add('active');
           currentCurrency = this.getAttribute('data-curr');
-          updateAllCurrencies();
-          if(typeof window.actualizarCotizacionTerrenoGlobal === 'function') window.actualizarCotizacionTerrenoGlobal();
-          if(typeof window.actualizarCalculadoraFachadaGlobal === 'function') window.actualizarCalculadoraFachadaGlobal();
-          if(typeof window.actualizarCalculadoraPlanosGlobal === 'function') window.actualizarCalculadoraPlanosGlobal();
+          const config = exchangeRates[currentCurrency];
+          document.querySelectorAll('.curr-symbol').forEach(el => el.textContent = config.symbol);
+          
+          actualizarCotizacionTerreno();
+          actualizarCalculadoraPlanos();
+          actualizarCalculadoraFachada();
           currencyMenu.classList.remove('show');
         });
       });
+      
+    </script>
 
-      document.addEventListener('DOMContentLoaded', function() {
+    <!-- INTEGRACIÓN DE FIREBASE (AUTH & MODAL LOGIC) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",
+        authDomain: "evolution-design-9b63b.firebaseapp.com",
+        projectId: "evolution-design-9b63b",
+        storageBucket: "evolution-design-9b63b.firebasestorage.app",
+        messagingSenderId: "433474708581",
+        appId: "1:433474708581:web:cff7830077fb7d0e8a128c"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const providerGoogle = new GoogleAuthProvider();
+
+      // LOGICA DEL MODAL LIQUID GLASS
+      const authModal = document.getElementById('authModal');
+      const closeAuthModal = document.getElementById('closeAuthModal');
+      const toggleAuthMode = document.getElementById('toggleAuthMode');
+      const authModalTitle = document.getElementById('authModalTitle');
+      const btnSubmitAuth = document.getElementById('btnSubmitAuth');
+      const authEmailForm = document.getElementById('authEmailForm');
+      const authError = document.getElementById('authError');
+      const btnGoogleLogin = document.getElementById('btnGoogleLogin');
+
+      let isLoginMode = true;
+
+      window.abrirAuthModal = function() {
+        authModal.classList.add('show');
+        authError.style.display = 'none';
+      }
+
+      closeAuthModal.addEventListener('click', () => { authModal.classList.remove('show'); });
+
+      toggleAuthMode.addEventListener('click', (e) => {
+        e.preventDefault();
+        isLoginMode = !isLoginMode;
+        if(isLoginMode) {
+          authModalTitle.textContent = 'Iniciar Sesión';
+          btnSubmitAuth.textContent = 'Ingresar';
+          toggleAuthMode.innerHTML = '¿No tienes cuenta? <span class="accent-text fw-medium">Regístrate</span>';
+        } else {
+          authModalTitle.textContent = 'Crear Cuenta';
+          btnSubmitAuth.textContent = 'Registrarse';
+          toggleAuthMode.innerHTML = '¿Ya tienes cuenta? <span class="accent-text fw-medium">Inicia sesión</span>';
+        }
+        authError.style.display = 'none';
+      });
+
+      btnGoogleLogin.addEventListener('click', async () => {
+        try {
+          await signInWithPopup(auth, providerGoogle);
+          authModal.classList.remove('show');
+        } catch(error) {
+          authError.textContent = 'Error al conectar con Google.';
+          authError.style.display = 'block';
+        }
+      });
+
+      authEmailForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
         
-        // --- CALCULADORA GENERAL (3D y CUANTIFICACIÓN) ---
-        const servicioSelect = document.getElementById('calcServicioSelect');
-        const anchoInput = document.getElementById('calcAncho');
-        const largoInput = document.getElementById('calcLargo');
-        const cRadiosNiveles = document.querySelectorAll('input[name="c-niveles"]');
-        const totalDisplay = document.getElementById('calcTotal');
-        const precioFinalDisplay = document.getElementById('calcPrecioFinal');
+        try {
+          if(isLoginMode) {
+            await signInWithEmailAndPassword(auth, email, password);
+          } else {
+            await createUserWithEmailAndPassword(auth, email, password);
+          }
+          authModal.classList.remove('show');
+          authEmailForm.reset();
+        } catch(error) {
+          authError.textContent = isLoginMode ? 'Correo o contraseña incorrectos.' : 'Error al crear la cuenta. Usa una contraseña de 6+ caracteres.';
+          authError.style.display = 'block';
+        }
+      });
+
+      // VIGILANTE DE SESIÓN
+      onAuthStateChanged(auth, (user) => {
+        window.usuarioAutenticado = !!user;
+
+        const btnDesktop = document.getElementById('auth-desktop-wrapper');
+        const btnMobile = document.getElementById('auth-mobile-wrapper');
         
-        const wrapperPagoDirecto3D = document.getElementById('wrapperPagoDirecto3D');
-        const mensajeRango3d = document.getElementById('mensaje-rango-3d');
-        const btnProceder3D = document.getElementById('btnProceder3D');
-        const paypalWrapper3D = document.getElementById('paypal-container-wrapper-3d');
-        const paypalContainer3D = document.getElementById('paypal-button-container-3d');
-        const btnCancelar3D = document.getElementById('btnCancelar3D');
-        const lockOverlay3D = document.getElementById('lockOverlay3D');
-
-        function toggleLock3D(locked) {
-          if(servicioSelect) servicioSelect.disabled = locked;
-          if(anchoInput) anchoInput.disabled = locked;
-          if(largoInput) largoInput.disabled = locked;
-          cRadiosNiveles.forEach(r => r.disabled = locked);
-          if(lockOverlay3D) {
-            if(locked) lockOverlay3D.classList.add('active');
-            else lockOverlay3D.classList.remove('active');
-          }
-        }
-
-        function actualizarCotizacionTerreno() {
-          if(!anchoInput || !largoInput || !servicioSelect) return;
-          const ancho = parseFloat(anchoInput.value) || 0;
-          const largo = parseFloat(largoInput.value) || 0;
-          let niveles = 1;
-          const checkedRadio = document.querySelector('input[name="c-niveles"]:checked');
-          if (checkedRadio) niveles = parseInt(checkedRadio.value);
-
-          const areaTotal = ancho * largo * niveles;
-          const servicioVal = servicioSelect.value;
-
-          if (areaTotal > 0) {
-            if(totalDisplay) totalDisplay.textContent = areaTotal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            let precioFinalUSD = 0;
-
-            if (servicioVal === 'basico') {
-              let base = 300; if (areaTotal > 400) base += (areaTotal - 400) * 3.00; precioFinalUSD = base;
-            } else if (servicioVal === 'profesional') {
-              let base = 499; if (areaTotal > 400) base += (areaTotal - 400) * 3.00; precioFinalUSD = base;
-            } else if (servicioVal === 'premium') {
-              let base = 949; if (areaTotal > 400) base += (areaTotal - 400) * 3.00; precioFinalUSD = base;
-            } else if (servicioVal === 'cuantificacion') {
-              precioFinalUSD = areaTotal * 1.75;
-            }
-
-            window.montoPago3D = precioFinalUSD.toFixed(2);
-
-            const config = exchangeRates[currentCurrency];
-            const convertedFinal = precioFinalUSD * config.rate;
-            const decimals = currentCurrency === 'JPY' ? 0 : 2;
-
-            if(precioFinalDisplay) precioFinalDisplay.textContent = convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
-
-            if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.setProperty('display', 'block', 'important');
-            
-            if (!btnProceder3D.disabled) {
-              btnProceder3D.style.display = 'block';
-              if(paypalWrapper3D) paypalWrapper3D.style.display = 'none';
-              if(btnCancelar3D) btnCancelar3D.style.display = 'none';
-            }
-
-            if (areaTotal > 400) {
-              if(mensajeRango3d) {
-                mensajeRango3d.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de $${precioFinalUSD.toFixed(2)} USD listo para pago.</span>`;
-                mensajeRango3d.style.background = 'rgba(255, 193, 7, 0.1)';
-                mensajeRango3d.style.borderColor = 'rgba(255, 193, 7, 0.2)';
-              }
-            } else {
-              if(mensajeRango3d) {
-                mensajeRango3d.innerHTML = `<span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>¡Proyecto en rango base! Listo para pago.</span>`;
-                mensajeRango3d.style.background = 'rgba(40, 167, 69, 0.1)';
-                mensajeRango3d.style.borderColor = 'rgba(40, 167, 69, 0.2)';
-              }
-            }
-          } else {
-            if(totalDisplay) totalDisplay.textContent = "0.00"; 
-            if(precioFinalDisplay) precioFinalDisplay.textContent = "0.00"; 
-            if(wrapperPagoDirecto3D) wrapperPagoDirecto3D.style.setProperty('display', 'none', 'important');
-            window.montoPago3D = "0.00";
-          }
-        }
-        window.actualizarCotizacionTerrenoGlobal = actualizarCotizacionTerreno;
-
-        if (anchoInput && largoInput && servicioSelect) {
-          anchoInput.addEventListener('input', actualizarCotizacionTerreno);
-          largoInput.addEventListener('input', actualizarCotizacionTerreno);
-          servicioSelect.addEventListener('change', actualizarCotizacionTerreno);
-          cRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCotizacionTerreno));
-          actualizarCotizacionTerreno();
-        }
-
-        if(btnProceder3D) {
-          btnProceder3D.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleLock3D(true);
-            btnProceder3D.style.display = 'none';
-            if(paypalWrapper3D) {
-              paypalWrapper3D.style.display = 'block';
-              paypalContainer3D.innerHTML = '';
-              renderizarPayPal3D(window.montoPago3D, '#paypal-button-container-3d');
-            }
-            if(btnCancelar3D) btnCancelar3D.style.display = 'block';
-          });
-        }
-        if(btnCancelar3D) {
-          btnCancelar3D.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleLock3D(false);
-            if(btnProceder3D) btnProceder3D.style.display = 'block';
-            if(paypalWrapper3D) paypalWrapper3D.style.display = 'none';
-            btnCancelar3D.style.display = 'none';
-          });
-        }
-
-        // --- CALCULADORA DE PLANOS 2D ---
-        const pAncho = document.getElementById('p-ancho');
-        const pLargo = document.getElementById('p-largo');
-        const pRadiosNiveles = document.querySelectorAll('input[name="p-niveles"]');
-        const pRadiosPaquete = document.querySelectorAll('input[name="p-paquete"]');
-        const pAreaText = document.getElementById('p-area-text');
-        const pBaseText = document.getElementById('p-base-text');
-        const pExcedenteText = document.getElementById('p-excedente-text');
-        const pExcedenteLabel = document.getElementById('p-excedente-label');
-        const rowPlanosExcedente = document.getElementById('row-planos-excedente');
-        const pTotal = document.getElementById('p-total');
-        
-        const wrapperPagoDirectoPlanos = document.getElementById('wrapperPagoDirectoPlanos');
-        const mensajeRangoPlanos = document.getElementById('mensaje-rango-planos');
-        const btnProceder2D = document.getElementById('btnProceder2D');
-        const paypalWrapper2D = document.getElementById('paypal-container-wrapper-2d');
-        const paypalContainer2D = document.getElementById('paypal-button-container-2d');
-        const btnCancelar2D = document.getElementById('btnCancelar2D');
-        const lockOverlay2D = document.getElementById('lockOverlay2D');
-
-        function toggleLock2D(locked) {
-          if(pAncho) pAncho.disabled = locked;
-          if(pLargo) pLargo.disabled = locked;
-          pRadiosNiveles.forEach(r => r.disabled = locked);
-          pRadiosPaquete.forEach(r => r.disabled = locked);
-          if(lockOverlay2D) {
-            if(locked) lockOverlay2D.classList.add('active');
-            else lockOverlay2D.classList.remove('active');
-          }
-        }
-
-        function actualizarCalculadoraPlanos() {
-          if(!pAncho || !pLargo) return;
-          let ancho = parseFloat(pAncho.value) || 0;
-          let largo = parseFloat(pLargo.value) || 0;
-          let niveles = 2;
-          const checkedPNiv = document.querySelector('input[name="p-niveles"]:checked');
-          if(checkedPNiv) niveles = parseInt(checkedPNiv.value);
-
-          let paquete = 'basico';
-          const checkedPPaq = document.querySelector('input[name="p-paquete"]:checked');
-          if(checkedPPaq) paquete = checkedPPaq.value;
-
-          let areaTotal = ancho * largo * niveles;
-          let basePrecioUSD = paquete === 'basico' ? 390 : 800;
-          let costoExtraPerM2 = paquete === 'basico' ? 1.10 : 2.00;
-
-          let metrosExcedentes = 0;
-          let costoExcedenteUSD = 0;
-
-          if (areaTotal > 400) {
-            metrosExcedentes = areaTotal - 400;
-            costoExcedenteUSD = metrosExcedentes * costoExtraPerM2;
-          }
-
-          let totalFinalUSD = basePrecioUSD + costoExcedenteUSD;
-          window.montoPago2D = totalFinalUSD.toFixed(2);
-
-          const config = exchangeRates[currentCurrency];
-          const convertedTotal = totalFinalUSD * config.rate;
-          const convertedBase = basePrecioUSD * config.rate;
-          const convertedExcedente = costoExcedenteUSD * config.rate;
-          const decimals = currentCurrency === 'JPY' ? 0 : 2;
-
-          if(pAreaText) pAreaText.textContent = areaTotal.toFixed(2) + ' m²';
-          if(pBaseText) pBaseText.textContent = `${config.symbol} ${convertedBase.toFixed(decimals)}`;
-
-          if(costoExcedenteUSD > 0) {
-            if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'flex', 'important');
-            if(pExcedenteLabel) pExcedenteLabel.textContent = `Metros excedentes (${metrosExcedentes.toFixed(2)} m²)`;
-            if(pExcedenteText) pExcedenteText.textContent = `+${config.symbol} ${convertedExcedente.toFixed(decimals)}`;
-            
-            if(mensajeRangoPlanos) {
-              mensajeRangoPlanos.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de $${totalFinalUSD.toFixed(2)} USD listo para pago.</span>`;
-              mensajeRangoPlanos.style.background = 'rgba(255, 193, 7, 0.1)';
-              mensajeRangoPlanos.style.borderColor = 'rgba(255, 193, 7, 0.2)';
-            }
-          } else {
-            if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'none', 'important');
-            
-            if(mensajeRangoPlanos) {
-              mensajeRangoPlanos.innerHTML = `<span class="text-success fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>¡Proyecto en rango base! Listo para pago.</span>`;
-              mensajeRangoPlanos.style.background = 'rgba(40, 167, 69, 0.1)';
-              mensajeRangoPlanos.style.borderColor = 'rgba(40, 167, 69, 0.2)';
-            }
-          }
-
-          if(areaTotal > 0) {
-            if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'block', 'important');
-            if(!btnProceder2D.disabled) {
-              btnProceder2D.style.display = 'block';
-              if(paypalWrapper2D) paypalWrapper2D.style.display = 'none';
-              if(btnCancelar2D) btnCancelar2D.style.display = 'none';
-            }
-          } else {
-             if(wrapperPagoDirectoPlanos) wrapperPagoDirectoPlanos.style.setProperty('display', 'none', 'important');
-             window.montoPago2D = "0.00";
-          }
-
-          if(pTotal) pTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
-        }
-        window.actualizarCalculadoraPlanosGlobal = actualizarCalculadoraPlanos;
-
-        if(pAncho && pLargo) {
-          pAncho.addEventListener('input', actualizarCalculadoraPlanos);
-          pLargo.addEventListener('input', actualizarCalculadoraPlanos);
-          pRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraPlanos));
-          pRadiosPaquete.forEach(radio => radio.addEventListener('change', actualizarCalculadoraPlanos));
-          actualizarCalculadoraPlanos();
-        }
-
-        if(btnProceder2D) {
-          btnProceder2D.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleLock2D(true);
-            btnProceder2D.style.display = 'none';
-            if(paypalWrapper2D) {
-              paypalWrapper2D.style.display = 'block';
-              paypalContainer2D.innerHTML = '';
-              renderizarPayPal2D(window.montoPago2D, '#paypal-button-container-2d');
-            }
-            if(btnCancelar2D) btnCancelar2D.style.display = 'block';
-          });
-        }
-        if(btnCancelar2D) {
-          btnCancelar2D.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleLock2D(false);
-            if(btnProceder2D) btnProceder2D.style.display = 'block';
-            if(paypalWrapper2D) paypalWrapper2D.style.display = 'none';
-            btnCancelar2D.style.display = 'none';
-          });
-        }
-
-        // --- CALCULADORA DE FACHADAS ---
-        const fAncho = document.getElementById('f-ancho');
-        const fAltura = document.getElementById('f-altura');
-        const fAreaText = document.getElementById('f-area-text');
-        const fBaseText = document.getElementById('f-base-text');
-        const fComplexLabel = document.getElementById('f-complex-label');
-        const fSubtotalText = document.getElementById('f-subtotal-text');
-        const fRenderText = document.getElementById('f-render-text');
-        const fTotal = document.getElementById('f-total');
-        const fRadiosComplejidad = document.querySelectorAll('input[name="f-complejidad"]');
-        const fRadiosTipo = document.querySelectorAll('input[name="f-tipo"]');
-        const fRadiosNiveles = document.querySelectorAll('input[name="f-niveles"]');
-        const fRenderToggle = document.getElementById('f-render');
-        
-        const wrapperPagoDirectoFachadas = document.getElementById('wrapperPagoDirectoFachadas');
-        const btnProcederFachadas = document.getElementById('btnProcederFachadas');
-        const paypalWrapperFachada = document.getElementById('paypal-container-wrapper-fachada');
-        const paypalContainerFachada = document.getElementById('paypal-button-container-fachada');
-        const btnCancelarFachadas = document.getElementById('btnCancelarFachadas');
-        const lockOverlayFachadas = document.getElementById('lockOverlayFachadas');
-
-        function toggleLockFachadas(locked) {
-          if(fAncho) fAncho.disabled = locked;
-          if(fAltura) fAltura.disabled = locked;
-          fRadiosComplejidad.forEach(r => r.disabled = locked);
-          fRadiosTipo.forEach(r => r.disabled = locked);
-          fRadiosNiveles.forEach(r => r.disabled = locked);
-          if(fRenderToggle) fRenderToggle.disabled = locked;
-          if(lockOverlayFachadas) {
-            if(locked) lockOverlayFachadas.classList.add('active');
-            else lockOverlayFachadas.classList.remove('active');
-          }
-        }
-
-        function actualizarCalculadoraFachada() {
-          if (!fAncho || !fAltura) return;
-          let ancho = parseFloat(fAncho.value) || 0; let altura = parseFloat(fAltura.value) || 0;
+        if (user) {
+          const userPhoto = user.photoURL ? user.photoURL : `https://ui-avatars.com/api/?name=${user.displayName || 'U'}&background=d4b895&color=fff`;
+          let adminBtnDesktop = ""; let adminBtnMobile = "";
           
-          let compVal = 1.3; let compText = 'Profesional';
-          const checkedComp = document.querySelector('input[name="f-complejidad"]:checked');
-          if(checkedComp) { compVal = parseFloat(checkedComp.value); compText = checkedComp.getAttribute('data-label'); }
-
-          const renderOn = fRenderToggle ? fRenderToggle.checked : true;
-
-          const area = ancho * altura;
-          const precioBase = area * 1.50;
-          
-          let nivelesVal = '2';
-          const checkedFNiv = document.querySelector('input[name="f-niveles"]:checked');
-          if(checkedFNiv) nivelesVal = checkedFNiv.value;
-
-          let costoNiveles = 0; let labelNiveles = "";
-          if (nivelesVal === "3") { costoNiveles = 25.00; labelNiveles = "Cargo por 3 Niveles"; } 
-          else if (nivelesVal === "4") { costoNiveles = 30.00; labelNiveles = "Cargo por 4+ Niveles"; }
-          
-          let subtotal = precioBase * compVal;
-          if (subtotal < 80) subtotal = 80;
-
-          const costoRender = renderOn ? 40.00 : 0.00;
-          const totalFinalUSD = subtotal + costoNiveles + costoRender;
-          
-          window.montoPagoFachada = totalFinalUSD.toFixed(2);
-
-          const config = exchangeRates[currentCurrency];
-          const convertedTotal = totalFinalUSD * config.rate;
-          const convertedBase = precioBase * config.rate;
-          const convertedRender = costoRender * config.rate;
-          const convertedNiveles = costoNiveles * config.rate;
-          const decimals = currentCurrency === 'JPY' ? 0 : 2;
-
-          if(fAreaText) fAreaText.textContent = area.toFixed(2) + ' m²';
-          if(fBaseText) fBaseText.textContent = `${config.symbol} ${convertedBase.toFixed(decimals)}`;
-          if(fComplexLabel) fComplexLabel.textContent = `Nivel de complejidad (${compText} ${compVal.toFixed(2)}x)`;
-          if(fSubtotalText) fSubtotalText.textContent = `${config.symbol} ${(subtotal * config.rate).toFixed(decimals)}`;
-          
-          const rowNivelesExtra = document.getElementById('row-niveles-extra');
-          const fNivelesLabelUI = document.getElementById('f-niveles-label');
-          const fNivelesCostoUI = document.getElementById('f-niveles-costo');
-          
-          if (costoNiveles > 0) {
-            if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'flex', 'important');
-            if(fNivelesLabelUI) fNivelesLabelUI.textContent = labelNiveles;
-            if(fNivelesCostoUI) fNivelesCostoUI.textContent = `+${config.symbol} ${convertedNiveles.toFixed(decimals)}`;
-          } else {
-            if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
+          // BOTÓN DE PANEL ADMIN SOLO PARA TI
+          if (user.email === 'evolutiongt01@gmail.com') {
+            adminBtnDesktop = `<a href="admin.html" class="admin-badge-btn ms-2"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="me-1" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Panel Admin</a>`;
+            adminBtnMobile = `<a href="admin.html" class="icon-btn ms-2 text-white border-danger" style="width:38px; height:38px; background: rgba(220,53,69,0.5);"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></a>`;
           }
 
-          if(fRenderText) fRenderText.textContent = `${config.symbol} ${convertedRender.toFixed(decimals)}`;
-          if(fTotal) fTotal.textContent = `${config.symbol} ${convertedTotal.toFixed(decimals)}`;
+          const htmlLogueadoDesktop = `
+            <div class="d-flex align-items-center">
+              <a href="#" title="Mi Perfil">
+                <img src="${userPhoto}" alt="Perfil" class="profile-pic-liquid" onerror="this.src='https://ui-avatars.com/api/?name=U&background=d4b895&color=fff'">
+              </a>
+              ${adminBtnDesktop}
+            </div>`;
+          const htmlLogueadoMobile = `
+            <div class="d-flex align-items-center">
+              <a href="#" title="Mi Perfil">
+                <img src="${userPhoto}" alt="Perfil" class="profile-pic-liquid" onerror="this.src='https://ui-avatars.com/api/?name=U&background=d4b895&color=fff'">
+              </a>
+              ${adminBtnMobile}
+            </div>`;
 
-          if(area > 0) {
-            if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'block', 'important');
-            if(!btnProcederFachadas.disabled) {
-              btnProcederFachadas.style.display = 'block';
-              if(paypalWrapperFachada) paypalWrapperFachada.style.display = 'none';
-              if(btnCancelarFachadas) btnCancelarFachadas.style.display = 'none';
-            }
-          } else {
-            if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'none', 'important');
-            window.montoPagoFachada = "0.00";
-          }
-        }
-        window.actualizarCalculadoraFachadaGlobal = actualizarCalculadoraFachada;
-
-        if(fAncho && fAltura) {
-          fAncho.addEventListener('input', actualizarCalculadoraFachada);
-          fAltura.addEventListener('input', actualizarCalculadoraFachada);
-          if(fRenderToggle) fRenderToggle.addEventListener('change', actualizarCalculadoraFachada);
-          fRadiosComplejidad.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
-          fRadiosTipo.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
-          fRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
-          actualizarCalculadoraFachada();
+          if (btnDesktop) btnDesktop.innerHTML = htmlLogueadoDesktop;
+          if (btnMobile) btnMobile.innerHTML = htmlLogueadoMobile;
+        } else {
+          const htmlLoginDesktop = `<a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>`;
+          const htmlLoginMobile = `<a href="#" onclick="abrirAuthModal(); return false;" class="icon-btn" aria-label="Login"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg></a>`;
+          
+          if (btnDesktop) btnDesktop.innerHTML = htmlLoginDesktop;
+          if (btnMobile) btnMobile.innerHTML = htmlLoginMobile;
         }
 
-        if(btnProcederFachadas) {
-          btnProcederFachadas.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleLockFachadas(true);
-            btnProcederFachadas.style.display = 'none';
-            if(paypalWrapperFachada) {
-              paypalWrapperFachada.style.display = 'block';
-              paypalContainerFachada.innerHTML = '';
-              renderizarPayPalFachada(window.montoPagoFachada, '#paypal-button-container-fachada');
-            }
-            if(btnCancelarFachadas) btnCancelarFachadas.style.display = 'block';
-          });
-        }
-        if(btnCancelarFachadas) {
-          btnCancelarFachadas.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleLockFachadas(false);
-            if(btnProcederFachadas) btnProcederFachadas.style.display = 'block';
-            if(paypalWrapperFachada) paypalWrapperFachada.style.display = 'none';
-            btnCancelarFachadas.style.display = 'none';
-          });
-        }
-
-        // --- FUNCIONES PARA RENDERIZAR BOTONES DE PAYPAL CON ESTILO ---
-        function renderizarPayPal3D(monto, selector) {
-          if (typeof paypal === 'undefined') return;
-          paypal.Buttons({
-            style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
-            createOrder: function(data, actions) {
-              return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
-            },
-            onApprove: function(data, actions) {
-              return actions.order.capture().then(function(details) {
-                const nombreCliente = details.payer.name.given_name;
-                const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${monto} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi proyecto.`);
-                window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
-              });
-            }
-          }).render(selector);
-        }
-
-        function renderizarPayPal2D(monto, selector) {
-          if (typeof paypal === 'undefined') return;
-          paypal.Buttons({
-            style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
-            createOrder: function(data, actions) {
-              return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
-            },
-            onApprove: function(data, actions) {
-              return actions.order.capture().then(function(details) {
-                const nombreCliente = details.payer.name.given_name;
-                const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${monto} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mis planos 2D.`);
-                window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
-              });
-            }
-          }).render(selector);
-        }
-
-        function renderizarPayPalFachada(monto, selector) {
-          if (typeof paypal === 'undefined') return;
-          paypal.Buttons({
-            style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
-            createOrder: function(data, actions) {
-              return actions.order.create({ purchase_units: [{ amount: { value: monto } }] });
-            },
-            onApprove: function(data, actions) {
-              return actions.order.capture().then(function(details) {
-                const nombreCliente = details.payer.name.given_name;
-                const msjExito = encodeURIComponent(`¡Hola! Acabo de realizar el pago en su sitio web mediante PayPal por $${monto} USD. Mi nombre registrado es ${nombreCliente}. Listo para iniciar mi diseño de fachada.`);
-                window.open(`https://wa.me/18329774150?text=${msjExito}`, '_blank');
-              });
-            }
-          }).render(selector);
-        }
-
+        // Actualiza calculadoras para desbloquear los precios
+        if(window.actualizarCotizacionTerrenoGlobal) window.actualizarCotizacionTerrenoGlobal();
+        if(window.actualizarCalculadoraPlanosGlobal) window.actualizarCalculadoraPlanosGlobal();
+        if(window.actualizarCalculadoraFachadaGlobal) window.actualizarCalculadoraFachadaGlobal();
       });
     </script>
 
-    <!-- JS DIFERIDO PARA MAYOR VELOCIDAD -->
     <script src="js/bootstrap.bundle.min.js" defer></script>
     <script src="js/aos.js" defer></script>
     <script> document.addEventListener("DOMContentLoaded", function() { AOS.init({ duration: 800 }); }); </script>
