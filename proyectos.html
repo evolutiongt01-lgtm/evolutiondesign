@@ -31,8 +31,12 @@
 
       .glass-panel { background: rgba(255, 255, 255, 0.03) !important; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 24px; padding: 2.5rem; position: relative; }
       
-      .upload-dropzone { border: 2px dashed rgba(212, 184, 149, 0.4); background: rgba(255, 255, 255, 0.02); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; cursor: pointer; }
+      .upload-dropzone { border: 1px dashed rgba(212, 184, 149, 0.4); background: rgba(255, 255, 255, 0.02); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; cursor: pointer; }
       .upload-dropzone:hover { background: rgba(212, 184, 149, 0.05); border-color: #d4b895; }
+
+      .custom-textarea { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; font-size: 0.85rem; padding: 1rem; width: 100%; transition: all 0.3s ease; resize: none; }
+      .custom-textarea:focus { outline: none; border-color: #d4b895; background: rgba(255,255,255,0.05); }
+      .custom-textarea::placeholder { color: rgba(255,255,255,0.3); }
 
       .desktop-nav { padding-top: calc(25px + env(safe-area-inset-top, 0px)); }
       .nav-pill { background: rgba(15, 15, 15, 0.75) !important; backdrop-filter: blur(25px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 100px; padding: 0.6rem 0.8rem 0.6rem 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1150px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); }
@@ -61,31 +65,31 @@
       <div class="row mb-5">
         <div class="col-12 text-center">
           <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">PANEL DE CLIENTE</span>
-          <h1 class="display-4 fw-bold text-white mb-2">Mis Proyectos y Órdenes</h1>
-          <p class="text-secondary mx-auto" style="max-width: 650px;">Sube aquí tus archivos requeridos (Planos 2D en PDF/AutoCAD, dibujos a mano alzada o fotos de referencia de tu terreno) para que podamos dar marcha a tu proyecto.</p>
+          <h1 class="display-4 fw-bold text-white mb-2">Mis Proyectos</h1>
+          <p class="text-secondary mx-auto" style="max-width: 650px;">Sube tus archivos y añade instrucciones para que nuestro equipo comience a trabajar de inmediato.</p>
         </div>
       </div>
 
       <!-- CONTENEDOR DINÁMICO DE PROYECTOS -->
       <div class="row justify-content-center">
-        <div class="col-12 col-lg-10">
+        <div class="col-12 col-lg-11">
           
-          <!-- ESTADO: SIN PROYECTOS (O CARGANDO) -->
+          <!-- ESTADO: SIN PROYECTOS (Oculto por ahora) -->
           <div id="sin-proyectos-msg" class="glass-panel text-center py-5 mb-4" style="display: none;">
-            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary mb-3" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
+            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1" class="text-secondary mb-3" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
             <h4 class="text-white fw-bold mb-2">Aún no tienes proyectos pagados</h4>
             <p class="text-secondary small mb-4">Cuando realices una cotización y completes tu pago seguro, tu orden aparecerá listada en este apartado.</p>
             <a href="index.html#servicios-tecnicos" class="btn-liquid-glass">Ir a cotizar un proyecto</a>
           </div>
 
-          <!-- TARJETA DE PROYECTO EJEMPLO (Se generará con JS al conectar con Firebase) -->
+          <!-- TARJETA DE PROYECTO EJEMPLO MEJORADA -->
           <div id="lista-proyectos-container">
             <div class="glass-panel mb-4">
               <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 pb-4 border-bottom border-secondary border-opacity-25 mb-4">
                 <div>
-                  <span class="badge px-3 py-1 rounded-pill mb-2" style="background: rgba(212, 184, 149, 0.15); color: #d4b895; border: 1px solid rgba(212,184,149,0.3);">En Proceso de Revisión</span>
+                  <span class="badge px-3 py-1 rounded-pill mb-3" style="background: rgba(212, 184, 149, 0.1); color: #d4b895; border: 1px solid rgba(212,184,149,0.3); font-weight: normal; letter-spacing: 0.5px;">En Preparación de Archivos</span>
                   <h3 class="fw-bold text-white mb-1 fs-4">Paquete Planos 2D - Premium</h3>
-                  <p class="text-secondary small mb-0">Orden ID: <span class="text-white">#EVO-98243</span> &bull; Fecha: 06 de Agosto, 2026</p>
+                  <p class="text-secondary small mb-0">Orden ID: <span class="text-white">#EVO-98243</span></p>
                 </div>
                 <div class="text-md-end">
                   <span class="text-secondary small d-block">Inversión Total</span>
@@ -93,32 +97,57 @@
                 </div>
               </div>
 
-              <!-- ZONA DE SUBIDA DE ARCHIVOS -->
-              <div class="row g-4 align-items-center">
-                <div class="col-12 col-lg-7">
-                  <h5 class="text-white fw-bold mb-2 fs-6">Documentación Requerida</h5>
-                  <p class="text-secondary small mb-3">Sube tu archivo AutoCAD (DWG/DWF), PDF de medidas o imagen de tu dibujo a mano alzada.</p>
+              <div class="row g-5">
+                <!-- ZONA DE SUBIDA -->
+                <div class="col-12 col-lg-6">
+                  <h5 class="text-white mb-2 fs-6 d-flex align-items-center gap-2">
+                    <svg width="18" height="18" fill="none" stroke="#d4b895" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+                    Archivos Requeridos
+                  </h5>
+                  <p class="text-secondary small mb-4" style="line-height: 1.6;">Sube tu archivo AutoCAD (DWG/DWF), PDF de medidas o la imagen clara de tu dibujo a mano alzada.</p>
                   
                   <div class="upload-dropzone" onclick="document.getElementById('fileInput1').click();">
-                    <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" class="accent-text mb-2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1" class="accent-text mb-3" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                     <p class="text-white small mb-1 fw-medium">Haz clic aquí para adjuntar archivos</p>
-                    <p class="text-secondary" style="font-size: 0.7rem;">PDF, DWG, DWF, PNG, JPG (Máx. 50MB)</p>
+                    <p class="text-secondary mb-0" style="font-size: 0.7rem;">PDF, DWG, DWF, PNG, JPG (Máx. 50MB)</p>
                     <input type="file" id="fileInput1" class="d-none" multiple onchange="mostrarNombreArchivo(this)">
                   </div>
-                  <div id="archivo-seleccionado-1" class="text-success small mt-2 fw-medium" style="display: none;"></div>
+                  <div id="archivo-seleccionado-1" class="text-success small mt-3 fw-medium" style="display: none;"></div>
                 </div>
 
-                <div class="col-12 col-lg-5">
-                  <div class="p-4 rounded-4" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06);">
-                    <h6 class="text-white fw-bold mb-2" style="font-size: 0.85rem;">Estado de Entrega</h6>
-                    <ul class="list-unstyled text-secondary small mb-3" style="line-height: 1.6;">
-                      <li>✓ Pago verificado por PayPal</li>
-                      <li class="text-white">⏳ Pendiente de recepción de archivos</li>
-                      <li>🔒 En espera de asignación a arquitecto</li>
-                    </ul>
-                    <button type="button" class="btn w-100 fw-bold py-2 rounded-pill text-black" style="background-color: #d4b895; font-size: 0.85rem;" onclick="alert('Función de subida conectada correctamente. ¡Pronto tus archivos llegarán a nuestro sistema!')">
-                      Subir y Notificar a Equipo
-                    </button>
+                <!-- COMENTARIOS Y ESTADO -->
+                <div class="col-12 col-lg-6">
+                  <div class="d-flex flex-column h-100 justify-content-between">
+                    <div>
+                      <h5 class="text-white mb-2 fs-6 d-flex align-items-center gap-2">
+                        <svg width="18" height="18" fill="none" stroke="#d4b895" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        Instrucciones del Proyecto
+                      </h5>
+                      <p class="text-secondary small mb-3">Añade especificaciones, gustos de colores, detalles del terreno o notas para el arquitecto.</p>
+                      <textarea id="comentarios-cliente" class="custom-textarea mb-4" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás..."></textarea>
+                    </div>
+
+                    <div class="p-4 rounded-4" style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);">
+                      <div class="d-flex align-items-start gap-2 mb-3">
+                        <svg width="18" height="18" fill="none" stroke="#28a745" stroke-width="2" class="mt-1 flex-shrink-0" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <div>
+                          <span class="text-white d-block small fw-medium">Pago Aprobado</span>
+                          <span class="text-secondary" style="font-size: 0.7rem;">Transacción verificada vía PayPal</span>
+                        </div>
+                      </div>
+                      
+                      <div class="d-flex align-items-start gap-2 mb-4">
+                        <svg width="18" height="18" fill="none" stroke="#ffc107" stroke-width="2" class="mt-1 flex-shrink-0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <div>
+                          <span class="text-white d-block small fw-medium" id="texto-fecha-entrega">Calculando entrega...</span>
+                          <span class="text-secondary" style="font-size: 0.7rem;">(Tiempo estimado: 3 días hábiles desde envío de archivos)</span>
+                        </div>
+                      </div>
+
+                      <button type="button" class="btn w-100 fw-bold py-3 rounded-pill text-black" style="background-color: #d4b895; font-size: 0.85rem;" onclick="alert('Función de subida conectada correctamente. ¡Pronto tus archivos llegarán a nuestro sistema!')">
+                        Enviar Archivos al Equipo
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -131,16 +160,47 @@
 
     </main>
 
-    <!-- SCRIPT AUXILIAR PARA MOSTRAR ARCHIVO SELECCIONADO -->
+    <!-- SCRIPT AUXILIAR -->
     <script>
+      // Función para mostrar el nombre del archivo seleccionado
       function mostrarNombreArchivo(input) {
         const div = document.getElementById('archivo-seleccionado-1');
         if (input.files && input.files.length > 0) {
           let nombres = Array.from(input.files).map(f => f.name).join(', ');
-          div.textContent = `Archivo(s) listo(s): ${nombres}`;
+          div.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="me-1 mb-1" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Archivo(s) listo(s): <span class="text-white">${nombres}</span>`;
           div.style.display = 'block';
+        } else {
+          div.style.display = 'none';
         }
       }
+
+      // Script inteligente para calcular 3 días HÁBILES (salta sábados y domingos)
+      document.addEventListener("DOMContentLoaded", function() {
+        function calcularFechaEntrega(diasHabiles) {
+          let fecha = new Date(); // Fecha de hoy
+          let agregados = 0;
+          
+          while (agregados < diasHabiles) {
+            fecha.setDate(fecha.getDate() + 1);
+            // .getDay() devuelve 0 para Domingo y 6 para Sábado
+            if (fecha.getDay() !== 0 && fecha.getDay() !== 6) {
+              agregados++;
+            }
+          }
+          
+          // Formatear fecha en español
+          const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
+          let fechaFormateada = fecha.toLocaleDateString('es-GT', opciones);
+          
+          // Capitalizar la primera letra del día
+          return fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
+        }
+
+        const fechaEl = document.getElementById('texto-fecha-entrega');
+        if (fechaEl) {
+          fechaEl.innerHTML = `Entrega estimada: <span class="accent-text">${calcularFechaEntrega(3)}</span>`;
+        }
+      });
     </script>
 
     <script src="js/bootstrap.bundle.min.js" defer></script>
