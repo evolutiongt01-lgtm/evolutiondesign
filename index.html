@@ -305,7 +305,7 @@
         </div>
       </div>
 
-      <!-- 1. SERVICIOS VIDEOS (OPTIMIZADOS CON PRELOAD NONE) -->
+      <!-- 1. SERVICIOS VIDEOS -->
       <section id="servicios-destacados" class="services-section">
         <div class="container px-vw-5">
           <div class="row align-items-end mb-5" data-aos="fade">
@@ -327,7 +327,7 @@
         </div>
       </section>
 
-      <!-- 2. SECCIÓN DE PLANOS 2D (PAQUETES FIJOS) -->
+      <!-- 2. SECCIÓN DE PLANOS 2D -->
       <div id="servicios-tecnicos" class="section-planos-bg py-vh-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
         <div class="container">
           <div class="text-center mb-5" data-aos="fade">
@@ -720,7 +720,7 @@
                       <span class="text-white text-end fw-medium" id="f-area-text" style="font-size: 0.9rem;">0.00 m²</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                      <span class="text-secondary" style="font-size: 0.85rem;">Precio base</span>
+                      <span class="text-secondary" style="font-size: 0.85rem;">Precio base (<span class="price-val" data-usd="1.50">1.50</span> <span class="curr-symbol">USD</span>/m²)</span>
                       <span class="text-white text-end fw-medium" id="f-base-text" style="font-size: 0.9rem;">$--.--</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-4 w-100">
@@ -1167,6 +1167,61 @@
         btn.classList.add('text-black');
       }
 
+      function toggleLock3D(locked) {
+        const servicioSelect = document.getElementById('calcServicioSelect');
+        const anchoInput = document.getElementById('calcAncho');
+        const largoInput = document.getElementById('calcLargo');
+        const cRadiosNiveles = document.querySelectorAll('input[name="c-niveles"]');
+        const lockOverlay3D = document.getElementById('lockOverlay3D');
+
+        if(servicioSelect) servicioSelect.disabled = locked;
+        if(anchoInput) anchoInput.disabled = locked;
+        if(largoInput) largoInput.disabled = locked;
+        if(cRadiosNiveles) cRadiosNiveles.forEach(r => r.disabled = locked);
+        if(lockOverlay3D) {
+            if(locked) lockOverlay3D.classList.add('active');
+            else lockOverlay3D.classList.remove('active');
+        }
+      }
+
+      function toggleLock2D(locked) {
+        const pAncho = document.getElementById('p-ancho');
+        const pLargo = document.getElementById('p-largo');
+        const pRadiosNiveles = document.querySelectorAll('input[name="p-niveles"]');
+        const pRadiosPaquete = document.querySelectorAll('input[name="p-paquete"]');
+        const lockOverlay2D = document.getElementById('lockOverlay2D');
+
+        if(pAncho) pAncho.disabled = locked;
+        if(pLargo) pLargo.disabled = locked;
+        if(pRadiosNiveles) pRadiosNiveles.forEach(r => r.disabled = locked);
+        if(pRadiosPaquete) pRadiosPaquete.forEach(r => r.disabled = locked);
+        if(lockOverlay2D) {
+            if(locked) lockOverlay2D.classList.add('active');
+            else lockOverlay2D.classList.remove('active');
+        }
+      }
+
+      function toggleLockFachadas(locked) {
+        const fAncho = document.getElementById('f-ancho');
+        const fAltura = document.getElementById('f-altura');
+        const fRadiosComplejidad = document.querySelectorAll('input[name="f-complejidad"]');
+        const fRadiosTipo = document.querySelectorAll('input[name="f-tipo"]');
+        const fRadiosNiveles = document.querySelectorAll('input[name="f-niveles"]');
+        const fRenderToggle = document.getElementById('f-render');
+        const lockOverlayFachadas = document.getElementById('lockOverlayFachadas');
+
+        if(fAncho) fAncho.disabled = locked;
+        if(fAltura) fAltura.disabled = locked;
+        if(fRadiosComplejidad) fRadiosComplejidad.forEach(r => r.disabled = locked);
+        if(fRadiosTipo) fRadiosTipo.forEach(r => r.disabled = locked);
+        if(fRadiosNiveles) fRadiosNiveles.forEach(r => r.disabled = locked);
+        if(fRenderToggle) fRenderToggle.disabled = locked;
+        if(lockOverlayFachadas) {
+            if(locked) lockOverlayFachadas.classList.add('active');
+            else lockOverlayFachadas.classList.remove('active');
+        }
+      }
+
       // --- 1. CALCULADORA 3D ---
       function actualizarCotizacionTerreno() {
         const ancho = parseFloat(document.getElementById('calcAncho')?.value) || 0;
@@ -1209,6 +1264,38 @@
       if (calcServicioSelect) calcServicioSelect.addEventListener('change', actualizarCotizacionTerreno);
       if (cRadiosNiveles) cRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCotizacionTerreno));
 
+      const btnProceder3D = document.getElementById('btnProceder3D');
+      const btnCancelar3D = document.getElementById('btnCancelar3D');
+      const paypalWrapper3D = document.getElementById('paypal-container-wrapper-3d');
+      const paypalContainer3D = document.getElementById('paypal-button-container-3d');
+
+      if(btnProceder3D) {
+          btnProceder3D.addEventListener('click', (e) => {
+              e.preventDefault();
+              if(!window.usuarioAutenticado && typeof window.abrirAuthModal === 'function') {
+                  window.abrirAuthModal();
+                  return;
+              }
+              toggleLock3D(true);
+              btnProceder3D.style.display = 'none';
+              if(paypalWrapper3D) {
+                  paypalWrapper3D.style.display = 'block';
+                  if(paypalContainer3D) paypalContainer3D.innerHTML = '';
+                  if(typeof window.renderizarPayPal3D === 'function') window.renderizarPayPal3D(window.montoPago3D, '#paypal-button-container-3d');
+              }
+              if(btnCancelar3D) btnCancelar3D.style.display = 'block';
+          });
+      }
+
+      if(btnCancelar3D) {
+          btnCancelar3D.addEventListener('click', (e) => {
+              e.preventDefault();
+              toggleLock3D(false);
+              if(btnProceder3D) btnProceder3D.style.display = 'block';
+              if(paypalWrapper3D) paypalWrapper3D.style.display = 'none';
+              btnCancelar3D.style.display = 'none';
+          });
+      }
 
       // --- 2. CALCULADORA 2D ---
       function actualizarCalculadoraPlanos() {
@@ -1273,6 +1360,39 @@
       if(pLargo) pLargo.addEventListener('input', actualizarCalculadoraPlanos);
       if(pRadiosNiveles) pRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraPlanos));
       if(pRadiosPaquete) pRadiosPaquete.forEach(radio => radio.addEventListener('change', actualizarCalculadoraPlanos));
+
+      const btnProceder2D = document.getElementById('btnProceder2D');
+      const btnCancelar2D = document.getElementById('btnCancelar2D');
+      const paypalWrapper2D = document.getElementById('paypal-container-wrapper-2d');
+      const paypalContainer2D = document.getElementById('paypal-button-container-2d');
+
+      if(btnProceder2D) {
+          btnProceder2D.addEventListener('click', (e) => {
+              e.preventDefault();
+              if(!window.usuarioAutenticado && typeof window.abrirAuthModal === 'function') {
+                  window.abrirAuthModal();
+                  return;
+              }
+              toggleLock2D(true);
+              btnProceder2D.style.display = 'none';
+              if(paypalWrapper2D) {
+                  paypalWrapper2D.style.display = 'block';
+                  if(paypalContainer2D) paypalContainer2D.innerHTML = '';
+                  if(typeof window.renderizarPayPal2D === 'function') window.renderizarPayPal2D(window.montoPago2D, '#paypal-button-container-2d');
+              }
+              if(btnCancelar2D) btnCancelar2D.style.display = 'block';
+          });
+      }
+
+      if(btnCancelar2D) {
+          btnCancelar2D.addEventListener('click', (e) => {
+              e.preventDefault();
+              toggleLock2D(false);
+              if(btnProceder2D) btnProceder2D.style.display = 'block';
+              if(paypalWrapper2D) paypalWrapper2D.style.display = 'none';
+              btnCancelar2D.style.display = 'none';
+          });
+      }
 
 
       // --- 3. CALCULADORA FACHADAS ---
@@ -1375,40 +1495,39 @@
       if(fRadiosTipo) fRadiosTipo.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
       if(fRadiosNiveles) fRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
 
+      const btnProcederFachadas = document.getElementById('btnProcederFachadas');
+      const btnCancelarFachadas = document.getElementById('btnCancelarFachadas');
+      const paypalWrapperFachada = document.getElementById('paypal-container-wrapper-fachada');
+      const paypalContainerFachada = document.getElementById('paypal-button-container-fachada');
 
-      // EVENTOS DE BOTONES
-      ['btnProceder3D', 'btnProceder2D', 'btnProcederFachadas'].forEach(btnId => {
-        const btn = document.getElementById(btnId);
-        if(btn) {
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if(!window.usuarioAutenticado && typeof window.abrirAuthModal === 'function') {
-              window.abrirAuthModal();
-              return;
-            }
-            
-            btn.style.display = 'none';
-            const wrapperId = btnId.replace('btnProceder', 'paypal-container-wrapper-').toLowerCase();
-            const containerId = btnId.replace('btnProceder', 'paypal-button-container-').toLowerCase();
-            const wrapper = document.getElementById(wrapperId);
-            const container = document.getElementById(containerId);
-            const cancelarBtn = document.getElementById(btnId.replace('btnProceder', 'btnCancelar'));
-
-            if (wrapper) wrapper.style.display = 'block';
-            if (cancelarBtn) cancelarBtn.style.display = 'block';
-
-            if (container) container.innerHTML = '';
-            
-            if (btnId === 'btnProceder3D' && typeof window.renderizarPayPal3D === 'function') {
-               window.renderizarPayPal3D(window.montoPago3D, '#' + containerId);
-            } else if (btnId === 'btnProceder2D' && typeof window.renderizarPayPal2D === 'function') {
-               window.renderizarPayPal2D(window.montoPago2D, '#' + containerId);
-            } else if (btnId === 'btnProcederFachadas' && typeof window.renderizarPayPalFachada === 'function') {
-               window.renderizarPayPalFachada(window.montoPagoFachada, '#' + containerId);
-            }
+      if(btnProcederFachadas) {
+          btnProcederFachadas.addEventListener('click', (e) => {
+              e.preventDefault();
+              if(!window.usuarioAutenticado && typeof window.abrirAuthModal === 'function') {
+                  window.abrirAuthModal();
+                  return;
+              }
+              toggleLockFachadas(true);
+              btnProcederFachadas.style.display = 'none';
+              if(paypalWrapperFachada) {
+                  paypalWrapperFachada.style.display = 'block';
+                  if(paypalContainerFachada) paypalContainerFachada.innerHTML = '';
+                  if(typeof window.renderizarPayPalFachada === 'function') window.renderizarPayPalFachada(window.montoPagoFachada, '#paypal-button-container-fachada');
+              }
+              if(btnCancelarFachadas) btnCancelarFachadas.style.display = 'block';
           });
-        }
-      });
+      }
+
+      if(btnCancelarFachadas) {
+          btnCancelarFachadas.addEventListener('click', (e) => {
+              e.preventDefault();
+              toggleLockFachadas(false);
+              if(btnProcederFachadas) btnProcederFachadas.style.display = 'block';
+              if(paypalWrapperFachada) paypalWrapperFachada.style.display = 'none';
+              btnCancelarFachadas.style.display = 'none';
+          });
+      }
+
       
       // Cambio de moneda global
       const currencyItemsArray = document.querySelectorAll('.currency-item');
@@ -1426,23 +1545,6 @@
           const currMenu = document.getElementById('currencyMenu');
           if (currMenu) currMenu.classList.remove('show');
         });
-      });
-
-      // LÓGICA DE CANCELAR PAYPAL
-      ['btnCancelar3D', 'btnCancelar2D', 'btnCancelarFachadas'].forEach(btnId => {
-        const btn = document.getElementById(btnId);
-        if(btn) {
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const procederBtn = document.getElementById(btnId.replace('btnCancelar', 'btnProceder'));
-            const wrapperId = btnId.replace('btnCancelar', 'paypal-container-wrapper-').toLowerCase();
-            const wrapper = document.getElementById(wrapperId);
-
-            if (procederBtn) procederBtn.style.display = 'block';
-            if (wrapper) wrapper.style.display = 'none';
-            btn.style.display = 'none';
-          });
-        }
       });
       
     </script>
