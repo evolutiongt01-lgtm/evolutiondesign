@@ -28,6 +28,9 @@
   <!-- GOOGLE RECAPTCHA V3 SCRIPT (CARGA DIFERIDA) -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LewmG4tAAAAADBNcF1z4t7NvP_YFyA7P57xx9uM" async defer></script>
 
+  <!-- SDK DE AWS v2 (Tanque de guerra para Cloudflare R2 en navegadores) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1390.0/aws-sdk.min.js"></script>
+
   <!-- PAYPAL SDK: se carga dinámicamente según la divisa detectada/seleccionada -->
   <link rel="preconnect" href="https://www.paypal.com">
   <link rel="dns-prefetch" href="//www.paypal.com">
@@ -1087,6 +1090,19 @@
                       <div class="paypal-white-card">
                         <div id="paypal-button-container-2d" class="w-100"></div>
                       </div>
+                      <div class="text-center mt-3 mb-2">
+                        <span class="text-secondary small">O paga con criptomonedas o transferencia:</span>
+                      </div>
+                      <button type="button" class="btn w-100 fw-bold py-2 rounded-pill shadow d-flex align-items-center justify-content-center gap-2" style="background-color: #1E2026; color: #F0B90B; border: 1px solid rgba(240, 185, 11, 0.5);" onclick="abrirModalBinance('Planos 2D', window.montoPago2D)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#F0B90B"><path d="M12 24l-3.5-3.5h7L12 24zm-8.5-8.5l3.5 3.5v-7l-3.5 3.5zm17 0l-3.5-3.5v7l3.5-3.5zM12 0l3.5 3.5h-7L12 0zm0 17l-3.5-3.5 3.5-3.5 3.5 3.5L12 17z"/></svg>
+                        Pagar con Binance Pay
+                      </button>
+                      
+                      <!-- BOTÓN TRANSFERENCIA BANCARIA (SOLO GUATEMALA) -->
+                      <button type="button" class="btn-gt-transfer btn w-100 fw-bold py-2 rounded-pill shadow align-items-center justify-content-center gap-2 mt-2" style="background-color: #123224; color: #4bd97a; border: 1px solid rgba(75, 217, 122, 0.5); display: none;" onclick="abrirModalTransferencia('Planos 2D', window.montoPago2D)">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                        Transferencia Bancaria (GT)
+                      </button>
                     </div>
 
                     <!-- BOTÓN CANCELAR/EDITAR -->
@@ -1335,6 +1351,19 @@
                       <div class="paypal-white-card">
                         <div id="paypal-button-container-fachada" class="w-100"></div>
                       </div>
+                      <div class="text-center mt-3 mb-2">
+                        <span class="text-secondary small">O paga con criptomonedas o transferencia:</span>
+                      </div>
+                      <button type="button" class="btn w-100 fw-bold py-2 rounded-pill shadow d-flex align-items-center justify-content-center gap-2" style="background-color: #1E2026; color: #F0B90B; border: 1px solid rgba(240, 185, 11, 0.5);" onclick="abrirModalBinance('Diseño de Fachada', window.montoPagoFachada)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#F0B90B"><path d="M12 24l-3.5-3.5h7L12 24zm-8.5-8.5l3.5 3.5v-7l-3.5 3.5zm17 0l-3.5-3.5v7l3.5-3.5zM12 0l3.5 3.5h-7L12 0zm0 17l-3.5-3.5 3.5-3.5 3.5 3.5L12 17z"/></svg>
+                        Pagar con Binance Pay
+                      </button>
+                      
+                      <!-- BOTÓN TRANSFERENCIA BANCARIA (SOLO GUATEMALA) -->
+                      <button type="button" class="btn-gt-transfer btn w-100 fw-bold py-2 rounded-pill shadow align-items-center justify-content-center gap-2 mt-2" style="background-color: #123224; color: #4bd97a; border: 1px solid rgba(75, 217, 122, 0.5); display: none;" onclick="abrirModalTransferencia('Diseño de Fachada', window.montoPagoFachada)">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                        Transferencia Bancaria (GT)
+                      </button>
                     </div>
                     
                     <!-- BOTÓN CANCELAR/EDITAR -->
@@ -1617,6 +1646,19 @@
                       <div class="paypal-white-card">
                         <div id="paypal-button-container-3d" class="w-100"></div>
                       </div>
+                      <div class="text-center mt-3 mb-2">
+                        <span class="text-secondary small">O paga con criptomonedas o transferencia:</span>
+                      </div>
+                      <button type="button" class="btn w-100 fw-bold py-2 rounded-pill shadow d-flex align-items-center justify-content-center gap-2" style="background-color: #1E2026; color: #F0B90B; border: 1px solid rgba(240, 185, 11, 0.5);" onclick="abrirModalBinance('Visualización 3D', window.montoPago3D)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#F0B90B"><path d="M12 24l-3.5-3.5h7L12 24zm-8.5-8.5l3.5 3.5v-7l-3.5 3.5zm17 0l-3.5-3.5v7l3.5-3.5zM12 0l3.5 3.5h-7L12 0zm0 17l-3.5-3.5 3.5-3.5 3.5 3.5L12 17z"/></svg>
+                        Pagar con Binance Pay
+                      </button>
+                      
+                      <!-- BOTÓN TRANSFERENCIA BANCARIA (SOLO GUATEMALA) -->
+                      <button type="button" class="btn-gt-transfer btn w-100 fw-bold py-2 rounded-pill shadow align-items-center justify-content-center gap-2 mt-2" style="background-color: #123224; color: #4bd97a; border: 1px solid rgba(75, 217, 122, 0.5); display: none;" onclick="abrirModalTransferencia('Visualización 3D', window.montoPago3D)">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                        Transferencia Bancaria (GT)
+                      </button>
                     </div>
 
                     <!-- BOTÓN CANCELAR/EDITAR -->
@@ -1660,7 +1702,7 @@
         </p>
         <div class="pt-2 border-top" style="border-color: rgba(255,255,255,0.06) !important;">
           <p class="text-secondary mb-1" style="font-size: 0.7rem; letter-spacing: 0.5px;">
-            MÉTODOS DE PAGO SEGUROS: <span class="text-white fw-medium">Visa &bull; Mastercard &bull; American Express &bull; PayPal</span>
+            MÉTODOS DE PAGO SEGUROS: <span class="text-white fw-medium">Visa &bull; Mastercard &bull; American Express &bull; PayPal &bull; Binance Pay</span>
           </p>
           <p class="accent-text mb-0" style="font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3px;">
             Moneda detectada automáticamente según tu ubicación. PayPal procesa el cobro en <span class="paypal-billing-currency">USD</span>.
@@ -1713,6 +1755,88 @@
         <li><a class="currency-item" href="#" data-curr="JPY"><span class="badge bg-secondary me-2">¥</span> JPY</a></li>
       </ul>
       <button class="currency-float-btn" id="currencyBtn" aria-label="Cambiar Moneda"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></button>
+    </div>
+  </div>
+
+  <!-- MODAL DE PAGO BINANCE -->
+  <div id="binanceModal" class="login-modal-overlay">
+    <div class="login-glass-card" style="max-width: 450px; width: 90%;">
+      <button id="closeBinanceModal" class="btn-close-modal" aria-label="Cerrar">&times;</button>
+      <div class="text-center mb-4">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="#F0B90B" class="mb-2"><path d="M12 24l-3.5-3.5h7L12 24zm-8.5-8.5l3.5 3.5v-7l-3.5 3.5zm17 0l-3.5-3.5v7l3.5-3.5zM12 0l3.5 3.5h-7L12 0zm0 17l-3.5-3.5 3.5-3.5 3.5 3.5L12 17z"/></svg>
+        <h4 class="fw-bold text-white mb-1">Pago con Criptomonedas</h4>
+        <p class="text-secondary small">Realiza el depósito exacto para iniciar tu proyecto.</p>
+      </div>
+      
+      <div class="text-center p-3 mb-3" style="background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
+          <span class="d-block text-secondary small mb-1">Monto a depositar:</span>
+          <h2 class="text-white fw-bold mb-0" id="binanceMontoDisplay">$0.00 <span class="fs-6 text-secondary">USDT</span></h2>
+          <div class="mt-2 text-warning small fw-bold" id="binanceTimer">Tiempo para congelar precio: 15:00</div>
+      </div>
+
+      <div class="mb-3">
+          <span class="d-block text-secondary small mb-1">1. Envía el pago a esta billetera (Red TRC20):</span>
+          <div class="d-flex align-items-center justify-content-between p-2 rounded-3 mb-2" style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+              <code class="text-white small m-0" style="word-break: break-all;">TVxSuwZJ5XnFh6n9c1oU7TzL...</code>
+          </div>
+          <span class="d-block text-secondary small mb-1">O por Binance Pay ID:</span>
+          <div class="d-flex align-items-center justify-content-between p-2 rounded-3" style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+              <code class="text-white small m-0">123456789</code>
+          </div>
+      </div>
+      
+      <div class="mb-4">
+          <span class="d-block text-secondary small mb-2">2. Sube la captura de tu transferencia:</span>
+          <input type="file" id="binanceReceiptFile" class="form-control text-white" accept="image/*,.pdf" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 0.5rem; font-size: 0.8rem;">
+          <div class="progress mt-2 rounded-pill" style="height: 4px; background: rgba(255,255,255,0.1); display: none;" id="binanceProgressWrap">
+             <div class="progress-bar rounded-pill" id="binanceProgressBar" style="width: 0%; background: #F0B90B;"></div>
+          </div>
+      </div>
+
+      <button id="btnSubmitBinance" class="btn w-100 fw-bold py-2 rounded-pill shadow" style="background-color: #F0B90B; color: #000;" onclick="procesarPagoManual('Binance', 'binanceReceiptFile', 'binanceProgressWrap', 'binanceProgressBar', 'binanceError', 'btnSubmitBinance')">
+          Subir Comprobante y Finalizar
+      </button>
+      <div id="binanceError" class="text-danger small mt-2 text-center" style="display:none; background: rgba(220,53,69,0.1); border-radius: 10px; padding: 8px;"></div>
+    </div>
+  </div>
+
+  <!-- MODAL DE TRANSFERENCIA BANCARIA (SOLO GUATEMALA) -->
+  <div id="transferenciaModal" class="login-modal-overlay">
+    <div class="login-glass-card" style="max-width: 450px; width: 90%;">
+      <button id="closeTransferenciaModal" class="btn-close-modal" aria-label="Cerrar">&times;</button>
+      <div class="text-center mb-4">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4bd97a" stroke-width="1.5" class="mb-2"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <h4 class="fw-bold text-white mb-1">Transferencia Bancaria</h4>
+        <p class="text-secondary small">Exclusivo para Guatemala. Realiza tu depósito para iniciar.</p>
+      </div>
+      
+      <div class="text-center p-3 mb-3" style="background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
+          <span class="d-block text-secondary small mb-1">Monto a depositar:</span>
+          <h2 class="text-white fw-bold mb-0" id="transferenciaMontoDisplay">Q0.00</h2>
+      </div>
+
+      <div class="mb-3">
+          <span class="d-block text-secondary small mb-1">1. Deposita a la siguiente cuenta:</span>
+          <div class="p-3 rounded-3 mb-2 text-start" style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+              <!-- RECUERDA CAMBIAR ESTOS DATOS POR TU BANCO Y CUENTA REALES -->
+              <p class="text-white small mb-1"><strong>Banco:</strong> [NOMBRE DEL BANCO]</p>
+              <p class="text-white small mb-1"><strong>Cuenta Monetaria:</strong> [TU NUMERO DE CUENTA]</p>
+              <p class="text-white small mb-0"><strong>A nombre de:</strong> Evolution Design</p>
+          </div>
+      </div>
+      
+      <div class="mb-4 text-start">
+          <span class="d-block text-secondary small mb-2">2. Sube la foto de la boleta o captura:</span>
+          <input type="file" id="transferenciaReceiptFile" class="form-control text-white" accept="image/*,.pdf" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 0.5rem; font-size: 0.8rem;">
+          <div class="progress mt-2 rounded-pill" style="height: 4px; background: rgba(255,255,255,0.1); display: none;" id="transferenciaProgressWrap">
+             <div class="progress-bar rounded-pill" id="transferenciaProgressBar" style="width: 0%; background: #4bd97a;"></div>
+          </div>
+      </div>
+
+      <button id="btnSubmitTransferencia" class="btn w-100 fw-bold py-2 rounded-pill shadow" style="background-color: #4bd97a; color: #000;" onclick="procesarPagoManual('Transferencia Bancaria', 'transferenciaReceiptFile', 'transferenciaProgressWrap', 'transferenciaProgressBar', 'transferenciaError', 'btnSubmitTransferencia')">
+          Subir Comprobante y Finalizar
+      </button>
+      <div id="transferenciaError" class="text-danger small mt-2 text-center" style="display:none; background: rgba(220,53,69,0.1); border-radius: 10px; padding: 8px;"></div>
     </div>
   </div>
 
@@ -1793,6 +1917,14 @@
       actualizarNavMovil();
     })();
 
+    // MOSTRAR OPCIÓN GUATEMALA SI APLICA
+    function checkGTOptions() {
+      const isGt = window.evolutionGeo?.countryCode === 'GT' || window.currentCurrency === 'GTQ';
+      document.querySelectorAll('.btn-gt-transfer').forEach(btn => {
+          btn.style.display = isGt ? 'flex' : 'none';
+      });
+    }
+
     function updateAllCurrencies() {
       const config = exchangeRates[currentCurrency];
       document.querySelectorAll('.price-val').forEach(el => {
@@ -1824,6 +1956,7 @@
       if (typeof window.actualizarCotizacionTerrenoGlobal === 'function') window.actualizarCotizacionTerrenoGlobal();
       if (typeof window.actualizarCalculadoraPlanosGlobal === 'function') window.actualizarCalculadoraPlanosGlobal();
       if (typeof window.actualizarCalculadoraFachadaGlobal === 'function') window.actualizarCalculadoraFachadaGlobal();
+      checkGTOptions();
       try { localStorage.setItem('evolution_currency', code); } catch(e) {}
       if (auto) document.documentElement.dataset.detectedCurrency = code;
     }
@@ -1873,6 +2006,7 @@
       const target = stored || detectedCurrency || 'USD';
       if (target && exchangeRates[target]) applyCurrency(target, { auto: !stored });
       else applyCurrency('USD', { auto: !stored });
+      checkGTOptions();
       return window.currentCurrency;
     })();
 
@@ -1959,6 +2093,79 @@
       }
     }
 
+    // LÓGICA DE BINANCE MODAL
+    let binanceTimerInterval;
+    window.abrirModalBinance = function(tipo, monto) {
+        if (!window.usuarioAutenticado) {
+            if(typeof window.abrirAuthModal === 'function') window.abrirAuthModal();
+            return;
+        }
+        window.currentManualType = tipo;
+        window.currentManualMonto = monto;
+        
+        // Formatear monto en USDT (misma cantidad que USD)
+        const rate = exchangeRates[currentCurrency]?.rate || 1;
+        const montoUSD = (monto / rate).toFixed(2);
+        
+        document.getElementById('binanceMontoDisplay').innerHTML = `$${montoUSD} <span class="fs-6 text-secondary">USDT</span>`;
+        document.getElementById('binanceReceiptFile').value = '';
+        document.getElementById('binanceProgressWrap').style.display = 'none';
+        document.getElementById('binanceError').style.display = 'none';
+        document.getElementById('btnSubmitBinance').disabled = false;
+        document.getElementById('btnSubmitBinance').textContent = 'Subir Comprobante y Finalizar';
+        
+        document.getElementById('binanceModal').classList.add('show');
+        
+        clearInterval(binanceTimerInterval);
+        let timeLeft = 15 * 60;
+        const timerDisplay = document.getElementById('binanceTimer');
+        binanceTimerInterval = setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                clearInterval(binanceTimerInterval);
+                timerDisplay.textContent = "Tiempo expirado. Vuelve a intentar.";
+                document.getElementById('btnSubmitBinance').disabled = true;
+            } else {
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                timerDisplay.textContent = `Tiempo para congelar precio: ${m}:${s < 10 ? '0'+s : s}`;
+            }
+        }, 1000);
+    };
+
+    document.getElementById('closeBinanceModal').addEventListener('click', () => {
+        document.getElementById('binanceModal').classList.remove('show');
+        clearInterval(binanceTimerInterval);
+    });
+    
+    // LÓGICA DE TRANSFERENCIA BANCARIA MODAL
+    window.abrirModalTransferencia = function(tipo, monto) {
+        if (!window.usuarioAutenticado) {
+            if(typeof window.abrirAuthModal === 'function') window.abrirAuthModal();
+            return;
+        }
+        window.currentManualType = tipo;
+        window.currentManualMonto = monto;
+        
+        // Asegurar que muestre en la moneda que esté visualizando el cliente
+        const symbol = exchangeRates[currentCurrency]?.symbol || 'Q';
+        const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
+        const formatted = parseFloat(monto).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+        
+        document.getElementById('transferenciaMontoDisplay').textContent = `${symbol} ${formatted}`;
+        document.getElementById('transferenciaReceiptFile').value = '';
+        document.getElementById('transferenciaProgressWrap').style.display = 'none';
+        document.getElementById('transferenciaError').style.display = 'none';
+        document.getElementById('btnSubmitTransferencia').disabled = false;
+        document.getElementById('btnSubmitTransferencia').textContent = 'Subir Comprobante y Finalizar';
+        
+        document.getElementById('transferenciaModal').classList.add('show');
+    };
+
+    document.getElementById('closeTransferenciaModal').addEventListener('click', () => {
+        document.getElementById('transferenciaModal').classList.remove('show');
+    });
+
     // --- 1. CALCULADORA 3D ---
     function actualizarCotizacionTerreno() {
       const ancho = parseFloat(document.getElementById('calcAncho')?.value) || 0;
@@ -1980,9 +2187,9 @@
         else if (servicioVal === 'premium') { baseUSD = 949 + (areaTotal > 400 ? (areaTotal - 400) * 3 : 0); }
         else if (servicioVal === 'cuantificacion') { baseUSD = areaTotal * 1.75; }
 
-        window.montoPago3D = baseUSD.toFixed(2);
         const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
         const convertedFinal = baseUSD * exchangeRates[currentCurrency].rate;
+        window.montoPago3D = convertedFinal.toFixed(decimals);
 
         if(!window.usuarioAutenticado) {
           if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">$--.--</span>`;
@@ -1994,7 +2201,7 @@
           if (areaTotal > 400) {
             if(msj3D) {
               msj3D.style.display = 'block';
-              msj3D.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de $${baseUSD.toFixed(2)} USD listo para pago.</span>`;
+              msj3D.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado listo para pago.</span>`;
               msj3D.style.background = 'rgba(255, 193, 7, 0.1)';
               msj3D.style.borderColor = 'rgba(255, 193, 7, 0.2)';
             }
@@ -2088,10 +2295,10 @@
       let costoExtra = paquete === 'basico' ? 1.10 : 2.00;
       let excedente = areaTotal > 400 ? (areaTotal - 400) * costoExtra : 0;
       
-      window.montoPago2D = (basePrecioUSD + excedente).toFixed(2);
       const rate = exchangeRates[currentCurrency].rate;
       const symbol = exchangeRates[currentCurrency].symbol;
       const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
+      window.montoPago2D = ((basePrecioUSD + excedente) * rate).toFixed(decimals);
 
       const pAreaText = document.getElementById('p-area-text');
       if(pAreaText) pAreaText.textContent = areaTotal.toFixed(2) + ' m²';
@@ -2124,7 +2331,7 @@
           
           if(msjPlanos && areaTotal > 0) {
             msjPlanos.style.display = 'block';
-            msjPlanos.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de $${(basePrecioUSD + excedente).toFixed(2)} USD listo para pago.</span>`;
+            msjPlanos.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado listo para pago.</span>`;
             msjPlanos.style.background = 'rgba(255, 193, 7, 0.1)';
             msjPlanos.style.borderColor = 'rgba(255, 193, 7, 0.2)';
           }
@@ -2184,720 +2391,4 @@
         btnCancelar2D.addEventListener('click', (e) => {
             e.preventDefault();
             toggleLock2D(false);
-            if(btnProceder2D) btnProceder2D.style.display = 'block';
-            if(paypalWrapper2D) paypalWrapper2D.style.display = 'none';
-            btnCancelar2D.style.display = 'none';
-        });
-    }
-
-
-    // --- 3. CALCULADORA FACHADAS ---
-    function actualizarCalculadoraFachada() {
-      const fAnchoInput = document.getElementById('f-ancho');
-      const fAlturaInput = document.getElementById('f-altura');
-      if (!fAnchoInput || !fAlturaInput) return;
-
-      const ancho = parseFloat(fAnchoInput.value) || 0;
-      const altura = parseFloat(fAlturaInput.value) || 0;
-      
-      let compVal = 1.3; let compText = 'Profesional';
-      const checkedComp = document.querySelector('input[name="f-complejidad"]:checked');
-      if(checkedComp) { compVal = parseFloat(checkedComp.value); compText = checkedComp.getAttribute('data-label'); }
-
-      const fRenderToggle = document.getElementById('f-render');
-      const renderOn = fRenderToggle ? fRenderToggle.checked : true;
-
-      const area = ancho * altura;
-      let subtotal = (area * 1.50) * compVal;
-      if(subtotal < 80) subtotal = 80;
-      
-      const nivelesVal = document.querySelector('input[name="f-niveles"]:checked')?.value || '2';
-      let extraNivel = nivelesVal === '3' ? 25 : (nivelesVal === '4' ? 30 : 0);
-      let labelNiveles = nivelesVal === '3' ? "Cargo por 3 Niveles" : "Cargo por 4+ Niveles";
-      
-      const costoRender = renderOn ? 40.00 : 0.00;
-      let totalUSD = subtotal + extraNivel + costoRender;
-
-      window.montoPagoFachada = totalUSD.toFixed(2);
-      const rate = exchangeRates[currentCurrency].rate;
-      const symbol = exchangeRates[currentCurrency].symbol;
-      const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
-
-      const fAreaText = document.getElementById('f-area-text');
-      if(fAreaText) fAreaText.textContent = area.toFixed(2) + ' m²';
-
-      const fBaseText = document.getElementById('f-base-text');
-      const fSubtotalText = document.getElementById('f-subtotal-text');
-      const fTotal = document.getElementById('f-total');
-      const rowNivelesExtra = document.getElementById('row-niveles-extra');
-      const fNivelesCostoUI = document.getElementById('f-niveles-costo');
-      const fRenderText = document.getElementById('f-render-text');
-      const fComplexLabel = document.getElementById('f-complex-label');
-      const fNivelesLabelUI = document.getElementById('f-niveles-label');
-      const instruccionesFachada = document.getElementById('instrucciones-subida-fachada');
-
-      if(!window.usuarioAutenticado) {
-        if(fBaseText) fBaseText.textContent = `$--.--`;
-        if(fSubtotalText) fSubtotalText.textContent = `$--.--`;
-        if(fTotal) fTotal.innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">$--.--</span>`;
-        if(fComplexLabel) fComplexLabel.textContent = `Nivel de complejidad (${compText} ${compVal.toFixed(2)}x)`;
-
-        if (extraNivel > 0) {
-          if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'flex', 'important');
-          if(fNivelesCostoUI) fNivelesCostoUI.textContent = `$--.--`;
-        } else {
-          if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
-        }
-        if(fRenderText) fRenderText.textContent = `$--.--`;
-        if(instruccionesFachada) instruccionesFachada.style.display = 'none';
-      } else {
-        if(fBaseText) fBaseText.textContent = `${symbol} ${((area*1.5)*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
-        if(fSubtotalText) fSubtotalText.textContent = `${symbol} ${(subtotal*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
-        if(fTotal) fTotal.textContent = `${symbol} ${(totalUSD*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
-        if(fComplexLabel) fComplexLabel.textContent = `Nivel de complejidad (${compText} ${compVal.toFixed(2)}x)`;
-
-        if (extraNivel > 0) {
-          if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'flex', 'important');
-          if(fNivelesLabelUI) fNivelesLabelUI.textContent = labelNiveles;
-          if(fNivelesCostoUI) fNivelesCostoUI.textContent = `+${symbol} ${(extraNivel * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
-        } else {
-          if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
-        }
-        if(fRenderText) fRenderText.textContent = `${symbol} ${(costoRender * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
-
-        if(instruccionesFachada && area > 0) {
-            instruccionesFachada.style.display = 'block';
-            if(renderOn) {
-                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea). Además, por los renders hiperrealistas, necesitamos <strong>fotos claras del terreno</strong>.`;
-            } else {
-                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea).`;
-            }
-        } else if (instruccionesFachada) {
-            instruccionesFachada.style.display = 'none';
-        }
-      }
-      
-      window.actualizarEstadoBoton('btnProcederFachadas', window.usuarioAutenticado, area > 0);
-      const wrapperPagoDirectoFachadas = document.getElementById('wrapperPagoDirectoFachadas');
-      if(wrapperPagoDirectoFachadas) wrapperPagoDirectoFachadas.style.setProperty('display', 'block', 'important');
-    }
-    window.actualizarCalculadoraFachadaGlobal = actualizarCalculadoraFachada;
-    const fAncho = document.getElementById('f-ancho');
-    const fAltura = document.getElementById('f-altura');
-    const fRadiosComplejidad = document.querySelectorAll('input[name="f-complejidad"]');
-    const fRadiosTipo = document.querySelectorAll('input[name="f-tipo"]');
-    const fRadiosNiveles = document.querySelectorAll('input[name="f-niveles"]');
-    const fRenderToggle = document.getElementById('f-render');
-
-    if(fAncho) fAncho.addEventListener('input', actualizarCalculadoraFachada);
-    if(fAltura) fAltura.addEventListener('input', actualizarCalculadoraFachada);
-    if(fRenderToggle) fRenderToggle.addEventListener('change', actualizarCalculadoraFachada);
-    if(fRadiosComplejidad) fRadiosComplejidad.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
-    if(fRadiosTipo) fRadiosTipo.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
-    if(fRadiosNiveles) fRadiosNiveles.forEach(radio => radio.addEventListener('change', actualizarCalculadoraFachada));
-
-    const btnProcederFachadas = document.getElementById('btnProcederFachadas');
-    const btnCancelarFachadas = document.getElementById('btnCancelarFachadas');
-    const paypalWrapperFachada = document.getElementById('paypal-container-wrapper-fachada');
-    const paypalContainerFachada = document.getElementById('paypal-button-container-fachada');
-
-    if(btnProcederFachadas) {
-        btnProcederFachadas.addEventListener('click', (e) => {
-            e.preventDefault();
-            if(!window.usuarioAutenticado && typeof window.abrirAuthModal === 'function') {
-                window.abrirAuthModal();
-                return;
-            }
-            toggleLockFachadas(true);
-            btnProcederFachadas.style.display = 'none';
-            if(paypalWrapperFachada) {
-                paypalWrapperFachada.style.display = 'block';
-                if(paypalContainerFachada) paypalContainerFachada.innerHTML = '';
-                if(typeof window.renderizarPayPalFachada === 'function') window.renderizarPayPalFachada(window.montoPagoFachada, '#paypal-button-container-fachada');
-            }
-            if(btnCancelarFachadas) btnCancelarFachadas.style.display = 'block';
-        });
-    }
-
-    if(btnCancelarFachadas) {
-        btnCancelarFachadas.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleLockFachadas(false);
-            if(btnProcederFachadas) btnProcederFachadas.style.display = 'block';
-            if(paypalWrapperFachada) paypalWrapperFachada.style.display = 'none';
-            btnCancelarFachadas.style.display = 'none';
-        });
-    }
-
-    
-    // Cambio de moneda global
-    document.querySelectorAll('.currency-item').forEach(bindCurrencyItem);
-    
-  </script>
-
-  <!-- INTEGRACIÓN DE FIREBASE (AUTH & MODAL LOGIC) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
-    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",
-      authDomain: "evolution-design-9b63b.firebaseapp.com",
-      projectId: "evolution-design-9b63b",
-      storageBucket: "evolution-design-9b63b.firebasestorage.app",
-      messagingSenderId: "433474708581",
-      appId: "1:433474708581:web:cff7830077fb7d0e8a128c"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const functions = getFunctions(app, 'us-central1');
-    const createPayPalOrderCallable = httpsCallable(functions, 'createPayPalOrder');
-    const capturePayPalOrderCallable = httpsCallable(functions, 'capturePayPalOrder');
-    const providerGoogle = new GoogleAuthProvider();
-
-    // FUNCIÓN GLOBAL PARA CERRAR SESIÓN Y REINICIAR LAS CALCULADORAS
-    window.cerrarSesionGlobal = function() {
-      signOut(auth).then(() => {
-         // Cerramos los contenedores de paypal si estaban abiertos
-         ['paypal-container-wrapper-3d', 'paypal-container-wrapper-2d', 'paypal-container-wrapper-fachada'].forEach(id => {
-            const el = document.getElementById(id);
-            if(el) el.style.display = 'none';
-         });
-         // Re-mostramos los botones de proceder
-         ['btnProceder3D', 'btnProceder2D', 'btnProcederFachadas'].forEach(id => {
-            const el = document.getElementById(id);
-            if(el) el.style.display = 'block';
-         });
-         // Ocultamos los de cancelar
-         ['btnCancelar3D', 'btnCancelar2D', 'btnCancelarFachadas'].forEach(id => {
-            const el = document.getElementById(id);
-            if(el) el.style.display = 'none';
-         });
-         
-         // Desbloqueamos los inputs
-         if(typeof toggleLock3D === 'function') toggleLock3D(false);
-         if(typeof toggleLock2D === 'function') toggleLock2D(false);
-         if(typeof toggleLockFachadas === 'function') toggleLockFachadas(false);
-
-         if(window.actualizarCotizacionTerrenoGlobal) window.actualizarCotizacionTerrenoGlobal();
-         if(window.actualizarCalculadoraPlanosGlobal) window.actualizarCalculadoraPlanosGlobal();
-         if(window.actualizarCalculadoraFachadaGlobal) window.actualizarCalculadoraFachadaGlobal();
-      }).catch((error) => {
-         console.error("Error al cerrar sesión", error);
-      });
-    };
-
-    // LOGICA DEL MODAL LIQUID GLASS
-    const authModal = document.getElementById('authModal');
-    const closeAuthModal = document.getElementById('closeAuthModal');
-    const toggleAuthMode = document.getElementById('toggleAuthMode');
-    const authModalTitle = document.getElementById('authModalTitle');
-    const btnSubmitAuth = document.getElementById('btnSubmitAuth');
-    const authEmailForm = document.getElementById('authEmailForm');
-    const authError = document.getElementById('authError');
-    const btnGoogleLogin = document.getElementById('btnGoogleLogin');
-
-    let isLoginMode = true;
-
-    window.abrirAuthModal = function() {
-      if(authModal) {
-        authModal.classList.add('show');
-        if(authError) authError.style.display = 'none';
-      }
-    }
-
-    if(closeAuthModal) closeAuthModal.addEventListener('click', () => { authModal.classList.remove('show'); });
-
-    if(toggleAuthMode) {
-      toggleAuthMode.addEventListener('click', (e) => {
-        e.preventDefault();
-        isLoginMode = !isLoginMode;
-        if(isLoginMode) {
-          authModalTitle.textContent = 'Iniciar Sesión';
-          btnSubmitAuth.textContent = 'Ingresar';
-          toggleAuthMode.innerHTML = '¿No tienes cuenta? <span class="accent-text fw-medium">Regístrate</span>';
-        } else {
-          authModalTitle.textContent = 'Crear Cuenta';
-          btnSubmitAuth.textContent = 'Registrarse';
-          toggleAuthMode.innerHTML = '¿Ya tienes cuenta? <span class="accent-text fw-medium">Inicia sesión</span>';
-        }
-        if(authError) authError.style.display = 'none';
-      });
-    }
-
-    if(btnGoogleLogin) {
-      btnGoogleLogin.addEventListener('click', async () => {
-        try {
-          await signInWithPopup(auth, providerGoogle);
-          if(authModal) authModal.classList.remove('show');
-        } catch(error) {
-          if(authError) {
-            authError.textContent = 'Error al conectar con Google.';
-            authError.style.display = 'block';
-          }
-        }
-      });
-    }
-
-    if(authEmailForm) {
-      authEmailForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('authEmail').value;
-        const password = document.getElementById('authPassword').value;
-        
-        try {
-          if(isLoginMode) {
-            await signInWithEmailAndPassword(auth, email, password);
-          } else {
-            await createUserWithEmailAndPassword(auth, email, password);
-          }
-          if(authModal) authModal.classList.remove('show');
-          authEmailForm.reset();
-        } catch(error) {
-          if(authError) {
-            authError.textContent = isLoginMode ? 'Correo o contraseña incorrectos.' : 'Error al crear la cuenta. Usa una contraseña de 6+ caracteres.';
-            authError.style.display = 'block';
-          }
-        }
-      });
-    }
-
-    // VIGILANTE DE SESIÓN Y RENDERIZADO DE MENÚS
-    onAuthStateChanged(auth, (user) => {
-      window.usuarioAutenticado = !!user;
-      window.evolutionCurrentUser = user ? {
-        uid: user.uid || '',
-        email: user.email || '',
-        displayName: user.displayName || '',
-        photoURL: user.photoURL || ''
-      } : null;
-
-      if (user) {
-        Promise.resolve(window.currencyReadyPromise).catch(()=>{}).finally(async () => {
-          const g = window.evolutionGeo || {};
-          try {
-            const profileRef = doc(db, 'users', user.uid);
-            await setDoc(profileRef, {
-              uid:user.uid,
-              email:user.email || '',
-              displayName:user.displayName || '',
-              photoURL:user.photoURL || '',
-              lastGeo:{ city:g.city||'', region:g.region||'', country:g.country||'', countryCode:g.countryCode||'', currency:g.currency||'' },
-              lastSeenAt:serverTimestamp(),
-              updatedAt:serverTimestamp()
-            }, { merge:true });
-          } catch(err) {
-            console.info('Perfil Firestore no sincronizado:', err?.message || err);
-          }
-        });
-      }
-
-      const btnDesktop = document.getElementById('auth-desktop-wrapper');
-      const btnMobile = document.getElementById('auth-mobile-wrapper');
-      const profileDesktop = document.getElementById('floating-profile-desktop');
-      const adminDesktop = document.getElementById('admin-badge-container-desktop');
-      
-      // Elementos dinámicos "Mis Proyectos"
-      const pDesk = document.getElementById('linkProyectosDesktop');
-      const pMenuDesk = document.getElementById('linkProyectosMenuDesktop');
-      const pMob = document.getElementById('linkProyectosMobile');
-      
-      if (user) {
-        const userPhoto = user.photoURL ? user.photoURL : `https://ui-avatars.com/api/?name=${user.displayName || 'U'}&background=d4b895&color=fff`;
-        let adminBtnMobile = "";
-        let adminBtnDesktopStr = "";
-        
-        // Mostrar "Mis Proyectos" al estar autenticado
-        if(pDesk) pDesk.classList.remove('d-none');
-        if(pMenuDesk) pMenuDesk.classList.remove('d-none');
-        if(pMob) pMob.classList.remove('d-none');
-        
-        // BOTÓN DE PANEL ADMIN PARA CÉSAR Y ANTONIO
-        if (user.email === 'evolutiongt01@gmail.com' || user.email === 'tepaz2025@gmail.com') {
-          adminBtnMobile = `<a href="admin.html" class="mobile-auth-action text-white border-danger" style="background: rgba(220,53,69,0.28); border-color: rgba(220,53,69,.55);"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></a>`;
-          
-          // Botón Admin de escritorio, flotando abajo del logo
-          adminBtnDesktopStr = `<a href="admin.html" class="admin-badge-btn shadow"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="me-1" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Panel Admin</a>`;
-        }
-
-        // Desktop: Solo el botón de Cerrar Sesión en la barra
-        const htmlLogueadoDesktop = `
-          <a href="#" onclick="cerrarSesionGlobal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; font-size: 0.9rem; white-space: nowrap;">
-            Salir <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-          </a>`;
-          
-        // RUTA ÚNICA DEL PERFIL (Mac + iPhone): perfil.html
-        // Foto de perfil fuera de la barra en Desktop
-        const profilePicHTML = `
-          <a href="perfil.html" title="Mi Perfil" aria-label="Abrir perfil">
-            <img src="${userPhoto}" alt="Perfil" class="profile-pic-liquid" onerror="this.src='https://ui-avatars.com/api/?name=U&background=d4b895&color=fff'">
-          </a>`;
-          
-        // Mobile: Agrupa todo (foto, admin si aplica, y botón salir)
-        const htmlLogueadoMobile = `
-          <div class="mobile-auth-actions">
-            <a href="perfil.html" class="mobile-profile-link" aria-label="Abrir perfil" title="Mi Perfil">
-              <img src="${userPhoto}" alt="Perfil" class="profile-pic-liquid" onerror="this.src='https://ui-avatars.com/api/?name=U&background=d4b895&color=fff'">
-            </a>
-            ${adminBtnMobile}
-            <a href="#" onclick="cerrarSesionGlobal(); return false;" class="mobile-auth-action" aria-label="Cerrar Sesión" title="Cerrar Sesión">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-            </a>
-          </div>`;
-
-        if (btnDesktop) btnDesktop.innerHTML = htmlLogueadoDesktop;
-        if (btnMobile) btnMobile.innerHTML = htmlLogueadoMobile;
-        if (profileDesktop) profileDesktop.innerHTML = profilePicHTML;
-        if (adminDesktop) adminDesktop.innerHTML = adminBtnDesktopStr;
-
-      } else {
-        // Ocultar "Mis Proyectos" si no hay usuario
-        if(pDesk) pDesk.classList.add('d-none');
-        if(pMenuDesk) pMenuDesk.classList.add('d-none');
-        if(pMob) pMob.classList.add('d-none');
-          
-        // Estado de NO logueado
-        const htmlLoginDesktop = `<a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; white-space: nowrap;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>`;
-        const htmlLoginMobile = `<a href="#" onclick="abrirAuthModal(); return false;" class="icon-btn" aria-label="Login"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg></a>`;
-        
-        if (btnDesktop) btnDesktop.innerHTML = htmlLoginDesktop;
-        if (btnMobile) btnMobile.innerHTML = htmlLoginMobile;
-        if (profileDesktop) profileDesktop.innerHTML = '';
-        if (adminDesktop) adminDesktop.innerHTML = '';
-      }
-
-      // Actualiza calculadoras para bloquear/desbloquear los precios
-      if(typeof window.actualizarCotizacionTerrenoGlobal === 'function') window.actualizarCotizacionTerrenoGlobal();
-      if(typeof window.actualizarCalculadoraPlanosGlobal === 'function') window.actualizarCalculadoraPlanosGlobal();
-      if(typeof window.actualizarCalculadoraFachadaGlobal === 'function') window.actualizarCalculadoraFachadaGlobal();
-    });
-
-    // FUNCIONES PARA RENDERIZAR BOTONES DE PAYPAL CON ESTILO
-    // Solo guardamos metadatos no sensibles del pago. Nunca se almacenan números de tarjeta.
-    function nombrePaisDesdeCodigo(codigo) {
-      if (!codigo) return '';
-      try {
-        if (typeof Intl !== 'undefined' && Intl.DisplayNames) {
-          const nombres = new Intl.DisplayNames(['es'], { type: 'region' });
-          return nombres.of(String(codigo).toUpperCase()) || codigo;
-        }
-      } catch (e) {}
-      return String(codigo).toUpperCase();
-    }
-
-    function detectarMetodoPagoPayPal(details, data) {
-      const source = (details && details.payment_source) || {};
-      const sdkSource = data && data.paymentSource ? String(data.paymentSource).toLowerCase() : '';
-
-      if (source.card || sdkSource === 'card') return 'Tarjeta vía PayPal';
-      if (source.paypal || sdkSource === 'paypal') return 'PayPal';
-      if (sdkSource) return sdkSource.charAt(0).toUpperCase() + sdkSource.slice(1) + ' vía PayPal';
-      return 'PayPal Checkout';
-    }
-
-    function valorNumero(id) {
-      const el = document.getElementById(id);
-      return el ? (parseFloat(el.value) || 0) : 0;
-    }
-
-    function etiquetaRadio(name, fallback = '') {
-      const radio = document.querySelector(`input[name="${name}"]:checked`);
-      if (!radio) return fallback;
-      const label = document.querySelector(`label[for="${radio.id}"]`);
-      return label ? label.textContent.replace(/\s+/g, ' ').trim() : (radio.value || fallback);
-    }
-
-    function capturarConfiguracionProyecto(tipoProyecto) {
-      if (tipoProyecto === 'Planos 2D') {
-        const ancho = valorNumero('p-ancho');
-        const largo = valorNumero('p-largo');
-        const niveles = parseInt(document.querySelector('input[name="p-niveles"]:checked')?.value || '1', 10);
-        const paquete = document.querySelector('input[name="p-paquete"]:checked')?.value || 'basico';
-        const area = ancho * largo * niveles;
-        const premium = paquete === 'premium';
-
-        return {
-          category: 'Planos 2D',
-          packageCode: paquete,
-          packageName: premium ? 'Paquete Planos 2D - Premium' : 'Paquete Planos 2D - Básico',
-          shortPackageName: premium ? 'Premium 2D' : 'Básico 2D',
-          specs: [
-            { label: 'Terreno', value: `${ancho || 0} × ${largo || 0} m` },
-            { label: 'Niveles', value: `${niveles}` },
-            { label: 'Área total', value: `${area.toFixed(2)} m²` }
-          ],
-          uploadTitle: 'Archivos Requeridos',
-          uploadCopy: 'Sube tu archivo AutoCAD (DWG/DWF), PDF de medidas o una imagen clara de tu dibujo/plano.',
-          uploadFormats: 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB',
-          pricingInput: { width: ancho, length: largo, levels: niveles, packageCode: paquete },
-          includedHighlights: premium ? [
-            'Arquitectura minimalista contemporánea de alta gama',
-            'Plano Arquitectónico Amueblado y Acotado por nivel',
-            '2 cortes longitudinales y 2 transversales',
-            'Fachadas de los 4 lados',
-            'Cimentación con detalles constructivos',
-            'Columnas, cadenas y armados',
-            'Losas / entrepiso y techo',
-            'Planos hidráulico, drenajes y eléctrico completos',
-            'Acabados, puertas y ventanas',
-            'Entrega PDF / CAD lista para trámites y obra'
-          ] : [
-            'Estilo minimalista contemporáneo',
-            'Plano Arquitectónico Amueblado por nivel',
-            'Plano Acotado para albañilería',
-            '1 corte longitudinal y 1 transversal',
-            'Fachadas de los 4 lados',
-            'Entrega PDF / CAD lista para obra e impresión'
-          ]
-        };
-      }
-
-      if (tipoProyecto === 'Visualización 3D') {
-        const select = document.getElementById('calcServicioSelect');
-        const servicio = select?.value || 'basico';
-        const ancho = valorNumero('calcAncho');
-        const largo = valorNumero('calcLargo');
-        const niveles = parseInt(document.querySelector('input[name="c-niveles"]:checked')?.value || '1', 10);
-        const area = ancho * largo * niveles;
-        const configs = {
-          basico: {
-            category: 'Visualización 3D',
-            packageName: 'Paquete 3D - Básico',
-            shortPackageName: 'Básico 3D',
-            uploadCopy: 'Sube tu archivo 2D en PDF, AutoCAD DWG/DWF o una imagen clara de tu plano.',
-            includedHighlights: ['Modelado 3D profesional','8 renders realistas','Fachada incluida','Resolución HD','Materiales e iluminación básicos','1 revisión incluida']
-          },
-          profesional: {
-            category: 'Visualización 3D',
-            packageName: 'Paquete 3D - Profesional',
-            shortPackageName: 'Profesional 3D',
-            uploadCopy: 'Sube tu archivo 2D (PDF, DWG/DWF o foto clara del plano) y fotografías de referencia del lugar para trabajar el hiperrealismo.',
-            includedHighlights: ['Modelado 3D completo','16 renders realistas','Fachada frontal y posterior','3 videos realistas de 8 segundos','Entrega en alta resolución','2 revisiones incluidas']
-          },
-          premium: {
-            category: 'Visualización 3D',
-            packageName: 'Paquete 3D - Premium',
-            shortPackageName: 'Premium 3D',
-            uploadCopy: 'Sube tu archivo 2D (PDF, DWG/DWF o foto clara del plano) y fotografías de referencia del lugar para el nivel de hiperrealismo Premium.',
-            includedHighlights: ['Modelado 3D completo','26 renders realistas','Recorrido virtual de 1 min 44 s (13 clips de 8 s)','Plano amueblado','Iluminación avanzada','Diseño de paisaje conceptual','Resolución 4K','3 revisiones incluidas']
-          },
-          cuantificacion: {
-            category: 'Cuantificación de Materiales',
-            packageName: 'Cuantificación de Materiales',
-            shortPackageName: 'Cuantificación',
-            uploadCopy: 'Sube los planos, medidas o archivos de referencia necesarios para calcular las cantidades de materiales de tu obra.',
-            includedHighlights: ['Listado exacto de materiales','Obra gris: cemento, arena, grava, block y ladrillo','Hierro para construcción, losa y lámina','Acabados: piso, repello, puertas, ventanas y pintura']
-          }
-        };
-        const cfg = configs[servicio] || configs.basico;
-        return {
-          ...cfg,
-          packageCode: servicio,
-          specs: [
-            { label: 'Terreno', value: `${ancho || 0} × ${largo || 0} m` },
-            { label: 'Niveles', value: `${niveles}` },
-            { label: 'Área total', value: `${area.toFixed(2)} m²` }
-          ],
-          uploadTitle: 'Archivos Requeridos',
-          uploadFormats: 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB',
-          pricingInput: { width: ancho, length: largo, levels: niveles, serviceCode: servicio }
-        };
-      }
-
-      if (tipoProyecto === 'Diseño de Fachada') {
-        const ancho = valorNumero('f-ancho');
-        const altura = valorNumero('f-altura');
-        const niveles = document.querySelector('input[name="f-niveles"]:checked')?.value || '2';
-        const tipo = document.querySelector('input[name="f-tipo"]:checked')?.value || 'Vivienda';
-        const complejidad = document.querySelector('input[name="f-complejidad"]:checked');
-        const complejidadNombre = complejidad?.getAttribute('data-label') || etiquetaRadio('f-complejidad', 'Profesional');
-        const renderOn = !!document.getElementById('f-render')?.checked;
-        const area = ancho * altura;
-
-        return {
-          category: 'Diseño de Fachada',
-          packageCode: String(complejidadNombre).toLowerCase(),
-          packageName: `Diseño de Fachada - ${complejidadNombre}`,
-          shortPackageName: complejidadNombre,
-          specs: [
-            { label: 'Fachada', value: `${ancho || 0} × ${altura || 0} m` },
-            { label: 'Niveles', value: niveles === '4' ? '4+' : niveles },
-            { label: 'Proyecto', value: tipo },
-            { label: 'Área', value: `${area.toFixed(2)} m²` },
-            { label: 'Renders', value: renderOn ? '3 hiperrealistas' : 'No incluidos' }
-          ],
-          uploadTitle: 'Referencias de Fachada',
-          uploadCopy: renderOn
-            ? 'Sube una foto clara de la fachada o terreno y sus medidas. También puedes adjuntar un dibujo de tu idea y fotografías claras del lugar para los renders hiperrealistas.'
-            : 'Sube una foto clara de tu fachada actual o terreno y sus medidas. Opcionalmente puedes adjuntar un dibujo a mano alzada de tu idea.',
-          uploadFormats: 'PDF, PNG, JPG, DWG, DWF · Máx. 50MB',
-          pricingInput: { width: ancho, height: altura, levels: parseInt(niveles, 10), projectKind: tipo, complexity: parseFloat(complejidad?.value || '1.3'), renderOn },
-          includedHighlights: [
-            `Nivel de diseño ${complejidadNombre}`,
-            '3 propuestas distintas de fachada',
-            'Diseño estético y funcional con selección de materiales',
-            ...(renderOn ? ['3 renders hiperrealistas de la propuesta elegida'] : [])
-          ]
-        };
-      }
-
-      return {
-        category: tipoProyecto || 'Proyecto',
-        packageCode: '',
-        packageName: tipoProyecto || 'Proyecto Evolution Design',
-        shortPackageName: tipoProyecto || 'Proyecto',
-        specs: [],
-        uploadTitle: 'Archivos Requeridos',
-        uploadCopy: 'Sube los archivos y referencias necesarios para iniciar tu proyecto.',
-        uploadFormats: 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB',
-        includedHighlights: []
-      };
-    }
-
-    // La creación/captura del pago y la creación del proyecto se realizan en
-    // Cloud Functions. El navegador ya no puede crear proyectos pagados por sí solo.
-    async function crearOrdenSegura(tipoProyecto, checkoutCurrency) {
-      const projectConfig = capturarConfiguracionProyecto(tipoProyecto);
-      if (!projectConfig || !projectConfig.pricingInput) throw new Error('No se pudo leer la configuración de la cotización.');
-      const response = await createPayPalOrderCallable({
-        type: tipoProyecto,
-        projectInput: projectConfig.pricingInput,
-        requestedCurrency: checkoutCurrency,
-        clientGeo: window.evolutionGeo ? { city:window.evolutionGeo.city||'', region:window.evolutionGeo.region||'', country:window.evolutionGeo.country||'', countryCode:window.evolutionGeo.countryCode||'', currency:window.evolutionGeo.currency||'' } : {}
-      });
-      return response.data;
-    }
-
-    async function capturarOrdenSegura(orderId) {
-      const response = await capturePayPalOrderCallable({ orderId });
-      return response.data;
-    }
-
-    const PAYPAL_CLIENT_ID = 'BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20';
-    const PAYPAL_SUPPORTED_CURRENCIES = new Set([
-      'AUD','BRL','CAD','CNY','CZK','DKK','EUR','HKD','HUF','ILS','JPY','MYR','MXN','TWD','NZD','NOK','PHP','PLN','GBP','SGD','SEK','CHF','THB','USD'
-    ]);
-    const PAYPAL_ZERO_DECIMAL = new Set(['JPY','HUF','TWD']);
-    const paypalSdkPromises = {};
-
-    function getPayPalCheckoutCurrency() {
-      const selected = String(window.currentCurrency || 'USD').toUpperCase();
-      return PAYPAL_SUPPORTED_CURRENCIES.has(selected) ? selected : 'USD';
-    }
-
-    function updatePayPalCurrencyLabels(currency) {
-      document.querySelectorAll('.paypal-billing-currency').forEach(el => { el.textContent = currency; });
-    }
-
-    function loadPayPalSDK(currency) {
-      currency = String(currency || 'USD').toUpperCase();
-      const namespace = `paypal_${currency}`;
-      if (window[namespace] && window[namespace].Buttons) return Promise.resolve(window[namespace]);
-      if (paypalSdkPromises[currency]) return paypalSdkPromises[currency];
-
-      paypalSdkPromises[currency] = new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=${encodeURIComponent(currency)}&components=buttons&intent=capture`;
-        script.async = true;
-        script.setAttribute('data-namespace', namespace);
-        script.onload = () => window[namespace] && window[namespace].Buttons ? resolve(window[namespace]) : reject(new Error('PayPal SDK no expuso Buttons.'));
-        script.onerror = () => reject(new Error('No se pudo cargar PayPal SDK.'));
-        document.head.appendChild(script);
-      });
-      return paypalSdkPromises[currency];
-    }
-
-    function getConvertedCheckoutAmount(baseUsd, currency) {
-      const rates = window.exchangeRates || {};
-      const rate = rates[currency] && Number(rates[currency].rate) ? Number(rates[currency].rate) : 1;
-      const converted = Number(baseUsd || 0) * rate;
-      return PAYPAL_ZERO_DECIMAL.has(currency) ? String(Math.round(converted)) : converted.toFixed(2);
-    }
-
-    function setCurrencyNote(selector, displayCurrency, checkoutCurrency) {
-      const target = document.querySelector(selector);
-      if (!target) return;
-      const card = target.closest('.paypal-white-card');
-      if (!card) return;
-      let note = card.querySelector('.paypal-currency-note');
-      if (!note) {
-        note = document.createElement('div');
-        note.className = 'paypal-currency-note';
-        card.appendChild(note);
-      }
-      if (displayCurrency === checkoutCurrency) {
-        note.innerHTML = `Cobro procesado en <strong>${checkoutCurrency}</strong>.`;
-      } else {
-        note.innerHTML = `Tus precios se muestran en <strong>${displayCurrency}</strong>. Esta divisa no está disponible para cobro directo en PayPal, por lo que el pago se procesa en <strong>${checkoutCurrency}</strong>.`;
-      }
-    }
-
-    async function renderizarBotonPayPal(monto, selector, tipoProyecto) {
-      try {
-        if (window.currencyReadyPromise) await window.currencyReadyPromise.catch(() => {});
-        const displayCurrency = String(window.currentCurrency || 'USD').toUpperCase();
-        const checkoutCurrency = getPayPalCheckoutCurrency();
-        updatePayPalCurrencyLabels(checkoutCurrency);
-        setCurrencyNote(selector, displayCurrency, checkoutCurrency);
-        const paypalSDK = await loadPayPalSDK(checkoutCurrency);
-
-        const target = document.querySelector(selector);
-        if (target) target.innerHTML = '';
-
-        return paypalSDK.Buttons({
-          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay', height: 45 },
-          createOrder: async function() {
-            if (!window.evolutionCurrentUser?.uid) {
-              throw new Error('Debes iniciar sesión antes de pagar.');
-            }
-            const serverOrder = await crearOrdenSegura(tipoProyecto, checkoutCurrency);
-            if (!serverOrder?.orderId) throw new Error('El servidor no devolvió una orden válida.');
-            return serverOrder.orderId;
-          },
-          onApprove: async function(data) {
-            try {
-              const result = await capturarOrdenSegura(data.orderID);
-              if (!result?.projectId) throw new Error('El pago fue capturado pero no se creó el proyecto.');
-              window.location.href = 'proyectos.html';
-            } catch (error) {
-              console.error('Error capturando pago en servidor:', error);
-              alert('PayPal aprobó la operación, pero no pudimos finalizar el registro del proyecto. No vuelvas a pagar; contáctanos con tu ID de orden de PayPal.');
-            }
-          },
-          onCancel: function() {
-            console.info('Pago cancelado por el cliente.');
-          },
-          onError: function(err) {
-            console.error('Error de PayPal:', err);
-            alert('No fue posible completar el pago. Revisa tu conexión e inténtalo nuevamente.');
-          }
-        }).render(selector);
-      } catch (err) {
-        console.error('No se pudo inicializar PayPal/Firebase:', err);
-        alert('No se pudo preparar el pago seguro. Verifica que Firebase Functions esté desplegado y vuelve a intentarlo.');
-      }
-    }
-
-    window.renderizarPayPal3D = function(monto, selector) {
-      renderizarBotonPayPal(monto, selector, 'Visualización 3D');
-    };
-
-    window.renderizarPayPal2D = function(monto, selector) {
-      renderizarBotonPayPal(monto, selector, 'Planos 2D');
-    };
-
-    window.renderizarPayPalFachada = function(monto, selector) {
-      renderizarBotonPayPal(monto, selector, 'Diseño de Fachada');
-    };
-  </script>
-
-  <!-- JS DIFERIDO PARA MAYOR VELOCIDAD -->
-  <script src="js/bootstrap.bundle.min.js" defer></script>
-  <script src="js/aos.js" defer></script>
-  <script> document.addEventListener("DOMContentLoaded", function() { AOS.init({ duration: 800 }); }); </script>
-</body>
-</html>
+            if(btnProceder2D) btnProceder2D.style.display =Soy una IA basada en texto y no tengo esa capacidad.
