@@ -2011,9 +2011,9 @@
           if(instrucciones3D) {
             instrucciones3D.style.display = 'block';
             if (servicioVal === 'basico') {
-                instrucciones3D.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que compartas el enlace de tu archivo 2D (PDF, AutoCAD DWG/DWF, o una foto clara de tu plano).`;
+                instrucciones3D.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas tu archivo 2D (PDF, AutoCAD DWG/DWF, o una foto clara de tu plano).`;
             } else if (servicioVal === 'profesional' || servicioVal === 'premium') {
-                instrucciones3D.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que compartas el enlace de tu archivo 2D (PDF, AutoCAD DWG/DWF, o foto de tu plano). Además, por tu tarifa, requerimos <strong>fotografías de referencia del lugar</strong> para el hiperrealismo.`;
+                instrucciones3D.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas tu archivo 2D (PDF, AutoCAD DWG/DWF, o foto de tu plano). Además, por tu tarifa, requerimos <strong>fotografías de referencia del lugar</strong> para el hiperrealismo.`;
             } else {
                 instrucciones3D.style.display = 'none';
             }
@@ -2140,7 +2140,7 @@
 
         if(instrucciones2D && areaTotal > 0) {
             instrucciones2D.style.display = 'block';
-            instrucciones2D.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que compartas un enlace con una foto de tu <strong>dibujo a mano alzada</strong> con medidas.`;
+            instrucciones2D.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una foto de tu <strong>dibujo a mano alzada</strong> con medidas.`;
         }
       }
       
@@ -2268,9 +2268,9 @@
         if(instruccionesFachada && area > 0) {
             instruccionesFachada.style.display = 'block';
             if(renderOn) {
-                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que compartas un enlace con una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea). Además, por los renders hiperrealistas, necesitamos <strong>fotos claras del terreno</strong>.`;
+                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea). Además, por los renders hiperrealistas, necesitamos <strong>fotos claras del terreno</strong>.`;
             } else {
-                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que compartas un enlace con una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea).`;
+                instruccionesFachada.innerHTML = `<strong>Después del pago:</strong> serás redirigido a 'Mis Proyectos' para que subas una <strong>foto de tu fachada actual y medidas</strong> (opcional: dibujo a mano alzada de tu idea).`;
             }
         } else if (instruccionesFachada) {
             instruccionesFachada.style.display = 'none';
@@ -2340,6 +2340,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
+    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",
@@ -2352,10 +2353,10 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
     const functions = getFunctions(app, 'us-central1');
     const createPayPalOrderCallable = httpsCallable(functions, 'createPayPalOrder');
     const capturePayPalOrderCallable = httpsCallable(functions, 'capturePayPalOrder');
-    const syncClientProfileCallable = httpsCallable(functions, 'syncClientProfile');
     const providerGoogle = new GoogleAuthProvider();
 
     // FUNCIÓN GLOBAL PARA CERRAR SESIÓN Y REINICIAR LAS CALCULADORAS
@@ -2476,9 +2477,22 @@
       } : null;
 
       if (user) {
-        Promise.resolve(window.currencyReadyPromise).catch(()=>{}).finally(() => {
+        Promise.resolve(window.currencyReadyPromise).catch(()=>{}).finally(async () => {
           const g = window.evolutionGeo || {};
-          syncClientProfileCallable({ geo:{ city:g.city||'', region:g.region||'', country:g.country||'', countryCode:g.countryCode||'', currency:g.currency||'' } }).catch(err => console.info('Perfil Firebase no sincronizado:', err?.message || err));
+          try {
+            const profileRef = doc(db, 'users', user.uid);
+            await setDoc(profileRef, {
+              uid:user.uid,
+              email:user.email || '',
+              displayName:user.displayName || '',
+              photoURL:user.photoURL || '',
+              lastGeo:{ city:g.city||'', region:g.region||'', country:g.country||'', countryCode:g.countryCode||'', currency:g.currency||'' },
+              lastSeenAt:serverTimestamp(),
+              updatedAt:serverTimestamp()
+            }, { merge:true });
+          } catch(err) {
+            console.info('Perfil Firestore no sincronizado:', err?.message || err);
+          }
         });
       }
 
@@ -2618,7 +2632,7 @@
           ],
           uploadTitle: 'Archivos Requeridos',
           uploadCopy: 'Sube tu archivo AutoCAD (DWG/DWF), PDF de medidas o una imagen clara de tu dibujo/plano.',
-          uploadFormats: 'Google Drive · MEGA · MediaFire',
+          uploadFormats: 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB',
           pricingInput: { width: ancho, length: largo, levels: niveles, packageCode: paquete },
           includedHighlights: premium ? [
             'Arquitectura minimalista contemporánea de alta gama',
@@ -2688,8 +2702,8 @@
             { label: 'Niveles', value: `${niveles}` },
             { label: 'Área total', value: `${area.toFixed(2)} m²` }
           ],
-          uploadTitle: 'Enlaces de archivos requeridos',
-          uploadFormats: 'Google Drive · MEGA · MediaFire',
+          uploadTitle: 'Archivos Requeridos',
+          uploadFormats: 'PDF, DWG, DWF, PNG, JPG · Máx. 50MB',
           pricingInput: { width: ancho, length: largo, levels: niveles, serviceCode: servicio }
         };
       }
@@ -2720,7 +2734,7 @@
           uploadCopy: renderOn
             ? 'Sube una foto clara de la fachada o terreno y sus medidas. También puedes adjuntar un dibujo de tu idea y fotografías claras del lugar para los renders hiperrealistas.'
             : 'Sube una foto clara de tu fachada actual o terreno y sus medidas. Opcionalmente puedes adjuntar un dibujo a mano alzada de tu idea.',
-          uploadFormats: 'Google Drive · MEGA · MediaFire',
+          uploadFormats: 'PDF, PNG, JPG, DWG, DWF · Máx. 50MB',
           pricingInput: { width: ancho, height: altura, levels: parseInt(niveles, 10), projectKind: tipo, complexity: parseFloat(complejidad?.value || '1.3'), renderOn },
           includedHighlights: [
             `Nivel de diseño ${complejidadNombre}`,
