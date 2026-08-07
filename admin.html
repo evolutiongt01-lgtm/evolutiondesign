@@ -53,17 +53,62 @@
 }
 .modal-back{position:fixed;inset:0;background:rgba(0,0,0,.74);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:100;display:none;align-items:flex-start;justify-content:flex-end}.modal-back.show{display:flex}
 .drawer{
-  width:min(1080px,97vw);
+  width:min(1120px,98vw);
   height:100vh;
   height:100dvh;
-  background:#09090a;
+  background:radial-gradient(circle at 86% 2%,rgba(212,184,149,.075),transparent 22%),#09090a;
   border-left:1px solid var(--line);
   overflow:auto;
   padding:30px;
   box-shadow:-28px 0 70px rgba(0,0,0,.42);
+  transform:translateX(36px);
+  opacity:0;
+  transition:transform .34s cubic-bezier(.22,.61,.36,1),opacity .26s ease;
 }
-.drawer-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:20px}
-.drawer-title{font-size:27px;font-weight:700;letter-spacing:-.04em;line-height:1.08}
+.modal-back{opacity:0;transition:opacity .24s ease}
+.modal-back.show{opacity:1}
+.modal-back.show .drawer{transform:translateX(0);opacity:1}
+.drawer-head{
+  position:sticky;top:-30px;z-index:30;
+  display:flex;justify-content:space-between;gap:18px;align-items:flex-start;
+  margin:-30px -30px 20px;padding:24px 30px 18px;
+  border-bottom:1px solid rgba(255,255,255,.075);
+  background:rgba(9,9,10,.88);
+  backdrop-filter:blur(20px) saturate(150%);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+}
+.drawer-title{font-size:29px;font-weight:700;letter-spacing:-.045em;line-height:1.06}
+.drawer-head-actions{display:flex;align-items:center;gap:8px}
+.unsaved-pill{display:none;align-items:center;gap:7px;min-height:34px;padding:0 11px;border-radius:999px;border:1px solid rgba(233,188,101,.20);color:#e1bc71;background:rgba(233,188,101,.055);font-size:9px;font-weight:700}
+.unsaved-pill.show{display:inline-flex;animation:softPop .22s ease}
+.unsaved-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:#e9bc65;box-shadow:0 0 0 4px rgba(233,188,101,.06)}
+@keyframes softPop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes sectionIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes saveFlash{0%{box-shadow:0 0 0 rgba(57,212,119,0)}45%{box-shadow:0 0 0 8px rgba(57,212,119,.06)}100%{box-shadow:0 0 0 rgba(57,212,119,0)}}
+.drawer .section{animation:sectionIn .34s ease both}
+.drawer .section:nth-of-type(1){animation-delay:.03s}.drawer .section:nth-of-type(2){animation-delay:.07s}.drawer .section:nth-of-type(3){animation-delay:.11s}.drawer .section:nth-of-type(4){animation-delay:.15s}.drawer .section:nth-of-type(5){animation-delay:.19s}
+.section{transition:transform .2s ease,border-color .2s ease,background .2s ease}
+.section:hover{border-color:rgba(255,255,255,.13)}
+.financial-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 16px}
+.financial-card{position:relative;overflow:hidden;min-width:0;padding:15px;border:1px solid rgba(255,255,255,.075);border-radius:14px;background:linear-gradient(155deg,rgba(255,255,255,.035),rgba(255,255,255,.012))}
+.financial-card::after{content:'';position:absolute;right:-22px;bottom:-28px;width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.025)}
+.financial-card.profit{border-color:rgba(212,184,149,.18);background:linear-gradient(155deg,rgba(212,184,149,.075),rgba(255,255,255,.012))}
+.financial-card span{display:block;color:#707076;font-size:8px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.financial-card strong{display:block;color:#f6f6f4;font-size:18px;letter-spacing:-.035em;position:relative;z-index:2;transition:transform .18s ease,color .18s ease}
+.financial-card.updated strong{transform:scale(1.035);color:#e2c7a5}
+.price-field-wrap{position:relative}.price-prefix{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#777;font-size:12px;pointer-events:none}.price-field-wrap .input{padding-left:28px!important}
+.save-project-btn{min-width:180px;position:relative;overflow:hidden;transition:transform .18s ease,filter .18s ease,background .18s ease}.save-project-btn:hover{transform:translateY(-1px)}.save-project-btn.saved{animation:saveFlash .55s ease;background:#57d888!important;border-color:#57d888!important}
+.form-actions.sticky-actions{position:sticky;bottom:-30px;z-index:18;margin:18px -17px -17px;padding:13px 17px calc(13px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(255,255,255,.07);background:rgba(9,9,10,.90);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.input,.textarea,.select{transition:border-color .2s ease,box-shadow .2s ease,background .2s ease,transform .15s ease}
+.input:focus,.textarea:focus,.select:focus{border-color:rgba(212,184,149,.48);box-shadow:0 0 0 4px rgba(212,184,149,.045);background:#0d0d0e}
+.bank-like-help{margin-top:6px;color:#626268;font-size:8px;line-height:1.45}
+@media(max-width:700px){
+  .financial-grid{grid-template-columns:1fr}
+  .drawer-head{top:-15px;margin:-15px -15px 16px;padding:17px 15px 14px}
+  .drawer-head-actions{gap:5px}.unsaved-pill{display:none!important}
+  .save-project-btn{width:100%}
+  .form-actions.sticky-actions{bottom:-15px;margin:16px -13px -13px;padding:12px 13px calc(12px + env(safe-area-inset-bottom,0px))}
+}
 .drawer-close{width:40px;height:40px;min-width:40px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#aaa;cursor:pointer;font-size:18px}
 .drawer-close:hover{color:#fff;border-color:rgba(255,255,255,.22)}
 .detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-bottom:18px}
@@ -208,7 +253,10 @@
         <div id="drawerTitle" class="drawer-title">—</div>
         <div id="drawerSub" class="sub"></div>
       </div>
-      <button class="drawer-close" onclick="closeProject()" aria-label="Cerrar">×</button>
+      <div class="drawer-head-actions">
+        <div id="unsavedPill" class="unsaved-pill">Cambios sin guardar</div>
+        <button class="drawer-close" onclick="closeProject()" aria-label="Cerrar">×</button>
+      </div>
     </div>
 
     <div id="drawerDetails" class="detail-grid"></div>
@@ -219,6 +267,11 @@
         <div class="section-h-copy">Edita la información que verá el cliente y controla el estado operativo.</div>
       </div>
       <div class="section-b">
+        <div class="financial-grid">
+          <div id="financeSaleCard" class="financial-card"><span>Precio del proyecto</span><strong id="financeSale">$0.00</strong></div>
+          <div id="financeCostCard" class="financial-card"><span>Costo interno</span><strong id="financeCost">$0.00</strong></div>
+          <div id="financeProfitCard" class="financial-card profit"><span>Ganancia estimada</span><strong id="financeProfit">$0.00</strong></div>
+        </div>
         <div class="form-grid">
           <div class="field full">
             <label>Título del proyecto</label>
@@ -255,8 +308,15 @@
           </div>
 
           <div class="field">
+            <label>Precio del proyecto USD</label>
+            <div class="price-field-wrap"><span class="price-prefix">$</span><input id="editPrice" class="input" type="number" min="0" step="0.01" inputmode="decimal"></div>
+            <div class="bank-like-help">Este precio se mostrará al cliente en “Mis Proyectos”.</div>
+          </div>
+
+          <div class="field">
             <label>Costo interno USD</label>
-            <input id="editCost" class="input" type="number" min="0" step="0.01">
+            <div class="price-field-wrap"><span class="price-prefix">$</span><input id="editCost" class="input" type="number" min="0" step="0.01" inputmode="decimal"></div>
+            <div class="bank-like-help">Solo visible para administración.</div>
           </div>
 
           <div class="field">
@@ -286,8 +346,8 @@
           </div>
         </div>
 
-        <div class="form-actions">
-          <button class="btn btn-accent" onclick="saveProject()">Guardar cambios</button>
+        <div class="form-actions sticky-actions">
+          <button id="saveProjectBtn" class="btn btn-accent save-project-btn" onclick="saveProject()">Guardar cambios</button>
         </div>
       </div>
     </div>
@@ -419,9 +479,30 @@ function paymentMethodCode(v){return String(v||'PAGO').normalize('NFD').replace(
 
 window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',projects:'Proyectos y órdenes',clients:'Clientes',custom:'Nueva orden personalizada'}[v]||v};
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
-document.addEventListener('input',e=>{if(e.target?.id==='editCost'&&selected){$('editProfit').value=usd(Number(selected.baseUsd||0)-Number(e.target.value||0))}});
+function currentEditPrice(){return Math.max(0,Number($('editPrice')?.value||0))}
+function currentEditCost(){return Math.max(0,Number($('editCost')?.value||0))}
+function updateFinancialPreview(animate=true){
+  if(!selected)return;
+  const price=currentEditPrice(),cost=currentEditCost(),profit=price-cost;
+  if($('editProfit'))$('editProfit').value=usd(profit);
+  if($('financeSale'))$('financeSale').textContent=usd(price);
+  if($('financeCost'))$('financeCost').textContent=usd(cost);
+  if($('financeProfit'))$('financeProfit').textContent=usd(profit);
+  if(animate){
+    ['financeSaleCard','financeCostCard','financeProfitCard'].forEach(id=>{
+      const el=$(id);if(!el)return;el.classList.remove('updated');void el.offsetWidth;el.classList.add('updated');setTimeout(()=>el.classList.remove('updated'),220);
+    });
+  }
+}
+function setProjectDirty(dirty=true){const pill=$('unsavedPill');if(pill)pill.classList.toggle('show',!!dirty)}
+document.addEventListener('input',e=>{
+  if(!selected||!e.target?.closest('#projectModal'))return;
+  if(e.target?.id==='editPrice'||e.target?.id==='editCost')updateFinancialPreview(true);
+  if(['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName))setProjectDirty(true);
+});
 
 document.addEventListener('change',e=>{
+  if(selected&&e.target?.closest('#projectModal')&&['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName))setProjectDirty(true);
   if(e.target?.id==='clientAdminFileInput'){
     addFilesToQueue('client',e.target.files);
     e.target.value='';
@@ -611,8 +692,9 @@ window.openProject=async function(uid,id){
   $('editStatus').value=selected.status||'waiting_files';
   setProfessionalRole(selected.professionalRole||'Arquitecto');
   $('editArchitect').value=selected.architectName||'';
-  $('editCost').value=Number(selected.adminMeta?.internalCostUsd||0);
-  $('editProfit').value=usd(projectProfit(selected));
+  $('editPrice').value=Number(selected.baseUsd||0).toFixed(2);
+  $('editCost').value=Number(selected.adminMeta?.internalCostUsd||0).toFixed(2);
+  updateFinancialPreview(false);
   $('editClientComments').value=selected.clientComments||'';
   $('editDeliveryNote').value=selected.deliveryNote||'';
   $('editAdminNotes').value=selected.adminMeta?.adminNotes||'';
@@ -630,10 +712,17 @@ window.openProject=async function(uid,id){
   $('deliveryProgress').style.width='0%';
   $('clientAdminUploadStatus').textContent='';
   $('deliveryUploadStatus').textContent='';
+  setProjectDirty(false);
   $('projectModal').classList.add('show');
   await loadFiles();
 };
-window.closeProject=()=>{clearPreviewObjectUrls();$('projectModal').classList.remove('show');selected=null};$('editCost').oninput=()=>{if(selected)$('editProfit').value=usd(Number(selected.baseUsd||0)-Number($('editCost').value||0))};
+window.closeProject=()=>{
+  clearPreviewObjectUrls();
+  clearPendingSelectionUrls();
+  $('projectModal').classList.remove('show');
+  setProjectDirty(false);
+  setTimeout(()=>{selected=null},220);
+};
 
 let previewObjectUrls=[];
 function clearPreviewObjectUrls(){previewObjectUrls.forEach(url=>{try{URL.revokeObjectURL(url)}catch{}});previewObjectUrls=[]}
@@ -697,36 +786,87 @@ window.deleteR2File = async function(fileId, role, storagePath) {
 
 window.saveProject=async function(){
   if(!selected)return;
+
+  const btn=$('saveProjectBtn');
+  const defaultText='Guardar cambios';
   const newTitle=String($('editProjectTitle').value||'').trim().replace(/\s+/g,' ').slice(0,160);
+  const newPrice=currentEditPrice();
+  const newCost=currentEditCost();
+
   if(!newTitle){toast('Escribe un título para el proyecto.');$('editProjectTitle').focus();return}
+  if(!Number.isFinite(newPrice)||newPrice<0){toast('Escribe un precio válido.');$('editPrice').focus();return}
+  if(!Number.isFinite(newCost)||newCost<0){toast('Escribe un costo válido.');$('editCost').focus();return}
+
   try{
+    if(btn){btn.disabled=true;btn.textContent='Guardando…'}
+
     const uid=selected.ownerUid,id=selected.id;
     const pRef=doc(db,'users',uid,'projects',id),mRef=doc(db,'adminProjectData',`${uid}__${id}`);
+
+    const projectPatch={
+      projectTitle:newTitle,
+      baseUsd:newPrice,
+      'projectConfig.baseUsd':newPrice,
+      status:$('editStatus').value,
+      professionalRole:normalizeProfessionalRole($('editProfessionalRole').value),
+      architectName:$('editArchitect').value||'Pendiente',
+      clientComments:$('editClientComments').value||'',
+      deliveryNote:$('editDeliveryNote').value||'',
+      updatedAt:serverTimestamp()
+    };
+
+    if(String(selected.currency||'USD').toUpperCase()==='USD'){
+      projectPatch.amount=newPrice.toFixed(2);
+    }
+
     await Promise.all([
-      updateDoc(pRef,{
-        projectTitle:newTitle,
-        status:$('editStatus').value,
-        professionalRole:normalizeProfessionalRole($('editProfessionalRole').value),
-        architectName:$('editArchitect').value||'Pendiente',
-        clientComments:$('editClientComments').value||'',
-        deliveryNote:$('editDeliveryNote').value||'',
-        updatedAt:serverTimestamp()
-      }),
+      updateDoc(pRef,projectPatch),
       setDoc(mRef,{
         ownerUid:uid,
         projectId:id,
-        internalCostUsd:Number($('editCost').value||0),
+        internalCostUsd:newCost,
         adminNotes:$('editAdminNotes').value||'',
         updatedAt:serverTimestamp()
       },{merge:true})
     ]);
+
+    selected.baseUsd=newPrice;
+    selected.projectTitle=newTitle;
+    selected.adminMeta={...(selected.adminMeta||{}),internalCostUsd:newCost};
+    if(String(selected.currency||'USD').toUpperCase()==='USD')selected.amount=newPrice.toFixed(2);
+
     $('drawerTitle').textContent=newTitle;
-    toast('Proyecto actualizado.');
+    updateFinancialPreview(false);
+    setProjectDirty(false);
+
+    if(btn){
+      btn.textContent='Guardado ✓';
+      btn.classList.add('saved');
+      setTimeout(()=>{btn.classList.remove('saved');btn.textContent=defaultText},1200);
+    }
+
+    toast('Proyecto actualizado correctamente.');
     await refresh();
     selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;
+
+    $('drawerDetails').innerHTML=[
+      ['Cliente',selected.payerName||selected.ownerEmail],
+      ['País',selected.payerCountry||selected.lastGeo?.country||'No reportado'],
+      ['Venta',usd(selected.baseUsd)],
+      ['Pago',selected.paymentMethod||selected.paymentStatus],
+      ['Transacción',selected.transactionId||'Pendiente'],
+      ['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados`]
+    ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
+
   }catch(e){
     console.error(e);
     toast(e?.message||'No se pudo guardar.');
+    if(btn)btn.textContent='Error · Reintentar';
+  }finally{
+    if(btn){
+      btn.disabled=false;
+      if(btn.textContent==='Guardando…')btn.textContent=defaultText;
+    }
   }
 };
 
