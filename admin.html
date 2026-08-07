@@ -99,6 +99,61 @@
 .upload-status.ok{color:#66de95}
 .upload-status.error{color:#ff8d97}
 .batch-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;color:#777;font-size:9px}
+.selected-files-wrap{
+  display:none;
+  margin-top:12px;
+  border-top:1px solid rgba(255,255,255,.06);
+  padding-top:11px;
+}
+.selected-files-wrap.show{display:block}
+.selected-files-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:8px;color:#8a8a90;font-size:9px
+}
+.selected-files-head strong{color:#d7d7da;font-size:10px}
+.selected-files-list{display:grid;gap:8px}
+.selected-file-card{
+  display:grid;
+  grid-template-columns:70px minmax(0,1fr) auto;
+  gap:11px;
+  align-items:center;
+  padding:9px;
+  border:1px solid rgba(255,255,255,.075);
+  border-radius:12px;
+  background:rgba(0,0,0,.20);
+}
+.selected-file-preview{
+  width:70px;height:54px;border-radius:9px;overflow:hidden;
+  background:rgba(212,184,149,.055);
+  border:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:center;
+  color:#a99070;font-size:9px;font-weight:800
+}
+.selected-file-preview img{width:100%;height:100%;object-fit:cover;display:block}
+.selected-file-info{min-width:0}
+.selected-file-name{
+  font-size:10px;color:#eee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.selected-file-meta{font-size:8px;color:#68686e;margin-top:4px}
+.selected-file-remove{
+  width:30px;height:30px;border-radius:9px;border:1px solid rgba(255,102,115,.15);
+  background:rgba(255,102,115,.035);color:#ff8c95;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:15px
+}
+.selected-file-remove:hover{background:rgba(255,102,115,.09)}
+.file .file-ico{width:58px;height:48px;flex-basis:58px}
+.file .file-preview-img{border-radius:8px}
+.client-instructions-tools{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-bottom:8px
+}
+.client-instructions-tools .hint{margin:0}
+.btn-download-text{
+  border:1px solid rgba(212,184,149,.20);
+  background:rgba(212,184,149,.055);
+  color:#d4b895;
+}
+.btn-download-text:hover{background:rgba(212,184,149,.10);color:#fff}
 .danger-zone{border-color:rgba(255,102,115,.16)}
 #editProjectTitle{font-weight:700;font-size:14px}
 .drawer .input,.drawer .textarea{font-size:12px;padding:12px 13px;border-radius:11px}
@@ -122,6 +177,10 @@
   .file{flex-wrap:wrap}
   .file-info{min-width:calc(100% - 55px)}
   .drawer .input,.drawer .textarea{font-size:16px}
+  .selected-file-card{grid-template-columns:62px minmax(0,1fr) auto}
+  .selected-file-preview{width:62px;height:50px}
+  .client-instructions-tools{align-items:stretch;flex-direction:column}
+  .btn-download-text{width:100%}
 }
 
 .toast{position:fixed;right:22px;bottom:22px;z-index:500;max-width:360px;padding:11px 13px;border-radius:11px;background:#151516;border:1px solid var(--line);font-size:10px;color:#ddd;box-shadow:0 15px 50px rgba(0,0,0,.5);display:none}.toast.show{display:block}.loading{padding:40px;text-align:center;color:#777;font-size:11px}
@@ -206,6 +265,17 @@
           </div>
 
           <div class="field full">
+            <div class="client-instructions-tools">
+              <div>
+                <label style="margin-bottom:4px">Indicaciones del cliente</label>
+                <div class="hint">Puedes complementar aquí instrucciones recibidas por WhatsApp, llamada o presencialmente.</div>
+              </div>
+              <button type="button" class="btn btn-download-text" onclick="downloadClientInstructionsTxt()">Descargar indicaciones .TXT</button>
+            </div>
+            <textarea id="editClientComments" class="textarea" placeholder="Ej. Mantener la escalera actual, fachada en tonos grises, incluir mobiliario..."></textarea>
+          </div>
+
+          <div class="field full">
             <label>Nota de entrega para el cliente</label>
             <textarea id="editDeliveryNote" class="textarea"></textarea>
           </div>
@@ -242,13 +312,17 @@
             <div class="field">
               <label>Fotos / archivos recibidos</label>
               <input id="clientAdminFileInput" class="input" type="file" multiple accept="image/*,.pdf,.dwg,.dxf,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx,.txt">
-              <div class="hint">Puedes seleccionar varios archivos al mismo tiempo.</div>
+              <div class="hint">Puedes elegir varios de una vez o volver a pulsar “Elegir archivos” para ir agregando más.</div>
             </div>
             <div class="field">
               <label>Nota opcional</label>
               <input id="clientAdminLabel" class="input" placeholder="Ej. Recibido por WhatsApp">
             </div>
             <button id="clientAdminUploadBtn" class="btn btn-accent" onclick="uploadClientFilesAdmin()">Agregar archivos</button>
+          </div>
+          <div id="clientSelectedFilesWrap" class="selected-files-wrap">
+            <div class="selected-files-head"><strong>Archivos preparados</strong><span id="clientSelectedCount">0 archivos</span></div>
+            <div id="clientSelectedFiles" class="selected-files-list"></div>
           </div>
           <div class="upload-progress"><span id="clientAdminProgress"></span></div>
           <div id="clientAdminUploadStatus" class="upload-status"></div>
@@ -268,13 +342,17 @@
             <div class="field">
               <label>Archivos finales</label>
               <input id="deliveryFileInput" class="input" type="file" multiple>
-              <div class="hint">Máximo 500 MB por archivo. Puedes seleccionar varios.</div>
+              <div class="hint">Máximo 500 MB por archivo. Puedes seleccionar varios o agregarlos en varias tandas antes de enviar.</div>
             </div>
             <div class="field">
               <label>Etiqueta general opcional</label>
               <input id="deliveryLabel" class="input" placeholder="Ej. Entrega final">
             </div>
             <button id="deliveryUploadBtn" class="btn btn-accent" onclick="uploadDelivery()">Subir y enviar</button>
+          </div>
+          <div id="deliverySelectedFilesWrap" class="selected-files-wrap">
+            <div class="selected-files-head"><strong>Archivos preparados</strong><span id="deliverySelectedCount">0 archivos</span></div>
+            <div id="deliverySelectedFiles" class="selected-files-list"></div>
           </div>
           <div class="upload-progress"><span id="deliveryProgress"></span></div>
           <div id="deliveryUploadStatus" class="upload-status"></div>
@@ -323,6 +401,9 @@ const cfg={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolutio
 const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
 const ADMIN_EMAILS=new Set(['evolutiongt01@gmail.com','tepaz2025@gmail.com']);
 let data={metrics:{},clients:[],projects:[],countries:[]},selected=null;
+let pendingClientAdminFiles=[];
+let pendingDeliveryFiles=[];
+let pendingSelectionUrls=[];
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function usd(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Number(n||0))}
@@ -339,6 +420,17 @@ function paymentMethodCode(v){return String(v||'PAGO').normalize('NFD').replace(
 window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',projects:'Proyectos y órdenes',clients:'Clientes',custom:'Nueva orden personalizada'}[v]||v};
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
 document.addEventListener('input',e=>{if(e.target?.id==='editCost'&&selected){$('editProfit').value=usd(Number(selected.baseUsd||0)-Number(e.target.value||0))}});
+
+document.addEventListener('change',e=>{
+  if(e.target?.id==='clientAdminFileInput'){
+    addFilesToQueue('client',e.target.files);
+    e.target.value='';
+  }
+  if(e.target?.id==='deliveryFileInput'){
+    addFilesToQueue('delivery',e.target.files);
+    e.target.value='';
+  }
+});
 
 function renderMetrics(){const m=data.metrics||{};$('metrics').innerHTML=[['Clientes',m.clients,'registrados'],['Proyectos',m.projects,'total'],['Activos',m.active,'en operación'],['Ingresos',usd(m.grossRevenueUsd),'normalizado USD'],['Costos',usd(m.internalCostUsd),'internos'],['Ganancia',usd(m.profitUsd),'ingresos - costos']].map((x,i)=>`<div class="metric ${i===5?'profit':''}"><div class="metric-label">${x[0]}</div><div class="metric-value">${x[1]??0}</div><div class="metric-sub">${x[2]}</div></div>`).join('')}
 function projectRow(p){return `<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)} · ${esc(p.transactionId||'sin transacción')}</div></td><td><div>${esc(p.payerName||p.ownerEmail||'Cliente')}</div><div class="sub">${esc(p.ownerEmail||'')}</div></td><td>${esc(p.payerCountry||p.lastGeo?.country||'No reportado')}</td><td><span class="strong">${usd(p.baseUsd)}</span><div class="sub">${esc(p.currency||'USD')} ${esc(p.amount||'')}</div></td><td><span class="strong">${usd(projectProfit(p))}</span><div class="sub">Costo ${usd(p.adminMeta?.internalCostUsd)}</div></td><td>${pill(p.status)}</td><td>${Number(p.clientFileCount||0)} recibidos · ${Number(p.deliveryFileCount||0)} enviados</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`}
@@ -521,13 +613,19 @@ window.openProject=async function(uid,id){
   $('editArchitect').value=selected.architectName||'';
   $('editCost').value=Number(selected.adminMeta?.internalCostUsd||0);
   $('editProfit').value=usd(projectProfit(selected));
+  $('editClientComments').value=selected.clientComments||'';
   $('editDeliveryNote').value=selected.deliveryNote||'';
   $('editAdminNotes').value=selected.adminMeta?.adminNotes||'';
   $('includedList').innerHTML=(selected.projectConfig?.includedHighlights||[]).map(x=>`<span>${esc(x)}</span>`).join('')||'<span>Orden personalizada</span>';
+  pendingClientAdminFiles=[];
+  pendingDeliveryFiles=[];
+  clearPendingSelectionUrls();
   $('clientAdminFileInput').value='';
   $('clientAdminLabel').value='';
   $('deliveryFileInput').value='';
   $('deliveryLabel').value='';
+  renderPendingFiles('client');
+  renderPendingFiles('delivery');
   $('clientAdminProgress').style.width='0%';
   $('deliveryProgress').style.width='0%';
   $('clientAdminUploadStatus').textContent='';
@@ -610,6 +708,7 @@ window.saveProject=async function(){
         status:$('editStatus').value,
         professionalRole:normalizeProfessionalRole($('editProfessionalRole').value),
         architectName:$('editArchitect').value||'Pendiente',
+        clientComments:$('editClientComments').value||'',
         deliveryNote:$('editDeliveryNote').value||'',
         updatedAt:serverTimestamp()
       }),
@@ -632,6 +731,47 @@ window.saveProject=async function(){
 };
 
 
+
+window.downloadClientInstructionsTxt=function(){
+  if(!selected)return;
+  const comments=String($('editClientComments').value||'').trim();
+  const title=String($('editProjectTitle').value||selected.projectTitle||'Proyecto').trim();
+  const order=selected.displayOrderId||selected.id||'';
+  const client=selected.payerName||selected.ownerEmail||'Cliente';
+  const email=selected.ownerEmail||'';
+  const generated=new Date().toLocaleString('es-GT');
+
+  const body=[
+    'EVOLUTION DESIGN',
+    'INDICACIONES DEL CLIENTE',
+    '========================================',
+    `Proyecto: ${title}`,
+    `Orden: ${order}`,
+    `Cliente: ${client}`,
+    email?`Correo: ${email}`:'',
+    `Generado: ${generated}`,
+    '========================================',
+    '',
+    comments||'No hay indicaciones registradas.',
+    '',
+    '========================================',
+    'Documento generado desde Evolution Design Admin.'
+  ].filter(Boolean).join('\r\n');
+
+  const blob=new Blob([body],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const safe=title.replace(/[^\p{L}\p{N}._-]+/gu,'_').replace(/^_+|_+$/g,'').slice(0,80)||'proyecto';
+  a.href=url;
+  a.download=`Indicaciones_${safe}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1200);
+  toast('Indicaciones descargadas en TXT.');
+};
+
+
 function safeR2Name(name){
   return String(name||'archivo').replace(/[\\/]+/g,'_').replace(/[\u0000-\u001f]/g,'').slice(-180);
 }
@@ -644,6 +784,70 @@ function setUploadState(statusId,message,type=''){
   el.className=`upload-status ${type}`.trim();
   el.textContent=message||'';
 }
+
+function clearPendingSelectionUrls(){
+  pendingSelectionUrls.forEach(url=>{try{URL.revokeObjectURL(url)}catch{}});
+  pendingSelectionUrls=[];
+}
+function pendingFileKey(file){
+  return `${file.name}__${file.size}__${file.lastModified}`;
+}
+function addFilesToQueue(kind,fileList){
+  const target=kind==='client'?pendingClientAdminFiles:pendingDeliveryFiles;
+  const existing=new Set(target.map(pendingFileKey));
+  [...(fileList||[])].forEach(file=>{
+    const key=pendingFileKey(file);
+    if(!existing.has(key)){
+      target.push(file);
+      existing.add(key);
+    }
+  });
+  renderPendingFiles(kind);
+}
+function removeQueuedFile(kind,index){
+  const target=kind==='client'?pendingClientAdminFiles:pendingDeliveryFiles;
+  target.splice(index,1);
+  renderPendingFiles(kind);
+}
+window.removeQueuedFile=removeQueuedFile;
+
+function localFilePreview(file){
+  const image=String(file.type||'').startsWith('image/')||/\.(jpe?g|png|webp|gif|avif|bmp)$/i.test(file.name||'');
+  if(image){
+    const url=URL.createObjectURL(file);
+    pendingSelectionUrls.push(url);
+    return `<div class="selected-file-preview"><img src="${url}" alt=""></div>`;
+  }
+  const ext=String(file.name||'FILE').split('.').pop().slice(0,5).toUpperCase();
+  return `<div class="selected-file-preview">${esc(ext)}</div>`;
+}
+function renderPendingFiles(kind){
+  clearPendingSelectionUrls();
+  const files=kind==='client'?pendingClientAdminFiles:pendingDeliveryFiles;
+  const wrap=$(kind==='client'?'clientSelectedFilesWrap':'deliverySelectedFilesWrap');
+  const list=$(kind==='client'?'clientSelectedFiles':'deliverySelectedFiles');
+  const count=$(kind==='client'?'clientSelectedCount':'deliverySelectedCount');
+  if(!wrap||!list||!count)return;
+
+  count.textContent=`${files.length} archivo${files.length===1?'':'s'}`;
+  wrap.classList.toggle('show',files.length>0);
+  list.innerHTML=files.map((file,index)=>`
+    <div class="selected-file-card">
+      ${localFilePreview(file)}
+      <div class="selected-file-info">
+        <div class="selected-file-name">${esc(file.name)}</div>
+        <div class="selected-file-meta">${bytes(file.size)} · ${esc(file.type||'Tipo desconocido')}</div>
+      </div>
+      <button type="button" class="selected-file-remove" onclick="removeQueuedFile('${kind}',${index})" title="Quitar">×</button>
+    </div>
+  `).join('');
+}
+function resetPendingFiles(kind){
+  if(kind==='client')pendingClientAdminFiles=[];
+  else pendingDeliveryFiles=[];
+  renderPendingFiles(kind);
+}
+
 async function uploadR2ProjectFile({file,role,label,source,onProgress}){
   if(!selected)throw new Error('No hay proyecto seleccionado.');
   if(!s3)throw new Error('No hay conexión a Cloudflare R2.');
@@ -701,8 +905,8 @@ async function uploadR2ProjectFile({file,role,label,source,onProgress}){
 window.uploadClientFilesAdmin=async function(){
   if(!selected)return;
   const input=$('clientAdminFileInput');
-  const files=[...(input.files||[])];
-  if(!files.length){toast('Selecciona una o varias fotos/archivos.');return}
+  const files=[...pendingClientAdminFiles];
+  if(!files.length){toast('Agrega una o varias fotos/archivos a la lista.');return}
 
   const tooLarge=files.find(f=>f.size>500*1024*1024);
   if(tooLarge){toast(`${tooLarge.name} supera 500 MB.`);return}
@@ -757,6 +961,7 @@ window.uploadClientFilesAdmin=async function(){
     }
 
     input.value='';
+    resetPendingFiles('client');
     $('clientAdminLabel').value='';
     bar.style.width='100%';
     setUploadState('clientAdminUploadStatus',`${success} archivo${success===1?'':'s'} agregado${success===1?'':'s'} correctamente.`,'ok');
@@ -779,8 +984,8 @@ window.uploadDelivery=async function(){
   if(!selected)return;
 
   const input=$('deliveryFileInput');
-  const files=[...(input.files||[])];
-  if(!files.length){toast('Selecciona uno o varios archivos finales.');return}
+  const files=[...pendingDeliveryFiles];
+  if(!files.length){toast('Agrega uno o varios archivos finales a la lista.');return}
 
   const tooLarge=files.find(f=>f.size>500*1024*1024);
   if(tooLarge){toast(`${tooLarge.name} supera 500 MB.`);return}
@@ -827,6 +1032,7 @@ window.uploadDelivery=async function(){
 
     selected.deliveryFileCount=Number(selected.deliveryFileCount||0)+success;
     input.value='';
+    resetPendingFiles('delivery');
     $('deliveryLabel').value='';
     bar.style.width='100%';
     setUploadState('deliveryUploadStatus',`${success} archivo${success===1?'':'s'} enviado${success===1?'':'s'} al cliente.`,'ok');
