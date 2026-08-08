@@ -1368,6 +1368,69 @@
   .service-mini-body{padding:.9rem}
 }
 
+
+/* =========================================================
+   PORTAL PROFESIONAL · ESTADOS Y DATOS ESENCIALES
+   ========================================================= */
+.service-mini-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:.8rem;
+  margin-bottom:.8rem;
+}
+.service-mini-head-copy{min-width:0}
+.service-mini-kicker{
+  display:block;margin-bottom:.22rem;color:var(--accent);
+  font-size:.55rem;font-weight:800;letter-spacing:.10em;text-transform:uppercase;
+}
+.service-mini-title{margin:0!important}
+.service-status-row{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end}
+.service-status-pill{
+  display:inline-flex;align-items:center;gap:.38rem;min-height:27px;
+  padding:.34rem .55rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(255,255,255,.025);
+  color:#aaa;font-size:.56rem;font-weight:800;white-space:nowrap;
+}
+.service-status-pill::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:#777;
+}
+.service-status-pill.paid,.service-status-pill.active{
+  color:#72dfa0;border-color:rgba(43,200,102,.22);background:rgba(43,200,102,.055)
+}
+.service-status-pill.paid::before,.service-status-pill.active::before{background:#2bc866}
+.service-status-pill.review,.service-status-pill.pending{
+  color:#e2bf76;border-color:rgba(233,188,101,.22);background:rgba(233,188,101,.055)
+}
+.service-status-pill.review::before,.service-status-pill.pending::before{background:#e9bc65}
+.service-status-pill.rejected,.service-status-pill.cancelled,.service-status-pill.expired{
+  color:#ff8f99;border-color:rgba(255,102,115,.22);background:rgba(255,102,115,.055)
+}
+.service-status-pill.rejected::before,.service-status-pill.cancelled::before,.service-status-pill.expired::before{background:#ff6673}
+.service-status-pill.progress{
+  color:#91cfff;border-color:rgba(96,177,255,.20);background:rgba(96,177,255,.05)
+}
+.service-status-pill.progress::before{background:#68b6ff}
+.service-mini-row strong.status-good{color:#72dfa0}
+.service-mini-row strong.status-warn{color:#e2bf76}
+.service-mini-row strong.status-bad{color:#ff8f99}
+.service-mini-primary{
+  margin:.85rem 0 .1rem;padding:.78rem .85rem;
+  border:1px solid rgba(212,184,149,.13);border-radius:13px;
+  background:rgba(212,184,149,.035);
+}
+.service-mini-primary .service-mini-row{padding:.48rem 0}
+.service-mini-divider{height:1px;background:var(--line-soft);margin:.75rem 0}
+.service-mini-receipt-empty strong{display:block;color:#bcbcc0;font-size:.72rem;margin-bottom:.3rem}
+.subscription-renewal-note{
+  margin-top:.7rem;padding:.65rem .72rem;border-radius:11px;
+  border:1px solid rgba(212,184,149,.10);background:rgba(212,184,149,.025);
+  color:#8b8b90;font-size:.60rem;line-height:1.5;
+}
+@media(max-width:575.98px){
+  .service-mini-head{display:block}
+  .service-status-row{justify-content:flex-start;margin-top:.65rem}
+  .service-mini-row{gap:.65rem}
+  .service-mini-row strong{max-width:58%}
+}
+
 </style>
   </head>
 
@@ -1572,6 +1635,35 @@
         }catch(e){console.error('Comprobante:',e);return'';}
       }
 
+      function paymentStatePortal(record){
+        const raw=String(record?.paymentStatus||'').toLowerCase();
+        if(raw==='paid'||(!raw&&record?.transactionId))return {label:'Pago confirmado',cls:'paid',tone:'status-good'};
+        if(raw==='pending_review')return {label:'Pago en revisión',cls:'review',tone:'status-warn'};
+        if(raw==='rejected')return {label:'Pago rechazado',cls:'rejected',tone:'status-bad'};
+        if(raw==='pending'||raw==='awaiting_payment')return {label:'Pago pendiente',cls:'pending',tone:'status-warn'};
+        return {label:'Estado no disponible',cls:'pending',tone:'status-warn'};
+      }
+
+      function webProjectStatePortal(p){
+        const raw=String(p?.status||'waiting_files').toLowerCase();
+        const map={
+          awaiting_payment:['Esperando pago','pending'],
+          waiting_files:['Esperando contenido','pending'],
+          files_received:['Contenido recibido','progress'],
+          assigned:['Diseñador asignado','progress'],
+          in_progress:['En desarrollo','progress'],
+          review:['En revisión','progress'],
+          delivered:['Entregado','active'],
+          cancelled:['Cancelado','cancelled']
+        };
+        const [label,cls]=map[raw]||['En proceso','progress'];
+        return {label,cls};
+      }
+
+      function webOrderReference(p){
+        return p?.displayOrderId||p?.paypalOrderId||p?.manualPaymentReference||p?.transactionId||'—';
+      }
+
       function renderWebProjectsMinimal(projects){
         const host=document.getElementById('web-receipts-container');
         if(!host)return 0;
@@ -1582,21 +1674,51 @@
 
         host.innerHTML=projects.map(p=>{
           const receiptUrl=firstReceiptImage(p);
+          const payment=paymentStatePortal(p);
+          const projectState=webProjectStatePortal(p);
           const designer=p.architectName&&p.architectName!=='Pendiente'?p.architectName:'Pendiente de asignar';
           const role=String(p.professionalRole||'').toLowerCase().includes('web')?p.professionalRole:'Desarrollador Web Full-Stack';
           const contact=p?.webBrief?.phone||p?.phone||p?.payerPhone||'No registrado';
           const delivery=webDeliveryPortal(p);
+          const plan=p?.webPlanName||p?.projectConfig?.packageName||p?.projectConfig?.shortPackageName||'Diseño Web';
+          const amount=money(p?.baseUsd||p?.amount||0,'USD');
+          const method=p?.paymentMethod||'No registrado';
+          const tx=p?.manualPaymentReference||p?.paypalTransactionId||p?.transactionId||'—';
+          const order=webOrderReference(p);
+
           return `<article class="service-mini-card">
             <div class="service-mini-receipt">
-              ${receiptUrl?`<img src="${esc(receiptUrl)}" alt="Comprobante de pago de Diseño Web" loading="lazy">`:`<div class="service-mini-receipt-empty">Este pago no tiene una imagen de comprobante asociada.</div>`}
+              ${receiptUrl
+                ?`<img src="${esc(receiptUrl)}" alt="Comprobante de pago de Diseño Web" loading="lazy">`
+                :`<div class="service-mini-receipt-empty"><strong>Pago digital / sin imagen</strong>Este método no tiene una imagen de comprobante asociada.</div>`}
             </div>
+
             <div class="service-mini-body">
-              <h3 class="service-mini-title">Diseño Web</h3>
-              <div class="service-mini-meta">
-                <div class="service-mini-row"><span>Diseñador</span><strong>${esc(designer)}</strong></div>
-                <div class="service-mini-row"><span>Especialidad</span><strong>${esc(role)}</strong></div>
+              <div class="service-mini-head">
+                <div class="service-mini-head-copy">
+                  <span class="service-mini-kicker">Proyecto Web</span>
+                  <h3 class="service-mini-title">${esc(plan)}</h3>
+                </div>
+                <div class="service-status-row">
+                  <span class="service-status-pill ${payment.cls}">${esc(payment.label)}</span>
+                  <span class="service-status-pill ${projectState.cls}">${esc(projectState.label)}</span>
+                </div>
+              </div>
+
+              <div class="service-mini-primary">
+                <div class="service-mini-row"><span>Inversión</span><strong>${esc(amount)}</strong></div>
                 <div class="service-mini-row"><span>Entrega estimada</span><strong class="accent">${esc(delivery)}</strong></div>
+              </div>
+
+              <div class="service-mini-meta">
+                <div class="service-mini-row"><span>Diseñador asignado</span><strong>${esc(designer)}</strong></div>
+                <div class="service-mini-row"><span>Especialidad</span><strong>${esc(role)}</strong></div>
                 <div class="service-mini-row"><span>Contacto del cliente</span><strong>${esc(contact)}</strong></div>
+                <div class="service-mini-divider"></div>
+                <div class="service-mini-row"><span>Estado del pago</span><strong class="${payment.tone}">${esc(payment.label)}</strong></div>
+                <div class="service-mini-row"><span>Método de pago</span><strong>${esc(method)}</strong></div>
+                <div class="service-mini-row"><span>Referencia / transacción</span><strong>${esc(tx)}</strong></div>
+                <div class="service-mini-row"><span>Orden</span><strong>${esc(order)}</strong></div>
               </div>
             </div>
           </article>`;
@@ -1609,8 +1731,36 @@
         return value?dateText(value):'Sin fecha programada';
       }
 
+      function subscriptionDaysLeft(s){
+        const d=dateValue(s?.currentPeriodEnd||s?.nextPaymentAt||s?.expiresAt);
+        if(!d)return null;
+        return Math.ceil((d.getTime()-Date.now())/86400000);
+      }
+
       function subscriptionPaymentMethod(s){
         return s?.paymentMethod||s?.provider||s?.paymentProvider||'No registrado';
+      }
+
+      function subscriptionStatusPortal(s){
+        const raw=String(s?.status||'active').toLowerCase();
+        const cancelPending=s?.cancelAtPeriodEnd===true||s?.cancellationRequested===true;
+        if(cancelPending)return {label:'Cancelación solicitada',cls:'pending'};
+        if(raw==='cancelled')return {label:'Cancelada',cls:'cancelled'};
+        if(raw==='expired')return {label:'Vencida',cls:'expired'};
+        if(raw==='past_due')return {label:'Pago pendiente',cls:'review'};
+        return {label:'Activa',cls:'active'};
+      }
+
+      function subscriptionPaymentState(s){
+        const raw=String(s?.paymentStatus||'').toLowerCase();
+        if(raw==='paid')return {label:'Pago confirmado',cls:'paid',tone:'status-good'};
+        if(raw==='pending_review')return {label:'Pago en revisión',cls:'review',tone:'status-warn'};
+        if(raw==='rejected')return {label:'Pago rechazado',cls:'rejected',tone:'status-bad'};
+        if(raw==='pending'||raw==='past_due')return {label:'Pago pendiente',cls:'pending',tone:'status-warn'};
+        const status=String(s?.status||'active').toLowerCase();
+        if(status==='active')return {label:'Al día',cls:'paid',tone:'status-good'};
+        if(status==='past_due')return {label:'Pago pendiente',cls:'pending',tone:'status-warn'};
+        return {label:'No disponible',cls:'pending',tone:'status-warn'};
       }
 
       function renderSubscriptionsMinimal(subscriptions){
@@ -1623,24 +1773,71 @@
 
         host.innerHTML=subscriptions.map(s=>{
           const receiptUrl=firstReceiptImage(s);
-          const status=String(s.status||'active').toLowerCase();
-          const cancelled=status==='cancelled'||status==='expired'||s.cancelAtPeriodEnd===true||s.cancellationRequested===true;
-          const btnLabel=cancelled?'Cancelación solicitada':'Cancelar membresía';
+          const membership=subscriptionStatusPortal(s);
+          const payment=subscriptionPaymentState(s);
+          const method=subscriptionPaymentMethod(s);
+          const renewal=subscriptionRenewalText(s);
+          const days=subscriptionDaysLeft(s);
+          const plan=s.planName||'Evolution PSD';
+          const price=money(s.priceUsd??27,s.currency||'USD');
+          const provider=s.provider||s.paymentProvider||'—';
+          const subscriptionId=s.subscriptionId||s.id||'—';
+          const rawStatus=String(s.status||'active').toLowerCase();
+          const cancelPending=s.cancelAtPeriodEnd===true||s.cancellationRequested===true;
+          const cancelled=rawStatus==='cancelled'||rawStatus==='expired'||cancelPending;
+          const btnLabel=
+            rawStatus==='cancelled'?'Membresía cancelada':
+            rawStatus==='expired'?'Membresía vencida':
+            cancelPending?'Cancelación solicitada':
+            'Cancelar membresía';
+
+          const renewalNote=
+            cancelPending&&renewal!=='Sin fecha programada'
+              ?`Tu acceso continuará hasta ${renewal}. Después de esa fecha no debe renovarse automáticamente.`
+              :rawStatus==='active'&&days!==null
+                ?`Quedan ${Math.max(0,days)} día${Math.abs(days)===1?'':'s'} para la próxima renovación.`
+                :'';
+
           return `<article class="service-mini-card">
             <div class="service-mini-receipt">
-              ${receiptUrl?`<img src="${esc(receiptUrl)}" alt="Comprobante de suscripción" loading="lazy">`:`<div class="service-mini-receipt-empty">Esta suscripción no tiene una imagen de comprobante asociada.</div>`}
+              ${receiptUrl
+                ?`<img src="${esc(receiptUrl)}" alt="Comprobante de suscripción" loading="lazy">`
+                :`<div class="service-mini-receipt-empty"><strong>Pago digital / sin imagen</strong>Esta membresía no tiene una imagen de comprobante asociada.</div>`}
             </div>
+
             <div class="service-mini-body">
-              <h3 class="service-mini-title">${esc(s.planName||'Evolution PSD')}</h3>
-              <div class="service-mini-meta">
-                <div class="service-mini-row"><span>Método de pago</span><strong>${esc(subscriptionPaymentMethod(s))}</strong></div>
-                <div class="service-mini-row"><span>Próxima renovación</span><strong class="accent">${esc(subscriptionRenewalText(s))}</strong></div>
+              <div class="service-mini-head">
+                <div class="service-mini-head-copy">
+                  <span class="service-mini-kicker">Membresía</span>
+                  <h3 class="service-mini-title">${esc(plan)}</h3>
+                </div>
+                <div class="service-status-row">
+                  <span class="service-status-pill ${membership.cls}">${esc(membership.label)}</span>
+                  <span class="service-status-pill ${payment.cls}">${esc(payment.label)}</span>
+                </div>
               </div>
+
+              <div class="service-mini-primary">
+                <div class="service-mini-row"><span>Precio</span><strong>${esc(price)} / mes</strong></div>
+                <div class="service-mini-row"><span>Próxima renovación</span><strong class="accent">${esc(renewal)}</strong></div>
+                ${days!==null&&rawStatus==='active'?`<div class="service-mini-row"><span>Días restantes</span><strong>${Math.max(0,days)} días</strong></div>`:''}
+              </div>
+
+              <div class="service-mini-meta">
+                <div class="service-mini-row"><span>Estado de membresía</span><strong>${esc(membership.label)}</strong></div>
+                <div class="service-mini-row"><span>Estado del pago</span><strong class="${payment.tone}">${esc(payment.label)}</strong></div>
+                <div class="service-mini-row"><span>Método de pago</span><strong>${esc(method)}</strong></div>
+                <div class="service-mini-row"><span>Proveedor</span><strong>${esc(provider)}</strong></div>
+                <div class="service-mini-row"><span>ID de membresía</span><strong>${esc(subscriptionId)}</strong></div>
+              </div>
+
+              ${renewalNote?`<div class="subscription-renewal-note">${esc(renewalNote)}</div>`:''}
               <button type="button" class="subscription-cancel-btn" ${cancelled?'disabled':''} onclick="cancelMembership('${esc(s.id)}',this)">${esc(btnLabel)}</button>
-              <div class="subscription-cancel-note" id="cancel-note-${safeId(s.id)}">${cancelled?'La membresía ya tiene una cancelación registrada.':''}</div>
+              <div class="subscription-cancel-note" id="cancel-note-${safeId(s.id)}">${cancelPending?'La cancelación ya quedó registrada.':''}</div>
             </div>
           </article>`;
         }).join('');
+
         return subscriptions.length;
       }
 
