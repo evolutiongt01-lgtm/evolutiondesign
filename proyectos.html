@@ -1311,6 +1311,35 @@
         .archive-action .action-label{display:none}
       }
 
+
+/* =========================================================
+   PORTAL DIVIDIDO · ARQUITECTURA / DISEÑO WEB / SUSCRIPCIONES
+   ========================================================= */
+.portal-area-nav{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin:0 0 1.15rem;padding:.4rem;border:1px solid var(--line);border-radius:16px;background:rgba(10,10,11,.72);width:max-content;max-width:100%}
+.portal-area-btn{border:0;min-height:42px;padding:.65rem 1rem;border-radius:12px;background:transparent;color:#7f7f85;font-size:.72rem;font-weight:700;cursor:pointer;transition:.2s ease;display:inline-flex;align-items:center;gap:.55rem}
+.portal-area-btn:hover{color:#ddd;background:rgba(255,255,255,.025)}
+.portal-area-btn.active{color:#17120d;background:var(--accent);box-shadow:0 8px 24px rgba(212,184,149,.10)}
+.portal-area-count{min-width:19px;height:19px;padding:0 5px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:rgba(0,0,0,.18);font-size:.58rem;font-weight:800}
+.portal-area-btn:not(.active) .portal-area-count{background:rgba(255,255,255,.055);color:#aaa}
+.portal-area{display:none}
+.portal-area.active{display:block}
+.portal-area-head{margin:0 0 1rem}
+.portal-area-title{margin:0;color:#fff;font-size:1.05rem;font-weight:750;letter-spacing:-.025em}
+.portal-area-copy{margin:.35rem 0 0;color:var(--muted);font-size:.7rem;line-height:1.55}
+.receipt-only-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.receipt-image-card{position:relative;overflow:hidden;min-height:250px;border:1px solid var(--line);border-radius:20px;background:#09090a;box-shadow:0 18px 48px rgba(0,0,0,.22)}
+.receipt-image-card img{display:block;width:100%;height:100%;min-height:250px;max-height:460px;object-fit:contain;background:#080809}
+.receipt-image-card::after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.018);border-radius:inherit}
+.receipt-empty,.receipt-loading{padding:2rem;border:1px dashed var(--line);border-radius:18px;color:var(--muted);font-size:.72rem;text-align:center;background:rgba(255,255,255,.012)}
+@media(max-width:900px){.receipt-only-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:575.98px){
+  .portal-area-nav{display:grid;grid-template-columns:1fr;width:100%;padding:.35rem}
+  .portal-area-btn{width:100%;justify-content:space-between}
+  .receipt-only-grid{grid-template-columns:1fr;gap:.75rem}
+  .receipt-image-card{min-height:210px;border-radius:16px}
+  .receipt-image-card img{min-height:210px;max-height:390px}
+}
+
 </style>
   </head>
 
@@ -1342,26 +1371,41 @@
         <div>
           <span class="page-kicker">Panel de Cliente</span>
           <h1 class="page-title">Mis Proyectos</h1>
-          <p class="page-subtitle">Sube tus archivos directamente de forma privada y sigue el avance de cada proyecto en tiempo real desde cualquier dispositivo.</p>
+          <p class="page-subtitle">Arquitectura, Diseño Web y Suscripciones organizados en un solo portal.</p>
         </div>
       </div>
 
-      <!-- CONTENEDOR DINÁMICO DE PROYECTOS -->
+      <!-- PORTAL DEL CLIENTE DIVIDIDO POR SERVICIO -->
+      <div class="portal-area-nav" role="tablist" aria-label="Áreas del portal">
+        <button type="button" class="portal-area-btn active" data-portal-area="architecture" onclick="switchPortalArea('architecture')"><span>Arquitectura</span><span class="portal-area-count" id="architecture-count">0</span></button>
+        <button type="button" class="portal-area-btn" data-portal-area="web" onclick="switchPortalArea('web')"><span>Diseño Web</span><span class="portal-area-count" id="web-count">0</span></button>
+        <button type="button" class="portal-area-btn" data-portal-area="subscriptions" onclick="switchPortalArea('subscriptions')"><span>Suscripciones</span><span class="portal-area-count" id="subscriptions-count">0</span></button>
+      </div>
+
       <div class="row justify-content-center">
         <div class="col-12">
-
-          <!-- ESTADO: SIN PROYECTOS (Oculto por ahora) -->
-          <div id="sin-proyectos-msg" class="empty-panel text-center mb-4" style="display: none;">
+          <div id="sin-proyectos-msg" class="empty-panel text-center mb-4" style="display:none;">
             <svg width="46" height="46" fill="none" stroke="currentColor" stroke-width="1" class="text-secondary mb-3" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
             <h4 class="text-white fw-bold mb-2">Aún no tienes proyectos u órdenes</h4>
-            <p class="text-secondary small mb-4">Cuando realices una cotización y completes tu pago seguro, tu orden aparecerá listada en este apartado.</p>
-            <a href="index.html#servicios-tecnicos" class="btn-liquid-glass">Ir a cotizar un proyecto</a>
+            <p class="text-secondary small mb-4">Tus compras y comprobantes aparecerán en el área correspondiente.</p>
+            <a href="index.html#servicios-tecnicos" class="btn-liquid-glass">Ver servicios</a>
           </div>
 
-          <!-- PROYECTOS DEL CLIENTE: se generan desde las compras aprobadas -->
-          <div id="lista-proyectos-container">
-            <div class="project-loading">Cargando tus proyectos…</div>
-          </div>
+          <section id="portal-area-architecture" class="portal-area active">
+            <div class="portal-area-head"><h2 class="portal-area-title">Arquitectura</h2><p class="portal-area-copy">Proyectos, archivos, comentarios, entregas y seguimiento completo.</p></div>
+            <div id="architecture-empty" class="receipt-empty" style="display:none">Aún no tienes proyectos de arquitectura.</div>
+            <div id="lista-proyectos-container"><div class="project-loading">Cargando tus proyectos…</div></div>
+          </section>
+
+          <section id="portal-area-web" class="portal-area">
+            <div class="portal-area-head"><h2 class="portal-area-title">Diseño Web</h2><p class="portal-area-copy">Comprobantes asociados a tus pagos de Diseño Web.</p></div>
+            <div id="web-receipts-container" class="receipt-only-grid"><div class="receipt-loading">Cargando comprobantes…</div></div>
+          </section>
+
+          <section id="portal-area-subscriptions" class="portal-area">
+            <div class="portal-area-head"><h2 class="portal-area-title">Suscripciones</h2><p class="portal-area-copy">Comprobantes asociados a tus pagos de suscripción.</p></div>
+            <div id="subscription-receipts-container" class="receipt-only-grid"><div class="receipt-loading">Cargando comprobantes…</div></div>
+          </section>
         </div>
       </div>
     </main>
@@ -1370,7 +1414,7 @@
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-      import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, onSnapshot, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, onSnapshot, serverTimestamp, increment, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
       import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
 
       // CREDENCIALES DE CLOUDFLARE R2
@@ -1396,7 +1440,7 @@
       const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), functions=getFunctions(app,'us-central1');
       const createCustomOrder=httpsCallable(functions,'createCustomPayPalOrder');
       const capturePayPalOrder=httpsCallable(functions,'capturePayPalOrder');
-      let unsubscribeProjects=null; const fileListeners=[]; let currentGeo={};
+      let unsubscribeProjects=null, unsubscribeSubscriptions=null; const fileListeners=[]; let currentGeo={};
 
       const PAYPAL_CLIENT_ID='BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20';
       const PAYPAL_SUPPORTED=new Set(['AUD','BRL','CAD','CNY','CZK','DKK','EUR','HKD','HUF','ILS','JPY','MYR','MXN','TWD','NZD','NOK','PHP','PLN','GBP','SGD','SEK','CHF','THB','USD']);
@@ -1422,6 +1466,64 @@
       function renderSpecs(items){return Array.isArray(items)&&items.length?`<div class="mini-meta">${items.map(x=>`<span class="mini-meta-item"><span class="mini-meta-dot"></span><strong>${esc(x.label)}:</strong> ${esc(x.value)}</span>`).join('')}</div>`:'';}
       function renderIncluded(items){return Array.isArray(items)&&items.length?`<div class="ui-card included-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg></span>Tu tarifa incluye</h3><p class="section-copy mb-0">Estos son exactamente los servicios incluidos en tu compra.</p><ul class="included-list">${items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';}
       function statusInfo(p){const labels={awaiting_payment:'Pago pendiente',waiting_files:'Esperando archivos',files_received:'Archivos recibidos',assigned:'Profesional asignado',in_progress:'En desarrollo',review:'En revisión',delivered:'Entregado',cancelled:'Cancelado'};return {status:p.status||'waiting_files',label:labels[p.status]||'En proceso'};}
+
+
+      function isWebProjectPortal(p){
+        const text=[p?.serviceType,p?.projectType,p?.projectTitle,p?.projectConfig?.category,p?.webPlanName,p?.projectConfig?.packageName].join(' ').toLowerCase();
+        return text.includes('web_design')||text.includes('diseño web')||text.includes('diseno web');
+      }
+
+      function receiptEntries(record){
+        const candidates=[
+          {storagePath:record?.receiptStoragePath,name:record?.receiptName,contentType:record?.receiptContentType},
+          {storagePath:record?.paymentReceiptStoragePath,name:record?.paymentReceiptName,contentType:record?.paymentReceiptContentType},
+          {storagePath:record?.lastReceiptStoragePath,name:record?.lastReceiptName,contentType:record?.lastReceiptContentType},
+          {storagePath:record?.receipt?.storagePath,name:record?.receipt?.name,contentType:record?.receipt?.contentType},
+          {storagePath:record?.lastPaymentReceipt?.storagePath,name:record?.lastPaymentReceipt?.name,contentType:record?.lastPaymentReceipt?.contentType}
+        ];
+        if(Array.isArray(record?.receipts)){
+          record.receipts.forEach(r=>candidates.push({
+            storagePath:r?.storagePath||r?.receiptStoragePath,
+            name:r?.name||r?.receiptName,
+            contentType:r?.contentType||r?.receiptContentType
+          }));
+        }
+        const seen=new Set();
+        return candidates.filter(item=>{
+          const path=String(item?.storagePath||'').trim();
+          if(!path||seen.has(path))return false;
+          const type=String(item?.contentType||'').toLowerCase();
+          const name=String(item?.name||path).toLowerCase();
+          const isImage=type.startsWith('image/')||/\.(jpe?g|png|webp|gif|bmp|avif|heic|heif)$/i.test(name);
+          if(!isImage)return false;
+          seen.add(path);return true;
+        });
+      }
+
+      function receiptImageCard(receipt){
+        if(!s3||!receipt?.storagePath)return'';
+        try{
+          const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:receipt.storagePath,Expires:300});
+          return `<div class="receipt-image-card"><img src="${esc(url)}" alt="Comprobante de pago" loading="lazy"></div>`;
+        }catch(e){console.error('Comprobante:',e);return'';}
+      }
+
+      function renderReceiptOnly(records,containerId,emptyCopy){
+        const host=document.getElementById(containerId);
+        if(!host)return 0;
+        const receipts=[];
+        (records||[]).forEach(record=>receiptEntries(record).forEach(receipt=>receipts.push(receipt)));
+        const htmlReceipts=receipts.map(receiptImageCard).filter(Boolean);
+        host.innerHTML=htmlReceipts.length?htmlReceipts.join(''):`<div class="receipt-empty">${esc(emptyCopy)}</div>`;
+        return htmlReceipts.length;
+      }
+
+      window.switchPortalArea=function(area){
+        const value=['architecture','web','subscriptions'].includes(area)?area:'architecture';
+        document.querySelectorAll('.portal-area').forEach(el=>el.classList.toggle('active',el.id===`portal-area-${value}`));
+        document.querySelectorAll('.portal-area-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.portalArea===value));
+        try{sessionStorage.setItem('evolutionPortalArea',value)}catch{}
+      };
 
       function paymentBox(project,unique){
         if(project.paymentStatus==='pending_review') return `<div class="payment-review-client"><strong>Comprobante recibido · En revisión</strong><p>Recibimos tu comprobante de ${esc(project.paymentMethod||'pago manual')} y la referencia <b>${esc(project.manualPaymentReference||project.transactionId||'')}</b>. Administración verificará el ingreso antes de habilitar la carga de archivos.</p></div>`;
@@ -1696,43 +1798,121 @@
         const c=document.getElementById('lista-proyectos-container');
         if(c&&c.textContent.includes('Cargando tus proyectos')) c.innerHTML='<div class="empty-panel text-center"><h4 class="text-white fw-bold mb-2">Firebase está tardando demasiado</h4><p class="text-secondary small mb-0">La sesión está abierta, pero Firestore todavía no respondió. Verifica que hayas publicado las reglas de Firestore.</p></div>';
       },8000);
+
+      function listenSubscriptions(user){
+        if(unsubscribeSubscriptions){try{unsubscribeSubscriptions()}catch{}unsubscribeSubscriptions=null}
+        const host=document.getElementById('subscription-receipts-container');
+        const count=document.getElementById('subscriptions-count');
+
+        if(!user){
+          if(host)host.innerHTML='<div class="receipt-empty">Inicia sesión para ver tus comprobantes.</div>';
+          if(count)count.textContent='0';
+          return;
+        }
+
+        try{
+          const q=query(collection(db,'subscriptions'),where('ownerUid','==',user.uid));
+          unsubscribeSubscriptions=onSnapshot(q,snap=>{
+            const subscriptions=snap.docs.map(d=>({id:d.id,...d.data()}));
+            const n=renderReceiptOnly(subscriptions,'subscription-receipts-container','Aún no hay imágenes de comprobantes de suscripción.');
+            if(count)count.textContent=String(n);
+          },error=>{
+            console.error('Firestore subscriptions:',error);
+            if(host)host.innerHTML='<div class="receipt-empty">No pudimos cargar los comprobantes de suscripción.</div>';
+            if(count)count.textContent='0';
+          });
+        }catch(error){
+          console.error('Subscriptions listener:',error);
+          if(host)host.innerHTML='<div class="receipt-empty">No pudimos cargar los comprobantes de suscripción.</div>';
+          if(count)count.textContent='0';
+        }
+      }
+
       async function listen(user){
         if(unsubscribeProjects){unsubscribeProjects();unsubscribeProjects=null}
+        if(unsubscribeSubscriptions){try{unsubscribeSubscriptions()}catch{}unsubscribeSubscriptions=null}
         clearFileListeners();
-        if(!user){projectsResolved=true;clearTimeout(loadingWatchdog);emptyState('Inicia sesión para ver tus proyectos','Tus compras y órdenes personalizadas aparecerán aquí al iniciar sesión con la misma cuenta.');return;}
+
+        const architectureCount=document.getElementById('architecture-count');
+        const webCount=document.getElementById('web-count');
+        const subscriptionsCount=document.getElementById('subscriptions-count');
+        const architectureEmpty=document.getElementById('architecture-empty');
+        const webHost=document.getElementById('web-receipts-container');
+
+        if(!user){
+          projectsResolved=true;clearTimeout(loadingWatchdog);
+          if(architectureCount)architectureCount.textContent='0';
+          if(webCount)webCount.textContent='0';
+          if(subscriptionsCount)subscriptionsCount.textContent='0';
+          emptyState('Inicia sesión para ver tus proyectos','Tus compras y comprobantes aparecerán aquí al iniciar sesión con la misma cuenta.');
+          if(webHost)webHost.innerHTML='<div class="receipt-empty">Inicia sesión para ver tus comprobantes.</div>';
+          listenSubscriptions(null);
+          return;
+        }
+
+        const generalEmpty=document.getElementById('sin-proyectos-msg');
+        if(generalEmpty)generalEmpty.style.display='none';
+
         detectGeo().then(async g=>{
           try{await setDoc(doc(db,'users',user.uid),{uid:user.uid,email:user.email||'',displayName:user.displayName||'',photoURL:user.photoURL||'',lastGeo:g,lastSeenAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true});}catch(e){console.info('Perfil Firestore:',e?.message||e)}
         });
-        const projectsCol=collection(db,'users',user.uid,'projects'),container=document.getElementById('lista-proyectos-container'),empty=document.getElementById('sin-proyectos-msg');
+
+        listenSubscriptions(user);
+
+        const projectsCol=collection(db,'users',user.uid,'projects'),
+              container=document.getElementById('lista-proyectos-container');
+
         unsubscribeProjects=onSnapshot(projectsCol,snap=>{
           projectsResolved=true;clearTimeout(loadingWatchdog);
 
-          // Firestore vuelve a emitir el proyecto cuando cambia clientFileCount,
-          // deliveryFileCount, estado, etc. Antes de reconstruir el HTML guardamos
-          // la ficha abierta, comentarios sin guardar y posición visual.
           const uiState=captureProjectUiState(container);
           const collapseIds=new Set(collapseProjectOnNextSnapshot);
           collapseProjectOnNextSnapshot.clear();
           collapseIds.forEach(id=>uiState.openProjects.delete(id));
 
           clearFileListeners();
-          const projects=snap.docs.map(d=>({id:d.id,ownerUid:user.uid,...d.data()})).sort((a,b)=>dateValue(b.createdAt)-dateValue(a.createdAt));
-          if(!projects.length){emptyState('Aún no tienes proyectos u órdenes','Cuando compres una tarifa o Evolution Design cree una orden personalizada para ti, aparecerá aquí.');return;}
 
-          if(empty)empty.style.display='none';
-          if(container)container.innerHTML=projects.map(renderProject).join('');
+          const projects=snap.docs
+            .map(d=>({id:d.id,ownerUid:user.uid,...d.data()}))
+            .sort((a,b)=>dateValue(b.createdAt)-dateValue(a.createdAt));
 
-          // Reabre exactamente las fichas que ya estaban abiertas. Así subir una
-          // foto, eliminar un archivo o recibir una actualización del admin no
-          // obliga al cliente a volver a desplegar y desplazarse hacia abajo.
+          const webProjects=projects.filter(isWebProjectPortal);
+          const architectureProjects=projects.filter(p=>!isWebProjectPortal(p));
+
+          if(architectureCount)architectureCount.textContent=String(architectureProjects.length);
+
+          const webReceiptCount=renderReceiptOnly(webProjects,'web-receipts-container','Aún no hay imágenes de comprobantes de Diseño Web.');
+          if(webCount)webCount.textContent=String(webReceiptCount);
+
+          if(container){
+            container.innerHTML=architectureProjects.length
+              ?architectureProjects.map(renderProject).join('')
+              :'';
+          }
+          if(architectureEmpty)architectureEmpty.style.display=architectureProjects.length?'none':'block';
+
           restoreProjectUiState(container,uiState,collapseIds);
 
-          projects.forEach(p=>{
+          // Arquitectura conserva exactamente el sistema privado de archivos.
+          architectureProjects.forEach(p=>{
             if((p.paymentStatus==='paid'||(!p.paymentStatus&&p.transactionId)))attachFiles(user,p);
           });
-        },e=>{projectsResolved=true;clearTimeout(loadingWatchdog);console.error('Firestore projects:',e);emptyState('No pudimos cargar tus proyectos',e?.code==='permission-denied'?'Firebase rechazó el acceso. Publica las reglas nuevas de Firestore y vuelve a intentarlo.':'Revisa tu conexión o la configuración de Firestore.');});
+
+          if(generalEmpty)generalEmpty.style.display='none';
+        },e=>{
+          projectsResolved=true;clearTimeout(loadingWatchdog);
+          console.error('Firestore projects:',e);
+          emptyState('No pudimos cargar tus proyectos',e?.code==='permission-denied'?'Firebase rechazó el acceso. Revisa las reglas de Firestore.':'Revisa tu conexión o la configuración de Firestore.');
+        });
       }
-      onAuthStateChanged(auth,listen);
+
+      onAuthStateChanged(auth,user=>{
+        try{
+          const saved=sessionStorage.getItem('evolutionPortalArea');
+          if(saved)switchPortalArea(saved);
+        }catch{}
+        listen(user);
+      });
     </script>
 
     <script src="js/bootstrap.bundle.min.js" defer></script>
