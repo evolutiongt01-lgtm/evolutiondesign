@@ -233,18 +233,121 @@
 .system-alert{display:none;margin:0 0 18px;padding:14px 16px;border:1px solid rgba(255,193,7,.28);background:rgba(255,193,7,.07);border-radius:14px;color:#f0dfb1;font-size:12px;line-height:1.55}.system-alert.show{display:block}.system-alert strong{color:#fff}.system-alert code{color:#d4b895;word-break:break-word}.system-alert .retry{margin-top:10px;border:1px solid rgba(212,184,149,.3);background:rgba(212,184,149,.08);color:#d4b895;border-radius:9px;padding:7px 10px;cursor:pointer;font-weight:700;font-size:11px}
 @media(max-width:1180px){.metrics{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:1fr}.admin-shell{grid-template-columns:210px minmax(0,1fr)}}
 @media(max-width:800px){.admin-shell{display:block}.sidebar{position:sticky;height:auto;top:0;border-right:0;border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 10px 10px}.brand{padding:5px 5px 9px}.brand small,.side-bottom{display:none}.nav{display:flex;overflow:auto;gap:5px}.nav button{white-space:nowrap;width:auto;padding:9px}.main{padding:17px 11px 60px}.topbar{align-items:flex-start}.title{font-size:23px}.metrics{grid-template-columns:repeat(2,1fr)}.metric{padding:13px}.metric-value{font-size:20px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.drawer{width:100vw}.detail-grid{grid-template-columns:1fr 1fr}.upload-row{grid-template-columns:1fr}.search{min-width:100%}}
+
+/* SOLICITUDES WEB */
+.webreq-count{display:inline-flex;min-width:19px;height:19px;padding:0 6px;align-items:center;justify-content:center;margin-left:auto;border-radius:999px;background:rgba(212,184,149,.10);border:1px solid rgba(212,184,149,.16);color:#d8bd9b;font-size:8px;font-weight:800}
+.webreq-plan{display:inline-flex;padding:5px 8px;border-radius:999px;border:1px solid rgba(112,231,255,.14);background:rgba(112,231,255,.04);color:#9feafc;font-size:9px}
+.webreq-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.webreq-stat{padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.018)}
+.webreq-stat span{display:block;color:#777;font-size:9px;margin-bottom:6px}.webreq-stat strong{font-size:19px}
+.webreq-brief-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.webreq-brief{padding:13px;border:1px solid var(--soft);border-radius:12px;background:rgba(255,255,255,.016)}
+.webreq-brief.full{grid-column:1/-1}.webreq-brief span{display:block;color:#6f6f75;font-size:8px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}.webreq-brief strong,.webreq-brief div{font-size:11px;color:#e9e9eb;line-height:1.55;overflow-wrap:anywhere}
+.webreq-status-new{color:#e5c594}.webreq-status-reviewing{color:#8fc9ff}.webreq-status-approved{color:#75df9e}.webreq-status-rejected{color:#ff8e98}.webreq-status-converted{color:#caa9ff}
+.webreq-action-note{margin-top:10px;color:#74747a;font-size:9px;line-height:1.5}
+@media(max-width:800px){.webreq-card-grid{grid-template-columns:1fr 1fr}.webreq-brief-grid{grid-template-columns:1fr}.webreq-brief.full{grid-column:auto}}
+@media(max-width:520px){.webreq-card-grid{grid-template-columns:1fr}}
+
+
+/* COMPROBANTES DE PAGO — BINANCE / TRANSFERENCIA */
+.payment-review-count{display:inline-flex;min-width:19px;height:19px;padding:0 6px;align-items:center;justify-content:center;margin-left:auto;border-radius:999px;background:rgba(233,188,101,.10);border:1px solid rgba(233,188,101,.18);color:#e5c277;font-size:8px;font-weight:800}
+.payment-review-count.zero{opacity:.42}
+.payment-proof-section{border-color:rgba(233,188,101,.18)!important;background:linear-gradient(155deg,rgba(233,188,101,.035),rgba(255,255,255,.012))!important}
+.payment-proof-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.payment-proof-badge{display:inline-flex;align-items:center;gap:7px;min-height:29px;padding:0 10px;border-radius:999px;font-size:9px;font-weight:800;border:1px solid rgba(233,188,101,.22);background:rgba(233,188,101,.06);color:#e1bd73}
+.payment-proof-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:#e9bc65;box-shadow:0 0 0 4px rgba(233,188,101,.06)}
+.payment-proof-badge.approved{color:#6fe09a;border-color:rgba(57,212,119,.22);background:rgba(57,212,119,.05)}
+.payment-proof-badge.approved::before{background:#39d477;box-shadow:0 0 0 4px rgba(57,212,119,.06)}
+.payment-proof-badge.rejected{color:#ff8d97;border-color:rgba(255,102,115,.22);background:rgba(255,102,115,.05)}
+.payment-proof-badge.rejected::before{background:#ff6673;box-shadow:0 0 0 4px rgba(255,102,115,.06)}
+.payment-proof-layout{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(0,1.1fr);gap:14px}
+.payment-receipt-preview{position:relative;min-height:360px;border:1px solid rgba(255,255,255,.075);border-radius:15px;background:radial-gradient(circle at 50% 20%,rgba(212,184,149,.05),transparent 38%),#070708;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.payment-receipt-preview img{display:block;width:100%;height:100%;max-height:520px;object-fit:contain;background:#070708}
+.payment-receipt-preview iframe{display:block;width:100%;height:500px;border:0;background:#fff}
+.payment-receipt-empty{padding:28px;text-align:center;color:#666;font-size:10px;line-height:1.55}
+.payment-receipt-empty strong{display:block;color:#aaa;font-size:12px;margin-bottom:5px}
+.payment-proof-info{display:grid;align-content:start;gap:10px}
+.payment-proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.payment-proof-detail{padding:12px;border:1px solid rgba(255,255,255,.065);border-radius:12px;background:rgba(0,0,0,.16)}
+.payment-proof-detail span{display:block;color:#6e6e74;font-size:8px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.payment-proof-detail strong{display:block;color:#eee;font-size:11px;line-height:1.45;overflow-wrap:anywhere}
+.payment-proof-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.payment-proof-actions .btn{min-height:42px}
+.payment-proof-review{margin-top:4px;padding:12px;border:1px solid rgba(255,255,255,.065);border-radius:12px;background:rgba(255,255,255,.014)}
+.payment-proof-review label{display:block;margin-bottom:6px;color:#777;font-size:8px;text-transform:uppercase;letter-spacing:.07em}
+.payment-proof-review textarea{min-height:72px}
+.payment-review-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.payment-approve{border-color:rgba(57,212,119,.25)!important;background:rgba(57,212,119,.07)!important;color:#70df9a!important}
+.payment-reject{border-color:rgba(255,102,115,.22)!important;background:rgba(255,102,115,.055)!important;color:#ff8e98!important}
+.payment-table-status{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700}
+.payment-table-status::before{content:"";width:6px;height:6px;border-radius:50%;background:#777}
+.payment-table-status.pending{color:#e2bf76}.payment-table-status.pending::before{background:#e9bc65}
+.payment-table-status.approved{color:#6fdf9a}.payment-table-status.approved::before{background:#39d477}
+.payment-table-status.rejected{color:#ff8e98}.payment-table-status.rejected::before{background:#ff6673}
+.manual-payment-chip{display:inline-flex;margin-top:5px;padding:4px 7px;border-radius:999px;background:rgba(233,188,101,.055);border:1px solid rgba(233,188,101,.13);color:#d5b570;font-size:8px}
+@media(max-width:900px){.payment-proof-layout{grid-template-columns:1fr}.payment-receipt-preview{min-height:300px}}
+@media(max-width:560px){.payment-proof-grid{grid-template-columns:1fr}.payment-proof-actions,.payment-review-buttons{grid-template-columns:1fr}.payment-receipt-preview{min-height:250px;border-radius:12px}.payment-receipt-preview iframe{height:400px}}
+
 </style>
 </head>
 <body>
 <div class="admin-shell" id="adminShell" style="visibility:hidden">
-<aside class="sidebar"><div class="brand"><img src="img/logo.png" alt="Evolution Design"><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div id="adminEmail" class="admin-user">—</div><button id="logoutBtn" class="logout">Cerrar sesión</button></div></aside>
+<aside class="sidebar"><div class="brand"><img src="img/logo.png" alt="Evolution Design"><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div id="adminEmail" class="admin-user">—</div><button id="logoutBtn" class="logout">Cerrar sesión</button></div></aside>
 <main class="main"><div id="systemAlert" class="system-alert"></div>
 <div class="topbar"><div><div class="kicker">Evolution Design · Administración</div><h1 id="pageTitle" class="title">Dashboard</h1></div><div class="top-actions"><button id="refreshBtn" class="btn">Actualizar datos</button><a href="index.html" class="btn" style="text-decoration:none">Ver sitio</a></div></div>
 <section id="view-dashboard" class="view active"><div id="metrics" class="metrics"></div><div class="grid-2"><div class="panel"><div class="panel-head"><div><div class="panel-title">Proyectos recientes</div><div class="panel-copy">Compras, órdenes personalizadas y estado operativo.</div></div><button class="btn" onclick="switchView('projects')">Ver todos</button></div><div id="recentProjects" class="panel-body"></div></div><div class="panel"><div class="panel-head"><div><div class="panel-title">Clientes por país</div><div class="panel-copy">País reportado por PayPal o última ubicación.</div></div></div><div id="countryList" class="panel-body country-list"></div></div></div></section>
-<section id="view-projects" class="view"><div class="toolbar"><input id="projectSearch" class="search" placeholder="Buscar proyecto, cliente, orden o transacción"><select id="statusFilter" class="select"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En desarrollo</option><option value="review">Revisión</option><option value="delivered">Entregado</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
+<section id="view-payments" class="view">
+<div class="webreq-card-grid"><div class="webreq-stat"><span>Por revisar</span><strong id="paymentPendingMetric">0</strong></div><div class="webreq-stat"><span>Aprobados</span><strong id="paymentApprovedMetric">0</strong></div><div class="webreq-stat"><span>Rechazados</span><strong id="paymentRejectedMetric">0</strong></div></div>
+<div class="toolbar"><input id="paymentSearch" class="search" placeholder="Buscar orden, cliente, referencia, banco o Binance"><select id="paymentReviewFilter" class="select"><option value="">Todos los comprobantes</option><option value="pending">Por revisar</option><option value="approved">Aprobados</option><option value="rejected">Rechazados</option></select></div>
+<div class="table-wrap"><table><thead><tr><th>Orden</th><th>Cliente</th><th>Método</th><th>Monto esperado</th><th>Referencia</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody id="paymentReceiptsBody"></tbody></table></div>
+</section>
+<section id="view-projects" class="view"><div class="toolbar"><input id="projectSearch" class="search" placeholder="Buscar proyecto, cliente, orden o transacción"><select id="statusFilter" class="select"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="payment_pending_review">Comprobante por revisar</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En desarrollo</option><option value="review">Revisión</option><option value="delivered">Entregado</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
 <section id="view-clients" class="view"><div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar nombre, correo o país"></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Ubicación</th><th>Última conexión / actividad</th><th>Órdenes</th><th>Total comprado</th><th></th></tr></thead><tbody id="clientsBody"></tbody></table></div></section>
+<section id="view-webrequests" class="view">
+  <div class="webreq-card-grid">
+    <div class="webreq-stat"><span>Nuevas</span><strong id="webReqNew">0</strong></div>
+    <div class="webreq-stat"><span>En revisión</span><strong id="webReqReview">0</strong></div>
+    <div class="webreq-stat"><span>Aprobadas / convertidas</span><strong id="webReqApproved">0</strong></div>
+  </div>
+  <div class="toolbar">
+    <input id="webRequestSearch" class="search" placeholder="Buscar cliente, negocio, plan o correo">
+    <select id="webRequestStatus" class="select">
+      <option value="">Todos los estados</option>
+      <option value="new">Nueva</option>
+      <option value="reviewing">En revisión</option>
+      <option value="approved">Aprobada</option>
+      <option value="rejected">Rechazada</option>
+      <option value="converted">Convertida a proyecto</option>
+    </select>
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>Solicitud</th><th>Cliente</th><th>Negocio</th><th>Plan</th><th>Precio</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody id="webRequestsBody"></tbody></table></div>
+</section>
 <section id="view-custom" class="view"><div class="panel"><div class="panel-head"><div><div class="panel-title">Crear orden personalizada</div><div class="panel-copy">La orden aparecerá directamente en “Mis Proyectos” del cliente. Puede quedar pendiente de PayPal o marcarse pagada manualmente.</div></div></div><div class="panel-body"><form id="customOrderForm"><div class="form-grid"><div class="field full"><label>Cliente</label><select id="customClient" class="input" required></select></div><div class="field"><label>Nombre de la orden</label><input id="customTitle" class="input" required placeholder="Ej. Remodelación integral vivienda"></div><div class="field"><label>Categoría</label><input id="customCategory" class="input" value="Orden personalizada"></div><div class="field"><label>Precio USD</label><input id="customPrice" class="input" type="number" min="1" step="0.01" required></div><div class="field"><label>Costo interno USD</label><input id="customCost" class="input" type="number" min="0" step="0.01" value="0"><div class="hint">Solo visible en el panel admin; se usa para calcular ganancia.</div></div><div class="field full"><label>Descripción para el cliente</label><textarea id="customDescription" class="textarea" placeholder="Explica el alcance de la orden…"></textarea></div><div class="field full"><label>Archivos requeridos</label><textarea id="customUpload" class="textarea" placeholder="Ej. Sube plano PDF/DWG, fotografías actuales y medidas principales."></textarea></div><div class="field full"><label>Incluye (una línea por elemento)</label><textarea id="customIncluded" class="textarea" placeholder="Modelado 3D completo\n12 renders hiperrealistas\n2 revisiones"></textarea></div><div class="field full"><label>Notas internas</label><textarea id="customAdminNotes" class="textarea" placeholder="Solo administración…"></textarea></div></div><label class="check"><input id="customManualPaid" type="checkbox"> Marcar esta orden como pagada</label><div id="customPaymentMethodWrap" class="payment-method-wrap hidden"><div class="field"><label>Método con el que pagó el cliente</label><select id="customPaymentMethod" class="input"><option value="Binance">Binance</option><option value="POS">POS</option><option value="Efectivo">Efectivo</option><option value="Tarjeta de crédito o débito">Tarjeta de crédito o débito</option><option value="PayPal">PayPal</option></select><div class="hint">Este método quedará guardado en la orden y visible en el panel administrativo.</div></div></div><div class="form-actions"><button class="btn btn-accent" type="submit">Crear orden personalizada</button></div></form></div></div></section>
 </main></div>
+
+<div id="webRequestModal" class="modal-back">
+  <div class="drawer">
+    <div class="drawer-head">
+      <div><div class="kicker">Solicitud Diseño Web</div><div id="webReqDrawerTitle" class="drawer-title">—</div><div id="webReqDrawerSub" class="sub"></div></div>
+      <button class="drawer-close" onclick="closeWebRequest()" aria-label="Cerrar">×</button>
+    </div>
+    <div id="webReqDetails" class="detail-grid"></div>
+    <div class="section"><div class="section-h">Brief del cliente</div><div class="section-b"><div id="webReqBrief" class="webreq-brief-grid"></div></div></div>
+    <div class="section">
+      <div class="section-h"><div>Revisión administrativa</div><div class="section-h-copy">Actualiza el estado o conviértela en un proyecto real del cliente.</div></div>
+      <div class="section-b">
+        <div class="form-grid">
+          <div class="field"><label>Estado</label><select id="webReqEditStatus" class="input"><option value="new">Nueva</option><option value="reviewing">En revisión</option><option value="approved">Aprobada</option><option value="rejected">Rechazada</option><option value="converted">Convertida a proyecto</option></select></div>
+          <div class="field"><label>Precio aprobado USD</label><input id="webReqApprovedPrice" class="input" type="number" min="0" step="0.01"></div>
+          <div class="field full"><label>Notas internas</label><textarea id="webReqAdminNotes" class="textarea" placeholder="Notas de revisión…"></textarea></div>
+        </div>
+        <div class="form-actions"><button class="btn" type="button" onclick="saveWebRequest()">Guardar revisión</button><button class="btn btn-accent" type="button" onclick="convertWebRequestToProject()">Aprobar y crear proyecto →</button></div>
+        <div class="webreq-action-note">Al crear el proyecto, se genera una orden pendiente de pago dentro de la cuenta del cliente. No se marca como pagada automáticamente.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="projectModal" class="modal-back">
   <div class="drawer">
     <div class="drawer-head">
@@ -260,6 +363,18 @@
     </div>
 
     <div id="drawerDetails" class="detail-grid"></div>
+
+    <div id="paymentProofSection" class="section payment-proof-section hidden">
+      <div class="section-h"><div class="payment-proof-head"><div><div>Comprobante de pago</div><div class="section-h-copy">Binance Pay o transferencia bancaria · revisión manual de administración.</div></div><span id="paymentProofBadge" class="payment-proof-badge">Por revisar</span></div></div>
+      <div class="section-b"><div class="payment-proof-layout">
+        <div id="paymentReceiptPreview" class="payment-receipt-preview"><div class="payment-receipt-empty"><strong>Sin vista previa</strong>Abre el comprobante para revisarlo.</div></div>
+        <div class="payment-proof-info">
+          <div id="paymentProofDetails" class="payment-proof-grid"></div>
+          <div class="payment-proof-actions"><button id="openReceiptBtn" class="btn" type="button" onclick="openPaymentReceipt(false)">Ver comprobante</button><button id="downloadReceiptBtn" class="btn" type="button" onclick="openPaymentReceipt(true)">Descargar archivo</button></div>
+          <div class="payment-proof-review"><label>Nota de revisión</label><textarea id="paymentReviewNote" class="textarea" placeholder="Ej. Depósito confirmado en BAC / referencia coincide."></textarea><div class="payment-review-buttons"><button id="rejectPaymentBtn" class="btn payment-reject" type="button" onclick="rejectManualPayment()">Rechazar comprobante</button><button id="approvePaymentBtn" class="btn payment-approve" type="button" onclick="approveManualPayment()">Aprobar pago ✓</button></div></div>
+        </div>
+      </div></div>
+    </div>
 
     <div class="section">
       <div class="section-h">
@@ -460,7 +575,7 @@ if (window.AWS) {
 const cfg={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
 const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
 const ADMIN_EMAILS=new Set(['evolutiongt01@gmail.com','tepaz2025@gmail.com']);
-let data={metrics:{},clients:[],projects:[],countries:[]},selected=null;
+let data={metrics:{},clients:[],projects:[],countries:[],webRequests:[]},selected=null,selectedWebRequest=null;
 let pendingClientAdminFiles=[];
 let pendingDeliveryFiles=[];
 let pendingSelectionUrls=[];
@@ -477,7 +592,7 @@ function normalizeProfessionalRole(v){return String(v||'').toLowerCase()==='inge
 window.setProfessionalRole=function(role){const value=normalizeProfessionalRole(role),hidden=$('editProfessionalRole'),label=$('editProfessionalNameLabel'),input=$('editArchitect');if(hidden)hidden.value=value;document.querySelectorAll('#professionalRoleToggle button').forEach(b=>b.classList.toggle('active',b.dataset.role===value));if(label)label.textContent=`Nombre del ${value.toLowerCase()}`;if(input)input.placeholder=`Nombre del ${value.toLowerCase()}`};
 function paymentMethodCode(v){return String(v||'PAGO').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').toUpperCase().slice(0,24)||'PAGO'}
 
-window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',projects:'Proyectos y órdenes',clients:'Clientes',custom:'Nueva orden personalizada'}[v]||v};
+window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
 function currentEditPrice(){return Math.max(0,Number($('editPrice')?.value||0))}
 function currentEditCost(){return Math.max(0,Number($('editCost')?.value||0))}
@@ -513,9 +628,163 @@ document.addEventListener('change',e=>{
   }
 });
 
+
+function webRequestStatusLabel(s){return({new:'Nueva',reviewing:'En revisión',approved:'Aprobada',rejected:'Rechazada',converted:'Convertida'}[s]||s||'Nueva')}
+function webRequestStatusClass(s){return `webreq-status-${String(s||'new').replace(/[^a-z_-]/g,'')}`}
+function renderWebRequests(){
+  const rows=Array.isArray(data.webRequests)?data.webRequests:[];
+  const term=String($('webRequestSearch')?.value||'').toLowerCase();
+  const st=$('webRequestStatus')?.value||'';
+  const filtered=rows.filter(r=>(!st||r.status===st)&&(!term||[r.name,r.email,r.userEmail,r.businessName,r.businessType,r.planName,r.phone].some(x=>String(x||'').toLowerCase().includes(term))));
+  if($('webRequestsBody'))$('webRequestsBody').innerHTML=filtered.map(r=>`<tr>
+    <td><div class="strong">${esc(r.id.slice(0,8).toUpperCase())}</div><div class="sub">${esc(r.source||'diseno-web')}</div></td>
+    <td><div>${esc(r.name||'Cliente')}</div><div class="sub">${esc(r.userEmail||r.email||'')}</div></td>
+    <td>${esc(r.businessName||'—')}</td>
+    <td><span class="webreq-plan">${esc(r.planName||'Sitio Web')}</span></td>
+    <td><span class="strong">${usd(r.approvedPriceUsd??r.basePriceUsd)}</span></td>
+    <td><span class="${webRequestStatusClass(r.status)}">${esc(webRequestStatusLabel(r.status))}</span></td>
+    <td>${esc(niceDate(r.createdAt))}</td>
+    <td><button class="mini" onclick="openWebRequest('${esc(r.id)}')">Abrir</button></td>
+  </tr>`).join('')||'<tr><td colspan="8">Sin solicitudes web.</td></tr>';
+  const newCount=rows.filter(x=>(x.status||'new')==='new').length;
+  const reviewCount=rows.filter(x=>x.status==='reviewing').length;
+  const approvedCount=rows.filter(x=>['approved','converted'].includes(x.status)).length;
+  if($('webRequestCount'))$('webRequestCount').textContent=newCount;
+  if($('webReqNew'))$('webReqNew').textContent=newCount;
+  if($('webReqReview'))$('webReqReview').textContent=reviewCount;
+  if($('webReqApproved'))$('webReqApproved').textContent=approvedCount;
+}
+window.openWebRequest=function(id){
+  selectedWebRequest=(data.webRequests||[]).find(x=>x.id===id);
+  if(!selectedWebRequest)return;
+  const r=selectedWebRequest;
+  $('webReqDrawerTitle').textContent=`${r.planName||'Diseño Web'} · ${r.businessName||r.name||'Solicitud'}`;
+  $('webReqDrawerSub').textContent=`${r.id.slice(0,8).toUpperCase()} · ${r.userEmail||r.email||''}`;
+  $('webReqDetails').innerHTML=[
+    ['Cliente',r.name||'—'],['Plan',r.planName||'—'],['Precio base',usd(r.basePriceUsd)],
+    ['Negocio',r.businessName||'—'],['WhatsApp',r.phone||'—'],['Estado',webRequestStatusLabel(r.status)]
+  ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
+  const brief=[
+    ['Tipo de negocio',r.businessType],['Sitio actual',r.existingSite],['Objetivos',(r.goals||[]).join(' · ')],
+    ['Funciones',(r.features||[]).join(' · ')],['Dirección visual',r.style],['Dominio',r.domainIdea],
+    ['Plazo',r.timeline],['Referencias',r.referenceSites],['Notas del cliente',r.notes]
+  ];
+  $('webReqBrief').innerHTML=brief.map((x,i)=>`<div class="webreq-brief ${i>=2?'full':''}"><span>${x[0]}</span><div>${esc(x[1]||'—')}</div></div>`).join('');
+  $('webReqEditStatus').value=r.status||'new';
+  $('webReqApprovedPrice').value=Number(r.approvedPriceUsd??r.basePriceUsd??0).toFixed(2);
+  $('webReqAdminNotes').value=r.adminNotes||'';
+  $('webRequestModal').classList.add('show');
+}
+window.closeWebRequest=function(){$('webRequestModal')?.classList.remove('show');selectedWebRequest=null}
+window.saveWebRequest=async function(){
+  if(!selectedWebRequest)return;
+  try{
+    const patch={
+      status:$('webReqEditStatus').value||'reviewing',
+      approvedPriceUsd:Math.max(0,Number($('webReqApprovedPrice').value||selectedWebRequest.basePriceUsd||0)),
+      adminNotes:$('webReqAdminNotes').value.trim(),
+      updatedAt:serverTimestamp()
+    };
+    await updateDoc(doc(db,'webRequests',selectedWebRequest.id),patch);
+    Object.assign(selectedWebRequest,patch);
+    toast('Solicitud web actualizada.');
+    await refresh();
+  }catch(e){console.error(e);toast(e?.message||'No se pudo actualizar la solicitud.')}
+}
+window.convertWebRequestToProject=async function(){
+  if(!selectedWebRequest)return;
+  const r=selectedWebRequest;
+  if(!r.userUid){toast('Esta solicitud no tiene un usuario asociado.');return}
+  if(r.projectId){toast('Esta solicitud ya fue convertida en proyecto.');return}
+  const price=Math.max(0,Number($('webReqApprovedPrice').value||r.basePriceUsd||0));
+  const title=`Diseño Web · ${r.planName||'Proyecto'}${r.businessName?` · ${r.businessName}`:''}`;
+  if(!confirm(`Crear "${title}" por ${usd(price)} como proyecto pendiente de pago?`))return;
+  try{
+    const pRef=doc(collection(db,'users',r.userUid,'projects'));
+    const displayOrderId=`#EVO-W${Date.now().toString().slice(-7)}`;
+    await setDoc(pRef,{
+      ownerUid:r.userUid,
+      ownerEmail:r.userEmail||r.email||'',
+      payerName:r.name||'Cliente',
+      projectTitle:title,
+      category:'Diseño Web',
+      serviceType:'web_design',
+      webRequestId:r.id,
+      webPlanId:r.planId||'',
+      webPlanName:r.planName||'',
+      baseUsd:price,
+      amount:price.toFixed(2),
+      currency:'USD',
+      status:'awaiting_payment',
+      paymentStatus:'pending',
+      paymentMethod:'PayPal',
+      displayOrderId,
+      description:`Proyecto de diseño web aprobado desde solicitud ${r.id.slice(0,8).toUpperCase()}.`,
+      included:Array.isArray(r.features)?r.features:[],
+      clientComments:r.notes||'',
+      createdAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+    await updateDoc(doc(db,'webRequests',r.id),{
+      status:'converted',
+      approvedPriceUsd:price,
+      projectId:pRef.id,
+      displayOrderId,
+      convertedAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+    toast('Solicitud aprobada y proyecto creado.');
+    closeWebRequest();
+    await refresh();
+    switchView('projects');
+    $('projectSearch').value=displayOrderId;
+    renderProjects();
+  }catch(e){console.error(e);toast(e?.message||'No se pudo convertir la solicitud en proyecto.')}
+}
+
 function renderMetrics(){const m=data.metrics||{};$('metrics').innerHTML=[['Clientes',m.clients,'registrados'],['Proyectos',m.projects,'total'],['Activos',m.active,'en operación'],['Ingresos',usd(m.grossRevenueUsd),'normalizado USD'],['Costos',usd(m.internalCostUsd),'internos'],['Ganancia',usd(m.profitUsd),'ingresos - costos']].map((x,i)=>`<div class="metric ${i===5?'profit':''}"><div class="metric-label">${x[0]}</div><div class="metric-value">${x[1]??0}</div><div class="metric-sub">${x[2]}</div></div>`).join('')}
-function projectRow(p){return `<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)} · ${esc(p.transactionId||'sin transacción')}</div></td><td><div>${esc(p.payerName||p.ownerEmail||'Cliente')}</div><div class="sub">${esc(p.ownerEmail||'')}</div></td><td>${esc(p.payerCountry||p.lastGeo?.country||'No reportado')}</td><td><span class="strong">${usd(p.baseUsd)}</span><div class="sub">${esc(p.currency||'USD')} ${esc(p.amount||'')}</div></td><td><span class="strong">${usd(projectProfit(p))}</span><div class="sub">Costo ${usd(p.adminMeta?.internalCostUsd)}</div></td><td>${pill(p.status)}</td><td>${Number(p.clientFileCount||0)} recibidos · ${Number(p.deliveryFileCount||0)} enviados</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`}
-function renderProjects(){const term=$('projectSearch').value.toLowerCase(),st=$('statusFilter').value;const rows=data.projects.filter(p=>(!st||p.status===st)&&(!term||[p.projectTitle,p.ownerEmail,p.payerName,p.displayOrderId,p.transactionId,p.payerCountry,p.lastGeo?.country].some(x=>String(x||'').toLowerCase().includes(term))));$('projectsBody').innerHTML=rows.map(projectRow).join('')||'<tr><td colspan="8">Sin resultados.</td></tr>'}
+
+function hasPaymentReceipt(p){return !!String(p?.receiptStoragePath||'').trim()}
+function paymentReviewState(p){const raw=String(p?.paymentReviewStatus||'').toLowerCase();if(raw==='approved'||p?.paymentVerifiedByAdmin===true||String(p?.paymentStatus||'').toLowerCase()==='paid')return'approved';if(raw==='rejected'||String(p?.paymentStatus||'').toLowerCase()==='rejected')return'rejected';return'pending'}
+function paymentReviewLabel(p){return({pending:'Por revisar',approved:'Aprobado',rejected:'Rechazado'}[paymentReviewState(p)]||'Por revisar')}
+function paymentExpectedText(p){return `${p?.expectedAmount||p?.amount||'—'} ${p?.expectedCurrency||p?.currency||''}`.trim()}
+function paymentStatusExtra(p){if(!hasPaymentReceipt(p))return'';const state=paymentReviewState(p);return `<div class="manual-payment-chip">${state==='pending'?'Comprobante por revisar':state==='approved'?'Pago manual aprobado':'Comprobante rechazado'}</div>`}
+function renderPaymentReceipts(){
+  const term=String($('paymentSearch')?.value||'').toLowerCase(),filter=$('paymentReviewFilter')?.value||'';
+  const all=(data.projects||[]).filter(hasPaymentReceipt);
+  const rows=all.filter(p=>{const state=paymentReviewState(p);const hay=[p.displayOrderId,p.projectTitle,p.ownerEmail,p.payerName,p.paymentMethod,p.bankName,p.manualPaymentReference,p.transactionId].some(x=>String(x||'').toLowerCase().includes(term));return(!filter||state===filter)&&(!term||hay)});
+  if($('paymentReceiptsBody'))$('paymentReceiptsBody').innerHTML=rows.map(p=>{const state=paymentReviewState(p);return `<tr><td><div class="strong">${esc(p.displayOrderId||p.id)}</div><div class="sub">${esc(p.projectTitle||'Proyecto')}</div></td><td><div>${esc(p.payerName||p.ownerEmail||'Cliente')}</div><div class="sub">${esc(p.ownerEmail||'')}</div></td><td><div>${esc(p.paymentMethod||'Pago manual')}</div>${p.bankName?`<div class="sub">${esc(p.bankName)}</div>`:''}</td><td><span class="strong">${esc(paymentExpectedText(p))}</span><div class="sub">${usd(p.baseUsd)} base</div></td><td>${esc(p.manualPaymentReference||p.transactionId||'—')}</td><td><span class="payment-table-status ${state}">${esc(paymentReviewLabel(p))}</span></td><td>${esc(niceDateTime(p.paymentSubmittedAt||p.createdAt))}</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Revisar</button></td></tr>`}).join('')||'<tr><td colspan="8">No hay comprobantes en este filtro.</td></tr>';
+  const pending=all.filter(p=>paymentReviewState(p)==='pending').length,approved=all.filter(p=>paymentReviewState(p)==='approved').length,rejected=all.filter(p=>paymentReviewState(p)==='rejected').length;
+  if($('paymentReviewCount')){$('paymentReviewCount').textContent=pending;$('paymentReviewCount').classList.toggle('zero',pending===0)}
+  if($('paymentPendingMetric'))$('paymentPendingMetric').textContent=pending;
+  if($('paymentApprovedMetric'))$('paymentApprovedMetric').textContent=approved;
+  if($('paymentRejectedMetric'))$('paymentRejectedMetric').textContent=rejected;
+}
+async function renderPaymentProof(){
+  const box=$('paymentProofSection');
+  if(!box||!selected||!hasPaymentReceipt(selected)){box?.classList.add('hidden');return}
+  box.classList.remove('hidden');
+  const state=paymentReviewState(selected),badge=$('paymentProofBadge');
+  if(badge){badge.className=`payment-proof-badge ${state==='approved'?'approved':state==='rejected'?'rejected':''}`;badge.textContent=paymentReviewLabel(selected)}
+  if($('paymentReviewNote'))$('paymentReviewNote').value=selected.paymentReviewNote||selected.paymentRejectionReason||'';
+  const details=[['Método',selected.paymentMethod||selected.paymentProvider||'Pago manual'],['Monto esperado',paymentExpectedText(selected)],['Referencia',selected.manualPaymentReference||selected.transactionId||'—'],['Banco',selected.bankName||selected.bankKey||'—'],['Archivo',selected.receiptName||'Comprobante'],['Enviado',niceDateTime(selected.paymentSubmittedAt||selected.createdAt)]];
+  $('paymentProofDetails').innerHTML=details.map(x=>`<div class="payment-proof-detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
+  const preview=$('paymentReceiptPreview');preview.innerHTML='<div class="payment-receipt-empty"><strong>Cargando comprobante…</strong>Preparando vista previa.</div>';
+  if(!s3){preview.innerHTML='<div class="payment-receipt-empty"><strong>R2 no disponible</strong>Usa la descarga cuando la conexión esté disponible.</div>';return}
+  try{
+    const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:selected.receiptStoragePath,Expires:300}),type=String(selected.receiptContentType||'').toLowerCase(),name=String(selected.receiptName||'').toLowerCase();
+    if(type.startsWith('image/')||/\.(png|jpe?g|webp|gif|avif|bmp)$/i.test(name))preview.innerHTML=`<img src="${esc(url)}" alt="Comprobante de pago">`;
+    else if(type==='application/pdf'||name.endsWith('.pdf'))preview.innerHTML=`<iframe src="${esc(url)}#toolbar=0&navpanes=0" title="Comprobante PDF"></iframe>`;
+    else preview.innerHTML='<div class="payment-receipt-empty"><strong>Vista previa no disponible</strong>Usa “Ver comprobante” o “Descargar archivo”.</div>';
+  }catch(e){console.error(e);preview.innerHTML='<div class="payment-receipt-empty"><strong>No se pudo mostrar</strong>Usa el botón de descarga.</div>'}
+  if($('approvePaymentBtn'))$('approvePaymentBtn').disabled=state==='approved';
+}
+window.openPaymentReceipt=function(download=false){if(!selected||!hasPaymentReceipt(selected)){toast('Este proyecto no tiene comprobante.');return}if(!s3){toast('No hay conexión a R2.');return}try{const params={Bucket:R2_BUCKET_NAME,Key:selected.receiptStoragePath,Expires:300};if(download)params.ResponseContentDisposition=`attachment; filename="${String(selected.receiptName||'comprobante').replace(/"/g,'')}"`;const url=s3.getSignedUrl('getObject',params);if(download){const a=document.createElement('a');a.href=url;a.download=selected.receiptName||'comprobante';document.body.appendChild(a);a.click();a.remove()}else window.open(url,'_blank','noopener,noreferrer')}catch(e){console.error(e);toast('No se pudo abrir el comprobante.')}}
+window.approveManualPayment=async function(){if(!selected||!hasPaymentReceipt(selected))return;const refText=selected.manualPaymentReference||selected.transactionId||'sin referencia';if(!confirm(`¿Confirmas que recibiste el pago ${paymentExpectedText(selected)}?\nReferencia: ${refText}`))return;const btn=$('approvePaymentBtn'),note=String($('paymentReviewNote')?.value||'').trim(),uid=selected.ownerUid,id=selected.id;try{if(btn){btn.disabled=true;btn.textContent='Aprobando…'}const patch={paymentStatus:'paid',paymentReviewStatus:'approved',paymentVerifiedByAdmin:true,paymentVerifiedByAdminEmail:auth.currentUser?.email||'',paymentReviewNote:note,status:'waiting_files',paidAt:serverTimestamp(),paymentVerifiedAt:serverTimestamp(),updatedAt:serverTimestamp()};await updateDoc(doc(db,'users',uid,'projects',id),patch);toast('Pago aprobado. El proyecto ya puede continuar.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value='waiting_files';await renderPaymentProof()}catch(e){console.error(e);toast(e?.message||'No se pudo aprobar el pago.')}finally{if(btn){btn.disabled=false;btn.textContent='Aprobar pago ✓'}}}
+window.rejectManualPayment=async function(){if(!selected||!hasPaymentReceipt(selected))return;const uid=selected.ownerUid,id=selected.id,note=String($('paymentReviewNote')?.value||'').trim(),reason=note||prompt('Motivo del rechazo (opcional):')||'';if(!confirm('¿Marcar este comprobante como rechazado?'))return;const btn=$('rejectPaymentBtn');try{if(btn){btn.disabled=true;btn.textContent='Rechazando…'}const patch={paymentStatus:'rejected',paymentReviewStatus:'rejected',paymentVerifiedByAdmin:false,paymentReviewNote:reason,paymentRejectionReason:reason,status:'awaiting_payment',paymentRejectedAt:serverTimestamp(),updatedAt:serverTimestamp()};await updateDoc(doc(db,'users',uid,'projects',id),patch);toast('Comprobante rechazado.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value='awaiting_payment';await renderPaymentProof()}catch(e){console.error(e);toast(e?.message||'No se pudo rechazar el comprobante.')}finally{if(btn){btn.disabled=false;btn.textContent='Rechazar comprobante'}}}
+
+function projectRow(p){return `<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)} · ${esc(p.transactionId||'sin transacción')}</div>${paymentStatusExtra(p)}</td><td><div>${esc(p.payerName||p.ownerEmail||'Cliente')}</div><div class="sub">${esc(p.ownerEmail||'')}</div></td><td>${esc(p.payerCountry||p.lastGeo?.country||'No reportado')}</td><td><span class="strong">${usd(p.baseUsd)}</span><div class="sub">${esc(p.currency||'USD')} ${esc(p.amount||'')}</div></td><td><span class="strong">${usd(projectProfit(p))}</span><div class="sub">Costo ${usd(p.adminMeta?.internalCostUsd)}</div></td><td>${pill(p.status)}</td><td>${Number(p.clientFileCount||0)} recibidos · ${Number(p.deliveryFileCount||0)} enviados</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`}
+function renderProjects(){const term=$('projectSearch').value.toLowerCase(),st=$('statusFilter').value;const rows=data.projects.filter(p=>{const statusOk=!st||(st==='payment_pending_review'?hasPaymentReceipt(p)&&paymentReviewState(p)==='pending':p.status===st);return statusOk&&(!term||[p.projectTitle,p.ownerEmail,p.payerName,p.displayOrderId,p.transactionId,p.payerCountry,p.lastGeo?.country,p.paymentMethod,p.bankName,p.manualPaymentReference].some(x=>String(x||'').toLowerCase().includes(term)))});$('projectsBody').innerHTML=rows.map(projectRow).join('')||'<tr><td colspan="8">Sin resultados.</td></tr>'}
 function renderRecent(){const rows=data.projects.slice(0,8);$('recentProjects').innerHTML=rows.length?`<table><thead><tr><th>Proyecto</th><th>Cliente</th><th>Venta</th><th>Estado</th><th></th></tr></thead><tbody>${rows.map(p=>`<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)}</div></td><td>${esc(p.ownerEmail||p.payerName||'')}</td><td>${usd(p.baseUsd)}</td><td>${pill(p.status)}</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`).join('')}</tbody></table>`:'<div class="loading">Aún no hay proyectos.</div>'}
 function renderCountries(){const max=Math.max(1,...data.countries.map(x=>x.count));$('countryList').innerHTML=data.countries.length?data.countries.map(x=>`<div class="country-row"><div class="country-name">${esc(x.country)}</div><div class="country-track"><div class="country-bar" style="width:${Math.round(x.count/max*100)}%"></div></div><div class="country-count">${x.count}</div></div>`).join(''):'<div class="sub">Aún no hay ubicaciones registradas.</div>'}
 function authProviderLabel(c){const p=Array.isArray(c.providers)?c.providers:[];if(p.includes('google.com'))return 'Google';if(p.includes('password'))return 'Correo';if(p.includes('phone'))return 'Teléfono';return p[0]||'Firebase';}
@@ -603,11 +872,14 @@ window.showClientProjects=function(uid){switchView('projects');const c=data.clie
 function clearSystemError(){const box=$('systemAlert');if(box){box.classList.remove('show');box.innerHTML=''}}
 
 async function loadDashboardDirect(){
-  const [usersSnap,projectsSnap,metaSnap]=await Promise.all([
+  const [usersSnap,projectsSnap,metaSnap,webReqResult]=await Promise.all([
     getDocs(collection(db,'users')),
     getDocs(collectionGroup(db,'projects')),
-    getDocs(collection(db,'adminProjectData'))
+    getDocs(collection(db,'adminProjectData')),
+    getDocs(collection(db,'webRequests')).then(s=>({snap:s,error:null})).catch(error=>({snap:null,error}))
   ]);
+  const webReqSnap=webReqResult.snap||{docs:[]};
+  if(webReqResult.error)console.warn('Solicitudes Web no disponibles:',webReqResult.error?.message||webReqResult.error);
 
   const metaMap=new Map(metaSnap.docs.map(d=>{const x=d.data();return [`${x.ownerUid}__${x.projectId}`,x]}));
   const projects=projectsSnap.docs.map(d=>{const x=d.data(),parts=d.ref.path.split('/'),ownerUid=x.ownerUid||parts[1]||'';return {id:d.id,ownerUid,...x,adminMeta:metaMap.get(`${ownerUid}__${d.id}`)||{}}}).sort((a,b)=>dateMs(b.createdAt)-dateMs(a.createdAt));
@@ -647,6 +919,7 @@ async function loadDashboardDirect(){
   return {
     metrics:{clients:clients.length,projects:projects.length,active,delivered,pendingPayments:pending,grossRevenueUsd:gross,internalCostUsd:cost,profitUsd:gross-cost},
     clients,projects,
+    webRequests:webReqSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateMs(b.createdAt)-dateMs(a.createdAt)),
     countries:Object.entries(countriesMap).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count)
   };
 }
@@ -656,7 +929,7 @@ async function refresh(){
     $('refreshBtn').disabled=true;
     $('refreshBtn').textContent='Actualizando…';
     data=await loadDashboardDirect();
-    renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();
+    renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();renderWebRequests();renderPaymentReceipts();
     clearSystemError();
     return true;
   }catch(e){
@@ -673,6 +946,11 @@ $('refreshBtn').onclick=()=>refresh();
 $('projectSearch').oninput=renderProjects;
 $('statusFilter').onchange=renderProjects;
 $('clientSearch').oninput=renderClients;
+$('webRequestSearch').oninput=renderWebRequests;
+$('webRequestStatus').onchange=renderWebRequests;
+$('paymentSearch').oninput=renderPaymentReceipts;
+$('paymentReviewFilter').onchange=renderPaymentReceipts;
+document.getElementById('webRequestModal')?.addEventListener('click',e=>{if(e.target?.id==='webRequestModal')closeWebRequest()});
 $('customManualPaid').onchange=()=>{const paid=$('customManualPaid').checked,wrap=$('customPaymentMethodWrap');wrap?.classList.toggle('hidden',!paid);if(!paid&&$('customPaymentMethod'))$('customPaymentMethod').value='PayPal'};
 
 window.openProject=async function(uid,id){
@@ -714,7 +992,7 @@ window.openProject=async function(uid,id){
   $('deliveryUploadStatus').textContent='';
   setProjectDirty(false);
   $('projectModal').classList.add('show');
-  await loadFiles();
+  await Promise.all([loadFiles(),renderPaymentProof()]);
 };
 window.closeProject=()=>{
   clearPreviewObjectUrls();
