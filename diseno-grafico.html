@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+html = """<!DOCTYPE html>
+
 <html lang="es">
 <head>
 <meta charset="utf-8"/>
@@ -8,11 +9,11 @@
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="yes" name="mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="Evolution Design — Diseño gráfico, proyectos PSD editables y biblioteca premium para miembros." name="description"/>
+<meta content="Evolution Design — Diseño y desarrollo web, landing pages, tiendas online y consultoría digital." name="description"/>
 <meta content="Evolution Design" name="author"/>
 <meta content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" name="google-site-verification"/>
-<meta content="2026-08-08-graphic-design-membership-v2" name="evolution-build"/>
-<title>Diseño Gráfico — Recursos PSD y Membresía | Evolution Design</title>
+<meta content="2026-08-08-web-design-v2" name="evolution-build"/>
+<title>Diseño Web y E-commerce | Evolution Design</title>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
 <link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
@@ -56,7 +57,7 @@
 
     /* ---------- TRANSICIONES ENTRE ÁREAS ---------- */
     @view-transition { navigation:auto; }
-    .desktop-nav,.mobile-nav { view-transition-name:evolution-navigation; }
+    .desktop-nav,.mobile-app-nav { view-transition-name:evolution-navigation; }
     main { view-transition-name:evolution-content; }
     ::view-transition-group(evolution-navigation) {
       z-index:99999;
@@ -128,34 +129,30 @@
     .dropdown-menu-ed a:hover,.dropdown-menu-ed a.active,.dropdown-menu-ed a.current-area { background: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
 
     /* ---------- MOBILE NAV ---------- */
-    .mobile-nav { position:fixed; inset:0 0 auto 0; z-index:1035; background: rgba(5, 5, 5, 0.94) !important; backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); border-bottom: 1px solid rgba(255,255,255,.07) !important; box-shadow: 0 8px 28px rgba(0,0,0,.28); transition:transform .42s cubic-bezier(.22,.61,.36,1), box-shadow .28s ease; will-change:transform; }
-    .mobile-nav.hidden { transform:translate3d(0,-112%,0); box-shadow:none !important; }
-    .mobile-top { display:grid; grid-template-columns:42px 1fr auto; align-items:center; gap:10px; padding:calc(env(safe-area-inset-top,0px) + 9px) 12px 8px; }
-    .mobile-logo { display:flex; justify-content:center; }
-    .mobile-logo img { max-height:26px; width:auto; }
-    .mobile-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); padding:0 7px; }
-    .mobile-tab { min-width:0; padding:7px 2px 9px; text-align:center; color:#7f7f85; text-decoration:none; font-size:.59rem; border-bottom:2px solid transparent; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .mobile-tab svg { display:block; width:18px; height:18px; margin:0 auto 4px; }
-    .mobile-tab.active,.mobile-tab.current-area { color:#fff; border-bottom-color:var(--accent); }
-    .mobile-tab.active svg,.mobile-tab.current-area svg { opacity: 1; transform: scale(1.12); }
-    .mobile-auth-actions { display:flex; align-items:center; gap:8px; }
-    .mobile-auth-action,.mobile-profile-link { width:36px; height:36px; border-radius:50%; display:grid; place-items:center; color:var(--accent); border:1px solid rgba(212,184,149,.28); background:rgba(212,184,149,.05); text-decoration:none; }
-    .mobile-profile-link img { width:28px; height:28px; border-radius:50%; object-fit:cover; }
-
+    .mobile-app-nav { background: rgba(5, 5, 5, 0.94) !important; backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); border-bottom: 1px solid rgba(255,255,255,.07) !important; box-shadow: 0 8px 28px rgba(0,0,0,.28); position: fixed; top: 0; left: 0; width: 100%; z-index: 1030; }
+    @media (min-width: 992px) { .mobile-app-nav { display: none !important; } }
+    .app-nav-top { display: flex; justify-content: space-between; align-items: center; padding: max(38px, env(safe-area-inset-top)) 1.5rem 0.8rem 1.5rem; }
+    .app-tabs { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 1.5rem; gap: 2rem; justify-content: space-around; }
+    .app-tabs::-webkit-scrollbar { display: none; }
+    .tab-item { display: flex; flex-direction: column; align-items: center; color: #888 !important; text-decoration: none !important; font-size: 0.75rem; padding-bottom: 0.8rem; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.4s ease; }
+    .tab-item svg { margin-bottom: 6px; opacity: 0.7; transition: transform 0.4s ease; }
+    .tab-item:hover, .tab-item.active, .tab-item.current-area { color: #fff !important; border-bottom-color: #d4b895 !important; }
+    .tab-item.active svg, .tab-item.current-area svg { opacity: 1; transform: scale(1.12); }
+    
     @media (max-width: 991.98px) {
-      .mobile-nav { top: 0; left: 0; right: 0; width: 100%; width: 100dvw; padding-top: env(safe-area-inset-top, 0px); }
-      .mobile-top { min-height: 60px; padding: 10px 14px 9px !important; gap: 12px; }
-      .mobile-top > * { min-width: 0; }
-      .mobile-top > a img { display: block; max-width: 128px; max-height: 27px !important; object-fit: contain; }
+      .mobile-app-nav { top: 0; left: 0; right: 0; width: 100%; width: 100dvw; padding-top: env(safe-area-inset-top, 0px); }
+      .app-nav-top { min-height: 60px; padding: 10px 14px 9px !important; gap: 12px; }
+      .app-nav-top > * { min-width: 0; }
+      .app-nav-top > a img { display: block; max-width: 128px; max-height: 27px !important; object-fit: contain; }
       .icon-btn { width: 40px; height: 40px; min-width: 40px; min-height: 40px; -webkit-tap-highlight-color: transparent; }
-      .mobile-tabs { width: 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; padding: 0 7px !important; overflow: visible; justify-content: initial; }
-      .mobile-tab { min-width: 0; padding: 7px 2px 9px; font-size: .62rem; line-height: 1.15; text-align: center; overflow: hidden; text-overflow: ellipsis; }
-      .mobile-tab svg { width: 19px; height: 19px; margin-bottom: 4px; }
+      .app-tabs { width: 100%; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; padding: 0 7px !important; overflow: visible; justify-content: initial; }
+      .tab-item { min-width: 0; padding: 7px 2px 9px; font-size: .62rem; line-height: 1.15; text-align: center; overflow: hidden; text-overflow: ellipsis; }
+      .tab-item svg { width: 19px; height: 19px; margin-bottom: 4px; }
       .dropdown-menu-ed { top: 48px; max-width: calc(100vw - 28px); }
 
-      .mobile-nav { transition: transform .34s cubic-bezier(.22,.61,.36,1), background-color .25s ease, box-shadow .25s ease; will-change: transform; }
-      .mobile-nav.nav-hidden { transform: translate3d(0, -105%, 0); box-shadow: none; }
-      .mobile-nav.nav-at-top { box-shadow: none; }
+      .mobile-app-nav { transition: transform .34s cubic-bezier(.22,.61,.36,1), background-color .25s ease, box-shadow .25s ease; will-change: transform; }
+      .mobile-app-nav.nav-hidden { transform: translate3d(0, -105%, 0); box-shadow: none; }
+      .mobile-app-nav.nav-at-top { box-shadow: none; }
       #auth-mobile-wrapper { flex-shrink: 0; }
       .mobile-auth-actions { display: flex; align-items: center; gap: 10px; }
       .mobile-profile-link, .mobile-auth-action { width: 36px; height: 36px; min-width: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; text-decoration: none !important; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.13); box-shadow: 0 6px 18px rgba(0,0,0,.22); }
@@ -164,7 +161,6 @@
       .mobile-auth-action { color: #d4b895 !important; border-color: rgba(212,184,149,.28); }
       .mobile-auth-action svg { width: 15px; height: 15px; }
     }
-    @media (min-width: 1200px) { #floating-profile-desktop { margin-left: .7rem; } }
 
     /* ---------- AUTH MODAL ---------- */
     .login-modal-overlay { position:fixed; inset:0; z-index:1100; display:grid; place-items:center; padding:18px; background:rgba(0,0,0,.66); -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); opacity:0; pointer-events:none; transition:opacity .25s ease; }
@@ -175,428 +171,145 @@
     .auth-input { width:100%; min-height:48px; border:1px solid rgba(255,255,255,.10); border-radius:14px; background:rgba(255,255,255,.04); color:#fff; padding:0 14px; outline:none; font-size:16px; }
     .auth-input:focus { border-color:rgba(212,184,149,.55); box-shadow:0 0 0 3px rgba(212,184,149,.06); }
     .auth-submit { width:100%; min-height:48px; border:0; border-radius:14px; background:var(--accent); color:#0b0b0c; font-weight:800; cursor:pointer; }
-    
+
     /* =========================================================
-       DISEÑO GRÁFICO — PSD MEMBERSHIP
+       DISEÑO WEB — PORTFOLIO & PRECIOS
        ========================================================= */
-    body.graphic-page { background:#050505; }
-    .graphic-main { background:#050505; overflow:hidden; }
-    .graphic-hero { position:relative; min-height:78vh; display:flex; align-items:flex-end; padding:155px 5vw 86px; overflow:hidden; border-bottom:1px solid rgba(255,255,255,.06); }
-    .graphic-hero::before { content:""; position:absolute; inset:-8%; background:
-      radial-gradient(circle at 76% 30%,rgba(212,184,149,.14),transparent 27%),
-      radial-gradient(circle at 24% 15%,rgba(255,255,255,.07),transparent 20%),
-      linear-gradient(135deg,#050505 0%,#0b0b0c 48%,#050505 100%); transform:scale(1.03); }
-    .graphic-hero::after { content:""; position:absolute; inset:0; opacity:.25; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:64px 64px; mask-image:linear-gradient(to bottom,black,transparent 88%); }
-    .graphic-hero-inner { position:relative; z-index:2; width:min(1360px,100%); margin:0 auto; display:grid; grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr); gap:68px; align-items:end; }
-    .graphic-kicker { display:flex; align-items:center; gap:10px; color:var(--accent); font-size:.68rem; letter-spacing:.19em; font-weight:700; text-transform:uppercase; }
-    .graphic-kicker::before { content:""; width:34px; height:1px; background:var(--accent); }
-    .graphic-title { margin:22px 0 0; max-width:850px; font-size:clamp(4.1rem,7.3vw,8rem); line-height:.87; letter-spacing:-.07em; font-weight:700; }
-    .graphic-title em { display:block; color:var(--accent); font-style:normal; font-weight:500; }
-    .graphic-copy { max-width:680px; margin:28px 0 0; color:#9f9fa6; line-height:1.72; font-size:clamp(1rem,1.2vw,1.14rem); }
-    .graphic-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:30px; }
-    .graphic-primary,.graphic-secondary { min-height:48px; display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:0 19px; border-radius:999px; text-decoration:none; font-size:.78rem; font-weight:800; transition:.25s ease; }
-    .graphic-primary { background:#f2f2f1; color:#080808; }
-    .graphic-primary:hover { color:#000; transform:translateY(-2px); box-shadow:0 14px 34px rgba(255,255,255,.10); }
-    .graphic-secondary { border:1px solid rgba(255,255,255,.13); background:rgba(255,255,255,.035); color:#fff; -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); }
-    .graphic-secondary:hover { color:#fff; border-color:rgba(212,184,149,.45); background:rgba(212,184,149,.06); }
+    body.web-page { background:#050505; }
+    .web-main { background:#050505; overflow:hidden; }
+    .web-hero { position:relative; min-height:85vh; display:flex; align-items:flex-end; padding:155px 5vw 96px; overflow:hidden; border-bottom:1px solid rgba(255,255,255,.06); }
+    .web-hero::before { content:""; position:absolute; inset:-8%; background:
+      radial-gradient(circle at 80% 20%,rgba(212,184,149,.15),transparent 25%),
+      radial-gradient(circle at 10% 45%,rgba(255,255,255,.06),transparent 18%),
+      linear-gradient(145deg,#050505 0%,#09090b 50%,#050505 100%); transform:scale(1.04); }
+    .web-hero::after { content:""; position:absolute; inset:0; opacity:.3; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px); background-size:58px 58px; mask-image:linear-gradient(to bottom,black,transparent 80%); }
+    .web-hero-inner { position:relative; z-index:2; width:min(1360px,100%); margin:0 auto; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(360px,.9fr); gap:65px; align-items:center; }
+    .web-kicker { display:flex; align-items:center; gap:10px; color:var(--accent); font-size:.68rem; letter-spacing:.19em; font-weight:700; text-transform:uppercase; }
+    .web-kicker::before { content:""; width:34px; height:1px; background:var(--accent); }
+    .web-title { margin:24px 0 0; max-width:880px; font-size:clamp(4rem,7.5vw,7.8rem); line-height:.88; letter-spacing:-.06em; font-weight:700; }
+    .web-title em { display:block; color:var(--accent); font-style:normal; font-weight:500; }
+    .web-copy { max-width:640px; margin:28px 0 0; color:#9a9aa1; line-height:1.75; font-size:clamp(.98rem,1.15vw,1.12rem); }
+    .web-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:34px; }
+    .web-primary,.web-secondary { min-height:48px; display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:0 20px; border-radius:999px; text-decoration:none; font-size:.78rem; font-weight:800; transition:.25s ease; }
+    .web-primary { background:#f2f2f1; color:#080808; }
+    .web-primary:hover { color:#000; transform:translateY(-2px); box-shadow:0 14px 34px rgba(255,255,255,.10); }
+    .web-secondary { border:1px solid rgba(255,255,255,.13); background:rgba(255,255,255,.035); color:#fff; -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); }
+    .web-secondary:hover { color:#fff; border-color:rgba(212,184,149,.45); background:rgba(212,184,149,.06); }
 
-    .membership-preview-card { position:relative; padding:22px; border-radius:28px; border:1px solid rgba(255,255,255,.105); background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.014)),rgba(5,5,5,.46); -webkit-backdrop-filter:blur(25px) saturate(165%); backdrop-filter:blur(25px) saturate(165%); box-shadow:0 28px 75px rgba(0,0,0,.38); overflow:hidden; }
-    .membership-preview-card::before { content:""; position:absolute; width:300px; height:300px; right:-120px; top:-150px; border-radius:50%; background:radial-gradient(circle,rgba(212,184,149,.17),transparent 67%); pointer-events:none; }
-    .membership-preview-top { position:relative; z-index:2; display:flex; justify-content:space-between; gap:18px; align-items:flex-start; }
-    .membership-preview-top span:first-child { color:#76767d; font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; }
-    .price-badge { display:inline-flex; align-items:baseline; gap:5px; color:#fff; font-weight:800; }
-    .price-badge strong { font-size:2.35rem; letter-spacing:-.06em; }
-    .price-badge small { color:#88888f; font-size:.65rem; font-weight:600; }
-    .membership-preview-card h2 { position:relative; z-index:2; margin:31px 0 9px; font-size:clamp(1.9rem,3vw,3.1rem); letter-spacing:-.055em; line-height:.95; }
-    .membership-preview-card p { position:relative; z-index:2; margin:0; color:#929299; line-height:1.6; font-size:.78rem; }
-    .hero-benefits { position:relative; z-index:2; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:23px; }
-    .hero-benefit { min-height:70px; padding:12px; border:1px solid rgba(255,255,255,.075); border-radius:15px; background:rgba(255,255,255,.025); }
-    .hero-benefit svg { color:var(--accent); margin-bottom:7px; }
-    .hero-benefit strong { display:block; font-size:.70rem; }
-    .hero-benefit small { display:block; color:#74747a; margin-top:3px; font-size:.59rem; line-height:1.35; }
+    .web-hero-visual { position:relative; }
+    .web-frame { position:relative; border-radius:24px; border:1px solid rgba(255,255,255,.11); background:#0c0c0d; padding:16px; box-shadow:0 35px 80px rgba(0,0,0,.45); overflow:hidden; }
+    .web-frame-head { display:flex; gap:6px; margin-bottom:14px; padding:0 6px; }
+    .web-frame-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.15); }
+    .web-frame-img { border-radius:14px; overflow:hidden; background:#111; border:1px solid rgba(255,255,255,.05); }
+    .web-frame-img img { display:block; width:100%; height:auto; opacity:.85; filter:saturate(.85); }
+    .web-glass-badge { position:absolute; right:-20px; bottom:-25px; padding:18px 24px; border-radius:20px; border:1px solid rgba(255,255,255,.12); background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.015)),rgba(10,10,12,.65); -webkit-backdrop-filter:blur(24px) saturate(180%); backdrop-filter:blur(24px) saturate(180%); box-shadow:0 20px 50px rgba(0,0,0,.4); }
+    .web-glass-badge strong { display:block; color:#fff; font-size:1.15rem; letter-spacing:-.03em; }
+    .web-glass-badge small { display:block; margin-top:4px; color:#888; font-size:.66rem; letter-spacing:.05em; text-transform:uppercase; }
 
-    .projects-section { position:relative; overflow:hidden; padding:105px 5vw 115px; background:linear-gradient(180deg,#050505,#080808); }
-    .projects-inner { width:min(1360px,100%); margin:0 auto; }
-    .projects-head { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr); gap:45px; align-items:end; margin-bottom:42px; }
-    .projects-head h2 { margin:0; max-width:880px; font-size:clamp(2.8rem,5vw,5.4rem); line-height:.95; letter-spacing:-.06em; }
-    .projects-head p { margin:0 0 6px; color:#86868d; line-height:1.7; font-size:.86rem; }
-    .project-count { display:inline-flex; align-items:center; gap:9px; margin-bottom:12px; color:var(--accent); font-size:.64rem; letter-spacing:.17em; font-weight:700; text-transform:uppercase; }
-    .project-count::before { content:""; width:28px; height:1px; background:var(--accent); }
+    .portfolio-section { padding:110px 5vw; background:linear-gradient(180deg,#050505,#09090a); }
+    .portfolio-inner { width:min(1360px,100%); margin:0 auto; }
+    .portfolio-head { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr); gap:45px; align-items:end; margin-bottom:55px; }
+    .portfolio-head h2 { margin:0; max-width:880px; font-size:clamp(2.7rem,4.8vw,5.2rem); line-height:.96; letter-spacing:-.055em; }
+    .portfolio-head p { margin:0 0 6px; color:#8a8a92; line-height:1.7; font-size:.88rem; }
+    .portfolio-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+    .port-card { display:block; position:relative; border-radius:28px; overflow:hidden; background:#0c0c0e; border:1px solid rgba(255,255,255,.07); text-decoration:none; color:#fff; transition:transform .35s var(--ease),border-color .3s ease; }
+    .port-card:hover { transform:translateY(-5px); border-color:rgba(212,184,149,.3); }
+    .port-visual { position:relative; aspect-ratio:16/10; overflow:hidden; background:#111; }
+    .port-visual img { width:100%; height:100%; object-fit:cover; opacity:.85; filter:saturate(.9); transition:transform .6s var(--ease),opacity .4s ease,filter .4s ease; }
+    .port-card:hover .port-visual img { transform:scale(1.04); opacity:1; filter:saturate(1.05); }
+    .port-visual::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 60%,rgba(12,12,14,.98)); pointer-events:none; }
+    .port-content { position:absolute; bottom:0; left:0; right:0; padding:28px; z-index:2; }
+    .port-content h3 { margin:0; font-size:1.55rem; letter-spacing:-.03em; }
+    .port-content p { margin:6px 0 0; color:#8d8d96; font-size:.76rem; }
+    .port-tags { display:flex; gap:8px; position:absolute; top:20px; left:20px; z-index:2; }
+    .port-tag { padding:6px 12px; border-radius:999px; background:rgba(0,0,0,.65); border:1px solid rgba(255,255,255,.1); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); font-size:.56rem; letter-spacing:.08em; text-transform:uppercase; color:#d2d2d5; }
 
-    .psd-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
-    .psd-unlocked-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
-    /* Segunda fila: PSD 04 visible + teaser premium de PSD 05 y 06 */
-    .psd-showcase-second {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:14px;
-      margin-top:14px;
-      align-items:stretch;
+    .pricing-section { padding:100px 5vw 130px; background:#09090a; border-top:1px solid rgba(255,255,255,.05); }
+    .pricing-inner { width:min(1360px,100%); margin:0 auto; }
+    .pricing-head { text-align:center; max-width:680px; margin:0 auto 65px; }
+    .pricing-head h2 { margin:0 0 16px; font-size:clamp(2.5rem,4.5vw,4.2rem); letter-spacing:-.05em; line-height:1; }
+    .pricing-head p { margin:0; color:#8a8a92; font-size:.88rem; line-height:1.65; }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .price-card { position:relative; display:flex; flex-direction:column; padding:38px; border-radius:32px; border:1px solid rgba(255,255,255,.07); background:#0c0c0e; transition:transform .3s ease,border-color .3s ease; }
+    .price-card:hover { transform:translateY(-4px); border-color:rgba(212,184,149,.25); }
+    .price-card.featured { background:linear-gradient(155deg,rgba(212,184,149,.08),rgba(255,255,255,.01)),#0c0c0e; border-color:rgba(212,184,149,.35); box-shadow:0 30px 60px rgba(0,0,0,.35); }
+    .price-card.featured::before { content:"Más popular"; position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:var(--accent); color:#000; padding:5px 14px; border-radius:999px; font-size:.6rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    .pc-top { margin-bottom:30px; padding-bottom:30px; border-bottom:1px solid rgba(255,255,255,.06); }
+    .pc-top h3 { margin:0 0 8px; font-size:1.35rem; font-weight:500; }
+    .pc-top p { margin:0 0 20px; color:#7d7d85; font-size:.76rem; line-height:1.5; min-height:40px; }
+    .pc-price { display:flex; align-items:baseline; gap:6px; }
+    .pc-price strong { font-size:2.8rem; letter-spacing:-.05em; font-weight:800; }
+    .pc-price span { color:#6b6b72; font-size:.65rem; font-weight:600; }
+    .pc-list { list-style:none; padding:0; margin:0 0 35px; flex-grow:1; }
+    .pc-list li { position:relative; padding-left:24px; margin-bottom:14px; color:#c6c6cc; font-size:.78rem; line-height:1.45; }
+    .pc-list li::before { content:"✓"; position:absolute; left:0; top:0; color:var(--accent); font-weight:800; font-size:.8rem; }
+    .pc-list li.dim { color:#5b5b62; }
+    .pc-list li.dim::before { content:"—"; color:#444; font-weight:400; }
+    .price-cta { width:100%; min-height:48px; display:inline-flex; align-items:center; justify-content:center; border-radius:999px; font-size:.75rem; font-weight:800; text-decoration:none; transition:.2s ease; }
+    .price-card .price-cta { background:rgba(255,255,255,.04); color:#fff; border:1px solid rgba(255,255,255,.1); }
+    .price-card .price-cta:hover { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.2); }
+    .price-card.featured .price-cta { background:#f2f2f1; color:#000; border:none; }
+    .price-card.featured .price-cta:hover { background:#fff; box-shadow:0 10px 25px rgba(255,255,255,.15); }
+
+    .workflow-section { padding:0 5vw 120px; background:#09090a; }
+    .workflow-inner { width:min(1360px,100%); margin:0 auto; padding:65px; border-radius:36px; border:1px solid rgba(255,255,255,.06); background:linear-gradient(145deg,rgba(255,255,255,.03),rgba(255,255,255,.005)),#0b0b0d; }
+    .wf-head { text-align:center; margin-bottom:55px; }
+    .wf-head h2 { margin:0; font-size:clamp(2.1rem,3.5vw,3rem); letter-spacing:-.04em; }
+    .wf-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:30px; }
+    .wf-step { position:relative; }
+    .wf-num { width:46px; height:46px; border-radius:50%; display:grid; place-items:center; background:rgba(212,184,149,.1); border:1px solid rgba(212,184,149,.25); color:var(--accent); font-size:.9rem; font-weight:800; margin-bottom:20px; }
+    .wf-step h4 { margin:0 0 10px; font-size:1.05rem; letter-spacing:-.02em; }
+    .wf-step p { margin:0; color:#7d7d85; font-size:.75rem; line-height:1.6; }
+
+    @media (max-width:1199.98px) {
+      .web-hero-inner { grid-template-columns:1fr 400px; gap:40px; }
     }
-
-    .psd-premium-tease {
-      position:relative;
-      grid-column:span 2;
-      min-width:0;
-      min-height:390px;
-      border-radius:22px;
-      overflow:hidden;
-      isolation:isolate;
-      background:#0b0b0c;
-    }
-
-    .psd-premium-grid {
-      position:relative;
-      z-index:0;
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:14px;
-      height:100%;
-    }
-
-    .psd-premium-grid .psd-card {
-      min-height:390px;
-      filter:saturate(.82) brightness(.90);
-    }
-
-    /* Niebla blanca progresiva: deja ver bastante de 05 y 06 arriba,
-       y los oculta gradualmente hacia abajo para invitar a suscribirse. */
-    .psd-premium-fog {
-      position:absolute;
-      inset:0;
-      z-index:5;
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      padding:26px;
-      text-align:center;
-      background:
-        linear-gradient(180deg,
-          rgba(250,250,248,0) 0%,
-          rgba(250,250,248,.04) 20%,
-          rgba(250,250,248,.26) 42%,
-          rgba(250,250,248,.70) 70%,
-          rgba(250,250,248,.94) 100%);
-      -webkit-backdrop-filter:blur(14px) saturate(112%);
-      backdrop-filter:blur(14px) saturate(112%);
-      -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.12) 20%,#000 46%,#000 100%);
-      mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.12) 20%,#000 46%,#000 100%);
-      pointer-events:auto;
-    }
-
-    .psd-premium-fog::before {
-      content:"";
-      position:absolute;
-      inset:auto 5% 0;
-      height:70%;
-      border-radius:50% 50% 0 0 / 16% 16% 0 0;
-      background:radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.60),transparent 68%);
-      pointer-events:none;
-    }
-
-    .psd-tease-content {
-      position:relative;
-      z-index:2;
-      width:min(500px,100%);
-      padding:20px 22px;
-      border-radius:22px;
-      background:rgba(255,255,255,.72);
-      border:1px solid rgba(255,255,255,.86);
-      -webkit-backdrop-filter:blur(22px) saturate(130%);
-      backdrop-filter:blur(22px) saturate(130%);
-      box-shadow:
-        0 20px 55px rgba(0,0,0,.16),
-        inset 0 1px 0 rgba(255,255,255,.96);
-      color:#090909;
-    }
-
-    .psd-tease-icon {
-      width:44px;
-      height:44px;
-      margin:0 auto 10px;
-      display:grid;
-      place-items:center;
-      border-radius:50%;
-      background:rgba(255,255,255,.82);
-      border:1px solid rgba(0,0,0,.08);
-      color:#080808;
-      box-shadow:0 10px 26px rgba(0,0,0,.09);
-    }
-
-    .psd-tease-kicker {
-      display:block;
-      color:#666;
-      font-size:.55rem;
-      line-height:1;
-      font-weight:800;
-      letter-spacing:.17em;
-      text-transform:uppercase;
-      margin-bottom:7px;
-    }
-
-    .psd-tease-content h3 {
-      margin:0;
-      color:#090909;
-      font-size:clamp(1.25rem,2vw,1.85rem);
-      line-height:1;
-      letter-spacing:-.05em;
-    }
-
-    .psd-tease-content p {
-      max-width:410px;
-      margin:9px auto 0;
-      color:#555;
-      font-size:.64rem;
-      line-height:1.52;
-    }
-
-    .psd-tease-bottom {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:10px 14px;
-      margin-top:13px;
-    }
-
-    .psd-tease-price {
-      display:flex;
-      align-items:baseline;
-      gap:5px;
-      white-space:nowrap;
-    }
-
-    .psd-tease-price strong {
-      color:#090909;
-      font-size:1.35rem;
-      letter-spacing:-.05em;
-    }
-
-    .psd-tease-price span {
-      color:#666;
-      font-size:.56rem;
-    }
-
-    .psd-tease-cta {
-      min-height:42px;
-      padding:0 16px;
-      border-radius:999px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:7px;
-      background:#090909;
-      color:#fff !important;
-      text-decoration:none !important;
-      font-size:.62rem;
-      font-weight:800;
-      transition:transform .22s ease, box-shadow .22s ease;
-      -webkit-tap-highlight-color:transparent;
-    }
-
-    .psd-tease-cta:hover {
-      transform:translateY(-2px);
-      box-shadow:0 12px 28px rgba(0,0,0,.20);
-    }
-
-    .psd-card { position:relative; min-height:390px; overflow:hidden; border-radius:22px; border:1px solid rgba(255,255,255,.085); background:#0c0c0d; text-decoration:none; color:#fff; isolation:isolate; transition:transform .35s var(--ease),border-color .3s ease,box-shadow .35s ease; }
-    .psd-card:hover { color:#fff; transform:translateY(-5px); border-color:rgba(212,184,149,.32); box-shadow:0 24px 55px rgba(0,0,0,.30); }
-    .psd-card img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .7s var(--ease),filter .4s ease; }
-    .psd-card:hover img { transform:scale(1.035); }
-    .psd-card::before { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,transparent 36%,rgba(0,0,0,.22) 57%,rgba(0,0,0,.92) 100%); }
-    .psd-card.missing::after { content:"Sube tu imagen aquí"; position:absolute; inset:0; display:grid; place-items:center; color:#65656b; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; background:linear-gradient(135deg,#111,#080808); z-index:0; }
-    .psd-card-content { position:absolute; z-index:2; left:0; right:0; bottom:0; padding:22px; }
-    .psd-card-top { position:absolute; z-index:2; top:16px; left:16px; right:16px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
-    .psd-chip { display:inline-flex; align-items:center; min-height:27px; padding:0 10px; border:1px solid rgba(255,255,255,.12); border-radius:999px; background:rgba(5,5,5,.47); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); color:#dedee1; font-size:.58rem; letter-spacing:.09em; text-transform:uppercase; }
-    .psd-free { color:#111; background:#f1f1ef; border-color:#f1f1ef; font-weight:800; }
-    .psd-card h3 { margin:0; font-size:1.32rem; letter-spacing:-.04em; }
-    .psd-card p { margin:7px 0 0; color:#9b9ba1; font-size:.68rem; line-height:1.5; }
-    .psd-meta { display:flex; gap:12px; margin-top:15px; color:#74747a; font-size:.59rem; text-transform:uppercase; letter-spacing:.08em; }
-
-    .vault-section { padding:0 5vw 120px; background:#080808; }
-    .vault-inner { width:min(1360px,100%); margin:0 auto; }
-    .vault-shell { position:relative; min-height:620px; padding:16px; border:1px solid rgba(255,255,255,.085); border-radius:30px; overflow:hidden; background:#09090a; box-shadow:0 30px 80px rgba(0,0,0,.33); }
-    .vault-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; height:100%; filter:blur(16px) saturate(.45) brightness(.52); transform:scale(1.035); opacity:.82; pointer-events:none; user-select:none; }
-    .vault-thumb { min-height:280px; border-radius:18px; overflow:hidden; background:linear-gradient(145deg,#1b1b1d,#080808); border:1px solid rgba(255,255,255,.06); }
-    .vault-thumb:nth-child(2n) { background:linear-gradient(145deg,#151416,#28211b); }
-    .vault-thumb:nth-child(3n) { background:linear-gradient(145deg,#202024,#09090a); }
-    .vault-overlay { position:absolute; inset:0; z-index:3; display:grid; place-items:center; padding:28px; background:radial-gradient(circle at 50% 48%,rgba(4,4,4,.22),rgba(4,4,4,.70) 60%,rgba(4,4,4,.88) 100%); -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px); }
-    .vault-lock-card { width:min(570px,100%); text-align:center; padding:38px 34px; border-radius:28px; border:1px solid rgba(255,255,255,.13); background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.024)),rgba(6,6,7,.68); -webkit-backdrop-filter:blur(28px) saturate(160%); backdrop-filter:blur(28px) saturate(160%); box-shadow:0 24px 70px rgba(0,0,0,.48); }
-    .lock-orb { width:70px; height:70px; margin:0 auto 20px; display:grid; place-items:center; border-radius:50%; color:var(--accent); border:1px solid rgba(212,184,149,.32); background:rgba(212,184,149,.055); box-shadow:0 0 0 8px rgba(212,184,149,.025),0 0 40px rgba(212,184,149,.08); animation:lockBreath 3s ease-in-out infinite; }
-    @keyframes lockBreath { 50% { transform:translateY(-3px); box-shadow:0 0 0 11px rgba(212,184,149,.02),0 0 50px rgba(212,184,149,.13); } }
-    .vault-lock-card .eyebrow { display:block; margin-bottom:10px; color:var(--accent); font-size:.62rem; letter-spacing:.17em; font-weight:800; text-transform:uppercase; }
-    .vault-lock-card h3 { margin:0; font-size:clamp(2rem,4vw,3.7rem); line-height:.96; letter-spacing:-.06em; }
-    .vault-lock-card p { max-width:470px; margin:17px auto 0; color:#95959c; line-height:1.65; font-size:.80rem; }
-    .vault-price { display:flex; justify-content:center; align-items:baseline; gap:7px; margin:22px 0 0; }
-    .vault-price strong { font-size:2.5rem; letter-spacing:-.06em; }
-    .vault-price span { color:#77777e; font-size:.70rem; }
-    .vault-cta { margin-top:22px; min-height:50px; padding:0 22px; display:inline-flex; align-items:center; justify-content:center; gap:10px; border:0; border-radius:999px; background:#f2f2f1; color:#090909; text-decoration:none; font-size:.78rem; font-weight:800; transition:.25s ease; }
-    .vault-cta:hover { color:#000; transform:translateY(-2px); box-shadow:0 16px 36px rgba(255,255,255,.11); }
-    .vault-note { margin-top:12px; color:#66666c; font-size:.61rem; }
-
-    .member-section { padding:0 5vw 120px; background:#080808; }
-    .member-inner { width:min(1360px,100%); margin:0 auto; display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:16px; }
-    .member-copy,.member-plan { min-height:390px; border:1px solid rgba(255,255,255,.085); border-radius:28px; padding:34px; background:#0a0a0b; }
-    .member-copy { display:flex; flex-direction:column; justify-content:space-between; }
-    .member-copy h3 { margin:0; font-size:clamp(2.3rem,4.2vw,4.6rem); line-height:.95; letter-spacing:-.06em; }
-    .member-copy p { color:#85858c; max-width:520px; line-height:1.7; font-size:.83rem; }
-    .member-plan { position:relative; overflow:hidden; background:linear-gradient(145deg,rgba(212,184,149,.09),rgba(255,255,255,.02)),#0a0a0b; }
-    .member-plan::after { content:""; position:absolute; width:440px; height:440px; right:-220px; bottom:-270px; border-radius:50%; background:radial-gradient(circle,rgba(212,184,149,.16),transparent 68%); }
-    .member-plan-head { position:relative; z-index:2; display:flex; justify-content:space-between; align-items:flex-start; gap:18px; }
-    .member-plan h4 { margin:0; font-size:1.45rem; letter-spacing:-.035em; }
-    .member-plan .price { font-size:3.25rem; letter-spacing:-.07em; font-weight:800; }
-    .member-plan .price small { color:#777; font-size:.68rem; font-weight:600; letter-spacing:0; }
-    .benefit-list { position:relative; z-index:2; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:32px; }
-    .benefit-item { display:flex; gap:10px; align-items:flex-start; min-height:86px; padding:14px; border:1px solid rgba(255,255,255,.07); border-radius:16px; background:rgba(255,255,255,.02); }
-    .benefit-item svg { flex:0 0 auto; color:var(--accent); margin-top:1px; }
-    .benefit-item strong { display:block; font-size:.70rem; }
-    .benefit-item small { display:block; margin-top:4px; color:#74747a; font-size:.61rem; line-height:1.42; }
-    .member-plan .vault-cta { position:relative; z-index:2; }
-
     @media (max-width:991.98px) {
-      .graphic-hero { min-height:auto; padding:calc(env(safe-area-inset-top,0px) + 135px) 16px 58px; }
-      .graphic-hero-inner { grid-template-columns:1fr; gap:38px; }
-      .graphic-title { font-size:clamp(3.4rem,14vw,6.3rem); }
-      .membership-preview-card { max-width:650px; }
-      .projects-section { padding:76px 16px 82px; }
-      .projects-head { grid-template-columns:1fr; gap:16px; margin-bottom:28px; }
-      .psd-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
-      .psd-card { min-height:330px; }
-      .vault-section,.member-section { padding-left:16px; padding-right:16px; padding-bottom:82px; }
-      .vault-shell { min-height:570px; }
-      .vault-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
-      .vault-thumb { min-height:240px; }
-      .member-inner { grid-template-columns:1fr; }
-      .member-copy,.member-plan { min-height:auto; }
+      .web-hero { min-height:auto; padding:calc(env(safe-area-inset-top,0px) + 135px) 16px 65px; }
+      .web-hero-inner { grid-template-columns:1fr; gap:45px; }
+      .web-title { font-size:clamp(3.3rem,13vw,5.5rem); }
+      .web-frame { max-width:550px; margin:0 auto; }
+      .web-glass-badge { right:10px; bottom:-15px; padding:14px 18px; }
       
-      .projects-section { padding-left:18px; padding-right:18px; }
-      .psd-unlocked-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
-      .psd-unlocked-grid .psd-card:last-child { grid-column:1/-1; min-height:360px; }
-      .psd-showcase-second { grid-template-columns:1fr; gap:10px; margin-top:10px; }
-      .psd-showcase-second > .psd-card { min-height:360px; }
-      .psd-premium-tease { grid-column:auto; min-height:390px; }
-      .psd-premium-grid { gap:10px; }
-      .psd-premium-grid .psd-card { min-height:390px; }
-      .psd-premium-fog {
-        padding:20px;
-        -webkit-backdrop-filter:blur(12px) saturate(108%);
-        backdrop-filter:blur(12px) saturate(108%);
-      }
-      .psd-tease-content { width:min(520px,100%); }
+      .portfolio-section { padding:80px 16px; }
+      .portfolio-head { grid-template-columns:1fr; gap:16px; margin-bottom:35px; }
+      .portfolio-grid { grid-template-columns:1fr; gap:18px; }
+      
+      .pricing-section { padding:75px 16px 90px; }
+      .pricing-grid { grid-template-columns:1fr; gap:16px; max-width:500px; margin:0 auto; }
+      .price-card { padding:30px; border-radius:26px; }
+      
+      .workflow-section { padding:0 16px 80px; }
+      .workflow-inner { padding:40px 24px; border-radius:26px; }
+      .wf-grid { grid-template-columns:1fr; gap:35px; }
     }
     @media (max-width:575.98px) {
-      .graphic-hero { padding-top:calc(env(safe-area-inset-top,0px) + 118px); }
-      .graphic-title { font-size:clamp(3rem,15.5vw,4.6rem); }
-      .graphic-copy { font-size:.94rem; }
-      .graphic-actions { display:grid; grid-template-columns:1fr; }
-      .graphic-primary,.graphic-secondary { width:100%; }
-      .membership-preview-card { padding:18px; border-radius:22px; }
-      .membership-preview-card h2 { margin-top:23px; }
-      .price-badge strong { font-size:1.9rem; }
-      .hero-benefits { grid-template-columns:1fr; }
-      .projects-section { padding-top:62px; }
-      .projects-head h2 { font-size:clamp(2.45rem,12vw,3.5rem); }
-      .psd-grid { grid-template-columns:1fr; }
-      .psd-lock-content h3 { font-size:1.75rem; }
-      .psd-lock-cta { width:100%; }
-      .psd-card { min-height:370px; }
-      .vault-shell { min-height:610px; padding:9px; border-radius:23px; }
-      .vault-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; filter:blur(13px) saturate(.4) brightness(.48); }
-      .vault-thumb { min-height:210px; border-radius:14px; }
-      .vault-overlay { padding:14px; }
-      .vault-lock-card { padding:29px 19px; border-radius:22px; }
-      .lock-orb { width:60px; height:60px; }
-      .vault-cta { width:100%; }
-      .member-copy,.member-plan { padding:24px 20px; border-radius:22px; }
-      .benefit-list { grid-template-columns:1fr; }
-      .member-plan-head { flex-direction:column; }
+      .web-hero { padding-top:calc(env(safe-area-inset-top,0px) + 118px); }
+      .web-title { font-size:clamp(2.8rem,14.5vw,4.2rem); }
+      .web-copy { font-size:.94rem; }
+      .web-actions { display:grid; grid-template-columns:1fr; }
+      .web-primary,.web-secondary { width:100%; }
+      .web-frame { padding:12px; border-radius:18px; }
+      .web-frame-img { border-radius:10px; }
+      .web-glass-badge { right:0; bottom:-10px; padding:12px 15px; border-radius:16px; }
+      .web-glass-badge strong { font-size:1.05rem; }
       
-      .projects-section { padding:70px 12px 82px; }
-      .projects-head { margin-bottom:20px; }
-      .projects-head h2 { font-size:clamp(2.15rem,11vw,3rem); line-height:.96; }
-      .projects-head p { font-size:.75rem; line-height:1.58; }
-
-      .psd-unlocked-grid { grid-template-columns:1fr; gap:9px; }
-      .psd-unlocked-grid .psd-card:last-child { grid-column:auto; min-height:345px; }
-      .psd-card { min-height:345px; border-radius:18px; }
-      .psd-card-content { padding:17px; }
-      .psd-card h3 { font-size:1.12rem; }
-      .psd-card p { font-size:.64rem; }
-      .psd-card-top { top:12px; left:12px; right:12px; }
-
-      .psd-showcase-second { grid-template-columns:1fr; gap:9px; margin-top:9px; }
-      .psd-showcase-second > .psd-card { min-height:345px; }
-
-      .psd-premium-tease {
-        min-height:390px;
-        border-radius:18px;
-      }
-      .psd-premium-grid {
-        grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:7px;
-      }
-      .psd-premium-grid .psd-card {
-        min-height:390px;
-        border-radius:16px;
-      }
-      .psd-premium-grid .psd-card-content {
-        padding:12px;
-      }
-      .psd-premium-grid .psd-card h3 {
-        font-size:.86rem;
-      }
-      .psd-premium-grid .psd-card p,
-      .psd-premium-grid .psd-meta {
-        display:none;
-      }
-      .psd-premium-grid .psd-chip {
-        min-height:24px;
-        padding:0 7px;
-        font-size:.49rem;
-      }
-
-      .psd-premium-fog {
-        padding:12px;
-        background:
-          linear-gradient(180deg,
-            rgba(250,250,248,0) 0%,
-            rgba(250,250,248,.03) 18%,
-            rgba(250,250,248,.22) 40%,
-            rgba(250,250,248,.72) 68%,
-            rgba(250,250,248,.96) 100%);
-        -webkit-backdrop-filter:blur(10px) saturate(105%);
-        backdrop-filter:blur(10px) saturate(105%);
-        -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.08) 17%,#000 43%,#000 100%);
-        mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.08) 17%,#000 43%,#000 100%);
-      }
-
-      .psd-tease-content {
-        padding:16px 13px;
-        border-radius:18px;
-      }
-      .psd-tease-icon { width:38px; height:38px; margin-bottom:8px; }
-      .psd-tease-content h3 { font-size:1.24rem; }
-      .psd-tease-content p { font-size:.59rem; margin-top:7px; }
-      .psd-tease-bottom { gap:8px; margin-top:10px; }
-      .psd-tease-price strong { font-size:1.16rem; }
-      .psd-tease-cta { width:100%; min-height:44px; }
-    }
-
-    @media (max-width:380px) {
-      .psd-premium-tease { min-height:365px; }
-      .psd-premium-grid .psd-card { min-height:365px; }
-      .psd-tease-content p { display:none; }
-      .psd-tease-content { padding:14px 12px; }
-    }
-
-
-    @media (hover:none) and (pointer:coarse) {
-      .psd-card:hover { transform:none; box-shadow:none; }
-      .psd-card:hover img { transform:none; }
+      .portfolio-head h2 { font-size:clamp(2.4rem,11vw,3.2rem); }
+      .port-card { border-radius:22px; }
+      .port-content { padding:20px; }
+      .port-content h3 { font-size:1.35rem; }
+      .port-tag { padding:5px 10px; font-size:.5rem; }
+      
+      .pricing-head h2 { font-size:clamp(2.2rem,10vw,3rem); }
+      .pc-price strong { font-size:2.4rem; }
+      
+      .workflow-inner { padding:30px 20px; border-radius:22px; }
+      .wf-head h2 { font-size:clamp(1.8rem,8vw,2.4rem); }
+      .wf-step h4 { font-size:1rem; }
     }
 </style>
 </head>
-<body class="graphic-page">
+<body class="web-page">
 
 <!-- LOGIN MODAL -->
   <div id="authModal" class="login-modal-overlay" aria-hidden="true">
@@ -637,8 +350,8 @@
               <ul class="dropdown-menu-ed" id="desktopDropdownMenu">
                 <li><a class="menu-item" href="index.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
                 <li><a class="menu-item" href="arquitectura.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V10l8-7 8 7v11"></path><path d="M9 21v-7h6v7"></path></svg> Arquitectura</a></li>
-                <li><a class="menu-item current-area active" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg> Diseño Gráfico</a></li>
-                <li><a class="menu-item" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg> Diseño Web</a></li>
+                <li><a class="menu-item" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg> Diseño Gráfico</a></li>
+                <li><a class="menu-item current-area active" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg> Diseño Web</a></li>
                 <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
                 <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
                 <li id="linkProyectosMenuDesktop" class="d-none"><a class="menu-item" href="proyectos.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
@@ -650,8 +363,8 @@
           <div class="nav-pill-links d-none d-xl-flex">
             <a href="index.html" class="nav-pill-link" data-evolution-nav>Home</a>
             <a href="arquitectura.html" class="nav-pill-link" data-evolution-nav>Arquitectura</a>
-            <a href="diseno-grafico.html" class="nav-pill-link current-area active" data-evolution-nav aria-current="page">Diseño Gráfico</a>
-            <a href="diseno-web.html" class="nav-pill-link" data-evolution-nav>Diseño Web</a>
+            <a href="diseno-grafico.html" class="nav-pill-link" data-evolution-nav>Diseño Gráfico</a>
+            <a href="diseno-web.html" class="nav-pill-link current-area active" data-evolution-nav aria-current="page">Diseño Web</a>
 
             <!-- ENLACE A MIS PROYECTOS -->
             <a href="proyectos.html" class="nav-pill-link d-none" id="linkProyectosDesktop" data-evolution-nav style="white-space: nowrap; color: #fff;">Mis Proyectos</a>
@@ -684,8 +397,8 @@
         <ul class="dropdown-menu-ed" id="mobileDropdownMenu">
           <li><a class="menu-item" href="index.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
           <li><a class="menu-item" href="arquitectura.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V10l8-7 8 7v11"></path><path d="M9 21v-7h6v7"></path></svg> Arquitectura</a></li>
-          <li><a class="menu-item current-area active" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg> Diseño Gráfico</a></li>
-          <li><a class="menu-item" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg> Diseño Web</a></li>
+          <li><a class="menu-item" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg> Diseño Gráfico</a></li>
+          <li><a class="menu-item current-area active" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg> Diseño Web</a></li>
           <li><a class="menu-item" href="https://dingloft.com" target="_blank" rel="noopener"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Dingloft Software</a></li>
           <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
           <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
@@ -701,102 +414,141 @@
     <div class="app-tabs">
       <a href="index.html" class="tab-item" data-evolution-nav><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Home</a>
       <a href="arquitectura.html" class="tab-item" data-evolution-nav><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V10l8-7 8 7v11"></path><path d="M9 21v-7h6v7"></path></svg>Arquitectura</a>
-      <a href="diseno-grafico.html" class="tab-item current-area active" data-evolution-nav aria-current="page"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg>Diseño G.</a>
-      <a href="diseno-web.html" class="tab-item" data-evolution-nav><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg>Diseño Web</a>
+      <a href="diseno-grafico.html" class="tab-item" data-evolution-nav><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg>Diseño G.</a>
+      <a href="diseno-web.html" class="tab-item current-area active" data-evolution-nav aria-current="page"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg>Diseño Web</a>
       <a href="proyectos.html" class="tab-item d-none" id="linkProyectosMobile" data-evolution-nav><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>Proyectos</a>
     </div>
   </nav>
 
-<main class="graphic-main">
-<section class="graphic-hero">
-<div class="graphic-hero-inner">
+<main class="web-main">
+<section class="web-hero">
+<div class="web-hero-inner">
 <div>
-<div class="graphic-kicker">Evolution Design · Graphic Studio</div>
-<h1 class="graphic-title">Diseño que puedes <em>editar.</em></h1>
-<p class="graphic-copy">Una biblioteca de proyectos PSD editables para acelerar tu trabajo creativo. Explora seis proyectos destacados y desbloquea el catálogo completo con la membresía Evolution PSD.</p>
-<div class="graphic-actions">
-<a class="graphic-primary" href="#proyectos-psd">Ver proyectos PSD <span>↓</span></a>
-<a class="graphic-secondary" href="#membresia">Ver membresía <span>↘</span></a>
+<div class="web-kicker">Evolution Design · Digital Experiences</div>
+<h1 class="web-title">Velocidad y <em>conversión.</em></h1>
+<p class="web-copy">Diseñamos sitios web y tiendas online (E-commerce) enfocadas en la experiencia del usuario y el rendimiento. Estética impecable, código optimizado e integración total para que tu negocio crezca en digital.</p>
+<div class="web-actions">
+<a class="web-primary" href="#portafolio">Explorar proyectos <span>↓</span></a>
+<a class="web-secondary" href="#precios">Ver planes de desarrollo <span>↘</span></a>
 </div>
 </div>
-<aside aria-label="Membresía Evolution PSD" class="membership-preview-card">
-<div class="membership-preview-top">
-<span>Evolution PSD Membership</span>
-<div class="price-badge"><strong>$27</strong><small>USD / mes</small></div>
+<div class="web-hero-visual">
+<div class="web-frame">
+<div class="web-frame-head"><span class="web-frame-dot"></span><span class="web-frame-dot"></span><span class="web-frame-dot"></span></div>
+<div class="web-frame-img"><img alt="Preview diseño web" src="img/diseno-web/web-preview.jpg"/></div>
 </div>
-<h2>Tu biblioteca creativa, siempre lista.</h2>
-<p>Descarga recursos editables, estudia composiciones profesionales y construye piezas más rápido desde archivos organizados para Photoshop.</p>
-<div class="hero-benefits">
-<div class="hero-benefit"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="18"><path d="M12 3v12M7 10l5 5 5-5"></path><path d="M5 21h14"></path></svg><strong>PSD editables</strong><small>Archivos listos para personalizar.</small></div>
-<div class="hero-benefit"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="18"><path d="M12 2v20M2 12h20"></path><circle cx="12" cy="12" r="8"></circle></svg><strong>Biblioteca creciente</strong><small>Nuevos proyectos y recursos.</small></div>
-<div class="hero-benefit"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="18"><path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-4Z"></path><path d="m9 12 2 2 4-4"></path></svg><strong>Acceso para miembros</strong><small>Contenido reservado y ordenado.</small></div>
-<div class="hero-benefit"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="18"><path d="M4 18v-7a8 8 0 0 1 16 0v7"></path><path d="M4 18h4v3H6a2 2 0 0 1-2-2v-1ZM20 18h-4v3h2a2 2 0 0 0 2-2v-1Z"></path></svg><strong>Soporte de acceso</strong><small>Ayuda con tu biblioteca y cuenta.</small></div>
+<div class="web-glass-badge">
+<strong>Rendimiento 99%</strong>
+<small>Optimización de velocidad</small>
 </div>
-</aside>
-</div>
-</section>
-<section class="projects-section" id="proyectos-psd">
-<div class="projects-inner">
-<div class="projects-head reveal">
-<div><span class="project-count">6 proyectos destacados</span><h2>Explora una muestra de la biblioteca.</h2></div>
-<p>Explora cuatro proyectos completos. Los proyectos 05 y 06 quedan parcialmente ocultos para darte una probadita de lo que se desbloquea dentro de Evolution PSD.</p>
-</div>
-<div class="psd-unlocked-grid reveal">
-<article class="psd-card"><img alt="Vista previa PSD 01" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('missing')" src="img/diseno-grafico/psd-01.jpg"/><div class="psd-card-top"><span class="psd-chip psd-free">Preview</span><span class="psd-chip">PSD</span></div><div class="psd-card-content"><h3>Proyecto PSD 01</h3><p>Reemplaza esta imagen por tu primer proyecto.</p><div class="psd-meta"><span>Photoshop</span><span>Editable</span></div></div></article>
-<article class="psd-card"><img alt="Vista previa PSD 02" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('missing')" src="img/diseno-grafico/psd-02.jpg"/><div class="psd-card-top"><span class="psd-chip psd-free">Preview</span><span class="psd-chip">PSD</span></div><div class="psd-card-content"><h3>Proyecto PSD 02</h3><p>Vista previa de composición editable.</p><div class="psd-meta"><span>Photoshop</span><span>Capas</span></div></div></article>
-<article class="psd-card"><img alt="Vista previa PSD 03" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('missing')" src="img/diseno-grafico/psd-03.jpg"/><div class="psd-card-top"><span class="psd-chip psd-free">Preview</span><span class="psd-chip">PSD</span></div><div class="psd-card-content"><h3>Proyecto PSD 03</h3><p>Proyecto premium para mostrar el nivel del catálogo.</p><div class="psd-meta"><span>Photoshop</span><span>Organizado</span></div></div></article>
-</div>
-<div class="psd-showcase-second reveal">
-  <article class="psd-card"><img alt="Vista previa PSD 04" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('missing')" src="img/diseno-grafico/psd-04.jpg"/><div class="psd-card-top"><span class="psd-chip psd-free">Preview</span><span class="psd-chip">PSD</span></div><div class="psd-card-content"><h3>Proyecto PSD 04</h3><p>Otro recurso editable de tu biblioteca.</p><div class="psd-meta"><span>Photoshop</span><span>Editable</span></div></div></article>
-  <div class="psd-premium-tease">
-    <div class="psd-premium-grid" aria-hidden="true">
-      <article class="psd-card"><img alt="Vista previa PSD 05" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('missing')" src="img/diseno-grafico/psd-05.jpg"/><div class="psd-card-top"><span class="psd-chip psd-free">Preview</span><span class="psd-chip">PSD</span></div><div class="psd-card-content"><h3>Proyecto PSD 05</h3><p>Muestra cómo lucen los recursos para miembros.</p><div class="psd-meta"><span>Photoshop</span><span>Capas</span></div></div></article>
-      <article class="psd-card"><img alt="Vista previa PSD 06" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('missing')" src="img/diseno-grafico/psd-06.jpg"/><div class="psd-card-top"><span class="psd-chip psd-free">Preview</span><span class="psd-chip">PSD</span></div><div class="psd-card-content"><h3>Proyecto PSD 06</h3><p>Última vista previa antes de la zona premium.</p><div class="psd-meta"><span>Photoshop</span><span>Premium</span></div></div></article>
-    </div>
-    <div class="psd-premium-fog">
-      <div class="psd-tease-content">
-        <div class="psd-tease-icon">
-          <svg fill="none" height="21" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" width="21">
-            <rect height="11" rx="2" width="14" x="5" y="10"></rect>
-            <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"></path>
-          </svg>
-        </div>
-        <span class="psd-tease-kicker">Evolution PSD · Members Only</span>
-        <h3>Hay mucho más detrás.</h3>
-        <p>Proyecto 04 queda como muestra completa. Los siguientes recursos premium se desbloquean con tu membresía.</p>
-        <div class="psd-tease-bottom">
-          <div class="psd-tease-price"><strong>$27</strong><span>USD / mes</span></div>
-          <a class="psd-tease-cta" href="#membresia">Desbloquear biblioteca <span>→</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 </div>
 </section>
-<section class="member-section" id="membresia">
-<div class="member-inner">
-<div class="member-copy reveal">
-<div><span class="eyebrow">Evolution PSD</span><h3>Más recursos. Menos tiempo empezando desde cero.</h3></div>
-<p>La membresía está planteada como una biblioteca de trabajo: entra, elige un proyecto, descarga el PSD y adapta la pieza a tu propio flujo creativo.</p>
+<section class="portfolio-section" id="portafolio">
+<div class="portfolio-inner">
+<div class="portfolio-head reveal">
+<div><h2>Diseñamos la estructura, tú dominas el contenido.</h2></div>
+<p>Todos nuestros proyectos web se entregan listos para ser operados por el cliente, con paneles de administración amigables y escalables.</p>
 </div>
-<div class="member-plan reveal">
-<div class="member-plan-head"><div><span class="eyebrow">Plan mensual</span><h4>Evolution PSD Membership</h4></div><div class="price">$27 <small>USD / mes</small></div></div>
-<div class="benefit-list">
-<div class="benefit-item"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="18"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg><div><strong>Descargas PSD</strong><small>Acceso a archivos editables disponibles en la biblioteca.</small></div></div>
-<div class="benefit-item"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="18"><path d="M12 2v20M2 12h20"></path><circle cx="12" cy="12" r="8"></circle></svg><div><strong>Biblioteca en crecimiento</strong><small>Nuevos proyectos y recursos conforme amplíes el catálogo.</small></div></div>
-<div class="benefit-item"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="18"><path d="M4 5h16v14H4zM8 9h8M8 13h5"></path></svg><div><strong>Archivos organizados</strong><small>Una presentación consistente para localizar mejor cada recurso.</small></div></div>
-<div class="benefit-item"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="18"><path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-4Z"></path></svg><div><strong>Área exclusiva</strong><small>El contenido premium se desbloquea únicamente para miembros.</small></div></div>
+<div class="portfolio-grid reveal">
+<a class="port-card" href="#precios">
+<div class="port-visual"><img alt="Landing Page" loading="lazy" src="img/diseno-web/port-01.jpg"/></div>
+<div class="port-tags"><span class="port-tag">Landing Page</span><span class="port-tag">UI/UX</span></div>
+<div class="port-content"><h3>Presencia limpia y directa</h3><p>Páginas de aterrizaje enfocadas a la captura de leads y conversión.</p></div>
+</a>
+<a class="port-card" href="#precios">
+<div class="port-visual"><img alt="E-commerce" loading="lazy" src="img/diseno-web/port-02.jpg"/></div>
+<div class="port-tags"><span class="port-tag">E-commerce</span><span class="port-tag">Tienda Online</span></div>
+<div class="port-content"><h3>Ventas sin fronteras</h3><p>Tiendas robustas con carritos de compra y pasarelas de pago integradas.</p></div>
+</a>
+<a class="port-card" href="#precios">
+<div class="port-visual"><img alt="Sitio Corporativo" loading="lazy" src="img/diseno-web/port-03.jpg"/></div>
+<div class="port-tags"><span class="port-tag">Corporativo</span><span class="port-tag">Empresas</span></div>
+<div class="port-content"><h3>Tu sede digital</h3><p>Sitios web completos para empresas e instituciones profesionales.</p></div>
+</a>
+<a class="port-card" href="#precios">
+<div class="port-visual"><img alt="Portafolio" loading="lazy" src="img/diseno-web/port-04.jpg"/></div>
+<div class="port-tags"><span class="port-tag">Portafolios</span><span class="port-tag">Estudios</span></div>
+<div class="port-content"><h3>El catálogo de tus ideas</h3><p>Muestra tu trabajo, proyectos y servicios de una manera espectacular.</p></div>
+</a>
 </div>
-<a class="vault-cta" href="#" onclick="abrirAuthModal();return false;">Suscribirme por $27/mes <span>→</span></a>
+</div>
+</section>
+<section class="workflow-section" id="proceso">
+<div class="workflow-inner reveal">
+<div class="wf-head"><h2>Cómo trabajamos tu sitio web</h2></div>
+<div class="wf-grid">
+<div class="wf-step"><div class="wf-num">1</div><h4>Estructura y UX</h4><p>Mapeamos el viaje de tu usuario para asegurar que la información y las ventas fluyan de forma lógica y sin fricción.</p></div>
+<div class="wf-step"><div class="wf-num">2</div><h4>Diseño de Interfaces (UI)</h4><p>Aplicamos tu identidad de marca en interfaces limpias, modernas y adaptables a computadoras, tablets y móviles.</p></div>
+<div class="wf-step"><div class="wf-num">3</div><h4>Desarrollo y Código</h4><p>Construimos el sitio utilizando tecnologías rápidas y seguras (WordPress, Shopify, o HTML/CSS según requieras).</p></div>
+<div class="wf-step"><div class="wf-num">4</div><h4>Entrega y Capacitación</h4><p>Publicamos el proyecto y te entregamos los accesos y una guía rápida para que administres tu contenido de manera autónoma.</p></div>
+</div>
+</div>
+</section>
+<section class="pricing-section" id="precios">
+<div class="pricing-inner">
+<div class="pricing-head reveal">
+<h2>Planes de desarrollo</h2>
+<p>Todos los planes incluyen diseño responsivo (adaptable a móviles), integración básica de SEO y conexión con tus redes sociales.</p>
+</div>
+<div class="pricing-grid reveal">
+<div class="price-card">
+<div class="pc-top">
+<h3>Landing Page</h3>
+<p>Ideal para campañas, lanzamientos de un solo producto o captura de leads.</p>
+<div class="pc-price"><strong>$250</strong><span>USD</span></div>
+</div>
+<ul class="pc-list">
+<li>Diseño One-Page (Página única)</li>
+<li>Formulario de contacto integrado</li>
+<li>Optimización básica SEO</li>
+<li>Diseño 100% responsivo</li>
+<li class="dim">Integración de carrito</li>
+<li class="dim">Catálogo de productos</li>
+</ul>
+<a class="price-cta" href="feedback">Cotizar proyecto</a>
+</div>
+<div class="price-card featured">
+<div class="pc-top">
+<h3>Sitio Corporativo</h3>
+<p>El estándar para empresas, agencias y estudios que requieren presencia sólida.</p>
+<div class="pc-price"><strong>$450</strong><span>USD</span></div>
+</div>
+<ul class="pc-list">
+<li>Hasta 5 páginas internas (Ej. Inicio, Servicios, Nosotros, Portafolio, Contacto)</li>
+<li>Blog autoadministrable</li>
+<li>Formularios avanzados</li>
+<li>Optimización velocidad y SEO</li>
+<li class="dim">Integración de carrito</li>
+<li class="dim">Pagos en línea</li>
+</ul>
+<a class="price-cta" href="feedback">Cotizar proyecto</a>
+</div>
+<div class="price-card">
+<div class="pc-top">
+<h3>E-commerce</h3>
+<p>Para negocios que necesitan vender en línea 24/7 y gestionar envíos y stock.</p>
+<div class="pc-price"><strong>$850</strong><span>USD</span></div>
+</div>
+<ul class="pc-list">
+<li>Catálogo de productos (hasta 50 prod. iniciales)</li>
+<li>Carrito de compras completo</li>
+<li>Pasarelas de pago (PayPal, Tarjetas, Transferencia)</li>
+<li>Gestión de stock y envíos</li>
+<li>Capacitación de uso de la tienda</li>
+<li>Soporte extendido por 1 mes</li>
+</ul>
+<a class="price-cta" href="feedback">Cotizar proyecto</a>
+</div>
 </div>
 </div>
 </section>
 </main>
+
 <footer class="site-footer" id="contacto">
 <div class="footer-inner">
 <div class="footer-grid">
-<div class="footer-brand"><a href="index.html"><img alt="Evolution Design" src="img/logo.png"/></a><p>Diseño gráfico, recursos PSD y experiencias digitales bajo una misma dirección creativa.</p></div>
+<div class="footer-brand"><a href="index.html"><img alt="Evolution Design" src="img/logo.png"/></a><p>Diseño web, identidad gráfica y arquitectura bajo una misma dirección creativa.</p></div>
 <div class="footer-col"><span>Estudio</span><a href="arquitectura.html">Arquitectura</a><a href="diseno-grafico.html">Diseño Gráfico</a><a href="diseno-web.html">Diseño Web</a></div>
 <div class="footer-col"><span>Contacto</span><p>support@evolutiondesing.com</p><a href="https://dingloft.com" rel="noopener" target="_blank">Dingloft ↗</a></div>
 </div>
@@ -805,7 +557,7 @@
 </footer>
 <script>
   (() => {
-    ['index.html','arquitectura.html','diseno-web.html'].forEach(href => {
+    ['index.html','arquitectura.html','diseno-grafico.html'].forEach(href => {
       const a = document.querySelector(`a[href="${href}"]`);
       if (!a) return;
       let done = false;
@@ -817,7 +569,8 @@
       a.addEventListener('touchstart', prefetch, {once:true, passive:true});
     });
   })();
-</script><script>
+</script>
+<script>
     // UI básica del Home: menú, móvil, animaciones y precarga. Sin calculadoras ni pagos.
     (() => {
       const bindMenu = (buttonId, menuId) => {
@@ -1046,3 +799,9 @@
   </script>
 </body>
 </html>
+"""
+
+with open('diseno-web.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+
+print("File diseno-web.html generated successfully.")
