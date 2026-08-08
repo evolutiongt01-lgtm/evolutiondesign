@@ -307,25 +307,6 @@
 @media(max-width:900px){.sub-metrics{grid-template-columns:repeat(2,1fr)}.sub-drawer-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.sub-metrics{grid-template-columns:1fr 1fr}.sub-drawer-grid{grid-template-columns:1fr}.sub-days{min-width:110px}}
 
-
-/* WEB CHECKOUT AUTO-LINK */
-.webreq-payment{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:800}
-.webreq-payment::before{content:"";width:6px;height:6px;border-radius:50%;background:#e9bc65}
-.webreq-payment.paid{color:#6fdf9a}.webreq-payment.paid::before{background:#39d477}
-.webreq-payment.pending{color:#e3bd70}
-.web-project-brief{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.web-project-brief .webreq-brief.full{grid-column:1/-1}
-@media(max-width:620px){.web-project-brief{grid-template-columns:1fr}.web-project-brief .webreq-brief.full{grid-column:auto}}
-
-
-/* PATCH SEGURO · Diseño Web */
-#professionalRoleToggle{grid-template-columns:repeat(3,minmax(0,1fr))}
-#professionalRoleToggle button[data-role="Desarrollador Web Full-Stack"]{white-space:normal;line-height:1.25}
-@media(max-width:620px){
-  #professionalRoleToggle{grid-template-columns:1fr 1fr}
-  #professionalRoleToggle button[data-role="Desarrollador Web Full-Stack"]{grid-column:1/-1}
-}
-
 </style>
 </head>
 <body>
@@ -367,9 +348,9 @@
 <section id="view-clients" class="view"><div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar nombre, correo o país"></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Ubicación</th><th>Última conexión / actividad</th><th>Órdenes</th><th>Total comprado</th><th></th></tr></thead><tbody id="clientsBody"></tbody></table></div></section>
 <section id="view-webrequests" class="view">
   <div class="webreq-card-grid">
-    <div class="webreq-stat"><span>Pendientes / revisión</span><strong id="webReqNew">0</strong></div>
+    <div class="webreq-stat"><span>Nuevas</span><strong id="webReqNew">0</strong></div>
     <div class="webreq-stat"><span>En revisión</span><strong id="webReqReview">0</strong></div>
-    <div class="webreq-stat"><span>Pagadas</span><strong id="webReqApproved">0</strong></div>
+    <div class="webreq-stat"><span>Aprobadas / convertidas</span><strong id="webReqApproved">0</strong></div>
   </div>
   <div class="toolbar">
     <input id="webRequestSearch" class="search" placeholder="Buscar cliente, negocio, plan o correo">
@@ -382,7 +363,7 @@
       <option value="converted">Convertida a proyecto</option>
     </select>
   </div>
-  <div class="table-wrap"><table><thead><tr><th>Solicitud</th><th>Cliente</th><th>Negocio</th><th>Plan</th><th>Precio</th><th>Pago</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody id="webRequestsBody"></tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>Solicitud</th><th>Cliente</th><th>Negocio</th><th>Plan</th><th>Precio</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody id="webRequestsBody"></tbody></table></div>
 </section>
 <section id="view-custom" class="view"><div class="panel"><div class="panel-head"><div><div class="panel-title">Crear orden personalizada</div><div class="panel-copy">La orden aparecerá directamente en “Mis Proyectos” del cliente. Puede quedar pendiente de PayPal o marcarse pagada manualmente.</div></div></div><div class="panel-body"><form id="customOrderForm"><div class="form-grid"><div class="field full"><label>Cliente</label><select id="customClient" class="input" required></select></div><div class="field"><label>Nombre de la orden</label><input id="customTitle" class="input" required placeholder="Ej. Remodelación integral vivienda"></div><div class="field"><label>Categoría</label><input id="customCategory" class="input" value="Orden personalizada"></div><div class="field"><label>Precio USD</label><input id="customPrice" class="input" type="number" min="1" step="0.01" required></div><div class="field"><label>Costo interno USD</label><input id="customCost" class="input" type="number" min="0" step="0.01" value="0"><div class="hint">Solo visible en el panel admin; se usa para calcular ganancia.</div></div><div class="field full"><label>Descripción para el cliente</label><textarea id="customDescription" class="textarea" placeholder="Explica el alcance de la orden…"></textarea></div><div class="field full"><label>Archivos requeridos</label><textarea id="customUpload" class="textarea" placeholder="Ej. Sube plano PDF/DWG, fotografías actuales y medidas principales."></textarea></div><div class="field full"><label>Incluye (una línea por elemento)</label><textarea id="customIncluded" class="textarea" placeholder="Modelado 3D completo\n12 renders hiperrealistas\n2 revisiones"></textarea></div><div class="field full"><label>Notas internas</label><textarea id="customAdminNotes" class="textarea" placeholder="Solo administración…"></textarea></div></div><label class="check"><input id="customManualPaid" type="checkbox"> Marcar esta orden como pagada</label><div id="customPaymentMethodWrap" class="payment-method-wrap hidden"><div class="field"><label>Método con el que pagó el cliente</label><select id="customPaymentMethod" class="input"><option value="Binance">Binance</option><option value="POS">POS</option><option value="Efectivo">Efectivo</option><option value="Tarjeta de crédito o débito">Tarjeta de crédito o débito</option><option value="PayPal">PayPal</option></select><div class="hint">Este método quedará guardado en la orden y visible en el panel administrativo.</div></div></div><div class="form-actions"><button class="btn btn-accent" type="submit">Crear orden personalizada</button></div></form></div></div></section>
 </main></div>
@@ -422,8 +403,8 @@
           <div class="field"><label>Precio aprobado USD</label><input id="webReqApprovedPrice" class="input" type="number" min="0" step="0.01"></div>
           <div class="field full"><label>Notas internas</label><textarea id="webReqAdminNotes" class="textarea" placeholder="Notas de revisión…"></textarea></div>
         </div>
-        <div class="form-actions"><button class="btn" type="button" onclick="saveWebRequest()">Guardar revisión</button><button id="webReqOpenProjectBtn" class="btn btn-accent hidden" type="button" onclick="openPaidWebProject()">Abrir proyecto pagado →</button></div>
-        <div class="webreq-action-note">PayPal crea el proyecto pagado automáticamente. Binance y transferencia crean un proyecto con comprobante pendiente de revisión.</div>
+        <div class="form-actions"><button class="btn" type="button" onclick="saveWebRequest()">Guardar revisión</button><button class="btn btn-accent" type="button" onclick="convertWebRequestToProject()">Aprobar y crear proyecto →</button></div>
+        <div class="webreq-action-note">Al crear el proyecto, se genera una orden pendiente de pago dentro de la cuenta del cliente. No se marca como pagada automáticamente.</div>
       </div>
     </div>
   </div>
@@ -444,11 +425,6 @@
     </div>
 
     <div id="drawerDetails" class="detail-grid"></div>
-
-    <div id="webProjectBriefSection" class="section hidden">
-      <div class="section-h"><div>Brief de Diseño Web</div><div class="section-h-copy">Información enviada por el cliente antes del pago.</div></div>
-      <div class="section-b"><div id="webProjectBrief" class="web-project-brief"></div></div>
-    </div>
 
     <div id="paymentProofSection" class="section payment-proof-section hidden">
       <div class="section-h"><div class="payment-proof-head"><div><div>Comprobante de pago</div><div class="section-h-copy">Binance Pay o transferencia bancaria · revisión manual de administración.</div></div><span id="paymentProofBadge" class="payment-proof-badge">Por revisar</span></div></div>
@@ -499,7 +475,6 @@
             <div id="professionalRoleToggle" class="role-toggle">
               <button type="button" data-role="Arquitecto" class="active" onclick="setProfessionalRole('Arquitecto')">Arquitecto</button>
               <button type="button" data-role="Ingeniero" onclick="setProfessionalRole('Ingeniero')">Ingeniero</button>
-              <button type="button" data-role="Desarrollador Web Full-Stack" onclick="setProfessionalRole('Desarrollador Web Full-Stack')">Desarrollador Web Full‑Stack</button>
             </div>
             <input id="editProfessionalRole" type="hidden" value="Arquitecto">
           </div>
@@ -675,54 +650,8 @@ function statusLabel(s){return({awaiting_payment:'Pago pendiente',waiting_files:
 function pill(s){const c=s==='delivered'?'green':s==='awaiting_payment'?'gold':s==='cancelled'?'red':'';return `<span class="pill ${c}">${esc(statusLabel(s))}</span>`}
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3200)}
 function projectProfit(p){return Number(p.baseUsd||0)-Number(p.adminMeta?.internalCostUsd||0)}
-function normalizeProfessionalRole(v){
-  const raw=String(v||'').trim().toLowerCase();
-  if(raw==='ingeniero')return'Ingeniero';
-  if(raw.includes('web')||raw.includes('desarrollador')||raw.includes('full-stack')||raw.includes('full stack'))return'Desarrollador Web Full-Stack';
-  return'Arquitecto';
-}
-function isWebProjectAdmin(p){
-  const value=[p?.serviceType,p?.projectType,p?.projectTitle,p?.projectConfig?.category,p?.webPlanName].join(' ').toLowerCase();
-  return value.includes('web_design')||value.includes('diseño web')||value.includes('diseno web');
-}
-function firestoreDateAdmin(v){
-  if(!v)return null;
-  if(typeof v.toDate==='function')return v.toDate();
-  if(typeof v.toMillis==='function')return new Date(v.toMillis());
-  const d=new Date(v);
-  return Number.isNaN(d.getTime())?null:d;
-}
-function addBusinessDaysAdmin(start,days=4){
-  const d=new Date(start);
-  if(Number.isNaN(d.getTime()))return null;
-  let left=days;
-  while(left>0){
-    d.setDate(d.getDate()+1);
-    if(d.getDay()!==0&&d.getDay()!==6)left--;
-  }
-  return d;
-}
-function webDeliveryTextAdmin(p){
-  if(!isWebProjectAdmin(p))return'';
-  const start=firestoreDateAdmin(p?.paidAt||p?.paymentVerifiedAt);
-  if(!start)return'Se calcula al confirmar el pago';
-  const eta=addBusinessDaysAdmin(start,4);
-  return eta
-    ?new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(eta)
-    :'Se calcula al confirmar el pago';
-}
-window.setProfessionalRole=function(role){
-  const value=normalizeProfessionalRole(role),hidden=$('editProfessionalRole'),label=$('editProfessionalNameLabel'),input=$('editArchitect');
-  if(hidden)hidden.value=value;
-  document.querySelectorAll('#professionalRoleToggle button').forEach(b=>b.classList.toggle('active',b.dataset.role===value));
-  if(value==='Desarrollador Web Full-Stack'){
-    if(label)label.textContent='Nombre del desarrollador web';
-    if(input)input.placeholder='Nombre del desarrollador web';
-  }else{
-    if(label)label.textContent=`Nombre del ${value.toLowerCase()}`;
-    if(input)input.placeholder=`Nombre del ${value.toLowerCase()}`;
-  }
-};
+function normalizeProfessionalRole(v){return String(v||'').toLowerCase()==='ingeniero'?'Ingeniero':'Arquitecto'}
+window.setProfessionalRole=function(role){const value=normalizeProfessionalRole(role),hidden=$('editProfessionalRole'),label=$('editProfessionalNameLabel'),input=$('editArchitect');if(hidden)hidden.value=value;document.querySelectorAll('#professionalRoleToggle button').forEach(b=>b.classList.toggle('active',b.dataset.role===value));if(label)label.textContent=`Nombre del ${value.toLowerCase()}`;if(input)input.placeholder=`Nombre del ${value.toLowerCase()}`};
 function paymentMethodCode(v){return String(v||'PAGO').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').toUpperCase().slice(0,24)||'PAGO'}
 
 window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
@@ -846,20 +775,6 @@ window.saveSubscriptionAdmin=async function(){
     closeSubscription();await refresh();
   }catch(e){console.error(e);toast(e?.message||'No se pudo actualizar la suscripción.')}
 }
-
-function linkedWebProject(requestId){
-  return (data.projects||[]).find(p=>String(p.webRequestId||'')===String(requestId||''))||null;
-}
-function webRequestPaid(r){const p=linkedWebProject(r.id);return !!p&&String(p.paymentStatus||'').toLowerCase()==='paid'}
-function webRequestPaymentLabel(r){
-  const p=linkedWebProject(r.id);
-  if(!p)return {text:'Pendiente de pago',cls:'pending'};
-  const ps=String(p.paymentStatus||'').toLowerCase();
-  if(ps==='paid')return {text:'Pagado',cls:'paid'};
-  if(ps==='pending_review'||String(p.paymentReviewStatus||'').toLowerCase()==='pending')return {text:'Comprobante por revisar',cls:'pending'};
-  if(ps==='rejected')return {text:'Comprobante rechazado',cls:'pending'};
-  return {text:'Pendiente de pago',cls:'pending'};
-}
 function webRequestStatusLabel(s){return({new:'Nueva',reviewing:'En revisión',approved:'Aprobada',rejected:'Rechazada',converted:'Convertida'}[s]||s||'Nueva')}
 function webRequestStatusClass(s){return `webreq-status-${String(s||'new').replace(/[^a-z_-]/g,'')}`}
 function renderWebRequests(){
@@ -867,37 +782,33 @@ function renderWebRequests(){
   const term=String($('webRequestSearch')?.value||'').toLowerCase();
   const st=$('webRequestStatus')?.value||'';
   const filtered=rows.filter(r=>(!st||r.status===st)&&(!term||[r.name,r.email,r.userEmail,r.businessName,r.businessType,r.planName,r.phone].some(x=>String(x||'').toLowerCase().includes(term))));
-  if($('webRequestsBody'))$('webRequestsBody').innerHTML=filtered.map(r=>{
-    const project=linkedWebProject(r.id),paid=webRequestPaid(r),paymentInfo=webRequestPaymentLabel(r);
-    return `<tr>
-      <td><div class="strong">${esc(r.id.slice(0,8).toUpperCase())}</div><div class="sub">${esc(r.source||'diseno-web')}</div></td>
-      <td><div>${esc(r.name||'Cliente')}</div><div class="sub">${esc(r.userEmail||r.email||'')}</div></td>
-      <td>${esc(r.businessName||'—')}</td>
-      <td><span class="webreq-plan">${esc(r.planName||'Sitio Web')}</span></td>
-      <td><span class="strong">${usd(r.approvedPriceUsd??r.basePriceUsd)}</span></td>
-      <td><span class="webreq-payment ${paymentInfo.cls}">${esc(paymentInfo.text)}</span>${project?.displayOrderId?`<div class="sub">${esc(project.displayOrderId)}</div>`:''}</td>
-      <td><span class="${webRequestStatusClass(r.status)}">${esc(webRequestStatusLabel(r.status))}</span></td>
-      <td>${esc(niceDate(r.createdAt))}</td>
-      <td><button class="mini" onclick="openWebRequest('${esc(r.id)}')">Abrir</button></td>
-    </tr>`;
-  }).join('')||'<tr><td colspan="9">Sin solicitudes web.</td></tr>';
-  const unpaid=rows.filter(r=>!webRequestPaid(r)).length;
-  const paid=rows.filter(webRequestPaid).length;
+  if($('webRequestsBody'))$('webRequestsBody').innerHTML=filtered.map(r=>`<tr>
+    <td><div class="strong">${esc(r.id.slice(0,8).toUpperCase())}</div><div class="sub">${esc(r.source||'diseno-web')}</div></td>
+    <td><div>${esc(r.name||'Cliente')}</div><div class="sub">${esc(r.userEmail||r.email||'')}</div></td>
+    <td>${esc(r.businessName||'—')}</td>
+    <td><span class="webreq-plan">${esc(r.planName||'Sitio Web')}</span></td>
+    <td><span class="strong">${usd(r.approvedPriceUsd??r.basePriceUsd)}</span></td>
+    <td><span class="${webRequestStatusClass(r.status)}">${esc(webRequestStatusLabel(r.status))}</span></td>
+    <td>${esc(niceDate(r.createdAt))}</td>
+    <td><button class="mini" onclick="openWebRequest('${esc(r.id)}')">Abrir</button></td>
+  </tr>`).join('')||'<tr><td colspan="8">Sin solicitudes web.</td></tr>';
+  const newCount=rows.filter(x=>(x.status||'new')==='new').length;
   const reviewCount=rows.filter(x=>x.status==='reviewing').length;
-  if($('webRequestCount'))$('webRequestCount').textContent=unpaid;
-  if($('webReqNew'))$('webReqNew').textContent=unpaid;
+  const approvedCount=rows.filter(x=>['approved','converted'].includes(x.status)).length;
+  if($('webRequestCount'))$('webRequestCount').textContent=newCount;
+  if($('webReqNew'))$('webReqNew').textContent=newCount;
   if($('webReqReview'))$('webReqReview').textContent=reviewCount;
-  if($('webReqApproved'))$('webReqApproved').textContent=paid;
+  if($('webReqApproved'))$('webReqApproved').textContent=approvedCount;
 }
 window.openWebRequest=function(id){
   selectedWebRequest=(data.webRequests||[]).find(x=>x.id===id);
   if(!selectedWebRequest)return;
-  const r=selectedWebRequest,project=linkedWebProject(r.id),paid=webRequestPaid(r),paymentInfo=webRequestPaymentLabel(r);
+  const r=selectedWebRequest;
   $('webReqDrawerTitle').textContent=`${r.planName||'Diseño Web'} · ${r.businessName||r.name||'Solicitud'}`;
   $('webReqDrawerSub').textContent=`${r.id.slice(0,8).toUpperCase()} · ${r.userEmail||r.email||''}`;
   $('webReqDetails').innerHTML=[
     ['Cliente',r.name||'—'],['Plan',r.planName||'—'],['Precio base',usd(r.basePriceUsd)],
-    ['Negocio',r.businessName||'—'],['WhatsApp',r.phone||'—'],['Pago',project?`${paymentInfo.text} · ${project.displayOrderId||''}`:'Pendiente']
+    ['Negocio',r.businessName||'—'],['WhatsApp',r.phone||'—'],['Estado',webRequestStatusLabel(r.status)]
   ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
   const brief=[
     ['Tipo de negocio',r.businessType],['Sitio actual',r.existingSite],['Objetivos',(r.goals||[]).join(' · ')],
@@ -908,14 +819,7 @@ window.openWebRequest=function(id){
   $('webReqEditStatus').value=r.status||'new';
   $('webReqApprovedPrice').value=Number(r.approvedPriceUsd??r.basePriceUsd??0).toFixed(2);
   $('webReqAdminNotes').value=r.adminNotes||'';
-  const openBtn=$('webReqOpenProjectBtn');if(openBtn){openBtn.classList.toggle('hidden',!project);openBtn.textContent=paid?'Abrir proyecto pagado →':'Abrir proyecto / comprobante →'};
   $('webRequestModal').classList.add('show');
-}
-window.openPaidWebProject=function(){
-  if(!selectedWebRequest)return;
-  const p=linkedWebProject(selectedWebRequest.id);
-  if(!p){toast('Todavía no hay un proyecto vinculado.');return}
-  closeWebRequest();switchView('projects');setTimeout(()=>openProject(p.ownerUid,p.id),100);
 }
 window.closeWebRequest=function(){$('webRequestModal')?.classList.remove('show');selectedWebRequest=null}
 window.saveWebRequest=async function(){
@@ -933,6 +837,58 @@ window.saveWebRequest=async function(){
     await refresh();
   }catch(e){console.error(e);toast(e?.message||'No se pudo actualizar la solicitud.')}
 }
+window.convertWebRequestToProject=async function(){
+  if(!selectedWebRequest)return;
+  const r=selectedWebRequest;
+  if(!r.userUid){toast('Esta solicitud no tiene un usuario asociado.');return}
+  if(r.projectId){toast('Esta solicitud ya fue convertida en proyecto.');return}
+  const price=Math.max(0,Number($('webReqApprovedPrice').value||r.basePriceUsd||0));
+  const title=`Diseño Web · ${r.planName||'Proyecto'}${r.businessName?` · ${r.businessName}`:''}`;
+  if(!confirm(`Crear "${title}" por ${usd(price)} como proyecto pendiente de pago?`))return;
+  try{
+    const pRef=doc(collection(db,'users',r.userUid,'projects'));
+    const displayOrderId=`#EVO-W${Date.now().toString().slice(-7)}`;
+    await setDoc(pRef,{
+      ownerUid:r.userUid,
+      ownerEmail:r.userEmail||r.email||'',
+      payerName:r.name||'Cliente',
+      projectTitle:title,
+      category:'Diseño Web',
+      serviceType:'web_design',
+      webRequestId:r.id,
+      webPlanId:r.planId||'',
+      webPlanName:r.planName||'',
+      baseUsd:price,
+      amount:price.toFixed(2),
+      currency:'USD',
+      status:'awaiting_payment',
+      paymentStatus:'pending',
+      paymentMethod:'PayPal',
+      displayOrderId,
+      description:`Proyecto de diseño web aprobado desde solicitud ${r.id.slice(0,8).toUpperCase()}.`,
+      included:Array.isArray(r.features)?r.features:[],
+      clientComments:r.notes||'',
+      createdAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+    await updateDoc(doc(db,'webRequests',r.id),{
+      status:'converted',
+      approvedPriceUsd:price,
+      projectId:pRef.id,
+      displayOrderId,
+      convertedAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+    toast('Solicitud aprobada y proyecto creado.');
+    closeWebRequest();
+    await refresh();
+    switchView('projects');
+    $('projectSearch').value=displayOrderId;
+    renderProjects();
+  }catch(e){console.error(e);toast(e?.message||'No se pudo convertir la solicitud en proyecto.')}
+}
+
+function renderMetrics(){const m=data.metrics||{};$('metrics').innerHTML=[['Clientes',m.clients,'registrados'],['Proyectos',m.projects,'total'],['Activos',m.active,'en operación'],['Ingresos',usd(m.grossRevenueUsd),'normalizado USD'],['Costos',usd(m.internalCostUsd),'internos'],['Ganancia',usd(m.profitUsd),'ingresos - costos']].map((x,i)=>`<div class="metric ${i===5?'profit':''}"><div class="metric-label">${x[0]}</div><div class="metric-value">${x[1]??0}</div><div class="metric-sub">${x[2]}</div></div>`).join('')}
 
 function hasPaymentReceipt(p){return !!String(p?.receiptStoragePath||'').trim()}
 function paymentReviewState(p){const raw=String(p?.paymentReviewStatus||'').toLowerCase();if(raw==='approved'||p?.paymentVerifiedByAdmin===true||String(p?.paymentStatus||'').toLowerCase()==='paid')return'approved';if(raw==='rejected'||String(p?.paymentStatus||'').toLowerCase()==='rejected')return'rejected';return'pending'}
@@ -1150,44 +1106,22 @@ $('subscriptionFilter').onchange=renderSubscriptions;
 document.getElementById('webRequestModal')?.addEventListener('click',e=>{if(e.target?.id==='webRequestModal')closeWebRequest()});
 $('customManualPaid').onchange=()=>{const paid=$('customManualPaid').checked,wrap=$('customPaymentMethodWrap');wrap?.classList.toggle('hidden',!paid);if(!paid&&$('customPaymentMethod'))$('customPaymentMethod').value='PayPal'};
 
-
-function renderWebProjectBrief(p){
-  const section=$('webProjectBriefSection'),host=$('webProjectBrief');
-  if(!section||!host)return;
-  const b=p?.webBrief;
-  if(!b||String(p?.serviceType||'')!=='web_design'){
-    section.classList.add('hidden');host.innerHTML='';return;
-  }
-  section.classList.remove('hidden');
-  const rows=[
-    ['Plan',p.webPlanName||p.projectConfig?.packageName],['Negocio',b.businessName],['Tipo de negocio',b.businessType],
-    ['Sitio actual',b.existingSite],['Objetivos',(b.goals||[]).join(' · ')],['Funciones',(b.features||[]).join(' · ')],
-    ['Estilo',b.style],['Dominio',b.domainIdea],['Plazo',b.timeline],['WhatsApp',b.phone],
-    ['Referencias',b.referenceSites],['Notas',b.notes]
-  ];
-  host.innerHTML=rows.map((x,i)=>`<div class="webreq-brief ${i>=4?'full':''}"><span>${x[0]}</span><div>${esc(x[1]||'—')}</div></div>`).join('');
-}
 window.openProject=async function(uid,id){
   selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id);
   if(!selected)return;
   $('drawerTitle').textContent=selected.projectTitle||'Proyecto';
   $('drawerSub').textContent=`${selected.displayOrderId||id} · ${selected.ownerEmail||''}`;
-  renderWebProjectBrief(selected);
   $('drawerDetails').innerHTML=[
     ['Cliente',selected.payerName||selected.ownerEmail],
     ['País',selected.payerCountry||selected.lastGeo?.country||'No reportado'],
     ['Venta',usd(selected.baseUsd)],
     ['Pago',selected.paymentMethod||selected.paymentStatus],
     ['Transacción',selected.transactionId||'Pendiente'],
-    ...(isWebProjectAdmin(selected)?[
-      ['Entrega estimada',webDeliveryTextAdmin(selected)],
-      ['Plazo','4 días hábiles · lunes a viernes']
-    ]:[]),
     ['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados`]
   ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
   $('editProjectTitle').value=selected.projectTitle||'Proyecto';
   $('editStatus').value=selected.status||'waiting_files';
-  setProfessionalRole(isWebProjectAdmin(selected)?(selected.professionalRole||'Desarrollador Web Full-Stack'):(selected.professionalRole||'Arquitecto'));
+  setProfessionalRole(selected.professionalRole||'Arquitecto');
   $('editArchitect').value=selected.architectName||'';
   $('editPrice').value=Number(selected.baseUsd||0).toFixed(2);
   $('editCost').value=Number(selected.adminMeta?.internalCostUsd||0).toFixed(2);
@@ -1352,10 +1286,6 @@ window.saveProject=async function(){
       ['Venta',usd(selected.baseUsd)],
       ['Pago',selected.paymentMethod||selected.paymentStatus],
       ['Transacción',selected.transactionId||'Pendiente'],
-      ...(isWebProjectAdmin(selected)?[
-        ['Entrega estimada',webDeliveryTextAdmin(selected)],
-        ['Plazo','4 días hábiles · lunes a viernes']
-      ]:[]),
       ['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados`]
     ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
 
