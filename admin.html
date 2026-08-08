@@ -318,19 +318,9 @@
 @media(max-width:620px){.web-project-brief{grid-template-columns:1fr}.web-project-brief .webreq-brief.full{grid-column:auto}}
 
 
-/* DISEÑO WEB — PROFESIONAL + ENTREGA HÁBIL */
+/* SAFE PATCH — Diseño Web: rol profesional */
 #professionalRoleToggle{flex-wrap:wrap}
 #professionalRoleToggle button[data-role="Desarrollador Web Full-Stack"]{min-width:190px}
-#webEstimatedDeliveryField.web-eta-active .input{
-  color:#86dfaa;
-  border-color:rgba(57,212,119,.18);
-  background:rgba(57,212,119,.035);
-}
-#webEstimatedDeliveryField.web-eta-pending .input{
-  color:#dfbd78;
-  border-color:rgba(233,188,101,.16);
-  background:rgba(233,188,101,.035);
-}
 @media(max-width:560px){
   #professionalRoleToggle{display:grid!important;grid-template-columns:1fr 1fr}
   #professionalRoleToggle button[data-role="Desarrollador Web Full-Stack"]{grid-column:1/-1;min-width:0}
@@ -518,12 +508,6 @@
             <label id="editProfessionalNameLabel">Nombre del arquitecto</label>
             <input id="editArchitect" class="input" placeholder="Nombre del arquitecto">
           </div>
-          
-          <div class="field" id="webEstimatedDeliveryField">
-            <label>Entrega estimada</label>
-            <input id="editEstimatedDelivery" class="input" disabled value="—">
-            <div class="bank-like-help" id="editEstimatedDeliveryHelp">Para Diseño Web: 4 días hábiles. Solo cuentan lunes a viernes; sábado y domingo no cuentan.</div>
-          </div>
 
           <div class="field">
             <label>Precio del proyecto USD</label>
@@ -691,78 +675,57 @@ function statusLabel(s){return({awaiting_payment:'Pago pendiente',waiting_files:
 function pill(s){const c=s==='delivered'?'green':s==='awaiting_payment'?'gold':s==='cancelled'?'red':'';return `<span class="pill ${c}">${esc(statusLabel(s))}</span>`}
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3200)}
 function projectProfit(p){return Number(p.baseUsd||0)-Number(p.adminMeta?.internalCostUsd||0)}
-function isWebProject(p){
-  const hay=[p?.serviceType,p?.projectType,p?.projectTitle,p?.projectConfig?.category,p?.webPlanName].join(' ').toLowerCase();
-  return hay.includes('web_design')||hay.includes('diseño web')||hay.includes('diseno web');
-}
-function addBusinessDays(startDate, businessDays){
-  const date=new Date(startDate);
-  if(Number.isNaN(date.getTime()))return null;
-  let remaining=Math.max(0,Number(businessDays)||0);
-  while(remaining>0){
-    date.setDate(date.getDate()+1);
-    const day=date.getDay();
-    if(day!==0&&day!==6)remaining--;
-  }
-  return date;
-}
-function projectTimestampDate(value){
-  if(!value)return null;
-  if(typeof value.toDate==='function')return value.toDate();
-  if(typeof value.toMillis==='function')return new Date(value.toMillis());
-  const d=new Date(value);return Number.isNaN(d.getTime())?null:d;
-}
-function estimatedWebDeliveryDate(p){
-  if(!isWebProject(p))return null;
-  const stored=projectTimestampDate(p?.estimatedDeliveryAt);
-  if(stored)return stored;
-  const start=projectTimestampDate(p?.paidAt||p?.paymentVerifiedAt);
-  if(!start)return null;
-  return addBusinessDays(start,Number(p?.estimatedBusinessDays||4));
-}
-function formatWebDeliveryDate(date){
-  if(!date)return'Pendiente de confirmar pago';
-  return new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(date);
-}
-function renderEstimatedDelivery(p){
-  const wrap=$('webEstimatedDeliveryField'),input=$('editEstimatedDelivery'),help=$('editEstimatedDeliveryHelp');
-  if(!wrap||!input)return;
-  if(!isWebProject(p)){
-    wrap.classList.add('hidden');
-    return;
-  }
-  wrap.classList.remove('hidden','web-eta-active','web-eta-pending');
-  const eta=estimatedWebDeliveryDate(p);
-  if(eta){
-    wrap.classList.add('web-eta-active');
-    input.value=formatWebDeliveryDate(eta);
-    if(help)help.textContent='4 días hábiles desde la confirmación del pago · lunes a viernes. Sábado y domingo no cuentan.';
-  }else{
-    wrap.classList.add('web-eta-pending');
-    input.value='Se calcula al confirmar el pago';
-    if(help)help.textContent='El plazo inicia cuando el pago queda confirmado. Después se cuentan 4 días hábiles, únicamente de lunes a viernes.';
-  }
-}
-
 function normalizeProfessionalRole(v){
   const raw=String(v||'').trim().toLowerCase();
   if(raw==='ingeniero')return'Ingeniero';
-  if(raw.includes('web')||raw.includes('full-stack')||raw.includes('full stack')||raw.includes('desarrollador'))return'Desarrollador Web Full-Stack';
+  if(raw.includes('web')||raw.includes('desarrollador')||raw.includes('full-stack')||raw.includes('full stack'))return'Desarrollador Web Full-Stack';
   return'Arquitecto';
 }
-function professionalNameCopy(role){
-  const value=normalizeProfessionalRole(role);
-  if(value==='Desarrollador Web Full-Stack')return{label:'Nombre del desarrollador web',placeholder:'Nombre del desarrollador web'};
-  if(value==='Ingeniero')return{label:'Nombre del ingeniero',placeholder:'Nombre del ingeniero'};
-  return{label:'Nombre del arquitecto',placeholder:'Nombre del arquitecto'};
-}
 window.setProfessionalRole=function(role){
-  const value=normalizeProfessionalRole(role),hidden=$('editProfessionalRole'),label=$('editProfessionalNameLabel'),input=$('editArchitect'),copy=professionalNameCopy(value);
+  const value=normalizeProfessionalRole(role),hidden=$('editProfessionalRole'),label=$('editProfessionalNameLabel'),input=$('editArchitect');
   if(hidden)hidden.value=value;
   document.querySelectorAll('#professionalRoleToggle button').forEach(b=>b.classList.toggle('active',b.dataset.role===value));
-  if(label)label.textContent=copy.label;
-  if(input)input.placeholder=copy.placeholder;
+  if(value==='Desarrollador Web Full-Stack'){
+    if(label)label.textContent='Nombre del desarrollador web';
+    if(input)input.placeholder='Nombre del desarrollador web';
+  }else{
+    if(label)label.textContent=`Nombre del ${value.toLowerCase()}`;
+    if(input)input.placeholder=`Nombre del ${value.toLowerCase()}`;
+  }
 };
+
+function adminIsWebProject(p){
+  const text=[p?.serviceType,p?.projectType,p?.projectTitle,p?.projectConfig?.category,p?.webPlanName].join(' ').toLowerCase();
+  return text.includes('web_design')||text.includes('diseño web')||text.includes('diseno web');
+}
+function adminDateFromFirestore(v){
+  if(!v)return null;
+  if(typeof v.toDate==='function')return v.toDate();
+  if(typeof v.toMillis==='function')return new Date(v.toMillis());
+  const d=new Date(v);
+  return Number.isNaN(d.getTime())?null:d;
+}
+function adminAddBusinessDays(start,businessDays=4){
+  const d=new Date(start);
+  if(Number.isNaN(d.getTime()))return null;
+  let left=businessDays;
+  while(left>0){
+    d.setDate(d.getDate()+1);
+    if(d.getDay()!==0&&d.getDay()!==6)left--;
+  }
+  return d;
+}
+function adminWebEta(p){
+  if(!adminIsWebProject(p))return null;
+  const start=adminDateFromFirestore(p?.paidAt||p?.paymentVerifiedAt);
+  return start?adminAddBusinessDays(start,4):null;
+}
+function adminWebEtaText(p){
+  const eta=adminWebEta(p);
+  if(!eta)return 'Se calcula al confirmar el pago';
+  return new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(eta);
+}
+
 function paymentMethodCode(v){return String(v||'PAGO').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').toUpperCase().slice(0,24)||'PAGO'}
 
 window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
@@ -1010,13 +973,7 @@ async function renderPaymentProof(){
   if($('approvePaymentBtn'))$('approvePaymentBtn').disabled=state==='approved';
 }
 window.openPaymentReceipt=function(download=false){if(!selected||!hasPaymentReceipt(selected)){toast('Este proyecto no tiene comprobante.');return}if(!s3){toast('No hay conexión a R2.');return}try{const params={Bucket:R2_BUCKET_NAME,Key:selected.receiptStoragePath,Expires:300};if(download)params.ResponseContentDisposition=`attachment; filename="${String(selected.receiptName||'comprobante').replace(/"/g,'')}"`;const url=s3.getSignedUrl('getObject',params);if(download){const a=document.createElement('a');a.href=url;a.download=selected.receiptName||'comprobante';document.body.appendChild(a);a.click();a.remove()}else window.open(url,'_blank','noopener,noreferrer')}catch(e){console.error(e);toast('No se pudo abrir el comprobante.')}}
-window.approveManualPayment=async function(){if(!selected||!hasPaymentReceipt(selected))return;const refText=selected.manualPaymentReference||selected.transactionId||'sin referencia';if(!confirm(`¿Confirmas que recibiste el pago ${paymentExpectedText(selected)}?\nReferencia: ${refText}`))return;const btn=$('approvePaymentBtn'),note=String($('paymentReviewNote')?.value||'').trim(),uid=selected.ownerUid,id=selected.id;try{if(btn){btn.disabled=true;btn.textContent='Aprobando…'}const patch={paymentStatus:'paid',paymentReviewStatus:'approved',paymentVerifiedByAdmin:true,paymentVerifiedByAdminEmail:auth.currentUser?.email||'',paymentReviewNote:note,status:'waiting_files',paidAt:serverTimestamp(),paymentVerifiedAt:serverTimestamp(),updatedAt:serverTimestamp()};
-    if(isWebProject(selected)){
-      patch.professionalRole=normalizeProfessionalRole(selected.professionalRole||'Diseñador Web');
-      patch.estimatedBusinessDays=4;
-      patch.businessDaysOnly=true;
-      patch.estimatedDeliveryAt=addBusinessDays(new Date(),4);
-    }await updateDoc(doc(db,'users',uid,'projects',id),patch);toast('Pago aprobado. El proyecto ya puede continuar.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value='waiting_files';await renderPaymentProof()}catch(e){console.error(e);toast(e?.message||'No se pudo aprobar el pago.')}finally{if(btn){btn.disabled=false;btn.textContent='Aprobar pago ✓'}}}
+window.approveManualPayment=async function(){if(!selected||!hasPaymentReceipt(selected))return;const refText=selected.manualPaymentReference||selected.transactionId||'sin referencia';if(!confirm(`¿Confirmas que recibiste el pago ${paymentExpectedText(selected)}?\nReferencia: ${refText}`))return;const btn=$('approvePaymentBtn'),note=String($('paymentReviewNote')?.value||'').trim(),uid=selected.ownerUid,id=selected.id;try{if(btn){btn.disabled=true;btn.textContent='Aprobando…'}const patch={paymentStatus:'paid',paymentReviewStatus:'approved',paymentVerifiedByAdmin:true,paymentVerifiedByAdminEmail:auth.currentUser?.email||'',paymentReviewNote:note,status:'waiting_files',paidAt:serverTimestamp(),paymentVerifiedAt:serverTimestamp(),updatedAt:serverTimestamp()};await updateDoc(doc(db,'users',uid,'projects',id),patch);toast('Pago aprobado. El proyecto ya puede continuar.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value='waiting_files';await renderPaymentProof()}catch(e){console.error(e);toast(e?.message||'No se pudo aprobar el pago.')}finally{if(btn){btn.disabled=false;btn.textContent='Aprobar pago ✓'}}}
 window.rejectManualPayment=async function(){if(!selected||!hasPaymentReceipt(selected))return;const uid=selected.ownerUid,id=selected.id,note=String($('paymentReviewNote')?.value||'').trim(),reason=note||prompt('Motivo del rechazo (opcional):')||'';if(!confirm('¿Marcar este comprobante como rechazado?'))return;const btn=$('rejectPaymentBtn');try{if(btn){btn.disabled=true;btn.textContent='Rechazando…'}const patch={paymentStatus:'rejected',paymentReviewStatus:'rejected',paymentVerifiedByAdmin:false,paymentReviewNote:reason,paymentRejectionReason:reason,status:'awaiting_payment',paymentRejectedAt:serverTimestamp(),updatedAt:serverTimestamp()};await updateDoc(doc(db,'users',uid,'projects',id),patch);toast('Comprobante rechazado.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value='awaiting_payment';await renderPaymentProof()}catch(e){console.error(e);toast(e?.message||'No se pudo rechazar el comprobante.')}finally{if(btn){btn.disabled=false;btn.textContent='Rechazar comprobante'}}}
 
 function projectRow(p){return `<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)} · ${esc(p.transactionId||'sin transacción')}</div>${paymentStatusExtra(p)}</td><td><div>${esc(p.payerName||p.ownerEmail||'Cliente')}</div><div class="sub">${esc(p.ownerEmail||'')}</div></td><td>${esc(p.payerCountry||p.lastGeo?.country||'No reportado')}</td><td><span class="strong">${usd(p.baseUsd)}</span><div class="sub">${esc(p.currency||'USD')} ${esc(p.amount||'')}</div></td><td><span class="strong">${usd(projectProfit(p))}</span><div class="sub">Costo ${usd(p.adminMeta?.internalCostUsd)}</div></td><td>${pill(p.status)}</td><td>${Number(p.clientFileCount||0)} recibidos · ${Number(p.deliveryFileCount||0)} enviados</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`}
@@ -1225,17 +1182,19 @@ window.openProject=async function(uid,id){
     ['Venta',usd(selected.baseUsd)],
     ['Pago',selected.paymentMethod||selected.paymentStatus],
     ['Transacción',selected.transactionId||'Pendiente'],
-    ...(isWebProject(selected)?[['Entrega estimada',formatWebDeliveryDate(estimatedWebDeliveryDate(selected))]]:[]),
+    ...(adminIsWebProject(selected)?[
+      ['Entrega estimada',adminWebEtaText(selected)],
+      ['Plazo','4 días hábiles · lunes a viernes']
+    ]:[]),
     ['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados`]
   ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
   $('editProjectTitle').value=selected.projectTitle||'Proyecto';
   $('editStatus').value=selected.status||'waiting_files';
-  const initialRole=isWebProject(selected)&&(!selected.professionalRole||String(selected.professionalRole).toLowerCase()==='diseñador web'||String(selected.professionalRole).toLowerCase()==='disenador web')
-    ?'Desarrollador Web Full-Stack'
-    :(selected.professionalRole||'Arquitecto');
-  setProfessionalRole(initialRole);
+  const roleForProject=adminIsWebProject(selected)
+    ? normalizeProfessionalRole(selected.professionalRole||'Desarrollador Web Full-Stack')
+    : normalizeProfessionalRole(selected.professionalRole||'Arquitecto');
+  setProfessionalRole(roleForProject);
   $('editArchitect').value=selected.architectName||'';
-  renderEstimatedDelivery(selected);
   $('editPrice').value=Number(selected.baseUsd||0).toFixed(2);
   $('editCost').value=Number(selected.adminMeta?.internalCostUsd||0).toFixed(2);
   updateFinancialPreview(false);
@@ -1358,13 +1317,6 @@ window.saveProject=async function(){
       deliveryNote:$('editDeliveryNote').value||'',
       updatedAt:serverTimestamp()
     };
-
-    if(isWebProject(selected)){
-      projectPatch.estimatedBusinessDays=4;
-      projectPatch.businessDaysOnly=true;
-      const existingEta=estimatedWebDeliveryDate(selected);
-      if(existingEta&&!selected.estimatedDeliveryAt)projectPatch.estimatedDeliveryAt=existingEta;
-    }
 
     if(String(selected.currency||'USD').toUpperCase()==='USD'){
       projectPatch.amount=newPrice.toFixed(2);
