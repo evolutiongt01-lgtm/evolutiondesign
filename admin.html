@@ -318,12 +318,12 @@
 @media(max-width:620px){.web-project-brief{grid-template-columns:1fr}.web-project-brief .webreq-brief.full{grid-column:auto}}
 
 
-/* SAFE PATCH — Diseño Web: rol profesional */
-#professionalRoleToggle{flex-wrap:wrap}
-#professionalRoleToggle button[data-role="Desarrollador Web Full-Stack"]{min-width:190px}
-@media(max-width:560px){
-  #professionalRoleToggle{display:grid!important;grid-template-columns:1fr 1fr}
-  #professionalRoleToggle button[data-role="Desarrollador Web Full-Stack"]{grid-column:1/-1;min-width:0}
+/* PATCH SEGURO · Diseño Web */
+#professionalRoleToggle{grid-template-columns:repeat(3,minmax(0,1fr))}
+#professionalRoleToggle button[data-role="Desarrollador Web Full-Stack"]{white-space:normal;line-height:1.25}
+@media(max-width:620px){
+  #professionalRoleToggle{grid-template-columns:1fr 1fr}
+  #professionalRoleToggle button[data-role="Desarrollador Web Full-Stack"]{grid-column:1/-1}
 }
 
 </style>
@@ -681,6 +681,36 @@ function normalizeProfessionalRole(v){
   if(raw.includes('web')||raw.includes('desarrollador')||raw.includes('full-stack')||raw.includes('full stack'))return'Desarrollador Web Full-Stack';
   return'Arquitecto';
 }
+function isWebProjectAdmin(p){
+  const value=[p?.serviceType,p?.projectType,p?.projectTitle,p?.projectConfig?.category,p?.webPlanName].join(' ').toLowerCase();
+  return value.includes('web_design')||value.includes('diseño web')||value.includes('diseno web');
+}
+function firestoreDateAdmin(v){
+  if(!v)return null;
+  if(typeof v.toDate==='function')return v.toDate();
+  if(typeof v.toMillis==='function')return new Date(v.toMillis());
+  const d=new Date(v);
+  return Number.isNaN(d.getTime())?null:d;
+}
+function addBusinessDaysAdmin(start,days=4){
+  const d=new Date(start);
+  if(Number.isNaN(d.getTime()))return null;
+  let left=days;
+  while(left>0){
+    d.setDate(d.getDate()+1);
+    if(d.getDay()!==0&&d.getDay()!==6)left--;
+  }
+  return d;
+}
+function webDeliveryTextAdmin(p){
+  if(!isWebProjectAdmin(p))return'';
+  const start=firestoreDateAdmin(p?.paidAt||p?.paymentVerifiedAt);
+  if(!start)return'Se calcula al confirmar el pago';
+  const eta=addBusinessDaysAdmin(start,4);
+  return eta
+    ?new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(eta)
+    :'Se calcula al confirmar el pago';
+}
 window.setProfessionalRole=function(role){
   const value=normalizeProfessionalRole(role),hidden=$('editProfessionalRole'),label=$('editProfessionalNameLabel'),input=$('editArchitect');
   if(hidden)hidden.value=value;
@@ -693,39 +723,6 @@ window.setProfessionalRole=function(role){
     if(input)input.placeholder=`Nombre del ${value.toLowerCase()}`;
   }
 };
-
-function adminIsWebProject(p){
-  const text=[p?.serviceType,p?.projectType,p?.projectTitle,p?.projectConfig?.category,p?.webPlanName].join(' ').toLowerCase();
-  return text.includes('web_design')||text.includes('diseño web')||text.includes('diseno web');
-}
-function adminDateFromFirestore(v){
-  if(!v)return null;
-  if(typeof v.toDate==='function')return v.toDate();
-  if(typeof v.toMillis==='function')return new Date(v.toMillis());
-  const d=new Date(v);
-  return Number.isNaN(d.getTime())?null:d;
-}
-function adminAddBusinessDays(start,businessDays=4){
-  const d=new Date(start);
-  if(Number.isNaN(d.getTime()))return null;
-  let left=businessDays;
-  while(left>0){
-    d.setDate(d.getDate()+1);
-    if(d.getDay()!==0&&d.getDay()!==6)left--;
-  }
-  return d;
-}
-function adminWebEta(p){
-  if(!adminIsWebProject(p))return null;
-  const start=adminDateFromFirestore(p?.paidAt||p?.paymentVerifiedAt);
-  return start?adminAddBusinessDays(start,4):null;
-}
-function adminWebEtaText(p){
-  const eta=adminWebEta(p);
-  if(!eta)return 'Se calcula al confirmar el pago';
-  return new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(eta);
-}
-
 function paymentMethodCode(v){return String(v||'PAGO').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').toUpperCase().slice(0,24)||'PAGO'}
 
 window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
@@ -1182,18 +1179,15 @@ window.openProject=async function(uid,id){
     ['Venta',usd(selected.baseUsd)],
     ['Pago',selected.paymentMethod||selected.paymentStatus],
     ['Transacción',selected.transactionId||'Pendiente'],
-    ...(adminIsWebProject(selected)?[
-      ['Entrega estimada',adminWebEtaText(selected)],
+    ...(isWebProjectAdmin(selected)?[
+      ['Entrega estimada',webDeliveryTextAdmin(selected)],
       ['Plazo','4 días hábiles · lunes a viernes']
     ]:[]),
     ['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados`]
   ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
   $('editProjectTitle').value=selected.projectTitle||'Proyecto';
   $('editStatus').value=selected.status||'waiting_files';
-  const roleForProject=adminIsWebProject(selected)
-    ? normalizeProfessionalRole(selected.professionalRole||'Desarrollador Web Full-Stack')
-    : normalizeProfessionalRole(selected.professionalRole||'Arquitecto');
-  setProfessionalRole(roleForProject);
+  setProfessionalRole(isWebProjectAdmin(selected)?(selected.professionalRole||'Desarrollador Web Full-Stack'):(selected.professionalRole||'Arquitecto'));
   $('editArchitect').value=selected.architectName||'';
   $('editPrice').value=Number(selected.baseUsd||0).toFixed(2);
   $('editCost').value=Number(selected.adminMeta?.internalCostUsd||0).toFixed(2);
@@ -1358,6 +1352,10 @@ window.saveProject=async function(){
       ['Venta',usd(selected.baseUsd)],
       ['Pago',selected.paymentMethod||selected.paymentStatus],
       ['Transacción',selected.transactionId||'Pendiente'],
+      ...(isWebProjectAdmin(selected)?[
+        ['Entrega estimada',webDeliveryTextAdmin(selected)],
+        ['Plazo','4 días hábiles · lunes a viernes']
+      ]:[]),
       ['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados`]
     ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
 
