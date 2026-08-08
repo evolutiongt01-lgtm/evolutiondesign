@@ -150,16 +150,19 @@
     .hero-secondary:hover { border-color:rgba(212,184,149,.52); color:#fff; background:rgba(212,184,149,.07); }
     .hero-index { padding:12px; border:1px solid rgba(255,255,255,.10); border-radius:28px; background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.012)),rgba(5,5,5,.38); -webkit-backdrop-filter:blur(22px) saturate(160%); backdrop-filter:blur(22px) saturate(160%); box-shadow:0 24px 70px rgba(0,0,0,.34); }
     .hero-index-head { display:flex; justify-content:space-between; align-items:center; padding:7px 8px 14px; color:#7c7c82; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; }
-    .studio-row { position:relative; display:grid; grid-template-columns:42px 1fr auto; align-items:center; gap:13px; min-height:94px; padding:16px; border-top:1px solid rgba(255,255,255,.075); text-decoration:none; overflow:hidden; transition:background .25s ease,transform .25s ease; }
+    .studio-row { position:relative; display:grid; grid-template-columns:42px 1fr auto; align-items:center; gap:13px; min-height:94px; padding:16px; border-top:1px solid rgba(255,255,255,.075); color:#fff; text-decoration:none; overflow:hidden; transition:background .25s ease,color .25s ease,transform .25s ease; }
+    .studio-row:visited { color:#fff; }
     .studio-row:first-of-type { border-top:0; }
     .studio-row::after { content:""; position:absolute; inset:0; background:linear-gradient(100deg,transparent,rgba(212,184,149,.07),transparent); transform:translateX(-115%); transition:transform .55s var(--ease); }
-    .studio-row:hover { background:rgba(255,255,255,.035); transform:translateX(3px); }
+    .studio-row:hover { background:#f3f3f2; color:#090909; transform:translateX(3px); }
     .studio-row:hover::after { transform:translateX(115%); }
     .studio-number { color:#65656b; font-size:.67rem; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
     .studio-row strong { display:block; font-size:1.06rem; letter-spacing:-.02em; }
     .studio-row small { display:block; margin-top:4px; color:#85858b; font-size:.69rem; line-height:1.4; }
     .studio-arrow { position:relative; z-index:2; width:34px; height:34px; border-radius:50%; display:grid; place-items:center; border:1px solid rgba(255,255,255,.10); color:#bcbcc0; transition:.24s ease; }
-    .studio-row:hover .studio-arrow { border-color:rgba(212,184,149,.4); color:var(--accent); transform:rotate(-35deg); }
+    .studio-row:hover .studio-number { color:#606064; }
+    .studio-row:hover small { color:#55555a; }
+    .studio-row:hover .studio-arrow { border-color:rgba(0,0,0,.18); background:#090909; color:#fff; transform:rotate(-35deg); }
 
     .hero-status { position:absolute; z-index:3; left:5vw; right:5vw; bottom:28px; display:flex; justify-content:space-between; gap:20px; color:#66666c; font-size:.61rem; letter-spacing:.12em; text-transform:uppercase; }
     .hero-status strong { color:#a9a9ad; font-weight:500; }
@@ -184,23 +187,32 @@
     .discipline-bottom p { margin:0; max-width:300px; color:#7f7f85; line-height:1.65; font-size:.79rem; }
     .discipline-more { display:inline-flex; align-items:center; gap:8px; margin-top:22px; color:#d4d4d7; font-size:.72rem; font-weight:600; }
 
-    /* ---------- DINGLOFT ---------- */
-    .software-section { padding:0 5vw 115px; background:#080808; }
-    .software-panel { position:relative; width:min(1360px,100%); min-height:255px; margin:0 auto; overflow:hidden; display:grid; grid-template-columns:1.25fr .75fr; align-items:center; gap:40px; padding:42px 48px; border:1px solid rgba(255,255,255,.09); border-radius:28px; background:linear-gradient(120deg,rgba(11,18,13,.88),rgba(7,7,8,.98) 62%); box-shadow:inset 0 1px 0 rgba(255,255,255,.045); }
-    .software-panel::before { content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent 0 4px,rgba(97,255,158,.018) 4px 5px); pointer-events:none; }
-    .software-panel::after { content:""; position:absolute; width:430px; height:430px; right:-120px; top:-240px; border-radius:50%; background:radial-gradient(circle,rgba(75,255,140,.11),transparent 69%); }
-    .terminal-label { display:inline-flex; align-items:center; gap:8px; color:#82efa8; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.68rem; letter-spacing:.07em; }
-    .terminal-dot { width:7px; height:7px; border-radius:50%; background:#6bf49d; box-shadow:0 0 13px rgba(107,244,157,.75); animation:terminalPulse 1.6s ease-in-out infinite; }
-    @keyframes terminalPulse { 50% { opacity:.35; box-shadow:none; } }
-    .software-panel h3 { margin:15px 0 10px; max-width:700px; font-size:clamp(2rem,3.4vw,3.7rem); letter-spacing:-.055em; line-height:.97; }
-    .software-panel p { margin:0; max-width:650px; color:#85858b; font-size:.83rem; line-height:1.7; }
-    .software-side { position:relative; z-index:2; display:flex; justify-content:flex-end; }
-    .dingloft-cta { width:min(330px,100%); padding:18px; border-radius:18px; text-decoration:none; border:1px solid rgba(105,245,155,.22); background:rgba(61,255,131,.035); transition:.3s var(--ease); }
-    .dingloft-cta:hover { transform:translateY(-4px); background:rgba(61,255,131,.06); border-color:rgba(105,245,155,.43); box-shadow:0 18px 45px rgba(0,0,0,.28),0 0 34px rgba(83,255,148,.055); color:#fff; }
-    .dingloft-code { color:#70ed9d; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.69rem; }
-    .dingloft-cta strong { display:block; margin:12px 0 6px; font-size:1.02rem; }
-    .dingloft-cta small { color:#73737a; font-size:.68rem; }
-    .dingloft-go { display:flex; justify-content:space-between; align-items:center; margin-top:17px; padding-top:13px; border-top:1px solid rgba(255,255,255,.07); color:#cfcfd2; font-size:.7rem; }
+    /* ---------- EVOLUTION DIGITAL ECOSYSTEM / DINGLOFT ---------- */
+    .hero-side-stack { display:grid; gap:12px; min-width:0; }
+    .digital-ecosystem { position:relative; min-height:176px; display:block; overflow:hidden; border-radius:24px; border:1px solid rgba(100,255,157,.20); background:linear-gradient(135deg,rgba(5,19,11,.86),rgba(4,7,6,.94) 55%,rgba(8,8,9,.90)); color:#fff; text-decoration:none; box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 18px 48px rgba(0,0,0,.30),0 0 44px rgba(55,255,132,.035); transition:transform .32s var(--ease),border-color .32s ease,box-shadow .32s ease; isolation:isolate; }
+    .digital-ecosystem:hover { color:#fff; transform:translateY(-3px); border-color:rgba(107,255,162,.42); box-shadow:inset 0 1px 0 rgba(255,255,255,.075),0 24px 58px rgba(0,0,0,.38),0 0 52px rgba(55,255,132,.075); }
+    .digital-ecosystem::before { content:""; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg,rgba(0,0,0,.76) 0%,rgba(0,0,0,.40) 48%,rgba(0,0,0,.10) 100%),repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px); }
+    .digital-ecosystem::after { content:""; position:absolute; z-index:1; width:250px; height:250px; right:-85px; top:-118px; border-radius:50%; background:radial-gradient(circle,rgba(76,255,142,.16),transparent 68%); pointer-events:none; transition:transform .55s var(--ease),opacity .3s ease; }
+    .digital-ecosystem:hover::after { transform:scale(1.18); opacity:.9; }
+    .digital-rain { position:absolute; inset:0; z-index:0; width:100%; height:100%; opacity:.42; filter:drop-shadow(0 0 5px rgba(89,255,149,.20)); pointer-events:none; }
+    .digital-scan { position:absolute; z-index:2; left:0; right:0; height:46px; top:-52px; pointer-events:none; background:linear-gradient(to bottom,transparent,rgba(98,255,153,.07),rgba(98,255,153,.16),transparent); mix-blend-mode:screen; animation:digitalScan 4.7s linear infinite; }
+    @keyframes digitalScan { to { transform:translateY(245px); } }
+    .digital-content { position:relative; z-index:3; min-height:176px; padding:18px 20px 17px; display:flex; flex-direction:column; justify-content:space-between; }
+    .digital-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-size:.57rem; letter-spacing:.11em; text-transform:uppercase; }
+    .digital-label { display:inline-flex; align-items:center; gap:7px; color:#91f5b4; }
+    .digital-dot { width:6px; height:6px; border-radius:50%; background:#6dff9f; box-shadow:0 0 12px rgba(109,255,159,.88); animation:terminalPulse 1.5s ease-in-out infinite; }
+    @keyframes terminalPulse { 50% { opacity:.34; box-shadow:0 0 2px rgba(109,255,159,.25); } }
+    .digital-status { color:rgba(145,245,180,.48); }
+    .digital-main { max-width:390px; }
+    .digital-command { margin-bottom:7px; color:#70ee9e; font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-size:.61rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .digital-command .cursor { display:inline-block; width:7px; margin-left:3px; border-bottom:1px solid #83ffae; animation:cursorBlink .8s steps(1) infinite; }
+    @keyframes cursorBlink { 50% { opacity:0; } }
+    .digital-main strong { display:block; margin:0 0 4px; font-size:1.12rem; letter-spacing:-.035em; }
+    .digital-main small { display:block; color:#7b8980; font-size:.64rem; line-height:1.45; }
+    .digital-bottom { display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:12px; border-top:1px solid rgba(112,255,162,.10); font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-size:.58rem; color:#9da69f; }
+    .digital-launch { display:inline-flex; align-items:center; gap:7px; color:#83f7aa; font-weight:700; letter-spacing:.02em; }
+    .digital-launch span:last-child { transition:transform .25s ease; }
+    .digital-ecosystem:hover .digital-launch span:last-child { transform:translate(3px,-3px); }
 
     /* ---------- PAYMENT LOGOS: VISUAL ONLY ---------- */
     .payment-strip { padding:48px 5vw 42px; border-top:1px solid rgba(255,255,255,.055); background:#060606; }
@@ -249,16 +261,14 @@
       .hero-inner { display:block; }
       .hero h1 { font-size:clamp(3rem,14vw,5rem); }
       .hero-copy { max-width:560px; }
-      .hero-index { margin-top:42px; }
+      .hero-side-stack { margin-top:42px; }
+      .hero-index { margin-top:0; }
       .hero-status { position:relative; left:auto; right:auto; bottom:auto; margin-top:28px; padding:0 1px; }
       .studio-section { padding:82px 16px; }
       .section-head { grid-template-columns:1fr; gap:18px; }
       .discipline-grid { grid-template-columns:1fr; }
       .discipline-card { min-height:285px; border-right:0; border-bottom:1px solid rgba(255,255,255,.08); }
       .discipline-card:last-child { border-bottom:0; }
-      .software-section { padding:0 16px 82px; }
-      .software-panel { grid-template-columns:1fr; padding:30px 25px; gap:28px; }
-      .software-side { justify-content:flex-start; }
       .payment-strip { padding:38px 16px; }
       .payment-inner { grid-template-columns:1fr; gap:22px; }
       .payment-logos { grid-template-columns:repeat(4,minmax(0,1fr)); }
@@ -277,7 +287,8 @@
       .studio-row strong { font-size:.94rem; }
       .hero-status { display:none; }
       .discipline-card { min-height:260px; padding:23px; }
-      .software-panel { border-radius:22px; padding:27px 20px; }
+      .digital-ecosystem { min-height:164px; border-radius:20px; }
+      .digital-content { min-height:164px; padding:16px; }
       .payment-logos { grid-template-columns:repeat(2,minmax(0,1fr)); }
       .footer-grid { grid-template-columns:1fr; }
       .footer-brand { grid-column:auto; }
@@ -394,20 +405,42 @@
           </div>
         </div>
 
-        <div class="hero-index reveal">
-          <div class="hero-index-head"><span>Studio Index</span><span>03 disciplinas</span></div>
-          <a href="arquitectura.html" class="studio-row">
-            <span class="studio-number">01</span><div><strong>Arquitectura</strong><small>Planos · Renders · Fachadas · Interiores</small></div><span class="studio-arrow">→</span>
-          </a>
-          <a href="diseno-grafico.html" class="studio-row">
-            <span class="studio-number">02</span><div><strong>Diseño Gráfico</strong><small>Branding · Identidad · Publicidad · Contenido</small></div><span class="studio-arrow">→</span>
-          </a>
-          <a href="diseno-web.html" class="studio-row">
-            <span class="studio-number">03</span><div><strong>Diseño Web</strong><small>Sitios · Landing pages · Ecommerce · UI/UX</small></div><span class="studio-arrow">→</span>
+        <div class="hero-side-stack">
+          <div class="hero-index reveal">
+            <div class="hero-index-head"><span>Studio Index</span><span>03 disciplinas</span></div>
+            <a href="arquitectura.html" class="studio-row">
+              <span class="studio-number">01</span><div><strong>Arquitectura</strong><small>Planos · Renders · Fachadas · Interiores</small></div><span class="studio-arrow">→</span>
+            </a>
+            <a href="diseno-grafico.html" class="studio-row">
+              <span class="studio-number">02</span><div><strong>Diseño Gráfico</strong><small>Branding · Identidad · Publicidad · Contenido</small></div><span class="studio-arrow">→</span>
+            </a>
+            <a href="diseno-web.html" class="studio-row">
+              <span class="studio-number">03</span><div><strong>Diseño Web</strong><small>Sitios · Landing pages · Ecommerce · UI/UX</small></div><span class="studio-arrow">→</span>
+            </a>
+          </div>
+
+          <a href="https://dingloft.com" target="_blank" rel="noopener" class="digital-ecosystem reveal" aria-label="Abrir Evolution Digital Ecosystem en Dingloft">
+            <canvas class="digital-rain" id="digitalRain" aria-hidden="true"></canvas>
+            <span class="digital-scan" aria-hidden="true"></span>
+            <div class="digital-content">
+              <div class="digital-topline">
+                <span class="digital-label"><span class="digital-dot"></span>Evolution Digital Ecosystem</span>
+                <span class="digital-status">SYSTEM ONLINE</span>
+              </div>
+              <div class="digital-main">
+                <div class="digital-command">root@evolution:~$ launch dingloft --secure<span class="cursor">&nbsp;</span></div>
+                <strong>Software profesional para Mac.</strong>
+                <small>DMG · herramientas creativas · recursos digitales</small>
+              </div>
+              <div class="digital-bottom">
+                <span>ENCRYPTED ROUTE / 256</span>
+                <span class="digital-launch"><span>Abrir Dingloft</span><span>↗</span></span>
+              </div>
+            </div>
           </a>
         </div>
       </div>
-      <div class="hero-status"><span><strong>Panajachel · Guatemala</strong></span><span>Architecture · Brand · Digital</span></div>
+      <div class="hero-status" style="justify-content:flex-end;"><span>Architecture · Brand · Digital</span></div>
     </section>
 
     <section class="studio-section" id="estudio">
@@ -434,23 +467,6 @@
       </div>
     </section>
 
-    <section class="software-section">
-      <div class="software-panel reveal">
-        <div>
-          <span class="terminal-label"><span class="terminal-dot"></span> EVOLUTION DIGITAL ECOSYSTEM</span>
-          <h3>Software profesional, en un espacio separado del estudio.</h3>
-          <p>Dingloft concentra nuestro catálogo digital para que arquitectura, branding y web mantengan una navegación limpia y enfocada.</p>
-        </div>
-        <div class="software-side">
-          <a href="https://dingloft.com" target="_blank" rel="noopener" class="dingloft-cta" aria-label="Abrir catálogo de software en Dingloft">
-            <span class="dingloft-code">&gt;_ dingloft.launch()</span>
-            <strong>Descarga software para Mac</strong>
-            <small>Catálogo independiente · DMG · Recursos digitales</small>
-            <span class="dingloft-go"><span>Abrir Dingloft</span><span>↗</span></span>
-          </a>
-        </div>
-      </div>
-    </section>
   </main>
 
   <!-- Solo presentación visual de métodos aceptados. No hay SDK ni checkout en Home. -->
@@ -518,6 +534,52 @@
           const p = document.createElement('link'); p.rel='prefetch'; p.href=href; p.dataset.prefetch=href; document.head.appendChild(p);
         }, {once:true});
       });
+
+      // Lluvia de código del bloque Evolution Digital Ecosystem.
+      const rainCanvas = document.getElementById('digitalRain');
+      if (rainCanvas) {
+        const ctx = rainCanvas.getContext('2d', { alpha:true });
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const glyphs = '01{}[]<>/#$%&*+=-;:ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let width = 0, height = 0, columns = 0, drops = [], raf = 0, lastFrame = 0;
+
+        const resizeRain = () => {
+          const rect = rainCanvas.getBoundingClientRect();
+          const dpr = Math.min(devicePixelRatio || 1, 1.5);
+          width = Math.max(1, rect.width); height = Math.max(1, rect.height);
+          rainCanvas.width = Math.round(width * dpr); rainCanvas.height = Math.round(height * dpr);
+          ctx.setTransform(dpr,0,0,dpr,0,0);
+          columns = Math.max(1, Math.floor(width / 14));
+          drops = Array.from({length:columns}, () => Math.random() * -18);
+        };
+
+        const drawRain = (time=0) => {
+          if (document.hidden) { raf = requestAnimationFrame(drawRain); return; }
+          if (time - lastFrame < 42 && !reduced) { raf = requestAnimationFrame(drawRain); return; }
+          lastFrame = time;
+          ctx.fillStyle = reduced ? 'rgba(3,10,6,.32)' : 'rgba(3,10,6,.15)';
+          ctx.fillRect(0,0,width,height);
+          ctx.font = '11px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+          ctx.textAlign = 'left';
+          for (let i=0;i<columns;i++) {
+            const ch = glyphs[(Math.random()*glyphs.length)|0];
+            const x = i * 14;
+            const y = drops[i] * 14;
+            ctx.fillStyle = Math.random() > .92 ? 'rgba(188,255,211,.88)' : 'rgba(84,255,145,.52)';
+            ctx.fillText(ch,x,y);
+            if (!reduced) {
+              drops[i] += .55 + Math.random()*.28;
+              if (y > height + 22 && Math.random() > .965) drops[i] = -Math.random()*12;
+            }
+          }
+          if (!reduced) raf = requestAnimationFrame(drawRain);
+        };
+
+        resizeRain();
+        if ('ResizeObserver' in window) new ResizeObserver(resizeRain).observe(rainCanvas);
+        else addEventListener('resize',resizeRain,{passive:true});
+        drawRain();
+      }
     })();
   </script>
 
