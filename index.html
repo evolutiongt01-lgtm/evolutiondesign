@@ -453,20 +453,20 @@
       overflow: hidden;
       isolation: isolate;
       background:
-        radial-gradient(220px 120px at var(--glass-x) var(--glass-y), rgba(255,255,255,.16), rgba(255,255,255,.055) 34%, transparent 68%),
-        linear-gradient(112deg, transparent 0 39%, rgba(255,255,255,.055) 46%, rgba(255,255,255,.16) 49%, rgba(255,255,255,.035) 53%, transparent 61%),
-        linear-gradient(180deg, rgba(255,255,255,.145) 0%, rgba(255,255,255,.060) 48%, rgba(255,255,255,.025) 100%),
-        rgba(42,42,47,.38) !important;
-      -webkit-backdrop-filter: blur(42px) saturate(165%) brightness(1.05) contrast(106%) !important;
-      backdrop-filter: blur(42px) saturate(165%) brightness(1.05) contrast(106%) !important;
-      border: 1px solid rgba(255,255,255,.30) !important;
+        radial-gradient(260px 150px at var(--glass-x) var(--glass-y), rgba(0,0,0,.28), rgba(0,0,0,.10) 36%, transparent 70%),
+        linear-gradient(112deg, transparent 0 38%, rgba(0,0,0,.10) 45%, rgba(0,0,0,.30) 49%, rgba(0,0,0,.08) 54%, transparent 62%),
+        linear-gradient(180deg, rgba(18,18,20,.46) 0%, rgba(12,12,14,.30) 48%, rgba(5,5,7,.22) 100%),
+        rgba(24,24,28,.38) !important;
+      -webkit-backdrop-filter: blur(64px) saturate(150%) brightness(.96) contrast(108%) !important;
+      backdrop-filter: blur(64px) saturate(150%) brightness(.96) contrast(108%) !important;
+      border: 1px solid rgba(0,0,0,.68) !important;
       box-shadow:
-        0 18px 48px rgba(0,0,0,.30),
-        0 2px 8px rgba(0,0,0,.12),
-        inset 0 1px 0 rgba(255,255,255,.62),
-        inset 0 -1px 0 rgba(255,255,255,.12),
-        inset 1px 0 0 rgba(255,255,255,.13),
-        inset -1px 0 0 rgba(255,255,255,.10) !important;
+        0 20px 54px rgba(0,0,0,.38),
+        0 3px 10px rgba(0,0,0,.24),
+        inset 0 1px 0 rgba(0,0,0,.72),
+        inset 0 -1px 0 rgba(0,0,0,.55),
+        inset 1px 0 0 rgba(0,0,0,.42),
+        inset -1px 0 0 rgba(0,0,0,.38) !important;
       transition: background .22s ease, border-color .22s ease, box-shadow .22s ease;
     }
 
@@ -474,19 +474,19 @@
     .nav-pill::before {
       content:"";
       position:absolute;
-      inset:-9% -1%;
+      inset:-11% -2%;
       border-radius:inherit;
       pointer-events:none;
       z-index:0;
       background:
-        radial-gradient(75% 105% at 15% -22%, rgba(255,255,255,.28), rgba(255,255,255,.075) 27%, transparent 55%),
-        radial-gradient(65% 105% at 90% 128%, rgba(255,255,255,.10), transparent 54%),
-        linear-gradient(104deg, transparent 0 54%, rgba(255,255,255,.045) 58%, rgba(255,255,255,.18) 60%, rgba(255,255,255,.035) 64%, transparent 70%);
-      -webkit-backdrop-filter: blur(5px) saturate(122%) brightness(1.05);
-      backdrop-filter: blur(5px) saturate(122%) brightness(1.05);
-      transform: scale(1.008) translate3d(calc(var(--glass-shine-x) * .18),0,0);
-      opacity:.96;
-      mix-blend-mode:screen;
+        radial-gradient(78% 112% at 15% -22%, rgba(0,0,0,.34), rgba(0,0,0,.12) 30%, transparent 58%),
+        radial-gradient(68% 110% at 90% 128%, rgba(0,0,0,.20), transparent 56%),
+        linear-gradient(104deg, transparent 0 53%, rgba(0,0,0,.08) 57%, rgba(0,0,0,.30) 60%, rgba(0,0,0,.07) 64%, transparent 71%);
+      -webkit-backdrop-filter: blur(12px) saturate(116%) brightness(.98);
+      backdrop-filter: blur(12px) saturate(116%) brightness(.98);
+      transform: scale(1.01) translate3d(calc(var(--glass-shine-x) * .18),0,0);
+      opacity:.90;
+      mix-blend-mode:multiply;
     }
 
     /* Borde óptico: el contorno claro hace que parezca vidrio grueso. */
@@ -499,28 +499,28 @@
       z-index:0;
       padding:1px;
       background:linear-gradient(115deg,
-        rgba(255,255,255,.88) 0%,
-        rgba(255,255,255,.22) 14%,
-        rgba(255,255,255,.055) 42%,
-        rgba(255,255,255,.10) 66%,
-        rgba(255,255,255,.66) 100%);
+        rgba(0,0,0,.92) 0%,
+        rgba(0,0,0,.58) 14%,
+        rgba(0,0,0,.22) 42%,
+        rgba(0,0,0,.36) 66%,
+        rgba(0,0,0,.82) 100%);
       -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
       -webkit-mask-composite:xor;
       mask-composite:exclude;
-      opacity:.72;
+      opacity:.86;
     }
 
     .nav-pill > * { position:relative; z-index:1; }
 
     .nav-pill:hover {
-      border-color:rgba(255,255,255,.38) !important;
+      border-color:rgba(0,0,0,.82) !important;
       box-shadow:
-        0 20px 54px rgba(0,0,0,.31),
-        0 2px 10px rgba(0,0,0,.13),
-        inset 0 1px 0 rgba(255,255,255,.72),
-        inset 0 -1px 0 rgba(255,255,255,.14),
-        inset 1px 0 0 rgba(255,255,255,.16),
-        inset -1px 0 0 rgba(255,255,255,.12) !important;
+        0 22px 60px rgba(0,0,0,.42),
+        0 3px 12px rgba(0,0,0,.27),
+        inset 0 1px 0 rgba(0,0,0,.82),
+        inset 0 -1px 0 rgba(0,0,0,.62),
+        inset 1px 0 0 rgba(0,0,0,.48),
+        inset -1px 0 0 rgba(0,0,0,.44) !important;
     }
 
     .nav-pill .icon-btn,
