@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Evolution Design - Estudio creativo de arquitectura, diseño gráfico y diseño web">
+  <meta name="description" content="Evolution Design - Arquitectura, renders fotorrealistas, planos 2D, fachadas y visualización 3D">
 
   <!-- GOOGLE SEARCH CONSOLE VERIFICATION -->
   <meta name="google-site-verification" content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" />
@@ -19,12 +19,11 @@
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
   <meta name="author" content="Evolution Design">
-  <title>Evolution Design - Arquitectura, Diseño Gráfico y Diseño Web</title>
+  <title>Evolution Design - Arquitectura, Renders y Planos</title>
 
   <!-- PRELOAD DE RECURSOS CLAVE PARA VELOCIDAD -->
   <link rel="preload" href="css/theme.min.css" as="style">
   <link rel="stylesheet" href="css/theme.min.css">
-  <link rel="prefetch" href="arquitectura.html">
 
   <!-- GOOGLE RECAPTCHA V3 SCRIPT (CARGA DIFERIDA) -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LewmG4tAAAAADBNcF1z4t7NvP_YFyA7P57xx9uM" async defer></script>
@@ -931,425 +930,104 @@
     }
 
   
+
     /* =========================================================
-       EVOLUTION DESIGN — HOME + CONTINUIDAD ENTRE PÁGINAS V3
-       Capa 100% visual. No modifica Firebase, pagos ni autenticación.
+       EVOLUTION DESIGN — NAVEGACIÓN ENTRE ÁREAS / TRANSICIONES
+       Solo capa visual: no modifica autenticación, pagos ni Firebase.
+       Replicar este bloque en Home, Diseño Gráfico y Diseño Web para
+       obtener la misma transición continua entre documentos.
        ========================================================= */
     @view-transition { navigation: auto; }
 
-    /* Mantiene la barra como un elemento compartido entre documentos. */
     .desktop-nav,
     .mobile-app-nav { view-transition-name: evolution-navigation; }
     main { view-transition-name: evolution-content; }
 
     ::view-transition-group(evolution-navigation) {
       z-index: 99999;
-      animation-duration: .44s;
-      animation-timing-function: cubic-bezier(.2,.8,.2,1);
+      animation-duration: .28s;
+      animation-timing-function: cubic-bezier(.22,.61,.36,1);
     }
     ::view-transition-old(evolution-navigation),
     ::view-transition-new(evolution-navigation) {
       mix-blend-mode: normal;
-      animation-duration: .44s;
-    }
-    ::view-transition-group(evolution-nav-indicator) {
-      z-index: 100000;
-      animation-duration: .52s;
-      animation-timing-function: cubic-bezier(.16,1,.3,1);
-    }
-    ::view-transition-old(evolution-nav-indicator),
-    ::view-transition-new(evolution-nav-indicator) {
-      mix-blend-mode: normal;
+      animation-duration: .28s;
     }
     ::view-transition-old(evolution-content) {
-      animation: evolution-content-out .22s cubic-bezier(.4,0,1,1) both;
+      animation: evolution-content-out .18s ease both;
     }
     ::view-transition-new(evolution-content) {
-      animation: evolution-content-in .48s .04s cubic-bezier(.16,1,.3,1) both;
+      animation: evolution-content-in .34s cubic-bezier(.22,.61,.36,1) both;
     }
     ::view-transition-old(root) {
-      animation: evolution-root-out .28s ease both;
+      animation: evolution-root-out .18s ease both;
     }
     ::view-transition-new(root) {
-      animation: evolution-root-in .44s ease both;
+      animation: evolution-root-in .30s ease both;
     }
 
     @keyframes evolution-content-out {
-      to { opacity: 0; transform: translate3d(0,-8px,0) scale(.996); filter: blur(4px); }
+      to { opacity: 0; transform: translate3d(0,-5px,0); filter: blur(2px); }
     }
     @keyframes evolution-content-in {
-      from { opacity: 0; transform: translate3d(0,12px,0) scale(.996); filter: blur(5px); }
-      to { opacity: 1; transform: translate3d(0,0,0) scale(1); filter: blur(0); }
+      from { opacity: 0; transform: translate3d(0,7px,0); filter: blur(3px); }
+      to { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); }
     }
     @keyframes evolution-root-out { to { background: #050505; } }
     @keyframes evolution-root-in { from { background: #050505; } }
 
-    /* Indicador real: durante el cambio de documento se desliza de Home a Arquitectura. */
-    .nav-pill-links { position: relative; }
-    .nav-pill-link.active::after,
-    .nav-pill-link.current-area::after { display: none !important; }
-    .evolution-nav-indicator {
-      position: absolute;
-      left: 0;
-      bottom: -7px;
-      width: 0;
-      height: 2px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #fff, #d4b895);
-      box-shadow: 0 0 16px rgba(212,184,149,.42);
-      pointer-events: none;
-      transform: translate3d(0,0,0);
-      transition: left .42s cubic-bezier(.16,1,.3,1),
-                  width .42s cubic-bezier(.16,1,.3,1),
-                  opacity .2s ease;
-      view-transition-name: evolution-nav-indicator;
-    }
-
-    /* Fallback elegante si el navegador no soporta transición entre documentos. */
+    /* Fallback negro sutil para navegadores sin transición entre documentos. */
     #evolution-page-curtain {
       position: fixed;
       inset: 0;
       z-index: 200000;
-      background:
-        radial-gradient(circle at 50% 45%, rgba(212,184,149,.08), transparent 26%),
-        #050505;
+      background: #050505;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity .20s ease, visibility 0s linear .20s;
-    }
-    #evolution-page-curtain::before {
-      content: '';
-      position: absolute;
-      left: 12%;
-      right: 12%;
-      top: 50%;
-      height: 1px;
-      opacity: 0;
-      transform: scaleX(.15);
-      background: linear-gradient(90deg, transparent, rgba(212,184,149,.9), transparent);
+      transition: opacity .16s ease, visibility 0s linear .16s;
     }
     #evolution-page-curtain.is-active {
       opacity: 1;
       visibility: visible;
-      transition: opacity .20s ease;
-    }
-    #evolution-page-curtain.is-active::before {
-      animation: evolution-curtain-line .42s cubic-bezier(.16,1,.3,1) both;
-    }
-    @keyframes evolution-curtain-line {
-      0% { opacity: 0; transform: scaleX(.1); }
-      55% { opacity: 1; }
-      100% { opacity: 0; transform: scaleX(1); }
+      transition: opacity .16s ease;
     }
 
+    /* La sección actual queda clara sin romper el lenguaje visual existente. */
     .nav-pill-link.current-area,
-    .menu-item.current-area { color: #fff !important; }
+    .menu-item.current-area {
+      color: #fff !important;
+    }
+    .nav-pill-link.current-area::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #d4b895;
+      border-radius: 2px;
+      box-shadow: 0 0 12px rgba(212,184,149,.35);
+    }
     .tab-item.current-area {
       color: #fff !important;
       border-bottom-color: #d4b895 !important;
     }
     .tab-item.current-area svg { opacity: 1; transform: scale(1.12); }
 
-    /* =========================================================
-       HOME — dirección visual tipo creative studio premium
-       ========================================================= */
-
-    .home-hero {
-      min-height: 100vh;
-      background: #050505 !important;
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .home-hero::before {
-      content: '';
-      position: absolute;
-      inset: -4%;
-      z-index: -2;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.99) 0%, rgba(0,0,0,.92) 42%, rgba(0,0,0,.40) 72%, rgba(0,0,0,.55) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.55)),
-        url('img/hero-pc.jpg') right center/cover no-repeat;
-      transform: scale(1.035);
-      animation: evolution-home-scene 18s ease-in-out infinite alternate;
-      will-change: transform;
-    }
-    .home-hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background:
-        radial-gradient(580px circle at var(--spot-x, 66%) var(--spot-y, 44%), rgba(212,184,149,.105), transparent 47%),
-        linear-gradient(180deg, transparent 65%, rgba(5,5,5,.72) 100%);
-      transition: background .12s linear;
-    }
-    @keyframes evolution-home-scene {
-      from { transform: scale(1.035) translate3d(0,0,0); filter: saturate(.90) contrast(1.02); }
-      to { transform: scale(1.075) translate3d(-.65%, -.35%, 0); filter: saturate(1) contrast(1.06); }
-    }
-
-    .home-hero-content {
-      max-width: 820px !important;
-      position: relative;
-      z-index: 2;
-    }
-    .home-hero-content::before {
-      content: '';
-      position: absolute;
-      left: -32px;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: linear-gradient(180deg, transparent, rgba(212,184,149,.35) 22%, rgba(255,255,255,.10) 68%, transparent);
-      opacity: .65;
-    }
-    .home-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      color: rgba(255,255,255,.58);
-      font-size: .64rem;
-      font-weight: 700;
-      letter-spacing: .19em;
-      text-transform: uppercase;
-    }
-    .home-eyebrow::before {
-      content: '';
-      width: 18px;
-      height: 1px;
-      background: #d4b895;
-      box-shadow: 0 0 10px rgba(212,184,149,.4);
-    }
-    .home-hero-content .display-3 {
-      font-size: clamp(3.2rem, 5.7vw, 6.15rem);
-      letter-spacing: -.055em;
-      line-height: .93 !important;
-      max-width: 790px;
-      text-wrap: balance;
-    }
-    .home-hero-content > p {
-      max-width: 640px;
-      line-height: 1.65;
-    }
-
-    .home-division-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 11px;
-      margin-top: 2.15rem;
-      perspective: 1200px;
-    }
-    .home-division-card {
-      --tilt-x: 0deg;
-      --tilt-y: 0deg;
-      --lift: 0px;
-      min-width: 0;
-      min-height: 190px;
-      padding: 20px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.105);
-      background: linear-gradient(145deg, rgba(21,21,21,.70), rgba(9,9,9,.48));
-      backdrop-filter: blur(24px) saturate(145%);
-      -webkit-backdrop-filter: blur(24px) saturate(145%);
-      color: #fff !important;
-      text-decoration: none !important;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(var(--lift));
-      transform-style: preserve-3d;
-      transition: transform .22s ease-out,
-                  border-color .28s ease,
-                  background .28s ease,
-                  box-shadow .28s ease;
-      will-change: transform;
-    }
-    .home-division-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(260px circle at var(--card-x, 50%) var(--card-y, 50%), rgba(212,184,149,.14), transparent 52%),
-        linear-gradient(120deg, transparent 30%, rgba(255,255,255,.035), transparent 68%);
-      opacity: .55;
-      pointer-events: none;
-      transition: opacity .28s ease;
-    }
-    .home-division-card::after {
-      content: '';
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 0;
-      height: 1px;
-      transform: scaleX(.18);
-      transform-origin: left;
-      background: linear-gradient(90deg, #d4b895, transparent 88%);
-      opacity: .5;
-      transition: transform .36s cubic-bezier(.16,1,.3,1), opacity .25s ease;
-    }
-    .home-division-card:hover {
-      --lift: -7px;
-      border-color: rgba(212,184,149,.45);
-      background: linear-gradient(145deg, rgba(29,29,29,.82), rgba(10,10,10,.60));
-      box-shadow: 0 22px 54px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.035);
-    }
-    .home-division-card:hover::before { opacity: 1; }
-    .home-division-card:hover::after { transform: scaleX(1); opacity: 1; }
-    .home-division-index {
-      position: absolute;
-      top: 15px;
-      right: 16px;
-      color: rgba(255,255,255,.28);
-      font-size: .60rem;
-      font-weight: 800;
-      letter-spacing: .10em;
-    }
-    .home-division-icon {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 15px;
-      border: 1px solid rgba(212,184,149,.22);
-      background: rgba(212,184,149,.055);
-      color: #d4b895;
-      margin-bottom: 20px;
-      transform: translateZ(22px);
-      transition: transform .32s cubic-bezier(.16,1,.3,1), background .3s ease;
-    }
-    .home-division-card:hover .home-division-icon {
-      transform: translateZ(28px) scale(1.06);
-      background: rgba(212,184,149,.10);
-    }
-    .home-division-card strong {
-      display: block;
-      font-size: .95rem;
-      letter-spacing: -.015em;
-      margin-bottom: 6px;
-      transform: translateZ(16px);
-    }
-    .home-division-card small {
-      display: block;
-      color: rgba(255,255,255,.46);
-      font-size: .65rem;
-      line-height: 1.5;
-      padding-right: 20px;
-      transform: translateZ(12px);
-    }
-    .home-arrow {
-      position: absolute;
-      right: 17px;
-      bottom: 16px;
-      color: rgba(255,255,255,.50);
-      font-size: 1.05rem;
-      transition: transform .34s cubic-bezier(.16,1,.3,1), color .25s ease;
-      transform: translateZ(20px);
-    }
-    .home-division-card:hover .home-arrow {
-      transform: translate3d(5px,0,24px);
-      color: #d4b895;
-    }
-    .home-trust-badges {
-      max-width: 650px;
-      margin-top: 1.35rem;
-      border-color: rgba(255,255,255,.085);
-      background: rgba(6,6,6,.34);
-    }
-
-    /* Entrada escalonada del Home. Se activa por JS después de cargar. */
-    .home-page .home-hero-content > div:first-child,
-    .home-page .home-eyebrow,
-    .home-page .home-hero-content h1,
-    .home-page .home-hero-content > p,
-    .home-page .home-division-grid,
-    .home-page .home-trust-badges {
-      opacity: 0;
-      transform: translate3d(0,16px,0);
-    }
-    .home-page.evolution-ready .home-hero-content > div:first-child { animation: home-reveal .66s .04s cubic-bezier(.16,1,.3,1) forwards; }
-    .home-page.evolution-ready .home-eyebrow { animation: home-reveal .70s .10s cubic-bezier(.16,1,.3,1) forwards; }
-    .home-page.evolution-ready .home-hero-content h1 { animation: home-reveal .78s .16s cubic-bezier(.16,1,.3,1) forwards; }
-    .home-page.evolution-ready .home-hero-content > p { animation: home-reveal .72s .25s cubic-bezier(.16,1,.3,1) forwards; }
-    .home-page.evolution-ready .home-division-grid { animation: home-reveal .76s .32s cubic-bezier(.16,1,.3,1) forwards; }
-    .home-page.evolution-ready .home-trust-badges { animation: home-reveal .72s .43s cubic-bezier(.16,1,.3,1) forwards; }
-    @keyframes home-reveal {
-      from { opacity: 0; transform: translate3d(0,18px,0); filter: blur(5px); }
-      to { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); }
-    }
-
     @media (min-width: 1200px) and (max-width: 1399.98px) {
       .nav-pill-links { gap: 1rem; }
       .nav-pill-link { font-size: .82rem; }
       .nav-pill { padding-left: 1.1rem; }
-      .home-hero-content .display-3 { font-size: clamp(3.1rem, 5vw, 5.2rem); }
     }
 
     @media (max-width: 991.98px) {
-      .home-page .app-tabs {
-        display: flex !important;
-        justify-content: stretch !important;
-        gap: 0 !important;
-      }
-      .home-page .app-tabs .tab-item { flex: 1 1 0; min-width: 0; }
+      /* Se adapta automáticamente si “Mis Proyectos” está oculto sin sesión. */
       .app-tabs {
         grid-template-columns: repeat(auto-fit, minmax(64px, 1fr)) !important;
         gap: 2px;
       }
       .tab-item { padding-left: 1px; padding-right: 1px; }
-      .home-hero { min-height: 100dvh; }
-      .home-hero::before {
-        inset: -2%;
-        background:
-          linear-gradient(180deg, rgba(0,0,0,.93) 0%, rgba(0,0,0,.70) 46%, rgba(0,0,0,.96) 100%),
-          url('img/hero-movil.jpg') center/cover no-repeat;
-        animation-duration: 20s;
-      }
-      .home-hero::after {
-        background: linear-gradient(180deg, transparent 55%, rgba(5,5,5,.72) 100%);
-      }
-      .home-hero-content::before { display: none; }
-      .home-hero-content .display-3 {
-        font-size: clamp(2.75rem, 11.8vw, 4rem) !important;
-        line-height: .97 !important;
-      }
-      .home-division-grid {
-        grid-template-columns: 1fr;
-        gap: 9px;
-        margin-top: 1.55rem;
-        perspective: none;
-      }
-      .home-division-card {
-        min-height: 94px;
-        padding: 13px 48px 13px 68px;
-        justify-content: center;
-        transform: none !important;
-      }
-      .home-division-icon {
-        position: absolute;
-        left: 13px;
-        top: 50%;
-        transform: translateY(-50%) !important;
-        width: 42px;
-        height: 42px;
-        margin: 0;
-      }
-      .home-division-index { top: 10px; right: 12px; }
-      .home-arrow { right: 15px; bottom: 50%; transform: translateY(50%) !important; }
-      .home-division-card:hover .home-arrow { transform: translate(4px, 50%) !important; }
-      .home-division-card strong { font-size: .86rem; }
-      .home-division-card small { font-size: .62rem; }
-      .home-trust-badges { margin-top: 1.15rem; }
-    }
-
-    @media (max-width: 575.98px) {
-      .home-eyebrow { font-size: .56rem; letter-spacing: .13em; }
-      .home-hero-content .display-3 { font-size: clamp(2.55rem, 11.5vw, 3.65rem) !important; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1357,84 +1035,27 @@
       ::view-transition-new(root),
       ::view-transition-old(evolution-content),
       ::view-transition-new(evolution-content),
-      ::view-transition-group(evolution-navigation),
-      ::view-transition-group(evolution-nav-indicator) { animation-duration: .01ms !important; }
-      #evolution-page-curtain,
-      .evolution-nav-indicator,
-      .home-division-card,
-      .home-division-icon,
-      .home-arrow { transition: none !important; }
-      .home-hero::before { animation: none !important; }
-      .home-page .home-hero-content > div:first-child,
-      .home-page .home-eyebrow,
-      .home-page .home-hero-content h1,
-      .home-page .home-hero-content > p,
-      .home-page .home-division-grid,
-      .home-page .home-trust-badges {
-        opacity: 1 !important;
-        transform: none !important;
-        filter: none !important;
-        animation: none !important;
-      }
+      ::view-transition-group(evolution-navigation) { animation-duration: .01ms !important; }
+      #evolution-page-curtain { transition: none; }
     }
 
   </style>
-
-  <!-- EVOLUTION INTERNAL ROUTER: Home ↔ Arquitectura sin recarga -->
   <script>
-    (function(){
-      var path = (window.location.pathname || '').toLowerCase();
-      var isArchitecture = /\/arquitectura(?:\.html)?\/?$/.test(path);
-      document.documentElement.dataset.evolutionView = isArchitecture ? 'architecture' : 'home';
-
-      /*
-        IMPORTANTE EN arquitectura.html:
-        los navegadores pueden restaurar la posición anterior antes/después de pintar
-        el documento. La anulamos desde HEAD para que un refresh siempre abra arriba.
-      */
-      if (isArchitecture) {
-        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-        document.documentElement.style.scrollBehavior = 'auto';
+    (function () {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      function architectureTop() {
+        if (location.hash) return;
         window.scrollTo(0, 0);
+        if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
       }
+      window.addEventListener('pageshow', architectureTop);
+      document.addEventListener('DOMContentLoaded', architectureTop, { once: true });
     })();
   </script>
-  <style>
-    /* Home y Arquitectura viven en el mismo shell para evitar recargas visibles. */
-    html[data-evolution-view="home"] main > :not(.home-hero) { display: none !important; }
-    html[data-evolution-view="architecture"] main > .home-hero { display: none !important; }
-
-    /* Evita que Chrome intente mantener el footer anclado cuando cambia la vista. */
-    html, body, main, footer { overflow-anchor: none; }
-
-    main {
-      opacity: 1;
-      transform: translate3d(0,0,0);
-      filter: blur(0);
-      transition: opacity .24s ease, transform .32s cubic-bezier(.16,1,.3,1), filter .24s ease;
-      will-change: opacity, transform, filter;
-    }
-    body.evolution-internal-switch main {
-      opacity: 0;
-      transform: translate3d(0,-7px,0) scale(.998);
-      filter: blur(4px);
-    }
-    body.evolution-internal-enter main {
-      animation: evolution-internal-enter .52s cubic-bezier(.16,1,.3,1) both;
-    }
-    @keyframes evolution-internal-enter {
-      from { opacity: 0; transform: translate3d(0,12px,0) scale(.997); filter: blur(5px); }
-      to   { opacity: 1; transform: translate3d(0,0,0) scale(1); filter: blur(0); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      main { transition: none !important; }
-      body.evolution-internal-enter main { animation: none !important; }
-    }
-  </style>
 
 </head>
 
-<body class="home-page" data-bs-spy="scroll" data-bs-target="#navScroll">
+<body data-bs-spy="scroll" data-bs-target="#navScroll">
 
   <!-- MODAL DE LOGIN (ESTILO LIQUID GLASS) -->
   <div id="authModal" class="login-modal-overlay">
@@ -1478,7 +1099,7 @@
   <nav class="desktop-nav fixed-top" id="navScroll">
     <div class="container px-0 position-relative">
       <div class="d-flex align-items-center justify-content-center gap-3 w-100">
-        
+
         <!-- BARRA PRINCIPAL ANCHA -->
         <div class="nav-pill w-100" style="max-width: 1400px; position: relative;">
           <div class="d-flex align-items-center gap-3">
@@ -1487,30 +1108,30 @@
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
               </a>
               <ul class="desktop-dropdown-menu" id="desktopDropdownMenu">
-                <li><a class="menu-item current-area active" href="index.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
-                <li><a class="menu-item" href="arquitectura.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg> Arquitectura</a></li>
-                <li><a class="menu-item" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg> Diseño Gráfico</a></li>
-                <li><a class="menu-item" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path><circle cx="6" cy="5.5" r=".5" fill="currentColor"></circle><circle cx="9" cy="5.5" r=".5" fill="currentColor"></circle></svg> Diseño Web</a></li>
+                <li><a class="menu-item" href="index.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
+                <li><a class="menu-item current-area active" href="arquitectura.html" data-evolution-nav aria-current="page"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V10l8-7 8 7v11"></path><path d="M9 21v-7h6v7"></path></svg> Arquitectura</a></li>
+                <li><a class="menu-item" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg> Diseño Gráfico</a></li>
+                <li><a class="menu-item" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg> Diseño Web</a></li>
                 <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
                 <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
                 <!-- Solo aparece al iniciar sesión -->
-                <li id="linkProyectosMenuDesktop" class="d-none"><a class="menu-item" href="proyectos.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
+                <li id="linkProyectosMenuDesktop" class="d-none"><a class="menu-item" href="proyectos.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
               </ul>
             </div>
-            <a href="index.html" data-evolution-nav class="d-flex align-items-center"><img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;" loading="lazy"></a>
-            
+            <a href="index.html" class="d-flex align-items-center" data-evolution-nav aria-label="Ir a Home"><img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;" loading="lazy"></a>
+
             <!-- BOTÓN ADMIN FLOTANDO EXACTAMENTE DEBAJO DEL LOGO (MAC) -->
             <div id="admin-badge-container-desktop" style="position: absolute; top: calc(100% + 5px); left: 3.5rem; z-index: 10;"></div>
           </div>
 
           <div class="nav-pill-links d-none d-xl-flex">
-            <a href="index.html" data-evolution-nav class="nav-pill-link current-area active" aria-current="page">Home</a>
-            <a href="arquitectura.html" data-evolution-nav class="nav-pill-link">Arquitectura</a>
-            <a href="diseno-grafico.html" data-evolution-nav class="nav-pill-link">Diseño Gráfico</a>
-            <a href="diseno-web.html" data-evolution-nav class="nav-pill-link">Diseño Web</a>
+            <a href="index.html" class="nav-pill-link" data-evolution-nav>Home</a>
+            <a href="arquitectura.html" class="nav-pill-link current-area active" data-evolution-nav aria-current="page">Arquitectura</a>
+            <a href="diseno-grafico.html" class="nav-pill-link" data-evolution-nav>Diseño Gráfico</a>
+            <a href="diseno-web.html" class="nav-pill-link" data-evolution-nav>Diseño Web</a>
 
             <!-- ENLACE A MIS PROYECTOS (SE MOSTRARÁ AL INICIAR SESIÓN) -->
-            <a href="proyectos.html" class="nav-pill-link d-none" id="linkProyectosDesktop" style="white-space: nowrap; color: #fff;">Mis Proyectos</a>
+            <a href="proyectos.html" class="nav-pill-link d-none" id="linkProyectosDesktop" data-evolution-nav style="white-space: nowrap; color: #fff;">Mis Proyectos</a>
 
             <!-- CONTENEDOR LOGIN Y LOGOUT DENTRO DE LA BARRA ESCRITORIO -->
             <div id="auth-desktop-wrapper" class="d-flex align-items-center">
@@ -1518,7 +1139,7 @@
                 <a href="#" onclick="abrirAuthModal(); return false;" class="nav-pill-link d-flex align-items-center gap-1" style="color: #d4b895; font-weight: bold; white-space: nowrap;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>
             </div>
           </div>
-          <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem; white-space: nowrap;">Catálogo de Software &rarr;</a>
+          <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" rel="noopener" style="font-size: 0.9rem; white-space: nowrap;">Catálogo de Software &rarr;</a>
         </div>
 
         <!-- FOTO DE PERFIL LIQUID GLASS A LA PAR DE LA BARRA (MAC) -->
@@ -1534,15 +1155,15 @@
       <div style="position: relative;">
         <a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg></a>
         <ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
-          <li><a class="menu-item current-area active" href="index.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
-          <li><a class="menu-item" href="arquitectura.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg> Arquitectura</a></li>
-          <li><a class="menu-item" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path></svg> Diseño Gráfico</a></li>
-          <li><a class="menu-item" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path></svg> Diseño Web</a></li>
+          <li><a class="menu-item" href="index.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
+          <li><a class="menu-item current-area active" href="arquitectura.html" data-evolution-nav aria-current="page"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V10l8-7 8 7v11"></path><path d="M9 21v-7h6v7"></path></svg> Arquitectura</a></li>
+          <li><a class="menu-item" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg> Diseño Gráfico</a></li>
+          <li><a class="menu-item" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg> Diseño Web</a></li>
           <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
           <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
         </ul>
       </div>
-      <a href="index.html" data-evolution-nav><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;" loading="lazy"></a>
+      <a href="index.html" data-evolution-nav aria-label="Ir a Home"><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;" loading="lazy"></a>
       <!-- CONTENEDOR LOGIN Y PERFIL MÓVIL -->
       <div id="auth-mobile-wrapper" class="d-flex align-items-center">
           <a href="#" onclick="abrirAuthModal(); return false;" class="icon-btn" aria-label="Login">
@@ -1551,59 +1172,29 @@
       </div>
     </div>
     <div class="app-tabs">
-      <a href="index.html" data-evolution-nav class="tab-item current-area active" aria-current="page"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Home</a>
-      <a href="arquitectura.html" data-evolution-nav class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg>Arquitectura</a>
-      <a href="diseno-grafico.html" data-evolution-nav class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path></svg>Gráfico</a>
-      <a href="diseno-web.html" data-evolution-nav class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path></svg>Web</a>
-      <a href="proyectos.html" class="tab-item d-none" id="linkProyectosMobile"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>Proyectos</a>
+      <a href="index.html" class="tab-item" data-evolution-nav><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Home</a>
+      <a href="arquitectura.html" class="tab-item current-area active" data-evolution-nav aria-current="page"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V10l8-7 8 7v11"></path><path d="M9 21v-7h6v7"></path></svg>Arquitectura</a>
+      <a href="diseno-grafico.html" class="tab-item" data-evolution-nav><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg>Diseño G.</a>
+      <a href="diseno-web.html" class="tab-item" data-evolution-nav><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg>Diseño Web</a>
+      <a href="proyectos.html" class="tab-item d-none" id="linkProyectosMobile" data-evolution-nav><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>Proyectos</a>
     </div>
   </nav>
 
   <main>
     <!-- HERO -->
-    <div class="hero-app home-hero">
-      <div class="hero-content home-hero-content">
+    <div class="hero-app">
+      <div class="hero-content">
         <div style="width: 40px; height: 2px; background-color: #fff; margin-bottom: 1.5rem;"></div>
-        <span class="home-eyebrow">EVOLUTION DESIGN · CREATIVE STUDIO</span>
-        <h1 class="display-3 fw-bold lh-1 mb-4">Diseñamos lo que<br><span class="accent-text">imaginas.</span></h1>
-        <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">Arquitectura, diseño gráfico y experiencias web reunidas en un solo estudio creativo.</p>
-
-        <div class="home-division-grid">
-          <a href="arquitectura.html" data-evolution-nav class="home-division-card">
-            <span class="home-division-index">01</span>
-            <div class="home-division-icon"><svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg></div>
-            <div>
-              <strong>Arquitectura</strong>
-              <small>Planos · Renders · Fachadas · Interiores</small>
-            </div>
-            <span class="home-arrow">→</span>
-          </a>
-
-          <a href="diseno-grafico.html" data-evolution-nav class="home-division-card">
-            <span class="home-division-index">02</span>
-            <div class="home-division-icon"><svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path><circle cx="11" cy="11" r="2"></circle></svg></div>
-            <div>
-              <strong>Diseño Gráfico</strong>
-              <small>Branding · Logos · Publicidad · Contenido</small>
-            </div>
-            <span class="home-arrow">→</span>
-          </a>
-
-          <a href="diseno-web.html" data-evolution-nav class="home-division-card">
-            <span class="home-division-index">03</span>
-            <div class="home-division-icon"><svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path><path d="M7 13h4M7 17h8M15 13h2"></path></svg></div>
-            <div>
-              <strong>Diseño Web</strong>
-              <small>Sitios · Landing pages · Ecommerce · UI/UX</small>
-            </div>
-            <span class="home-arrow">→</span>
-          </a>
+        <h1 class="display-3 fw-bold lh-1 mb-4">Visualizamos<br>tu <span class="accent-text">visión.</span></h1>
+        <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">Modelado 3D profesional y renders fotorrealistas que dan vida a tu proyecto antes de construirlo.</p>
+        <div class="grid-buttons">
+          <a href="#visualizacion" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>3D &rarr;</span></a>
+          <a href="#servicios-tecnicos" class="sq-btn"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg><span class="text-center fw-medium">Ver Paquetes<br>2D &rarr;</span></a>
         </div>
-
-        <div class="trust-badges home-trust-badges">
+        <div class="trust-badges">
           <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg><span>Calidad<br>Garantizada</span></div>
           <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Entrega<br>Puntual</span></div>
-          <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg><span>Asesoría<br>Personalizada</span></div>
+          <div class="trust-item"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path><path d="M19 22v-3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v3"></path></svg><span>Asesoría<br>Personalizada</span></div>
         </div>
       </div>
     </div>
@@ -2420,8 +2011,8 @@
     <div class="container text-secondary fw-lighter">
       <div class="row g-4">
         <div class="col-12 col-lg-5 text-center text-lg-start">
-          <a href="index.html" data-evolution-nav><img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;" class="mb-3" loading="lazy"></a>
-          <p class="small">Espacios, marcas y experiencias digitales que evolucionan contigo.</p>
+          <a href="index.html"><img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;" class="mb-3" loading="lazy"></a>
+          <p class="small">Precisión en cada línea, valor en cada detalle.</p>
           <div class="d-flex justify-content-center justify-content-lg-start mt-4">
             <a href="https://www.facebook.com/evolutiondesing.gt" target="_blank" class="text-secondary text-decoration-none" aria-label="Facebook" style="margin-right: 25px;"><svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg></a>
             <a href="https://www.instagram.com/evolutiondesign.gt" target="_blank" class="text-secondary text-decoration-none" aria-label="Instagram"><svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
@@ -4175,334 +3766,58 @@
   <script src="js/aos.js" defer></script>
   <script> document.addEventListener("DOMContentLoaded", function() { AOS.init({ duration: 800 }); }); </script>
 
-  <!-- EVOLUTION DESIGN: continuidad visual entre áreas (solo UI) -->
+
+  <!-- EVOLUTION DESIGN: transición visual entre áreas (no toca lógica de negocio) -->
   <div id="evolution-page-curtain" aria-hidden="true"></div>
   <script>
     (function () {
+      const links = Array.from(document.querySelectorAll('a[data-evolution-nav]'));
       const curtain = document.getElementById('evolution-page-curtain');
       const prefetched = new Set();
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const supportsCrossDocumentVT = ('onpageswap' in window) && ('onpagereveal' in window);
 
-      function urlFor(anchor) {
-        try { return new URL(anchor.href, window.location.href); } catch (_) { return null; }
-      }
       function isSameDocument(url) {
-        return url && url.origin === window.location.origin &&
+        return url.origin === window.location.origin &&
                url.pathname === window.location.pathname &&
                url.search === window.location.search;
       }
+
       function prefetch(anchor) {
-        const url = urlFor(anchor);
-        if (!url || url.origin !== window.location.origin || isSameDocument(url) || prefetched.has(url.href)) return;
-        prefetched.add(url.href);
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
-        link.href = url.href;
-        link.as = 'document';
-        document.head.appendChild(link);
+        try {
+          const url = new URL(anchor.href, window.location.href);
+          if (url.origin !== window.location.origin || isSameDocument(url) || prefetched.has(url.href)) return;
+          prefetched.add(url.href);
+          const link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.href = url.href;
+          document.head.appendChild(link);
+        } catch (_) {}
       }
 
-      /* Indicador deslizante real del nav. */
-      const navLinksWrap = document.querySelector('.desktop-nav .nav-pill-links');
-      let indicator = null;
-      let activeLink = null;
-      function placeIndicator(link, immediate) {
-        if (!navLinksWrap || !indicator || !link || link.offsetParent === null) return;
-        const wrapBox = navLinksWrap.getBoundingClientRect();
-        const box = link.getBoundingClientRect();
-        if (immediate) indicator.style.transition = 'none';
-        indicator.style.left = (box.left - wrapBox.left) + 'px';
-        indicator.style.width = box.width + 'px';
-        indicator.style.opacity = '1';
-        if (immediate) requestAnimationFrame(() => { indicator.style.transition = ''; });
-      }
-      if (navLinksWrap) {
-        indicator = document.createElement('span');
-        indicator.className = 'evolution-nav-indicator';
-        indicator.setAttribute('aria-hidden', 'true');
-        navLinksWrap.appendChild(indicator);
-        activeLink = navLinksWrap.querySelector('.current-area, .active');
-        requestAnimationFrame(() => placeIndicator(activeLink, true));
-        navLinksWrap.querySelectorAll('.nav-pill-link').forEach(link => {
-          link.addEventListener('pointerenter', () => placeIndicator(link, false), { passive: true });
-        });
-        navLinksWrap.addEventListener('pointerleave', () => placeIndicator(activeLink, false), { passive: true });
-        window.addEventListener('resize', () => placeIndicator(activeLink, true), { passive: true });
-      }
-
-      /* Precarga + fallback suave para navegadores sin View Transitions entre documentos. */
-      const links = Array.from(document.querySelectorAll('a[data-evolution-nav]'));
       links.forEach((anchor) => {
         anchor.addEventListener('pointerenter', () => prefetch(anchor), { passive: true });
         anchor.addEventListener('touchstart', () => prefetch(anchor), { passive: true, once: true });
+
         anchor.addEventListener('click', (event) => {
           if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
           if (anchor.target && anchor.target !== '_self') return;
-          const url = urlFor(anchor);
-          if (!url || url.origin !== window.location.origin || isSameDocument(url)) return;
 
-          /* Chrome moderno usa la transición nativa compartida. */
-          if (supportsCrossDocumentVT && !reduceMotion) return;
+          let url;
+          try { url = new URL(anchor.href, window.location.href); } catch (_) { return; }
+          if (url.origin !== window.location.origin || isSameDocument(url)) return;
+
+          /* Los navegadores con View Transitions hacen el cambio nativo.
+             El curtain solo evita el flash blanco en el resto. */
+          if ('startViewTransition' in document) return;
 
           event.preventDefault();
-          document.body.classList.remove('evolution-ready');
-          if (curtain && !reduceMotion) curtain.classList.add('is-active');
-          window.setTimeout(() => { window.location.href = url.href; }, reduceMotion ? 0 : 185);
+          if (curtain) curtain.classList.add('is-active');
+          window.setTimeout(() => { window.location.href = url.href; }, 155);
         });
       });
 
-      /* Home: spotlight del cursor y tilt muy sutil de las disciplinas. */
-      const homeHero = document.querySelector('.home-hero');
-      if (homeHero && !reduceMotion && window.matchMedia('(pointer:fine)').matches) {
-        homeHero.addEventListener('pointermove', (event) => {
-          const rect = homeHero.getBoundingClientRect();
-          const x = ((event.clientX - rect.left) / rect.width) * 100;
-          const y = ((event.clientY - rect.top) / rect.height) * 100;
-          homeHero.style.setProperty('--spot-x', x.toFixed(2) + '%');
-          homeHero.style.setProperty('--spot-y', y.toFixed(2) + '%');
-        }, { passive: true });
-
-        document.querySelectorAll('.home-division-card').forEach(card => {
-          card.addEventListener('pointermove', (event) => {
-            const r = card.getBoundingClientRect();
-            const px = (event.clientX - r.left) / r.width;
-            const py = (event.clientY - r.top) / r.height;
-            card.style.setProperty('--card-x', (px * 100).toFixed(1) + '%');
-            card.style.setProperty('--card-y', (py * 100).toFixed(1) + '%');
-            card.style.setProperty('--tilt-y', ((px - .5) * 4.5).toFixed(2) + 'deg');
-            card.style.setProperty('--tilt-x', ((.5 - py) * 4).toFixed(2) + 'deg');
-          }, { passive: true });
-          card.addEventListener('pointerleave', () => {
-            card.style.setProperty('--tilt-x', '0deg');
-            card.style.setProperty('--tilt-y', '0deg');
-          }, { passive: true });
-        });
-      }
-
-      function revealPage() {
+      window.addEventListener('pageshow', () => {
         if (curtain) curtain.classList.remove('is-active');
-        requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('evolution-ready')));
-        requestAnimationFrame(() => placeIndicator(activeLink, true));
-      }
-      window.addEventListener('pageshow', revealPage);
-      window.addEventListener('pagereveal', revealPage);
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', revealPage, { once: true });
-      } else {
-        revealPage();
-      }
-    })();
-  </script>
-
-
-  <!-- EVOLUTION SAME-SHELL ROUTER V1 -->
-  <script>
-    (function () {
-      const root = document.documentElement;
-      const body = document.body;
-      const main = document.querySelector('main');
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      /* Nosotros controlamos la posición al cambiar de vista. */
-      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-
-      function forceTopAfterViewChange() {
-        const previousBehavior = root.style.scrollBehavior;
-        root.style.scrollBehavior = 'auto';
-
-        const goTop = () => {
-          window.scrollTo(0, 0);
-          if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-        };
-
-        /* Varias pasadas: primero al cambiar display y luego tras recalcular layout. */
-        goTop();
-        requestAnimationFrame(() => {
-          goTop();
-          requestAnimationFrame(() => {
-            goTop();
-            window.setTimeout(() => {
-              goTop();
-              root.style.scrollBehavior = previousBehavior;
-            }, 80);
-          });
-        });
-      }
-
-      const isArchitecturePath = (path) => /\/arquitectura(?:\.html)?\/?$/i.test(path || '');
-      const isHomePath = (path) => /\/(?:index(?:\.html)?)?\/?$/i.test(path || '/');
-
-      function currentViewFromLocation() {
-        return isArchitecturePath(location.pathname) ? 'architecture' : 'home';
-      }
-
-      function setNavState(view) {
-        const wantsArchitecture = view === 'architecture';
-        document.querySelectorAll('a[data-evolution-nav]').forEach((a) => {
-          let u;
-          try { u = new URL(a.href, location.href); } catch (_) { return; }
-          const isArch = isArchitecturePath(u.pathname);
-          const isHome = isHomePath(u.pathname);
-          if (!isArch && !isHome) return;
-          const active = wantsArchitecture ? isArch : isHome;
-          a.classList.toggle('active', active);
-          a.classList.toggle('current-area', active);
-          if (active) a.setAttribute('aria-current', 'page');
-          else a.removeAttribute('aria-current');
-        });
-
-        const wrap = document.querySelector('.desktop-nav .nav-pill-links');
-        const indicator = wrap?.querySelector('.evolution-nav-indicator');
-        const active = wrap?.querySelector('.nav-pill-link.current-area, .nav-pill-link.active');
-        if (wrap && indicator && active && active.offsetParent !== null) {
-          const wb = wrap.getBoundingClientRect();
-          const ab = active.getBoundingClientRect();
-          indicator.style.left = (ab.left - wb.left) + 'px';
-          indicator.style.width = ab.width + 'px';
-          indicator.style.opacity = '1';
-        }
-      }
-
-      function setMediaState(view) {
-        document.querySelectorAll('main video').forEach((video) => {
-          if (view === 'architecture') {
-            const play = video.play();
-            if (play && typeof play.catch === 'function') play.catch(() => {});
-          } else {
-            try { video.pause(); } catch (_) {}
-          }
-        });
-      }
-
-      function applyView(view, options = {}) {
-        const next = view === 'architecture' ? 'architecture' : 'home';
-        const current = root.dataset.evolutionView || currentViewFromLocation();
-        const same = current === next;
-
-        if (options.push) {
-          const href = next === 'architecture' ? 'arquitectura.html' : 'index.html';
-          history.pushState({ evolutionView: next }, '', href);
-        } else if (options.replace) {
-          const href = next === 'architecture' ? 'arquitectura.html' : 'index.html';
-          history.replaceState({ evolutionView: next }, '', href);
-        }
-
-        if (same && !options.force) {
-          setNavState(next);
-          return;
-        }
-
-        const switchNow = () => {
-          root.dataset.evolutionView = next;
-          setNavState(next);
-          setMediaState(next);
-          forceTopAfterViewChange();
-          document.title = next === 'architecture'
-            ? 'Evolution Design - Arquitectura, Renders y Planos'
-            : 'Evolution Design - Arquitectura, Diseño Gráfico y Diseño Web';
-          if (typeof window.AOS !== 'undefined') {
-            requestAnimationFrame(() => {
-              try { window.AOS.refreshHard(); } catch (_) {}
-            });
-          }
-        };
-
-        if (reduceMotion || !main) {
-          switchNow();
-          return;
-        }
-
-        body.classList.add('evolution-internal-switch');
-        window.setTimeout(() => {
-          switchNow();
-          body.classList.remove('evolution-internal-switch');
-          body.classList.add('evolution-internal-enter');
-
-          /* Reafirma el top después de que desaparece el Home y aparece Arquitectura.
-             Esto evita el salto al pie de página por focus/layout restoration. */
-          requestAnimationFrame(forceTopAfterViewChange);
-          window.setTimeout(forceTopAfterViewChange, 80);
-          window.setTimeout(forceTopAfterViewChange, 260);
-
-          window.setTimeout(() => {
-            body.classList.remove('evolution-internal-enter');
-            forceTopAfterViewChange();
-          }, 540);
-        }, 170);
-      }
-
-      /* Intercepta Home ↔ Arquitectura ANTES del handler de navegación entre documentos. */
-      document.addEventListener('click', function (event) {
-        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-        const anchor = event.target.closest('a[data-evolution-nav]');
-        if (!anchor || (anchor.target && anchor.target !== '_self')) return;
-        let url;
-        try { url = new URL(anchor.href, location.href); } catch (_) { return; }
-        if (url.origin !== location.origin) return;
-
-        let targetView = null;
-        if (isArchitecturePath(url.pathname)) targetView = 'architecture';
-        else if (isHomePath(url.pathname)) targetView = 'home';
-        if (!targetView) return;
-
-        event.preventDefault();
-        event.stopImmediatePropagation();
-
-        /* Si el enlace que recibió foco va a ocultarse (p. ej. tarjeta del Home),
-           quitamos el foco ANTES del cambio. Chrome/Safari pueden intentar mantener
-           visible el elemento enfocado y terminar desplazando la página al footer. */
-        try {
-          if (document.activeElement && typeof document.activeElement.blur === 'function') {
-            document.activeElement.blur();
-          }
-        } catch (_) {}
-
-        applyView(targetView, { push: (root.dataset.evolutionView !== targetView) });
-      }, true);
-
-      window.addEventListener('popstate', function () {
-        applyView(currentViewFromLocation(), { force: true });
       });
-
-      /* Si Vercel devuelve index.html para /arquitectura.html, se abre la vista correcta igualmente. */
-      const initial = currentViewFromLocation();
-      root.dataset.evolutionView = initial;
-      setNavState(initial);
-      setMediaState(initial);
-      history.replaceState({ evolutionView: initial }, '', location.href);
-
-      /*
-        FIX arquitectura.html: al abrir o RECARGAR esta URL siempre inicia arriba.
-        pageshow ocurre después de la restauración de scroll del navegador, por eso
-        repetimos el reset después de que el layout ya quedó estable.
-      */
-      if (initial === 'architecture') {
-        const resetArchitectureTop = () => {
-          const previousBehavior = root.style.scrollBehavior;
-          root.style.scrollBehavior = 'auto';
-          window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-          if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
-          body.scrollTop = 0;
-          requestAnimationFrame(() => {
-            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-            if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
-            body.scrollTop = 0;
-            root.style.scrollBehavior = previousBehavior;
-          });
-        };
-
-        resetArchitectureTop();
-        document.addEventListener('DOMContentLoaded', resetArchitectureTop, { once: true });
-        window.addEventListener('load', resetArchitectureTop, { once: true });
-        window.addEventListener('pageshow', () => {
-          resetArchitectureTop();
-          setTimeout(resetArchitectureTop, 0);
-          setTimeout(resetArchitectureTop, 80);
-          setTimeout(resetArchitectureTop, 220);
-        });
-      }
     })();
   </script>
 
