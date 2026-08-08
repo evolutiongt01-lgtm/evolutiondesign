@@ -288,11 +288,30 @@
 @media(max-width:900px){.payment-proof-layout{grid-template-columns:1fr}.payment-receipt-preview{min-height:300px}}
 @media(max-width:560px){.payment-proof-grid{grid-template-columns:1fr}.payment-proof-actions,.payment-review-buttons{grid-template-columns:1fr}.payment-receipt-preview{min-height:250px;border-radius:12px}.payment-receipt-preview iframe{height:400px}}
 
+
+/* SUSCRIPCIONES DISEÑO GRÁFICO */
+.sub-count{display:inline-flex;min-width:19px;height:19px;padding:0 6px;align-items:center;justify-content:center;margin-left:auto;border-radius:999px;background:rgba(212,184,149,.10);border:1px solid rgba(212,184,149,.18);color:#dfc39f;font-size:8px;font-weight:800}
+.sub-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.sub-metric{padding:15px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(160deg,rgba(255,255,255,.03),rgba(255,255,255,.012))}
+.sub-metric span{display:block;color:#777;font-size:9px;margin-bottom:7px}.sub-metric strong{font-size:20px;letter-spacing:-.04em}
+.sub-plan{display:inline-flex;padding:5px 8px;border-radius:999px;border:1px solid rgba(212,184,149,.18);background:rgba(212,184,149,.055);color:#d9bd99;font-size:9px;font-weight:700}
+.sub-status{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700}.sub-status::before{content:"";width:6px;height:6px;border-radius:50%;background:#777}
+.sub-status.active{color:#6fdf9a}.sub-status.active::before{background:#39d477}
+.sub-status.expiring{color:#e5bd69}.sub-status.expiring::before{background:#e9bc65}
+.sub-status.expired{color:#ff8e98}.sub-status.expired::before{background:#ff6673}
+.sub-days{display:flex;align-items:center;gap:8px;min-width:130px}.sub-days strong{font-size:12px}.sub-days-bar{width:70px;height:5px;border-radius:9px;background:rgba(255,255,255,.07);overflow:hidden}.sub-days-bar i{display:block;height:100%;border-radius:9px;background:var(--accent)}
+.sub-renewal{color:#aaa;font-size:10px;white-space:nowrap}.sub-renewal small{display:block;color:#666;font-size:8px;margin-top:3px}
+.sub-drawer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sub-drawer-card{padding:14px;border:1px solid var(--soft);border-radius:13px;background:rgba(255,255,255,.018)}
+.sub-drawer-card span{display:block;color:#6f6f75;font-size:8px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}.sub-drawer-card strong{font-size:12px;color:#eee;overflow-wrap:anywhere}
+@media(max-width:900px){.sub-metrics{grid-template-columns:repeat(2,1fr)}.sub-drawer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.sub-metrics{grid-template-columns:1fr 1fr}.sub-drawer-grid{grid-template-columns:1fr}.sub-days{min-width:110px}}
+
 </style>
 </head>
 <body>
 <div class="admin-shell" id="adminShell" style="visibility:hidden">
-<aside class="sidebar"><div class="brand"><img src="img/logo.png" alt="Evolution Design"><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div id="adminEmail" class="admin-user">—</div><button id="logoutBtn" class="logout">Cerrar sesión</button></div></aside>
+<aside class="sidebar"><div class="brand"><img src="img/logo.png" alt="Evolution Design"><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="subscriptions"><span class="dot"></span>Suscripciones <span class="sub-count" id="subscriptionCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div id="adminEmail" class="admin-user">—</div><button id="logoutBtn" class="logout">Cerrar sesión</button></div></aside>
 <main class="main"><div id="systemAlert" class="system-alert"></div>
 <div class="topbar"><div><div class="kicker">Evolution Design · Administración</div><h1 id="pageTitle" class="title">Dashboard</h1></div><div class="top-actions"><button id="refreshBtn" class="btn">Actualizar datos</button><a href="index.html" class="btn" style="text-decoration:none">Ver sitio</a></div></div>
 <section id="view-dashboard" class="view active"><div id="metrics" class="metrics"></div><div class="grid-2"><div class="panel"><div class="panel-head"><div><div class="panel-title">Proyectos recientes</div><div class="panel-copy">Compras, órdenes personalizadas y estado operativo.</div></div><button class="btn" onclick="switchView('projects')">Ver todos</button></div><div id="recentProjects" class="panel-body"></div></div><div class="panel"><div class="panel-head"><div><div class="panel-title">Clientes por país</div><div class="panel-copy">País reportado por PayPal o última ubicación.</div></div></div><div id="countryList" class="panel-body country-list"></div></div></div></section>
@@ -300,6 +319,30 @@
 <div class="webreq-card-grid"><div class="webreq-stat"><span>Por revisar</span><strong id="paymentPendingMetric">0</strong></div><div class="webreq-stat"><span>Aprobados</span><strong id="paymentApprovedMetric">0</strong></div><div class="webreq-stat"><span>Rechazados</span><strong id="paymentRejectedMetric">0</strong></div></div>
 <div class="toolbar"><input id="paymentSearch" class="search" placeholder="Buscar orden, cliente, referencia, banco o Binance"><select id="paymentReviewFilter" class="select"><option value="">Todos los comprobantes</option><option value="pending">Por revisar</option><option value="approved">Aprobados</option><option value="rejected">Rechazados</option></select></div>
 <div class="table-wrap"><table><thead><tr><th>Orden</th><th>Cliente</th><th>Método</th><th>Monto esperado</th><th>Referencia</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody id="paymentReceiptsBody"></tbody></table></div>
+</section>
+
+<section id="view-subscriptions" class="view">
+  <div class="sub-metrics">
+    <div class="sub-metric"><span>Suscripciones activas</span><strong id="subActiveMetric">0</strong></div>
+    <div class="sub-metric"><span>Renuevan ≤ 7 días</span><strong id="subSoonMetric">0</strong></div>
+    <div class="sub-metric"><span>Vencidas</span><strong id="subExpiredMetric">0</strong></div>
+    <div class="sub-metric"><span>Ingreso mensual activo</span><strong id="subMrrMetric">$0.00</strong></div>
+  </div>
+  <div class="toolbar">
+    <input id="subscriptionSearch" class="search" placeholder="Buscar cliente, correo, plan o ID">
+    <select id="subscriptionFilter" class="select">
+      <option value="">Todas</option>
+      <option value="active">Activas</option>
+      <option value="expiring">Renuevan pronto</option>
+      <option value="expired">Vencidas</option>
+    </select>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Cliente</th><th>Plan</th><th>Precio</th><th>Estado</th><th>Días restantes</th><th>Próximo pago</th><th>Proveedor</th><th></th></tr></thead>
+      <tbody id="subscriptionsBody"></tbody>
+    </table>
+  </div>
 </section>
 <section id="view-projects" class="view"><div class="toolbar"><input id="projectSearch" class="search" placeholder="Buscar proyecto, cliente, orden o transacción"><select id="statusFilter" class="select"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="payment_pending_review">Comprobante por revisar</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En desarrollo</option><option value="review">Revisión</option><option value="delivered">Entregado</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
 <section id="view-clients" class="view"><div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar nombre, correo o país"></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Ubicación</th><th>Última conexión / actividad</th><th>Órdenes</th><th>Total comprado</th><th></th></tr></thead><tbody id="clientsBody"></tbody></table></div></section>
@@ -324,6 +367,25 @@
 </section>
 <section id="view-custom" class="view"><div class="panel"><div class="panel-head"><div><div class="panel-title">Crear orden personalizada</div><div class="panel-copy">La orden aparecerá directamente en “Mis Proyectos” del cliente. Puede quedar pendiente de PayPal o marcarse pagada manualmente.</div></div></div><div class="panel-body"><form id="customOrderForm"><div class="form-grid"><div class="field full"><label>Cliente</label><select id="customClient" class="input" required></select></div><div class="field"><label>Nombre de la orden</label><input id="customTitle" class="input" required placeholder="Ej. Remodelación integral vivienda"></div><div class="field"><label>Categoría</label><input id="customCategory" class="input" value="Orden personalizada"></div><div class="field"><label>Precio USD</label><input id="customPrice" class="input" type="number" min="1" step="0.01" required></div><div class="field"><label>Costo interno USD</label><input id="customCost" class="input" type="number" min="0" step="0.01" value="0"><div class="hint">Solo visible en el panel admin; se usa para calcular ganancia.</div></div><div class="field full"><label>Descripción para el cliente</label><textarea id="customDescription" class="textarea" placeholder="Explica el alcance de la orden…"></textarea></div><div class="field full"><label>Archivos requeridos</label><textarea id="customUpload" class="textarea" placeholder="Ej. Sube plano PDF/DWG, fotografías actuales y medidas principales."></textarea></div><div class="field full"><label>Incluye (una línea por elemento)</label><textarea id="customIncluded" class="textarea" placeholder="Modelado 3D completo\n12 renders hiperrealistas\n2 revisiones"></textarea></div><div class="field full"><label>Notas internas</label><textarea id="customAdminNotes" class="textarea" placeholder="Solo administración…"></textarea></div></div><label class="check"><input id="customManualPaid" type="checkbox"> Marcar esta orden como pagada</label><div id="customPaymentMethodWrap" class="payment-method-wrap hidden"><div class="field"><label>Método con el que pagó el cliente</label><select id="customPaymentMethod" class="input"><option value="Binance">Binance</option><option value="POS">POS</option><option value="Efectivo">Efectivo</option><option value="Tarjeta de crédito o débito">Tarjeta de crédito o débito</option><option value="PayPal">PayPal</option></select><div class="hint">Este método quedará guardado en la orden y visible en el panel administrativo.</div></div></div><div class="form-actions"><button class="btn btn-accent" type="submit">Crear orden personalizada</button></div></form></div></div></section>
 </main></div>
+
+
+<div id="subscriptionModal" class="modal-back">
+  <div class="drawer">
+    <div class="drawer-head">
+      <div><div class="kicker">Evolution PSD · Membresía</div><div id="subDrawerTitle" class="drawer-title">—</div><div id="subDrawerSub" class="sub"></div></div>
+      <button class="drawer-close" onclick="closeSubscription()" aria-label="Cerrar">×</button>
+    </div>
+    <div id="subDrawerGrid" class="sub-drawer-grid"></div>
+    <div class="section"><div class="section-h">Control de membresía</div><div class="section-b">
+      <div class="form-grid">
+        <div class="field"><label>Estado</label><select id="subEditStatus" class="input"><option value="active">Activa</option><option value="past_due">Pago pendiente</option><option value="cancelled">Cancelada</option><option value="expired">Vencida</option></select></div>
+        <div class="field"><label>Precio mensual USD</label><input id="subEditPrice" class="input" type="number" min="0" step="0.01"></div>
+        <div class="field full"><label>Nota administrativa</label><textarea id="subAdminNote" class="textarea" placeholder="Notas sobre la suscripción…"></textarea></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-accent" type="button" onclick="saveSubscriptionAdmin()">Guardar cambios</button></div>
+    </div></div>
+  </div>
+</div>
 
 <div id="webRequestModal" class="modal-back">
   <div class="drawer">
@@ -575,7 +637,7 @@ if (window.AWS) {
 const cfg={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
 const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
 const ADMIN_EMAILS=new Set(['evolutiongt01@gmail.com','tepaz2025@gmail.com']);
-let data={metrics:{},clients:[],projects:[],countries:[],webRequests:[]},selected=null,selectedWebRequest=null;
+let data={metrics:{},clients:[],projects:[],countries:[],webRequests:[],subscriptions:[]},selected=null,selectedWebRequest=null,selectedSubscription=null;
 let pendingClientAdminFiles=[];
 let pendingDeliveryFiles=[];
 let pendingSelectionUrls=[];
@@ -592,7 +654,7 @@ function normalizeProfessionalRole(v){return String(v||'').toLowerCase()==='inge
 window.setProfessionalRole=function(role){const value=normalizeProfessionalRole(role),hidden=$('editProfessionalRole'),label=$('editProfessionalNameLabel'),input=$('editArchitect');if(hidden)hidden.value=value;document.querySelectorAll('#professionalRoleToggle button').forEach(b=>b.classList.toggle('active',b.dataset.role===value));if(label)label.textContent=`Nombre del ${value.toLowerCase()}`;if(input)input.placeholder=`Nombre del ${value.toLowerCase()}`};
 function paymentMethodCode(v){return String(v||'PAGO').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').toUpperCase().slice(0,24)||'PAGO'}
 
-window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
+window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
 function currentEditPrice(){return Math.max(0,Number($('editPrice')?.value||0))}
 function currentEditCost(){return Math.max(0,Number($('editCost')?.value||0))}
@@ -629,6 +691,90 @@ document.addEventListener('change',e=>{
 });
 
 
+
+function timestampMs(v){
+  if(!v)return 0;
+  if(typeof v.toMillis==='function')return v.toMillis();
+  if(typeof v.toDate==='function')return v.toDate().getTime();
+  const d=new Date(v);return Number.isFinite(d.getTime())?d.getTime():0;
+}
+function subscriptionDaysLeft(s){
+  const end=timestampMs(s.currentPeriodEnd||s.nextPaymentAt||s.expiresAt);
+  if(!end)return null;
+  return Math.ceil((end-Date.now())/86400000);
+}
+function subscriptionDisplayState(s){
+  const days=subscriptionDaysLeft(s),raw=String(s.status||'active').toLowerCase();
+  if(['cancelled','expired'].includes(raw)||days!==null&&days<0)return'expired';
+  if(raw==='past_due'||days!==null&&days<=7)return'expiring';
+  return'active';
+}
+function subscriptionStateLabel(s){return({active:'Activa',expiring:'Renueva pronto',expired:'Vencida'}[subscriptionDisplayState(s)]||'Activa')}
+function subscriptionOwner(s){
+  return data.clients.find(c=>c.uid===s.ownerUid)||{};
+}
+function renderSubscriptions(){
+  const term=String($('subscriptionSearch')?.value||'').toLowerCase(),filter=$('subscriptionFilter')?.value||'';
+  const all=Array.isArray(data.subscriptions)?data.subscriptions:[];
+  const rows=all.filter(s=>{
+    const c=subscriptionOwner(s),state=subscriptionDisplayState(s);
+    const hay=[s.id,s.planName,s.ownerEmail,c.email,c.displayName,s.provider,s.subscriptionId].some(x=>String(x||'').toLowerCase().includes(term));
+    return (!filter||state===filter)&&(!term||hay);
+  });
+  if($('subscriptionsBody'))$('subscriptionsBody').innerHTML=rows.map(s=>{
+    const c=subscriptionOwner(s),days=subscriptionDaysLeft(s),state=subscriptionDisplayState(s);
+    const progress=days===null?0:Math.max(0,Math.min(100,(days/30)*100));
+    const daysText=days===null?'—':days<0?`Venció hace ${Math.abs(days)} d`:`${days} días`;
+    return `<tr>
+      <td><div class="strong">${esc(c.displayName||s.customerName||s.ownerEmail||'Cliente')}</div><div class="sub">${esc(s.ownerEmail||c.email||'')}</div></td>
+      <td><span class="sub-plan">${esc(s.planName||'Evolution PSD')}</span><div class="sub">${esc(s.subscriptionId||s.id)}</div></td>
+      <td><span class="strong">${usd(s.priceUsd??27)}</span><div class="sub">mensual</div></td>
+      <td><span class="sub-status ${state}">${esc(subscriptionStateLabel(s))}</span></td>
+      <td><div class="sub-days"><strong>${esc(daysText)}</strong><div class="sub-days-bar"><i style="width:${progress}%"></i></div></div></td>
+      <td><div class="sub-renewal">${esc(niceDate(s.currentPeriodEnd||s.nextPaymentAt||s.expiresAt))}<small>${days!==null&&days>=0?'Próximo cobro / renovación':'Sin renovación programada'}</small></div></td>
+      <td>${esc(s.provider||s.paymentProvider||'—')}</td>
+      <td><button class="mini" onclick="openSubscription('${esc(s.id)}')">Abrir</button></td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="8">No hay suscripciones en este filtro.</td></tr>';
+
+  const active=all.filter(s=>subscriptionDisplayState(s)==='active').length;
+  const soon=all.filter(s=>subscriptionDisplayState(s)==='expiring').length;
+  const expired=all.filter(s=>subscriptionDisplayState(s)==='expired').length;
+  const mrr=all.filter(s=>subscriptionDisplayState(s)!=='expired').reduce((a,s)=>a+Number(s.priceUsd??27),0);
+  if($('subscriptionCount'))$('subscriptionCount').textContent=active;
+  if($('subActiveMetric'))$('subActiveMetric').textContent=active;
+  if($('subSoonMetric'))$('subSoonMetric').textContent=soon;
+  if($('subExpiredMetric'))$('subExpiredMetric').textContent=expired;
+  if($('subMrrMetric'))$('subMrrMetric').textContent=usd(mrr);
+}
+window.openSubscription=function(id){
+  selectedSubscription=(data.subscriptions||[]).find(s=>s.id===id);
+  if(!selectedSubscription)return;
+  const s=selectedSubscription,c=subscriptionOwner(s),days=subscriptionDaysLeft(s);
+  $('subDrawerTitle').textContent=c.displayName||s.customerName||s.ownerEmail||'Suscripción';
+  $('subDrawerSub').textContent=`${s.planName||'Evolution PSD'} · ${s.ownerEmail||c.email||''}`;
+  const info=[
+    ['Estado',subscriptionStateLabel(s)],['Días restantes',days===null?'—':days<0?`Vencida hace ${Math.abs(days)} días`:`${days} días`],
+    ['Próximo pago',niceDate(s.currentPeriodEnd||s.nextPaymentAt||s.expiresAt)],['Inicio',niceDate(s.currentPeriodStart||s.startedAt||s.createdAt)],
+    ['Precio',usd(s.priceUsd??27)],['Proveedor',s.provider||s.paymentProvider||'—'],
+    ['ID suscripción',s.subscriptionId||s.id],['UID cliente',s.ownerUid||'—'],['Último pago',niceDate(s.lastPaymentAt)]
+  ];
+  $('subDrawerGrid').innerHTML=info.map(x=>`<div class="sub-drawer-card"><span>${x[0]}</span><strong>${esc(x[1]||'—')}</strong></div>`).join('');
+  $('subEditStatus').value=s.status||'active';
+  $('subEditPrice').value=Number(s.priceUsd??27).toFixed(2);
+  $('subAdminNote').value=s.adminNote||'';
+  $('subscriptionModal').classList.add('show');
+}
+window.closeSubscription=function(){$('subscriptionModal')?.classList.remove('show');selectedSubscription=null}
+window.saveSubscriptionAdmin=async function(){
+  if(!selectedSubscription)return;
+  try{
+    const patch={status:$('subEditStatus').value,priceUsd:Math.max(0,Number($('subEditPrice').value||27)),adminNote:$('subAdminNote').value.trim(),updatedAt:serverTimestamp()};
+    await updateDoc(doc(db,'subscriptions',selectedSubscription.id),patch);
+    toast('Suscripción actualizada.');
+    closeSubscription();await refresh();
+  }catch(e){console.error(e);toast(e?.message||'No se pudo actualizar la suscripción.')}
+}
 function webRequestStatusLabel(s){return({new:'Nueva',reviewing:'En revisión',approved:'Aprobada',rejected:'Rechazada',converted:'Convertida'}[s]||s||'Nueva')}
 function webRequestStatusClass(s){return `webreq-status-${String(s||'new').replace(/[^a-z_-]/g,'')}`}
 function renderWebRequests(){
@@ -872,14 +1018,17 @@ window.showClientProjects=function(uid){switchView('projects');const c=data.clie
 function clearSystemError(){const box=$('systemAlert');if(box){box.classList.remove('show');box.innerHTML=''}}
 
 async function loadDashboardDirect(){
-  const [usersSnap,projectsSnap,metaSnap,webReqResult]=await Promise.all([
+  const [usersSnap,projectsSnap,metaSnap,webReqResult,subResult]=await Promise.all([
     getDocs(collection(db,'users')),
     getDocs(collectionGroup(db,'projects')),
     getDocs(collection(db,'adminProjectData')),
-    getDocs(collection(db,'webRequests')).then(s=>({snap:s,error:null})).catch(error=>({snap:null,error}))
+    getDocs(collection(db,'webRequests')).then(s=>({snap:s,error:null})).catch(error=>({snap:null,error})),
+    getDocs(collection(db,'subscriptions')).then(s=>({snap:s,error:null})).catch(error=>({snap:null,error}))
   ]);
   const webReqSnap=webReqResult.snap||{docs:[]};
+  const subSnap=subResult.snap||{docs:[]};
   if(webReqResult.error)console.warn('Solicitudes Web no disponibles:',webReqResult.error?.message||webReqResult.error);
+  if(subResult.error)console.warn('Suscripciones no disponibles:',subResult.error?.message||subResult.error);
 
   const metaMap=new Map(metaSnap.docs.map(d=>{const x=d.data();return [`${x.ownerUid}__${x.projectId}`,x]}));
   const projects=projectsSnap.docs.map(d=>{const x=d.data(),parts=d.ref.path.split('/'),ownerUid=x.ownerUid||parts[1]||'';return {id:d.id,ownerUid,...x,adminMeta:metaMap.get(`${ownerUid}__${d.id}`)||{}}}).sort((a,b)=>dateMs(b.createdAt)-dateMs(a.createdAt));
@@ -920,6 +1069,7 @@ async function loadDashboardDirect(){
     metrics:{clients:clients.length,projects:projects.length,active,delivered,pendingPayments:pending,grossRevenueUsd:gross,internalCostUsd:cost,profitUsd:gross-cost},
     clients,projects,
     webRequests:webReqSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateMs(b.createdAt)-dateMs(a.createdAt)),
+    subscriptions:subSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>timestampMs(a.currentPeriodEnd||a.nextPaymentAt)-timestampMs(b.currentPeriodEnd||b.nextPaymentAt)),
     countries:Object.entries(countriesMap).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count)
   };
 }
@@ -929,7 +1079,7 @@ async function refresh(){
     $('refreshBtn').disabled=true;
     $('refreshBtn').textContent='Actualizando…';
     data=await loadDashboardDirect();
-    renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();renderWebRequests();renderPaymentReceipts();
+    renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();renderWebRequests();renderPaymentReceipts();renderSubscriptions();
     clearSystemError();
     return true;
   }catch(e){
@@ -950,6 +1100,9 @@ $('webRequestSearch').oninput=renderWebRequests;
 $('webRequestStatus').onchange=renderWebRequests;
 $('paymentSearch').oninput=renderPaymentReceipts;
 $('paymentReviewFilter').onchange=renderPaymentReceipts;
+$('subscriptionSearch').oninput=renderSubscriptions;
+document.getElementById('subscriptionModal')?.addEventListener('click',e=>{if(e.target?.id==='subscriptionModal')closeSubscription()});
+$('subscriptionFilter').onchange=renderSubscriptions;
 document.getElementById('webRequestModal')?.addEventListener('click',e=>{if(e.target?.id==='webRequestModal')closeWebRequest()});
 $('customManualPaid').onchange=()=>{const paid=$('customManualPaid').checked,wrap=$('customPaymentMethodWrap');wrap?.classList.toggle('hidden',!paid);if(!paid&&$('customPaymentMethod'))$('customPaymentMethod').value='PayPal'};
 
