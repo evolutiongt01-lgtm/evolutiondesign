@@ -18,9 +18,8 @@
 <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
 <link rel="preload" href="css/theme.min.css" as="style">
 <link rel="stylesheet" href="css/theme.min.css">
-<script>
-window.ORKA_APP_ID="6a6e1491fcaf85963eaf05d6";(function(){const s=document.createElement('script');s.src='//widget.orka.chat/app.js';s.async=true;document.head.appendChild(s)})();
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1390.0/aws-sdk.min.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20&currency=USD&intent=capture"></script>
 <style>
 @font-face{font-family:Inter;font-style:normal;font-weight:300;font-display:swap;src:url('fonts/inter-v12-latin-300.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-v12-latin-regular.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:500;font-display:swap;src:url('fonts/inter-v12-latin-500.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-v12-latin-700.woff2') format('woff2')}
 :root{--bg:#050505;--panel:#0b0b0c;--text:#f5f5f5;--muted:#98989f;--soft:#67676e;--accent:#d4b895;--line:rgba(255,255,255,.10);--cyan:#70e7ff;--green:#67f0a0;--violet:#ae8cff;--ease:cubic-bezier(.16,1,.3,1);--mx:50%;--my:35%}
@@ -182,10 +181,402 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
   .plan-cta{min-height:48px}
 }
 
+
+/* =========================================================
+   AUTH EXPERIENCE — cuenta de cliente premium
+   ========================================================= */
+.login-modal-overlay{
+  padding:22px;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(112,231,255,.08),transparent 28%),
+    radial-gradient(circle at 82% 80%,rgba(212,184,149,.09),transparent 30%),
+    rgba(0,0,0,.78)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(135%)!important;
+  backdrop-filter:blur(28px) saturate(135%)!important;
+}
+.login-card{
+  width:min(820px,100%)!important;
+  padding:0!important;
+  display:grid;
+  grid-template-columns:minmax(250px,.82fr) minmax(360px,1.18fr);
+  overflow:hidden;
+  border-radius:30px!important;
+  background:#09090a!important;
+  border:1px solid rgba(255,255,255,.13)!important;
+  box-shadow:0 44px 120px rgba(0,0,0,.68),inset 0 1px 0 rgba(255,255,255,.05)!important;
+}
+.auth-showcase{
+  position:relative;
+  min-height:560px;
+  padding:32px 28px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 18% 12%,rgba(112,231,255,.18),transparent 29%),
+    radial-gradient(circle at 88% 88%,rgba(174,140,255,.13),transparent 33%),
+    linear-gradient(145deg,#111319,#08090b 65%,#0b0b0d);
+  border-right:1px solid rgba(255,255,255,.08);
+}
+.auth-showcase::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to bottom,black,transparent 92%);
+  pointer-events:none;
+}
+.auth-showcase>*{position:relative;z-index:1}
+.auth-showcase-logo{height:28px;width:auto;object-fit:contain;object-position:left center}
+.auth-showcase-kicker{display:block;margin:28px 0 12px;color:#8beaff;font-size:.58rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase}
+.auth-showcase h3{margin:0;max-width:290px;font-size:2.25rem;line-height:.96;letter-spacing:-.06em}
+.auth-showcase p{margin:15px 0 0;max-width:290px;color:#85858e;font-size:.72rem;line-height:1.6}
+.auth-benefits{display:grid;gap:9px;margin-top:24px}
+.auth-benefit{display:flex;align-items:center;gap:9px;color:#b9b9bf;font-size:.64rem}
+.auth-benefit i{width:21px;height:21px;display:grid;place-items:center;border-radius:7px;background:rgba(112,231,255,.08);border:1px solid rgba(112,231,255,.12);color:#82e8ff;font-style:normal;font-size:.57rem}
+.auth-plan-context{padding:12px 13px;border:1px solid rgba(212,184,149,.16);border-radius:14px;background:rgba(212,184,149,.045)}
+.auth-plan-context span{display:block;color:#777780;font-size:.52rem;text-transform:uppercase;letter-spacing:.11em;margin-bottom:5px}
+.auth-plan-context strong{display:block;color:#e5cbaa;font-size:.72rem}
+.auth-form-panel{position:relative;padding:34px 34px 30px;background:radial-gradient(circle at 100% 0%,rgba(212,184,149,.05),transparent 32%),#09090a}
+.auth-form-panel .close-modal{
+  top:17px;right:18px;width:38px;height:38px;border-radius:50%!important;
+  display:grid;place-items:center;border:1px solid rgba(255,255,255,.10)!important;
+  background:rgba(255,255,255,.025)!important;color:#8b8b92!important;font-size:1.25rem!important;
+}
+.auth-eyebrow{display:block;color:var(--accent);font-size:.56rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+.auth-form-panel h4{margin:0;font-size:2rem;line-height:1;letter-spacing:-.055em}
+.auth-subtitle{margin:10px 0 20px;color:#797981;font-size:.72rem;line-height:1.58}
+.auth-mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:4px;margin-bottom:18px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:#060607}
+.auth-mode-tab{min-height:39px;border:0;border-radius:10px;background:transparent;color:#707078;font-size:.64rem;font-weight:800;cursor:pointer}
+.auth-mode-tab.active{background:rgba(255,255,255,.085);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.google-auth-btn{width:100%;min-height:49px;border:1px solid rgba(255,255,255,.11);border-radius:13px;background:#f3f3f1;color:#080808;font-size:.69rem;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}
+.google-auth-btn svg{width:18px;height:18px}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:#5d5d64;font-size:.57rem;text-transform:uppercase;letter-spacing:.09em}
+.auth-divider::before,.auth-divider::after{content:"";height:1px;flex:1;background:rgba(255,255,255,.065)}
+.auth-field{margin-bottom:10px}
+.auth-field label{display:block;margin:0 0 6px;color:#73737a;font-size:.57rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.auth-input{min-height:50px!important;border-radius:13px!important;background:#060607!important;border-color:rgba(255,255,255,.10)!important}
+.auth-input:focus{background:#080809!important;border-color:rgba(212,184,149,.48)!important;box-shadow:0 0 0 4px rgba(212,184,149,.045)!important}
+.auth-submit{min-height:50px!important;border-radius:13px!important;background:linear-gradient(90deg,#d4b895,#e5c9a8)!important;color:#0b0b0b!important;box-shadow:0 13px 34px rgba(212,184,149,.10)}
+.auth-submit:hover{filter:brightness(1.04)}
+.auth-secure-note{display:flex;align-items:flex-start;gap:8px;margin-top:13px;color:#64646b;font-size:.56rem;line-height:1.45}
+.auth-secure-note svg{flex:0 0 auto;margin-top:1px}
+#authError{display:none;color:#ff9aa2;background:rgba(255,92,104,.065);border:1px solid rgba(255,92,104,.16);border-radius:12px;padding:9px 10px;margin-top:11px;font-size:.63rem;text-align:center}
+@media(max-width:720px){
+  .login-modal-overlay{padding:12px}
+  .login-card{grid-template-columns:1fr!important;max-height:calc(100dvh - 24px);overflow:auto}
+  .auth-showcase{min-height:auto;padding:20px 18px 17px;border-right:0;border-bottom:1px solid rgba(255,255,255,.07)}
+  .auth-showcase-logo{height:22px}.auth-showcase-kicker{margin:15px 0 7px}.auth-showcase h3{font-size:1.5rem;max-width:none}.auth-showcase p{display:none}
+  .auth-benefits{display:none}.auth-plan-context{margin-top:15px;padding:9px 10px}
+  .auth-form-panel{padding:24px 18px 20px}.auth-form-panel h4{font-size:1.72rem}.auth-form-panel .close-modal{top:13px;right:13px}
+}
+@media(max-width:390px){
+  .auth-showcase{padding-top:17px}.auth-form-panel{padding-left:14px;padding-right:14px}.auth-mode-tab{font-size:.60rem}
+}
+
+/* =========================================================
+   CHECKOUT FINAL DEL BRIEF
+   ========================================================= */
+.web-checkout{display:grid;grid-template-columns:minmax(0,.92fr) minmax(330px,1.08fr);gap:15px;margin-top:22px}
+.web-checkout-summary,.web-checkout-pay{border:1px solid rgba(255,255,255,.09);border-radius:20px;background:rgba(255,255,255,.018);overflow:hidden}
+.web-checkout-summary{padding:20px}
+.checkout-plan-kicker{color:var(--accent);font-size:.55rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.checkout-plan-title{margin:9px 0 4px;font-size:1.55rem;letter-spacing:-.05em}
+.checkout-plan-business{color:#73737b;font-size:.65rem}
+.checkout-total{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:23px 0 17px;padding:18px 0;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07)}
+.checkout-total span{color:#77777e;font-size:.62rem}.checkout-total strong{font-size:2.25rem;letter-spacing:-.06em}
+.checkout-summary-list{display:grid;gap:9px}.checkout-summary-row{display:flex;justify-content:space-between;gap:15px;color:#72727a;font-size:.61rem}.checkout-summary-row strong{color:#c8c8cd;text-align:right}
+.checkout-request-id{margin-top:16px;padding:9px 10px;border:1px solid rgba(103,240,160,.13);border-radius:10px;background:rgba(103,240,160,.035);color:#7ddc9f;font-size:.57rem}
+.web-checkout-pay{padding:20px;background:linear-gradient(155deg,rgba(255,255,255,.035),rgba(255,255,255,.014))}
+.web-checkout-pay h3{margin:0;font-size:1.25rem;letter-spacing:-.04em}.web-checkout-pay>p{margin:7px 0 16px;color:#73737b;font-size:.64rem;line-height:1.5}
+.paypal-web-host{min-height:48px}
+.checkout-security{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px}
+.checkout-security span{padding:8px 6px;border:1px solid rgba(255,255,255,.06);border-radius:9px;color:#686870;text-align:center;font-size:.52rem}
+.checkout-payment-status{display:none;margin-top:11px;padding:10px 11px;border-radius:11px;font-size:.62rem;line-height:1.45;text-align:center}
+.checkout-payment-status.info{display:block;color:#dfc394;background:rgba(212,184,149,.055);border:1px solid rgba(212,184,149,.15)}
+.checkout-payment-status.ok{display:block;color:#78dda0;background:rgba(57,212,119,.055);border:1px solid rgba(57,212,119,.15)}
+.checkout-payment-status.error{display:block;color:#ff939d;background:rgba(255,102,115,.055);border:1px solid rgba(255,102,115,.15)}
+.checkout-lock-note{margin-top:12px;color:#5e5e65;font-size:.54rem;line-height:1.5;text-align:center}
+@media(max-width:760px){
+  .web-checkout{grid-template-columns:1fr}
+  .checkout-security{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:430px){
+  .web-checkout-summary,.web-checkout-pay{border-radius:16px}.web-checkout-summary,.web-checkout-pay{padding:15px}
+  .checkout-security{grid-template-columns:1fr}.checkout-total strong{font-size:1.95rem}
+}
+
+/* MÉTODOS DE PAGO: PayPal, Binance y transferencia bancaria GT */
+    .payment-checkout-card { background: rgba(10,10,10,.94); border: 1px solid rgba(255,255,255,.10); border-radius: 18px; padding: 14px; box-shadow: 0 18px 42px rgba(0,0,0,.38); }
+    .payment-method-title { font-size: .72rem; color: #aaa; text-align: center; margin-bottom: 10px; }
+    .payment-method-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+    .payment-method-grid.has-bank { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .payment-method-btn { min-height: 48px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.035); color: #eee; font-size: .72rem; font-weight: 700; cursor: pointer; padding: 9px 10px; transition: .2s ease; display:flex;align-items:center;justify-content:center;gap:7px;text-align:center; }
+    .payment-method-btn:hover,.payment-method-btn.active { border-color: rgba(212,184,149,.5); background: rgba(212,184,149,.09); color: #fff; }
+    .payment-method-btn.binance { color: #f3ba2f; }
+    .payment-method-btn.bank { color: #d4b895; }
+    .payment-method-panel { margin-top: 12px; }
+    .manual-payment-card { border: 1px solid rgba(255,255,255,.09); border-radius: 15px; background: rgba(255,255,255,.025); padding: 15px; color: #e9e9ea; }
+    .manual-payment-head { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px; }
+    .manual-payment-head strong { font-size:.82rem; }
+    .manual-payment-amount { color:#d4b895;font-weight:800;font-size:1.05rem;white-space:nowrap; }
+    .manual-payment-copy { color:#999;font-size:.70rem;line-height:1.55;margin-bottom:12px; }
+    .binance-qr-img { display:block;width:min(100%,310px);margin:0 auto 12px;border-radius:14px;background:#191a1f; }
+    .manual-meta { display:grid;gap:7px;margin:10px 0 13px; }
+    .manual-meta-row { display:flex;justify-content:space-between;gap:12px;padding:9px 10px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(0,0,0,.18);font-size:.69rem; }
+    .manual-meta-row span:first-child { color:#777; }
+    .manual-meta-row strong { color:#eee;text-align:right;overflow-wrap:anywhere; }
+    .bank-choice-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .bank-choice {
+      position:relative;
+      min-width:0;
+      min-height:108px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.018));
+      color:#d7d7da;
+      border-radius:16px;
+      padding:13px;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      text-align:left;
+      transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .bank-choice::after {
+      content:'';
+      position:absolute;
+      width:88px;
+      height:88px;
+      right:-35px;
+      bottom:-42px;
+      border-radius:50%;
+      background:rgba(255,255,255,.025);
+      pointer-events:none;
+    }
+    .bank-choice:hover {
+      transform:translateY(-2px);
+      border-color:rgba(255,255,255,.22);
+      background:rgba(255,255,255,.055);
+    }
+    .bank-choice.active {
+      border-color:rgba(212,184,149,.62);
+      background:linear-gradient(145deg,rgba(212,184,149,.12),rgba(255,255,255,.022));
+      color:#fff;
+      box-shadow:0 12px 30px rgba(0,0,0,.22);
+    }
+    .bank-choice-copy { min-width:0; }
+    .bank-choice-name { display:block;color:#f5f5f5;font-size:.73rem;font-weight:800;line-height:1.2; }
+    .bank-choice-type { display:block;color:#77777d;font-size:.58rem;font-weight:600;margin-top:3px; }
+
+    .bank-logo {
+      width:46px;
+      height:46px;
+      flex:0 0 46px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.22);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+    }
+    .bank-logo svg { width:31px;height:31px;display:block; }
+    .bank-logo-bac { color:#e42b2f;background:rgba(228,43,47,.075);border-color:rgba(228,43,47,.15); }
+    .bank-logo-promerica { color:#70bb38;background:rgba(112,187,56,.075);border-color:rgba(112,187,56,.15); }
+    .bank-logo-banrural { color:#16815d;background:rgba(22,129,93,.08);border-color:rgba(22,129,93,.17); }
+    .bank-logo-banrural .bank-sun { fill:#f28b22; }
+
+    .bank-account-card {
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:17px;
+      padding:15px;
+      background:linear-gradient(155deg,rgba(255,255,255,.045),rgba(0,0,0,.20));
+      box-shadow:0 14px 34px rgba(0,0,0,.18);
+    }
+    .bank-account-head {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+      padding-bottom:13px;
+      margin-bottom:13px;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    .bank-account-head .bank-logo { width:50px;height:50px;flex-basis:50px; }
+    .bank-account-title { min-width:0; }
+    .bank-account-title strong { display:block;color:#fff;font-size:.83rem; }
+    .bank-account-title span { display:block;color:#727278;font-size:.61rem;margin-top:3px; }
+    .bank-account-number-box {
+      padding:13px;
+      border:1px solid rgba(212,184,149,.17);
+      border-radius:13px;
+      background:rgba(212,184,149,.045);
+      margin-bottom:10px;
+    }
+    .bank-account-label {
+      color:#777;
+      font-size:.57rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:6px;
+    }
+    .bank-account-number-row {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      min-width:0;
+    }
+    .bank-account-number {
+      min-width:0;
+      color:#f5efe8;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:1.02rem;
+      font-weight:800;
+      letter-spacing:.035em;
+      overflow-wrap:anywhere;
+    }
+    .bank-copy-btn {
+      flex:0 0 auto;
+      border:1px solid rgba(212,184,149,.24);
+      background:rgba(212,184,149,.08);
+      color:#d4b895;
+      border-radius:9px;
+      padding:7px 9px;
+      font-size:.60rem;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .bank-copy-btn:hover { background:#d4b895;color:#111; }
+    .bank-info-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
+    .bank-info-box {
+      min-width:0;
+      border:1px solid rgba(255,255,255,.065);
+      border-radius:11px;
+      padding:9px 10px;
+      background:rgba(0,0,0,.14);
+    }
+    .bank-info-box span { display:block;color:#707075;font-size:.57rem;margin-bottom:4px; }
+    .bank-info-box strong { display:block;color:#e9e9eb;font-size:.68rem;line-height:1.35;overflow-wrap:anywhere; }
+
+    @media (max-width: 767.98px) {
+      .bank-choice-grid { grid-template-columns:1fr;gap:8px; }
+      .bank-choice {
+        min-height:72px;
+        padding:10px 11px;
+        flex-direction:row;
+        align-items:center;
+        justify-content:flex-start;
+        gap:11px;
+      }
+      .bank-choice::after { width:72px;height:72px;right:-30px;bottom:-34px; }
+      .bank-logo { width:42px;height:42px;flex-basis:42px;border-radius:12px; }
+      .bank-logo svg { width:28px;height:28px; }
+      .bank-choice-name { font-size:.76rem; }
+      .bank-choice-type { font-size:.61rem; }
+      .bank-account-card { padding:12px;border-radius:14px; }
+      .bank-account-head .bank-logo { width:44px;height:44px;flex-basis:44px; }
+      .bank-account-number-row { flex-direction:column;align-items:stretch; }
+      .bank-account-number { font-size:.94rem; }
+      .bank-copy-btn { width:100%;min-height:40px;font-size:.65rem; }
+      .bank-info-grid { grid-template-columns:1fr; }
+      .manual-input { font-size:16px !important; }
+      .manual-submit { min-height:46px;font-size:.76rem; }
+    }
+    .manual-field { margin-top:9px;text-align:left; }
+    .manual-field label { display:block;color:#777;font-size:.62rem;margin:0 0 5px;text-transform:uppercase;letter-spacing:.06em; }
+    .manual-input { width:100%;border:1px solid rgba(255,255,255,.11);background:#09090a;color:#fff;padding:10px 11px;border-radius:10px;outline:none;font-size:.74rem; }
+    .manual-input:focus { border-color:rgba(212,184,149,.5);box-shadow:0 0 0 3px rgba(212,184,149,.05); }
+    .manual-file { padding:9px; }
+    .manual-submit { width:100%;margin-top:12px;border:0;border-radius:11px;padding:11px;background:#d4b895;color:#111;font-weight:800;font-size:.73rem;cursor:pointer; }
+    .manual-submit:disabled { opacity:.45;cursor:not-allowed; }
+    .manual-warning { margin-top:10px;color:#9a7d46;background:rgba(212,184,149,.08);border:1px solid rgba(212,184,149,.18);border-radius:10px;padding:9px 10px;font-size:.66rem;line-height:1.5; }
+    .manual-status { margin-top:10px;padding:9px 10px;border-radius:10px;font-size:.68rem;line-height:1.45;text-align:center;display:none; }
+    .manual-status.info { display:block;color:#bea574;background:rgba(212,184,149,.08);border:1px solid rgba(212,184,149,.18); }
+    .manual-status.ok { display:block;color:#52d783;background:rgba(43,200,102,.06);border:1px solid rgba(43,200,102,.18); }
+    .manual-status.error { display:block;color:#ff9099;background:rgba(255,102,115,.06);border:1px solid rgba(255,102,115,.18); }
+    .payment-gt-only-note { margin-top:8px;color:#6f6f75;font-size:.61rem;text-align:center; }
+    @media(max-width:575.98px){.payment-method-grid.has-bank{grid-template-columns:1fr}.payment-method-grid{grid-template-columns:1fr 1fr}.payment-checkout-card{padding:10px}.manual-payment-card{padding:12px}.payment-method-btn{min-height:46px;padding:9px 8px;font-size:.69rem}}
+
+
+    
+/* PAYMENT SELECTOR — DISEÑO WEB */
+.web-payment-selector{margin-top:2px}
+.web-payment-detecting{padding:18px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.018);color:#777;text-align:center;font-size:.64rem}
+.web-checkout-pay .payment-checkout-card{padding:0;background:transparent;border:0;box-shadow:none}
+.web-checkout-pay .payment-method-title{text-align:left;margin-bottom:12px;color:#8c8c94;font-size:.64rem}
+.web-checkout-pay .payment-method-btn{min-height:46px;border-radius:13px}
+.web-checkout-pay .payment-method-panel{margin-top:13px}
+.web-checkout-pay .paypal-white-card{padding:12px;border-radius:13px}
+.web-checkout-pay .manual-payment-card{background:#070708;border-color:rgba(255,255,255,.08)}
+.web-checkout-pay .binance-qr-img{width:min(100%,245px)}
+.web-checkout-pay .manual-payment-amount{font-size:.92rem}
+.web-checkout-pay .payment-gt-only-note{margin:10px 0 0;color:#74747b;text-align:left}
+.web-checkout-pay .bank-choice{min-height:91px}
+.web-checkout-pay .bank-choice-grid{gap:7px}
+.web-checkout-pay .bank-account-card{background:rgba(255,255,255,.018)}
+.web-payment-region{display:flex;align-items:center;gap:7px;margin:0 0 11px;color:#6f6f77;font-size:.56rem}
+.web-payment-region i{width:6px;height:6px;border-radius:50%;background:#67f0a0;box-shadow:0 0 14px rgba(103,240,160,.35)}
+@media(max-width:575.98px){
+  .web-checkout-pay .payment-method-grid,.web-checkout-pay .payment-method-grid.has-bank{grid-template-columns:1fr}
+  .web-checkout-pay .bank-choice-grid{grid-template-columns:1fr}
+  .web-checkout-pay .bank-choice{min-height:68px;flex-direction:row;align-items:center}
+}
+
 </style>
 </head>
 <body>
-<div class="login-modal-overlay" id="authModal" aria-hidden="true"><div class="login-card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle"><button class="close-modal" id="closeAuth" type="button">×</button><h4 id="authModalTitle" style="margin:0 0 5px;font-size:1.35rem">Iniciar sesión</h4><p style="margin:0 0 20px;color:#797980;font-size:.75rem;line-height:1.5"><span class="auth-project-note"><strong>Tu proyecto necesita una cuenta.</strong><br>Inicia sesión para guardar el brief, continuar después y seguir el proceso desde Mis Proyectos.</span></p><button id="googleAuthBtn" type="button" class="auth-submit" style="background:#f3f3f2;margin-bottom:10px">Continuar con Google</button><div style="display:flex;align-items:center;gap:9px;color:#5f5f65;font-size:.62rem;margin:13px 0"><span style="height:1px;background:#242428;flex:1"></span>o con correo<span style="height:1px;background:#242428;flex:1"></span></div><form id="authEmailForm"><input id="authEmail" class="auth-input" autocomplete="email" type="email" placeholder="Correo electrónico" required style="margin-bottom:8px"><input id="authPassword" class="auth-input" autocomplete="current-password" type="password" minlength="6" placeholder="Contraseña" required style="margin-bottom:11px"><button id="btnSubmitAuth" class="auth-submit" type="submit">Ingresar</button></form><button id="toggleAuthMode" type="button" style="border:0;background:none;color:#8d8d94;font-size:.68rem;width:100%;margin-top:13px;cursor:pointer">¿No tienes cuenta? Crear cuenta</button><div id="authError" style="display:none;color:#ff929b;background:rgba(255,92,104,.07);border:1px solid rgba(255,92,104,.15);border-radius:10px;padding:8px;margin-top:11px;font-size:.66rem;text-align:center"></div></div></div>
+<div class="login-modal-overlay" id="authModal" aria-hidden="true">
+  <div class="login-card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <aside class="auth-showcase">
+      <div>
+        <img class="auth-showcase-logo" src="img/logo.png" alt="Evolution Design">
+        <span class="auth-showcase-kicker">Evolution Client Space</span>
+        <h3>Tu proyecto empieza con una cuenta.</h3>
+        <p>Guarda tu brief, realiza el pago seguro y sigue el desarrollo desde Mis Proyectos.</p>
+        <div class="auth-benefits">
+          <div class="auth-benefit"><i>01</i><span>Brief guardado en tu perfil</span></div>
+          <div class="auth-benefit"><i>02</i><span>Pago ligado a tu proyecto</span></div>
+          <div class="auth-benefit"><i>03</i><span>Seguimiento desde Mis Proyectos</span></div>
+        </div>
+      </div>
+      <div class="auth-plan-context"><span>Proyecto seleccionado</span><strong id="authPlanContext">Sitio Web Pro · $500 USD</strong></div>
+    </aside>
+    <section class="auth-form-panel">
+      <button class="close-modal" id="closeAuth" type="button" aria-label="Cerrar">×</button>
+      <span class="auth-eyebrow">Área privada</span>
+      <h4 id="authModalTitle">Iniciar sesión</h4>
+      <p class="auth-subtitle" id="authModeHint">Accede a tu cuenta para continuar con el brief y el pago de tu proyecto.</p>
+      <div class="auth-mode-tabs">
+        <button class="auth-mode-tab active" id="authTabLogin" type="button" data-auth-mode="login">Iniciar sesión</button>
+        <button class="auth-mode-tab" id="authTabRegister" type="button" data-auth-mode="register">Crear cuenta</button>
+      </div>
+      <button id="googleAuthBtn" type="button" class="google-auth-btn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.4-.18-2.07H12v3.92h5.39a4.6 4.6 0 0 1-2 3.02v2.55h3.24c1.9-1.75 2.97-4.33 2.97-7.42z"/><path fill="#34A853" d="M12 22c2.7 0 4.97-.9 6.63-2.35l-3.24-2.55c-.9.6-2.05.96-3.39.96-2.61 0-4.82-1.76-5.61-4.13H3.04v2.6A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.39 13.93A6 6 0 0 1 6.08 12c0-.67.12-1.32.31-1.93v-2.6H3.04A10 10 0 0 0 2 12c0 1.61.38 3.14 1.04 4.53l3.35-2.6z"/><path fill="#EA4335" d="M12 5.94c1.47 0 2.79.5 3.83 1.5l2.87-2.87C16.96 2.95 14.7 2 12 2a10 10 0 0 0-8.96 5.47l3.35 2.6C7.18 7.7 9.39 5.94 12 5.94z"/></svg>
+        Continuar con Google
+      </button>
+      <div class="auth-divider">o con correo</div>
+      <form id="authEmailForm">
+        <div class="auth-field"><label for="authEmail">Correo electrónico</label><input id="authEmail" class="auth-input" autocomplete="email" type="email" placeholder="tu@correo.com" required></div>
+        <div class="auth-field"><label for="authPassword">Contraseña</label><input id="authPassword" class="auth-input" autocomplete="current-password" type="password" minlength="6" placeholder="Mínimo 6 caracteres" required></div>
+        <button id="btnSubmitAuth" class="auth-submit" type="submit">Ingresar y continuar</button>
+      </form>
+      <div class="auth-secure-note"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg><span>Tu cuenta protege el brief, el pago y el historial del proyecto. Nunca compartimos tus credenciales.</span></div>
+      <div id="authError"></div>
+    </section>
+  </div>
+</div>
 
 <nav class="desktop-nav"><div class="desktop-nav-inner"><div class="nav-pill"><div class="brand-group"><div class="menu-wrap"><a href="#" class="icon-btn" id="desktopMenuBtn" aria-label="Menú"><svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a><ul class="dropdown-menu-ed" id="desktopDropdown"><li><a href="index.html">Home</a></li><li><a href="arquitectura.html">Arquitectura</a></li><li><a href="diseno-grafico.html">Diseño Gráfico</a></li><li><a class="active" href="diseno-web.html">Diseño Web</a></li><li id="linkProyectosMenuDesktop" class="hidden"><a href="proyectos.html">Mis Proyectos</a></li></ul></div><a href="index.html" class="brand-link"><img src="img/logo.png" alt="Evolution Design"></a><div id="admin-badge-container-desktop"></div></div><div class="nav-links"><a href="index.html" class="nav-link-ed">Home</a><a href="arquitectura.html" class="nav-link-ed">Arquitectura</a><a href="diseno-grafico.html" class="nav-link-ed">Diseño Gráfico</a><a href="diseno-web.html" class="nav-link-ed active">Diseño Web</a><a href="proyectos.html" id="linkProyectosDesktop" class="nav-link-ed hidden">Mis Proyectos</a><div id="auth-desktop-wrapper"><a href="#" onclick="abrirAuthModal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Login</a></div></div><div class="nav-actions"><a class="software-mini" href="https://dingloft.com" target="_blank" rel="noopener">Software <span>↗</span></a></div></div><div id="floating-profile-desktop" class="profile-slot"></div></div></nav>
 <nav class="mobile-nav" id="mobileNav"><div class="mobile-top"><div class="menu-wrap"><a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a><ul class="dropdown-menu-ed" id="mobileDropdown"><li><a href="index.html">Home</a></li><li><a href="arquitectura.html">Arquitectura</a></li><li><a href="diseno-grafico.html">Diseño Gráfico</a></li><li><a class="active" href="diseno-web.html">Diseño Web</a></li><li id="linkProyectosMobile" class="hidden"><a href="proyectos.html">Mis Proyectos</a></li></ul></div><a href="index.html" class="mobile-logo"><img src="img/logo.png" alt="Evolution Design"></a><div id="auth-mobile-wrapper"><a href="#" class="icon-btn" onclick="abrirAuthModal();return false" aria-label="Login"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></a></div></div><div class="mobile-tabs"><a class="mobile-tab" href="index.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a><a class="mobile-tab" href="arquitectura.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V5l8-3 8 3v16M8 9h8M8 13h8M8 17h8"/></svg>Arquitectura</a><a class="mobile-tab" href="diseno-grafico.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18"/></svg>Gráfico</a><a class="mobile-tab active" href="diseno-web.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M8 9l-2 2 2 2M16 9l2 2-2 2"/></svg>Web</a></div></nav>
@@ -273,7 +664,37 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
 <section class="survey-step" data-step="2"><span class="survey-kicker">02 · Objetivo</span><h2>¿Qué debe lograr tu página?</h2><p>Puedes marcar varias opciones.</p><div class="choice-grid" data-required-group="goals"><div class="choice"><input type="checkbox" id="goal1" value="Conseguir clientes" name="goals"><label for="goal1"><strong>Conseguir clientes</strong><small>Leads, WhatsApp y formularios.</small></label></div><div class="choice"><input type="checkbox" id="goal2" value="Vender online" name="goals"><label for="goal2"><strong>Vender online</strong><small>Catálogo, ecommerce o pagos.</small></label></div><div class="choice"><input type="checkbox" id="goal3" value="Mostrar portafolio" name="goals"><label for="goal3"><strong>Portafolio</strong><small>Presentar trabajos y proyectos.</small></label></div><div class="choice"><input type="checkbox" id="goal4" value="Reservas / citas" name="goals"><label for="goal4"><strong>Reservas</strong><small>Citas, agenda o disponibilidad.</small></label></div><div class="choice"><input type="checkbox" id="goal5" value="Posicionar marca" name="goals"><label for="goal5"><strong>Posicionar marca</strong><small>Presencia premium y credibilidad.</small></label></div><div class="choice"><input type="checkbox" id="goal6" value="Automatizar procesos" name="goals"><label for="goal6"><strong>Automatizar</strong><small>Flujos, paneles o integraciones.</small></label></div></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
 <section class="survey-step" data-step="3"><span class="survey-kicker">03 · Funciones</span><h2>¿Qué quieres que pueda hacer tu sitio?</h2><p>Selecciona las capacidades que te interesan. Podemos combinar varias.</p><div class="choice-grid"><div class="choice"><input type="checkbox" id="f1" value="E-commerce / carrito / pagos" name="features"><label for="f1"><strong>E-commerce</strong><small>Catálogo, carrito, checkout y pagos.</small></label></div><div class="choice"><input type="checkbox" id="f2" value="Panel administrativo" name="features"><label for="f2"><strong>Panel Admin</strong><small>Control de productos, contenido, clientes o pedidos.</small></label></div><div class="choice"><input type="checkbox" id="f3" value="Animaciones avanzadas" name="features"><label for="f3"><strong>Animaciones</strong><small>Motion, parallax y microinteracciones.</small></label></div><div class="choice"><input type="checkbox" id="f4" value="Reservas / agenda" name="features"><label for="f4"><strong>Reservas</strong><small>Agenda, citas o solicitudes.</small></label></div><div class="choice"><input type="checkbox" id="f5" value="Login / membresías / área privada" name="features"><label for="f5"><strong>Login / membresías</strong><small>Área privada, roles o suscripciones.</small></label></div><div class="choice"><input type="checkbox" id="f6" value="Inventario / pedidos / seguimiento" name="features"><label for="f6"><strong>Inventario</strong><small>Stock, pedidos y seguimiento.</small></label></div><div class="choice"><input type="checkbox" id="f7" value="API / automatización" name="features"><label for="f7"><strong>API / Automatización</strong><small>Integraciones con servicios externos.</small></label></div><div class="choice"><input type="checkbox" id="f8" value="WhatsApp / contacto" name="features"><label for="f8"><strong>WhatsApp</strong><small>Contacto directo y CTA inteligentes.</small></label></div></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
 <section class="survey-step" data-step="4"><span class="survey-kicker">04 · Dirección visual</span><h2>¿Cómo quieres que se sienta?</h2><p>Elige una dirección. Esto no limita el diseño; nos da un punto de partida.</p><div class="choice-grid" data-required-group="style"><div class="choice"><input type="radio" id="s1" value="Minimalista premium" name="style"><label for="s1"><strong>Minimalista premium</strong><small>Editorial, limpio y sofisticado.</small></label></div><div class="choice"><input type="radio" id="s2" value="Oscuro tecnológico" name="style"><label for="s2"><strong>Tech / dark</strong><small>Contraste, luz y profundidad.</small></label></div><div class="choice"><input type="radio" id="s3" value="Elegante corporativo" name="style"><label for="s3"><strong>Corporativo</strong><small>Seriedad y confianza profesional.</small></label></div><div class="choice"><input type="radio" id="s4" value="Colorido creativo" name="style"><label for="s4"><strong>Creativo</strong><small>Identidad fuerte y expresiva.</small></label></div><div class="choice"><input type="radio" id="s5" value="Lujo / editorial" name="style"><label for="s5"><strong>Luxury editorial</strong><small>Imagen, tipografía y aire.</small></label></div><div class="choice"><input type="radio" id="s6" value="A criterio de Evolution Design" name="style"><label for="s6"><strong>Ustedes decidan</strong><small>Dirección creativa completa.</small></label></div></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
-<section class="survey-step" data-step="5"><span class="survey-kicker">05 · Contacto</span><h2>Listo. ¿Dónde te contactamos?</h2><p>Tu solicitud quedará ligada a esta cuenta y llegará al panel de Evolution Design con el brief completo.</p><div class="survey-grid"><div class="survey-field"><label>Correo *</label><input class="survey-input" id="leadEmail" type="email" maxlength="180" required placeholder="tu@correo.com"></div><div class="survey-field"><label>WhatsApp / teléfono *</label><input class="survey-input" id="leadPhone" maxlength="40" required placeholder="+502 ..."></div><div class="survey-field"><label>Dominio que te gustaría</label><input class="survey-input" id="domainIdea" maxlength="180" placeholder="ej. mimarca.com"></div><div class="survey-field"><label>¿Cuándo quieres iniciar?</label><select class="survey-select" id="timeline"><option>Lo antes posible</option><option>En 1–2 semanas</option><option>Este mes</option><option>Solo estoy explorando</option></select></div><div class="survey-field full"><label>Referencias / links</label><textarea class="survey-textarea" id="referenceSites" maxlength="1200" placeholder="Pega sitios que te gusten, Instagram o referencias visuales..."></textarea></div><div class="survey-field full"><label>Algo más que debamos saber</label><textarea class="survey-textarea" id="leadNotes" maxlength="1600" placeholder="Cuéntanos cualquier detalle importante del proyecto..."></textarea></div></div><div id="surveyStatus" class="survey-status"></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="submit" class="survey-submit" id="submitSurvey">Enviar solicitud →</button></div></section>
+<section class="survey-step" data-step="5"><span class="survey-kicker">05 · Contacto</span><h2>Listo. ¿Dónde te contactamos?</h2><p>Tu solicitud quedará ligada a esta cuenta y llegará al panel de Evolution Design con el brief completo.</p><div class="survey-grid"><div class="survey-field"><label>Correo *</label><input class="survey-input" id="leadEmail" type="email" maxlength="180" required placeholder="tu@correo.com"></div><div class="survey-field"><label>WhatsApp / teléfono *</label><input class="survey-input" id="leadPhone" maxlength="40" required placeholder="+502 ..."></div><div class="survey-field"><label>Dominio que te gustaría</label><input class="survey-input" id="domainIdea" maxlength="180" placeholder="ej. mimarca.com"></div><div class="survey-field"><label>¿Cuándo quieres iniciar?</label><select class="survey-select" id="timeline"><option>Lo antes posible</option><option>En 1–2 semanas</option><option>Este mes</option><option>Solo estoy explorando</option></select></div><div class="survey-field full"><label>Referencias / links</label><textarea class="survey-textarea" id="referenceSites" maxlength="1200" placeholder="Pega sitios que te gusten, Instagram o referencias visuales..."></textarea></div><div class="survey-field full"><label>Algo más que debamos saber</label><textarea class="survey-textarea" id="leadNotes" maxlength="1600" placeholder="Cuéntanos cualquier detalle importante del proyecto..."></textarea></div></div><div id="surveyStatus" class="survey-status"></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="submit" class="survey-submit" id="submitSurvey">Continuar al pago →</button></div></section>
+<section class="survey-step" data-step="6">
+  <span class="survey-kicker">06 · Pago seguro</span>
+  <h2>Activa tu proyecto.</h2>
+  <p>Tu brief ya quedó registrado. Para continuar, completa el pago correspondiente al plan seleccionado.</p>
+  <div class="web-checkout">
+    <div class="web-checkout-summary">
+      <span class="checkout-plan-kicker">Resumen del proyecto</span>
+      <h3 class="checkout-plan-title" id="checkoutPlanName">Sitio Web Pro</h3>
+      <div class="checkout-plan-business" id="checkoutBusinessName">Tu proyecto</div>
+      <div class="checkout-total"><span>Total a pagar</span><strong id="checkoutPlanPrice">$500 USD</strong></div>
+      <div class="checkout-summary-list">
+        <div class="checkout-summary-row"><span>Servicio</span><strong id="checkoutServiceLabel">Diseño Web</strong></div>
+        <div class="checkout-summary-row"><span>Cliente</span><strong id="checkoutClientLabel">—</strong></div>
+        <div class="checkout-summary-row"><span>Entrega</span><strong>Gestionada desde Mis Proyectos</strong></div>
+      </div>
+      <div class="checkout-request-id" id="checkoutRequestId">Solicitud registrada</div>
+    </div>
+    <div class="web-checkout-pay">
+      <h3>Elige cómo pagar</h3>
+      <p>PayPal confirma el proyecto al instante. Binance Pay y transferencia bancaria requieren comprobante y validación de administración.</p>
+      <div class="web-payment-region" id="webPaymentRegion"><i></i><span>Detectando región y métodos disponibles…</span></div>
+      <div class="web-payment-selector" id="webPaymentMethods">
+        <div class="web-payment-detecting">Preparando métodos de pago…</div>
+      </div>
+      <div class="checkout-payment-status" id="checkoutPaymentStatus"></div>
+      <div class="checkout-security"><span>SSL / HTTPS</span><span>PayPal + Binance</span><span>Comprobantes protegidos</span></div>
+      <div class="checkout-lock-note">Transferencia bancaria se habilita únicamente cuando la IP se detecta en Guatemala.</div>
+    </div>
+  </div>
+</section>
 </div></form></div>
 
 <script>
@@ -358,19 +779,214 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";import{getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";import{getFirestore,collection,addDoc,serverTimestamp,doc,setDoc}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),googleProvider=new GoogleAuthProvider();let currentUser=null,loginMode=true;
-const $=id=>document.getElementById(id),modal=$('authModal'),authError=$('authError');window.abrirAuthModal=()=>{modal.classList.add('show');modal.setAttribute('aria-hidden','false')};function closeAuth(){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');authError.style.display='none'}$('closeAuth')?.addEventListener('click',closeAuth);modal?.addEventListener('click',e=>{if(e.target===modal)closeAuth()});window.cerrarSesionGlobal=async()=>{try{await signOut(auth)}catch(e){console.error(e)}};
-$('toggleAuthMode')?.addEventListener('click',()=>{loginMode=!loginMode;$('btnSubmitAuth').textContent=loginMode?'Ingresar':'Crear cuenta';$('authModalTitle').textContent=loginMode?'Iniciar sesión':'Crear cuenta';$('toggleAuthMode').textContent=loginMode?'¿No tienes cuenta? Crear cuenta':'¿Ya tienes cuenta? Iniciar sesión'});$('googleAuthBtn')?.addEventListener('click',async()=>{try{await signInWithPopup(auth,googleProvider);closeAuth()}catch(e){authError.textContent='No se pudo iniciar con Google.';authError.style.display='block'}});$('authEmailForm')?.addEventListener('submit',async e=>{e.preventDefault();try{const email=$('authEmail').value.trim(),password=$('authPassword').value;if(loginMode)await signInWithEmailAndPassword(auth,email,password);else await createUserWithEmailAndPassword(auth,email,password);closeAuth()}catch(err){authError.textContent=err?.code==='auth/invalid-credential'?'Correo o contraseña incorrectos.':'No se pudo completar el acceso.';authError.style.display='block'}});
+const R2_ACCOUNT_ID = "d94e264f8a09f87496e21e72bd3731aa";
+    const R2_ACCESS_KEY_ID = "ea76378ab014694c3f387477de604782";
+    const R2_SECRET_ACCESS_KEY = "cf9a573453b35a875f4adb07c88374f942047b9ae9e358c3a3c11a629a0af4f6";
+    const R2_BUCKET_NAME = "evolution-design-files";
+    let paymentR2 = null;
+    if (window.AWS) {
+      window.AWS.config.update({accessKeyId:R2_ACCESS_KEY_ID,secretAccessKey:R2_SECRET_ACCESS_KEY,region:'auto',signatureVersion:'v4'});
+      paymentR2 = new window.AWS.S3({endpoint:new window.AWS.Endpoint(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`)});
+    }
+
+    
+const BINANCE_PAYMENT = {
+      alias: 'Evolution Desing',
+      asset: 'USDT',
+      qrImage: 'img/binance-pay.jpeg'
+    };
+
+    // CUENTAS BANCARIAS — únicamente visibles cuando la IP se detecta en Guatemala.
+    const BANK_TRANSFER_ACCOUNTS = {
+      bac: {
+        bank:'BAC Credomatic',
+        accountHolder:'César Mátzar',
+        accountNumber:'973883242',
+        accountType:'Cuenta de ahorro',
+        currency:'GTQ'
+      },
+      promerica: {
+        bank:'Promerica',
+        accountHolder:'César Mátzar',
+        accountNumber:'32992082006521',
+        accountType:'Cuenta de ahorro',
+        currency:'GTQ'
+      },
+      banrural: {
+        bank:'Banrural',
+        accountHolder:'César Mátzar',
+        accountNumber:'4156174501',
+        accountType:'Cuenta de ahorro',
+        currency:'GTQ'
+      }
+    };
+
+    
+function bankLogoMarkup(key) {
+      if (key === 'bac') {
+        return `<span class="bank-logo bank-logo-bac" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="img">
+            <path d="M19 23c-5-8 1-14 8-10 4-5 13-5 17 0 7-4 13 2 8 10 5 4 7 10 5 16-2 7-8 13-15 16l-10 5-10-5C15 52 9 46 7 39c-2-6 0-12 5-16 1-1 3-1 7 0Z" fill="currentColor" opacity=".17"/>
+            <path d="M19 24c-3-5 0-9 5-7m21 7c3-5 0-9-5-7M20 28c2-9 22-9 24 0 2 9-3 19-12 24-9-5-14-15-12-24Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M23 33h.1M41 33h.1M27 41c3 2 7 2 10 0" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M32 35l-2 3h4l-2-3Z" fill="currentColor"/>
+          </svg>
+        </span>`;
+      }
+      if (key === 'promerica') {
+        return `<span class="bank-logo bank-logo-promerica" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="img">
+            <path d="M32 5l6.2 17.2L55 16l-10.8 15 15.3 9.4-18-1.6L43 57 32 42.5 21 57l1.5-18.2-18 1.6L19.8 31 9 16l16.8 6.2L32 5Z" fill="currentColor"/>
+            <circle cx="32" cy="32" r="6.5" fill="#0b0b0c"/>
+          </svg>
+        </span>`;
+      }
+      return `<span class="bank-logo bank-logo-banrural" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="img">
+          <circle cx="45" cy="17" r="8" fill="currentColor" class="bank-sun"/>
+          <path d="M7 45 24 25l8 10 7-8 18 18H7Z" fill="currentColor" opacity=".22"/>
+          <path d="M7 45 24 25l8 10 7-8 18 18" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 50h48" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </span>`;
+    }
+
+    async function copiarCuentaBanco(value, button) {
+      try {
+        await navigator.clipboard.writeText(String(value || ''));
+      } catch (_) {
+        const t=document.createElement('textarea');
+        t.value=String(value||'');
+        t.style.position='fixed';
+        t.style.opacity='0';
+        document.body.appendChild(t);
+        t.select();
+        try{document.execCommand('copy')}catch(_){}
+        t.remove();
+      }
+      if(button){
+        const old=button.textContent;
+        button.textContent='Copiado ✓';
+        setTimeout(()=>{button.textContent=old},1400);
+      }
+    }
+
+
+    
+
+window.webPaymentGeo={countryCode:'',country:'',region:'',city:'',currency:''};
+window.webGtqRate=7.65;
+window.webPaymentGeoReady=(async()=>{
+  try{
+    const [rateResult,geoResult]=await Promise.allSettled([
+      fetch('https://open.er-api.com/v6/latest/USD',{cache:'force-cache'}).then(r=>r.ok?r.json():null),
+      fetch('https://ipapi.co/json/',{cache:'no-store'}).then(r=>r.ok?r.json():null)
+    ]);
+    const rateData=rateResult.status==='fulfilled'?rateResult.value:null;
+    if(rateData?.result==='success'&&Number(rateData?.rates?.GTQ)>0)window.webGtqRate=Number(rateData.rates.GTQ);
+    const geo=geoResult.status==='fulfilled'?geoResult.value:null;
+    if(geo){
+      window.webPaymentGeo={
+        ip:geo.ip||'',city:geo.city||'',region:geo.region||'',country:geo.country_name||'',
+        countryCode:String(geo.country_code||'').toUpperCase(),currency:String(geo.currency||'').toUpperCase()
+      };
+    }
+  }catch(e){console.info('Geo/tasa de pago no disponible:',e)}
+  window.evolutionGeo=window.webPaymentGeo;
+  return window.webPaymentGeo;
+})();
+
+async function uploadManualReceipt(user, projectId, file, onProgress) {
+      if(!paymentR2) throw new Error('El servidor de comprobantes R2 no está disponible.');
+      if(!file) throw new Error('Adjunta el comprobante del pago.');
+      if(file.size > 12*1024*1024) throw new Error('El comprobante no puede superar 12 MB.');
+      const allowed = /^image\//i.test(file.type) || file.type === 'application/pdf';
+      if(!allowed) throw new Error('El comprobante debe ser imagen o PDF.');
+
+      const fileId=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,'');
+      const safeName=String(file.name||'comprobante').replace(/[\\/]+/g,'_').slice(-160);
+      const path=`projects/${user.uid}/${projectId}/payment/${fileId}/${safeName}`;
+      const request=paymentR2.putObject({Bucket:R2_BUCKET_NAME,Key:path,Body:file,ContentType:file.type||'application/octet-stream'});
+      request.on('httpUploadProgress',p=>{if(p.total>0&&typeof onProgress==='function')onProgress(Math.round(p.loaded/p.total*100));});
+      await request.promise();
+      return {storagePath:path,name:file.name||safeName,size:file.size,contentType:file.type||'application/octet-stream'};
+    }
+
+    
+
+function bankAccountConfigured(account){return Boolean(account?.accountHolder&&account?.accountNumber&&account?.accountType)}
+function manualPaymentProjectId(method){
+  const code=String(method||'manual').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0,24)||'manual';
+  const random=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,'').slice(-36);
+  return `web_${code}_${random}`;
+}
+function webManualStatus(panel,message,type='info'){
+  const el=panel?.querySelector('.manual-status');if(!el)return;
+  el.className=`manual-status ${type}`;el.textContent=message;
+}
+
+const $=id=>document.getElementById(id),modal=$('authModal'),authError=$('authError');
+function setAuthMode(mode='login'){
+  loginMode=mode!=='register';
+  $('authTabLogin')?.classList.toggle('active',loginMode);
+  $('authTabRegister')?.classList.toggle('active',!loginMode);
+  if($('authModalTitle'))$('authModalTitle').textContent=loginMode?'Iniciar sesión':'Crear tu cuenta';
+  if($('authModeHint'))$('authModeHint').textContent=loginMode
+    ?'Accede a tu cuenta para continuar con el brief y el pago de tu proyecto.'
+    :'Crea tu cuenta Evolution Design para guardar el proyecto y realizar el pago de forma segura.';
+  if($('btnSubmitAuth'))$('btnSubmitAuth').textContent=loginMode?'Ingresar y continuar':'Crear cuenta y continuar';
+  if($('authPassword'))$('authPassword').autocomplete=loginMode?'current-password':'new-password';
+  if(authError){authError.style.display='none';authError.textContent=''}
+}
+window.abrirAuthModal=()=>{
+  if($('authPlanContext'))$('authPlanContext').textContent=`${selectedPlan?.name||'Sitio Web Pro'} · $${selectedPlan?.price||500} USD`;
+  modal.classList.add('show');modal.setAttribute('aria-hidden','false');
+};
+function closeAuth(){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');if(authError){authError.style.display='none';authError.textContent=''}}
+$('closeAuth')?.addEventListener('click',closeAuth);
+modal?.addEventListener('click',e=>{if(e.target===modal)closeAuth()});
+window.cerrarSesionGlobal=async()=>{try{await signOut(auth)}catch(e){console.error(e)}};
+document.querySelectorAll('[data-auth-mode]').forEach(btn=>btn.addEventListener('click',()=>setAuthMode(btn.dataset.authMode)));
+$('googleAuthBtn')?.addEventListener('click',async()=>{try{await signInWithPopup(auth,googleProvider);closeAuth()}catch(e){authError.textContent='No se pudo iniciar con Google. Intenta nuevamente.';authError.style.display='block'}});
+$('authEmailForm')?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  try{
+    const email=$('authEmail').value.trim(),password=$('authPassword').value;
+    if(loginMode)await signInWithEmailAndPassword(auth,email,password);
+    else await createUserWithEmailAndPassword(auth,email,password);
+    closeAuth();
+  }catch(err){
+    const code=err?.code||'';
+    authError.textContent=
+      code==='auth/invalid-credential'?'Correo o contraseña incorrectos.':
+      code==='auth/email-already-in-use'?'Ese correo ya tiene una cuenta. Inicia sesión.':
+      code==='auth/weak-password'?'La contraseña debe tener al menos 6 caracteres.':
+      code==='auth/invalid-email'?'Ingresa un correo válido.':
+      'No se pudo completar el acceso. Intenta nuevamente.';
+    authError.style.display='block';
+  }
+});
+setAuthMode('login');
 onAuthStateChanged(auth,async user=>{currentUser=user||null;const desk=$('auth-desktop-wrapper'),mob=$('auth-mobile-wrapper'),profile=$('floating-profile-desktop'),admin=$('admin-badge-container-desktop'),p1=$('linkProyectosDesktop'),p2=$('linkProyectosMenuDesktop'),p3=$('linkProyectosMobile');if(!user){p1?.classList.add('hidden');p2?.classList.add('hidden');p3?.classList.add('hidden');if(desk)desk.innerHTML='<a href="#" onclick="abrirAuthModal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Login</a>';if(mob)mob.innerHTML='<a href="#" class="icon-btn" onclick="abrirAuthModal();return false" aria-label="Login"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></a>';if(profile)profile.innerHTML='';if(admin)admin.innerHTML='';return}p1?.classList.remove('hidden');p2?.classList.remove('hidden');p3?.classList.remove('hidden');const photo=user.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||'U')}&background=d4b895&color=111`,isAdmin=['evolutiongt01@gmail.com','tepaz2025@gmail.com'].includes(String(user.email||'').toLowerCase());if(desk)desk.innerHTML='<a href="#" onclick="cerrarSesionGlobal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Salir</a>';if(profile)profile.innerHTML=`<a href="perfil.html" aria-label="Mi perfil"><img class="profile-pic-liquid" src="${photo}" alt="Perfil"></a>`;if(admin)admin.innerHTML=isAdmin?'<a href="admin.html" class="admin-badge-btn">Panel Admin</a>':'';if(mob)mob.innerHTML=`<div class="mobile-auth-actions"><a href="perfil.html" class="mobile-profile-link"><img src="${photo}" alt="Perfil"></a>${isAdmin?'<a href="admin.html" class="mobile-auth-action" aria-label="Panel Admin">A</a>':''}<a href="#" onclick="cerrarSesionGlobal();return false" class="mobile-auth-action" aria-label="Cerrar sesión">↗</a></div>`;try{await setDoc(doc(db,'users',user.uid),{uid:user.uid,email:user.email||'',displayName:user.displayName||'',photoURL:user.photoURL||'',lastSeenAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true})}catch(e){console.info('Perfil no sincronizado',e?.message||e)}if(!$('leadEmail').value&&user.email)$('leadEmail').value=user.email;if(!$('leadName').value&&user.displayName)$('leadName').value=user.displayName;window.dispatchEvent(new CustomEvent('evolution-auth-ready'))});
 
 (function(){const preview=document.getElementById('builderPreview'),browser=document.getElementById('previewBrowser'),presetLabel=document.getElementById('builderPresetLabel'),accentLabel=document.getElementById('builderAccentLabel'),title=document.getElementById('previewTitle'),copy=document.getElementById('previewCopy'),kicker=document.getElementById('previewKicker');if(!preview||!browser)return;const presets={premium:{label:'Premium',k:'EXPERIENCIA PREMIUM',t:'Tu marca puede sentirse así de bien.',c:'Jerarquía, profundidad y detalles finos para una presencia digital de alto nivel.',rounded:true},minimal:{label:'Minimal',k:'CLARIDAD PRIMERO',t:'Menos ruido. Más intención.',c:'Un sistema limpio donde tipografía, espacio y contenido llevan toda la atención.',rounded:false},tech:{label:'Tech',k:'SYSTEM / ONLINE',t:'Diseño con precisión digital.',c:'Interfaces dinámicas, datos, motion y una estética tecnológica con personalidad.',rounded:true}};document.querySelectorAll('[data-preset]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-preset]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const p=presets[btn.dataset.preset]||presets.premium;presetLabel.textContent=p.label;kicker.textContent=p.k;title.textContent=p.t;copy.textContent=p.c;browser.classList.toggle('rounded',p.rounded)}));document.querySelectorAll('[data-accent]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-accent]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');preview.style.setProperty('--builder-accent',btn.dataset.accent);browser.style.setProperty('--builder-accent',btn.dataset.accent);accentLabel.textContent=btn.dataset.name||'Custom'}));const glass=document.getElementById('toggleBuilderGlass'),motion=document.getElementById('toggleBuilderMotion');glass?.addEventListener('click',()=>{const on=browser.classList.toggle('glass');glass.classList.toggle('active',on);glass.textContent=`Glass ${on?'ON':'OFF'}`});motion?.addEventListener('click',()=>{const on=browser.classList.toggle('motion');motion.classList.toggle('active',on);motion.textContent=`Motion ${on?'ON':'OFF'}`})})();
 
 const overlay=$('surveyOverlay'),form=$('webSurvey'),progress=$('surveyProgress'),status=$('surveyStatus');
 const PLAN_CONFIG={
-  landing:{id:'landing',name:'Landing Page',price:350,category:'Diseño Web · Landing Page'},
-  pro:{id:'pro',name:'Sitio Web Pro',price:500,category:'Diseño Web · Sitio Web Pro'},
-  ecommerce:{id:'ecommerce',name:'E-commerce',price:850,category:'Diseño Web · E-commerce'}
+  landing:{
+    id:'landing',name:'Landing Page',price:350,category:'Diseño Web · Landing Page',
+    included:['UI/UX personalizado','Página única responsive','Formulario + WhatsApp','SEO técnico base','Dominio + correo empresarial · primer año']
+  },
+  pro:{
+    id:'pro',name:'Sitio Web Pro',price:500,category:'Diseño Web · Sitio Web Pro',
+    included:['Hasta 5 páginas internas','UI/UX premium','Animaciones avanzadas','Formularios y automatizaciones básicas','Panel administrativo según alcance','Dominio + correo empresarial · primer año']
+  },
+  ecommerce:{
+    id:'ecommerce',name:'E-commerce',price:850,category:'Diseño Web · E-commerce',
+    included:['Catálogo inicial hasta 50 productos','Carrito + checkout','Integración de pagos','Panel de productos / stock / pedidos','UI/UX responsive','Dominio + correo empresarial · primer año']
+  }
 };
-let step=1,selectedPlan=PLAN_CONFIG.pro,pendingPlanAfterLogin=null;
+let step=1,selectedPlan=PLAN_CONFIG.pro,pendingPlanAfterLogin=null,currentWebRequestId=null,paypalButtonsInstance=null;
 
 function applySelectedPlan(key){
   selectedPlan=PLAN_CONFIG[key]||PLAN_CONFIG.pro;
@@ -381,11 +997,13 @@ function applySelectedPlan(key){
 }
 function renderStep(){
   document.querySelectorAll('.survey-step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===step));
-  progress.style.width=`${step*20}%`;
+  progress.style.width=`${Math.round(step/6*100)}%`;
   overlay.querySelector('.survey-card')?.scrollTo({top:0,behavior:'smooth'});
 }
 function openSurveyForPlan(key){
+  const previousPlan=selectedPlan?.id;
   applySelectedPlan(key);
+  if(previousPlan!==selectedPlan.id){currentWebRequestId=null;step=1;}
   if(!currentUser){
     pendingPlanAfterLogin=selectedPlan.id;
     const title=$('authModalTitle');
@@ -439,59 +1057,342 @@ function validateStep(){
   }
   return true;
 }
-document.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>{if(validateStep()){step=Math.min(5,step+1);renderStep()}}));
+document.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>{if(validateStep()){step=Math.min(6,step+1);renderStep()}}));
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>{step=Math.max(1,step-1);renderStep()}));
+
+
+
+function buildWebProjectConfig(){
+  const brief=buildWebBrief();
+  return {
+    category:'Diseño Web',packageCode:selectedPlan.id,packageName:selectedPlan.name,shortPackageName:selectedPlan.name,
+    description:`${selectedPlan.name} para ${brief.businessName||'cliente Evolution Design'}`,
+    specs:brief.features||[],uploadTitle:'Contenido para tu sitio web',
+    uploadCopy:'Sube logotipo, fotografías, textos, referencias y cualquier material necesario para desarrollar tu sitio.',
+    uploadFormats:'Imágenes, logos, documentos, textos y referencias',
+    includedHighlights:selectedPlan.included||[],custom:false,baseUsd:selectedPlan.price
+  };
+}
+
+async function createManualWebProject({method,reference,payerName,receipt,bankKey=''}) {
+  if(!currentUser?.uid)throw new Error('Debes iniciar sesión antes de enviar el comprobante.');
+  if(!currentWebRequestId)throw new Error('No encontramos el brief asociado.');
+  const cleanReference=String(reference||'').trim().slice(0,140);
+  if(!cleanReference)throw new Error('Ingresa el ID o referencia de la transacción.');
+  const brief=buildWebBrief(),projectConfig=buildWebProjectConfig(),geo=window.webPaymentGeo||window.evolutionGeo||{};
+  const isBank=method==='bank_transfer';
+  if(isBank&&String(geo.countryCode||'').toUpperCase()!=='GT')throw new Error('Transferencia bancaria solo está disponible para IP detectada en Guatemala.');
+  const projectId=manualPaymentProjectId(method),receiptInfo=await uploadManualReceipt(currentUser,projectId,receipt);
+  const baseUsd=Number(selectedPlan.price),paymentCurrency=isBank?'GTQ':'USDT';
+  const paymentAmount=isBank?(baseUsd*Number(window.webGtqRate||7.65)):baseUsd;
+  const bank=BANK_TRANSFER_ACCOUNTS[bankKey]||null;
+  const displayOrderId=`#EVO-WM${Date.now().toString().slice(-6)}`;
+  const paymentMethod=isBank?`Transferencia bancaria - ${bank?.bank||'Guatemala'}`:'Binance Pay';
+  const projectData={
+    ownerUid:currentUser.uid,ownerEmail:currentUser.email||brief.email||'',
+    payerName:String(payerName||currentUser.displayName||brief.name||currentUser.email||'Cliente').trim().slice(0,120),
+    payerEmail:currentUser.email||brief.email||'',payerRegion:geo.region||geo.city||'No reportada',
+    payerCountry:geo.country||'No reportado',payerCountryCode:String(geo.countryCode||'').toUpperCase(),
+    transactionId:cleanReference,manualPaymentReference:cleanReference,paymentMethod,
+    paymentProvider:isBank?'bank_transfer':'binance_pay',bankKey:isBank?bankKey:'',bankName:isBank?(bank?.bank||''):'',
+    amount:paymentAmount.toFixed(2),currency:paymentCurrency,baseUsd,expectedAmount:paymentAmount.toFixed(2),
+    expectedCurrency:paymentCurrency,displayOrderId,projectType:'Diseño Web',
+    projectTitle:`Diseño Web · ${selectedPlan.name} · ${brief.businessName||brief.name}`,projectConfig,
+    source:isBank?'diseno-web-bank-manual':'diseno-web-binance-manual',serviceType:'web_design',customOrder:false,
+    webRequestId:currentWebRequestId,webPlanId:selectedPlan.id,webPlanName:selectedPlan.name,webBrief:brief,
+    paymentStatus:'pending_review',paymentReviewStatus:'pending',status:'awaiting_payment',paymentVerifiedByAdmin:false,
+    receiptStoragePath:receiptInfo.storagePath,receiptName:receiptInfo.name,receiptSize:receiptInfo.size,
+    receiptContentType:receiptInfo.contentType,architectName:'Pendiente',professionalRole:'Diseñador Web',
+    clientFileCount:0,deliveryFileCount:0,
+    clientComments:[brief.notes,brief.referenceSites?`Referencias: ${brief.referenceSites}`:''].filter(Boolean).join('\n\n'),
+    deliveryNote:'',
+    lastGeo:{city:geo.city||'',region:geo.region||'',country:geo.country||'',countryCode:geo.countryCode||'',currency:geo.currency||''},
+    createdAt:serverTimestamp(),updatedAt:serverTimestamp(),paymentSubmittedAt:serverTimestamp()
+  };
+  await setDoc(doc(db,'users',currentUser.uid,'projects',projectId),projectData,{merge:true});
+  try{
+    await setDoc(doc(db,'users',currentUser.uid),{
+      uid:currentUser.uid,email:currentUser.email||brief.email||'',displayName:currentUser.displayName||brief.name||'',
+      lastWebProjectId:projectId,lastWebRequestId:currentWebRequestId,lastManualPaymentMethod:paymentMethod,
+      lastManualPaymentAt:serverTimestamp(),updatedAt:serverTimestamp()
+    },{merge:true});
+  }catch(e){console.info('Proyecto manual registrado; perfil no actualizado:',e)}
+  return {projectId,displayOrderId,paymentMethod,paymentAmount,paymentCurrency};
+}
+
+function renderWebManualPayment(panel,method){
+  if(!panel)return;
+  const geo=window.webPaymentGeo||{},isBank=method==='bank_transfer';
+  if(isBank&&String(geo.countryCode||'').toUpperCase()!=='GT'){
+    panel.innerHTML='<div class="manual-warning">Transferencia bancaria está disponible únicamente para clientes detectados en Guatemala.</div>';return;
+  }
+  const amount=isBank?Number(selectedPlan.price)*Number(window.webGtqRate||7.65):Number(selectedPlan.price);
+  const amountText=isBank?`Q ${amount.toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2})}`:`${amount.toFixed(2)} USDT`;
+  const banks=Object.entries(BANK_TRANSFER_ACCOUNTS);
+  const firstConfigured=banks.find(([,b])=>bankAccountConfigured(b))?.[0]||banks[0]?.[0]||'';
+  panel.innerHTML=`<div class="manual-payment-card" data-manual-method="${method}">
+    <div class="manual-payment-head"><strong>${isBank?'Transferencia bancaria':'Binance Pay · verificación manual'}</strong><span class="manual-payment-amount">${amountText}</span></div>
+    <div class="manual-payment-copy">${isBank?'Transfiere exactamente el monto indicado y adjunta el comprobante. El proyecto quedará pendiente hasta que administración confirme el depósito.':'Escanea el QR desde Binance, envía exactamente el monto indicado en USDT y adjunta el comprobante. Administración validará el ingreso antes de iniciar el proyecto.'}</div>
+    ${isBank?`<div class="bank-choice-grid">${banks.map(([key,b])=>`<button type="button" class="bank-choice ${key===firstConfigured?'active':''}" data-bank-key="${key}">${bankLogoMarkup(key)}<span class="bank-choice-copy"><span class="bank-choice-name">${b.bank}</span><span class="bank-choice-type">${b.accountType}</span></span></button>`).join('')}</div><div class="bank-account-details"></div>`:`<img class="binance-qr-img" src="${BINANCE_PAYMENT.qrImage}" alt="QR Binance Pay Evolution Design"><div class="manual-meta"><div class="manual-meta-row"><span>Alias</span><strong>${BINANCE_PAYMENT.alias}</strong></div><div class="manual-meta-row"><span>Activo</span><strong>${BINANCE_PAYMENT.asset}</strong></div><div class="manual-meta-row"><span>Monto exacto</span><strong>${amountText}</strong></div></div>`}
+    <div class="manual-field"><label>Nombre de quien realizó el pago</label><input class="manual-input manual-payer-name" value="${String(currentUser?.displayName||buildWebBrief().name||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" placeholder="Nombre del pagador"></div>
+    <div class="manual-field"><label>ID / referencia de la transacción</label><input class="manual-input manual-reference" placeholder="Copia aquí la referencia del pago"></div>
+    <div class="manual-field"><label>Comprobante</label><input class="manual-input manual-file" type="file" accept="image/*,application/pdf"></div>
+    <button type="button" class="manual-submit">Enviar comprobante para revisión</button><div class="manual-status"></div>
+  </div>`;
+  let selectedBank=firstConfigured;
+  const detailsBox=panel.querySelector('.bank-account-details'),submit=panel.querySelector('.manual-submit');
+  const refreshBank=()=>{
+    if(!isBank)return;
+    const b=BANK_TRANSFER_ACCOUNTS[selectedBank],configured=bankAccountConfigured(b);
+    detailsBox.innerHTML=configured?`<div class="bank-account-card">
+      <div class="bank-account-head">${bankLogoMarkup(selectedBank)}<div class="bank-account-title"><strong>${b.bank}</strong><span>Transferencia nacional · Guatemala · ${b.currency}</span></div></div>
+      <div class="bank-account-number-box"><div class="bank-account-label">Número de cuenta</div><div class="bank-account-number-row"><div class="bank-account-number">${b.accountNumber}</div><button type="button" class="bank-copy-btn" data-copy-account="${b.accountNumber}">Copiar cuenta</button></div></div>
+      <div class="bank-info-grid"><div class="bank-info-box"><span>Titular</span><strong>${b.accountHolder}</strong></div><div class="bank-info-box"><span>Tipo</span><strong>${b.accountType}</strong></div><div class="bank-info-box"><span>Monto exacto</span><strong>${amountText}</strong></div><div class="bank-info-box"><span>Moneda</span><strong>Quetzales (GTQ)</strong></div></div>
+    </div>`:`<div class="manual-warning">${b?.bank||'Este banco'} no está configurado todavía.</div>`;
+    detailsBox.querySelectorAll('[data-copy-account]').forEach(btn=>btn.addEventListener('click',()=>copiarCuentaBanco(btn.dataset.copyAccount,btn)));
+    submit.disabled=!configured;
+  };
+  if(isBank){
+    panel.querySelectorAll('.bank-choice').forEach(btn=>btn.addEventListener('click',()=>{
+      selectedBank=btn.dataset.bankKey;
+      panel.querySelectorAll('.bank-choice').forEach(x=>x.classList.toggle('active',x===btn));
+      refreshBank();
+    }));
+    refreshBank();
+  }
+  submit.addEventListener('click',async()=>{
+    const reference=panel.querySelector('.manual-reference')?.value.trim(),payerName=panel.querySelector('.manual-payer-name')?.value.trim(),receipt=panel.querySelector('.manual-file')?.files?.[0];
+    if(!reference){webManualStatus(panel,'Ingresa el ID o referencia de la transacción.','error');return}
+    if(!receipt){webManualStatus(panel,'Adjunta una captura o PDF del comprobante.','error');return}
+    const old=submit.textContent;submit.disabled=true;submit.textContent='Subiendo comprobante…';webManualStatus(panel,'Guardando comprobante para revisión…','info');
+    try{
+      const result=await createManualWebProject({method,reference,payerName,receipt,bankKey:selectedBank});
+      webManualStatus(panel,`Comprobante recibido · ${result.displayOrderId}. Abriendo Mis Proyectos…`,'ok');
+      sessionStorage.setItem('evolutionWebRequest',currentWebRequestId);sessionStorage.setItem('evolutionWebManualProject',result.projectId);
+      setTimeout(()=>{window.location.href=`proyectos.html?project=${encodeURIComponent(result.projectId)}`},900);
+    }catch(e){console.error(e);webManualStatus(panel,e?.message||'No se pudo registrar el comprobante.','error');submit.disabled=false;submit.textContent=old}
+  });
+}
+
+async function renderWebPaymentMethods(){
+  fillCheckoutSummary();
+  const host=$('webPaymentMethods'),region=$('webPaymentRegion');if(!host)return;
+  host.innerHTML='<div class="web-payment-detecting">Detectando región y preparando métodos…</div>';
+  if(!currentUser?.uid){host.innerHTML='<div class="manual-warning">Inicia sesión nuevamente antes de pagar.</div>';return}
+  await Promise.resolve(window.webPaymentGeoReady).catch(()=>{});
+  const geo=window.webPaymentGeo||{},isGuatemala=String(geo.countryCode||'').toUpperCase()==='GT';
+  if(region)region.innerHTML=`<i></i><span>${isGuatemala?'IP detectada en Guatemala · transferencia bancaria habilitada':geo.country?`Región detectada: ${geo.country}`:'Región no identificada · transferencia bancaria no disponible'}</span>`;
+  host.innerHTML=`<div class="payment-checkout-card"><div class="payment-method-title">Selecciona un método de pago</div>
+    <div class="payment-method-grid ${isGuatemala?'has-bank':''}">
+      <button type="button" class="payment-method-btn active" data-web-pay="paypal">Tarjeta · PayPal</button>
+      <button type="button" class="payment-method-btn binance" data-web-pay="binance">◆ Binance Pay</button>
+      ${isGuatemala?'<button type="button" class="payment-method-btn bank" data-web-pay="bank">Transferencia bancaria</button>':''}
+    </div><div class="payment-method-panel"></div>${isGuatemala?'<div class="payment-gt-only-note">Transferencias habilitadas porque tu IP fue detectada en Guatemala.</div>':''}</div>`;
+  const panel=host.querySelector('.payment-method-panel');
+  const selectMethod=async method=>{
+    host.querySelectorAll('.payment-method-btn').forEach(b=>b.classList.toggle('active',b.dataset.webPay===method));panel.innerHTML='';setCheckoutStatus('');
+    if(method==='paypal'){panel.innerHTML='<div class="paypal-white-card"><div id="paypalWebButtons"></div></div>';await renderWebPayPal()}
+    else if(method==='binance')renderWebManualPayment(panel,'binance_pay');
+    else if(method==='bank')renderWebManualPayment(panel,'bank_transfer');
+  };
+  host.querySelectorAll('.payment-method-btn').forEach(btn=>btn.addEventListener('click',()=>selectMethod(btn.dataset.webPay)));
+  await selectMethod('paypal');
+}
+
+function buildWebBrief(){
+  return {
+    name:$('leadName').value.trim(),
+    businessName:$('businessName').value.trim(),
+    businessType:$('businessType').value,
+    existingSite:$('existingSite').value,
+    goals:selected('goals'),
+    features:selected('features'),
+    style:selected('style')[0]||'',
+    email:$('leadEmail').value.trim(),
+    phone:$('leadPhone').value.trim(),
+    domainIdea:$('domainIdea').value.trim(),
+    timeline:$('timeline').value,
+    referenceSites:$('referenceSites').value.trim(),
+    notes:$('leadNotes').value.trim()
+  };
+}
+function setCheckoutStatus(message,type='info'){
+  const el=$('checkoutPaymentStatus');if(!el)return;
+  el.className=`checkout-payment-status ${message?type:''}`;
+  el.textContent=message||'';
+}
+function fillCheckoutSummary(){
+  const brief=buildWebBrief();
+  if($('checkoutPlanName'))$('checkoutPlanName').textContent=selectedPlan.name;
+  if($('checkoutPlanPrice'))$('checkoutPlanPrice').textContent=`$${selectedPlan.price} USD`;
+  if($('checkoutBusinessName'))$('checkoutBusinessName').textContent=brief.businessName||'Tu proyecto';
+  if($('checkoutServiceLabel'))$('checkoutServiceLabel').textContent=selectedPlan.category;
+  if($('checkoutClientLabel'))$('checkoutClientLabel').textContent=brief.name||currentUser?.email||'Cliente';
+  if($('checkoutRequestId'))$('checkoutRequestId').textContent=currentWebRequestId?`Solicitud ${currentWebRequestId.slice(0,8).toUpperCase()} · brief guardado`:'Brief preparado';
+}
+async function createPaidWebProject(details,data){
+  if(!currentUser?.uid)throw new Error('La sesión del cliente ya no está disponible.');
+  if(!currentWebRequestId)throw new Error('No encontramos la solicitud asociada a este pago.');
+  const brief=buildWebBrief();
+  const capture=details?.purchase_units?.[0]?.payments?.captures?.[0]||{};
+  const orderId=String(data?.orderID||details?.id||'').trim();
+  if(!orderId)throw new Error('PayPal no devolvió el ID de la orden.');
+  const transactionId=String(capture?.id||orderId);
+  const safeOrderId=orderId.replace(/[^A-Za-z0-9_-]/g,'').slice(0,90);
+  const projectId=`web_paypal_${safeOrderId}`;
+  const displayOrderId=`#EVO-W${transactionId.slice(-7).toUpperCase()}`;
+  const payerName=[details?.payer?.name?.given_name,details?.payer?.name?.surname].filter(Boolean).join(' ')||brief.name||currentUser.displayName||'Cliente';
+  const payerCountry=details?.payer?.address?.country_code||'';
+  const projectConfig={
+    category:'Diseño Web',
+    packageCode:selectedPlan.id,
+    packageName:selectedPlan.name,
+    shortPackageName:selectedPlan.name,
+    description:`${selectedPlan.name} para ${brief.businessName||'cliente Evolution Design'}`,
+    specs:brief.features||[],
+    uploadTitle:'Contenido para tu sitio web',
+    uploadCopy:'Sube logotipo, fotografías, textos, referencias y cualquier material necesario para desarrollar tu sitio.',
+    uploadFormats:'Imágenes, logos, documentos, textos y referencias',
+    includedHighlights:selectedPlan.included||[],
+    custom:false,
+    baseUsd:selectedPlan.price
+  };
+  const projectData={
+    ownerUid:currentUser.uid,
+    ownerEmail:currentUser.email||brief.email||'',
+    payerName,
+    payerEmail:details?.payer?.email_address||currentUser.email||brief.email||'',
+    payerCountry,
+    transactionId,
+    paypalTransactionId:transactionId,
+    paypalOrderId:orderId,
+    paypalStatus:capture?.status||details?.status||'COMPLETED',
+    paymentMethod:'PayPal',
+    amount:Number(selectedPlan.price).toFixed(2),
+    currency:'USD',
+    baseUsd:Number(selectedPlan.price),
+    displayOrderId,
+    projectType:'Diseño Web',
+    projectTitle:`Diseño Web · ${selectedPlan.name} · ${brief.businessName||brief.name}`,
+    projectConfig,
+    source:'diseno-web-paypal',
+    serviceType:'web_design',
+    customOrder:false,
+    webRequestId:currentWebRequestId,
+    webPlanId:selectedPlan.id,
+    webPlanName:selectedPlan.name,
+    webBrief:brief,
+    paymentStatus:'paid',
+    status:'waiting_files',
+    architectName:'Pendiente',
+    professionalRole:'Diseñador Web',
+    clientFileCount:0,
+    deliveryFileCount:0,
+    clientComments:[brief.notes,brief.referenceSites?`Referencias: ${brief.referenceSites}`:''].filter(Boolean).join('\n\n'),
+    deliveryNote:'',
+    createdAt:serverTimestamp(),
+    updatedAt:serverTimestamp(),
+    paidAt:serverTimestamp()
+  };
+  await setDoc(doc(db,'users',currentUser.uid,'projects',projectId),projectData,{merge:true});
+  try{
+    await setDoc(doc(db,'users',currentUser.uid),{
+      uid:currentUser.uid,email:currentUser.email||brief.email||'',displayName:currentUser.displayName||brief.name||'',
+      lastWebProjectId:projectId,lastWebRequestId:currentWebRequestId,lastPurchaseAt:serverTimestamp(),updatedAt:serverTimestamp()
+    },{merge:true});
+  }catch(profileError){console.info('Proyecto registrado; perfil no actualizado:',profileError)}
+  return {projectId,displayOrderId,transactionId,orderId};
+}
+async function renderWebPayPal(){
+  fillCheckoutSummary();
+  const host=$('paypalWebButtons');if(!host)return;
+  host.innerHTML='';
+  setCheckoutStatus('');
+  if(!currentUser?.uid){setCheckoutStatus('Inicia sesión nuevamente antes de pagar.','error');return}
+  if(typeof window.paypal==='undefined'||!window.paypal?.Buttons){
+    setCheckoutStatus('No se pudo cargar PayPal. Recarga la página e inténtalo nuevamente.','error');return;
+  }
+  try{
+    paypalButtonsInstance=window.paypal.Buttons({
+      style:{layout:'vertical',color:'black',shape:'rect',label:'pay',height:46},
+      createOrder:(data,actions)=>{
+        setCheckoutStatus('Preparando pago seguro…','info');
+        return actions.order.create({
+          purchase_units:[{
+            amount:{currency_code:'USD',value:Number(selectedPlan.price).toFixed(2)},
+            description:`Evolution Design · ${selectedPlan.name}`.slice(0,127),
+            custom_id:currentWebRequestId
+          }]
+        });
+      },
+      onApprove:async(data,actions)=>{
+        setCheckoutStatus('Pago aprobado. Registrando tu proyecto…','info');
+        try{
+          const details=await actions.order.capture();
+          const result=await createPaidWebProject(details,data);
+          setCheckoutStatus(`Pago confirmado · ${result.displayOrderId}. Abriendo Mis Proyectos…`,'ok');
+          sessionStorage.setItem('evolutionWebRequest',currentWebRequestId);
+          sessionStorage.setItem('evolutionWebPaidProject',result.projectId);
+          setTimeout(()=>{window.location.href=`proyectos.html?project=${encodeURIComponent(result.projectId)}`},900);
+        }catch(error){
+          console.error('PayPal aprobado pero no se registró proyecto:',error);
+          setCheckoutStatus(`PayPal aprobó el pago, pero no pudimos registrar el proyecto. NO vuelvas a pagar.${data?.orderID?' Orden PayPal: '+data.orderID:''}`,'error');
+        }
+      },
+      onCancel:()=>setCheckoutStatus('Pago cancelado. Tu brief sigue guardado y puedes intentarlo nuevamente.','info'),
+      onError:(err)=>{console.error('PayPal:',err);setCheckoutStatus('PayPal no pudo completar el pago. Intenta nuevamente.','error')}
+    });
+    if(!paypalButtonsInstance.isEligible()){
+      setCheckoutStatus('PayPal no está disponible en este dispositivo o navegador.','error');return;
+    }
+    await paypalButtonsInstance.render('#paypalWebButtons');
+  }catch(error){console.error(error);setCheckoutStatus('No pudimos iniciar el checkout de PayPal.','error')}
+}
 
 form.addEventListener('submit',async e=>{
   e.preventDefault();
   if(!currentUser){pendingPlanAfterLogin=selectedPlan.id;window.abrirAuthModal();return}
   if(!validateStep())return;
   if(!$('leadEmail').value.trim()||!$('leadPhone').value.trim()){
-    status.textContent='Agrega correo y WhatsApp para que podamos contactarte.';
+    status.textContent='Agrega correo y WhatsApp para continuar al pago.';
     status.className='survey-status error';return;
   }
   if($('companyWebsiteTrap').value)return;
+
   const btn=$('submitSurvey'),old=btn.textContent;
-  btn.disabled=true;btn.textContent='Guardando proyecto…';status.className='survey-status';
+  btn.disabled=true;btn.textContent='Preparando checkout…';status.className='survey-status';
   try{
-    const payload={
-      requestType:'web_design',
-      planId:selectedPlan.id,
-      planName:selectedPlan.name,
-      category:selectedPlan.category,
-      basePriceUsd:selectedPlan.price,
-      name:$('leadName').value.trim(),
-      businessName:$('businessName').value.trim(),
-      businessType:$('businessType').value,
-      existingSite:$('existingSite').value,
-      goals:selected('goals'),
-      features:selected('features'),
-      style:selected('style')[0]||'',
-      email:$('leadEmail').value.trim(),
-      phone:$('leadPhone').value.trim(),
-      domainIdea:$('domainIdea').value.trim(),
-      timeline:$('timeline').value,
-      referenceSites:$('referenceSites').value.trim(),
-      notes:$('leadNotes').value.trim(),
-      status:'new',
-      source:'diseno-web',
-      userUid:currentUser.uid,
-      userEmail:currentUser.email||$('leadEmail').value.trim(),
-      createdAt:serverTimestamp(),
-      updatedAt:serverTimestamp()
-    };
-    const ref=await addDoc(collection(db,'webRequests'),payload);
-    status.textContent=`Solicitud ${ref.id.slice(0,8).toUpperCase()} guardada en tu cuenta. Abriendo Mis Proyectos…`;
+    if(!currentWebRequestId){
+      const brief=buildWebBrief();
+      const payload={
+        requestType:'web_design',
+        planId:selectedPlan.id,
+        planName:selectedPlan.name,
+        category:selectedPlan.category,
+        basePriceUsd:selectedPlan.price,
+        ...brief,
+        status:'new',
+        source:'diseno-web',
+        userUid:currentUser.uid,
+        userEmail:currentUser.email||brief.email,
+        createdAt:serverTimestamp(),
+        updatedAt:serverTimestamp()
+      };
+      const ref=await addDoc(collection(db,'webRequests'),payload);
+      currentWebRequestId=ref.id;
+      sessionStorage.setItem('evolutionWebRequest',ref.id);
+      sessionStorage.setItem('evolutionWebPlan',selectedPlan.id);
+    }
+    status.textContent=`Brief ${currentWebRequestId.slice(0,8).toUpperCase()} guardado. Continúa con el pago.`;
     status.className='survey-status ok';
-    btn.textContent='Solicitud guardada ✓';
-    sessionStorage.setItem('evolutionWebRequest',ref.id);
-    sessionStorage.setItem('evolutionWebPlan',selectedPlan.id);
-    setTimeout(()=>{window.location.href=`proyectos.html?webRequest=${encodeURIComponent(ref.id)}`},1500);
+    btn.textContent='Brief guardado ✓';
+    step=6;renderStep();
+    await renderWebPaymentMethods();
   }catch(err){
     console.error(err);
     status.textContent=err?.code==='permission-denied'
-      ?'Tu cuenta está activa, pero Firestore todavía no permite crear solicitudes web.'
-      :'No pudimos guardar la solicitud. Intenta nuevamente.';
+      ?'Firestore rechazó la solicitud. Verifica que hayas publicado las reglas de webRequests.'
+      :'No pudimos guardar el brief. Intenta nuevamente.';
     status.className='survey-status error';
     btn.disabled=false;btn.textContent=old;
   }
