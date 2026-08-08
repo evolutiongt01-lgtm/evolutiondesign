@@ -132,8 +132,8 @@
     .dropdown-menu-ed a:hover,.dropdown-menu-ed a.active { color:#fff; background:rgba(255,255,255,.075); }
 
     /* ---------- MOBILE NAV ---------- */
-    .mobile-nav { position:fixed; inset:0 0 auto 0; z-index:1035; background:rgba(5,5,5,.57); border-bottom:1px solid rgba(255,255,255,.08); -webkit-backdrop-filter:blur(25px) saturate(175%); backdrop-filter:blur(25px) saturate(175%); transition:transform .32s var(--ease); }
-    .mobile-nav.hidden { transform:translateY(-105%); }
+    .mobile-nav { position:fixed; inset:0 0 auto 0; z-index:1035; background:rgba(5,5,5,.57); border-bottom:1px solid rgba(255,255,255,.08); -webkit-backdrop-filter:blur(25px) saturate(175%); backdrop-filter:blur(25px) saturate(175%); transition:transform .42s cubic-bezier(.22,.61,.36,1), box-shadow .28s ease; will-change:transform; }
+    .mobile-nav.hidden { transform:translate3d(0,-112%,0); box-shadow:none !important; }
     .mobile-top { display:grid; grid-template-columns:42px 1fr auto; align-items:center; gap:10px; padding:calc(env(safe-area-inset-top,0px) + 9px) 12px 8px; }
     .mobile-logo { display:flex; justify-content:center; }
     .mobile-logo img { max-height:26px; width:auto; }
@@ -457,8 +457,8 @@
         linear-gradient(112deg, transparent 0 39%, rgba(255,255,255,.055) 46%, rgba(255,255,255,.16) 49%, rgba(255,255,255,.035) 53%, transparent 61%),
         linear-gradient(180deg, rgba(255,255,255,.145) 0%, rgba(255,255,255,.060) 48%, rgba(255,255,255,.025) 100%),
         rgba(42,42,47,.38) !important;
-      -webkit-backdrop-filter: blur(18px) saturate(155%) brightness(1.06) contrast(108%) !important;
-      backdrop-filter: blur(18px) saturate(155%) brightness(1.06) contrast(108%) !important;
+      -webkit-backdrop-filter: blur(42px) saturate(165%) brightness(1.05) contrast(106%) !important;
+      backdrop-filter: blur(42px) saturate(165%) brightness(1.05) contrast(106%) !important;
       border: 1px solid rgba(255,255,255,.30) !important;
       box-shadow:
         0 18px 48px rgba(0,0,0,.30),
@@ -482,8 +482,8 @@
         radial-gradient(75% 105% at 15% -22%, rgba(255,255,255,.28), rgba(255,255,255,.075) 27%, transparent 55%),
         radial-gradient(65% 105% at 90% 128%, rgba(255,255,255,.10), transparent 54%),
         linear-gradient(104deg, transparent 0 54%, rgba(255,255,255,.045) 58%, rgba(255,255,255,.18) 60%, rgba(255,255,255,.035) 64%, transparent 70%);
-      -webkit-backdrop-filter: blur(2.2px) saturate(118%) brightness(1.05);
-      backdrop-filter: blur(2.2px) saturate(118%) brightness(1.05);
+      -webkit-backdrop-filter: blur(5px) saturate(122%) brightness(1.05);
+      backdrop-filter: blur(5px) saturate(122%) brightness(1.05);
       transform: scale(1.008) translate3d(calc(var(--glass-shine-x) * .18),0,0);
       opacity:.96;
       mix-blend-mode:screen;
@@ -544,25 +544,6 @@
       border-color:rgba(255,255,255,.38) !important;
     }
 
-    @media (max-width:991.98px) {
-      .mobile-nav {
-        background:
-          radial-gradient(180px 90px at 50% 0%,rgba(255,255,255,.11),transparent 65%),
-          linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.025)),
-          rgba(32,32,36,.47) !important;
-        -webkit-backdrop-filter:blur(18px) saturate(150%) brightness(1.05) !important;
-        backdrop-filter:blur(18px) saturate(150%) brightness(1.05) !important;
-        border-bottom:1px solid rgba(255,255,255,.22) !important;
-        box-shadow:0 14px 34px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.28) !important;
-      }
-      .mobile-top .icon-btn {
-        background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.04)),rgba(35,35,40,.28) !important;
-        border-color:rgba(255,255,255,.24) !important;
-        -webkit-backdrop-filter:blur(12px) saturate(145%);
-        backdrop-filter:blur(12px) saturate(145%);
-        box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 7px 18px rgba(0,0,0,.14);
-      }
-    }
 
     @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
       .nav-pill { background:rgba(38,38,43,.92) !important; }
@@ -816,19 +797,25 @@
       bindMenu('mobileMenuBtn','mobileDropdownMenu');
 
       const mobileNav = document.getElementById('mobileNav');
-      let lastY = window.scrollY;
       let ticking = false;
+      const syncMobileNav = () => {
+        if (!mobileNav || !window.matchMedia('(max-width: 991.98px)').matches) return;
+        const y = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
+        // Se esconde al abandonar la cabecera y solo vuelve cuando el usuario regresa al inicio.
+        if (y > 110) mobileNav.classList.add('hidden');
+        else if (y < 24) mobileNav.classList.remove('hidden');
+      };
       addEventListener('scroll', () => {
         if (ticking || !mobileNav) return;
         ticking = true;
         requestAnimationFrame(() => {
-          const y = window.scrollY;
-          mobileNav.classList.toggle('hidden', y > 150 && y > lastY + 5);
-          if (y < lastY - 4 || y < 70) mobileNav.classList.remove('hidden');
-          lastY = y;
+          syncMobileNav();
           ticking = false;
         });
       }, {passive:true});
+      addEventListener('pageshow', syncMobileNav, {passive:true});
+      addEventListener('resize', syncMobileNav, {passive:true});
+      syncMobileNav();
 
       const io = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); io.unobserve(entry.target); } }), {threshold:.12});
       document.querySelectorAll('.reveal').forEach(el => io.observe(el));
