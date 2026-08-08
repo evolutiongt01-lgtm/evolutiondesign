@@ -932,137 +932,363 @@
 
   
     /* =========================================================
-       HOME MULTIDISCIPLINARIO + NAVEGACIÓN ENTRE PÁGINAS
-       No modifica la lógica de pagos, Firebase ni autenticación.
+       EVOLUTION DESIGN — HOME + CONTINUIDAD ENTRE PÁGINAS V3
+       Capa 100% visual. No modifica Firebase, pagos ni autenticación.
        ========================================================= */
     @view-transition { navigation: auto; }
 
+    /* Mantiene la barra como un elemento compartido entre documentos. */
+    .desktop-nav,
+    .mobile-app-nav { view-transition-name: evolution-navigation; }
+    main { view-transition-name: evolution-content; }
+
+    ::view-transition-group(evolution-navigation) {
+      z-index: 99999;
+      animation-duration: .44s;
+      animation-timing-function: cubic-bezier(.2,.8,.2,1);
+    }
+    ::view-transition-old(evolution-navigation),
+    ::view-transition-new(evolution-navigation) {
+      mix-blend-mode: normal;
+      animation-duration: .44s;
+    }
+    ::view-transition-group(evolution-nav-indicator) {
+      z-index: 100000;
+      animation-duration: .52s;
+      animation-timing-function: cubic-bezier(.16,1,.3,1);
+    }
+    ::view-transition-old(evolution-nav-indicator),
+    ::view-transition-new(evolution-nav-indicator) {
+      mix-blend-mode: normal;
+    }
+    ::view-transition-old(evolution-content) {
+      animation: evolution-content-out .22s cubic-bezier(.4,0,1,1) both;
+    }
+    ::view-transition-new(evolution-content) {
+      animation: evolution-content-in .48s .04s cubic-bezier(.16,1,.3,1) both;
+    }
     ::view-transition-old(root) {
-      animation: evolution-page-out .18s ease both;
+      animation: evolution-root-out .28s ease both;
     }
     ::view-transition-new(root) {
-      animation: evolution-page-in .32s cubic-bezier(.22,.61,.36,1) both;
-    }
-    @keyframes evolution-page-out {
-      to { opacity: 0; filter: blur(2px); transform: translateY(-2px); }
-    }
-    @keyframes evolution-page-in {
-      from { opacity: 0; filter: blur(3px); transform: translateY(5px); }
-      to { opacity: 1; filter: blur(0); transform: translateY(0); }
+      animation: evolution-root-in .44s ease both;
     }
 
-    /* En Home conservamos todo el DOM arquitectónico para no tocar su lógica,
-       pero su contenido visual vive en arquitectura.html. */
-    body.home-page main > :not(.hero-app) {
-      display: none !important;
+    @keyframes evolution-content-out {
+      to { opacity: 0; transform: translate3d(0,-8px,0) scale(.996); filter: blur(4px); }
     }
+    @keyframes evolution-content-in {
+      from { opacity: 0; transform: translate3d(0,12px,0) scale(.996); filter: blur(5px); }
+      to { opacity: 1; transform: translate3d(0,0,0) scale(1); filter: blur(0); }
+    }
+    @keyframes evolution-root-out { to { background: #050505; } }
+    @keyframes evolution-root-in { from { background: #050505; } }
+
+    /* Indicador real: durante el cambio de documento se desliza de Home a Arquitectura. */
+    .nav-pill-links { position: relative; }
+    .nav-pill-link.active::after,
+    .nav-pill-link.current-area::after { display: none !important; }
+    .evolution-nav-indicator {
+      position: absolute;
+      left: 0;
+      bottom: -7px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #fff, #d4b895);
+      box-shadow: 0 0 16px rgba(212,184,149,.42);
+      pointer-events: none;
+      transform: translate3d(0,0,0);
+      transition: left .42s cubic-bezier(.16,1,.3,1),
+                  width .42s cubic-bezier(.16,1,.3,1),
+                  opacity .2s ease;
+      view-transition-name: evolution-nav-indicator;
+    }
+
+    /* Fallback elegante si el navegador no soporta transición entre documentos. */
+    #evolution-page-curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 200000;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(212,184,149,.08), transparent 26%),
+        #050505;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .20s ease, visibility 0s linear .20s;
+    }
+    #evolution-page-curtain::before {
+      content: '';
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      top: 50%;
+      height: 1px;
+      opacity: 0;
+      transform: scaleX(.15);
+      background: linear-gradient(90deg, transparent, rgba(212,184,149,.9), transparent);
+    }
+    #evolution-page-curtain.is-active {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .20s ease;
+    }
+    #evolution-page-curtain.is-active::before {
+      animation: evolution-curtain-line .42s cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes evolution-curtain-line {
+      0% { opacity: 0; transform: scaleX(.1); }
+      55% { opacity: 1; }
+      100% { opacity: 0; transform: scaleX(1); }
+    }
+
+    .nav-pill-link.current-area,
+    .menu-item.current-area { color: #fff !important; }
+    .tab-item.current-area {
+      color: #fff !important;
+      border-bottom-color: #d4b895 !important;
+    }
+    .tab-item.current-area svg { opacity: 1; transform: scale(1.12); }
+
+    /* =========================================================
+       HOME — dirección visual tipo creative studio premium
+       ========================================================= */
+    body.home-page main > :not(.hero-app) { display: none !important; }
 
     .home-hero {
       min-height: 100vh;
-      background:
-        radial-gradient(circle at 72% 45%, rgba(212,184,149,.10), transparent 28%),
-        linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,.90) 48%, rgba(0,0,0,.32) 100%),
-        url('img/hero-pc.jpg') right center/cover no-repeat;
+      background: #050505 !important;
+      overflow: hidden;
+      isolation: isolate;
     }
+    .home-hero::before {
+      content: '';
+      position: absolute;
+      inset: -4%;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.99) 0%, rgba(0,0,0,.92) 42%, rgba(0,0,0,.40) 72%, rgba(0,0,0,.55) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.55)),
+        url('img/hero-pc.jpg') right center/cover no-repeat;
+      transform: scale(1.035);
+      animation: evolution-home-scene 18s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+    .home-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(580px circle at var(--spot-x, 66%) var(--spot-y, 44%), rgba(212,184,149,.105), transparent 47%),
+        linear-gradient(180deg, transparent 65%, rgba(5,5,5,.72) 100%);
+      transition: background .12s linear;
+    }
+    @keyframes evolution-home-scene {
+      from { transform: scale(1.035) translate3d(0,0,0); filter: saturate(.90) contrast(1.02); }
+      to { transform: scale(1.075) translate3d(-.65%, -.35%, 0); filter: saturate(1) contrast(1.06); }
+    }
+
     .home-hero-content {
-      max-width: 760px !important;
+      max-width: 820px !important;
+      position: relative;
+      z-index: 2;
+    }
+    .home-hero-content::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(212,184,149,.35) 22%, rgba(255,255,255,.10) 68%, transparent);
+      opacity: .65;
     }
     .home-eyebrow {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       margin-bottom: 14px;
-      color: rgba(255,255,255,.52);
-      font-size: .66rem;
+      color: rgba(255,255,255,.58);
+      font-size: .64rem;
       font-weight: 700;
-      letter-spacing: .18em;
+      letter-spacing: .19em;
+      text-transform: uppercase;
     }
+    .home-eyebrow::before {
+      content: '';
+      width: 18px;
+      height: 1px;
+      background: #d4b895;
+      box-shadow: 0 0 10px rgba(212,184,149,.4);
+    }
+    .home-hero-content .display-3 {
+      font-size: clamp(3.2rem, 5.7vw, 6.15rem);
+      letter-spacing: -.055em;
+      line-height: .93 !important;
+      max-width: 790px;
+      text-wrap: balance;
+    }
+    .home-hero-content > p {
+      max-width: 640px;
+      line-height: 1.65;
+    }
+
     .home-division-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 2rem;
+      gap: 11px;
+      margin-top: 2.15rem;
+      perspective: 1200px;
     }
     .home-division-card {
+      --tilt-x: 0deg;
+      --tilt-y: 0deg;
+      --lift: 0px;
       min-width: 0;
-      min-height: 178px;
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.11);
-      background: rgba(12,12,12,.58);
-      backdrop-filter: blur(20px) saturate(140%);
-      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      min-height: 190px;
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.105);
+      background: linear-gradient(145deg, rgba(21,21,21,.70), rgba(9,9,9,.48));
+      backdrop-filter: blur(24px) saturate(145%);
+      -webkit-backdrop-filter: blur(24px) saturate(145%);
       color: #fff !important;
       text-decoration: none !important;
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
-      transition: transform .3s cubic-bezier(.22,.61,.36,1),
-                  border-color .3s ease,
-                  background .3s ease,
-                  box-shadow .3s ease;
+      transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(var(--lift));
+      transform-style: preserve-3d;
+      transition: transform .22s ease-out,
+                  border-color .28s ease,
+                  background .28s ease,
+                  box-shadow .28s ease;
+      will-change: transform;
     }
     .home-division-card::before {
       content: '';
       position: absolute;
-      inset: auto -30% -70% 20%;
-      height: 150px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(212,184,149,.12), transparent 66%);
+      inset: 0;
+      background:
+        radial-gradient(260px circle at var(--card-x, 50%) var(--card-y, 50%), rgba(212,184,149,.14), transparent 52%),
+        linear-gradient(120deg, transparent 30%, rgba(255,255,255,.035), transparent 68%);
+      opacity: .55;
       pointer-events: none;
+      transition: opacity .28s ease;
+    }
+    .home-division-card::after {
+      content: '';
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 0;
+      height: 1px;
+      transform: scaleX(.18);
+      transform-origin: left;
+      background: linear-gradient(90deg, #d4b895, transparent 88%);
+      opacity: .5;
+      transition: transform .36s cubic-bezier(.16,1,.3,1), opacity .25s ease;
     }
     .home-division-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(212,184,149,.52);
-      background: rgba(24,24,24,.78);
-      box-shadow: 0 18px 40px rgba(0,0,0,.34);
+      --lift: -7px;
+      border-color: rgba(212,184,149,.45);
+      background: linear-gradient(145deg, rgba(29,29,29,.82), rgba(10,10,10,.60));
+      box-shadow: 0 22px 54px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.035);
     }
+    .home-division-card:hover::before { opacity: 1; }
+    .home-division-card:hover::after { transform: scaleX(1); opacity: 1; }
     .home-division-index {
       position: absolute;
-      top: 14px;
-      right: 15px;
+      top: 15px;
+      right: 16px;
       color: rgba(255,255,255,.28);
-      font-size: .62rem;
+      font-size: .60rem;
       font-weight: 800;
-      letter-spacing: .08em;
+      letter-spacing: .10em;
     }
     .home-division-icon {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 14px;
+      border-radius: 15px;
       border: 1px solid rgba(212,184,149,.22);
-      background: rgba(212,184,149,.06);
+      background: rgba(212,184,149,.055);
       color: #d4b895;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
+      transform: translateZ(22px);
+      transition: transform .32s cubic-bezier(.16,1,.3,1), background .3s ease;
+    }
+    .home-division-card:hover .home-division-icon {
+      transform: translateZ(28px) scale(1.06);
+      background: rgba(212,184,149,.10);
     }
     .home-division-card strong {
       display: block;
-      font-size: .93rem;
-      margin-bottom: 5px;
+      font-size: .95rem;
+      letter-spacing: -.015em;
+      margin-bottom: 6px;
+      transform: translateZ(16px);
     }
     .home-division-card small {
       display: block;
-      color: rgba(255,255,255,.47);
-      font-size: .66rem;
-      line-height: 1.45;
-      padding-right: 18px;
+      color: rgba(255,255,255,.46);
+      font-size: .65rem;
+      line-height: 1.5;
+      padding-right: 20px;
+      transform: translateZ(12px);
     }
     .home-arrow {
       position: absolute;
-      right: 16px;
-      bottom: 15px;
-      color: rgba(255,255,255,.56);
-      transition: transform .25s ease, color .25s ease;
+      right: 17px;
+      bottom: 16px;
+      color: rgba(255,255,255,.50);
+      font-size: 1.05rem;
+      transition: transform .34s cubic-bezier(.16,1,.3,1), color .25s ease;
+      transform: translateZ(20px);
     }
     .home-division-card:hover .home-arrow {
-      transform: translateX(4px);
+      transform: translate3d(5px,0,24px);
       color: #d4b895;
     }
     .home-trust-badges {
-      max-width: 620px;
-      margin-top: 1.4rem;
+      max-width: 650px;
+      margin-top: 1.35rem;
+      border-color: rgba(255,255,255,.085);
+      background: rgba(6,6,6,.34);
+    }
+
+    /* Entrada escalonada del Home. Se activa por JS después de cargar. */
+    .home-page .home-hero-content > div:first-child,
+    .home-page .home-eyebrow,
+    .home-page .home-hero-content h1,
+    .home-page .home-hero-content > p,
+    .home-page .home-division-grid,
+    .home-page .home-trust-badges {
+      opacity: 0;
+      transform: translate3d(0,16px,0);
+    }
+    .home-page.evolution-ready .home-hero-content > div:first-child { animation: home-reveal .66s .04s cubic-bezier(.16,1,.3,1) forwards; }
+    .home-page.evolution-ready .home-eyebrow { animation: home-reveal .70s .10s cubic-bezier(.16,1,.3,1) forwards; }
+    .home-page.evolution-ready .home-hero-content h1 { animation: home-reveal .78s .16s cubic-bezier(.16,1,.3,1) forwards; }
+    .home-page.evolution-ready .home-hero-content > p { animation: home-reveal .72s .25s cubic-bezier(.16,1,.3,1) forwards; }
+    .home-page.evolution-ready .home-division-grid { animation: home-reveal .76s .32s cubic-bezier(.16,1,.3,1) forwards; }
+    .home-page.evolution-ready .home-trust-badges { animation: home-reveal .72s .43s cubic-bezier(.16,1,.3,1) forwards; }
+    @keyframes home-reveal {
+      from { opacity: 0; transform: translate3d(0,18px,0); filter: blur(5px); }
+      to { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); }
+    }
+
+    @media (min-width: 1200px) and (max-width: 1399.98px) {
+      .nav-pill-links { gap: 1rem; }
+      .nav-pill-link { font-size: .82rem; }
+      .nav-pill { padding-left: 1.1rem; }
+      .home-hero-content .display-3 { font-size: clamp(3.1rem, 5vw, 5.2rem); }
     }
 
     @media (max-width: 991.98px) {
@@ -1071,55 +1297,86 @@
         justify-content: stretch !important;
         gap: 0 !important;
       }
-      .home-page .app-tabs .tab-item {
-        flex: 1 1 0;
-        min-width: 0;
+      .home-page .app-tabs .tab-item { flex: 1 1 0; min-width: 0; }
+      .app-tabs {
+        grid-template-columns: repeat(auto-fit, minmax(64px, 1fr)) !important;
+        gap: 2px;
       }
-      .home-hero {
-        min-height: 100dvh;
+      .tab-item { padding-left: 1px; padding-right: 1px; }
+      .home-hero { min-height: 100dvh; }
+      .home-hero::before {
+        inset: -2%;
         background:
-          linear-gradient(180deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.68) 48%, rgba(0,0,0,.96) 100%),
+          linear-gradient(180deg, rgba(0,0,0,.93) 0%, rgba(0,0,0,.70) 46%, rgba(0,0,0,.96) 100%),
           url('img/hero-movil.jpg') center/cover no-repeat;
+        animation-duration: 20s;
+      }
+      .home-hero::after {
+        background: linear-gradient(180deg, transparent 55%, rgba(5,5,5,.72) 100%);
+      }
+      .home-hero-content::before { display: none; }
+      .home-hero-content .display-3 {
+        font-size: clamp(2.75rem, 11.8vw, 4rem) !important;
+        line-height: .97 !important;
       }
       .home-division-grid {
         grid-template-columns: 1fr;
         gap: 9px;
-        margin-top: 1.6rem;
+        margin-top: 1.55rem;
+        perspective: none;
       }
       .home-division-card {
-        min-height: 92px;
+        min-height: 94px;
         padding: 13px 48px 13px 68px;
         justify-content: center;
+        transform: none !important;
       }
       .home-division-icon {
         position: absolute;
         left: 13px;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-50%) !important;
         width: 42px;
         height: 42px;
         margin: 0;
       }
       .home-division-index { top: 10px; right: 12px; }
-      .home-arrow { right: 15px; bottom: 50%; transform: translateY(50%); }
-      .home-division-card:hover .home-arrow { transform: translate(4px, 50%); }
+      .home-arrow { right: 15px; bottom: 50%; transform: translateY(50%) !important; }
+      .home-division-card:hover .home-arrow { transform: translate(4px, 50%) !important; }
       .home-division-card strong { font-size: .86rem; }
       .home-division-card small { font-size: .62rem; }
-      .home-trust-badges { margin-top: 1.2rem; }
+      .home-trust-badges { margin-top: 1.15rem; }
     }
 
     @media (max-width: 575.98px) {
-      .home-eyebrow { font-size: .58rem; letter-spacing: .13em; }
-      .home-hero-content .display-3 {
-        font-size: clamp(2.45rem, 11.4vw, 3.55rem) !important;
-      }
+      .home-eyebrow { font-size: .56rem; letter-spacing: .13em; }
+      .home-hero-content .display-3 { font-size: clamp(2.55rem, 11.5vw, 3.65rem) !important; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       ::view-transition-old(root),
-      ::view-transition-new(root) { animation: none !important; }
+      ::view-transition-new(root),
+      ::view-transition-old(evolution-content),
+      ::view-transition-new(evolution-content),
+      ::view-transition-group(evolution-navigation),
+      ::view-transition-group(evolution-nav-indicator) { animation-duration: .01ms !important; }
+      #evolution-page-curtain,
+      .evolution-nav-indicator,
       .home-division-card,
+      .home-division-icon,
       .home-arrow { transition: none !important; }
+      .home-hero::before { animation: none !important; }
+      .home-page .home-hero-content > div:first-child,
+      .home-page .home-eyebrow,
+      .home-page .home-hero-content h1,
+      .home-page .home-hero-content > p,
+      .home-page .home-division-grid,
+      .home-page .home-trust-badges {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        animation: none !important;
+      }
     }
 
   </style>
@@ -1178,27 +1435,27 @@
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
               </a>
               <ul class="desktop-dropdown-menu" id="desktopDropdownMenu">
-                <li><a class="menu-item active" href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
-                <li><a class="menu-item" href="arquitectura.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg> Arquitectura</a></li>
-                <li><a class="menu-item" href="diseno-grafico.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg> Diseño Gráfico</a></li>
-                <li><a class="menu-item" href="diseno-web.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path><circle cx="6" cy="5.5" r=".5" fill="currentColor"></circle><circle cx="9" cy="5.5" r=".5" fill="currentColor"></circle></svg> Diseño Web</a></li>
+                <li><a class="menu-item current-area active" href="index.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
+                <li><a class="menu-item" href="arquitectura.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg> Arquitectura</a></li>
+                <li><a class="menu-item" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg> Diseño Gráfico</a></li>
+                <li><a class="menu-item" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path><circle cx="6" cy="5.5" r=".5" fill="currentColor"></circle><circle cx="9" cy="5.5" r=".5" fill="currentColor"></circle></svg> Diseño Web</a></li>
                 <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
                 <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
                 <!-- Solo aparece al iniciar sesión -->
                 <li id="linkProyectosMenuDesktop" class="d-none"><a class="menu-item" href="proyectos.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
               </ul>
             </div>
-            <a href="index.html" class="d-flex align-items-center"><img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;" loading="lazy"></a>
+            <a href="index.html" data-evolution-nav class="d-flex align-items-center"><img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;" loading="lazy"></a>
             
             <!-- BOTÓN ADMIN FLOTANDO EXACTAMENTE DEBAJO DEL LOGO (MAC) -->
             <div id="admin-badge-container-desktop" style="position: absolute; top: calc(100% + 5px); left: 3.5rem; z-index: 10;"></div>
           </div>
 
           <div class="nav-pill-links d-none d-xl-flex">
-            <a href="index.html" class="nav-pill-link active">Home</a>
-            <a href="arquitectura.html" class="nav-pill-link">Arquitectura</a>
-            <a href="diseno-grafico.html" class="nav-pill-link">Diseño Gráfico</a>
-            <a href="diseno-web.html" class="nav-pill-link">Diseño Web</a>
+            <a href="index.html" data-evolution-nav class="nav-pill-link current-area active" aria-current="page">Home</a>
+            <a href="arquitectura.html" data-evolution-nav class="nav-pill-link">Arquitectura</a>
+            <a href="diseno-grafico.html" data-evolution-nav class="nav-pill-link">Diseño Gráfico</a>
+            <a href="diseno-web.html" data-evolution-nav class="nav-pill-link">Diseño Web</a>
 
             <!-- ENLACE A MIS PROYECTOS (SE MOSTRARÁ AL INICIAR SESIÓN) -->
             <a href="proyectos.html" class="nav-pill-link d-none" id="linkProyectosDesktop" style="white-space: nowrap; color: #fff;">Mis Proyectos</a>
@@ -1225,15 +1482,15 @@
       <div style="position: relative;">
         <a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg></a>
         <ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
-          <li><a class="menu-item active" href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
-          <li><a class="menu-item" href="arquitectura.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg> Arquitectura</a></li>
-          <li><a class="menu-item" href="diseno-grafico.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path></svg> Diseño Gráfico</a></li>
-          <li><a class="menu-item" href="diseno-web.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path></svg> Diseño Web</a></li>
+          <li><a class="menu-item current-area active" href="index.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
+          <li><a class="menu-item" href="arquitectura.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg> Arquitectura</a></li>
+          <li><a class="menu-item" href="diseno-grafico.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path></svg> Diseño Gráfico</a></li>
+          <li><a class="menu-item" href="diseno-web.html" data-evolution-nav><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path></svg> Diseño Web</a></li>
           <li><a class="menu-item" href="sobre-nosotros"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Sobre Nosotros</a></li>
           <li><a class="menu-item" href="feedback"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
         </ul>
       </div>
-      <a href="index.html"><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;" loading="lazy"></a>
+      <a href="index.html" data-evolution-nav><img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;" loading="lazy"></a>
       <!-- CONTENEDOR LOGIN Y PERFIL MÓVIL -->
       <div id="auth-mobile-wrapper" class="d-flex align-items-center">
           <a href="#" onclick="abrirAuthModal(); return false;" class="icon-btn" aria-label="Login">
@@ -1242,10 +1499,10 @@
       </div>
     </div>
     <div class="app-tabs">
-      <a href="index.html" class="tab-item active"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Home</a>
-      <a href="arquitectura.html" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg>Arquitectura</a>
-      <a href="diseno-grafico.html" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path></svg>Gráfico</a>
-      <a href="diseno-web.html" class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path></svg>Web</a>
+      <a href="index.html" data-evolution-nav class="tab-item current-area active" aria-current="page"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Home</a>
+      <a href="arquitectura.html" data-evolution-nav class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg>Arquitectura</a>
+      <a href="diseno-grafico.html" data-evolution-nav class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path></svg>Gráfico</a>
+      <a href="diseno-web.html" data-evolution-nav class="tab-item"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path></svg>Web</a>
       <a href="proyectos.html" class="tab-item d-none" id="linkProyectosMobile"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>Proyectos</a>
     </div>
   </nav>
@@ -1260,7 +1517,7 @@
         <p class="fs-5 text-light mb-0" style="color: #a1a1aa !important;">Arquitectura, diseño gráfico y experiencias web reunidas en un solo estudio creativo.</p>
 
         <div class="home-division-grid">
-          <a href="arquitectura.html" class="home-division-card">
+          <a href="arquitectura.html" data-evolution-nav class="home-division-card">
             <span class="home-division-index">01</span>
             <div class="home-division-icon"><svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg></div>
             <div>
@@ -1270,7 +1527,7 @@
             <span class="home-arrow">→</span>
           </a>
 
-          <a href="diseno-grafico.html" class="home-division-card">
+          <a href="diseno-grafico.html" data-evolution-nav class="home-division-card">
             <span class="home-division-index">02</span>
             <div class="home-division-icon"><svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"></path><circle cx="11" cy="11" r="2"></circle></svg></div>
             <div>
@@ -1280,7 +1537,7 @@
             <span class="home-arrow">→</span>
           </a>
 
-          <a href="diseno-web.html" class="home-division-card">
+          <a href="diseno-web.html" data-evolution-nav class="home-division-card">
             <span class="home-division-index">03</span>
             <div class="home-division-icon"><svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"></rect><path d="M2 8h20"></path><path d="M7 13h4M7 17h8M15 13h2"></path></svg></div>
             <div>
@@ -2111,7 +2368,7 @@
     <div class="container text-secondary fw-lighter">
       <div class="row g-4">
         <div class="col-12 col-lg-5 text-center text-lg-start">
-          <a href="index.html"><img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;" class="mb-3" loading="lazy"></a>
+          <a href="index.html" data-evolution-nav><img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;" class="mb-3" loading="lazy"></a>
           <p class="small">Espacios, marcas y experiencias digitales que evolucionan contigo.</p>
           <div class="d-flex justify-content-center justify-content-lg-start mt-4">
             <a href="https://www.facebook.com/evolutiondesing.gt" target="_blank" class="text-secondary text-decoration-none" aria-label="Facebook" style="margin-right: 25px;"><svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg></a>
@@ -3865,5 +4122,126 @@
   <script src="js/bootstrap.bundle.min.js" defer></script>
   <script src="js/aos.js" defer></script>
   <script> document.addEventListener("DOMContentLoaded", function() { AOS.init({ duration: 800 }); }); </script>
+
+  <!-- EVOLUTION DESIGN: continuidad visual entre áreas (solo UI) -->
+  <div id="evolution-page-curtain" aria-hidden="true"></div>
+  <script>
+    (function () {
+      const curtain = document.getElementById('evolution-page-curtain');
+      const prefetched = new Set();
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const supportsCrossDocumentVT = ('onpageswap' in window) && ('onpagereveal' in window);
+
+      function urlFor(anchor) {
+        try { return new URL(anchor.href, window.location.href); } catch (_) { return null; }
+      }
+      function isSameDocument(url) {
+        return url && url.origin === window.location.origin &&
+               url.pathname === window.location.pathname &&
+               url.search === window.location.search;
+      }
+      function prefetch(anchor) {
+        const url = urlFor(anchor);
+        if (!url || url.origin !== window.location.origin || isSameDocument(url) || prefetched.has(url.href)) return;
+        prefetched.add(url.href);
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url.href;
+        link.as = 'document';
+        document.head.appendChild(link);
+      }
+
+      /* Indicador deslizante real del nav. */
+      const navLinksWrap = document.querySelector('.desktop-nav .nav-pill-links');
+      let indicator = null;
+      let activeLink = null;
+      function placeIndicator(link, immediate) {
+        if (!navLinksWrap || !indicator || !link || link.offsetParent === null) return;
+        const wrapBox = navLinksWrap.getBoundingClientRect();
+        const box = link.getBoundingClientRect();
+        if (immediate) indicator.style.transition = 'none';
+        indicator.style.left = (box.left - wrapBox.left) + 'px';
+        indicator.style.width = box.width + 'px';
+        indicator.style.opacity = '1';
+        if (immediate) requestAnimationFrame(() => { indicator.style.transition = ''; });
+      }
+      if (navLinksWrap) {
+        indicator = document.createElement('span');
+        indicator.className = 'evolution-nav-indicator';
+        indicator.setAttribute('aria-hidden', 'true');
+        navLinksWrap.appendChild(indicator);
+        activeLink = navLinksWrap.querySelector('.current-area, .active');
+        requestAnimationFrame(() => placeIndicator(activeLink, true));
+        navLinksWrap.querySelectorAll('.nav-pill-link').forEach(link => {
+          link.addEventListener('pointerenter', () => placeIndicator(link, false), { passive: true });
+        });
+        navLinksWrap.addEventListener('pointerleave', () => placeIndicator(activeLink, false), { passive: true });
+        window.addEventListener('resize', () => placeIndicator(activeLink, true), { passive: true });
+      }
+
+      /* Precarga + fallback suave para navegadores sin View Transitions entre documentos. */
+      const links = Array.from(document.querySelectorAll('a[data-evolution-nav]'));
+      links.forEach((anchor) => {
+        anchor.addEventListener('pointerenter', () => prefetch(anchor), { passive: true });
+        anchor.addEventListener('touchstart', () => prefetch(anchor), { passive: true, once: true });
+        anchor.addEventListener('click', (event) => {
+          if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          if (anchor.target && anchor.target !== '_self') return;
+          const url = urlFor(anchor);
+          if (!url || url.origin !== window.location.origin || isSameDocument(url)) return;
+
+          /* Chrome moderno usa la transición nativa compartida. */
+          if (supportsCrossDocumentVT && !reduceMotion) return;
+
+          event.preventDefault();
+          document.body.classList.remove('evolution-ready');
+          if (curtain && !reduceMotion) curtain.classList.add('is-active');
+          window.setTimeout(() => { window.location.href = url.href; }, reduceMotion ? 0 : 185);
+        });
+      });
+
+      /* Home: spotlight del cursor y tilt muy sutil de las disciplinas. */
+      const homeHero = document.querySelector('.home-hero');
+      if (homeHero && !reduceMotion && window.matchMedia('(pointer:fine)').matches) {
+        homeHero.addEventListener('pointermove', (event) => {
+          const rect = homeHero.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width) * 100;
+          const y = ((event.clientY - rect.top) / rect.height) * 100;
+          homeHero.style.setProperty('--spot-x', x.toFixed(2) + '%');
+          homeHero.style.setProperty('--spot-y', y.toFixed(2) + '%');
+        }, { passive: true });
+
+        document.querySelectorAll('.home-division-card').forEach(card => {
+          card.addEventListener('pointermove', (event) => {
+            const r = card.getBoundingClientRect();
+            const px = (event.clientX - r.left) / r.width;
+            const py = (event.clientY - r.top) / r.height;
+            card.style.setProperty('--card-x', (px * 100).toFixed(1) + '%');
+            card.style.setProperty('--card-y', (py * 100).toFixed(1) + '%');
+            card.style.setProperty('--tilt-y', ((px - .5) * 4.5).toFixed(2) + 'deg');
+            card.style.setProperty('--tilt-x', ((.5 - py) * 4).toFixed(2) + 'deg');
+          }, { passive: true });
+          card.addEventListener('pointerleave', () => {
+            card.style.setProperty('--tilt-x', '0deg');
+            card.style.setProperty('--tilt-y', '0deg');
+          }, { passive: true });
+        });
+      }
+
+      function revealPage() {
+        if (curtain) curtain.classList.remove('is-active');
+        requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('evolution-ready')));
+        requestAnimationFrame(() => placeIndicator(activeLink, true));
+      }
+      window.addEventListener('pageshow', revealPage);
+      window.addEventListener('pagereveal', revealPage);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', revealPage, { once: true });
+      } else {
+        revealPage();
+      }
+    })();
+  </script>
+
 </body>
 </html>
