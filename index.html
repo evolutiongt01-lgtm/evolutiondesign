@@ -442,80 +442,131 @@
   
 
     /* =========================================================
-       IOS 26 LIQUID GLASS — navegación premium
-       Recupera el acabado de la versión anterior sin tocar layout ni lógica.
+       LIQUID GLASS OPTICAL — navegación tipo lente / iOS
+       Más cuerpo, refracción visual, borde óptico y reflejo dinámico.
        ========================================================= */
     .nav-pill {
+      --glass-x: 50%;
+      --glass-y: 18%;
+      --glass-shine-x: 0px;
       position: relative;
       overflow: hidden;
+      isolation: isolate;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.060), rgba(255,255,255,.016)),
-        rgba(5,5,7,.26) !important;
-      -webkit-backdrop-filter: blur(32px) saturate(190%) contrast(108%) !important;
-      backdrop-filter: blur(32px) saturate(190%) contrast(108%) !important;
-      border: 1px solid rgba(255,255,255,.15) !important;
+        radial-gradient(220px 120px at var(--glass-x) var(--glass-y), rgba(255,255,255,.16), rgba(255,255,255,.055) 34%, transparent 68%),
+        linear-gradient(112deg, transparent 0 39%, rgba(255,255,255,.055) 46%, rgba(255,255,255,.16) 49%, rgba(255,255,255,.035) 53%, transparent 61%),
+        linear-gradient(180deg, rgba(255,255,255,.145) 0%, rgba(255,255,255,.060) 48%, rgba(255,255,255,.025) 100%),
+        rgba(42,42,47,.38) !important;
+      -webkit-backdrop-filter: blur(18px) saturate(155%) brightness(1.06) contrast(108%) !important;
+      backdrop-filter: blur(18px) saturate(155%) brightness(1.06) contrast(108%) !important;
+      border: 1px solid rgba(255,255,255,.30) !important;
       box-shadow:
-        0 18px 48px rgba(0,0,0,.27),
-        inset 0 1px 0 rgba(255,255,255,.17),
-        inset 0 -1px 0 rgba(255,255,255,.035) !important;
+        0 18px 48px rgba(0,0,0,.30),
+        0 2px 8px rgba(0,0,0,.12),
+        inset 0 1px 0 rgba(255,255,255,.62),
+        inset 0 -1px 0 rgba(255,255,255,.12),
+        inset 1px 0 0 rgba(255,255,255,.13),
+        inset -1px 0 0 rgba(255,255,255,.10) !important;
+      transition: background .22s ease, border-color .22s ease, box-shadow .22s ease;
     }
+
+    /* Capa que imita la refracción/curvatura de una lente de vidrio. */
     .nav-pill::before {
+      content:"";
+      position:absolute;
+      inset:-9% -1%;
+      border-radius:inherit;
+      pointer-events:none;
+      z-index:0;
+      background:
+        radial-gradient(75% 105% at 15% -22%, rgba(255,255,255,.28), rgba(255,255,255,.075) 27%, transparent 55%),
+        radial-gradient(65% 105% at 90% 128%, rgba(255,255,255,.10), transparent 54%),
+        linear-gradient(104deg, transparent 0 54%, rgba(255,255,255,.045) 58%, rgba(255,255,255,.18) 60%, rgba(255,255,255,.035) 64%, transparent 70%);
+      -webkit-backdrop-filter: blur(2.2px) saturate(118%) brightness(1.05);
+      backdrop-filter: blur(2.2px) saturate(118%) brightness(1.05);
+      transform: scale(1.008) translate3d(calc(var(--glass-shine-x) * .18),0,0);
+      opacity:.96;
+      mix-blend-mode:screen;
+    }
+
+    /* Borde óptico: el contorno claro hace que parezca vidrio grueso. */
+    .nav-pill::after {
       content:"";
       position:absolute;
       inset:1px;
       border-radius:inherit;
       pointer-events:none;
       z-index:0;
-      background:
-        radial-gradient(72% 120% at 12% -32%, rgba(255,255,255,.16), transparent 42%),
-        radial-gradient(55% 90% at 88% 130%, rgba(212,184,149,.055), transparent 52%),
-        linear-gradient(115deg, rgba(255,255,255,.045), transparent 34%, rgba(212,184,149,.03) 68%, transparent);
-      opacity:.92;
+      padding:1px;
+      background:linear-gradient(115deg,
+        rgba(255,255,255,.88) 0%,
+        rgba(255,255,255,.22) 14%,
+        rgba(255,255,255,.055) 42%,
+        rgba(255,255,255,.10) 66%,
+        rgba(255,255,255,.66) 100%);
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      opacity:.72;
     }
-    .nav-pill::after {
-      content:"";
-      position:absolute;
-      left:7%;
-      right:7%;
-      top:1px;
-      height:1px;
-      pointer-events:none;
-      z-index:0;
-      background:linear-gradient(90deg,transparent,rgba(255,255,255,.36),transparent);
-      opacity:.76;
-    }
+
     .nav-pill > * { position:relative; z-index:1; }
+
+    .nav-pill:hover {
+      border-color:rgba(255,255,255,.38) !important;
+      box-shadow:
+        0 20px 54px rgba(0,0,0,.31),
+        0 2px 10px rgba(0,0,0,.13),
+        inset 0 1px 0 rgba(255,255,255,.72),
+        inset 0 -1px 0 rgba(255,255,255,.14),
+        inset 1px 0 0 rgba(255,255,255,.16),
+        inset -1px 0 0 rgba(255,255,255,.12) !important;
+    }
 
     .nav-pill .icon-btn,
     .floating-profile {
-      background:rgba(255,255,255,.042) !important;
-      border-color:rgba(255,255,255,.15) !important;
-      -webkit-backdrop-filter:blur(20px) saturate(175%);
-      backdrop-filter:blur(20px) saturate(175%);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 8px 24px rgba(0,0,0,.12);
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.035)),
+        rgba(35,35,40,.30) !important;
+      border-color:rgba(255,255,255,.26) !important;
+      -webkit-backdrop-filter:blur(12px) saturate(145%) brightness(1.06);
+      backdrop-filter:blur(12px) saturate(145%) brightness(1.06);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.46),
+        inset 0 -1px 0 rgba(255,255,255,.08),
+        0 8px 24px rgba(0,0,0,.14);
     }
+
     .nav-pill .icon-btn:hover {
-      background:rgba(255,255,255,.10) !important;
-      border-color:rgba(255,255,255,.25) !important;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 10px 26px rgba(0,0,0,.16);
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.07)),
+        rgba(44,44,48,.34) !important;
+      border-color:rgba(255,255,255,.38) !important;
     }
 
     @media (max-width:991.98px) {
       .mobile-nav {
         background:
-          linear-gradient(180deg,rgba(255,255,255,.040),rgba(255,255,255,.010)),
-          rgba(4,4,6,.34) !important;
-        -webkit-backdrop-filter:blur(29px) saturate(190%) contrast(106%) !important;
-        backdrop-filter:blur(29px) saturate(190%) contrast(106%) !important;
-        border-bottom:1px solid rgba(255,255,255,.10) !important;
-        box-shadow:0 14px 34px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.08) !important;
+          radial-gradient(180px 90px at 50% 0%,rgba(255,255,255,.11),transparent 65%),
+          linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.025)),
+          rgba(32,32,36,.47) !important;
+        -webkit-backdrop-filter:blur(18px) saturate(150%) brightness(1.05) !important;
+        backdrop-filter:blur(18px) saturate(150%) brightness(1.05) !important;
+        border-bottom:1px solid rgba(255,255,255,.22) !important;
+        box-shadow:0 14px 34px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.28) !important;
       }
       .mobile-top .icon-btn {
-        background:rgba(255,255,255,.045) !important;
-        border-color:rgba(255,255,255,.14) !important;
-        -webkit-backdrop-filter:blur(18px) saturate(170%);
-        backdrop-filter:blur(18px) saturate(170%);
+        background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.04)),rgba(35,35,40,.28) !important;
+        border-color:rgba(255,255,255,.24) !important;
+        -webkit-backdrop-filter:blur(12px) saturate(145%);
+        backdrop-filter:blur(12px) saturate(145%);
+        box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 7px 18px rgba(0,0,0,.14);
       }
+    }
+
+    @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+      .nav-pill { background:rgba(38,38,43,.92) !important; }
+      .mobile-nav { background:rgba(20,20,23,.95) !important; }
     }
 
   </style>
@@ -941,5 +992,28 @@
       if (mobAuth) mobAuth.innerHTML=`<div class="mobile-auth-actions"><a href="perfil.html" class="mobile-profile-link" aria-label="Mi perfil"><img src="${photo}" alt="Perfil"></a>${isAdmin?'<a href="admin.html" class="mobile-auth-action" aria-label="Panel Admin"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></a>':''}<a href="#" onclick="cerrarSesionGlobal();return false;" class="mobile-auth-action" aria-label="Cerrar sesión"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M17 16l4-4-4-4M21 12H7M13 16v1a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1"/></svg></a></div>`;
     });
   </script>
+
+  <script>
+    /* Reflejo óptico sutil en la barra: solo desktop con puntero fino. */
+    (() => {
+      const glass = document.querySelector('.nav-pill');
+      if (!glass || !window.matchMedia('(pointer:fine)').matches) return;
+      const reset = () => {
+        glass.style.setProperty('--glass-x','50%');
+        glass.style.setProperty('--glass-y','18%');
+        glass.style.setProperty('--glass-shine-x','0px');
+      };
+      glass.addEventListener('pointermove', (e) => {
+        const r = glass.getBoundingClientRect();
+        const x = Math.max(0, Math.min(1, (e.clientX-r.left)/r.width));
+        const y = Math.max(0, Math.min(1, (e.clientY-r.top)/r.height));
+        glass.style.setProperty('--glass-x', `${(x*100).toFixed(1)}%`);
+        glass.style.setProperty('--glass-y', `${(y*100).toFixed(1)}%`);
+        glass.style.setProperty('--glass-shine-x', `${((x-.5)*34).toFixed(1)}px`);
+      }, {passive:true});
+      glass.addEventListener('pointerleave', reset, {passive:true});
+    })();
+  </script>
+
 </body>
 </html>
