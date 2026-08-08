@@ -1054,7 +1054,6 @@
     /* =========================================================
        HOME — dirección visual tipo creative studio premium
        ========================================================= */
-    body.home-page main > :not(.hero-app) { display: none !important; }
 
     .home-hero {
       min-height: 100vh;
@@ -1385,7 +1384,19 @@
   <script>
     (function(){
       var path = (window.location.pathname || '').toLowerCase();
-      document.documentElement.dataset.evolutionView = /\/arquitectura(?:\.html)?\/?$/.test(path) ? 'architecture' : 'home';
+      var isArchitecture = /\/arquitectura(?:\.html)?\/?$/.test(path);
+      document.documentElement.dataset.evolutionView = isArchitecture ? 'architecture' : 'home';
+
+      /*
+        IMPORTANTE EN arquitectura.html:
+        los navegadores pueden restaurar la posición anterior antes/después de pintar
+        el documento. La anulamos desde HEAD para que un refresh siempre abra arriba.
+      */
+      if (isArchitecture) {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        document.documentElement.style.scrollBehavior = 'auto';
+        window.scrollTo(0, 0);
+      }
     })();
   </script>
   <style>
@@ -4408,7 +4419,17 @@
           switchNow();
           body.classList.remove('evolution-internal-switch');
           body.classList.add('evolution-internal-enter');
-          window.setTimeout(() => body.classList.remove('evolution-internal-enter'), 540);
+
+          /* Reafirma el top después de que desaparece el Home y aparece Arquitectura.
+             Esto evita el salto al pie de página por focus/layout restoration. */
+          requestAnimationFrame(forceTopAfterViewChange);
+          window.setTimeout(forceTopAfterViewChange, 80);
+          window.setTimeout(forceTopAfterViewChange, 260);
+
+          window.setTimeout(() => {
+            body.classList.remove('evolution-internal-enter');
+            forceTopAfterViewChange();
+          }, 540);
         }, 170);
       }
 
@@ -4428,6 +4449,16 @@
 
         event.preventDefault();
         event.stopImmediatePropagation();
+
+        /* Si el enlace que recibió foco va a ocultarse (p. ej. tarjeta del Home),
+           quitamos el foco ANTES del cambio. Chrome/Safari pueden intentar mantener
+           visible el elemento enfocado y terminar desplazando la página al footer. */
+        try {
+          if (document.activeElement && typeof document.activeElement.blur === 'function') {
+            document.activeElement.blur();
+          }
+        } catch (_) {}
+
         applyView(targetView, { push: (root.dataset.evolutionView !== targetView) });
       }, true);
 
@@ -4441,6 +4472,37 @@
       setNavState(initial);
       setMediaState(initial);
       history.replaceState({ evolutionView: initial }, '', location.href);
+
+      /*
+        FIX arquitectura.html: al abrir o RECARGAR esta URL siempre inicia arriba.
+        pageshow ocurre después de la restauración de scroll del navegador, por eso
+        repetimos el reset después de que el layout ya quedó estable.
+      */
+      if (initial === 'architecture') {
+        const resetArchitectureTop = () => {
+          const previousBehavior = root.style.scrollBehavior;
+          root.style.scrollBehavior = 'auto';
+          window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+          if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+          body.scrollTop = 0;
+          requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+            if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+            body.scrollTop = 0;
+            root.style.scrollBehavior = previousBehavior;
+          });
+        };
+
+        resetArchitectureTop();
+        document.addEventListener('DOMContentLoaded', resetArchitectureTop, { once: true });
+        window.addEventListener('load', resetArchitectureTop, { once: true });
+        window.addEventListener('pageshow', () => {
+          resetArchitectureTop();
+          setTimeout(resetArchitectureTop, 0);
+          setTimeout(resetArchitectureTop, 80);
+          setTimeout(resetArchitectureTop, 220);
+        });
+      }
     })();
   </script>
 
