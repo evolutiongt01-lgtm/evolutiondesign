@@ -1340,6 +1340,34 @@
   .receipt-image-card img{min-height:210px;max-height:390px}
 }
 
+
+/* INFO MÍNIMA · Diseño Web / Suscripciones */
+.service-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.service-mini-card{overflow:hidden;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.012));box-shadow:0 18px 48px rgba(0,0,0,.20)}
+.service-mini-receipt{min-height:230px;background:#080809;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line-soft);overflow:hidden}
+.service-mini-receipt img{display:block;width:100%;height:100%;min-height:230px;max-height:390px;object-fit:contain;background:#080809}
+.service-mini-receipt-empty{padding:2rem;color:#67676d;font-size:.68rem;text-align:center}
+.service-mini-body{padding:1rem}
+.service-mini-title{margin:0 0 .75rem;color:#fff;font-size:.84rem;font-weight:750;letter-spacing:-.02em}
+.service-mini-meta{display:grid;gap:.55rem}
+.service-mini-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:.58rem 0;border-bottom:1px solid rgba(255,255,255,.055)}
+.service-mini-row:last-child{border-bottom:0}
+.service-mini-row span{color:var(--muted);font-size:.63rem}
+.service-mini-row strong{max-width:62%;color:#f1f1ef;font-size:.68rem;font-weight:650;text-align:right;overflow-wrap:anywhere}
+.service-mini-row strong.accent{color:var(--accent)}
+.subscription-cancel-btn{width:100%;min-height:44px;margin-top:.9rem;border:1px solid rgba(255,102,115,.20);border-radius:12px;background:rgba(255,102,115,.05);color:#ff929b;font-size:.68rem;font-weight:750;cursor:pointer;transition:.2s ease}
+.subscription-cancel-btn:hover{background:rgba(255,102,115,.10);border-color:rgba(255,102,115,.34)}
+.subscription-cancel-btn:disabled{opacity:.55;cursor:not-allowed}
+.subscription-cancel-note{min-height:18px;margin-top:.6rem;color:var(--muted);font-size:.61rem;line-height:1.45;text-align:center}
+.subscription-cancel-note.ok{color:#61dc90}.subscription-cancel-note.error{color:#ff8b95}
+@media(max-width:800px){.service-mini-grid{grid-template-columns:1fr}}
+@media(max-width:575.98px){
+  .service-mini-card{border-radius:16px}
+  .service-mini-receipt{min-height:200px}
+  .service-mini-receipt img{min-height:200px;max-height:340px}
+  .service-mini-body{padding:.9rem}
+}
+
 </style>
   </head>
 
@@ -1398,13 +1426,13 @@
           </section>
 
           <section id="portal-area-web" class="portal-area">
-            <div class="portal-area-head"><h2 class="portal-area-title">Diseño Web</h2><p class="portal-area-copy">Comprobantes asociados a tus pagos de Diseño Web.</p></div>
-            <div id="web-receipts-container" class="receipt-only-grid"><div class="receipt-loading">Cargando comprobantes…</div></div>
+            <div class="portal-area-head"><h2 class="portal-area-title">Diseño Web</h2><p class="portal-area-copy">Comprobante, diseñador asignado, entrega estimada y contacto registrado.</p></div>
+            <div id="web-receipts-container" class="service-mini-grid"><div class="receipt-loading">Cargando comprobantes…</div></div>
           </section>
 
           <section id="portal-area-subscriptions" class="portal-area">
-            <div class="portal-area-head"><h2 class="portal-area-title">Suscripciones</h2><p class="portal-area-copy">Comprobantes asociados a tus pagos de suscripción.</p></div>
-            <div id="subscription-receipts-container" class="receipt-only-grid"><div class="receipt-loading">Cargando comprobantes…</div></div>
+            <div class="portal-area-head"><h2 class="portal-area-title">Suscripciones</h2><p class="portal-area-copy">Comprobante, método de pago, próxima renovación y control de membresía.</p></div>
+            <div id="subscription-receipts-container" class="service-mini-grid"><div class="receipt-loading">Cargando comprobantes…</div></div>
           </section>
         </div>
       </div>
@@ -1517,6 +1545,153 @@
         host.innerHTML=htmlReceipts.length?htmlReceipts.join(''):`<div class="receipt-empty">${esc(emptyCopy)}</div>`;
         return htmlReceipts.length;
       }
+
+      function addPortalBusinessDays(start,days=4){
+        const d=dateValue(start);
+        if(!d)return null;
+        const out=new Date(d);
+        let left=Math.max(0,Number(days)||0);
+        while(left>0){
+          out.setDate(out.getDate()+1);
+          if(out.getDay()!==0&&out.getDay()!==6)left--;
+        }
+        return out;
+      }
+
+      function webDeliveryPortal(p){
+        if(p?.estimatedDeliveryAt)return dateTimeText(p.estimatedDeliveryAt);
+        const calculated=addPortalBusinessDays(p?.paidAt||p?.paymentVerifiedAt,Number(p?.estimatedBusinessDays||4));
+        return calculated?dateText(calculated):'Pendiente';
+      }
+
+      function firstReceiptImage(record){
+        const receipt=receiptEntries(record)[0];
+        if(!receipt||!s3)return '';
+        try{
+          return s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:receipt.storagePath,Expires:300});
+        }catch(e){console.error('Comprobante:',e);return'';}
+      }
+
+      function renderWebProjectsMinimal(projects){
+        const host=document.getElementById('web-receipts-container');
+        if(!host)return 0;
+        if(!projects?.length){
+          host.innerHTML='<div class="receipt-empty">Aún no tienes proyectos de Diseño Web.</div>';
+          return 0;
+        }
+
+        host.innerHTML=projects.map(p=>{
+          const receiptUrl=firstReceiptImage(p);
+          const designer=p.architectName&&p.architectName!=='Pendiente'?p.architectName:'Pendiente de asignar';
+          const role=String(p.professionalRole||'').toLowerCase().includes('web')?p.professionalRole:'Desarrollador Web Full-Stack';
+          const contact=p?.webBrief?.phone||p?.phone||p?.payerPhone||'No registrado';
+          const delivery=webDeliveryPortal(p);
+          return `<article class="service-mini-card">
+            <div class="service-mini-receipt">
+              ${receiptUrl?`<img src="${esc(receiptUrl)}" alt="Comprobante de pago de Diseño Web" loading="lazy">`:`<div class="service-mini-receipt-empty">Este pago no tiene una imagen de comprobante asociada.</div>`}
+            </div>
+            <div class="service-mini-body">
+              <h3 class="service-mini-title">Diseño Web</h3>
+              <div class="service-mini-meta">
+                <div class="service-mini-row"><span>Diseñador</span><strong>${esc(designer)}</strong></div>
+                <div class="service-mini-row"><span>Especialidad</span><strong>${esc(role)}</strong></div>
+                <div class="service-mini-row"><span>Entrega estimada</span><strong class="accent">${esc(delivery)}</strong></div>
+                <div class="service-mini-row"><span>Contacto del cliente</span><strong>${esc(contact)}</strong></div>
+              </div>
+            </div>
+          </article>`;
+        }).join('');
+        return projects.length;
+      }
+
+      function subscriptionRenewalText(s){
+        const value=s?.currentPeriodEnd||s?.nextPaymentAt||s?.expiresAt;
+        return value?dateText(value):'Sin fecha programada';
+      }
+
+      function subscriptionPaymentMethod(s){
+        return s?.paymentMethod||s?.provider||s?.paymentProvider||'No registrado';
+      }
+
+      function renderSubscriptionsMinimal(subscriptions){
+        const host=document.getElementById('subscription-receipts-container');
+        if(!host)return 0;
+        if(!subscriptions?.length){
+          host.innerHTML='<div class="receipt-empty">Aún no tienes suscripciones registradas.</div>';
+          return 0;
+        }
+
+        host.innerHTML=subscriptions.map(s=>{
+          const receiptUrl=firstReceiptImage(s);
+          const status=String(s.status||'active').toLowerCase();
+          const cancelled=status==='cancelled'||status==='expired'||s.cancelAtPeriodEnd===true||s.cancellationRequested===true;
+          const btnLabel=cancelled?'Cancelación solicitada':'Cancelar membresía';
+          return `<article class="service-mini-card">
+            <div class="service-mini-receipt">
+              ${receiptUrl?`<img src="${esc(receiptUrl)}" alt="Comprobante de suscripción" loading="lazy">`:`<div class="service-mini-receipt-empty">Esta suscripción no tiene una imagen de comprobante asociada.</div>`}
+            </div>
+            <div class="service-mini-body">
+              <h3 class="service-mini-title">${esc(s.planName||'Evolution PSD')}</h3>
+              <div class="service-mini-meta">
+                <div class="service-mini-row"><span>Método de pago</span><strong>${esc(subscriptionPaymentMethod(s))}</strong></div>
+                <div class="service-mini-row"><span>Próxima renovación</span><strong class="accent">${esc(subscriptionRenewalText(s))}</strong></div>
+              </div>
+              <button type="button" class="subscription-cancel-btn" ${cancelled?'disabled':''} onclick="cancelMembership('${esc(s.id)}',this)">${esc(btnLabel)}</button>
+              <div class="subscription-cancel-note" id="cancel-note-${safeId(s.id)}">${cancelled?'La membresía ya tiene una cancelación registrada.':''}</div>
+            </div>
+          </article>`;
+        }).join('');
+        return subscriptions.length;
+      }
+
+      window.cancelMembership=async function(subscriptionId,button){
+        const user=auth.currentUser;
+        if(!user||!subscriptionId)return;
+
+        const ok=confirm('¿Quieres cancelar esta membresía? La solicitud quedará registrada para evitar la próxima renovación.');
+        if(!ok)return;
+
+        const note=document.getElementById(`cancel-note-${safeId(subscriptionId)}`);
+        const old=button?.textContent||'Cancelar membresía';
+        if(button){button.disabled=true;button.textContent='Procesando…'}
+        if(note){note.className='subscription-cancel-note';note.textContent='Registrando cancelación…'}
+
+        const subRef=doc(db,'subscriptions',subscriptionId);
+        try{
+          // Si las reglas permiten autocancelación, queda marcado directamente en la suscripción.
+          await updateDoc(subRef,{
+            cancelAtPeriodEnd:true,
+            cancellationRequested:true,
+            cancellationRequestedAt:serverTimestamp(),
+            cancellationRequestedBy:'client',
+            updatedAt:serverTimestamp()
+          });
+          if(button)button.textContent='Cancelación solicitada';
+          if(note){note.className='subscription-cancel-note ok';note.textContent='Listo. La membresía no deberá renovarse después del periodo actual.'}
+        }catch(error){
+          console.info('Cancelación directa no permitida; guardando solicitud en perfil:',error?.code||error?.message||error);
+          try{
+            // Fallback compatible con tus reglas actuales de /users/{uid}.
+            await setDoc(doc(db,'users',user.uid),{
+              subscriptionCancellationRequest:{
+                subscriptionId,
+                requestedAt:serverTimestamp(),
+                status:'pending',
+                ownerUid:user.uid,
+                ownerEmail:user.email||''
+              },
+              updatedAt:serverTimestamp()
+            },{merge:true});
+            if(button)button.textContent='Cancelación solicitada';
+            if(note){note.className='subscription-cancel-note ok';note.textContent='Solicitud registrada. Administración procesará la cancelación antes de la próxima renovación.'}
+          }catch(fallbackError){
+            console.error('Cancelación de membresía:',fallbackError);
+            if(button){button.disabled=false;button.textContent=old}
+            if(note){note.className='subscription-cancel-note error';note.textContent='No pudimos registrar la cancelación. Intenta nuevamente.'}
+          }
+        }
+      };
+
 
       window.switchPortalArea=function(area){
         const value=['architecture','web','subscriptions'].includes(area)?area:'architecture';
@@ -1813,8 +1988,8 @@
         try{
           const q=query(collection(db,'subscriptions'),where('ownerUid','==',user.uid));
           unsubscribeSubscriptions=onSnapshot(q,snap=>{
-            const subscriptions=snap.docs.map(d=>({id:d.id,...d.data()}));
-            const n=renderReceiptOnly(subscriptions,'subscription-receipts-container','Aún no hay imágenes de comprobantes de suscripción.');
+            const subscriptions=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(a.currentPeriodEnd||a.nextPaymentAt||a.expiresAt)-dateValue(b.currentPeriodEnd||b.nextPaymentAt||b.expiresAt));
+            const n=renderSubscriptionsMinimal(subscriptions);
             if(count)count.textContent=String(n);
           },error=>{
             console.error('Firestore subscriptions:',error);
@@ -1881,8 +2056,8 @@
 
           if(architectureCount)architectureCount.textContent=String(architectureProjects.length);
 
-          const webReceiptCount=renderReceiptOnly(webProjects,'web-receipts-container','Aún no hay imágenes de comprobantes de Diseño Web.');
-          if(webCount)webCount.textContent=String(webReceiptCount);
+          const webProjectCount=renderWebProjectsMinimal(webProjects);
+          if(webCount)webCount.textContent=String(webProjectCount);
 
           if(container){
             container.innerHTML=architectureProjects.length
