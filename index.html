@@ -442,112 +442,46 @@
   
 
     /* =========================================================
-       LIQUID GLASS OPTICAL — navegación tipo lente / iOS
-       Más cuerpo, refracción visual, borde óptico y reflejo dinámico.
+       LIQUID GLASS — COPIADO DEL INDEX DE REFERENCIA
+       Solo apariencia del cristal; no altera layout ni navegación.
        ========================================================= */
     .nav-pill {
-      --glass-x: 50%;
-      --glass-y: 18%;
-      --glass-shine-x: 0px;
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-      background:
-        radial-gradient(260px 150px at var(--glass-x) var(--glass-y), rgba(0,0,0,.28), rgba(0,0,0,.10) 36%, transparent 70%),
-        linear-gradient(112deg, transparent 0 38%, rgba(0,0,0,.10) 45%, rgba(0,0,0,.30) 49%, rgba(0,0,0,.08) 54%, transparent 62%),
-        linear-gradient(180deg, rgba(18,18,20,.46) 0%, rgba(12,12,14,.30) 48%, rgba(5,5,7,.22) 100%),
-        rgba(24,24,28,.38) !important;
-      -webkit-backdrop-filter: blur(64px) saturate(150%) brightness(.96) contrast(108%) !important;
-      backdrop-filter: blur(64px) saturate(150%) brightness(.96) contrast(108%) !important;
-      border: 1px solid rgba(0,0,0,.68) !important;
-      box-shadow:
-        0 20px 54px rgba(0,0,0,.38),
-        0 3px 10px rgba(0,0,0,.24),
-        inset 0 1px 0 rgba(0,0,0,.72),
-        inset 0 -1px 0 rgba(0,0,0,.55),
-        inset 1px 0 0 rgba(0,0,0,.42),
-        inset -1px 0 0 rgba(0,0,0,.38) !important;
-      transition: background .22s ease, border-color .22s ease, box-shadow .22s ease;
+      background: rgba(15, 15, 15, 0.75) !important;
+      -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
+      backdrop-filter: blur(25px) saturate(200%) !important;
+      border-color: rgba(255, 255, 255, 0.10) !important;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.60) !important;
     }
+    .nav-pill::before,
+    .nav-pill::after { content: none !important; display: none !important; }
 
-    /* Capa que imita la refracción/curvatura de una lente de vidrio. */
-    .nav-pill::before {
-      content:"";
-      position:absolute;
-      inset:-11% -2%;
-      border-radius:inherit;
-      pointer-events:none;
-      z-index:0;
-      background:
-        radial-gradient(78% 112% at 15% -22%, rgba(0,0,0,.34), rgba(0,0,0,.12) 30%, transparent 58%),
-        radial-gradient(68% 110% at 90% 128%, rgba(0,0,0,.20), transparent 56%),
-        linear-gradient(104deg, transparent 0 53%, rgba(0,0,0,.08) 57%, rgba(0,0,0,.30) 60%, rgba(0,0,0,.07) 64%, transparent 71%);
-      -webkit-backdrop-filter: blur(12px) saturate(116%) brightness(.98);
-      backdrop-filter: blur(12px) saturate(116%) brightness(.98);
-      transform: scale(1.01) translate3d(calc(var(--glass-shine-x) * .18),0,0);
-      opacity:.90;
-      mix-blend-mode:multiply;
+    .nav-pill .icon-btn {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
     }
-
-    /* Borde óptico: el contorno claro hace que parezca vidrio grueso. */
-    .nav-pill::after {
-      content:"";
-      position:absolute;
-      inset:1px;
-      border-radius:inherit;
-      pointer-events:none;
-      z-index:0;
-      padding:1px;
-      background:linear-gradient(115deg,
-        rgba(0,0,0,.92) 0%,
-        rgba(0,0,0,.58) 14%,
-        rgba(0,0,0,.22) 42%,
-        rgba(0,0,0,.36) 66%,
-        rgba(0,0,0,.82) 100%);
-      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;
-      mask-composite:exclude;
-      opacity:.86;
-    }
-
-    .nav-pill > * { position:relative; z-index:1; }
-
-    .nav-pill:hover {
-      border-color:rgba(0,0,0,.82) !important;
-      box-shadow:
-        0 22px 60px rgba(0,0,0,.42),
-        0 3px 12px rgba(0,0,0,.27),
-        inset 0 1px 0 rgba(0,0,0,.82),
-        inset 0 -1px 0 rgba(0,0,0,.62),
-        inset 1px 0 0 rgba(0,0,0,.48),
-        inset -1px 0 0 rgba(0,0,0,.44) !important;
-    }
-
-    .nav-pill .icon-btn,
-    .floating-profile {
-      background:
-        linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.035)),
-        rgba(35,35,40,.30) !important;
-      border-color:rgba(255,255,255,.26) !important;
-      -webkit-backdrop-filter:blur(12px) saturate(145%) brightness(1.06);
-      backdrop-filter:blur(12px) saturate(145%) brightness(1.06);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.46),
-        inset 0 -1px 0 rgba(255,255,255,.08),
-        0 8px 24px rgba(0,0,0,.14);
-    }
-
     .nav-pill .icon-btn:hover {
-      background:
-        linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.07)),
-        rgba(44,44,48,.34) !important;
-      border-color:rgba(255,255,255,.38) !important;
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      transform: scale(1.05);
     }
 
+    /* Misma sensación de cristal del archivo de referencia en iPhone. */
+    @media (max-width: 991.98px) {
+      .mobile-nav {
+        background: rgba(5, 5, 5, 0.94) !important;
+        -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+        backdrop-filter: blur(24px) saturate(160%) !important;
+        border-bottom-color: rgba(255,255,255,.07) !important;
+        box-shadow: 0 8px 28px rgba(0,0,0,.28);
+      }
+    }
 
     @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-      .nav-pill { background:rgba(38,38,43,.92) !important; }
-      .mobile-nav { background:rgba(20,20,23,.95) !important; }
+      .nav-pill { background: rgba(15, 15, 15, 0.92) !important; }
+      .mobile-nav { background: rgba(5, 5, 5, 0.96) !important; }
     }
 
   </style>
