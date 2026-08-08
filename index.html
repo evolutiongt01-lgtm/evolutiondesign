@@ -1393,6 +1393,9 @@
     html[data-evolution-view="home"] main > :not(.home-hero) { display: none !important; }
     html[data-evolution-view="architecture"] main > .home-hero { display: none !important; }
 
+    /* Evita que Chrome intente mantener el footer anclado cuando cambia la vista. */
+    html, body, main, footer { overflow-anchor: none; }
+
     main {
       opacity: 1;
       transform: translate3d(0,0,0);
@@ -4290,6 +4293,33 @@
       const main = document.querySelector('main');
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+      /* Nosotros controlamos la posición al cambiar de vista. */
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+      function forceTopAfterViewChange() {
+        const previousBehavior = root.style.scrollBehavior;
+        root.style.scrollBehavior = 'auto';
+
+        const goTop = () => {
+          window.scrollTo(0, 0);
+          if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        };
+
+        /* Varias pasadas: primero al cambiar display y luego tras recalcular layout. */
+        goTop();
+        requestAnimationFrame(() => {
+          goTop();
+          requestAnimationFrame(() => {
+            goTop();
+            window.setTimeout(() => {
+              goTop();
+              root.style.scrollBehavior = previousBehavior;
+            }, 80);
+          });
+        });
+      }
+
       const isArchitecturePath = (path) => /\/arquitectura(?:\.html)?\/?$/i.test(path || '');
       const isHomePath = (path) => /\/(?:index(?:\.html)?)?\/?$/i.test(path || '/');
 
@@ -4357,7 +4387,7 @@
           root.dataset.evolutionView = next;
           setNavState(next);
           setMediaState(next);
-          window.scrollTo(0, 0);
+          forceTopAfterViewChange();
           document.title = next === 'architecture'
             ? 'Evolution Design - Arquitectura, Renders y Planos'
             : 'Evolution Design - Arquitectura, Diseño Gráfico y Diseño Web';
