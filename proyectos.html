@@ -1248,6 +1248,11 @@
       @media(max-width:575.98px){.file-upload-head{align-items:stretch}.file-pick-btn{width:100%;min-height:44px}.project-file-row{padding:.65rem}.submit-files-wrap{display:block}.submit-files-wrap .send-btn{width:100%;margin-bottom:.65rem}.delivery-files-card{padding:1.1rem}.project-file-name{font-size:.67rem}}
 
 
+      /* ENLACES EXTERNOS DE ENTREGA */
+      .external-delivery-card{margin-top:1rem;padding:1.45rem;border:1px solid rgba(91,170,255,.18);background:linear-gradient(180deg,rgba(91,170,255,.045),rgba(255,255,255,.012))}.external-delivery-grid{display:grid;gap:.62rem;margin-top:.9rem}.external-delivery-link{display:flex;align-items:center;gap:.72rem;padding:.78rem;border:1px solid rgba(91,170,255,.16);border-radius:13px;background:rgba(91,170,255,.035);text-decoration:none!important;transition:.2s ease;min-width:0}.external-delivery-link:hover{transform:translateY(-1px);border-color:rgba(91,170,255,.34);background:rgba(91,170,255,.075)}.external-delivery-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 38px;border:1px solid rgba(91,170,255,.16);background:rgba(91,170,255,.07);color:#b8dcff;font-size:.57rem;font-weight:850;letter-spacing:.02em}.external-delivery-copy{min-width:0;flex:1}.external-delivery-copy strong{display:block;color:#f6f8fb;font-size:.71rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.external-delivery-copy span{display:block;color:#7f93a8;font-size:.6rem;line-height:1.45;margin-top:.18rem;overflow-wrap:anywhere}.external-delivery-open{color:#a9d2ff;font-size:.65rem;font-weight:750;flex:0 0 auto}.locked-link-row .locked-file-icon{color:#a9d2ff;background:rgba(91,170,255,.06);border-color:rgba(91,170,255,.14)}
+      @media(max-width:575.98px){.external-delivery-card{padding:1.1rem}.external-delivery-link{align-items:flex-start}.external-delivery-open{display:none}.external-delivery-copy strong{white-space:normal}}
+
+
       /* PROYECTO ARCHIVADO · TARJETA COMPACTA DESPUÉS DE ENVIAR INFORMACIÓN */
       .project-archive{overflow:hidden}
       .project-archive[open]{overflow:visible}
@@ -1443,7 +1448,8 @@
       .delivery-paywall-copy{font-size:.69rem;line-height:1.55;color:var(--muted);margin:0;max-width:700px}
       .delivery-lock-pill{flex:0 0 auto;display:inline-flex;align-items:center;gap:.4rem;padding:.38rem .62rem;border-radius:999px;border:1px solid rgba(212,184,149,.28);background:rgba(212,184,149,.08);color:var(--accent-strong);font-size:.61rem;font-weight:800;letter-spacing:.025em}
       .delivery-preview-stage{position:relative;border:1px solid rgba(255,255,255,.09);border-radius:18px;background:#070708;overflow:hidden;min-height:220px;display:flex;align-items:center;justify-content:center}
-      .delivery-preview-stage img{width:100%;max-height:520px;display:block;object-fit:contain;background:#070708}
+      .delivery-preview-stage img{width:100%;max-height:620px;display:block;object-fit:contain;background:#070708;user-select:none;-webkit-user-drag:none}
+      .delivery-preview-stage::after{content:'MUESTRA  •  EVOLUTION DESIGN  •  MUESTRA  •  EVOLUTION DESIGN';position:absolute;left:50%;top:50%;width:120%;transform:translate(-50%,-50%) rotate(-18deg);text-align:center;color:rgba(255,255,255,.16);font-size:clamp(.75rem,2.2vw,1.5rem);font-weight:900;letter-spacing:.16em;text-shadow:0 1px 12px rgba(0,0,0,.45);pointer-events:none;white-space:nowrap}
       .delivery-preview-badge{position:absolute;left:12px;bottom:12px;padding:.42rem .62rem;border-radius:999px;background:rgba(5,5,5,.82);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);color:#eee;font-size:.6rem;font-weight:700}
       .delivery-preview-empty{padding:2.2rem 1rem;text-align:center;color:var(--muted);font-size:.69rem;line-height:1.55}
       .locked-delivery-list{display:grid;gap:.55rem;margin-top:.8rem}
@@ -1454,6 +1460,11 @@
       .locked-file-chip{flex:0 0 auto;padding:.34rem .5rem;border-radius:8px;border:1px solid rgba(212,184,149,.16);color:#bda482;background:rgba(212,184,149,.045);font-size:.57rem;font-weight:800}
       .delivery-payment-box{position:relative;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.07)}
       .payment-request-message{margin:.6rem 0 0;padding:.68rem .75rem;border-radius:10px;border:1px solid rgba(255,255,255,.065);background:rgba(255,255,255,.018);color:#aaa;font-size:.64rem;line-height:1.5}
+      .client-payment-comment-box{margin-top:.9rem;padding:.85rem;border-radius:12px;border:1px solid rgba(255,255,255,.075);background:rgba(0,0,0,.18)}
+      .client-payment-comment-label{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-bottom:.45rem}.client-payment-comment-label strong{font-size:.69rem;color:#f3f3f1}.client-payment-comment-label span{font-size:.56rem;color:#727277}
+      .client-payment-comment-textarea{width:100%;min-height:78px;resize:vertical;border-radius:10px;padding:.72rem .76rem;border:1px solid rgba(255,255,255,.09);background:#09090a;color:#f5f5f3;outline:none;font-size:.68rem;line-height:1.5;transition:.2s ease}.client-payment-comment-textarea:focus{border-color:rgba(212,184,149,.5);box-shadow:0 0 0 3px rgba(212,184,149,.05)}.client-payment-comment-textarea::placeholder{color:#58585d}
+      .client-payment-comment-actions{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-top:.6rem}.client-payment-comment-btn{border:1px solid rgba(212,184,149,.25);background:rgba(212,184,149,.09);color:var(--accent-strong);border-radius:9px;padding:.55rem .72rem;font-size:.62rem;font-weight:750;cursor:pointer}.client-payment-comment-btn:hover{background:var(--accent);color:#111}.client-payment-comment-feedback{color:#777;font-size:.58rem;line-height:1.4;flex:1;min-width:170px}.client-payment-comment-feedback.success{color:#55d981}.client-payment-comment-feedback.error{color:#ff7d88}
+      @media(max-width:575.98px){.client-payment-comment-label{align-items:flex-start}.client-payment-comment-textarea{font-size:16px;min-height:88px}.client-payment-comment-actions{display:block}.client-payment-comment-btn{width:100%;min-height:42px}.client-payment-comment-feedback{margin-top:.5rem;min-width:0}}
       .payment-not-requested{padding:.9rem;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);color:#999;font-size:.67rem;line-height:1.55}
       @media(max-width:575.98px){.delivery-paywall{padding:1rem}.delivery-paywall-head{display:block}.delivery-lock-pill{margin-top:.65rem}.delivery-preview-stage{min-height:180px;border-radius:14px}.delivery-preview-stage img{max-height:390px}.locked-delivery-row{padding:.65rem}.locked-file-chip{font-size:.54rem}}
 
@@ -1938,15 +1949,40 @@
         try{sessionStorage.setItem('evolutionPortalArea',value)}catch{}
       };
 
+      function paymentClientCommentBox(project,unique){
+        const value=String(project?.clientPaymentComment||'').trim();
+        const when=project?.clientPaymentCommentAt?dateTimeText(project.clientPaymentCommentAt):'';
+        return `<div class="client-payment-comment-box"><div class="client-payment-comment-label"><strong>Mensaje para administración</strong><span>Opcional · máx. 600 caracteres</span></div><textarea id="payment-comment-${unique}" class="client-payment-comment-textarea" maxlength="600" placeholder="Ej. Hola, ya envié el comprobante. El pago fue realizado desde la cuenta de Juan Pérez.">${esc(value)}</textarea><div class="client-payment-comment-actions"><button class="client-payment-comment-btn" type="button" onclick="guardarComentarioPago('${esc(project.id)}','payment-comment-${unique}','payment-comment-feedback-${unique}',this)">${value?'Actualizar mensaje':'Enviar mensaje'}</button><div id="payment-comment-feedback-${unique}" class="client-payment-comment-feedback">${value?`Mensaje enviado${when?` · ${esc(when)}`:''}. Puedes actualizarlo si necesitas aclarar algo.`:'Puedes avisarnos que ya enviaste un comprobante o indicar a nombre de quién se realizó el pago.'}</div></div></div>`;
+      }
+
+      window.guardarComentarioPago=async function(projectId,textareaId,feedbackId,button){
+        const user=auth.currentUser,textarea=document.getElementById(textareaId),feedback=document.getElementById(feedbackId);
+        if(!user||!textarea)return;
+        const message=String(textarea.value||'').trim().slice(0,600);
+        if(!message){if(feedback){feedback.textContent='Escribe un mensaje antes de enviarlo.';feedback.className='client-payment-comment-feedback error';}return;}
+        const old=button?.textContent;
+        try{
+          if(button){button.disabled=true;button.textContent='Enviando…';}
+          await updateDoc(doc(db,'users',user.uid,'projects',projectId),{clientPaymentComment:message,clientPaymentCommentAt:serverTimestamp(),clientPaymentCommentBy:'client',updatedAt:serverTimestamp()});
+          if(feedback){feedback.textContent='✓ Mensaje enviado a administración.';feedback.className='client-payment-comment-feedback success';}
+          if(button)button.textContent='Actualizar mensaje';
+        }catch(e){
+          console.error('Mensaje de pago:',e);
+          if(feedback){feedback.textContent='No pudimos enviar el mensaje. Intenta nuevamente.';feedback.className='client-payment-comment-feedback error';}
+          if(button)button.textContent=old||'Enviar mensaje';
+        }finally{if(button)button.disabled=false;}
+      };
+
       function paymentBox(project,unique){
         const delivered=String(project?.status||'').toLowerCase()==='delivered';
         const requestNote=String(project?.paymentRequestNote||'').trim();
-        if(project.paymentStatus==='pending_review') return `<div class="payment-review-client"><strong>Comprobante recibido · En revisión</strong><p>${delivered?'Tu proyecto ya está terminado. Las entregas finales permanecerán protegidas hasta que administración confirme el pago.':'Recibimos tu comprobante y administración verificará el ingreso antes de habilitar el proyecto.'}</p></div>`;
-        if(project.paymentStatus==='rejected') return `<div class="payment-review-client rejected"><strong>No pudimos confirmar este pago</strong><p>${esc(project.paymentReviewNote||'El comprobante o la referencia no coinciden con un ingreso confirmado. Contacta a Evolution Design o realiza un nuevo pago.')}</p></div>`;
+        const clientComment=paymentClientCommentBox(project,unique);
+        if(project.paymentStatus==='pending_review') return `<div class="payment-review-client"><strong>Comprobante recibido · En revisión</strong><p>${delivered?'Tu proyecto ya está terminado. Las entregas finales permanecerán protegidas hasta que administración confirme el pago.':'Recibimos tu comprobante y administración verificará el ingreso antes de habilitar el proyecto.'}</p></div>${clientComment}`;
+        if(project.paymentStatus==='rejected') return `<div class="payment-review-client rejected"><strong>No pudimos confirmar este pago</strong><p>${esc(project.paymentReviewNote||'El comprobante o la referencia no coinciden con un ingreso confirmado. Contacta a Evolution Design o realiza un nuevo pago.')}</p></div>${clientComment}`;
         if(project.paymentRequestStatus==='cancelled'&&project.paymentRequested===false) return `<div class="payment-not-requested">La solicitud de pago fue retirada por administración. Si necesitas información sobre esta orden, contacta a Evolution Design.</div>`;
         if(project.paymentStatus==='pending'){
           if(project.paymentRequested===false&&project.paymentRequestStatus==='not_requested') return `<div class="payment-not-requested">El pago de esta orden todavía no ha sido solicitado por administración. Cuando el cobro sea habilitado aparecerá aquí la pasarela segura.</div>`;
-          return `<div class="pending-order-box"><div class="pending-order-title">${delivered?'Tu proyecto está terminado · Pago pendiente':'Orden personalizada pendiente de pago'}</div><div class="pending-order-copy">${delivered?'Mostramos una vista previa de la entrega. Completa el pago para desbloquear y descargar todos los archivos finales.':'Esta cotización fue creada especialmente para tu cuenta. Completa el pago para habilitar la orden.'}</div>${requestNote?`<div class="payment-request-message">${esc(requestNote)}</div>`:''}<button class="pending-pay-btn" onclick="prepararPagoPersonalizado('${esc(project.id)}','paypal-custom-${unique}',this)">${delivered?'Pagar y desbloquear entrega':'Pagar orden con PayPal'}</button><div id="paypal-custom-${unique}" class="custom-paypal-wrap"></div></div>`;
+          return `<div class="pending-order-box"><div class="pending-order-title">${delivered?'Tu proyecto está terminado · Pago pendiente':'Orden personalizada pendiente de pago'}</div><div class="pending-order-copy">${delivered?'Mostramos una vista previa de la entrega. Completa el pago para desbloquear y descargar todos los archivos finales.':'Esta cotización fue creada especialmente para tu cuenta. Completa el pago para habilitar la orden.'}</div>${requestNote?`<div class="payment-request-message">${esc(requestNote)}</div>`:''}<button class="pending-pay-btn" onclick="prepararPagoPersonalizado('${esc(project.id)}','paypal-custom-${unique}',this)">${delivered?'Pagar y desbloquear entrega':'Pagar orden con PayPal'}</button><div id="paypal-custom-${unique}" class="custom-paypal-wrap"></div>${clientComment}</div>`;
         }
         return '';
       }
@@ -1970,7 +2006,7 @@
 
         const comments=paid?`<div class="ui-card comments-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"></path></svg></span>Comentarios del Cliente</h3><p class="section-copy">Añade especificaciones o notas especiales para el profesional asignado y confirma cuando hayas terminado de cargar tus archivos.</p><textarea id="comments-${unique}" class="custom-textarea" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás…">${esc(p.clientComments||'')}</textarea><div class="submit-files-wrap"><button class="send-btn" onclick="enviarArchivosProyecto('${esc(p.id)}','comments-${unique}','file-feedback-${unique}',this)">${submitted?'Guardar cambios':'Enviar archivos al equipo'}</button><div id="file-feedback-${unique}" class="files-feedback">${submitted?'Puedes agregar, eliminar o cambiar archivos y comentarios.':'Tus archivos se almacenan de forma segura en servidores de Evolution Group.'}</div></div></div>`:'';
 
-        const projectBody=`<div class="row g-0"><div class="col-12 col-lg-8 project-content-col"><div class="project-main"><div class="project-hero"><div class="hero-copy"><span class="project-badge">${esc(info.label)}</span><h2 class="project-name fw-bold text-white">${esc(title)}</h2><div class="order-id">Orden ID: <span>${esc(orderId)}</span></div>${renderSpecs(cfg.specs)}</div></div><div class="content-grid">${priceCard}${uploader}</div>${renderIncluded(cfg.includedHighlights)}<div id="delivery-files-card-${unique}"></div>${comments}</div></div><div class="col-12 col-lg-4 project-status-col"><div class="status-wrap"><aside class="status-panel"><div class="status-title-row"><h3 class="status-heading">Estado del Proyecto</h3><span class="status-pill">${esc(info.label)}</span></div><div class="tracker-container"><div class="tracker-step ${step1}"><div class="tracker-icon">${paid?'✓':'1'}</div><div class="tracker-text"><div class="tracker-title">${step1Title}</div><p class="tracker-desc">${paid?'Transacción confirmada y proyecto habilitado.':pendingReview?'Tu comprobante está siendo verificado por administración.':rejectedPayment?'El pago no fue confirmado. Revisa la observación del administrador.':'Completa la orden personalizada para iniciar.'}</p></div></div><div class="tracker-step ${step2}"><div class="tracker-icon">${hasFiles?'✓':'2'}</div><div class="tracker-text"><div class="tracker-title">${step2Title}</div><p class="tracker-desc">${paid?(hasFiles?'Tu información ya está disponible para el equipo.':'Sube directamente los archivos requeridos.'):(pendingReview?'Se habilita cuando administración apruebe el pago.':'Disponible después del pago.')}</p></div></div><div class="tracker-step ${step3}"><div class="tracker-icon">${delivered?'✓':'3'}</div><div class="tracker-text"><div class="tracker-title">${step3Title}</div><p class="tracker-desc">${esc(professionalRole)} delegado: <span class="text-white fw-medium">${esc(professionalName)}</span></p></div></div></div><div class="delivery-card"><div class="delivery-label">◷ Entrega estimada</div><span class="delivery-date">${due?`Entrega estimada: <span class="accent-text">${esc(due)}</span>`:(paid?'Se calcula al enviar tus archivos.':'Se habilita después del pago.')}</span><span class="delivery-help">Las entregas se programan entre 10:00 PM y 11:00 PM del día estimado.</span></div></aside></div></div></div>`;
+        const projectBody=`<div class="row g-0"><div class="col-12 col-lg-8 project-content-col"><div class="project-main"><div class="project-hero"><div class="hero-copy"><span class="project-badge">${esc(info.label)}</span><h2 class="project-name fw-bold text-white">${esc(title)}</h2><div class="order-id">Orden ID: <span>${esc(orderId)}</span></div>${renderSpecs(cfg.specs)}</div></div><div class="content-grid">${priceCard}${uploader}</div>${renderIncluded(cfg.includedHighlights)}<div id="delivery-files-card-${unique}"></div><div id="delivery-links-card-${unique}"></div>${comments}</div></div><div class="col-12 col-lg-4 project-status-col"><div class="status-wrap"><aside class="status-panel"><div class="status-title-row"><h3 class="status-heading">Estado del Proyecto</h3><span class="status-pill">${esc(info.label)}</span></div><div class="tracker-container"><div class="tracker-step ${step1}"><div class="tracker-icon">${paid?'✓':'1'}</div><div class="tracker-text"><div class="tracker-title">${step1Title}</div><p class="tracker-desc">${paid?'Transacción confirmada y proyecto habilitado.':pendingReview?'Tu comprobante está siendo verificado por administración.':rejectedPayment?'El pago no fue confirmado. Revisa la observación del administrador.':'Completa la orden personalizada para iniciar.'}</p></div></div><div class="tracker-step ${step2}"><div class="tracker-icon">${hasFiles?'✓':'2'}</div><div class="tracker-text"><div class="tracker-title">${step2Title}</div><p class="tracker-desc">${paid?(hasFiles?'Tu información ya está disponible para el equipo.':'Sube directamente los archivos requeridos.'):(pendingReview?'Se habilita cuando administración apruebe el pago.':'Disponible después del pago.')}</p></div></div><div class="tracker-step ${step3}"><div class="tracker-icon">${delivered?'✓':'3'}</div><div class="tracker-text"><div class="tracker-title">${step3Title}</div><p class="tracker-desc">${esc(professionalRole)} delegado: <span class="text-white fw-medium">${esc(professionalName)}</span></p></div></div></div><div class="delivery-card"><div class="delivery-label">◷ Entrega estimada</div><span class="delivery-date">${due?`Entrega estimada: <span class="accent-text">${esc(due)}</span>`:(paid?'Se calcula al enviar tus archivos.':'Se habilita después del pago.')}</span><span class="delivery-help">Las entregas se programan entre 10:00 PM y 11:00 PM del día estimado.</span></div></aside></div></div></div>`;
 
         if(submitted){
           return `<details class="project-shell project-archive" data-project-id="${esc(p.id)}"><summary class="project-archive-summary"><div class="archive-main"><span class="archive-icon">✓</span><div class="archive-copy"><div class="archive-kicker">Proyecto archivado</div><div class="archive-title">${esc(title)}</div><div class="archive-sub">${esc(orderId)} · Información y archivos enviados</div></div></div><div class="archive-finance"><span class="archive-finance-label">Inversión total</span><span class="archive-finance-value">${esc(amount)} <small>${esc(currency)}</small></span><div class="archive-meta"><span class="archive-status">${esc(info.label)}</span>${due?`<span>${esc(due)}</span>`:''}</div></div><span class="archive-action"><span class="action-label">Ver / actualizar</span><span class="chevron">⌄</span></span></summary><div class="project-archive-body">${projectBody}</div></details>`;
@@ -1986,26 +2022,56 @@
 
       function lockedDeliveryMarkup(files,project,unique){
         const active=files.filter(f=>f.availability!=='deleted');
-        if(!active.length)return '';
+        const dedicatedPath=String(project?.paymentPreviewStoragePath||'').trim();
         const images=active.filter(isImageFile);
-        const preview=images[0]||null;
-        let previewMarkup='<div class="delivery-preview-empty"><strong style="display:block;color:#ddd;margin-bottom:.3rem">Entrega preparada</strong>No hay una imagen compatible para mostrar como vista previa. Los archivos finales permanecen protegidos hasta completar el pago.</div>';
-        if(preview&&s3&&preview.storagePath){
+        const fallbackPreview=!dedicatedPath?(images[0]||null):null;
+        let previewMarkup='<div class="delivery-preview-empty"><strong style="display:block;color:#ddd;margin-bottom:.3rem">Entrega preparada</strong>La lámina de muestra todavía no ha sido publicada. Los archivos finales permanecen protegidos hasta completar el pago.</div>';
+        if(s3&&(dedicatedPath||fallbackPreview?.storagePath)){
           try{
-            // Solo se firma la PRIMERA imagen. Ningún otro archivo bloqueado recibe URL de R2.
-            const previewUrl=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:preview.storagePath,Expires:300});
-            previewMarkup=`<img src="${esc(previewUrl)}" alt="Vista previa de la entrega" loading="lazy"><span class="delivery-preview-badge">Vista previa · sin descarga</span>`;
+            // Se firma únicamente la lámina dedicada. Si no existe, se usa una sola imagen de entrega como compatibilidad.
+            const previewPath=dedicatedPath||fallbackPreview.storagePath;
+            const previewUrl=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:previewPath,Expires:300});
+            previewMarkup=`<img src="${esc(previewUrl)}" alt="Lámina arquitectónica de muestra" loading="lazy" draggable="false" oncontextmenu="return false"><span class="delivery-preview-badge">Lámina de muestra · sin descarga</span>`;
           }catch(e){console.info('No se pudo crear vista previa protegida:',e);}
         }
-        const hiddenCount=Math.max(0,active.length-(preview?1:0));
+        const hiddenCount=Math.max(0,active.length-(fallbackPreview?1:0));
         const lockedRows=Array.from({length:hiddenCount},(_,i)=>`<div class="locked-delivery-row"><div class="locked-file-icon">⌕</div><div class="locked-file-copy"><strong>Archivo final protegido ${i+1}</strong><span>Se desbloqueará automáticamente al confirmarse el pago.</span></div><span class="locked-file-chip">BLOQUEADO</span></div>`).join('');
-        return `<div class="ui-card delivery-paywall"><div class="delivery-paywall-head"><div><h3 class="delivery-paywall-title">Entrega lista · acceso protegido</h3><p class="delivery-paywall-copy">Evolution Design ya cargó ${active.length} archivo${active.length===1?'':'s'}. Puedes revisar una imagen de muestra; el resto no genera enlaces de descarga mientras el pago esté pendiente.</p></div><span class="delivery-lock-pill">🔒 Pago pendiente</span></div><div class="delivery-preview-stage">${previewMarkup}</div>${lockedRows?`<div class="locked-delivery-list">${lockedRows}</div>`:''}<div class="delivery-payment-box">${paymentBox(project,`${unique}-delivery`)}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`;
+        const externalCount=Math.max(0,Number(project?.deliveryLinkCount||0));
+        const lockedExternalRows=Array.from({length:externalCount},(_,i)=>`<div class="locked-delivery-row locked-link-row"><div class="locked-file-icon">↗</div><div class="locked-file-copy"><strong>Enlace externo protegido ${i+1}</strong><span>MEGA, Drive u otra nube · disponible después del pago.</span></div><span class="locked-file-chip">BLOQUEADO</span></div>`).join('');
+        const countText=active.length?`Evolution Design ya cargó ${active.length} archivo${active.length===1?'':'s'} final${active.length===1?'':'es'}.`:'Tu entrega final está protegida y lista para liberarse al confirmar el pago.';
+        return `<div class="ui-card delivery-paywall"><div class="delivery-paywall-head"><div><h3 class="delivery-paywall-title">Entrega lista · acceso protegido</h3><p class="delivery-paywall-copy">${countText} Revisa la lámina arquitectónica de muestra; los archivos finales no generan enlaces de descarga mientras el pago esté pendiente.</p></div><span class="delivery-lock-pill">🔒 Pago pendiente</span></div><div class="delivery-preview-stage">${previewMarkup}</div>${(lockedRows||lockedExternalRows)?`<div class="locked-delivery-list">${lockedRows}${lockedExternalRows}</div>`:''}<div class="delivery-payment-box">${paymentBox(project,`${unique}-delivery`)}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`;
+      }
+
+
+
+      function normalizeClientExternalUrl(raw){
+        const value=String(raw||'').trim();if(!value)return'';
+        try{const u=new URL(value);if(!['http:','https:'].includes(u.protocol))return'';return u.href;}catch{return'';}
+      }
+      function clientLinkProvider(link){
+        if(link?.provider)return String(link.provider);
+        try{const host=new URL(link?.url||'').hostname.toLowerCase();if(host.includes('mega'))return'MEGA';if(host.includes('drive.google')||host.includes('docs.google'))return'Google Drive';if(host.includes('dropbox'))return'Dropbox';if(host.includes('1drv')||host.includes('onedrive')||host.includes('sharepoint'))return'OneDrive';if(host.includes('wetransfer')||host.includes('we.tl'))return'WeTransfer';}catch{}
+        return'Otra nube';
+      }
+      function clientProviderAbbr(provider){const s=String(provider||'LINK').toUpperCase();if(s.includes('MEGA'))return'MEGA';if(s.includes('GOOGLE'))return'DRIVE';if(s.includes('DROPBOX'))return'DROP';if(s.includes('ONEDRIVE'))return'1DR';if(s.includes('WETRANSFER'))return'WET';return'LINK';}
+      function externalDeliveryLinksMarkup(links,project){
+        const active=(links||[]).filter(x=>x.availability!=='deleted').map(x=>({...x,url:normalizeClientExternalUrl(x.url)})).filter(x=>x.url);
+        if(!active.length)return'';
+        return `<div class="ui-card external-delivery-card"><h3 class="section-heading"><span class="section-icon" style="color:#a9d2ff;background:rgba(91,170,255,.07);border-color:rgba(91,170,255,.15)">↗</span>Archivos pesados en la nube</h3><p class="section-copy">Evolution Design ha preparado ${active.length} enlace${active.length===1?'':'s'} externo${active.length===1?'':'s'} para esta entrega. Se abrirán directamente en el proveedor indicado.</p><div class="external-delivery-grid">${active.map(link=>{const provider=clientLinkProvider(link),title=link.title||link.label||'Archivo externo';return `<a class="external-delivery-link" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer"><span class="external-delivery-icon">${esc(clientProviderAbbr(provider))}</span><span class="external-delivery-copy"><strong>${esc(title)}</strong><span>${esc(provider)}${link.note?` · ${esc(link.note)}`:''}</span></span><span class="external-delivery-open">Abrir ↗</span></a>`}).join('')}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`;
+      }
+      function attachExternalDeliveryLinks(user,project){
+        const unique=safeId(project.id),host=document.getElementById(`delivery-links-card-${unique}`);if(!host)return;
+        // Mientras el cobro esté bloqueado NO consultamos la subcolección: el navegador del cliente no recibe las URLs por esta interfaz.
+        if(shouldLockDelivery(project)){host.innerHTML='';return;}
+        const q=collection(db,'users',user.uid,'projects',project.id,'deliveryLinks');
+        fileListeners.push(onSnapshot(q,snap=>{const links=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.createdAt)-dateValue(a.createdAt));host.innerHTML=externalDeliveryLinksMarkup(links,project);},e=>{console.error('Enlaces externos:',e);host.innerHTML='<div class="file-empty">No se pudieron cargar los enlaces externos.</div>';}));
       }
 
       function attachFiles(user,project){
         const unique=safeId(project.id), clientEl=document.getElementById(`client-files-${unique}`), deliveryCard=document.getElementById(`delivery-files-card-${unique}`);
         if(clientEl){const q=collection(db,'users',user.uid,'projects',project.id,'clientFiles');fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.uploadedAt)-dateValue(a.uploadedAt));clientEl.innerHTML=fileRows(files,project,'client')},e=>clientEl.innerHTML='<div class="file-empty">No se pudieron cargar los archivos.</div>'));}
-        if(deliveryCard){const q=collection(db,'users',user.uid,'projects',project.id,'deliveryFiles');fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.uploadedAt)-dateValue(a.uploadedAt));const active=files.filter(f=>f.availability!=='deleted');if(!active.length){deliveryCard.innerHTML='';return;}deliveryCard.innerHTML=shouldLockDelivery(project)?lockedDeliveryMarkup(active,project,unique):`<div class="ui-card delivery-files-card"><h3 class="section-heading"><span class="section-icon" style="color:#55d981;background:rgba(43,200,102,.08);border-color:rgba(43,200,102,.16)">✓</span>Archivos de Entrega</h3><p class="section-copy">Evolution Design ha enviado ${active.length} archivo(s) para este proyecto.</p><div class="project-file-list">${fileRows(files,project,'delivery')}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`;}));}
+        if(deliveryCard){const q=collection(db,'users',user.uid,'projects',project.id,'deliveryFiles');fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.uploadedAt)-dateValue(a.uploadedAt));const active=files.filter(f=>f.availability!=='deleted');if(shouldLockDelivery(project)){deliveryCard.innerHTML=lockedDeliveryMarkup(active,project,unique);return;}if(!active.length){deliveryCard.innerHTML='';return;}deliveryCard.innerHTML=`<div class="ui-card delivery-files-card"><h3 class="section-heading"><span class="section-icon" style="color:#55d981;background:rgba(43,200,102,.08);border-color:rgba(43,200,102,.16)">✓</span>Archivos de Entrega</h3><p class="section-copy">Evolution Design ha enviado ${active.length} archivo(s) para este proyecto.</p><div class="project-file-list">${fileRows(files,project,'delivery')}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`;}));}
+        attachExternalDeliveryLinks(user,project);
       }
 
       // === ELIMINAR ARCHIVO (BOTON X) DESDE CLIENTE ===
@@ -2360,7 +2426,7 @@
 
           // Arquitectura conserva exactamente el sistema privado de archivos.
           architectureProjects.forEach(p=>{
-            if((p.paymentStatus==='paid'||(!p.paymentStatus&&p.transactionId)))attachFiles(user,p);
+            if((p.paymentStatus==='paid'||(!p.paymentStatus&&p.transactionId)||paymentRequestActive(p)||p.deliveryLocked===true||String(p.paymentPreviewStoragePath||'').trim()))attachFiles(user,p);
           });
 
           if(generalEmpty)generalEmpty.style.display='none';
