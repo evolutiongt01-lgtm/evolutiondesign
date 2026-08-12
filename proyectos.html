@@ -1597,7 +1597,6 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
       import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, onSnapshot, serverTimestamp, increment, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-      import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
 
       // CREDENCIALES DE CLOUDFLARE R2
       const R2_ACCOUNT_ID = "d94e264f8a09f87496e21e72bd3731aa";
@@ -1619,9 +1618,25 @@
       }
 
       const firebaseConfig={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
-      const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), functions=getFunctions(app,'us-central1');
-      const createCustomOrder=httpsCallable(functions,'createCustomPayPalOrder');
-      const capturePayPalOrder=httpsCallable(functions,'capturePayPalOrder');
+      const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app);
+      const EVOLUTION_WORKER_URL="https://evolution-design-backend.evolutiongt01.workers.dev".replace(/\/$/,"");
+      async function evolutionWorkerPost(path,payload={}){
+        const user=auth.currentUser;
+        if(!user?.uid)throw new Error('Tu sesión ya no está activa.');
+        const idToken=await user.getIdToken();
+        const response=await fetch(`${EVOLUTION_WORKER_URL}${path}`,{
+          method:'POST',
+          headers:{'content-type':'application/json','authorization':`Bearer ${idToken}`},
+          body:JSON.stringify(payload)
+        });
+        const body=await response.json().catch(()=>({}));
+        if(!response.ok||body?.ok===false){
+          const error=new Error(body?.error||'No se pudo completar la operación segura.');
+          error.code=body?.code||'';
+          throw error;
+        }
+        return body;
+      }
       let unsubscribeProjects=null, unsubscribeSubscriptions=null; const fileListeners=[]; let currentGeo={};
 
       const PAYPAL_CLIENT_ID='BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20';
@@ -2501,35 +2516,55 @@
         else renderCustomManualPayment(projectId,panel,method==='bank'?'bank_transfer':'binance_pay');
       };
 
-      function loadPayPal(currency){currency=PAYPAL_SUPPORTED.has(currency)?currency:'USD';if(paypalPromises[currency])return paypalPromises[currency];const ns=`paypal_projects_${currency}`;paypalPromises[currency]=new Promise((resolve,reject)=>{if(window[ns]?.Buttons)return resolve(window[ns]);const sc=document.createElement('script');sc.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=${currency}&components=buttons&intent=capture`;sc.dataset.namespace=ns;sc.onload=()=>window[ns]?.Buttons?resolve(window[ns]):reject(new Error('PayPal no cargó.'));sc.onerror=reject;document.head.appendChild(sc);});return paypalPromises[currency];}
+      function loadPayPal(){
+        const currency='USD';
+        if(paypalPromises[currency])return paypalPromises[currency];
+        const ns=`paypal_projects_${currency}`;
+        paypalPromises[currency]=new Promise((resolve,reject)=>{
+          if(window[ns]?.Buttons)return resolve(window[ns]);
+          const sc=document.createElement('script');
+          sc.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=USD&components=buttons&intent=capture`;
+          sc.dataset.namespace=ns;
+          sc.onload=()=>window[ns]?.Buttons?resolve(window[ns]):reject(new Error('PayPal no cargó.'));
+          sc.onerror=reject;
+          document.head.appendChild(sc);
+        });
+        return paypalPromises[currency];
+      }
       window.prepararPagoPersonalizado=async function(projectId,containerId,button){
         const box=document.getElementById(containerId);if(!box)return;
         const user=auth.currentUser;if(!user?.uid){box.innerHTML='<div style="color:#a00;padding:.6rem">Tu sesión ya no está activa.</div>';return;}
         if(button)button.style.display='none';box.style.display='block';box.innerHTML='Preparando pago seguro…';
-        const pRef=doc(db,'users',user.uid,'projects',projectId);
-        let before={};
         try{
-          const preSnap=await getDoc(pRef);before=preSnap.exists()?preSnap.data():{};
-          await detectGeo();const currency=detectedCurrency||'USD',sdk=await loadPayPal(currency);box.innerHTML='';
+          await detectGeo();
+          const sdk=await loadPayPal();
+          box.innerHTML='';
           await sdk.Buttons({
             style:{layout:'vertical',color:'gold',shape:'rect',height:44},
-            createOrder:async()=>{const r=await createCustomOrder({projectId,requestedCurrency:currency,clientGeo:currentGeo});return r.data.orderId;},
+            createOrder:async()=>{
+              const result=await evolutionWorkerPost('/paypal/create-order',{
+                mode:'project_balance',
+                projectId,
+                clientGeo:currentGeo||{}
+              });
+              if(!result?.orderId)throw new Error('El servidor no devolvió una orden PayPal válida.');
+              return result.orderId;
+            },
             onApprove:async d=>{
-              box.innerHTML='Confirmando pago…';
-              await capturePayPalOrder({orderId:d.orderID});
-              // Algunas versiones anteriores del backend movían la orden a waiting_files.
-              // Si administración ya la tenía en Entregado/Revisión/Desarrollo, restauramos ese estado.
-              const preserve=before.paymentRequestProjectStatus||before.status||'';
-              const patch={paymentRequested:false,paymentRequestStatus:'paid',deliveryLocked:false,paymentUnlockedAt:serverTimestamp(),updatedAt:serverTimestamp()};
-              // El pago jamás publica una entrega. Solo conserva el estado operativo que Administración había elegido.
-              if(preserve&&preserve!=='awaiting_payment')patch.status=preserve==='payment_pending_review'||preserve==='payment_failed'?'waiting_files':preserve;
-              await updateDoc(pRef,patch).catch(e=>console.info('Pago confirmado; metadatos de desbloqueo pendientes de sincronizar:',e));
-              box.innerHTML='<div style="color:#176b38;padding:.7rem;font-weight:700">✓ Pago confirmado. La entrega final se publicará por separado cuando el equipo la tenga lista.</div>';
+              try{
+                box.innerHTML='Confirmando pago seguro…';
+                const result=await evolutionWorkerPost('/paypal/capture-order',{orderId:d.orderID});
+                box.innerHTML=`<div style="color:#176b38;padding:.7rem;font-weight:700">✓ Pago confirmado${result.emailSent?' y correo enviado':''}. ${result.mode==='project_balance'?'El saldo quedó desbloqueado. La entrega final se publicará por separado cuando corresponda.':'Tu cuenta ya fue actualizada.'}</div>`;
+              }catch(e){
+                console.error(e);
+                box.innerHTML=`<div style="color:#a00;padding:.6rem">${esc(e?.message||'No se pudo confirmar el pago en el servidor.')}</div>`;
+                if(button)button.style.display='inline-block';
+              }
             },
             onCancel:()=>{box.innerHTML='<div style="color:#777;padding:.6rem">Pago cancelado. Puedes intentarlo nuevamente.</div>';if(button)button.style.display='inline-block';},
             onError:e=>{console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo completar el pago.</div>';if(button)button.style.display='inline-block';}
           }).render(`#${containerId}`);
-        }catch(e){console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo preparar PayPal.</div>';if(button)button.style.display='inline-block';}
+        }catch(e){console.error(e);box.innerHTML=`<div style="color:#a00;padding:.6rem">${esc(e?.message||'No se pudo preparar PayPal.')}</div>`;if(button)button.style.display='inline-block';}
       };
 
       function renderProjectSafe(project,index){
