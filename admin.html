@@ -349,6 +349,10 @@
 .payment-preview-admin-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(210px,.65fr);gap:10px;align-items:stretch}.payment-preview-drop{min-height:160px;border:1px dashed rgba(212,184,149,.28);border-radius:11px;background:#080809;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}.payment-preview-drop img{width:100%;height:100%;max-height:310px;object-fit:contain;display:block;background:#070708}.payment-preview-empty{padding:20px;text-align:center;color:#777;font-size:10px;line-height:1.5}.payment-preview-watermark{position:absolute;inset:auto 10px 10px auto;padding:5px 8px;border-radius:999px;background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.12);color:#ddd;font-size:8px;font-weight:800;letter-spacing:.08em}
 .payment-preview-controls{display:flex;flex-direction:column;justify-content:center;gap:8px}.payment-preview-controls .input{padding:8px;font-size:10px}.payment-preview-controls .btn{width:100%}.payment-preview-meta{font-size:9px;color:#777;line-height:1.45;overflow-wrap:anywhere}.payment-preview-remove{border-color:rgba(255,100,100,.18)!important;color:#ff8f96!important}
 @media(max-width:700px){.payment-request-status-row{align-items:flex-start}.payment-request-actions{display:grid;grid-template-columns:1fr}.payment-request-actions .btn{min-width:0}.payment-preview-admin-grid{grid-template-columns:1fr}.payment-preview-drop{min-height:190px}}
+.work-completion-card{border:1px solid rgba(75,217,122,.16);border-radius:14px;background:linear-gradient(145deg,rgba(75,217,122,.045),rgba(255,255,255,.012));padding:14px}
+.work-completion-status{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:10px 11px;border:1px solid rgba(255,255,255,.065);border-radius:11px;background:rgba(0,0,0,.2);margin-bottom:12px}.work-completion-status strong{display:block;font-size:11px;color:#f1f1ef}.work-completion-status span{display:block;font-size:9px;color:#777;margin-top:3px;line-height:1.45}.work-completion-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}.work-completion-actions .btn{min-width:170px}.preview-notify-btn{background:linear-gradient(180deg,#75e5a0,#3fbd70)!important;color:#08140c!important;border-color:rgba(75,217,122,.35)!important;font-weight:850}.preview-withdraw-btn{border-color:rgba(255,180,90,.18)!important;color:#efc28d!important}.work-status-pill{padding:5px 8px;border-radius:999px;font-size:8px;font-weight:850;letter-spacing:.05em;border:1px solid rgba(255,255,255,.09);white-space:nowrap}.work-status-pill.done{color:#62df91;background:rgba(75,217,122,.07);border-color:rgba(75,217,122,.18)}.work-status-pill.wait{color:#d4b895;background:rgba(212,184,149,.06);border-color:rgba(212,184,149,.16)}
+@media(max-width:700px){.work-completion-status{display:block}.work-status-pill{display:inline-flex;margin-top:8px}.work-completion-actions{display:grid;grid-template-columns:1fr}.work-completion-actions .btn{min-width:0;width:100%}}
+
 
 
 /* ENLACES EXTERNOS DE ENTREGA · MEGA / DRIVE / DROPBOX / OTROS */
@@ -363,6 +367,22 @@
 .activity-refresh-btn{border-color:rgba(91,170,255,.22)!important;color:#a9d2ff!important}
 @media(max-width:900px){.external-link-form{grid-template-columns:1fr 1fr}.external-link-form .field.url-field{grid-column:1/-1}}
 @media(max-width:620px){.external-link-form{grid-template-columns:1fr}.external-link-form .field.url-field,.external-link-form .field.full{grid-column:auto}.external-link-submit-row{display:grid;grid-template-columns:1fr}.external-link-submit-row .hint{margin:0}.external-link-item{align-items:flex-start;flex-wrap:wrap}.external-link-actions{width:100%;justify-content:flex-start;padding-left:49px}}
+
+
+
+/* PUBLICACIÓN MANUAL DE ENTREGA · ESTADO ≠ ENVIAR AL CLIENTE */
+.delivery-publish-control{margin-bottom:14px;border:1px solid rgba(212,184,149,.2);border-radius:16px;background:linear-gradient(135deg,rgba(212,184,149,.075),rgba(255,255,255,.015));padding:15px;display:grid;gap:12px}
+.delivery-publish-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.delivery-publish-copy strong{display:block;color:#fff;font-size:12px;margin-bottom:5px}.delivery-publish-copy span{display:block;color:#8f8f94;font-size:10px;line-height:1.55;max-width:760px}
+.delivery-publish-badge{flex:0 0 auto;border-radius:999px;padding:6px 9px;font-size:9px;font-weight:800;letter-spacing:.05em;border:1px solid rgba(255,255,255,.1);color:#aaa;background:rgba(255,255,255,.035)}
+.delivery-publish-badge.ready{color:#efcf9f;border-color:rgba(212,184,149,.3);background:rgba(212,184,149,.08)}
+.delivery-publish-badge.published{color:#66e08f;border-color:rgba(43,200,102,.28);background:rgba(43,200,102,.08)}
+.delivery-publish-badge.not-ready{color:#ff9ca5;border-color:rgba(255,100,115,.22);background:rgba(255,100,115,.055)}
+.delivery-publish-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.delivery-publish-actions .btn{min-height:42px}
+.delivery-publish-send{background:linear-gradient(180deg,#e0c5a2,#cda979)!important;color:#15110d!important;border-color:transparent!important;font-weight:850!important;box-shadow:0 10px 28px rgba(212,184,149,.13)}
+.delivery-publish-withdraw{border-color:rgba(255,110,120,.25)!important;color:#ff9ca5!important;background:rgba(255,100,110,.045)!important}
+.delivery-publish-time{color:#777;font-size:9px;margin-left:auto}
+@media(max-width:700px){.delivery-publish-head{display:block}.delivery-publish-badge{display:inline-flex;margin-top:9px}.delivery-publish-actions{display:grid;grid-template-columns:1fr}.delivery-publish-actions .btn{width:100%}.delivery-publish-time{margin-left:0}}
 
 </style>
 </head>
@@ -401,7 +421,7 @@
     </table>
   </div>
 </section>
-<section id="view-projects" class="view"><div class="toolbar"><input id="projectSearch" class="search" placeholder="Buscar proyecto, cliente, orden o transacción"><select id="statusFilter" class="select"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="payment_pending_review">Comprobante por revisar</option><option value="payment_failed">Fallo de pago</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En proceso</option><option value="review">Revisión</option><option value="delivered">Entregado</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
+<section id="view-projects" class="view"><div class="toolbar"><input id="projectSearch" class="search" placeholder="Buscar proyecto, cliente, orden o transacción"><select id="statusFilter" class="select"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="payment_pending_review">Comprobante por revisar</option><option value="payment_failed">Fallo de pago</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En proceso</option><option value="review">Revisión</option><option value="delivered" disabled>Entregado · automático al publicar entrega final</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
 <section id="view-clients" class="view"><div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar nombre, correo o país"></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Ubicación</th><th>Última conexión / actividad</th><th>Órdenes</th><th>Total comprado</th><th></th></tr></thead><tbody id="clientsBody"></tbody></table></div></section>
 <section id="view-webrequests" class="view">
   <div class="webreq-card-grid">
@@ -500,10 +520,46 @@
       </div></div>
     </div>
 
+
+    <div class="section" id="workCompletionSection">
+      <div class="section-h">
+        <div>Trabajo terminado · muestra al cliente</div>
+        <div class="section-h-copy">Esta etapa es independiente del pago y de la entrega final. Aquí el delegado confirma que terminó y envía únicamente una muestra protegida.</div>
+      </div>
+      <div class="section-b">
+        <div class="work-completion-card">
+          <div class="work-completion-status">
+            <div><strong id="workCompletionTitle">Trabajo todavía en proceso</strong><span id="workCompletionHelp">Marca el trabajo como terminado cuando el delegado ya no necesite editar la propuesta.</span></div>
+            <span id="workCompletionBadge" class="work-status-pill wait">EN PROCESO</span>
+          </div>
+          <div class="work-completion-actions">
+            <button id="markWorkCompletedBtn" class="btn" type="button" onclick="markWorkCompleted()">Marcar trabajo terminado</button>
+            <button id="reopenWorkBtn" class="btn preview-withdraw-btn" type="button" onclick="reopenWorkForChanges()">Reabrir para cambios</button>
+          </div>
+          <div class="payment-preview-admin" style="margin-top:14px">
+            <div class="payment-preview-admin-head"><div><strong>Muestra protegida del trabajo</strong><span>Sube una lámina o wallpaper de muestra. Es independiente de los PDF, SKP, DWG, ZIP y enlaces finales. La muestra solo aparece cuando pulses “Notificar al cliente”.</span></div><span id="paymentPreviewStatusBadge" class="payment-request-badge">Sin muestra</span></div>
+            <div class="payment-preview-admin-grid">
+              <div id="paymentPreviewAdminView" class="payment-preview-drop"><div class="payment-preview-empty">Aún no has subido una muestra para este proyecto.</div></div>
+              <div class="payment-preview-controls">
+                <input id="paymentPreviewInput" class="input" type="file" accept="image/jpeg,image/png,image/webp,image/avif">
+                <button id="paymentPreviewUploadBtn" class="btn btn-accent" type="button" onclick="uploadPaymentPreview()">Subir / reemplazar muestra</button>
+                <button id="paymentPreviewRemoveBtn" class="btn payment-preview-remove" type="button" onclick="deletePaymentPreview()">Quitar muestra</button>
+                <div id="paymentPreviewMeta" class="payment-preview-meta">JPG, PNG, WEBP o AVIF · Máx. 50 MB. El video se añadirá como una función separada después.</div>
+              </div>
+            </div>
+          </div>
+          <div class="work-completion-actions">
+            <button id="notifyClientPreviewBtn" class="btn preview-notify-btn" type="button" onclick="notifyClientPreview()">Notificar al cliente · mostrar muestra</button>
+            <button id="withdrawClientPreviewBtn" class="btn preview-withdraw-btn" type="button" onclick="withdrawClientPreview()">Retirar muestra del cliente</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="section" id="paymentRequestSection">
       <div class="section-h">
         <div>Solicitar pago al cliente</div>
-        <div class="section-h-copy">Activa el cobro de una orden personalizada y protege las entregas hasta que el pago sea confirmado.</div>
+        <div class="section-h-copy">Activa o revisa el cobro de una orden personalizada. Confirmar el pago NO publica por sí solo la entrega final.</div>
       </div>
       <div class="section-b">
         <div class="payment-request-card">
@@ -511,29 +567,17 @@
           <div id="clientPaymentMessageAdmin" class="payment-client-message-admin hidden"><div class="payment-client-message-admin-head"><strong>Mensaje del cliente sobre el pago</strong><span id="clientPaymentMessageDate">—</span></div><div id="clientPaymentMessageText" class="payment-client-message-admin-text"></div></div>
           <div class="form-grid">
             <div class="field"><label>Monto a cobrar USD</label><div class="price-field-wrap"><span class="price-prefix">$</span><input id="paymentRequestAmount" class="input" type="number" min="1" step="0.01" inputmode="decimal"></div><div class="hint">Este monto se sincroniza con “Precio del proyecto”. PayPal y Binance lo leen en USD/USDT; en Guatemala la transferencia calcula automáticamente el equivalente en GTQ.</div></div>
-            <div class="field"><label>Vista previa antes del pago</label><input class="input" value="1 imagen" disabled><div class="hint">Solo se firma y muestra una imagen; los demás archivos no reciben enlace de R2.</div></div>
+            <div class="field"><label>Estado de la entrega final</label><input class="input" value="Control independiente" disabled><div class="hint">El pago y la publicación final son etapas separadas. Los archivos finales solo aparecen después de “Publicar entrega final”.</div></div>
             <div class="field full"><label>Mensaje para el cliente</label><textarea id="paymentRequestNote" class="textarea" placeholder="Ej. Tu proyecto ya está terminado. Completa el pago para descargar la entrega final."></textarea></div>
           </div>
-          <label class="check payment-request-lock"><input id="paymentRequestLock" type="checkbox" checked> Bloquear entregas hasta que el pago sea confirmado</label>
+          <label class="check payment-request-lock"><input id="paymentRequestLock" type="checkbox" checked> Mantener archivos finales bloqueados mientras el pago esté pendiente</label>
           <div id="paidCorrectionBox" class="payment-paid-correction">
             <div class="payment-paid-correction-copy"><strong>⚠ ESTE PROYECTO FIGURA COMO PAGADO</strong><span>Mientras Firestore tenga el pago como confirmado, el cliente puede descargar las entregas publicadas. Si fue marcado por error, corrígelo antes de que el cliente entre.</span></div>
             <button id="reopenPaymentBtn" class="btn" type="button" onclick="reopenPaymentAsPending()">Corregir → marcar pendiente y bloquear</button>
           </div>
-          <div class="payment-preview-admin">
-            <div class="payment-preview-admin-head"><div><strong>Lámina arquitectónica de muestra</strong><span>Sube una imagen teaser independiente de los archivos finales. El cliente la verá antes de pagar con marca de muestra y sin botón de descarga.</span></div><span id="paymentPreviewStatusBadge" class="payment-request-badge">Sin lámina</span></div>
-            <div class="payment-preview-admin-grid">
-              <div id="paymentPreviewAdminView" class="payment-preview-drop"><div class="payment-preview-empty">Aún no has subido una lámina de muestra para este proyecto.</div></div>
-              <div class="payment-preview-controls">
-                <input id="paymentPreviewInput" class="input" type="file" accept="image/jpeg,image/png,image/webp,image/avif">
-                <button id="paymentPreviewUploadBtn" class="btn btn-accent" type="button" onclick="uploadPaymentPreview()">Subir / reemplazar lámina</button>
-                <button id="paymentPreviewRemoveBtn" class="btn payment-preview-remove" type="button" onclick="deletePaymentPreview()">Quitar lámina</button>
-                <div id="paymentPreviewMeta" class="payment-preview-meta">JPG, PNG, WEBP o AVIF · Máx. 50 MB.</div>
-              </div>
-            </div>
-          </div>
           <div class="payment-request-actions">
             <button id="requestPaymentBtn" class="btn btn-accent" type="button" onclick="requestClientPayment()">Solicitar pago al cliente</button>
-            <button id="markPaidManualBtn" class="btn payment-manual" type="button" onclick="markProjectPaidManual()">Marcar pagado / desbloquear</button>
+            <button id="markPaidManualBtn" class="btn payment-manual" type="button" onclick="markProjectPaidManual()">Marcar pagado</button>
             <button id="cancelPaymentRequestBtn" class="btn payment-cancel" type="button" onclick="cancelClientPaymentRequest()">Cancelar solicitud</button>
           </div>
         </div>
@@ -579,9 +623,8 @@
               <button type="button" class="status-quick-btn" data-status="files_received" onclick="setProjectStatusQuick('files_received')">Archivos recibidos</button>
               <button type="button" class="status-quick-btn" data-status="in_progress" onclick="setProjectStatusQuick('in_progress')">En proceso</button>
               <button type="button" class="status-quick-btn" data-status="review" onclick="setProjectStatusQuick('review')">En revisión</button>
-              <button type="button" class="status-quick-btn" data-status="delivered" onclick="setProjectStatusQuick('delivered')">Entregado</button>
             </div>
-            <div id="deliveryPublishWarning" class="delivery-publish-warning">⚠️ <strong>Entregado publica la entrega al cliente.</strong> Tener archivos finales cargados no los publica por sí solo.</div>
+            <div id="deliveryPublishWarning" class="delivery-publish-warning">ℹ️ <strong>“Entregado” ahora se establece únicamente al publicar la entrega final.</strong> Para indicar que el delegado terminó, usa “Marcar trabajo terminado”.</div>
           </div>
 
           <div class="field">
@@ -685,11 +728,25 @@
 
     <div class="section">
       <div class="section-h">
-        <div>Enviar archivos al cliente</div>
-        <div class="section-h-copy">Subir archivos no los publica automáticamente. Aquí puedes ver si están visibles, bloqueados o aún ocultos para el cliente.</div>
+        <div>Preparar y publicar entrega final</div>
+        <div class="section-h-copy">Los archivos y enlaces se preparan primero. Publicar la entrega final es una acción independiente y requiere el pago confirmado.</div>
         <button class="mini activity-refresh-btn" type="button" onclick="refreshDeliveryActivity()">Actualizar actividad</button>
       </div>
       <div class="section-b">
+        <div id="deliveryPublishControl" class="delivery-publish-control">
+          <div class="delivery-publish-head">
+            <div class="delivery-publish-copy">
+              <strong id="deliveryPublishTitle">Entrega final todavía no publicada</strong>
+              <span id="deliveryPublishHelp">Puedes subir y revisar los archivos primero. Nada final se publica hasta que pulses “Publicar entrega final”.</span>
+            </div>
+            <span id="deliveryPublishBadge" class="delivery-publish-badge">NO PUBLICADA</span>
+          </div>
+          <div class="delivery-publish-actions">
+            <button id="publishDeliveryBtn" class="btn delivery-publish-send" type="button" onclick="publishDeliveryToClient()">Publicar entrega final</button>
+            <button id="withdrawDeliveryBtn" class="btn delivery-publish-withdraw" type="button" onclick="withdrawDeliveryFromClient()">Retirar entrega final</button>
+            <span id="deliveryPublishTime" class="delivery-publish-time"></span>
+          </div>
+        </div>
         <div class="upload-box">
           <div class="upload-row">
             <div class="field">
@@ -701,7 +758,7 @@
               <label>Etiqueta general opcional</label>
               <input id="deliveryLabel" class="input" placeholder="Ej. Entrega final">
             </div>
-            <button id="deliveryUploadBtn" class="btn btn-accent" onclick="uploadDelivery()">Subir y enviar</button>
+            <button id="deliveryUploadBtn" class="btn btn-accent" onclick="uploadDelivery()">Subir archivos</button>
           </div>
           <div id="deliverySelectedFilesWrap" class="selected-files-wrap">
             <div class="selected-files-head"><strong>Archivos preparados</strong><span id="deliverySelectedCount">0 archivos</span></div>
@@ -714,7 +771,7 @@
 
         <div class="external-links-admin">
           <div class="external-links-admin-head">
-            <div><strong>Enlaces externos de entrega</strong><span>Para archivos pesados puedes usar MEGA, Google Drive, Dropbox, OneDrive, WeTransfer u otra nube sin consumir almacenamiento de R2. Si el proyecto tiene cobro bloqueado, estos enlaces también permanecen ocultos hasta confirmar el pago.</span></div>
+            <div><strong>Enlaces externos de entrega</strong><span>Para archivos pesados puedes usar MEGA, Google Drive, Dropbox, OneDrive, WeTransfer u otra nube sin consumir almacenamiento de R2. Los enlaces nuevos quedan “Pendientes de publicar”. Los enlaces ya publicados no desaparecen cuando agregas otro.</span></div>
             <span id="deliveryLinkCountBadge" class="external-link-count">0 enlaces</span>
           </div>
           <div class="external-link-form">
@@ -743,7 +800,7 @@
               <input id="deliveryLinkNote" class="input" placeholder="Ej. Archivo de 3.8 GB · contraseña incluida en el mensaje de entrega">
             </div>
             <div class="external-link-submit-row">
-              <div class="hint">El enlace se guarda en Firestore, no en R2. Se mostrará al cliente únicamente cuando la entrega esté desbloqueada.</div>
+              <div class="hint">El enlace se guarda en Firestore, no en R2. Solo se mostrará después de publicarlo como parte de la entrega final.</div>
               <button id="deliveryLinkAddBtn" class="btn btn-accent" type="button" onclick="addExternalDeliveryLink()">Agregar enlace</button>
             </div>
           </div>
@@ -1177,7 +1234,7 @@ window.approveManualPayment=async function(){
     if(keepStatus==='payment_pending_review'||keepStatus==='payment_failed')keepStatus='waiting_files';
     if(keepStatus==='awaiting_payment')keepStatus='waiting_files';
     const patch={paymentStatus:'paid',paymentReviewStatus:'approved',paymentVerifiedByAdmin:true,paymentVerifiedByAdminEmail:auth.currentUser?.email||'',paymentReviewNote:note,paymentRequested:false,paymentRequestStatus:'paid',deliveryLocked:false,paymentUnlockedAt:serverTimestamp(),status:keepStatus,paidAt:serverTimestamp(),paymentVerifiedAt:serverTimestamp(),updatedAt:serverTimestamp()};
-    await updateDoc(doc(db,'users',uid,'projects',id),patch);toast('Pago aprobado. Entregas desbloqueadas.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value=keepStatus;renderPaymentRequestAdmin();await renderPaymentProof();
+    await updateDoc(doc(db,'users',uid,'projects',id),patch);toast('Pago aprobado. La entrega final sigue bajo control de publicación.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value=keepStatus;renderPaymentRequestAdmin();await renderPaymentProof();
   }catch(e){console.error(e);toast(e?.message||'No se pudo aprobar el pago.');}
   finally{if(btn){btn.disabled=false;btn.textContent='Aprobar pago ✓';}}
 }
@@ -1195,7 +1252,7 @@ window.rejectManualPayment=async function(){
   finally{if(btn){btn.disabled=false;btn.textContent='Rechazar comprobante';}}
 }
 
-function projectRow(p){return `<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)} · ${esc(p.transactionId||'sin transacción')}</div>${paymentStatusExtra(p)}</td><td><div>${esc(p.payerName||p.ownerEmail||'Cliente')}</div><div class="sub">${esc(p.ownerEmail||'')}</div></td><td>${esc(p.payerCountry||p.lastGeo?.country||'No reportado')}</td><td><span class="strong">${usd(p.baseUsd)}</span><div class="sub">${esc(p.currency||'USD')} ${esc(p.amount||'')}</div></td><td><span class="strong">${usd(projectProfit(p))}</span><div class="sub">Costo ${usd(p.adminMeta?.internalCostUsd)}</div></td><td>${pill(p.status)}</td><td>${Number(p.clientFileCount||0)} recibidos · ${Number(p.deliveryFileCount||0)} enviados</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`}
+function projectRow(p){return `<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)} · ${esc(p.transactionId||'sin transacción')}</div>${paymentStatusExtra(p)}</td><td><div>${esc(p.payerName||p.ownerEmail||'Cliente')}</div><div class="sub">${esc(p.ownerEmail||'')}</div></td><td>${esc(p.payerCountry||p.lastGeo?.country||'No reportado')}</td><td><span class="strong">${usd(p.baseUsd)}</span><div class="sub">${esc(p.currency||'USD')} ${esc(p.amount||'')}</div></td><td><span class="strong">${usd(projectProfit(p))}</span><div class="sub">Costo ${usd(p.adminMeta?.internalCostUsd)}</div></td><td>${pill(p.status)}</td><td>${Number(p.clientFileCount||0)} recibidos · ${Number(p.deliveryFileCount||0)} preparados</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`}
 function renderProjects(){const term=$('projectSearch').value.toLowerCase(),st=$('statusFilter').value;const rows=data.projects.filter(p=>{const statusOk=!st||(st==='payment_pending_review'?hasPaymentReceipt(p)&&paymentReviewState(p)==='pending':st==='payment_failed'?paymentReviewState(p)==='rejected'||p.status==='payment_failed':p.status===st);return statusOk&&(!term||[p.projectTitle,p.ownerEmail,p.payerName,p.displayOrderId,p.transactionId,p.payerCountry,p.lastGeo?.country,p.paymentMethod,p.bankName,p.manualPaymentReference].some(x=>String(x||'').toLowerCase().includes(term)))});$('projectsBody').innerHTML=rows.map(projectRow).join('')||'<tr><td colspan="8">Sin resultados.</td></tr>'}
 function renderRecent(){const rows=data.projects.slice(0,8);$('recentProjects').innerHTML=rows.length?`<table><thead><tr><th>Proyecto</th><th>Cliente</th><th>Venta</th><th>Estado</th><th></th></tr></thead><tbody>${rows.map(p=>`<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)}</div></td><td>${esc(p.ownerEmail||p.payerName||'')}</td><td>${usd(p.baseUsd)}</td><td>${pill(p.status)}</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`).join('')}</tbody></table>`:'<div class="loading">Aún no hay proyectos.</div>'}
 function renderCountries(){const max=Math.max(1,...data.countries.map(x=>x.count));$('countryList').innerHTML=data.countries.length?data.countries.map(x=>`<div class="country-row"><div class="country-name">${esc(x.country)}</div><div class="country-track"><div class="country-bar" style="width:${Math.round(x.count/max*100)}%"></div></div><div class="country-count">${x.count}</div></div>`).join(''):'<div class="sub">Aún no hay ubicaciones registradas.</div>'}
@@ -1373,7 +1430,7 @@ document.getElementById('webRequestModal')?.addEventListener('click',e=>{if(e.ta
 $('customManualPaid').onchange=()=>{const paid=$('customManualPaid').checked,wrap=$('customPaymentMethodWrap');wrap?.classList.toggle('hidden',!paid);if(!paid&&$('customPaymentMethod'))$('customPaymentMethod').value='PayPal'};
 
 function adminPaymentRequestState(p){
-  if(String(p?.paymentStatus||'').toLowerCase()==='paid')return {label:'Pagado',cls:'paid',title:'Pago confirmado · entregas desbloqueadas'};
+  if(String(p?.paymentStatus||'').toLowerCase()==='paid')return {label:'Pagado',cls:'paid',title:'Pago confirmado'};
   if(String(p?.paymentStatus||'').toLowerCase()==='pending_review')return {label:'En revisión',cls:'review',title:'Comprobante recibido · pendiente de aprobación'};
   if(p?.paymentRequestStatus==='cancelled')return {label:'Cancelada',cls:'cancelled',title:'Solicitud de pago cancelada'};
   if(p?.paymentRequested===true||p?.paymentRequestStatus==='pending')return {label:'Solicitado',cls:'review',title:'Pago solicitado al cliente'};
@@ -1387,7 +1444,7 @@ function renderPaymentRequestAdmin(){
   if($('paymentRequestStatusTitle'))$('paymentRequestStatusTitle').textContent=state.title;
   if($('paymentRequestStatusHelp')){
     const lock=selected.deliveryLocked===true||(selected.deliveryLocked!==false&&selected.status==='delivered'&&!paid);
-    $('paymentRequestStatusHelp').textContent=paid?'El cliente ya tiene acceso completo a las entregas.':selected.paymentStatus==='pending_review'?'Revisa el comprobante arriba. Al aprobarlo se mantendrá el estado operativo actual del proyecto.':selected.paymentRequested===true?`Cobro activo${lock?' · entregas protegidas':''}. Métodos: PayPal y Binance globales; transferencia bancaria solo para clientes en Guatemala.`:'Puedes solicitar el pago sin borrar ni volver a subir archivos.';
+    $('paymentRequestStatusHelp').textContent=paid?'Pago confirmado. La entrega final sigue bajo el control independiente de publicación.':selected.paymentStatus==='pending_review'?'Revisa el comprobante arriba. Al aprobarlo se mantendrá el estado operativo actual del proyecto.':selected.paymentRequested===true?`Cobro activo${lock?' · entregas protegidas':''}. Métodos: PayPal y Binance globales; transferencia bancaria solo para clientes en Guatemala.`:'Puedes solicitar el pago sin borrar ni volver a subir archivos.';
   }
   if($('paymentRequestAmount'))$('paymentRequestAmount').value=Number(selected.paymentRequestedAmountUsd??selected.baseUsd??0).toFixed(2);
   if($('paymentRequestNote'))$('paymentRequestNote').value=selected.paymentRequestNote||'';
@@ -1399,52 +1456,202 @@ function renderPaymentRequestAdmin(){
   if($('requestPaymentBtn'))$('requestPaymentBtn').disabled=paid||selected.paymentStatus==='pending_review';
   if($('markPaidManualBtn'))$('markPaidManualBtn').disabled=paid;
   if($('cancelPaymentRequestBtn'))$('cancelPaymentRequestBtn').disabled=paid||!(selected.paymentRequested===true||selected.paymentRequestStatus==='pending');
+  renderWorkCompletionAdmin();
+  renderDeliveryPublishAdmin();
+}
+
+function adminWorkCompleted(project=selected){
+  if(project?.workCompleted===true)return true;
+  if(project?.workCompleted===false)return false;
+  return project?.deliveryPublished===true||String(project?.status||'').toLowerCase()==='delivered';
+}
+function adminPreviewPath(project=selected){
+  return String(project?.clientPreviewStoragePath||project?.paymentPreviewStoragePath||'').trim();
+}
+function adminPreviewPublished(project=selected){
+  if(project?.clientPreviewPublished===true)return true;
+  if(project?.clientPreviewPublished===false)return false;
+  // Compatibilidad con la muestra antigua: solo estaba visible cuando la entrega completa ya había sido publicada.
+  return !!adminPreviewPath(project)&&project?.deliveryPublished===true;
+}
+function renderWorkCompletionAdmin(){
+  if(!selected)return;
+  const done=adminWorkCompleted(selected),preview=adminPreviewPath(selected),notified=adminPreviewPublished(selected);
+  const badge=$('workCompletionBadge'),title=$('workCompletionTitle'),help=$('workCompletionHelp');
+  if(badge){badge.className=`work-status-pill ${done?'done':'wait'}`;badge.textContent=done?'TRABAJO TERMINADO':'EN PROCESO';}
+  if(title)title.textContent=done?'Trabajo marcado como terminado':'Trabajo todavía en proceso';
+  if(help)help.textContent=notified?'El cliente ya fue notificado y puede ver únicamente la muestra protegida.':done?'Sube una muestra y pulsa “Notificar al cliente”. Esto no publica la entrega final.':'Marca el trabajo como terminado cuando el delegado haya finalizado la propuesta.';
+  if($('markWorkCompletedBtn'))$('markWorkCompletedBtn').disabled=done;
+  if($('reopenWorkBtn'))$('reopenWorkBtn').disabled=!done||selected.deliveryPublished===true;
+  if($('notifyClientPreviewBtn'))$('notifyClientPreviewBtn').disabled=!done||!preview||notified;
+  if($('withdrawClientPreviewBtn')){$('withdrawClientPreviewBtn').disabled=!notified;$('withdrawClientPreviewBtn').style.display=notified?'inline-flex':'none';}
   renderPaymentPreviewAdmin();
 }
+window.markWorkCompleted=async function(){
+  if(!selected||adminWorkCompleted(selected))return;
+  if(!confirm('¿Confirmas que el delegado terminó el trabajo? Esto NO publicará archivos finales ni notificará todavía al cliente.'))return;
+  const btn=$('markWorkCompletedBtn');
+  try{
+    if(btn){btn.disabled=true;btn.textContent='Marcando…';}
+    const patch={workCompleted:true,workCompletedAt:serverTimestamp(),workCompletedByAdminEmail:auth.currentUser?.email||'',updatedAt:serverTimestamp()};
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
+    selected.workCompleted=true;selected.workCompletedAt=new Date();renderWorkCompletionAdmin();renderDeliveryPublishAdmin();toast('Trabajo marcado como terminado. Ahora puedes subir y notificar la muestra.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo marcar el trabajo como terminado.');}
+  finally{if(btn){btn.disabled=false;btn.textContent='Marcar trabajo terminado';}}
+};
+window.reopenWorkForChanges=async function(){
+  if(!selected||!adminWorkCompleted(selected)||selected.deliveryPublished===true)return;
+  if(!confirm('¿Reabrir el trabajo para cambios? La muestra dejará de mostrarse al cliente, pero no se borrará.'))return;
+  try{
+    const patch={workCompleted:false,clientPreviewPublished:false,workReopenedAt:serverTimestamp(),updatedAt:serverTimestamp()};
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
+    selected.workCompleted=false;selected.clientPreviewPublished=false;renderWorkCompletionAdmin();renderDeliveryPublishAdmin();toast('Trabajo reabierto. La muestra quedó oculta.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo reabrir el trabajo.');}
+};
+window.notifyClientPreview=async function(){
+  if(!selected)return;
+  if(!adminWorkCompleted(selected)){toast('Primero marca el trabajo como terminado.');return;}
+  if(!adminPreviewPath(selected)){toast('Primero sube una muestra del trabajo.');return;}
+  if(!confirm('¿Notificar al cliente y mostrarle únicamente la muestra protegida? Los archivos finales seguirán ocultos.'))return;
+  const btn=$('notifyClientPreviewBtn');
+  try{
+    if(btn){btn.disabled=true;btn.textContent='Notificando…';}
+    const patch={clientPreviewPublished:true,clientPreviewPublishedAt:serverTimestamp(),clientPreviewNotifiedAt:serverTimestamp(),clientPreviewNotifiedByAdminEmail:auth.currentUser?.email||'',updatedAt:serverTimestamp()};
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
+    selected.clientPreviewPublished=true;selected.clientPreviewPublishedAt=new Date();renderWorkCompletionAdmin();toast('Cliente notificado. Solo la muestra protegida es visible.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo notificar al cliente.');}
+  finally{if(btn){btn.disabled=false;btn.textContent='Notificar al cliente · mostrar muestra';}}
+};
+window.withdrawClientPreview=async function(){
+  if(!selected||!adminPreviewPublished(selected))return;
+  if(!confirm('¿Ocultar la muestra del portal del cliente? El archivo no se borrará.'))return;
+  try{
+    const patch={clientPreviewPublished:false,clientPreviewWithdrawnAt:serverTimestamp(),updatedAt:serverTimestamp()};
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
+    selected.clientPreviewPublished=false;renderWorkCompletionAdmin();toast('Muestra retirada del portal del cliente.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo retirar la muestra.');}
+};
+
+function renderDeliveryPublishAdmin(){
+  if(!selected)return;
+  const published=selected.deliveryPublished===true;
+  const paid=String(selected.paymentStatus||'').toLowerCase()==='paid'||selected.paymentVerifiedByAdmin===true;
+  const done=adminWorkCompleted(selected);
+  const prepared=Math.max(0,Number(selected._deliveryPreparedCount||0))+Math.max(0,Number(selected._deliveryLinkPreparedCount||0));
+  const hasAny=Math.max(0,Number(selected.deliveryFileCount||0))+Math.max(0,Number(selected.deliveryLinkCount||0))>0;
+  const badge=$('deliveryPublishBadge'),title=$('deliveryPublishTitle'),help=$('deliveryPublishHelp');
+  const send=$('publishDeliveryBtn'),withdraw=$('withdrawDeliveryBtn'),time=$('deliveryPublishTime');
+  if(badge){
+    badge.className=`delivery-publish-badge ${published?'published':done?'ready':'not-ready'}`;
+    badge.textContent=published?(prepared?`PUBLICADA · ${prepared} PENDIENTE${prepared===1?'':'S'}`:'PUBLICADA'):done?'PREPARADA':'NO LISTA';
+  }
+  if(title)title.textContent=published?'Entrega final publicada':done?'Trabajo terminado · entrega final aún no publicada':'Trabajo todavía en proceso';
+  if(help){
+    if(published&&prepared)help.textContent=`La entrega anterior sigue visible. Hay ${prepared} elemento${prepared===1?'':'s'} nuevo${prepared===1?'':'s'} pendiente${prepared===1?'':'s'} de publicar.`;
+    else if(published)help.textContent='La entrega final publicada sigue visible para el cliente. Agregar archivos nuevos no retira lo que ya entregaste.';
+    else if(!done)help.textContent='Primero marca “Trabajo terminado”. Puedes preparar archivos mientras tanto, pero no se publicarán.';
+    else if(!paid)help.textContent='El trabajo está terminado, pero el pago todavía no está confirmado. Solo puedes notificar la muestra; la entrega final permanece oculta.';
+    else help.textContent='Pago confirmado. Revisa los archivos/enlaces preparados y publica la entrega final cuando esté lista.';
+  }
+  const canPublish=done&&paid&&hasAny&&(!published||prepared>0);
+  if(send){send.disabled=!canPublish;send.textContent=published&&prepared?`Publicar ${prepared} cambio${prepared===1?'':'s'}`:'Publicar entrega final';}
+  if(withdraw){withdraw.disabled=!published;withdraw.style.display=published?'inline-flex':'none';}
+  if(time){const at=selected.deliveryPublishedAt||selected.deliveryLastPublishedAt;time.textContent=published&&at?`Última publicación: ${niceDateTime(at)}`:'';}
+}
+window.publishDeliveryToClient=async function(){
+  if(!selected)return;
+  const uid=selected.ownerUid,id=selected.id;
+  const latest=await getDoc(doc(db,'users',uid,'projects',id));
+  if(!latest.exists()){toast('No se encontró el proyecto.');return;}
+  const live={id,...latest.data()};Object.assign(selected,live);
+  if(!adminWorkCompleted(live)){toast('Primero marca el trabajo como terminado.');renderDeliveryPublishAdmin();return;}
+  const paid=String(live.paymentStatus||'').toLowerCase()==='paid'||live.paymentVerifiedByAdmin===true;
+  if(!paid){toast('El pago todavía no está confirmado. Notifica la muestra; la entrega final se publica después del pago.');renderDeliveryPublishAdmin();return;}
+  const [files,links]=await Promise.all([getProjectFiles('delivery'),getExternalDeliveryLinks()]);
+  const activeFiles=files.filter(f=>f.availability!=='deleted');
+  const activeLinks=links.filter(l=>l.availability!=='deleted');
+  const preparedFiles=activeFiles.filter(f=>!adminDeliveryItemIsPublished(f,live));
+  const preparedLinks=activeLinks.filter(l=>!adminDeliveryItemIsPublished(l,live));
+  const firstPublication=live.deliveryPublished!==true;
+  if(firstPublication&&!activeFiles.length&&!activeLinks.length){toast('Todavía no hay archivos ni enlaces finales preparados.');return;}
+  if(!firstPublication&&!preparedFiles.length&&!preparedLinks.length){toast('No hay cambios nuevos pendientes de publicar.');return;}
+  const count=firstPublication?activeFiles.length+activeLinks.length:preparedFiles.length+preparedLinks.length;
+  if(!confirm(firstPublication?`¿Publicar la entrega final con ${count} elemento${count===1?'':'s'}?`:`¿Publicar ${count} cambio${count===1?'':'s'} nuevo${count===1?'':'s'} sin retirar lo que el cliente ya tiene?`))return;
+  const btn=$('publishDeliveryBtn');
+  try{
+    if(btn){btn.disabled=true;btn.textContent='Publicando…';}
+    const filesToPublish=firstPublication?activeFiles:preparedFiles,linksToPublish=firstPublication?activeLinks:preparedLinks;
+    await Promise.all([
+      ...filesToPublish.map(f=>updateDoc(doc(db,'users',uid,'projects',id,'deliveryFiles',String(f.fileId||f.id)),{publicationState:'published',published:true,publishedAt:serverTimestamp(),updatedAt:serverTimestamp()})),
+      ...linksToPublish.map(l=>updateDoc(doc(db,'users',uid,'projects',id,'deliveryLinks',String(l.linkId||l.id)),{publicationState:'published',published:true,publishedAt:serverTimestamp(),updatedAt:serverTimestamp()}))
+    ]);
+    const patch={workCompleted:true,deliveryPublicationMode:'manual_v2',deliveryPublished:true,deliveryNeedsRepublish:false,deliveryPublishedAt:serverTimestamp(),deliveryLastPublishedAt:serverTimestamp(),deliveryPublishedByAdminEmail:auth.currentUser?.email||'',status:'delivered',updatedAt:serverTimestamp()};
+    if(!live.deliveredAt)patch.deliveredAt=serverTimestamp();
+    await updateDoc(doc(db,'users',uid,'projects',id),patch);
+    Object.assign(selected,{workCompleted:true,deliveryPublicationMode:'manual_v2',deliveryPublished:true,deliveryNeedsRepublish:false,status:'delivered',deliveryPublishedAt:new Date(),deliveryLastPublishedAt:new Date()});if(!selected.deliveredAt)selected.deliveredAt=new Date();
+    await loadFiles();renderDeliveryPublishAdmin();toast(firstPublication?'Entrega final publicada.':'Cambios nuevos publicados sin retirar la entrega anterior.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo publicar la entrega final.');}
+  finally{if(btn)btn.disabled=false;}
+};
+window.withdrawDeliveryFromClient=async function(){
+  if(!selected||selected.deliveryPublished!==true)return;
+  if(!confirm('¿Retirar temporalmente la entrega final del portal? No se borrará ningún archivo, enlace ni muestra.'))return;
+  const btn=$('withdrawDeliveryBtn');
+  try{
+    if(btn){btn.disabled=true;btn.textContent='Retirando…';}
+    const patch={deliveryPublicationMode:'manual_v2',deliveryPublished:false,deliveryWithdrawnAt:serverTimestamp(),deliveryWithdrawnByAdminEmail:auth.currentUser?.email||'',updatedAt:serverTimestamp()};
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
+    selected.deliveryPublicationMode='manual_v2';selected.deliveryPublished=false;selected.deliveryWithdrawnAt=new Date();renderDeliveryPublishAdmin();await loadFiles();toast('Entrega final retirada. La muestra y los archivos siguen guardados.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo retirar la entrega.');}
+  finally{if(btn){btn.disabled=false;btn.textContent='Retirar entrega final';}}
+};
+
 function paymentPreviewIsImage(file){return !!file&&(/^image\/(jpeg|png|webp|avif)$/i.test(String(file.type||''))||/\.(jpe?g|png|webp|avif)$/i.test(String(file.name||'')))}
 function renderPaymentPreviewAdmin(){
   const view=$('paymentPreviewAdminView'),badge=$('paymentPreviewStatusBadge'),meta=$('paymentPreviewMeta'),remove=$('paymentPreviewRemoveBtn');
   if(!view||!selected)return;
-  const path=String(selected.paymentPreviewStoragePath||'').trim();
-  if(badge){badge.textContent=path?'Lámina activa':'Sin lámina';badge.className=`payment-request-badge ${path?'paid':''}`.trim();}
+  const path=adminPreviewPath(selected),notified=adminPreviewPublished(selected);
+  if(badge){badge.textContent=path?(notified?'Muestra notificada':'Muestra preparada'):'Sin muestra';badge.className=`payment-request-badge ${notified?'paid':''}`.trim();}
   if(remove)remove.disabled=!path;
-  if(!path){view.innerHTML='<div class="payment-preview-empty">Aún no has subido una lámina de muestra para este proyecto.</div>';if(meta)meta.textContent='JPG, PNG, WEBP o AVIF · Máx. 50 MB.';return;}
+  if(!path){view.innerHTML='<div class="payment-preview-empty">Aún no has subido una muestra para este proyecto.</div>';if(meta)meta.textContent='JPG, PNG, WEBP o AVIF · Máx. 50 MB.';return;}
   if(meta){
-    const viewed=selected.paymentPreviewLastViewedAt?niceDateTime(selected.paymentPreviewLastViewedAt):'Aún no vista por el cliente';
-    const count=Math.max(0,Number(selected.paymentPreviewViewCount||0));
-    const published=selected.deliveryPublished===true||(selected.deliveryPublished==null&&!!selected.deliveredAt&&String(selected.status||'')==='delivered');
-    const paid=String(selected.paymentStatus||'').toLowerCase()==='paid'||selected.paymentVerifiedByAdmin===true;
-    const teaserVisible=published&&!paid&&selected.deliveryLocked!==false;
-    meta.textContent=`${selected.paymentPreviewName||'Lámina de muestra'}${selected.paymentPreviewSize?` · ${bytes(selected.paymentPreviewSize)}`:''} · ${teaserVisible?'VISIBLE COMO MUESTRA':'NO MOSTRADA AL CLIENTE'} · ${viewed}${count?` · ${count} vista${count===1?'':'s'}`:''}`;
+    const viewed=selected.clientPreviewLastViewedAt||selected.paymentPreviewLastViewedAt,viewedText=viewed?niceDateTime(viewed):'Aún no vista por el cliente';
+    const count=Math.max(0,Number(selected.clientPreviewViewCount??selected.paymentPreviewViewCount??0));
+    meta.textContent=`${selected.clientPreviewName||selected.paymentPreviewName||'Muestra del trabajo'}${(selected.clientPreviewSize||selected.paymentPreviewSize)?` · ${bytes(selected.clientPreviewSize||selected.paymentPreviewSize)}`:''} · ${notified?'VISIBLE PARA EL CLIENTE':'PREPARADA · NO NOTIFICADA'} · ${viewedText}${count?` · ${count} vista${count===1?'':'s'}`:''}`;
   }
-  if(!s3){view.innerHTML='<div class="payment-preview-empty">Lámina guardada. La vista previa requiere conexión a R2.</div>';return;}
-  try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:path,Expires:900});view.innerHTML=`<img src="${esc(url)}" alt="Lámina arquitectónica de muestra"><span class="payment-preview-watermark">MUESTRA · EVOLUTION DESIGN</span>`;}catch(e){console.error(e);view.innerHTML='<div class="payment-preview-empty">No se pudo cargar la vista previa de la lámina.</div>';}
+  if(!s3){view.innerHTML='<div class="payment-preview-empty">Muestra guardada. La vista previa requiere conexión a R2.</div>';return;}
+  try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:path,Expires:900});view.innerHTML=`<img src="${esc(url)}" alt="Muestra del trabajo"><span class="payment-preview-watermark">MUESTRA · EVOLUTION DESIGN</span>`;}catch(e){console.error(e);view.innerHTML='<div class="payment-preview-empty">No se pudo cargar la muestra.</div>';}
 }
 window.uploadPaymentPreview=async function(){
   if(!selected)return;
   const input=$('paymentPreviewInput'),file=input?.files?.[0];
-  if(!file){toast('Selecciona la imagen de la lámina.');return;}
-  if(!paymentPreviewIsImage(file)){toast('La lámina debe ser JPG, PNG, WEBP o AVIF.');return;}
-  if(file.size>50*1024*1024){toast('La lámina supera el máximo de 50 MB.');return;}
+  if(!file){toast('Selecciona la imagen de muestra.');return;}
+  if(!paymentPreviewIsImage(file)){toast('La muestra debe ser JPG, PNG, WEBP o AVIF.');return;}
+  if(file.size>50*1024*1024){toast('La muestra supera el máximo de 50 MB.');return;}
   if(!s3){toast('No hay conexión a Cloudflare R2.');return;}
-  const btn=$('paymentPreviewUploadBtn'),oldPath=String(selected.paymentPreviewStoragePath||'').trim();
+  const btn=$('paymentPreviewUploadBtn'),oldPath=adminPreviewPath(selected);
   try{
-    if(btn){btn.disabled=true;btn.textContent='Subiendo lámina…';}
-    const fileId=newFileId(),safeName=safeR2Name(file.name||'lamina-muestra.jpg'),path=`projects/${selected.ownerUid}/${selected.id}/payment-preview/${fileId}/${safeName}`;
-    const req=s3.putObject({Bucket:R2_BUCKET_NAME,Key:path,Body:file,ContentType:file.type||'image/jpeg'});
-    await req.promise();
-    const patch={paymentPreviewStoragePath:path,paymentPreviewName:file.name||safeName,paymentPreviewContentType:file.type||'image/jpeg',paymentPreviewSize:Number(file.size||0),paymentPreviewUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()};
+    if(btn){btn.disabled=true;btn.textContent='Subiendo muestra…';}
+    const fileId=newFileId(),safeName=safeR2Name(file.name||'muestra.jpg'),path=`projects/${selected.ownerUid}/${selected.id}/client-preview/${fileId}/${safeName}`;
+    await s3.putObject({Bucket:R2_BUCKET_NAME,Key:path,Body:file,ContentType:file.type||'image/jpeg'}).promise();
+    const patch={clientPreviewStoragePath:path,clientPreviewName:file.name||safeName,clientPreviewContentType:file.type||'image/jpeg',clientPreviewSize:Number(file.size||0),clientPreviewUpdatedAt:serverTimestamp(),paymentPreviewStoragePath:path,paymentPreviewName:file.name||safeName,paymentPreviewContentType:file.type||'image/jpeg',paymentPreviewSize:Number(file.size||0),paymentPreviewUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()};
     await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
-    if(oldPath&&oldPath!==path){try{await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:oldPath}).promise();}catch(e){console.info('La lámina anterior no pudo eliminarse de R2:',e);}}
-    Object.assign(selected,patch);if(input)input.value='';renderPaymentPreviewAdmin();toast('Lámina de muestra actualizada. El cliente la verá antes de pagar.');
-  }catch(e){console.error(e);toast(e?.message||'No se pudo subir la lámina de muestra.');}
-  finally{if(btn){btn.disabled=false;btn.textContent='Subir / reemplazar lámina';}}
+    if(oldPath&&oldPath!==path){try{await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:oldPath}).promise();}catch(e){console.info('La muestra anterior no pudo eliminarse de R2:',e);}}
+    Object.assign(selected,{...patch,clientPreviewStoragePath:path,clientPreviewName:file.name||safeName,clientPreviewSize:Number(file.size||0)});if(input)input.value='';renderWorkCompletionAdmin();toast(adminPreviewPublished(selected)?'Muestra reemplazada. El cliente verá la nueva versión.':'Muestra preparada. Pulsa “Notificar al cliente” para mostrarla.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo subir la muestra.');}
+  finally{if(btn){btn.disabled=false;btn.textContent='Subir / reemplazar muestra';}}
 };
 window.deletePaymentPreview=async function(){
-  if(!selected)return;const path=String(selected.paymentPreviewStoragePath||'').trim();if(!path){toast('Este proyecto no tiene lámina de muestra.');return;}
-  if(!confirm('¿Quitar la lámina de muestra? Los archivos finales no se tocarán.'))return;
+  if(!selected)return;const path=adminPreviewPath(selected);if(!path){toast('Este proyecto no tiene muestra.');return;}
+  if(!confirm('¿Quitar la muestra? La entrega final no se tocará.'))return;
   const btn=$('paymentPreviewRemoveBtn');
-  try{if(btn){btn.disabled=true;btn.textContent='Quitando…';}if(s3){try{await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:path}).promise();}catch(e){console.info('No se pudo borrar la lámina de R2:',e);}}const patch={paymentPreviewStoragePath:'',paymentPreviewName:'',paymentPreviewContentType:'',paymentPreviewSize:0,paymentPreviewUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()};await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);Object.assign(selected,patch);renderPaymentPreviewAdmin();toast('Lámina de muestra eliminada. Las entregas finales siguen intactas.');}catch(e){console.error(e);toast(e?.message||'No se pudo quitar la lámina.');}finally{if(btn){btn.disabled=false;btn.textContent='Quitar lámina';}}
+  try{
+    if(btn){btn.disabled=true;btn.textContent='Quitando…';}
+    if(s3){try{await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:path}).promise();}catch(e){console.info('No se pudo borrar la muestra de R2:',e);}}
+    const patch={clientPreviewStoragePath:'',clientPreviewName:'',clientPreviewContentType:'',clientPreviewSize:0,clientPreviewPublished:false,clientPreviewUpdatedAt:serverTimestamp(),paymentPreviewStoragePath:'',paymentPreviewName:'',paymentPreviewContentType:'',paymentPreviewSize:0,paymentPreviewUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()};
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);Object.assign(selected,patch);renderWorkCompletionAdmin();toast('Muestra eliminada. La entrega final sigue intacta.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo quitar la muestra.');}
+  finally{if(btn){btn.disabled=false;btn.textContent='Quitar muestra';}}
 };
 
 window.reopenPaymentAsPending=async function(){
@@ -1539,7 +1746,7 @@ window.markProjectPaidManual=async function(){
   if(String(selected.paymentStatus||'').toLowerCase()==='paid'){toast('Este proyecto ya está pagado.');return;}
   const method=String(prompt('Método de pago recibido:',selected.paymentMethod&& !String(selected.paymentMethod).includes('pendiente')?selected.paymentMethod:'Pago manual')||'').trim();
   if(!method)return;
-  if(!confirm(`¿Confirmas que recibiste el pago y quieres desbloquear todas las entregas?`))return;
+  if(!confirm(`¿Confirmas que recibiste el pago? Esto NO publicará la entrega final.`))return;
   const btn=$('markPaidManualBtn'),uid=selected.ownerUid,id=selected.id;
   try{
     if(btn){btn.disabled=true;btn.textContent='Confirmando…';}
@@ -1548,18 +1755,18 @@ window.markProjectPaidManual=async function(){
     if(keepStatus==='awaiting_payment')keepStatus='waiting_files';
     const patch={paymentStatus:'paid',paymentRequestStatus:'paid',paymentRequested:false,deliveryLocked:false,paymentMethod:method,transactionId:selected.transactionId||`ADMIN-${Date.now()}`,paymentVerifiedByAdmin:true,paymentVerifiedByAdminEmail:auth.currentUser?.email||'',paidAt:serverTimestamp(),paymentVerifiedAt:serverTimestamp(),paymentUnlockedAt:serverTimestamp(),status:keepStatus,updatedAt:serverTimestamp()};
     await updateDoc(doc(db,'users',uid,'projects',id),patch);
-    toast('Pago confirmado. Entregas desbloqueadas.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value=keepStatus;renderPaymentRequestAdmin();await renderPaymentProof();
+    toast('Pago confirmado. La entrega final se publica por separado.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value=keepStatus;renderPaymentRequestAdmin();await renderPaymentProof();
   }catch(e){console.error(e);toast(e?.message||'No se pudo marcar el pago.');}
-  finally{if(btn){btn.disabled=false;btn.textContent='Marcar pagado / desbloquear';}}
+  finally{if(btn){btn.disabled=false;btn.textContent='Marcar pagado';}}
 }
 window.cancelClientPaymentRequest=async function(){
   if(!selected)return;
-  if(!confirm('Cancelar la solicitud de pago también quitará el bloqueo de entrega de esta orden. ¿Continuar?'))return;
+  if(!confirm('Cancelar la solicitud de pago quitará el bloqueo asociado al cobro, pero no publicará la entrega final. ¿Continuar?'))return;
   const btn=$('cancelPaymentRequestBtn'),uid=selected.ownerUid,id=selected.id;
   try{
     if(btn){btn.disabled=true;btn.textContent='Cancelando…';}
     await updateDoc(doc(db,'users',uid,'projects',id),{paymentRequested:false,paymentRequestStatus:'cancelled',deliveryLocked:false,paymentRequestCancelledAt:serverTimestamp(),updatedAt:serverTimestamp()});
-    toast('Solicitud cancelada y bloqueo retirado.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;renderPaymentRequestAdmin();
+    toast('Solicitud cancelada. La publicación final no cambió.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;renderPaymentRequestAdmin();
   }catch(e){console.error(e);toast(e?.message||'No se pudo cancelar la solicitud.');}
   finally{if(btn){btn.disabled=false;btn.textContent='Cancelar solicitud';}}
 }
@@ -1629,12 +1836,18 @@ window.addEventListener('beforeunload',e=>{if(projectDirty&&$('projectModal')?.c
 let previewObjectUrls=[];
 function clearPreviewObjectUrls(){previewObjectUrls.forEach(url=>{try{URL.revokeObjectURL(url)}catch{}});previewObjectUrls=[]}
 function isImageFile(f){const type=String(f.contentType||'').toLowerCase(),name=String(f.name||'').toLowerCase();return type.startsWith('image/')||/\.(jpe?g|png|webp|gif|avif|bmp|svg)$/i.test(name)}
-function adminDeliveryAccessState(project=selected){
-  const published=String(project?.status||'').toLowerCase()==='delivered'&&(project?.deliveryPublished===true||(project?.deliveryPublished==null&&!!project?.deliveredAt));
-  if(!published)return {label:'NO VISIBLE',cls:'hidden',help:'La entrega todavía no está publicada'};
+function adminDeliveryItemIsPublished(item,project=selected){
+  const state=String(item?.publicationState||'').toLowerCase();
+  if(state==='published'||item?.published===true)return true;
+  if(state==='prepared'||state==='draft'||item?.published===false)return false;
+  // Compatibilidad con entregas existentes creadas antes del control por archivo.
+  return project?.deliveryPublished===true;
+}
+function adminDeliveryAccessState(project=selected,item=null){
+  if(item&&!adminDeliveryItemIsPublished(item,project))return {label:'PENDIENTE DE PUBLICAR',cls:'hidden',help:'Preparado en administración; el cliente todavía no lo recibe'};
+  if(project?.deliveryPublished!==true)return {label:'NO VISIBLE',cls:'hidden',help:'La entrega final todavía no está publicada'};
   const paid=String(project?.paymentStatus||'').toLowerCase()==='paid'||project?.paymentVerifiedByAdmin===true;
-  const locked=!paid&&project?.deliveryLocked!==false;
-  if(locked)return {label:'BLOQUEADO',cls:'locked',help:'Visible como entrega protegida, sin descarga'};
+  if(!paid)return {label:'BLOQUEADO',cls:'locked',help:'La entrega existe pero el pago todavía no habilita descargas'};
   return {label:'VISIBLE',cls:'visible',help:'El cliente puede descargarlo'};
 }
 function fileHTML(f,role){
@@ -1643,7 +1856,7 @@ function fileHTML(f,role){
   const icon=image?`<div class="file-ico has-preview"><img class="file-preview-img" data-storage-path="${esc(f.storagePath)}" data-fallback="${esc(ext)}" alt="Vista previa de ${esc(f.label||f.name)}" loading="lazy"></div>`:`<div class="file-ico">${esc(ext)}</div>`;
   let accessMarkup='',activityMarkup='';
   if(role==='delivery'){
-    const state=adminDeliveryAccessState(selected),fid=String(f.fileId||f.id||''),activity=selected?.deliveryActivity?.[fid]||{};
+    const state=adminDeliveryAccessState(selected,f),fid=String(f.fileId||f.id||''),activity=selected?.deliveryActivity?.[fid]||{};
     const downloaded=activity.lastDownloadedAt?niceDateTime(activity.lastDownloadedAt):'Nunca descargado';
     const count=Math.max(0,Number(activity.downloadCount||0));
     accessMarkup=`<span class="file-visibility ${state.cls}" title="${esc(state.help)}">${esc(state.label)}</span>`;
@@ -1685,12 +1898,14 @@ async function loadExternalDeliveryLinks(){
   if(!host||!selected)return;
   try{
     const links=await getExternalDeliveryLinks();
-    if(badge)badge.textContent=`${links.length} enlace${links.length===1?'':'s'}`;
+    const preparedLinks=links.filter(link=>!adminDeliveryItemIsPublished(link,selected));selected._deliveryLinkPreparedCount=preparedLinks.length;
+    if(badge)badge.textContent=`${links.length} enlace${links.length===1?'':'s'}${preparedLinks.length?` · ${preparedLinks.length} pendiente${preparedLinks.length===1?'':'s'}`:''}`;
     host.innerHTML=links.length?links.map(link=>{
       const safeUrl=normalizeExternalUrl(link.url),provider=link.provider||externalProviderFromUrl(safeUrl),title=link.title||link.label||'Archivo externo';
-      const state=adminDeliveryAccessState(selected),activity=selected?.externalDeliveryActivity?.[String(link.id)]||{},opened=activity.lastOpenedAt?niceDateTime(activity.lastOpenedAt):'Nunca abierto',openCount=Math.max(0,Number(activity.openCount||0));
+      const state=adminDeliveryAccessState(selected,link),activity=selected?.externalDeliveryActivity?.[String(link.id)]||{},opened=activity.lastOpenedAt?niceDateTime(activity.lastOpenedAt):'Nunca abierto',openCount=Math.max(0,Number(activity.openCount||0));
       return `<div class="external-link-item"><div class="external-link-icon">${esc(providerAbbr(provider))}</div><div class="external-link-info"><div class="external-link-title">${esc(title)}</div><div class="external-link-meta">${esc(provider)} · ${esc(safeUrl||'Enlace no válido')}</div>${link.note?`<div class="external-link-note">${esc(link.note)}</div>`:''}<span class="file-visibility ${state.cls}">${esc(state.label)}</span><div class="file-client-activity"><strong>Cliente:</strong> ${esc(opened)}${openCount?` · ${openCount} apertura${openCount===1?'':'s'}`:''}</div></div><div class="external-link-actions">${safeUrl?`<a class="mini external-link-open" href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">Abrir</a>`:''}<button class="mini delete" onclick="deleteExternalDeliveryLink('${esc(link.id)}')">Eliminar</button></div></div>`;
     }).join(''):'<div class="sub">Aún no hay enlaces externos.</div>';
+  renderDeliveryPublishAdmin();
   }catch(e){console.error(e);host.innerHTML='<div class="sub">No se pudieron cargar los enlaces externos.</div>';}
 }
 window.addExternalDeliveryLink=async function(){
@@ -1703,13 +1918,13 @@ window.addExternalDeliveryLink=async function(){
   try{
     if(btn){btn.disabled=true;btn.textContent='Agregando…';}
     const ref=doc(collection(db,'users',selected.ownerUid,'projects',selected.id,'deliveryLinks'));
-    const payload={ownerUid:selected.ownerUid,projectId:selected.id,linkId:ref.id,role:'delivery_external',provider,title,label:title,url,note,availability:'active',createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
+    const payload={ownerUid:selected.ownerUid,projectId:selected.id,linkId:ref.id,role:'delivery_external',provider,title,label:title,url,note,availability:'active',publicationState:'prepared',published:false,createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
     await setDoc(ref,payload);
     const nextCount=Math.max(0,Number(selected.deliveryLinkCount||0))+1;
-    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),{deliveryLinkCount:nextCount,updatedAt:serverTimestamp()});
-    selected.deliveryLinkCount=nextCount;
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),{deliveryLinkCount:nextCount,deliveryPublicationMode:'manual_v2',deliveryNeedsRepublish:true,updatedAt:serverTimestamp()});
+    selected.deliveryLinkCount=nextCount;selected.deliveryPublicationMode='manual_v2';selected.deliveryNeedsRepublish=true;
     if($('deliveryLinkUrl'))$('deliveryLinkUrl').value='';if($('deliveryLinkTitle'))$('deliveryLinkTitle').value='';if($('deliveryLinkNote'))$('deliveryLinkNote').value='';if($('deliveryLinkProvider'))$('deliveryLinkProvider').value='auto';
-    await loadExternalDeliveryLinks();toast('Enlace externo agregado a la entrega.');
+    renderDeliveryPublishAdmin();await loadExternalDeliveryLinks();toast('Enlace preparado. Si ya había una entrega publicada, seguirá visible; publica este cambio cuando esté listo.');
   }catch(e){console.error(e);toast(e?.message||'No se pudo agregar el enlace.');}
   finally{if(btn){btn.disabled=false;btn.textContent='Agregar enlace';}}
 };
@@ -1728,14 +1943,14 @@ window.refreshDeliveryActivity=async function(){
   try{
     const snap=await getDoc(doc(db,'users',selected.ownerUid,'projects',selected.id));
     if(snap.exists())Object.assign(selected,snap.data());
-    renderPaymentPreviewAdmin();
+    renderWorkCompletionAdmin();
     await loadFiles();
     toast('Actividad del cliente actualizada.');
   }catch(e){console.error(e);toast('No se pudo actualizar la actividad.');}
 };
 
 async function getProjectFiles(role){const col=role==='delivery'?'deliveryFiles':'clientFiles';const s=await getDocs(collection(db,'users',selected.ownerUid,'projects',selected.id,col));return s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateMs(b.uploadedAt)-dateMs(a.uploadedAt))}
-async function loadFiles(){if(!selected)return;try{clearPreviewObjectUrls();const latest=await getDoc(doc(db,'users',selected.ownerUid,'projects',selected.id));if(latest.exists())Object.assign(selected,latest.data());renderPaymentPreviewAdmin();const [clientFilesAll,deliveryFilesAll]=await Promise.all([getProjectFiles('client'),getProjectFiles('delivery')]);await loadExternalDeliveryLinks();const clientFiles=clientFilesAll.filter(f=>f.availability!=='deleted');const deliveryFiles=deliveryFilesAll.filter(f=>f.availability!=='deleted');$('clientFiles').innerHTML=clientFiles.map(f=>fileHTML(f,'client')).join('')||'<div class="sub">No hay archivos del cliente disponibles.</div>';$('deliveryFiles').innerHTML=deliveryFiles.map(f=>fileHTML(f,'delivery')).join('')||'<div class="sub">Aún no has enviado archivos al cliente.</div>';await Promise.allSettled([hydrateImagePreviews($('clientFiles')),hydrateImagePreviews($('deliveryFiles'))])}catch(e){console.error(e);$('clientFiles').innerHTML='<div class="sub">No se pudieron cargar los archivos.</div>'}}
+async function loadFiles(){if(!selected)return;try{clearPreviewObjectUrls();const latest=await getDoc(doc(db,'users',selected.ownerUid,'projects',selected.id));if(latest.exists())Object.assign(selected,latest.data());renderPaymentPreviewAdmin();renderDeliveryPublishAdmin();const [clientFilesAll,deliveryFilesAll]=await Promise.all([getProjectFiles('client'),getProjectFiles('delivery')]);await loadExternalDeliveryLinks();const clientFiles=clientFilesAll.filter(f=>f.availability!=='deleted');const deliveryFiles=deliveryFilesAll.filter(f=>f.availability!=='deleted');selected._deliveryPreparedCount=deliveryFiles.filter(f=>!adminDeliveryItemIsPublished(f,selected)).length;$('clientFiles').innerHTML=clientFiles.map(f=>fileHTML(f,'client')).join('')||'<div class="sub">No hay archivos del cliente disponibles.</div>';$('deliveryFiles').innerHTML=deliveryFiles.map(f=>fileHTML(f,'delivery')).join('')||'<div class="sub">Aún no has preparado archivos finales.</div>';renderDeliveryPublishAdmin();await Promise.allSettled([hydrateImagePreviews($('clientFiles')),hydrateImagePreviews($('deliveryFiles'))])}catch(e){console.error(e);$('clientFiles').innerHTML='<div class="sub">No se pudieron cargar los archivos.</div>'}}
 
 // === LÓGICA DE CLOUDFLARE R2 PARA DESCARGAR ARCHIVOS ===
 window.downloadR2File = async function(storagePath, fileName, btn) {
@@ -1795,6 +2010,8 @@ window.saveProject=async function(){
   if(!newTitle){toast('Escribe un título para el proyecto.');$('editProjectTitle').focus();return}
   if(!Number.isFinite(newPrice)||newPrice<0){toast('Escribe un precio válido.');$('editPrice').focus();return}
   if(!Number.isFinite(newCost)||newCost<0){toast('Escribe un costo válido.');$('editCost').focus();return}
+  const requestedStatus=String($('editStatus').value||'waiting_files');
+  if(requestedStatus==='delivered'&&selected.deliveryPublished!==true){toast('“Entregado” se establece desde “Publicar entrega final”. Para indicar que el delegado terminó usa “Marcar trabajo terminado”.');$('editStatus').value=selected.status||'review';return;}
 
   try{
     if(btn){btn.disabled=true;btn.textContent='Guardando…'}
@@ -1831,14 +2048,6 @@ window.saveProject=async function(){
       projectPatch.deliveryLocked=true;
     }
 
-    // PUBLICACIÓN EXPLÍCITA: los archivos finales solo se publican cuando Administración guarda Entregado.
-    if(nextStatus==='delivered'){
-      projectPatch.deliveryPublished=true;
-      projectPatch.deliveryPublishedAt=selected.deliveryPublished===true?selected.deliveryPublishedAt||serverTimestamp():serverTimestamp();
-    }else{
-      projectPatch.deliveryPublished=false;
-    }
-
     // Historial del proceso: se registra la primera vez que el proyecto alcanza cada etapa.
     // También sirve para proyectos antiguos: si ya estaba en Entregado y no tenía deliveredAt,
     // al guardar nuevamente se fija la fecha final sin alterar sus archivos ni el pago.
@@ -1846,7 +2055,6 @@ window.saveProject=async function(){
     if(nextStatus==='assigned'&&!selected.assignedAt)projectPatch.assignedAt=serverTimestamp();
     if(nextStatus==='in_progress'&&!selected.workStartedAt)projectPatch.workStartedAt=serverTimestamp();
     if(nextStatus==='review'&&!selected.reviewStartedAt)projectPatch.reviewStartedAt=serverTimestamp();
-    if(nextStatus==='delivered'&&!selected.deliveredAt)projectPatch.deliveredAt=serverTimestamp();
     if(previousStatus!==nextStatus){
       projectPatch.lastStatusChangedAt=serverTimestamp();
       projectPatch.previousStatus=previousStatus;
@@ -1872,18 +2080,18 @@ window.saveProject=async function(){
     selected.projectConfig={...(selected.projectConfig||{}),baseUsd:newPrice};
     selected.projectTitle=newTitle;
     selected.status=nextStatus;
-    selected.deliveryPublished=nextStatus==='delivered';
     if(nextStatus==='files_received'&&!selected.filesReceivedAt)selected.filesReceivedAt=new Date();
     if(nextStatus==='assigned'&&!selected.assignedAt)selected.assignedAt=new Date();
     if(nextStatus==='in_progress'&&!selected.workStartedAt)selected.workStartedAt=new Date();
     if(nextStatus==='review'&&!selected.reviewStartedAt)selected.reviewStartedAt=new Date();
-    if(nextStatus==='delivered'&&!selected.deliveredAt)selected.deliveredAt=new Date();
     selected.adminMeta={...(selected.adminMeta||{}),internalCostUsd:newCost};
     if(String(selected.currency||'USD').toUpperCase()==='USD')selected.amount=newPrice.toFixed(2);
 
     $('drawerTitle').textContent=newTitle;
     updateFinancialPreview(false);
     refreshStatusQuickUI();
+    renderDeliveryPublishAdmin();
+    renderWorkCompletionAdmin();
     setProjectDirty(false);
 
     if(btn){
@@ -2076,6 +2284,11 @@ async function uploadR2ProjectFile({file,role,label,source,onProgress}){
     availability:'active',
     uploadedAt:serverTimestamp()
   };
+  if(role==='delivery'){
+    payload.publicationState='prepared';
+    payload.published=false;
+    payload.preparedAt=serverTimestamp();
+  }
 
   if(role==='client' && source==='admin_whatsapp'){
     payload.uploadedByAdmin=true;
@@ -2217,16 +2430,16 @@ window.uploadDelivery=async function(){
 
     await updateDoc(
       doc(db,'users',selected.ownerUid,'projects',selected.id),
-      {deliveryFileCount:increment(success),updatedAt:serverTimestamp()}
+      {deliveryFileCount:increment(success),deliveryPublicationMode:'manual_v2',deliveryNeedsRepublish:true,updatedAt:serverTimestamp()}
     );
 
-    selected.deliveryFileCount=Number(selected.deliveryFileCount||0)+success;
+    selected.deliveryFileCount=Number(selected.deliveryFileCount||0)+success;selected.deliveryPublicationMode='manual_v2';selected.deliveryNeedsRepublish=true;selected._deliveryPreparedCount=Number(selected._deliveryPreparedCount||0)+success;
     input.value='';
     resetPendingFiles('delivery');
     $('deliveryLabel').value='';
     bar.style.width='100%';
-    setUploadState('deliveryUploadStatus',`${success} archivo${success===1?'':'s'} enviado${success===1?'':'s'} al cliente.`,'ok');
-    toast(`${success} archivo${success===1?'':'s'} enviado${success===1?'':'s'} al cliente.`);
+    setUploadState('deliveryUploadStatus',`${success} archivo${success===1?'':'s'} subido${success===1?'':'s'}. Aún NO se ha enviado la entrega al cliente.`,'ok');
+    toast(`${success} archivo${success===1?'':'s'} preparado${success===1?'':'s'}. Los archivos ya publicados no se retiraron.`);
     await loadFiles();
     await refresh();
     setTimeout(()=>{bar.style.width='0%'},900);
