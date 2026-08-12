@@ -682,12 +682,12 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
 </main>
 <footer><div class="footer-inner"><div><img src="img/logo.png" alt="Evolution Design"><div class="footer-copy">Arquitectura, identidad visual y experiencias digitales desarrolladas con una misma dirección de diseño.</div></div><div class="footer-links"><a href="index.html">Home</a><a href="arquitectura.html">Arquitectura</a><a href="diseno-grafico.html">Diseño Gráfico</a><a href="diseno-web.html">Diseño Web</a><a href="https://dingloft.com" target="_blank" rel="noopener">Software ↗</a></div></div></footer>
 
-<div class="survey-overlay" id="surveyOverlay" aria-hidden="true"><form class="survey-card" id="webSurvey"><input class="honeypot" type="text" id="companyWebsiteTrap" tabindex="-1" autocomplete="off"><div class="survey-top"><span class="survey-brand" id="surveyBrand">Evolution Web · Project Brief</span><button type="button" class="survey-close" id="closeSurvey">×</button></div><div class="survey-progress"><span id="surveyProgress"></span></div><div class="survey-body"><div class="plan-selected-strip" id="selectedPlanStrip"><span>Plan seleccionado</span><strong id="selectedPlanText">—</strong></div>
+<div class="survey-overlay" id="surveyOverlay" aria-hidden="true"><form class="survey-card" id="webSurvey" novalidate><input class="honeypot" type="text" id="companyWebsiteTrap" tabindex="-1" autocomplete="off"><div class="survey-top"><span class="survey-brand" id="surveyBrand">Evolution Web · Project Brief</span><button type="button" class="survey-close" id="closeSurvey">×</button></div><div class="survey-progress"><span id="surveyProgress"></span></div><div class="survey-body"><div class="plan-selected-strip" id="selectedPlanStrip"><span>Plan seleccionado</span><strong id="selectedPlanText">—</strong></div>
 <section class="survey-step active" data-step="1"><span class="survey-kicker">01 · Tu negocio</span><h2>Cuéntanos qué vamos a construir.</h2><p>Con esto entendemos el contexto antes de hablar de colores o animaciones.</p><div class="survey-grid"><div class="survey-field"><label>Nombre *</label><input class="survey-input" id="leadName" maxlength="120" required placeholder="Tu nombre"></div><div class="survey-field"><label>Negocio / marca *</label><input class="survey-input" id="businessName" maxlength="140" required placeholder="Ej. Estudio Nova"></div><div class="survey-field"><label>Sector *</label><select class="survey-select" id="businessType" required><option value="">Selecciona</option><option>Servicios profesionales</option><option>Arquitectura / construcción</option><option>Restaurante / comida</option><option>Tienda / ecommerce</option><option>Hotel / turismo</option><option>Marca personal</option><option>Educación</option><option>Tecnología</option><option>Otro</option></select></div><div class="survey-field"><label>¿Ya tienes sitio?</label><select class="survey-select" id="existingSite"><option value="no">No</option><option value="yes">Sí, queremos rediseñarlo</option></select></div><div class="survey-field full"><label>Logo de tu empresa <span style="text-transform:none;color:#5f5f66">(opcional)</span></label><label class="logo-upload-zone" id="brandLogoZone" for="brandLogoFile"><input id="brandLogoFile" type="file" accept="image/png,image/jpeg,image/webp" hidden><span class="logo-upload-preview" id="brandLogoPreview">SIN<br>LOGO</span><span class="logo-upload-copy"><strong>Sube tu logo</strong><small>PNG, JPG o WEBP. Lo optimizamos para enviarlo con tu brief sin perder la versión original que luego podrás subir en Mis Proyectos.</small><span class="logo-upload-meta" id="brandLogoMeta">Máximo 5 MB</span></span><span class="logo-upload-action">Elegir archivo</span></label></div></div><div class="survey-actions"><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
 <section class="survey-step" data-step="2"><span class="survey-kicker">02 · Objetivo</span><h2>¿Qué debe lograr tu página?</h2><p>Puedes marcar varias opciones.</p><div class="choice-grid" data-required-group="goals"><div class="choice"><input type="checkbox" id="goal1" value="Conseguir clientes" name="goals"><label for="goal1"><strong>Conseguir clientes</strong><small>Leads, WhatsApp y formularios.</small></label></div><div class="choice"><input type="checkbox" id="goal2" value="Vender online" name="goals"><label for="goal2"><strong>Vender online</strong><small>Catálogo, ecommerce o pagos.</small></label></div><div class="choice"><input type="checkbox" id="goal3" value="Mostrar portafolio" name="goals"><label for="goal3"><strong>Portafolio</strong><small>Presentar trabajos y proyectos.</small></label></div><div class="choice"><input type="checkbox" id="goal4" value="Reservas / citas" name="goals"><label for="goal4"><strong>Reservas</strong><small>Citas, agenda o disponibilidad.</small></label></div><div class="choice"><input type="checkbox" id="goal5" value="Posicionar marca" name="goals"><label for="goal5"><strong>Posicionar marca</strong><small>Presencia premium y credibilidad.</small></label></div><div class="choice"><input type="checkbox" id="goal6" value="Automatizar procesos" name="goals"><label for="goal6"><strong>Automatizar</strong><small>Flujos, paneles o integraciones.</small></label></div></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
 <section class="survey-step" data-step="3"><span class="survey-kicker">03 · Funciones</span><h2>¿Qué quieres que pueda hacer tu sitio?</h2><p>Selecciona las capacidades que te interesan. Podemos combinar varias.</p><div class="choice-grid"><div class="choice"><input type="checkbox" id="f1" value="E-commerce / carrito / pagos" name="features"><label for="f1"><strong>E-commerce</strong><small>Catálogo, carrito, checkout y pagos.</small></label></div><div class="choice"><input type="checkbox" id="f2" value="Panel administrativo" name="features"><label for="f2"><strong>Panel Admin</strong><small>Control de productos, contenido, clientes o pedidos.</small></label></div><div class="choice"><input type="checkbox" id="f3" value="Animaciones avanzadas" name="features"><label for="f3"><strong>Animaciones</strong><small>Motion, parallax y microinteracciones.</small></label></div><div class="choice"><input type="checkbox" id="f4" value="Reservas / agenda" name="features"><label for="f4"><strong>Reservas</strong><small>Agenda, citas o solicitudes.</small></label></div><div class="choice"><input type="checkbox" id="f5" value="Login / membresías / área privada" name="features"><label for="f5"><strong>Login / membresías</strong><small>Área privada, roles o suscripciones.</small></label></div><div class="choice"><input type="checkbox" id="f6" value="Inventario / pedidos / seguimiento" name="features"><label for="f6"><strong>Inventario</strong><small>Stock, pedidos y seguimiento.</small></label></div><div class="choice"><input type="checkbox" id="f7" value="API / automatización" name="features"><label for="f7"><strong>API / Automatización</strong><small>Integraciones con servicios externos.</small></label></div><div class="choice"><input type="checkbox" id="f8" value="WhatsApp / contacto" name="features"><label for="f8"><strong>WhatsApp</strong><small>Contacto directo y CTA inteligentes.</small></label></div></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
 <section class="survey-step" data-step="4"><span class="survey-kicker">04 · Dirección visual</span><h2>¿Cómo quieres que se sienta?</h2><p>Elige una dirección. Esto no limita el diseño; nos da un punto de partida.</p><div class="choice-grid" data-required-group="style"><div class="choice"><input type="radio" id="s1" value="Minimalista premium" name="style"><label for="s1"><strong>Minimalista premium</strong><small>Editorial, limpio y sofisticado.</small></label></div><div class="choice"><input type="radio" id="s2" value="Oscuro tecnológico" name="style"><label for="s2"><strong>Tech / dark</strong><small>Contraste, luz y profundidad.</small></label></div><div class="choice"><input type="radio" id="s3" value="Elegante corporativo" name="style"><label for="s3"><strong>Corporativo</strong><small>Seriedad y confianza profesional.</small></label></div><div class="choice"><input type="radio" id="s4" value="Colorido creativo" name="style"><label for="s4"><strong>Creativo</strong><small>Identidad fuerte y expresiva.</small></label></div><div class="choice"><input type="radio" id="s5" value="Lujo / editorial" name="style"><label for="s5"><strong>Luxury editorial</strong><small>Imagen, tipografía y aire.</small></label></div><div class="choice"><input type="radio" id="s6" value="A criterio de Evolution Design" name="style"><label for="s6"><strong>Ustedes decidan</strong><small>Dirección creativa completa.</small></label></div></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
-<section class="survey-step" data-step="5"><span class="survey-kicker">05 · Contacto</span><h2>Listo. ¿Dónde te contactamos?</h2><p>Tu solicitud quedará ligada a esta cuenta y llegará al panel de Evolution Design con el brief completo.</p><div class="survey-grid"><div class="survey-field"><label>Correo *</label><input class="survey-input" id="leadEmail" type="email" maxlength="180" required placeholder="tu@correo.com"></div><div class="survey-field"><label>WhatsApp / teléfono *</label><input class="survey-input" id="leadPhone" maxlength="40" required placeholder="+502 ..."></div><div class="survey-field"><label>Dominio que te gustaría</label><input class="survey-input" id="domainIdea" maxlength="180" placeholder="ej. mimarca.com"></div><div class="survey-field"><label>¿Cuándo quieres iniciar?</label><select class="survey-select" id="timeline"><option>Lo antes posible</option><option>En 1–2 semanas</option><option>Este mes</option><option>Solo estoy explorando</option></select></div><div class="survey-field full"><label>Referencias / links</label><textarea class="survey-textarea" id="referenceSites" maxlength="1200" placeholder="Pega sitios que te gusten, Instagram o referencias visuales..."></textarea></div><div class="survey-field full"><label>Algo más que debamos saber</label><textarea class="survey-textarea" id="leadNotes" maxlength="1600" placeholder="Cuéntanos cualquier detalle importante del proyecto..."></textarea></div></div><div id="surveyStatus" class="survey-status"></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="submit" class="survey-submit" id="submitSurvey">Continuar al pago →</button></div></section>
+<section class="survey-step" data-step="5"><span class="survey-kicker">05 · Contacto</span><h2>Listo. ¿Dónde te contactamos?</h2><p>Tu solicitud quedará ligada a esta cuenta y llegará al panel de Evolution Design con el brief completo.</p><div class="survey-grid"><div class="survey-field"><label>Correo *</label><input class="survey-input" id="leadEmail" type="email" maxlength="180" required placeholder="tu@correo.com"></div><div class="survey-field"><label>WhatsApp / teléfono *</label><input class="survey-input" id="leadPhone" maxlength="40" required placeholder="+502 ..."></div><div class="survey-field"><label>Dominio que te gustaría</label><input class="survey-input" id="domainIdea" maxlength="180" placeholder="ej. mimarca.com"></div><div class="survey-field"><label>¿Cuándo quieres iniciar?</label><select class="survey-select" id="timeline"><option>Lo antes posible</option><option>En 1–2 semanas</option><option>Este mes</option><option>Solo estoy explorando</option></select></div><div class="survey-field full"><label>Referencias / links</label><textarea class="survey-textarea" id="referenceSites" maxlength="1200" placeholder="Pega sitios que te gusten, Instagram o referencias visuales..."></textarea></div><div class="survey-field full"><label>Algo más que debamos saber</label><textarea class="survey-textarea" id="leadNotes" maxlength="1600" placeholder="Cuéntanos cualquier detalle importante del proyecto..."></textarea></div></div><div id="surveyStatus" class="survey-status"></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-submit" id="submitSurvey">Continuar al pago →</button></div></section>
 <section class="survey-step" data-step="6">
   <span class="survey-kicker">06 · Pago seguro</span>
   <h2>Activa tu proyecto.</h2>
@@ -701,7 +701,7 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
       <div class="checkout-summary-list">
         <div class="checkout-summary-row"><span>Servicio</span><strong id="checkoutServiceLabel">Diseño Web</strong></div>
         <div class="checkout-summary-row"><span>Cliente</span><strong id="checkoutClientLabel">—</strong></div>
-        <div class="checkout-summary-row"><span>Entrega</span><strong>Gestionada desde Mis Proyectos</strong></div>
+        <div class="checkout-summary-row"><span>Entrega estimada</span><strong>1 semana · lunes a viernes</strong></div>
       </div>
       <div class="checkout-request-id" id="checkoutRequestId">Solicitud registrada</div>
     </div>
@@ -888,30 +888,75 @@ function bankLogoMarkup(key) {
 
     
 
-window.webPaymentGeo={countryCode:'',country:'',region:'',city:'',currency:''};
+window.webPaymentGeo={ip:'',countryCode:'',country:'',region:'',city:'',currency:''};
 window.webGtqRate=7.65;
+window.webGeoResolved=false;
+
+// REGLA DE MONEDA:
+// GTQ SOLO cuando la detección devuelve una IP válida Y país GT.
+// Cualquier otro caso (otro país, sin IP o fallo de API) permanece en USD.
+function isGuatemalaVisitor(){
+  const geo=window.webPaymentGeo||{};
+  return Boolean(String(geo.ip||'').trim()) &&
+         String(geo.countryCode||'').toUpperCase()==='GT';
+}
+
+function fetchWithTimeout(url,options={},timeout=3500){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),timeout);
+  return fetch(url,{...options,signal:controller.signal}).finally(()=>clearTimeout(timer));
+}
+
 window.webPaymentGeoReady=(async()=>{
+  // Estado inicial seguro: USD.
+  window.webPaymentGeo={ip:'',countryCode:'',country:'',region:'',city:'',currency:''};
+  window.webGeoResolved=false;
+  refreshLocalizedPrices();
+
   try{
     const [rateResult,geoResult]=await Promise.allSettled([
-      fetch('https://open.er-api.com/v6/latest/USD',{cache:'force-cache'}).then(r=>r.ok?r.json():null),
-      fetch('https://ipapi.co/json/',{cache:'no-store'}).then(r=>r.ok?r.json():null)
+      fetchWithTimeout('https://open.er-api.com/v6/latest/USD',{cache:'force-cache'},3500).then(r=>r.ok?r.json():null),
+      fetchWithTimeout('https://ipapi.co/json/',{cache:'no-store'},3500).then(r=>r.ok?r.json():null)
     ]);
+
     const rateData=rateResult.status==='fulfilled'?rateResult.value:null;
-    if(rateData?.result==='success'&&Number(rateData?.rates?.GTQ)>0)window.webGtqRate=Number(rateData.rates.GTQ);
+    if(rateData?.result==='success'&&Number(rateData?.rates?.GTQ)>0){
+      window.webGtqRate=Number(rateData.rates.GTQ);
+    }
+
     const geo=geoResult.status==='fulfilled'?geoResult.value:null;
-    if(geo){
+    const detectedIp=String(geo?.ip||'').trim();
+    const detectedCountryCode=String(geo?.country_code||'').trim().toUpperCase();
+
+    if(detectedIp && detectedCountryCode){
       window.webPaymentGeo={
-        ip:geo.ip||'',city:geo.city||'',region:geo.region||'',country:geo.country_name||'',
-        countryCode:String(geo.country_code||'').toUpperCase(),currency:String(geo.currency||'').toUpperCase()
+        ip:detectedIp,
+        city:geo?.city||'',
+        region:geo?.region||'',
+        country:geo?.country_name||'',
+        countryCode:detectedCountryCode,
+        currency:String(geo?.currency||'').toUpperCase()
       };
     }
-  }catch(e){console.info('Geo/tasa de pago no disponible:',e)}
+  }catch(e){
+    console.info('Geo/tasa de pago no disponible; se mantiene USD:',e);
+  }
+
+  window.webGeoResolved=true;
   window.evolutionGeo=window.webPaymentGeo;
   refreshLocalizedPrices();
+
+  console.info(
+    '[Evolution Web] Moneda:',
+    isGuatemalaVisitor()?'GTQ':'USD',
+    '| IP:',
+    window.webPaymentGeo?.ip||'no detectada',
+    '| País:',
+    window.webPaymentGeo?.countryCode||'no detectado'
+  );
+
   return window.webPaymentGeo;
 })();
-
-function isGuatemalaVisitor(){return String(window.webPaymentGeo?.countryCode||'').toUpperCase()==='GT'}
 function gtqFromUsd(usd){return Number(usd||0)*Number(window.webGtqRate||7.65)}
 function formatGtq(value){return `Q ${Number(value||0).toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2})}`}
 function localPriceText(usd){return isGuatemalaVisitor()?`${formatGtq(gtqFromUsd(usd))} GTQ`:`$${Number(usd).toLocaleString('en-US',{maximumFractionDigits:2})} USD`}
@@ -1244,7 +1289,7 @@ async function renderWebPaymentMethods(){
   if(!currentUser?.uid){host.innerHTML='<div class="manual-warning">Inicia sesión nuevamente antes de pagar.</div>';return}
   await Promise.resolve(window.webPaymentGeoReady).catch(()=>{});
   const geo=window.webPaymentGeo||{},isGuatemala=String(geo.countryCode||'').toUpperCase()==='GT';refreshLocalizedPrices();
-  if(region)region.innerHTML=`<i></i><span>${isGuatemala?`Guatemala detectada · precios en GTQ · transferencia habilitada · tasa aprox. Q ${Number(window.webGtqRate||7.65).toFixed(4)} / USD`:geo.country?`Región detectada: ${geo.country} · precios en USD`:'Región no identificada · precios en USD'}</span>`;
+  if(region)region.innerHTML=`<i></i><span>${isGuatemala?`IP de Guatemala detectada · precios en GTQ · transferencia habilitada · tasa aprox. Q ${Number(window.webGtqRate||7.65).toFixed(4)} / USD`:geo.country?`Región detectada: ${geo.country} · precios en USD`:'IP no detectada · precios en USD · transferencia no disponible'}</span>`;
   host.innerHTML=`<div class="payment-checkout-card"><div class="payment-method-title">Selecciona un método de pago</div>
     <div class="payment-method-grid ${isGuatemala?'has-bank':''}">
       <button type="button" class="payment-method-btn active" data-web-pay="paypal">PayPal</button>
@@ -1341,21 +1386,89 @@ async function renderWebPayPal(funding='paypal'){
   }catch(error){console.error(error);setPayPalProcessing(false);setCheckoutStatus('No pudimos iniciar el checkout de PayPal.','error')}
 }
 
-form.addEventListener('submit',async e=>{
-  e.preventDefault();
-  if(!currentUser){pendingPlanAfterLogin=selectedPlan.id;window.abrirAuthModal();return}
-  if(!validateStep())return;
-  if(!$('leadEmail').value.trim()||!$('leadPhone').value.trim()){
-    status.textContent='Agrega correo y WhatsApp para continuar al pago.';
-    status.className='survey-status error';return;
-  }
-  if($('companyWebsiteTrap').value)return;
+let webCheckoutSubmitting=false;
 
-  const btn=$('submitSurvey'),old=btn.textContent;
-  btn.disabled=true;btn.textContent='Preparando checkout…';status.className='survey-status';
+function validCheckoutEmail(value){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value||'').trim());
+}
+
+function validateCheckoutBrief(){
+  status.className='survey-status';
+  status.textContent='';
+
+  if(!currentUser){
+    pendingPlanAfterLogin=selectedPlan.id;
+    window.abrirAuthModal();
+    return false;
+  }
+
+  const requiredText=[
+    ['leadName','Agrega tu nombre.'],
+    ['businessName','Agrega el nombre de tu negocio o marca.'],
+    ['businessType','Selecciona el sector de tu negocio.'],
+    ['leadEmail','Agrega tu correo.'],
+    ['leadPhone','Agrega tu WhatsApp o teléfono.']
+  ];
+
+  for(const [id,message] of requiredText){
+    const el=$(id);
+    if(!el || !String(el.value||'').trim()){
+      status.textContent=message;
+      status.className='survey-status error';
+      return false;
+    }
+  }
+
+  if(!validCheckoutEmail($('leadEmail').value)){
+    status.textContent='Ingresa un correo válido para continuar.';
+    status.className='survey-status error';
+    return false;
+  }
+
+  if(!selected('goals').length){
+    status.textContent='Selecciona al menos un objetivo del sitio.';
+    status.className='survey-status error';
+    return false;
+  }
+
+  if(!selected('style').length){
+    status.textContent='Selecciona una dirección visual.';
+    status.className='survey-status error';
+    return false;
+  }
+
+  if($('companyWebsiteTrap').value)return false;
+  return true;
+}
+
+async function proceedWebCheckout(){
+  if(webCheckoutSubmitting)return;
+  if(!validateCheckoutBrief())return;
+
+  const btn=$('submitSurvey');
+  if(!btn)return;
+
+  const old=btn.textContent;
+  webCheckoutSubmitting=true;
+  btn.disabled=true;
+  btn.textContent='Preparando checkout…';
+  status.textContent='Guardando tu brief y preparando los métodos de pago…';
+  status.className='survey-status ok';
+
   try{
-    await Promise.resolve(window.webPaymentGeoReady).catch(()=>{});
-    if(brandLogoInput?.files?.[0]) await brandLogoPromise;
+    // La detección regional no debe congelar el botón si una API externa tarda.
+    await Promise.race([
+      Promise.resolve(window.webPaymentGeoReady).catch(()=>null),
+      new Promise(resolve=>setTimeout(resolve,2500))
+    ]);
+
+    if(brandLogoInput?.files?.[0]){
+      await Promise.race([
+        Promise.resolve(brandLogoPromise),
+        new Promise(resolve=>setTimeout(resolve,5000))
+      ]);
+    }
+
     if(!currentWebRequestId){
       const brief=buildWebBrief();
       const payload={
@@ -1379,25 +1492,43 @@ form.addEventListener('submit',async e=>{
         createdAt:serverTimestamp(),
         updatedAt:serverTimestamp()
       };
+
       const ref=await addDoc(collection(db,'webRequests'),payload);
       currentWebRequestId=ref.id;
       sessionStorage.setItem('evolutionWebRequest',ref.id);
       sessionStorage.setItem('evolutionWebPlan',selectedPlan.id);
     }
-    status.textContent=`Brief ${currentWebRequestId.slice(0,8).toUpperCase()} guardado. Continúa con el pago.`;
+
+    status.textContent=`Brief ${currentWebRequestId.slice(0,8).toUpperCase()} guardado. Preparando pago…`;
     status.className='survey-status ok';
-    btn.textContent='Brief guardado ✓';
-    step=6;renderStep();
+
+    step=6;
+    renderStep();
+
     await renderWebPaymentMethods();
+
+    btn.textContent='Brief guardado ✓';
   }catch(err){
-    console.error(err);
+    console.error('Error preparando checkout Diseño Web:',err);
     status.textContent=err?.code==='permission-denied'
-      ?'Firestore rechazó la solicitud. Verifica que hayas publicado las reglas de webRequests.'
-      :'No pudimos guardar el brief. Intenta nuevamente.';
+      ?'Firebase rechazó el brief. Revisa las reglas de webRequests.'
+      :(err?.message||'No pudimos preparar el pago. Intenta nuevamente.');
     status.className='survey-status error';
-    btn.disabled=false;btn.textContent=old;
+    btn.disabled=false;
+    btn.textContent=old;
+    webCheckoutSubmitting=false;
   }
+}
+
+$('submitSurvey')?.addEventListener('click',proceedWebCheckout);
+
+// También soporta Enter desde un campo, pero sin depender de la validación
+// nativa de campos ocultos de otros pasos.
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  proceedWebCheckout();
 });
+
 applySelectedPlan('pro');renderStep();
 
 // Después de iniciar sesión, abrir automáticamente el plan que el usuario intentó contratar.
