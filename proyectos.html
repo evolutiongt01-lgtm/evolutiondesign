@@ -2155,7 +2155,7 @@
       function paymentBox(project,unique){
         const delivered=String(project.status||'')==='delivered';
         const requestNote=String(project.paymentRequestNote||'').trim();
-        const clientComment=paymentCommentBox(project,unique);
+        const clientComment=paymentClientCommentBox(project,unique);
         if(project.paymentStatus==='pending_review') return `<div class="payment-review-client"><strong>Comprobante recibido · En revisión</strong><p>Recibimos tu comprobante de ${esc(project.paymentMethod||'pago manual')} y la referencia <b>${esc(project.manualPaymentReference||project.transactionId||'')}</b>. Administración verificará el ingreso antes de desbloquear la entrega.</p></div>${clientComment}`;
         if(project.paymentStatus==='rejected') return `<div class="payment-review-client rejected"><strong>No pudimos confirmar este pago</strong><p>${esc(project.paymentReviewNote||'El comprobante o la referencia no coinciden con un ingreso confirmado.')}</p></div>${paymentMethodSelector(project,unique,'Puedes corregir los datos y enviar un nuevo pago/comprobante.')}${clientComment}`;
         if(project.paymentStatus==='pending'||project.paymentRequested===true||project.paymentRequestStatus==='pending'){
