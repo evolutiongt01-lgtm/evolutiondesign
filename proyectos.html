@@ -1431,7 +1431,33 @@
   .service-mini-row strong{max-width:58%}
 }
 
-</style>
+
+
+      /* =========================================================
+         ENTREGA PROTEGIDA · COBRO FINAL DE ÓRDENES PERSONALIZADAS
+         ========================================================= */
+      .delivery-paywall{margin-top:1rem;padding:1.45rem;border:1px solid rgba(212,184,149,.24);background:linear-gradient(145deg,rgba(212,184,149,.075),rgba(255,255,255,.012));position:relative;overflow:hidden}
+      .delivery-paywall::before{content:'';position:absolute;width:240px;height:240px;border-radius:50%;right:-120px;top:-145px;background:rgba(212,184,149,.07);filter:blur(2px);pointer-events:none}
+      .delivery-paywall-head{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+      .delivery-paywall-title{font-size:.88rem;font-weight:800;color:#fff;margin:0 0 .28rem}
+      .delivery-paywall-copy{font-size:.69rem;line-height:1.55;color:var(--muted);margin:0;max-width:700px}
+      .delivery-lock-pill{flex:0 0 auto;display:inline-flex;align-items:center;gap:.4rem;padding:.38rem .62rem;border-radius:999px;border:1px solid rgba(212,184,149,.28);background:rgba(212,184,149,.08);color:var(--accent-strong);font-size:.61rem;font-weight:800;letter-spacing:.025em}
+      .delivery-preview-stage{position:relative;border:1px solid rgba(255,255,255,.09);border-radius:18px;background:#070708;overflow:hidden;min-height:220px;display:flex;align-items:center;justify-content:center}
+      .delivery-preview-stage img{width:100%;max-height:520px;display:block;object-fit:contain;background:#070708}
+      .delivery-preview-badge{position:absolute;left:12px;bottom:12px;padding:.42rem .62rem;border-radius:999px;background:rgba(5,5,5,.82);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);color:#eee;font-size:.6rem;font-weight:700}
+      .delivery-preview-empty{padding:2.2rem 1rem;text-align:center;color:var(--muted);font-size:.69rem;line-height:1.55}
+      .locked-delivery-list{display:grid;gap:.55rem;margin-top:.8rem}
+      .locked-delivery-row{display:flex;align-items:center;gap:.75rem;min-height:58px;padding:.72rem .78rem;border:1px solid rgba(255,255,255,.065);border-radius:12px;background:rgba(0,0,0,.24);overflow:hidden;position:relative}
+      .locked-delivery-row::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.015),transparent);pointer-events:none}
+      .locked-file-icon{width:34px;height:34px;flex:0 0 34px;border-radius:10px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(212,184,149,.18);background:rgba(212,184,149,.065);color:var(--accent);font-size:.82rem}
+      .locked-file-copy{min-width:0;flex:1}.locked-file-copy strong{display:block;color:#e6e6e7;font-size:.69rem}.locked-file-copy span{display:block;color:#77777d;font-size:.59rem;margin-top:.16rem}
+      .locked-file-chip{flex:0 0 auto;padding:.34rem .5rem;border-radius:8px;border:1px solid rgba(212,184,149,.16);color:#bda482;background:rgba(212,184,149,.045);font-size:.57rem;font-weight:800}
+      .delivery-payment-box{position:relative;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.07)}
+      .payment-request-message{margin:.6rem 0 0;padding:.68rem .75rem;border-radius:10px;border:1px solid rgba(255,255,255,.065);background:rgba(255,255,255,.018);color:#aaa;font-size:.64rem;line-height:1.5}
+      .payment-not-requested{padding:.9rem;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);color:#999;font-size:.67rem;line-height:1.55}
+      @media(max-width:575.98px){.delivery-paywall{padding:1rem}.delivery-paywall-head{display:block}.delivery-lock-pill{margin-top:.65rem}.delivery-preview-stage{min-height:180px;border-radius:14px}.delivery-preview-stage img{max-height:390px}.locked-delivery-row{padding:.65rem}.locked-file-chip{font-size:.54rem}}
+
+    </style>
   </head>
 
   <body>
@@ -1546,6 +1572,21 @@
       function dateTimeText(v){const d=dateValue(v);if(!d)return '';let s=new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'numeric',month:'long',hour:'numeric',minute:'2-digit',hour12:true}).format(d).replace(/^./,x=>x.toUpperCase());return s.replace(/a\.\s*m\./gi,'AM').replace(/p\.\s*m\./gi,'PM');}
       function ext(name){const p=String(name||'').split('.');return p.length>1?p.pop().slice(0,4).toUpperCase():'FILE';}
       function isImageFile(file){const type=String(file?.contentType||'').toLowerCase(),name=String(file?.name||file?.label||'').toLowerCase();return type.startsWith('image/')||/\.(jpe?g|png|webp|gif|bmp|avif|heic|heif)$/i.test(name);}
+      function projectPaid(project){return project?.paymentStatus==='paid'||(!project?.paymentStatus&&!!project?.transactionId);}
+      function paymentRequestActive(project){
+        if(projectPaid(project))return false;
+        if(project?.paymentRequestStatus==='cancelled'||project?.paymentRequestStatus==='paid')return false;
+        if(project?.paymentRequested===true)return true;
+        // Compatibilidad con órdenes personalizadas creadas antes de esta actualización.
+        return project?.customOrder===true&&project?.paymentStatus==='pending'&&project?.paymentRequestStatus!=='not_requested';
+      }
+      function shouldLockDelivery(project){
+        if(projectPaid(project))return false;
+        if(project?.deliveryLocked===false)return false;
+        if(project?.deliveryLocked===true)return true;
+        // Protección automática para proyectos ya entregados pero aún no pagados.
+        return String(project?.status||'').toLowerCase()==='delivered';
+      }
       function fileThumb(file){
         const fallback=esc(ext(file?.name||file?.label));
         if(!isImageFile(file)||!s3||!file?.storagePath)return `<div class=\"project-file-icon\">${fallback}</div>`;
@@ -1898,14 +1939,20 @@
       };
 
       function paymentBox(project,unique){
-        if(project.paymentStatus==='pending_review') return `<div class="payment-review-client"><strong>Comprobante recibido · En revisión</strong><p>Recibimos tu comprobante de ${esc(project.paymentMethod||'pago manual')} y la referencia <b>${esc(project.manualPaymentReference||project.transactionId||'')}</b>. Administración verificará el ingreso antes de habilitar la carga de archivos.</p></div>`;
+        const delivered=String(project?.status||'').toLowerCase()==='delivered';
+        const requestNote=String(project?.paymentRequestNote||'').trim();
+        if(project.paymentStatus==='pending_review') return `<div class="payment-review-client"><strong>Comprobante recibido · En revisión</strong><p>${delivered?'Tu proyecto ya está terminado. Las entregas finales permanecerán protegidas hasta que administración confirme el pago.':'Recibimos tu comprobante y administración verificará el ingreso antes de habilitar el proyecto.'}</p></div>`;
         if(project.paymentStatus==='rejected') return `<div class="payment-review-client rejected"><strong>No pudimos confirmar este pago</strong><p>${esc(project.paymentReviewNote||'El comprobante o la referencia no coinciden con un ingreso confirmado. Contacta a Evolution Design o realiza un nuevo pago.')}</p></div>`;
-        if(project.paymentStatus==='pending') return `<div class="pending-order-box"><div class="pending-order-title">Orden personalizada pendiente de pago</div><div class="pending-order-copy">Esta cotización fue creada especialmente para tu cuenta. Completa el pago para habilitar la carga privada de archivos y comenzar el proyecto.</div><button class="pending-pay-btn" onclick="prepararPagoPersonalizado('${esc(project.id)}','paypal-custom-${unique}',this)">Pagar orden con PayPal</button><div id="paypal-custom-${unique}" class="custom-paypal-wrap"></div></div>`;
+        if(project.paymentRequestStatus==='cancelled'&&project.paymentRequested===false) return `<div class="payment-not-requested">La solicitud de pago fue retirada por administración. Si necesitas información sobre esta orden, contacta a Evolution Design.</div>`;
+        if(project.paymentStatus==='pending'){
+          if(project.paymentRequested===false&&project.paymentRequestStatus==='not_requested') return `<div class="payment-not-requested">El pago de esta orden todavía no ha sido solicitado por administración. Cuando el cobro sea habilitado aparecerá aquí la pasarela segura.</div>`;
+          return `<div class="pending-order-box"><div class="pending-order-title">${delivered?'Tu proyecto está terminado · Pago pendiente':'Orden personalizada pendiente de pago'}</div><div class="pending-order-copy">${delivered?'Mostramos una vista previa de la entrega. Completa el pago para desbloquear y descargar todos los archivos finales.':'Esta cotización fue creada especialmente para tu cuenta. Completa el pago para habilitar la orden.'}</div>${requestNote?`<div class="payment-request-message">${esc(requestNote)}</div>`:''}<button class="pending-pay-btn" onclick="prepararPagoPersonalizado('${esc(project.id)}','paypal-custom-${unique}',this)">${delivered?'Pagar y desbloquear entrega':'Pagar orden con PayPal'}</button><div id="paypal-custom-${unique}" class="custom-paypal-wrap"></div></div>`;
+        }
         return '';
       }
 
       function renderProject(p,index){
-        const cfg=p.projectConfig||{},unique=safeId(p.id||p.transactionId||`p-${index}`),paid=p.paymentStatus==='paid'||(!p.paymentStatus&&!!p.transactionId),pendingReview=p.paymentStatus==='pending_review',rejectedPayment=p.paymentStatus==='rejected',info=statusInfo(p);
+        const cfg=p.projectConfig||{},unique=safeId(p.id||p.transactionId||`p-${index}`),paid=projectPaid(p),pendingReview=p.paymentStatus==='pending_review',rejectedPayment=p.paymentStatus==='rejected',info=statusInfo(p);
         const title=p.projectTitle||cfg.packageName||p.projectType||'Proyecto Evolution Design',orderId=p.displayOrderId||`#EVO-${unique.slice(-8).toUpperCase()}`;
         const amount=money(p.amount||p.baseUsd,p.currency||'USD'), currency=String(p.currency||'USD').toUpperCase(), country=p.payerCountry||p.lastGeo?.country||'No reportado';
         const hasFiles=Number(p.clientFileCount||0)>0||['files_received','assigned','in_progress','review','delivered'].includes(info.status), submitted=!!p.filesSubmittedAt||['files_received','assigned','in_progress','review','delivered'].includes(info.status), assigned=(p.architectName&&p.architectName!=='Pendiente')||['assigned','in_progress','review','delivered'].includes(info.status), delivered=info.status==='delivered';
@@ -1918,7 +1965,8 @@
 
         const priceCard=`<div class="ui-card price-card"><div><div class="price-label">${paid?'Inversión Total':'Cotización'}</div><p class="price-value">${esc(amount)} <span class="price-currency">${esc(currency)}</span></p><div class="client-payment-meta"><div class="client-payment-row"><span class="client-payment-label">Cliente</span><span class="client-payment-value">${esc(p.payerName||auth.currentUser?.displayName||'Cliente')}</span></div><div class="client-payment-row"><span class="client-payment-label">ID de Transacción</span><span class="client-payment-value transaction">${esc(p.transactionId||'Pendiente de pago')}</span></div><div class="client-payment-row"><span class="client-payment-label">País</span><span class="client-payment-value">${esc(country)}</span></div><div class="client-payment-row"><span class="client-payment-label">Método de Pago</span><span class="client-payment-value">${esc(p.paymentMethod||'Pendiente')}</span></div></div></div>${paid?`<div class="verified-note"><span class="verified-dot">✓</span><span>${String(p.paymentMethod||'').toLowerCase().includes('paypal')?'Pago verificado por PayPal.':'Pago verificado por Evolution Design.'}</span></div>`:pendingReview?`<div class="payment-review-client"><strong>Pago en revisión</strong><p>El comprobante fue recibido y todavía no habilita los archivos.</p></div>`:rejectedPayment?`<div class="payment-review-client rejected"><strong>Pago no confirmado</strong><p>${esc(p.paymentReviewNote||'Revisa los datos del pago o contacta a Evolution Design.')}</p></div>`:`<div class="payment-pending-note">◷ Esta orden aún no ha sido pagada.</div>`}</div>`;
 
-        const uploader=paid?`<div class="ui-card upload-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M16 16l-4-4-4 4M12 12v9"></path><path d="M20.4 18.4A5 5 0 0018 9h-1.3A8 8 0 103 16.3"></path></svg></span>${esc(cfg.uploadTitle||'Archivos requeridos')}</h3><p class="section-copy">${esc(cfg.uploadCopy||'Sube los archivos necesarios para iniciar tu proyecto.')}</p><div class="file-upload-zone"><div class="file-upload-head"><div class="file-upload-copy"><strong>Carga privada a servidores de Evolution Group</strong><span>Hasta 15 archivos · Máx. 100 MB por archivo. Solo tú y el equipo autorizado pueden acceder.</span></div><button class="file-pick-btn" onclick="document.getElementById('file-input-${unique}').click()">Seleccionar archivos</button><input id="file-input-${unique}" type="file" multiple hidden onchange="subirArchivosProyecto('${esc(p.id)}',this,'progress-${unique}','file-feedback-${unique}')"></div><div id="progress-${unique}" class="file-progress-list"></div></div><div id="client-files-${unique}" class="project-file-list"><div class="file-empty">Cargando archivos…</div></div></div>`:`<div class="ui-card upload-card"><h3 class="section-heading"><span class="section-icon">⌁</span>Archivos del proyecto</h3><p class="section-copy">La carga de archivos se habilitará automáticamente cuando completes el pago de esta orden.</p>${paymentBox(p,unique)}</div>`;
+        const unpaidDeliveryMode=!paid&&(delivered||shouldLockDelivery(p));
+        const uploader=paid?`<div class="ui-card upload-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M16 16l-4-4-4 4M12 12v9"></path><path d="M20.4 18.4A5 5 0 0018 9h-1.3A8 8 0 103 16.3"></path></svg></span>${esc(cfg.uploadTitle||'Archivos requeridos')}</h3><p class="section-copy">${esc(cfg.uploadCopy||'Sube los archivos necesarios para iniciar tu proyecto.')}</p><div class="file-upload-zone"><div class="file-upload-head"><div class="file-upload-copy"><strong>Carga privada a servidores de Evolution Group</strong><span>Hasta 15 archivos · Máx. 100 MB por archivo. Solo tú y el equipo autorizado pueden acceder.</span></div><button class="file-pick-btn" onclick="document.getElementById('file-input-${unique}').click()">Seleccionar archivos</button><input id="file-input-${unique}" type="file" multiple hidden onchange="subirArchivosProyecto('${esc(p.id)}',this,'progress-${unique}','file-feedback-${unique}')"></div><div id="progress-${unique}" class="file-progress-list"></div></div><div id="client-files-${unique}" class="project-file-list"><div class="file-empty">Cargando archivos…</div></div></div>`:unpaidDeliveryMode?`<div class="ui-card upload-card"><h3 class="section-heading"><span class="section-icon">⌁</span>Entrega final protegida</h3><p class="section-copy">El trabajo puede estar terminado aunque el pago siga pendiente. Tus entregas se muestran abajo con acceso protegido hasta completar el cobro.</p></div>`:`<div class="ui-card upload-card"><h3 class="section-heading"><span class="section-icon">⌁</span>Archivos del proyecto</h3><p class="section-copy">La carga de archivos se habilitará automáticamente cuando completes el pago de esta orden.</p>${paymentBox(p,unique)}</div>`;
 
         const comments=paid?`<div class="ui-card comments-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"></path></svg></span>Comentarios del Cliente</h3><p class="section-copy">Añade especificaciones o notas especiales para el profesional asignado y confirma cuando hayas terminado de cargar tus archivos.</p><textarea id="comments-${unique}" class="custom-textarea" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás…">${esc(p.clientComments||'')}</textarea><div class="submit-files-wrap"><button class="send-btn" onclick="enviarArchivosProyecto('${esc(p.id)}','comments-${unique}','file-feedback-${unique}',this)">${submitted?'Guardar cambios':'Enviar archivos al equipo'}</button><div id="file-feedback-${unique}" class="files-feedback">${submitted?'Puedes agregar, eliminar o cambiar archivos y comentarios.':'Tus archivos se almacenan de forma segura en servidores de Evolution Group.'}</div></div></div>`:'';
 
@@ -1936,10 +1984,28 @@
         return active.map(f=>`<div class="project-file-row">${fileThumb(f)}<div class="project-file-info"><div class="project-file-name">${esc(f.label||f.name)}</div><div class="project-file-meta">${esc(bytes(f.size))} · ${role==='delivery'?'Entregado por Evolution Design':'Subido por ti'}</div></div><button class="file-download-btn" onclick="descargarArchivoR2('${esc(f.storagePath)}','${esc(f.label||f.name)}',this)">Descargar</button>${role==='client' ? `<button class="file-download-btn" style="border-color:rgba(255,100,100,0.3);color:#ff8888;margin-left:5px" onclick="eliminarArchivoR2Cliente('${esc(project.id)}','${esc(f.id)}','${esc(f.storagePath)}',this)">✕</button>` : ''}</div>`).join('');
       }
 
+      function lockedDeliveryMarkup(files,project,unique){
+        const active=files.filter(f=>f.availability!=='deleted');
+        if(!active.length)return '';
+        const images=active.filter(isImageFile);
+        const preview=images[0]||null;
+        let previewMarkup='<div class="delivery-preview-empty"><strong style="display:block;color:#ddd;margin-bottom:.3rem">Entrega preparada</strong>No hay una imagen compatible para mostrar como vista previa. Los archivos finales permanecen protegidos hasta completar el pago.</div>';
+        if(preview&&s3&&preview.storagePath){
+          try{
+            // Solo se firma la PRIMERA imagen. Ningún otro archivo bloqueado recibe URL de R2.
+            const previewUrl=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:preview.storagePath,Expires:300});
+            previewMarkup=`<img src="${esc(previewUrl)}" alt="Vista previa de la entrega" loading="lazy"><span class="delivery-preview-badge">Vista previa · sin descarga</span>`;
+          }catch(e){console.info('No se pudo crear vista previa protegida:',e);}
+        }
+        const hiddenCount=Math.max(0,active.length-(preview?1:0));
+        const lockedRows=Array.from({length:hiddenCount},(_,i)=>`<div class="locked-delivery-row"><div class="locked-file-icon">⌕</div><div class="locked-file-copy"><strong>Archivo final protegido ${i+1}</strong><span>Se desbloqueará automáticamente al confirmarse el pago.</span></div><span class="locked-file-chip">BLOQUEADO</span></div>`).join('');
+        return `<div class="ui-card delivery-paywall"><div class="delivery-paywall-head"><div><h3 class="delivery-paywall-title">Entrega lista · acceso protegido</h3><p class="delivery-paywall-copy">Evolution Design ya cargó ${active.length} archivo${active.length===1?'':'s'}. Puedes revisar una imagen de muestra; el resto no genera enlaces de descarga mientras el pago esté pendiente.</p></div><span class="delivery-lock-pill">🔒 Pago pendiente</span></div><div class="delivery-preview-stage">${previewMarkup}</div>${lockedRows?`<div class="locked-delivery-list">${lockedRows}</div>`:''}<div class="delivery-payment-box">${paymentBox(project,`${unique}-delivery`)}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`;
+      }
+
       function attachFiles(user,project){
         const unique=safeId(project.id), clientEl=document.getElementById(`client-files-${unique}`), deliveryCard=document.getElementById(`delivery-files-card-${unique}`);
         if(clientEl){const q=collection(db,'users',user.uid,'projects',project.id,'clientFiles');fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.uploadedAt)-dateValue(a.uploadedAt));clientEl.innerHTML=fileRows(files,project,'client')},e=>clientEl.innerHTML='<div class="file-empty">No se pudieron cargar los archivos.</div>'));}
-        if(deliveryCard){const q=collection(db,'users',user.uid,'projects',project.id,'deliveryFiles');fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.uploadedAt)-dateValue(a.uploadedAt));const active=files.filter(f=>f.availability!=='deleted');deliveryCard.innerHTML=active.length?`<div class="ui-card delivery-files-card"><h3 class="section-heading"><span class="section-icon" style="color:#55d981;background:rgba(43,200,102,.08);border-color:rgba(43,200,102,.16)">✓</span>Archivos de Entrega</h3><p class="section-copy">Evolution Design ha enviado ${active.length} archivo(s) para este proyecto.</p><div class="project-file-list">${fileRows(files,project,'delivery')}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`:'';}));}
+        if(deliveryCard){const q=collection(db,'users',user.uid,'projects',project.id,'deliveryFiles');fileListeners.push(onSnapshot(q,snap=>{const files=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateValue(b.uploadedAt)-dateValue(a.uploadedAt));const active=files.filter(f=>f.availability!=='deleted');if(!active.length){deliveryCard.innerHTML='';return;}deliveryCard.innerHTML=shouldLockDelivery(project)?lockedDeliveryMarkup(active,project,unique):`<div class="ui-card delivery-files-card"><h3 class="section-heading"><span class="section-icon" style="color:#55d981;background:rgba(43,200,102,.08);border-color:rgba(43,200,102,.16)">✓</span>Archivos de Entrega</h3><p class="section-copy">Evolution Design ha enviado ${active.length} archivo(s) para este proyecto.</p><div class="project-file-list">${fileRows(files,project,'delivery')}</div>${project.deliveryNote?`<div class="delivery-note">${esc(project.deliveryNote)}</div>`:''}</div>`;}));}
       }
 
       // === ELIMINAR ARCHIVO (BOTON X) DESDE CLIENTE ===
@@ -2087,7 +2153,34 @@
 
       async function detectGeo(){try{const r=await fetch('https://ipapi.co/json/',{cache:'no-store'});if(r.ok){const g=await r.json();currentGeo={city:g.city||'',region:g.region||'',country:g.country_name||'',countryCode:g.country_code||'',currency:g.currency||''};detectedCurrency=PAYPAL_SUPPORTED.has(String(g.currency||'').toUpperCase())?String(g.currency).toUpperCase():'USD';}}catch{}return currentGeo;}
       function loadPayPal(currency){currency=PAYPAL_SUPPORTED.has(currency)?currency:'USD';if(paypalPromises[currency])return paypalPromises[currency];const ns=`paypal_projects_${currency}`;paypalPromises[currency]=new Promise((resolve,reject)=>{if(window[ns]?.Buttons)return resolve(window[ns]);const sc=document.createElement('script');sc.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=${currency}&components=buttons&intent=capture`;sc.dataset.namespace=ns;sc.onload=()=>window[ns]?.Buttons?resolve(window[ns]):reject(new Error('PayPal no cargó.'));sc.onerror=reject;document.head.appendChild(sc);});return paypalPromises[currency];}
-      window.prepararPagoPersonalizado=async function(projectId,containerId,button){const box=document.getElementById(containerId);if(!box)return;if(button)button.style.display='none';box.style.display='block';box.innerHTML='Preparando pago seguro…';try{await detectGeo();const currency=detectedCurrency||'USD',sdk=await loadPayPal(currency);box.innerHTML='';await sdk.Buttons({style:{layout:'vertical',color:'gold',shape:'rect',height:44},createOrder:async()=>{const r=await createCustomOrder({projectId,requestedCurrency:currency,clientGeo:currentGeo});return r.data.orderId;},onApprove:async d=>{box.innerHTML='Confirmando pago…';await capturePayPalOrder({orderId:d.orderID});},onError:e=>{console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo completar el pago.</div>';if(button)button.style.display='inline-block';}}).render(`#${containerId}`);}catch(e){console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo preparar PayPal.</div>';if(button)button.style.display='inline-block';}};
+      window.prepararPagoPersonalizado=async function(projectId,containerId,button){
+        const box=document.getElementById(containerId);if(!box)return;
+        const user=auth.currentUser;if(!user?.uid){box.innerHTML='<div style="color:#a00;padding:.6rem">Tu sesión ya no está activa.</div>';return;}
+        if(button)button.style.display='none';box.style.display='block';box.innerHTML='Preparando pago seguro…';
+        const pRef=doc(db,'users',user.uid,'projects',projectId);
+        let before={};
+        try{
+          const preSnap=await getDoc(pRef);before=preSnap.exists()?preSnap.data():{};
+          await detectGeo();const currency=detectedCurrency||'USD',sdk=await loadPayPal(currency);box.innerHTML='';
+          await sdk.Buttons({
+            style:{layout:'vertical',color:'gold',shape:'rect',height:44},
+            createOrder:async()=>{const r=await createCustomOrder({projectId,requestedCurrency:currency,clientGeo:currentGeo});return r.data.orderId;},
+            onApprove:async d=>{
+              box.innerHTML='Confirmando pago y desbloqueando entregas…';
+              await capturePayPalOrder({orderId:d.orderID});
+              // Algunas versiones anteriores del backend movían la orden a waiting_files.
+              // Si administración ya la tenía en Entregado/Revisión/Desarrollo, restauramos ese estado.
+              const preserve=before.paymentRequestProjectStatus||before.status||'';
+              const patch={paymentRequested:false,paymentRequestStatus:'paid',deliveryLocked:false,paymentUnlockedAt:serverTimestamp(),updatedAt:serverTimestamp()};
+              if(preserve&&!['awaiting_payment','waiting_files'].includes(preserve))patch.status=preserve;
+              await updateDoc(pRef,patch).catch(e=>console.info('Pago confirmado; metadatos de desbloqueo pendientes de sincronizar:',e));
+              box.innerHTML='<div style="color:#176b38;padding:.7rem;font-weight:700">✓ Pago confirmado. Tus entregas se están desbloqueando.</div>';
+            },
+            onCancel:()=>{box.innerHTML='<div style="color:#777;padding:.6rem">Pago cancelado. Puedes intentarlo nuevamente.</div>';if(button)button.style.display='inline-block';},
+            onError:e=>{console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo completar el pago.</div>';if(button)button.style.display='inline-block';}
+          }).render(`#${containerId}`);
+        }catch(e){console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo preparar PayPal.</div>';if(button)button.style.display='inline-block';}
+      };
 
       function emptyState(title,text){const c=document.getElementById('lista-proyectos-container'),e=document.getElementById('sin-proyectos-msg');if(c)c.innerHTML='';if(e){e.style.display='block';const h=e.querySelector('h4'),p=e.querySelector('p');if(h)h.textContent=title;if(p)p.textContent=text;}}
       function clearFileListeners(){while(fileListeners.length){try{fileListeners.pop()();}catch{}}}
