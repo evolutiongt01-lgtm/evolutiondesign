@@ -79,10 +79,18 @@
 }
 .drawer-title{font-size:29px;font-weight:700;letter-spacing:-.045em;line-height:1.06}
 .drawer-head-actions{display:flex;align-items:center;gap:8px}
-.unsaved-pill{display:none;align-items:center;gap:7px;min-height:34px;padding:0 11px;border-radius:999px;border:1px solid rgba(233,188,101,.20);color:#e1bc71;background:rgba(233,188,101,.055);font-size:9px;font-weight:700}
-.unsaved-pill.show{display:inline-flex;animation:softPop .22s ease}
-.unsaved-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:#e9bc65;box-shadow:0 0 0 4px rgba(233,188,101,.06)}
+.unsaved-pill{display:none;align-items:center;gap:8px;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,196,82,.65);color:#1a1207;background:linear-gradient(180deg,#ffd37b,#e9b85d);font-size:10px;font-weight:900;letter-spacing:.025em;text-transform:uppercase;box-shadow:0 10px 26px rgba(233,184,93,.20)}
+.unsaved-pill.show{display:inline-flex;animation:unsavedPulse 1.45s ease-in-out infinite}
+.unsaved-pill::before{content:'!';width:20px;height:20px;border-radius:50%;background:#18120a;color:#ffd37b;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:1000;box-shadow:0 0 0 4px rgba(24,18,10,.08)}
+.unsaved-guard{position:fixed;right:28px;bottom:24px;z-index:260;width:min(430px,calc(100vw - 36px));display:none;align-items:center;justify-content:space-between;gap:14px;padding:13px 14px;border:1px solid rgba(255,202,99,.72);border-radius:16px;background:linear-gradient(145deg,rgba(36,25,12,.98),rgba(17,14,10,.98));box-shadow:0 18px 55px rgba(0,0,0,.58),0 0 0 1px rgba(255,209,119,.05) inset;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.unsaved-guard.show{display:flex;animation:guardIn .22s ease}
+.unsaved-guard-copy{display:flex;align-items:center;gap:11px;min-width:0}
+.unsaved-guard-icon{width:36px;height:36px;flex:0 0 36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#f1bd62;color:#17110a;font-size:18px;font-weight:1000;box-shadow:0 8px 24px rgba(241,189,98,.18)}
+.unsaved-guard-text{min-width:0}.unsaved-guard-text strong{display:block;color:#ffd88c;font-size:11px;letter-spacing:.045em;text-transform:uppercase}.unsaved-guard-text span{display:block;color:#b5a68e;font-size:9px;line-height:1.45;margin-top:3px}
+.unsaved-guard .btn{flex:0 0 auto;border-color:#f0bd65!important;background:#f0bd65!important;color:#16100a!important;font-weight:900!important;box-shadow:0 8px 24px rgba(240,189,101,.16)}
 @keyframes softPop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes unsavedPulse{0%,100%{box-shadow:0 10px 26px rgba(233,184,93,.18);transform:translateY(0)}50%{box-shadow:0 12px 34px rgba(255,196,82,.36);transform:translateY(-1px)}}
+@keyframes guardIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes sectionIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes saveFlash{0%{box-shadow:0 0 0 rgba(57,212,119,0)}45%{box-shadow:0 0 0 8px rgba(57,212,119,.06)}100%{box-shadow:0 0 0 rgba(57,212,119,0)}}
 .drawer .section{animation:sectionIn .34s ease both}
@@ -97,15 +105,17 @@
 .financial-card strong{display:block;color:#f6f6f4;font-size:18px;letter-spacing:-.035em;position:relative;z-index:2;transition:transform .18s ease,color .18s ease}
 .financial-card.updated strong{transform:scale(1.035);color:#e2c7a5}
 .price-field-wrap{position:relative}.price-prefix{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#777;font-size:12px;pointer-events:none}.price-field-wrap .input{padding-left:28px!important}
-.save-project-btn{min-width:180px;position:relative;overflow:hidden;transition:transform .18s ease,filter .18s ease,background .18s ease}.save-project-btn:hover{transform:translateY(-1px)}.save-project-btn.saved{animation:saveFlash .55s ease;background:#57d888!important;border-color:#57d888!important}
-.form-actions.sticky-actions{position:sticky;bottom:-30px;z-index:18;margin:18px -17px -17px;padding:13px 17px calc(13px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(255,255,255,.07);background:rgba(9,9,10,.90);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.save-project-btn{min-width:180px;position:relative;overflow:hidden;transition:transform .18s ease,filter .18s ease,background .18s ease,box-shadow .18s ease}.save-project-btn:hover{transform:translateY(-1px)}.save-project-btn.saved{animation:saveFlash .55s ease;background:#57d888!important;border-color:#57d888!important}.save-project-btn.attention{background:linear-gradient(180deg,#ffd37b,#e9b85d)!important;border-color:#ffd37b!important;color:#17110a!important;box-shadow:0 10px 30px rgba(233,184,93,.24);animation:saveAttention 1.35s ease-in-out infinite}
+@keyframes saveAttention{0%,100%{box-shadow:0 10px 30px rgba(233,184,93,.20)}50%{box-shadow:0 12px 38px rgba(255,203,101,.42)}}
+.form-actions.sticky-actions{position:sticky;bottom:-30px;z-index:18;margin:18px -17px -17px;padding:13px 17px calc(13px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(255,255,255,.07);background:rgba(9,9,10,.90);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);transition:border-color .2s ease,background .2s ease,box-shadow .2s ease}.form-actions.sticky-actions.dirty{border-top-color:rgba(255,201,96,.48);background:linear-gradient(180deg,rgba(35,25,13,.95),rgba(13,11,8,.96));box-shadow:0 -16px 38px rgba(0,0,0,.24)}
 .input,.textarea,.select{transition:border-color .2s ease,box-shadow .2s ease,background .2s ease,transform .15s ease}
 .input:focus,.textarea:focus,.select:focus{border-color:rgba(212,184,149,.48);box-shadow:0 0 0 4px rgba(212,184,149,.045);background:#0d0d0e}
 .bank-like-help{margin-top:6px;color:#626268;font-size:8px;line-height:1.45}
 @media(max-width:700px){
   .financial-grid{grid-template-columns:1fr}
   .drawer-head{top:-15px;margin:-15px -15px 16px;padding:17px 15px 14px}
-  .drawer-head-actions{gap:5px}.unsaved-pill{display:none!important}
+  .drawer-head-actions{gap:5px}.unsaved-pill{min-height:34px;padding:0 10px;font-size:8px}.unsaved-pill::before{width:17px;height:17px;font-size:9px}
+  .unsaved-guard{right:12px;left:12px;bottom:12px;width:auto;align-items:stretch;flex-direction:column}.unsaved-guard .btn{width:100%;min-height:44px}
   .save-project-btn{width:100%}
   .form-actions.sticky-actions{bottom:-15px;margin:16px -13px -13px;padding:12px 13px calc(12px + env(safe-area-inset-bottom,0px))}
 }
@@ -458,6 +468,11 @@
       </div>
     </div>
 
+    <div id="unsavedGuard" class="unsaved-guard" role="status" aria-live="polite">
+      <div class="unsaved-guard-copy"><span class="unsaved-guard-icon">!</span><div class="unsaved-guard-text"><strong>Cambios sin guardar</strong><span>No cierres este proyecto. Guarda para que el cliente y el resto del equipo vean los cambios.</span></div></div>
+      <button type="button" class="btn" onclick="saveProject()">Guardar ahora</button>
+    </div>
+
     <div id="drawerDetails" class="detail-grid"></div>
 
     <div id="paymentProofSection" class="section payment-proof-section hidden">
@@ -482,7 +497,7 @@
           <div class="payment-request-status-row"><div class="payment-request-status-copy"><strong id="paymentRequestStatusTitle">Sin solicitud activa</strong><span id="paymentRequestStatusHelp">Puedes solicitar el pago sin borrar ni volver a subir archivos.</span></div><span id="paymentRequestBadge" class="payment-request-badge">Pendiente</span></div>
           <div id="clientPaymentMessageAdmin" class="payment-client-message-admin hidden"><div class="payment-client-message-admin-head"><strong>Mensaje del cliente sobre el pago</strong><span id="clientPaymentMessageDate">—</span></div><div id="clientPaymentMessageText" class="payment-client-message-admin-text"></div></div>
           <div class="form-grid">
-            <div class="field"><label>Monto a cobrar USD</label><div class="price-field-wrap"><span class="price-prefix">$</span><input id="paymentRequestAmount" class="input" type="number" min="1" step="0.01" inputmode="decimal"></div><div class="hint">Se usa como importe de la pasarela PayPal de esta orden.</div></div>
+            <div class="field"><label>Monto a cobrar USD</label><div class="price-field-wrap"><span class="price-prefix">$</span><input id="paymentRequestAmount" class="input" type="number" min="1" step="0.01" inputmode="decimal"></div><div class="hint">Este monto se sincroniza con “Precio del proyecto”. PayPal y Binance lo leen en USD/USDT; en Guatemala la transferencia calcula automáticamente el equivalente en GTQ.</div></div>
             <div class="field"><label>Vista previa antes del pago</label><input class="input" value="1 imagen" disabled><div class="hint">Solo se firma y muestra una imagen; los demás archivos no reciben enlace de R2.</div></div>
             <div class="field full"><label>Mensaje para el cliente</label><textarea id="paymentRequestNote" class="textarea" placeholder="Ej. Tu proyecto ya está terminado. Completa el pago para descargar la entrega final."></textarea></div>
           </div>
@@ -793,7 +808,7 @@ function adminWebEtaText(p){
   const eta=adminAddBusinessDays(start,4);
   return new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(eta);
 }
-window.setProfessionalRole=function(role){
+window.setProfessionalRole=function(role,markDirty=true){
   const value=normalizeProfessionalRole(role),hidden=$('editProfessionalRole'),label=$('editProfessionalNameLabel'),input=$('editArchitect');
   if(hidden)hidden.value=value;
   document.querySelectorAll('#professionalRoleToggle button').forEach(b=>b.classList.toggle('active',b.dataset.role===value));
@@ -804,6 +819,7 @@ window.setProfessionalRole=function(role){
     if(label)label.textContent=`Nombre del ${value.toLowerCase()}`;
     if(input)input.placeholder=`Nombre del ${value.toLowerCase()}`;
   }
+  if(markDirty&&selected)setProjectDirty(true);
 };
 function paymentMethodCode(v){return String(v||'PAGO').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').toUpperCase().slice(0,24)||'PAGO'}
 
@@ -824,10 +840,29 @@ function updateFinancialPreview(animate=true){
     });
   }
 }
-function setProjectDirty(dirty=true){const pill=$('unsavedPill');if(pill)pill.classList.toggle('show',!!dirty)}
+let projectDirty=false;
+let projectAmountSyncing=false;
+function syncProjectAmounts(sourceId){
+  if(projectAmountSyncing)return;
+  const source=$(sourceId),target=$(sourceId==='paymentRequestAmount'?'editPrice':'paymentRequestAmount');
+  if(!source||!target)return;
+  projectAmountSyncing=true;
+  target.value=source.value;
+  projectAmountSyncing=false;
+  updateFinancialPreview(true);
+}
+function setProjectDirty(dirty=true){
+  projectDirty=!!dirty;
+  const pill=$('unsavedPill'),guard=$('unsavedGuard'),btn=$('saveProjectBtn'),sticky=btn?.closest('.sticky-actions');
+  if(pill)pill.classList.toggle('show',projectDirty);
+  if(guard)guard.classList.toggle('show',projectDirty);
+  if(btn){btn.classList.toggle('attention',projectDirty);if(projectDirty&&!btn.disabled)btn.textContent='Guardar cambios ahora';else if(!projectDirty&&!btn.classList.contains('saved')&&!btn.disabled)btn.textContent='Guardar cambios';}
+  if(sticky)sticky.classList.toggle('dirty',projectDirty);
+}
 document.addEventListener('input',e=>{
   if(!selected||!e.target?.closest('#projectModal'))return;
-  if(e.target?.id==='editPrice'||e.target?.id==='editCost')updateFinancialPreview(true);
+  if(e.target?.id==='editPrice'||e.target?.id==='paymentRequestAmount')syncProjectAmounts(e.target.id);
+  else if(e.target?.id==='editCost')updateFinancialPreview(true);
   if(['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName))setProjectDirty(true);
 });
 
@@ -1312,7 +1347,7 @@ function renderPaymentRequestAdmin(){
   if($('paymentRequestStatusTitle'))$('paymentRequestStatusTitle').textContent=state.title;
   if($('paymentRequestStatusHelp')){
     const lock=selected.deliveryLocked===true||(selected.deliveryLocked!==false&&selected.status==='delivered'&&!paid);
-    $('paymentRequestStatusHelp').textContent=paid?'El cliente ya tiene acceso completo a las entregas.':selected.paymentStatus==='pending_review'?'Revisa el comprobante arriba. Al aprobarlo se mantendrá el estado operativo actual del proyecto.':selected.paymentRequested===true?`Cobro activo${lock?' · entregas protegidas':''}. El cliente verá la pasarela dentro de Mis Proyectos.`:'Puedes solicitar el pago sin borrar ni volver a subir archivos.';
+    $('paymentRequestStatusHelp').textContent=paid?'El cliente ya tiene acceso completo a las entregas.':selected.paymentStatus==='pending_review'?'Revisa el comprobante arriba. Al aprobarlo se mantendrá el estado operativo actual del proyecto.':selected.paymentRequested===true?`Cobro activo${lock?' · entregas protegidas':''}. Métodos: PayPal y Binance globales; transferencia bancaria solo para clientes en Guatemala.`:'Puedes solicitar el pago sin borrar ni volver a subir archivos.';
   }
   if($('paymentRequestAmount'))$('paymentRequestAmount').value=Number(selected.paymentRequestedAmountUsd??selected.baseUsd??0).toFixed(2);
   if($('paymentRequestNote'))$('paymentRequestNote').value=selected.paymentRequestNote||'';
@@ -1380,7 +1415,7 @@ window.requestClientPayment=async function(){
       amount:amount.toFixed(2),
       projectConfig:{...(selected.projectConfig||{}),baseUsd:amount},
       paymentStatus:'pending',
-      paymentMethod:'PayPal (pendiente)',
+      paymentMethod:'Pendiente de elección',
       paymentRequested:true,
       paymentRequestStatus:'pending',
       paymentRequestedAmountUsd:amount,
@@ -1445,7 +1480,7 @@ window.openProject=async function(uid,id){
   ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
   $('editProjectTitle').value=selected.projectTitle||'Proyecto';
   $('editStatus').value=selected.status||'waiting_files';
-  setProfessionalRole(adminIsWebProject(selected)?(selected.professionalRole||'Desarrollador Web Full-Stack'):(selected.professionalRole||'Arquitecto'));
+  setProfessionalRole(adminIsWebProject(selected)?(selected.professionalRole||'Desarrollador Web Full-Stack'):(selected.professionalRole||'Arquitecto'),false);
   $('editArchitect').value=selected.architectName||'';
   $('editPrice').value=Number(selected.baseUsd||0).toFixed(2);
   $('editCost').value=Number(selected.adminMeta?.internalCostUsd||0).toFixed(2);
@@ -1477,13 +1512,15 @@ window.openProject=async function(uid,id){
   $('projectModal').classList.add('show');
   await Promise.all([loadFiles(),renderPaymentProof()]);
 };
-window.closeProject=()=>{
+window.closeProject=(force=false)=>{
+  if(projectDirty&&!force&&!confirm('Hay cambios sin guardar en este proyecto. ¿Cerrar y perder esos cambios?'))return;
   clearPreviewObjectUrls();
   clearPendingSelectionUrls();
   $('projectModal').classList.remove('show');
   setProjectDirty(false);
   setTimeout(()=>{selected=null},220);
 };
+window.addEventListener('beforeunload',e=>{if(projectDirty&&$('projectModal')?.classList.contains('show')){e.preventDefault();e.returnValue='';}});
 
 let previewObjectUrls=[];
 function clearPreviewObjectUrls(){previewObjectUrls.forEach(url=>{try{URL.revokeObjectURL(url)}catch{}});previewObjectUrls=[]}
@@ -1631,17 +1668,34 @@ window.saveProject=async function(){
     const uid=selected.ownerUid,id=selected.id;
     const pRef=doc(db,'users',uid,'projects',id),mRef=doc(db,'adminProjectData',`${uid}__${id}`);
 
+    const previousStatus=String(selected.status||'waiting_files');
+    const nextStatus=String($('editStatus').value||'waiting_files');
     const projectPatch={
       projectTitle:newTitle,
+      quotedBaseUsd:Number(selected.quotedBaseUsd??selected.baseUsd??newPrice),
       baseUsd:newPrice,
+      paymentRequestedAmountUsd:newPrice,
       'projectConfig.baseUsd':newPrice,
-      status:$('editStatus').value,
+      status:nextStatus,
       professionalRole:normalizeProfessionalRole($('editProfessionalRole').value),
       architectName:$('editArchitect').value||'Pendiente',
       clientComments:$('editClientComments').value||'',
       deliveryNote:$('editDeliveryNote').value||'',
       updatedAt:serverTimestamp()
     };
+
+    // Historial del proceso: se registra la primera vez que el proyecto alcanza cada etapa.
+    // También sirve para proyectos antiguos: si ya estaba en Entregado y no tenía deliveredAt,
+    // al guardar nuevamente se fija la fecha final sin alterar sus archivos ni el pago.
+    if(nextStatus==='files_received'&&!selected.filesReceivedAt)projectPatch.filesReceivedAt=serverTimestamp();
+    if(nextStatus==='assigned'&&!selected.assignedAt)projectPatch.assignedAt=serverTimestamp();
+    if(nextStatus==='in_progress'&&!selected.workStartedAt)projectPatch.workStartedAt=serverTimestamp();
+    if(nextStatus==='review'&&!selected.reviewStartedAt)projectPatch.reviewStartedAt=serverTimestamp();
+    if(nextStatus==='delivered'&&!selected.deliveredAt)projectPatch.deliveredAt=serverTimestamp();
+    if(previousStatus!==nextStatus){
+      projectPatch.lastStatusChangedAt=serverTimestamp();
+      projectPatch.previousStatus=previousStatus;
+    }
 
     if(String(selected.currency||'USD').toUpperCase()==='USD'){
       projectPatch.amount=newPrice.toFixed(2);
@@ -1659,7 +1713,15 @@ window.saveProject=async function(){
     ]);
 
     selected.baseUsd=newPrice;
+    selected.paymentRequestedAmountUsd=newPrice;
+    selected.projectConfig={...(selected.projectConfig||{}),baseUsd:newPrice};
     selected.projectTitle=newTitle;
+    selected.status=nextStatus;
+    if(nextStatus==='files_received'&&!selected.filesReceivedAt)selected.filesReceivedAt=new Date();
+    if(nextStatus==='assigned'&&!selected.assignedAt)selected.assignedAt=new Date();
+    if(nextStatus==='in_progress'&&!selected.workStartedAt)selected.workStartedAt=new Date();
+    if(nextStatus==='review'&&!selected.reviewStartedAt)selected.reviewStartedAt=new Date();
+    if(nextStatus==='delivered'&&!selected.deliveredAt)selected.deliveredAt=new Date();
     selected.adminMeta={...(selected.adminMeta||{}),internalCostUsd:newCost};
     if(String(selected.currency||'USD').toUpperCase()==='USD')selected.amount=newPrice.toFixed(2);
 
@@ -1676,6 +1738,9 @@ window.saveProject=async function(){
     toast('Proyecto actualizado correctamente.');
     await refresh();
     selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;
+    if($('editPrice'))$('editPrice').value=Number(selected.baseUsd||0).toFixed(2);
+    renderPaymentRequestAdmin();
+    updateFinancialPreview(false);
 
     $('drawerDetails').innerHTML=[
       ['Cliente',selected.payerName||selected.ownerEmail],
@@ -2041,7 +2106,7 @@ window.deleteProject=async function(){
     for(const sub of ['clientFiles','deliveryFiles','deliveryLinks']){const snap=await getDocs(collection(db,'users',selected.ownerUid,'projects',selected.id,sub));for(const d of snap.docs)await deleteDoc(d.ref)}
     await deleteDoc(doc(db,'users',selected.ownerUid,'projects',selected.id));
     await deleteDoc(doc(db,'adminProjectData',`${selected.ownerUid}__${selected.id}`)).catch(()=>{});
-    closeProject();toast('Proyecto y archivos eliminados.');await refresh();
+    closeProject(true);toast('Proyecto y archivos eliminados.');await refresh();
   }catch(e){
     console.error(e);toast(e?.message||'No se pudo eliminar.')
   }
