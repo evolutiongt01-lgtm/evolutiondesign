@@ -3269,11 +3269,10 @@
     }
 
     // ==============================================================
-    // PAGO DIRECTO PAYPAL -> FIREBASE
-    // Mismo método de autocad.html: PayPal crea y captura la orden
-    // directamente en el navegador. Después del pago, este INDEX
-    // únicamente registra la compra/proyecto en Firestore y redirige
-    // a proyectos.html. R2 NO se toca aquí; R2 queda en Mis Proyectos.
+    // PAGO PAYPAL SEGURO -> CLOUDFLARE WORKER -> FIRESTORE
+    // El navegador ya NO crea ni captura pagos directamente.
+    // El Worker recalcula el precio, habla con PayPal, verifica la
+    // captura, registra el proyecto y dispara el correo por Zoho.
     // ==============================================================
 
     function limpiarConfiguracionFirestore(value) {
@@ -3282,159 +3281,38 @@
       return JSON.parse(JSON.stringify(value));
     }
 
-    function datosPagoDesdePayPal(details, data, monto) {
-      const capture = details?.purchase_units?.[0]?.payments?.captures?.[0] || {};
-      const shippingAddress = details?.purchase_units?.[0]?.shipping?.address || {};
-      const payerAddress = details?.payer?.address || {};
-      const geo = window.evolutionGeo || {};
+    const EVOLUTION_WORKER_URL = "https://evolution-design-backend.evolutiongt01.workers.dev".replace(/\/$/, "");
 
-      const paypalOrderId = String(details?.id || data?.orderID || '').trim();
-      const transactionId = String(capture?.id || paypalOrderId || '').trim();
-      const givenName = String(details?.payer?.name?.given_name || '').trim();
-      const surname = String(details?.payer?.name?.surname || '').trim();
-      const paypalFullName = `${givenName} ${surname}`.trim();
-      const currentUser = auth.currentUser;
-
-      const payerName = paypalFullName || currentUser?.displayName || currentUser?.email || 'Cliente';
-      const payerEmail = String(details?.payer?.email_address || currentUser?.email || '').trim();
-
-      const payerRegion = String(
-        shippingAddress?.admin_area_1 ||
-        shippingAddress?.admin_area_2 ||
-        geo?.region ||
-        geo?.city ||
-        'No reportada'
-      ).trim();
-
-      const payerCountryCode = String(
-        shippingAddress?.country_code ||
-        payerAddress?.country_code ||
-        geo?.countryCode ||
-        ''
-      ).toUpperCase();
-
-      const payerCountry = String(
-        geo?.country ||
-        nombrePaisDesdeCodigo(payerCountryCode) ||
-        payerCountryCode ||
-        'No reportado'
-      ).trim();
-
-      const amount = String(capture?.amount?.value || Number(monto || 0).toFixed(2));
-      const currency = String(capture?.amount?.currency_code || 'USD').toUpperCase();
-
-      return {
-        paypalOrderId,
-        transactionId,
-        payerName,
-        payerEmail,
-        payerRegion,
-        payerCountry,
-        payerCountryCode,
-        paymentMethod: detectarMetodoPagoPayPal(details, data),
-        amount,
-        currency,
-        paypalStatus: String(capture?.status || details?.status || 'COMPLETED')
-      };
+    async function evolutionWorkerPost(path, payload = {}) {
+      const user = auth.currentUser;
+      if (!user?.uid) throw new Error('Debes iniciar sesión antes de pagar.');
+      const idToken = await user.getIdToken();
+      const response = await fetch(`${EVOLUTION_WORKER_URL}${path}`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'authorization': `Bearer ${idToken}`
+        },
+        body: JSON.stringify(payload)
+      });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok || body?.ok === false) {
+        const error = new Error(body?.error || 'No se pudo completar la operación segura.');
+        error.code = body?.code || '';
+        throw error;
+      }
+      return body;
     }
 
-    async function registrarProyectoPagadoEnFirebase(tipoProyecto, monto, details, data) {
-      const user = auth.currentUser;
-      if (!user?.uid) throw new Error('La sesión del cliente se cerró antes de registrar la compra.');
-
-      const pago = datosPagoDesdePayPal(details, data, monto);
-      if (!pago.paypalOrderId) throw new Error('PayPal no devolvió el ID de la orden.');
-      if (!pago.transactionId) throw new Error('PayPal no devolvió el ID de transacción.');
-
-      const cfgOriginal = capturarConfiguracionProyecto(tipoProyecto);
-      if (!cfgOriginal) throw new Error('No se pudo leer la configuración del proyecto.');
-
-      const baseUsd = Number(monto || 0);
-      if (!Number.isFinite(baseUsd) || baseUsd <= 0) throw new Error('Monto de pago inválido.');
-
-      const projectConfig = limpiarConfiguracionFirestore({ ...cfgOriginal, baseUsd });
-
-      // ID determinista: si PayPal dispara dos veces la aprobación,
-      // actualizamos el mismo proyecto y no creamos una compra duplicada.
-      const safeOrderId = pago.paypalOrderId.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 90);
-      const projectId = `paypal_${safeOrderId}`;
-      const projectRef = doc(db, 'users', user.uid, 'projects', projectId);
-      const displaySeed = pago.transactionId || pago.paypalOrderId;
-      const displayOrderId = `#EVO-${displaySeed.slice(-8).toUpperCase()}`;
-      const geo = window.evolutionGeo || {};
-
-      const projectData = {
-        ownerUid: user.uid,
-        ownerEmail: user.email || pago.payerEmail || '',
-
-        // Registro del pago / cliente
-        payerName: pago.payerName,
-        payerEmail: pago.payerEmail,
-        payerRegion: pago.payerRegion,
-        payerCountry: pago.payerCountry,
-        payerCountryCode: pago.payerCountryCode,
-        transactionId: pago.transactionId,
-        paypalTransactionId: pago.transactionId,
-        paypalOrderId: pago.paypalOrderId,
-        paypalStatus: pago.paypalStatus,
-        paymentMethod: pago.paymentMethod,
-
-        amount: pago.amount,
-        currency: pago.currency,
-        baseUsd,
-        displayOrderId,
-
-        projectType: projectConfig.category || tipoProyecto,
-        projectTitle: projectConfig.packageName || tipoProyecto,
-        projectConfig,
-        source: 'index-paypal-direct',
-        customOrder: false,
-
-        // Compatible con proyectos.html
-        paymentStatus: 'paid',
-        status: 'waiting_files',
-        architectName: 'Pendiente',
-        clientFileCount: 0,
-        deliveryFileCount: 0,
-        clientComments: '',
-        deliveryNote: '',
-
-        lastGeo: {
-          city: geo.city || '',
-          region: geo.region || pago.payerRegion || '',
-          country: geo.country || pago.payerCountry || '',
-          countryCode: geo.countryCode || pago.payerCountryCode || '',
-          currency: geo.currency || window.currentCurrency || ''
-        },
-
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-        paidAt: serverTimestamp()
+    function payloadCompraArquitectura(tipoProyecto) {
+      const cfg = capturarConfiguracionProyecto(tipoProyecto);
+      if (!cfg?.pricingInput) throw new Error('No se pudo leer la cotización actual.');
+      return {
+        mode: 'architecture_purchase',
+        projectType: tipoProyecto,
+        pricingInput: limpiarConfiguracionFirestore(cfg.pricingInput),
+        clientGeo: limpiarConfiguracionFirestore(window.evolutionGeo || {})
       };
-
-      // Esta escritura es la que hace aparecer la compra en Mis Proyectos.
-      await setDoc(projectRef, projectData, { merge: true });
-
-      // Perfil/resumen del cliente. No bloquea el proyecto si este update falla.
-      try {
-        await setDoc(doc(db, 'users', user.uid), {
-          uid: user.uid,
-          email: user.email || pago.payerEmail || '',
-          displayName: user.displayName || pago.payerName || '',
-          photoURL: user.photoURL || '',
-          payerName: pago.payerName,
-          payerRegion: pago.payerRegion,
-          payerCountry: pago.payerCountry,
-          lastTransactionId: pago.transactionId,
-          lastPayPalOrderId: pago.paypalOrderId,
-          lastPurchaseAt: serverTimestamp(),
-          updatedAt: serverTimestamp()
-        }, { merge: true });
-      } catch (profileError) {
-        console.info('Compra registrada; perfil no actualizado:', profileError);
-      }
-
-      return { projectId, displayOrderId, ...pago };
     }
 
 
@@ -3720,58 +3598,44 @@
             height: 45
           },
 
-          createOrder: function(data, actions) {
+          createOrder: async function() {
             mostrarEstadoPagoInline(selector, 'Preparando pago seguro…', 'info');
-
-            return actions.order.create({
-              purchase_units: [{
-                amount: {
-                  currency_code: 'USD',
-                  value: amountUsd.toFixed(2)
-                },
-                description: String(tipoProyecto || 'Proyecto Evolution Design').slice(0, 127)
-              }]
-            });
+            const result = await evolutionWorkerPost('/paypal/create-order', payloadCompraArquitectura(tipoProyecto));
+            if (!result?.orderId) throw new Error('El servidor no devolvió una orden PayPal válida.');
+            return result.orderId;
           },
 
-          onApprove: async function(data, actions) {
+          onApprove: async function(data) {
             mostrarEstadoPagoInline(selector, 'Confirmando pago y registrando tu proyecto…', 'info');
 
             try {
-              const details = await actions.order.capture();
-              const result = await registrarProyectoPagadoEnFirebase(
-                tipoProyecto,
-                amountUsd,
-                details,
-                data
-              );
+              const result = await evolutionWorkerPost('/paypal/capture-order', { orderId: data?.orderID || '' });
 
-              console.info('Pago registrado:', {
+              console.info('Pago verificado por Evolution Backend:', {
                 projectId: result.projectId,
                 transactionId: result.transactionId,
                 paypalOrderId: result.paypalOrderId,
-                payerName: result.payerName,
-                payerRegion: result.payerRegion
+                emailSent: result.emailSent
               });
 
               mostrarEstadoPagoInline(
                 selector,
-                'Pago confirmado. Abriendo Mis Proyectos…',
+                result.emailSent
+                  ? 'Pago confirmado y correo enviado. Abriendo Mis Proyectos…'
+                  : 'Pago confirmado. Abriendo Mis Proyectos…',
                 'ok'
               );
 
-              // R2 se usa únicamente en proyectos.html para archivos.
               setTimeout(() => {
                 window.location.href = 'proyectos.html';
               }, 650);
 
             } catch (error) {
-              console.error('PAYPAL APROBÓ, PERO FIREBASE NO REGISTRÓ LA COMPRA:', error);
-
+              console.error('PAYPAL / EVOLUTION BACKEND:', error);
               const orderId = data?.orderID || '';
               mostrarEstadoPagoInline(
                 selector,
-                `El pago fue aprobado por PayPal, pero no pudimos registrar el proyecto en Firebase. NO vuelvas a pagar.${orderId ? ' ID PayPal: ' + orderId : ''}`
+                `${error?.message || 'No pudimos confirmar el pago en el servidor.'}${orderId ? ' · Orden PayPal: ' + orderId : ''}`
               );
             }
           },
