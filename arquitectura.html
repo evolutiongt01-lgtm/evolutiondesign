@@ -154,8 +154,14 @@
     .facade-switch input:disabled + .f-slider-toggle { opacity: 0.5; cursor: not-allowed; }
 
     /* CAJA DE PAGO CON ESTILO LIQUID GLASS */
-    .paypal-white-card { background: #ffffff !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border: 1px solid #ffffff !important; padding: 18px; border-radius: 16px; box-shadow: 0 16px 38px rgba(0,0,0,0.52); overflow: hidden; }
+    .paypal-white-card { position: relative; background: #ffffff !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border: 1px solid #ffffff !important; padding: 18px; border-radius: 16px; box-shadow: 0 16px 38px rgba(0,0,0,0.52); overflow: hidden; }
     .paypal-white-card iframe { background: #ffffff !important; }
+    .paypal-processing-overlay { position:absolute; inset:0; z-index:80; display:flex; align-items:center; justify-content:center; padding:18px; background:rgba(10,10,11,.965); color:#f4f1ec; text-align:center; }
+    .paypal-processing-box { display:flex; align-items:center; justify-content:center; gap:11px; min-height:48px; font-size:.78rem; font-weight:750; letter-spacing:.01em; }
+    .paypal-processing-spinner { width:18px; height:18px; border:2px solid rgba(212,184,149,.24); border-top-color:#d4b895; border-radius:50%; animation:evolutionPaySpin .72s linear infinite; flex:0 0 auto; }
+    .paypal-processing-overlay.is-ok .paypal-processing-spinner { display:none; }
+    .paypal-processing-overlay.is-ok .paypal-processing-box::before { content:'✓'; display:grid; place-items:center; width:22px; height:22px; border-radius:50%; background:rgba(47,158,91,.16); border:1px solid rgba(47,158,91,.38); color:#72d59a; font-size:.78rem; }
+    @keyframes evolutionPaySpin { to { transform:rotate(360deg); } }
     .paypal-currency-note { margin-top: 10px; color: #6b6b6b; font-size: .69rem; line-height: 1.45; text-align: center; }
     .paypal-currency-note strong { color: #111; font-weight: 700; }
 
@@ -3552,6 +3558,31 @@
       }
     }
 
+
+    function mostrarProcesandoPayPal(selector, activo, mensaje = 'Verificando pago con PayPal…', ok = false) {
+      const target = document.querySelector(selector);
+      const card = target?.closest('.paypal-white-card');
+      if (!card) return;
+
+      let overlay = card.querySelector('.paypal-processing-overlay');
+
+      if (!activo) {
+        overlay?.remove();
+        return;
+      }
+
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'paypal-processing-overlay';
+        overlay.innerHTML = '<div class="paypal-processing-box"><span class="paypal-processing-spinner"></span><span class="paypal-processing-text"></span></div>';
+        card.appendChild(overlay);
+      }
+
+      overlay.classList.toggle('is-ok', Boolean(ok));
+      const text = overlay.querySelector('.paypal-processing-text');
+      if (text) text.textContent = mensaje;
+    }
+
     async function renderizarPayPalDirecto(monto, selector, tipoProyecto) {
       try {
         if (window.currencyReadyPromise) await window.currencyReadyPromise.catch(() => {});
@@ -3607,6 +3638,7 @@
 
           onApprove: async function(data) {
             mostrarEstadoPagoInline(selector, 'Confirmando pago y registrando tu proyecto…', 'info');
+            mostrarProcesandoPayPal(selector, true, 'Verificando pago con PayPal…');
 
             try {
               const result = await evolutionWorkerPost('/paypal/capture-order', { orderId: data?.orderID || '' });
@@ -3625,6 +3657,7 @@
                   : 'Pago confirmado. Abriendo Mis Proyectos…',
                 'ok'
               );
+              mostrarProcesandoPayPal(selector, true, 'Pago confirmado · abriendo Mis Proyectos…', true);
 
               setTimeout(() => {
                 window.location.href = 'proyectos.html';
@@ -3632,6 +3665,7 @@
 
             } catch (error) {
               console.error('PAYPAL / EVOLUTION BACKEND:', error);
+              mostrarProcesandoPayPal(selector, false);
               const orderId = data?.orderID || '';
               mostrarEstadoPagoInline(
                 selector,
@@ -3641,11 +3675,13 @@
           },
 
           onCancel: function() {
+            mostrarProcesandoPayPal(selector, false);
             mostrarEstadoPagoInline(selector, 'Pago cancelado. Puedes volver a intentarlo cuando quieras.', 'info');
           },
 
           onError: function(err) {
             console.error('Error de PayPal:', err);
+            mostrarProcesandoPayPal(selector, false);
             mostrarEstadoPagoInline(
               selector,
               'No fue posible completar el pago. Revisa los datos de tu tarjeta e inténtalo nuevamente.'
