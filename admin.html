@@ -848,6 +848,7 @@ if (window.AWS) {
 
 const cfg={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
 const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
+const EVOLUTION_WORKER_URL = "https://evolution-design-backend.evolutiongt01.workers.dev".replace(/\/$/,"");
 const ADMIN_EMAILS=new Set(['evolutiongt01@gmail.com','tepaz2025@gmail.com']);
 let data={metrics:{},clients:[],projects:[],countries:[],webRequests:[],subscriptions:[]},selected=null,selectedWebRequest=null,selectedSubscription=null;
 let pendingClientAdminFiles=[];
@@ -1477,13 +1478,27 @@ function adminPreviewPublished(project=selected){
 function renderWorkCompletionAdmin(){
   if(!selected)return;
   const done=adminWorkCompleted(selected),preview=adminPreviewPath(selected),notified=adminPreviewPublished(selected);
+  const mailStatus=String(selected.clientNotificationStatus||'').toLowerCase();
+  const mailSent=mailStatus==='sent';
+  const mailFailed=mailStatus==='failed';
+  const clientEmail=String(selected.clientNotificationEmail||selected.ownerEmail||selected.payerEmail||'').trim();
   const badge=$('workCompletionBadge'),title=$('workCompletionTitle'),help=$('workCompletionHelp');
   if(badge){badge.className=`work-status-pill ${done?'done':'wait'}`;badge.textContent=done?'TRABAJO TERMINADO':'EN PROCESO';}
   if(title)title.textContent=done?'Trabajo marcado como terminado':'Trabajo todavía en proceso';
-  if(help)help.textContent=notified?'El cliente ya fue notificado y puede ver únicamente la muestra protegida.':done?'Sube una muestra y pulsa “Notificar al cliente”. Esto no publica la entrega final.':'Marca el trabajo como terminado cuando el delegado haya finalizado la propuesta.';
+  if(help){
+    if(notified&&mailSent) help.textContent=`Muestra visible y correo enviado por Zoho${clientEmail?` a ${clientEmail}`:''}.`;
+    else if(notified&&mailFailed) help.textContent='La muestra ya está visible, pero Zoho no pudo enviar el correo. Puedes reintentarlo con el mismo botón.';
+    else if(notified) help.textContent='La muestra ya está visible. Falta confirmar el envío del correo por Zoho.';
+    else if(done) help.textContent='Sube una muestra y pulsa “Notificar al cliente”. Se mostrará en el portal y Zoho enviará el correo.';
+    else help.textContent='Marca el trabajo como terminado cuando el delegado haya finalizado la propuesta.';
+  }
   if($('markWorkCompletedBtn'))$('markWorkCompletedBtn').disabled=done;
   if($('reopenWorkBtn'))$('reopenWorkBtn').disabled=!done||selected.deliveryPublished===true;
-  if($('notifyClientPreviewBtn'))$('notifyClientPreviewBtn').disabled=!done||!preview||notified;
+  const notifyBtn=$('notifyClientPreviewBtn');
+  if(notifyBtn){
+    notifyBtn.disabled=!done||!preview||(notified&&mailSent);
+    notifyBtn.textContent=notified&&!mailSent?'Reintentar correo Zoho':'Notificar al cliente · mostrar muestra';
+  }
   if($('withdrawClientPreviewBtn')){$('withdrawClientPreviewBtn').disabled=!notified;$('withdrawClientPreviewBtn').style.display=notified?'inline-flex':'none';}
   renderPaymentPreviewAdmin();
 }
@@ -1512,15 +1527,41 @@ window.notifyClientPreview=async function(){
   if(!selected)return;
   if(!adminWorkCompleted(selected)){toast('Primero marca el trabajo como terminado.');return;}
   if(!adminPreviewPath(selected)){toast('Primero sube una muestra del trabajo.');return;}
-  if(!confirm('¿Notificar al cliente y mostrarle únicamente la muestra protegida? Los archivos finales seguirán ocultos.'))return;
+  const alreadyVisible=adminPreviewPublished(selected);
+  const question=alreadyVisible
+    ? '¿Reintentar el correo de notificación por Zoho? La muestra ya está visible para el cliente.'
+    : '¿Mostrar la muestra protegida y enviar el correo al cliente por Zoho? Los archivos finales seguirán ocultos.';
+  if(!confirm(question))return;
   const btn=$('notifyClientPreviewBtn');
   try{
-    if(btn){btn.disabled=true;btn.textContent='Notificando…';}
-    const patch={clientPreviewPublished:true,clientPreviewPublishedAt:serverTimestamp(),clientPreviewNotifiedAt:serverTimestamp(),clientPreviewNotifiedByAdminEmail:auth.currentUser?.email||'',updatedAt:serverTimestamp()};
-    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
-    selected.clientPreviewPublished=true;selected.clientPreviewPublishedAt=new Date();renderWorkCompletionAdmin();toast('Cliente notificado. Solo la muestra protegida es visible.');
-  }catch(e){console.error(e);toast(e?.message||'No se pudo notificar al cliente.');}
-  finally{if(btn){btn.disabled=false;btn.textContent='Notificar al cliente · mostrar muestra';}}
+    if(btn){btn.disabled=true;btn.textContent='Enviando con Zoho…';}
+    if(EVOLUTION_WORKER_URL.includes('PEGA_AQUI_')) throw new Error('Primero pega la URL real de tu Cloudflare Worker en EVOLUTION_WORKER_URL.');
+    const currentUser=auth.currentUser;
+    if(!currentUser) throw new Error('Tu sesión de administrador expiró. Vuelve a iniciar sesión.');
+    const idToken=await currentUser.getIdToken(true);
+    const response=await fetch(`${EVOLUTION_WORKER_URL}/notify-client-preview`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${idToken}`},
+      body:JSON.stringify({ownerUid:selected.ownerUid,projectId:selected.id})
+    });
+    const result=await response.json().catch(()=>({}));
+    if(!response.ok||result?.ok===false) throw new Error(result?.error||`Cloudflare respondió ${response.status}.`);
+    selected.clientPreviewPublished=result.previewPublished!==false;
+    selected.clientPreviewPublishedAt=selected.clientPreviewPublishedAt||new Date();
+    selected.clientPreviewNotifiedAt=new Date();
+    selected.clientNotificationStatus=result.emailSent?'sent':'failed';
+    selected.clientNotificationEmail=result.toAddress||selected.ownerEmail||selected.payerEmail||'';
+    if(result.emailSent) selected.clientNotificationSentAt=new Date();
+    renderWorkCompletionAdmin();
+    if(result.emailSent){toast(`Muestra visible y correo enviado por Zoho${result.toAddress?` a ${result.toAddress}`:''}.`);}
+    else{toast(`La muestra quedó visible, pero Zoho no envió el correo${result.error?`: ${result.error}`:'. Puedes reintentarlo.'}`);}
+  }catch(e){
+    console.error(e);
+    const msg=String(e?.message||'No se pudo notificar al cliente.').replace(/^FirebaseError:\s*/,'');
+    toast(msg);
+  }finally{
+    renderWorkCompletionAdmin();
+  }
 };
 window.withdrawClientPreview=async function(){
   if(!selected||!adminPreviewPublished(selected))return;
