@@ -18,8 +18,7 @@
 <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
 <link rel="preload" href="css/theme.min.css" as="style">
 <link rel="stylesheet" href="css/theme.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1390.0/aws-sdk.min.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20&currency=USD&intent=capture"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=BAA88hYhrlAVHUFkzsqrlDE1atrFHrCZe7j0XOYtbB4YlxcxBASouD2NAU2J_BV1fp9-jGGYK2Mh4bHN20&currency=USD&intent=capture&components=buttons,funding-eligibility"></script>
 <style>
 @font-face{font-family:Inter;font-style:normal;font-weight:300;font-display:swap;src:url('fonts/inter-v12-latin-300.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-v12-latin-regular.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:500;font-display:swap;src:url('fonts/inter-v12-latin-500.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-v12-latin-700.woff2') format('woff2')}
 :root{--bg:#050505;--panel:#0b0b0c;--text:#f5f5f5;--muted:#98989f;--soft:#67676e;--accent:#d4b895;--line:rgba(255,255,255,.10);--cyan:#70e7ff;--green:#67f0a0;--violet:#ae8cff;--ease:cubic-bezier(.16,1,.3,1);--mx:50%;--my:35%}
@@ -139,7 +138,8 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
 .price-card{position:relative;display:flex;flex-direction:column;min-height:590px;padding:30px;border:1px solid rgba(255,255,255,.09);border-radius:29px;background:linear-gradient(160deg,rgba(255,255,255,.03),rgba(255,255,255,.012));overflow:hidden;transition:transform .3s var(--ease),border-color .3s ease,box-shadow .3s ease}
 .price-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.18);box-shadow:0 24px 65px rgba(0,0,0,.24)}
 .price-card.popular{border-color:rgba(212,184,149,.25);background:radial-gradient(circle at 75% 0%,rgba(212,184,149,.12),transparent 34%),linear-gradient(160deg,rgba(212,184,149,.065),rgba(255,255,255,.015))}
-.popular-badge{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);padding:7px 12px;border-radius:999px;background:#d4b895;color:#17120e;font-size:.54rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.popular-badge{position:absolute;z-index:8;top:16px;right:18px;left:auto;transform:none;padding:7px 12px;border-radius:999px;background:#d4b895;color:#17120e;font-size:.54rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;box-shadow:0 9px 24px rgba(0,0,0,.24)}
+.price-card.popular .price-card-kicker{padding-right:118px}
 .price-card-kicker{color:#73737a;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase}
 .price-card h3{margin:12px 0 6px;font-size:1.55rem;letter-spacing:-.045em}
 .price-card-copy{min-height:63px;margin:0;color:#7e7e86;font-size:.70rem;line-height:1.58}
@@ -169,7 +169,8 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
   .price-card-copy{min-height:0}
   .plans-intro{margin-bottom:31px;text-align:left}
   .plans-intro p{margin-left:0}
-  .popular-badge{top:0}
+  .popular-badge{top:14px;right:14px}
+  .price-card.popular .price-card-kicker{padding-right:112px}
 }
 @media(max-width:575.98px){
   .plans-section{padding-top:82px;padding-bottom:82px}
@@ -307,13 +308,14 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
   .checkout-security{grid-template-columns:1fr}.checkout-total strong{font-size:1.95rem}
 }
 
-/* MÉTODOS DE PAGO: PayPal, Binance y transferencia bancaria GT */
+/* MÉTODOS DE PAGO: PayPal, tarjeta, transferencia GT y Binance Pay */
     .payment-checkout-card { background: rgba(10,10,10,.94); border: 1px solid rgba(255,255,255,.10); border-radius: 18px; padding: 14px; box-shadow: 0 18px 42px rgba(0,0,0,.38); }
     .payment-method-title { font-size: .72rem; color: #aaa; text-align: center; margin-bottom: 10px; }
     .payment-method-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
-    .payment-method-grid.has-bank { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .payment-method-grid.has-bank { grid-template-columns: repeat(2,minmax(0,1fr)); }
     .payment-method-btn { min-height: 48px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.035); color: #eee; font-size: .72rem; font-weight: 700; cursor: pointer; padding: 9px 10px; transition: .2s ease; display:flex;align-items:center;justify-content:center;gap:7px;text-align:center; }
     .payment-method-btn:hover,.payment-method-btn.active { border-color: rgba(212,184,149,.5); background: rgba(212,184,149,.09); color: #fff; }
+    .payment-method-btn.card { color: #cfe9ff; }
     .payment-method-btn.binance { color: #f3ba2f; }
     .payment-method-btn.bank { color: #d4b895; }
     .payment-method-panel { margin-top: 12px; }
@@ -322,7 +324,7 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
     .manual-payment-head strong { font-size:.82rem; }
     .manual-payment-amount { color:#d4b895;font-weight:800;font-size:1.05rem;white-space:nowrap; }
     .manual-payment-copy { color:#999;font-size:.70rem;line-height:1.55;margin-bottom:12px; }
-    .binance-qr-img { display:block;width:min(100%,310px);margin:0 auto 12px;border-radius:14px;background:#191a1f; }
+    .binance-qr-img { display:block;width:min(100%,280px);margin:0 auto 12px;border-radius:14px;background:#fff;padding:8px; }
     .manual-meta { display:grid;gap:7px;margin:10px 0 13px; }
     .manual-meta-row { display:flex;justify-content:space-between;gap:12px;padding:9px 10px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(0,0,0,.18);font-size:.69rem; }
     .manual-meta-row span:first-child { color:#777; }
@@ -520,7 +522,7 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
 .web-checkout-pay .payment-method-panel{margin-top:13px}
 .web-checkout-pay .paypal-white-card{padding:12px;border-radius:13px}
 .web-checkout-pay .manual-payment-card{background:#070708;border-color:rgba(255,255,255,.08)}
-.web-checkout-pay .binance-qr-img{width:min(100%,245px)}
+.web-checkout-pay .binance-qr-img{width:min(100%,235px)}
 .web-checkout-pay .manual-payment-amount{font-size:.92rem}
 .web-checkout-pay .payment-gt-only-note{margin:10px 0 0;color:#74747b;text-align:left}
 .web-checkout-pay .bank-choice{min-height:91px}
@@ -533,6 +535,27 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
   .web-checkout-pay .bank-choice-grid{grid-template-columns:1fr}
   .web-checkout-pay .bank-choice{min-height:68px;flex-direction:row;align-items:center}
 }
+
+
+/* =========================================================
+   EVOLUTION WEB · moneda local + logo + pagos seguros
+   ========================================================= */
+.localized-price-note{display:block;margin-top:4px;color:#66666e;font-size:.54rem;line-height:1.35}
+.price-big strong[data-usd-price]{white-space:nowrap}
+.logo-upload-zone{position:relative;display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:13px;align-items:center;min-height:96px;padding:12px;border:1px dashed rgba(212,184,149,.26);border-radius:15px;background:linear-gradient(145deg,rgba(212,184,149,.055),rgba(255,255,255,.012));cursor:pointer;transition:.22s ease;overflow:hidden}
+.logo-upload-zone:hover,.logo-upload-zone.drag{border-color:rgba(212,184,149,.62);background:rgba(212,184,149,.075)}
+.logo-upload-preview{width:72px;height:72px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:#060607;display:grid;place-items:center;overflow:hidden;color:#696970;font-size:.56rem;text-align:center}
+.logo-upload-preview img{width:100%;height:100%;object-fit:contain;padding:6px;background:#fff}
+.logo-upload-copy strong{display:block;color:#e8e8eb;font-size:.73rem}.logo-upload-copy small{display:block;margin-top:5px;color:#727279;font-size:.59rem;line-height:1.45}
+.logo-upload-action{min-height:38px;padding:0 12px;border:1px solid rgba(212,184,149,.22);border-radius:999px;background:rgba(212,184,149,.07);color:#d4b895;display:inline-flex;align-items:center;justify-content:center;font-size:.60rem;font-weight:800;white-space:nowrap}
+.logo-upload-meta{margin-top:7px;color:#6f6f76;font-size:.57rem;line-height:1.4}
+.paypal-white-card{position:relative;overflow:hidden;background:#fff;min-height:70px}
+.paypal-processing-overlay{position:absolute;inset:0;z-index:40;display:none;align-items:center;justify-content:center;gap:10px;padding:14px;background:linear-gradient(145deg,rgba(8,8,9,.98),rgba(14,14,16,.97));color:#eee;text-align:center;font-size:.65rem;font-weight:700}
+.paypal-processing-overlay.show{display:flex}
+.paypal-processing-spinner{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.18);border-top-color:#d4b895;animation:webPaySpin .72s linear infinite}
+@keyframes webPaySpin{to{transform:rotate(360deg)}}
+.payment-usd-charge-note{margin:10px 0 0;color:#6f6f77;font-size:.56rem;line-height:1.45;text-align:center}
+@media(max-width:575.98px){.logo-upload-zone{grid-template-columns:68px 1fr;padding:10px}.logo-upload-preview{width:58px;height:58px}.logo-upload-action{grid-column:1/-1;width:100%}.price-card.popular .price-card-kicker{padding-right:105px}}
 
 </style>
 </head>
@@ -582,7 +605,7 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
 <nav class="mobile-nav" id="mobileNav"><div class="mobile-top"><div class="menu-wrap"><a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a><ul class="dropdown-menu-ed" id="mobileDropdown"><li><a href="index.html">Home</a></li><li><a href="arquitectura.html">Arquitectura</a></li><li><a href="diseno-grafico.html">Diseño Gráfico</a></li><li><a class="active" href="diseno-web.html">Diseño Web</a></li><li id="linkProyectosMobile" class="hidden"><a href="proyectos.html">Mis Proyectos</a></li></ul></div><a href="index.html" class="mobile-logo"><img src="img/logo.png" alt="Evolution Design"></a><div id="auth-mobile-wrapper"><a href="#" class="icon-btn" onclick="abrirAuthModal();return false" aria-label="Login"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></a></div></div><div class="mobile-tabs"><a class="mobile-tab" href="index.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a><a class="mobile-tab" href="arquitectura.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V5l8-3 8 3v16M8 9h8M8 13h8M8 17h8"/></svg>Arquitectura</a><a class="mobile-tab" href="diseno-grafico.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18"/></svg>Gráfico</a><a class="mobile-tab active" href="diseno-web.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M8 9l-2 2 2 2M16 9l2 2-2 2"/></svg>Web</a></div></nav>
 
 <main>
-<section class="web-hero" id="inicio"><canvas id="heroCanvas" class="hero-canvas"></canvas><div class="web-hero-inner"><div><div class="hero-kicker">Evolution Web Studio · Interactive Experiences</div><h1>Tu web no debería <span>sentirse normal.</span></h1><p class="hero-copy">Diseñamos sitios totalmente personalizados con UI/UX de alto nivel, e-commerce, panel administrativo, seguridad reforzada y experiencias interactivas que se sienten como una app premium.</p><div class="hero-actions"><a class="primary-cta" href="#planes">Ver planes <span>→</span></a><a class="secondary-cta" href="#laboratorio">Probar la experiencia <span>↓</span></a></div><div class="price-inline"><strong>Desde $350</strong><small>USD · desarrollo profesional<br>dominio + correo empresarial el primer año</small></div><div class="included-mini"><span>UI / UX</span><span>E-commerce</span><span>Responsive</span><span>Dominio</span><span>Correo empresarial</span><span>Panel Admin</span><span>Seguridad reforzada</span></div></div><div class="hero-interface" id="heroInterface"><div class="interface-top"><div class="traffic"><i></i><i></i><i></i></div><span>EVOLUTION / LIVE EXPERIENCE</span><span>01</span></div><div class="interface-stage"><div class="floating-window code-window"><span style="color:#6c6c73;font:600 .58rem ui-monospace;letter-spacing:.12em">INTERACTION_ENGINE.JS</span><div class="code-line" style="width:42%"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div></div><div class="floating-window device-window"><div class="phone-mock"><div class="phone-notch"></div><div class="phone-glow"></div><div class="phone-bars"><i></i><i></i><i></i></div></div></div><div class="cursor-dot"></div></div></div></div></section>
+<section class="web-hero" id="inicio"><canvas id="heroCanvas" class="hero-canvas"></canvas><div class="web-hero-inner"><div><div class="hero-kicker">Evolution Web Studio · Interactive Experiences</div><h1>Tu web no debería <span>sentirse normal.</span></h1><p class="hero-copy">Diseñamos sitios totalmente personalizados con UI/UX de alto nivel, e-commerce, panel administrativo, seguridad reforzada y experiencias interactivas que se sienten como una app premium.</p><div class="hero-actions"><a class="primary-cta" href="#planes">Ver planes <span>→</span></a><a class="secondary-cta" href="#laboratorio">Probar la experiencia <span>↓</span></a></div><div class="price-inline"><strong id="heroWebPrice" data-usd-price="350">Desde $350</strong><small id="heroWebPriceNote">USD · desarrollo profesional<br>dominio + correo empresarial el primer año</small></div><div class="included-mini"><span>UI / UX</span><span>E-commerce</span><span>Responsive</span><span>Dominio</span><span>Correo empresarial</span><span>Panel Admin</span><span>Seguridad reforzada</span></div></div><div class="hero-interface" id="heroInterface"><div class="interface-top"><div class="traffic"><i></i><i></i><i></i></div><span>EVOLUTION / LIVE EXPERIENCE</span><span>01</span></div><div class="interface-stage"><div class="floating-window code-window"><span style="color:#6c6c73;font:600 .58rem ui-monospace;letter-spacing:.12em">INTERACTION_ENGINE.JS</span><div class="code-line" style="width:42%"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div></div><div class="floating-window device-window"><div class="phone-mock"><div class="phone-notch"></div><div class="phone-glow"></div><div class="phone-bars"><i></i><i></i><i></i></div></div></div><div class="cursor-dot"></div></div></div></div></section>
 
 <section class="section interactive-section" id="laboratorio"><div class="section-inner"><div class="section-head reveal"><div><span class="eyebrow">E-commerce UI/UX Lab · 01</span><h2>Una tienda que se siente como una app premium.</h2></div><p>Prueba la experiencia: cambia entre vista de escritorio y teléfono, modifica el estilo visual, agrega productos al carrito y simula un checkout. Todo funciona en vivo sin recargar la página.</p></div><div class="commerce-lab reveal"><div class="store-demo" id="storeDemo"><div class="store-top"><div class="store-brand">NØVA STORE</div><div class="store-nav"><span>New</span><span>Objects</span><span>Studio</span></div><div class="store-actions"><div class="device-switch"><button class="device-btn active" type="button" data-device="desktop">PC</button><button class="device-btn" type="button" data-device="mobile">Phone</button></div><div class="cart-chip">Cart <b id="cartCount">0</b></div></div></div><div class="store-viewport" id="storeViewport"><div class="store-hero-row"><h3>Objects for<br>modern spaces.</h3><p>Una demo de catálogo, UX responsive, carrito y microinteracciones programadas a la medida.</p></div><div class="catalog-grid"><article class="product-card-ui" style="--p1:#d8d0c5;--p2:#48443f"><div class="product-visual"></div><div class="product-info"><div class="product-meta"><span>Object 01</span><span>New</span></div><h4>Halo Speaker</h4><div class="product-price"><strong>$129</strong><button class="add-cart" type="button" data-name="Halo Speaker" data-price="129">Agregar +</button></div></div></article><article class="product-card-ui" style="--p1:#6ae3ff;--p2:#11233a"><div class="product-visual"></div><div class="product-info"><div class="product-meta"><span>Object 02</span><span>Limited</span></div><h4>Arc Light</h4><div class="product-price"><strong>$89</strong><button class="add-cart" type="button" data-name="Arc Light" data-price="89">Agregar +</button></div></div></article><article class="product-card-ui" style="--p1:#b79cff;--p2:#24183f"><div class="product-visual"></div><div class="product-info"><div class="product-meta"><span>Object 03</span><span>Studio</span></div><h4>Mono Dock</h4><div class="product-price"><strong>$74</strong><button class="add-cart" type="button" data-name="Mono Dock" data-price="74">Agregar +</button></div></div></article></div></div></div><aside class="commerce-controls"><span class="control-kicker">Live Commerce Controls</span><h3>Personaliza la experiencia.</h3><p>Así podemos diseñar una tienda alrededor de tu marca, tus productos y tu forma de vender.</p><div class="control-block"><div class="control-label"><span>Dirección UI/UX</span><strong id="uxLabel">Premium</strong></div><div class="ux-grid"><button class="ux-btn active" type="button" data-ux="premium">Premium</button><button class="ux-btn" type="button" data-ux="minimal">Minimal</button><button class="ux-btn" type="button" data-ux="luxury">Luxury</button></div></div><div class="control-block"><div class="control-label"><span>Acento de marca</span><strong id="storeAccentLabel">Cyan</strong></div><div class="swatch-row"><button class="swatch-btn active" type="button" data-store-accent="#70e7ff" data-name="Cyan" style="--sw:#70e7ff"></button><button class="swatch-btn" type="button" data-store-accent="#d4b895" data-name="Arena" style="--sw:#d4b895"></button><button class="swatch-btn" type="button" data-store-accent="#ae8cff" data-name="Violeta" style="--sw:#ae8cff"></button><button class="swatch-btn" type="button" data-store-accent="#67f0a0" data-name="Verde" style="--sw:#67f0a0"></button></div></div><div class="control-block"><div class="control-label"><span>Carrito en vivo</span><strong id="cartItemsLabel">0 items</strong></div><div class="cart-panel" id="cartPanel"><div class="cart-line"><span>Subtotal</span><strong id="cartSubtotal">$0</strong></div><div class="cart-line"><span>Envío demo</span><strong>Gratis</strong></div><div class="cart-total"><span>Total</span><strong id="cartTotal">$0</strong></div><button class="checkout-demo" id="checkoutDemo" type="button">Simular checkout →</button></div></div><div class="commerce-note">Podemos integrar catálogo, pagos, inventario, cupones, cuentas de cliente, seguimiento de pedidos, facturación e integraciones según el alcance del proyecto.</div></aside></div></div></section>
 <section class="section motion-section"><div class="section-inner"><div class="section-head reveal"><div><span class="eyebrow">Motion Lab · 02</span><h2>Movimiento que se siente diseñado, no decorado.</h2></div><p>Microinteracciones, física, profundidad, parallax y animaciones generativas pueden trabajar juntas sin convertir tu sitio en una presentación pesada.</p></div><div class="motion-grid"><article class="motion-card tilt reveal"><span class="num">01 / ORBITAL UI</span><h3>Motion systems</h3><p>Elementos que se mueven con jerarquía, ritmo y profundidad alrededor del contenido.</p><div class="orbit-system"><i></i></div></article><article class="motion-card tilt reveal"><span class="num">02 / MORPHING</span><h3>Formas vivas</h3><p>Geometría fluida que transforma interfaces estáticas en experiencias memorables.</p><div class="morph-blob"></div></article><article class="motion-card reveal" id="magneticCard"><span class="num">03 / MAGNETIC</span><h3>Interacción magnética</h3><p>Mueve el cursor dentro de la tarjeta. El botón responde como si tuviera masa.</p><div class="magnetic-demo"><div class="magnetic-btn" id="magneticBtn">ACÉRCATE</div></div></article></div></div></section>
@@ -604,7 +627,7 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
         <span class="price-card-kicker">01 · Presencia digital</span>
         <h3>Landing Page</h3>
         <p class="price-card-copy">Ideal para campañas, portafolios, profesionales, lanzamientos o una oferta principal.</p>
-        <div class="price-big"><strong>$350</strong><span>USD</span></div>
+        <div class="price-big"><strong data-usd-price="350">$350</strong><span data-price-currency>USD</span></div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li>Página única diseñada a la medida</li>
@@ -622,7 +645,7 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
         <span class="price-card-kicker">02 · Experiencia completa</span>
         <h3>Sitio Web Pro</h3>
         <p class="price-card-copy">Para empresas y marcas que necesitan una presencia sólida, interactiva y totalmente personalizada.</p>
-        <div class="price-big"><strong>$500</strong><span>USD</span></div>
+        <div class="price-big"><strong data-usd-price="500">$500</strong><span data-price-currency>USD</span></div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li>Hasta 5 páginas internas</li>
@@ -639,7 +662,7 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
         <span class="price-card-kicker">03 · Comercio digital</span>
         <h3>E-commerce</h3>
         <p class="price-card-copy">Para negocios que quieren vender online con catálogo, carrito, pagos y control de operaciones.</p>
-        <div class="price-big"><strong>$850</strong><span>USD</span></div>
+        <div class="price-big"><strong data-usd-price="850">$850</strong><span data-price-currency>USD</span></div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li>Catálogo inicial de hasta 50 productos</li>
@@ -653,14 +676,14 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
         <div class="plan-login-note"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Brief exclusivo para usuarios registrados</div>
       </article>
     </div>
-    <div class="plans-renewal reveal"><strong>Renovación anual posterior: $150 USD.</strong> Mantiene dominio, hosting y correo empresarial activos. Integraciones, licencias, comisiones de pasarelas o ampliaciones especiales se cotizan según el proyecto.</div>
+    <div class="plans-renewal reveal"><strong id="webRenewalPrice" data-usd-price="150">Renovación anual posterior: $150 USD.</strong> Mantiene dominio, hosting y correo empresarial activos. Integraciones, licencias, comisiones de pasarelas o ampliaciones especiales se cotizan según el proyecto.</div>
   </div>
 </section><section class="section"><div class="section-inner"><div class="section-head reveal"><div><span class="eyebrow">Proceso simple</span><h2>De la idea al sitio publicado.</h2></div><p>Inicia sesión, elige tu plan y completa el brief. La solicitud queda asociada a tu cuenta, llega a administración y después podrás seguir su avance desde Mis Proyectos.</p></div><div class="process reveal"><div class="step"><span class="step-num">01</span><h3>Brief interactivo</h3><p>Nos cuentas qué vendes, qué necesitas y qué estilo representa mejor tu marca.</p></div><div class="step"><span class="step-num">02</span><h3>Dirección visual</h3><p>Definimos estructura, lenguaje, jerarquía, movimiento y experiencia de navegación.</p></div><div class="step"><span class="step-num">03</span><h3>Desarrollo</h3><p>Programamos la experiencia responsive, integraciones, formularios y animaciones.</p></div><div class="step"><span class="step-num">04</span><h3>Lanzamiento</h3><p>Publicamos con dominio, correo empresarial y configuración esencial incluida.</p></div></div></div></section>
 </main>
 <footer><div class="footer-inner"><div><img src="img/logo.png" alt="Evolution Design"><div class="footer-copy">Arquitectura, identidad visual y experiencias digitales desarrolladas con una misma dirección de diseño.</div></div><div class="footer-links"><a href="index.html">Home</a><a href="arquitectura.html">Arquitectura</a><a href="diseno-grafico.html">Diseño Gráfico</a><a href="diseno-web.html">Diseño Web</a><a href="https://dingloft.com" target="_blank" rel="noopener">Software ↗</a></div></div></footer>
 
 <div class="survey-overlay" id="surveyOverlay" aria-hidden="true"><form class="survey-card" id="webSurvey"><input class="honeypot" type="text" id="companyWebsiteTrap" tabindex="-1" autocomplete="off"><div class="survey-top"><span class="survey-brand" id="surveyBrand">Evolution Web · Project Brief</span><button type="button" class="survey-close" id="closeSurvey">×</button></div><div class="survey-progress"><span id="surveyProgress"></span></div><div class="survey-body"><div class="plan-selected-strip" id="selectedPlanStrip"><span>Plan seleccionado</span><strong id="selectedPlanText">—</strong></div>
-<section class="survey-step active" data-step="1"><span class="survey-kicker">01 · Tu negocio</span><h2>Cuéntanos qué vamos a construir.</h2><p>Con esto entendemos el contexto antes de hablar de colores o animaciones.</p><div class="survey-grid"><div class="survey-field"><label>Nombre *</label><input class="survey-input" id="leadName" maxlength="120" required placeholder="Tu nombre"></div><div class="survey-field"><label>Negocio / marca *</label><input class="survey-input" id="businessName" maxlength="140" required placeholder="Ej. Estudio Nova"></div><div class="survey-field"><label>Sector *</label><select class="survey-select" id="businessType" required><option value="">Selecciona</option><option>Servicios profesionales</option><option>Arquitectura / construcción</option><option>Restaurante / comida</option><option>Tienda / ecommerce</option><option>Hotel / turismo</option><option>Marca personal</option><option>Educación</option><option>Tecnología</option><option>Otro</option></select></div><div class="survey-field"><label>¿Ya tienes sitio?</label><select class="survey-select" id="existingSite"><option value="no">No</option><option value="yes">Sí, queremos rediseñarlo</option></select></div></div><div class="survey-actions"><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
+<section class="survey-step active" data-step="1"><span class="survey-kicker">01 · Tu negocio</span><h2>Cuéntanos qué vamos a construir.</h2><p>Con esto entendemos el contexto antes de hablar de colores o animaciones.</p><div class="survey-grid"><div class="survey-field"><label>Nombre *</label><input class="survey-input" id="leadName" maxlength="120" required placeholder="Tu nombre"></div><div class="survey-field"><label>Negocio / marca *</label><input class="survey-input" id="businessName" maxlength="140" required placeholder="Ej. Estudio Nova"></div><div class="survey-field"><label>Sector *</label><select class="survey-select" id="businessType" required><option value="">Selecciona</option><option>Servicios profesionales</option><option>Arquitectura / construcción</option><option>Restaurante / comida</option><option>Tienda / ecommerce</option><option>Hotel / turismo</option><option>Marca personal</option><option>Educación</option><option>Tecnología</option><option>Otro</option></select></div><div class="survey-field"><label>¿Ya tienes sitio?</label><select class="survey-select" id="existingSite"><option value="no">No</option><option value="yes">Sí, queremos rediseñarlo</option></select></div><div class="survey-field full"><label>Logo de tu empresa <span style="text-transform:none;color:#5f5f66">(opcional)</span></label><label class="logo-upload-zone" id="brandLogoZone" for="brandLogoFile"><input id="brandLogoFile" type="file" accept="image/png,image/jpeg,image/webp" hidden><span class="logo-upload-preview" id="brandLogoPreview">SIN<br>LOGO</span><span class="logo-upload-copy"><strong>Sube tu logo</strong><small>PNG, JPG o WEBP. Lo optimizamos para enviarlo con tu brief sin perder la versión original que luego podrás subir en Mis Proyectos.</small><span class="logo-upload-meta" id="brandLogoMeta">Máximo 5 MB</span></span><span class="logo-upload-action">Elegir archivo</span></label></div></div><div class="survey-actions"><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
 <section class="survey-step" data-step="2"><span class="survey-kicker">02 · Objetivo</span><h2>¿Qué debe lograr tu página?</h2><p>Puedes marcar varias opciones.</p><div class="choice-grid" data-required-group="goals"><div class="choice"><input type="checkbox" id="goal1" value="Conseguir clientes" name="goals"><label for="goal1"><strong>Conseguir clientes</strong><small>Leads, WhatsApp y formularios.</small></label></div><div class="choice"><input type="checkbox" id="goal2" value="Vender online" name="goals"><label for="goal2"><strong>Vender online</strong><small>Catálogo, ecommerce o pagos.</small></label></div><div class="choice"><input type="checkbox" id="goal3" value="Mostrar portafolio" name="goals"><label for="goal3"><strong>Portafolio</strong><small>Presentar trabajos y proyectos.</small></label></div><div class="choice"><input type="checkbox" id="goal4" value="Reservas / citas" name="goals"><label for="goal4"><strong>Reservas</strong><small>Citas, agenda o disponibilidad.</small></label></div><div class="choice"><input type="checkbox" id="goal5" value="Posicionar marca" name="goals"><label for="goal5"><strong>Posicionar marca</strong><small>Presencia premium y credibilidad.</small></label></div><div class="choice"><input type="checkbox" id="goal6" value="Automatizar procesos" name="goals"><label for="goal6"><strong>Automatizar</strong><small>Flujos, paneles o integraciones.</small></label></div></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
 <section class="survey-step" data-step="3"><span class="survey-kicker">03 · Funciones</span><h2>¿Qué quieres que pueda hacer tu sitio?</h2><p>Selecciona las capacidades que te interesan. Podemos combinar varias.</p><div class="choice-grid"><div class="choice"><input type="checkbox" id="f1" value="E-commerce / carrito / pagos" name="features"><label for="f1"><strong>E-commerce</strong><small>Catálogo, carrito, checkout y pagos.</small></label></div><div class="choice"><input type="checkbox" id="f2" value="Panel administrativo" name="features"><label for="f2"><strong>Panel Admin</strong><small>Control de productos, contenido, clientes o pedidos.</small></label></div><div class="choice"><input type="checkbox" id="f3" value="Animaciones avanzadas" name="features"><label for="f3"><strong>Animaciones</strong><small>Motion, parallax y microinteracciones.</small></label></div><div class="choice"><input type="checkbox" id="f4" value="Reservas / agenda" name="features"><label for="f4"><strong>Reservas</strong><small>Agenda, citas o solicitudes.</small></label></div><div class="choice"><input type="checkbox" id="f5" value="Login / membresías / área privada" name="features"><label for="f5"><strong>Login / membresías</strong><small>Área privada, roles o suscripciones.</small></label></div><div class="choice"><input type="checkbox" id="f6" value="Inventario / pedidos / seguimiento" name="features"><label for="f6"><strong>Inventario</strong><small>Stock, pedidos y seguimiento.</small></label></div><div class="choice"><input type="checkbox" id="f7" value="API / automatización" name="features"><label for="f7"><strong>API / Automatización</strong><small>Integraciones con servicios externos.</small></label></div><div class="choice"><input type="checkbox" id="f8" value="WhatsApp / contacto" name="features"><label for="f8"><strong>WhatsApp</strong><small>Contacto directo y CTA inteligentes.</small></label></div></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
 <section class="survey-step" data-step="4"><span class="survey-kicker">04 · Dirección visual</span><h2>¿Cómo quieres que se sienta?</h2><p>Elige una dirección. Esto no limita el diseño; nos da un punto de partida.</p><div class="choice-grid" data-required-group="style"><div class="choice"><input type="radio" id="s1" value="Minimalista premium" name="style"><label for="s1"><strong>Minimalista premium</strong><small>Editorial, limpio y sofisticado.</small></label></div><div class="choice"><input type="radio" id="s2" value="Oscuro tecnológico" name="style"><label for="s2"><strong>Tech / dark</strong><small>Contraste, luz y profundidad.</small></label></div><div class="choice"><input type="radio" id="s3" value="Elegante corporativo" name="style"><label for="s3"><strong>Corporativo</strong><small>Seriedad y confianza profesional.</small></label></div><div class="choice"><input type="radio" id="s4" value="Colorido creativo" name="style"><label for="s4"><strong>Creativo</strong><small>Identidad fuerte y expresiva.</small></label></div><div class="choice"><input type="radio" id="s5" value="Lujo / editorial" name="style"><label for="s5"><strong>Luxury editorial</strong><small>Imagen, tipografía y aire.</small></label></div><div class="choice"><input type="radio" id="s6" value="A criterio de Evolution Design" name="style"><label for="s6"><strong>Ustedes decidan</strong><small>Dirección creativa completa.</small></label></div></div><div class="survey-actions"><button type="button" class="survey-back" data-back>← Atrás</button><button type="button" class="survey-next" data-next>Continuar →</button></div></section>
@@ -678,20 +701,20 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
       <div class="checkout-summary-list">
         <div class="checkout-summary-row"><span>Servicio</span><strong id="checkoutServiceLabel">Diseño Web</strong></div>
         <div class="checkout-summary-row"><span>Cliente</span><strong id="checkoutClientLabel">—</strong></div>
-        <div class="checkout-summary-row"><span>Entrega</span><strong>Gestionada desde Mis Proyectos</strong></div>
+        <div class="checkout-summary-row"><span>Entrega estimada</span><strong>1 semana · lunes a viernes</strong></div>
       </div>
       <div class="checkout-request-id" id="checkoutRequestId">Solicitud registrada</div>
     </div>
     <div class="web-checkout-pay">
       <h3>Elige cómo pagar</h3>
-      <p>PayPal confirma el proyecto al instante. Binance Pay y transferencia bancaria requieren comprobante y validación de administración.</p>
+      <p>PayPal y tarjeta confirman el proyecto al instante. Binance Pay y transferencia bancaria requieren comprobante y validación de administración.</p>
       <div class="web-payment-region" id="webPaymentRegion"><i></i><span>Detectando región y métodos disponibles…</span></div>
       <div class="web-payment-selector" id="webPaymentMethods">
         <div class="web-payment-detecting">Preparando métodos de pago…</div>
       </div>
       <div class="checkout-payment-status" id="checkoutPaymentStatus"></div>
-      <div class="checkout-security"><span>SSL / HTTPS</span><span>PayPal + Binance</span><span>Comprobantes protegidos</span></div>
-      <div class="checkout-lock-note">Transferencia bancaria se habilita únicamente cuando la IP se detecta en Guatemala.</div>
+      <div class="checkout-security"><span>SSL / HTTPS</span><span>PayPal + Tarjeta</span><span>Transferencia + Binance Pay</span></div>
+      <div class="checkout-lock-note">Guatemala ve precios en quetzales y transferencia local; el resto del mundo mantiene precios en dólares. Binance Pay está disponible como pago manual verificado.</div>
     </div>
   </div>
 </section>
@@ -779,22 +802,13 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";import{getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";import{getFirestore,collection,addDoc,serverTimestamp,doc,setDoc}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),googleProvider=new GoogleAuthProvider();let currentUser=null,loginMode=true;
-const R2_ACCOUNT_ID = "d94e264f8a09f87496e21e72bd3731aa";
-    const R2_ACCESS_KEY_ID = "ea76378ab014694c3f387477de604782";
-    const R2_SECRET_ACCESS_KEY = "cf9a573453b35a875f4adb07c88374f942047b9ae9e358c3a3c11a629a0af4f6";
-    const R2_BUCKET_NAME = "evolution-design-files";
-    let paymentR2 = null;
-    if (window.AWS) {
-      window.AWS.config.update({accessKeyId:R2_ACCESS_KEY_ID,secretAccessKey:R2_SECRET_ACCESS_KEY,region:'auto',signatureVersion:'v4'});
-      paymentR2 = new window.AWS.S3({endpoint:new window.AWS.Endpoint(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`)});
-    }
 
-    
+const EVOLUTION_WORKER_URL = "https://evolution-design-backend.evolutiongt01.workers.dev".replace(/\/$/,"");
 const BINANCE_PAYMENT = {
-      alias: 'Evolution Desing',
-      asset: 'USDT',
-      qrImage: 'img/binance-pay.jpeg'
-    };
+  alias: 'Evolution Desing',
+  asset: 'USDT',
+  qrImage: 'img/binance-pay.jpeg'
+};
 
     // CUENTAS BANCARIAS — únicamente visibles cuando la IP se detecta en Guatemala.
     const BANK_TRANSFER_ACCOUNTS = {
@@ -893,26 +907,75 @@ window.webPaymentGeoReady=(async()=>{
     }
   }catch(e){console.info('Geo/tasa de pago no disponible:',e)}
   window.evolutionGeo=window.webPaymentGeo;
+  refreshLocalizedPrices();
   return window.webPaymentGeo;
 })();
 
-async function uploadManualReceipt(user, projectId, file, onProgress) {
-      if(!paymentR2) throw new Error('El servidor de comprobantes R2 no está disponible.');
-      if(!file) throw new Error('Adjunta el comprobante del pago.');
-      if(file.size > 12*1024*1024) throw new Error('El comprobante no puede superar 12 MB.');
-      const allowed = /^image\//i.test(file.type) || file.type === 'application/pdf';
-      if(!allowed) throw new Error('El comprobante debe ser imagen o PDF.');
-
-      const fileId=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,'');
-      const safeName=String(file.name||'comprobante').replace(/[\\/]+/g,'_').slice(-160);
-      const path=`projects/${user.uid}/${projectId}/payment/${fileId}/${safeName}`;
-      const request=paymentR2.putObject({Bucket:R2_BUCKET_NAME,Key:path,Body:file,ContentType:file.type||'application/octet-stream'});
-      request.on('httpUploadProgress',p=>{if(p.total>0&&typeof onProgress==='function')onProgress(Math.round(p.loaded/p.total*100));});
-      await request.promise();
-      return {storagePath:path,name:file.name||safeName,size:file.size,contentType:file.type||'application/octet-stream'};
+function isGuatemalaVisitor(){return String(window.webPaymentGeo?.countryCode||'').toUpperCase()==='GT'}
+function gtqFromUsd(usd){return Number(usd||0)*Number(window.webGtqRate||7.65)}
+function formatGtq(value){return `Q ${Number(value||0).toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2})}`}
+function localPriceText(usd){return isGuatemalaVisitor()?`${formatGtq(gtqFromUsd(usd))} GTQ`:`$${Number(usd).toLocaleString('en-US',{maximumFractionDigits:2})} USD`}
+function refreshLocalizedPrices(){
+  document.querySelectorAll('.price-big strong[data-usd-price]').forEach(el=>{
+    const usd=Number(el.dataset.usdPrice||0),currency=el.parentElement?.querySelector('[data-price-currency]');
+    if(isGuatemalaVisitor()){
+      el.textContent=formatGtq(gtqFromUsd(usd));
+      if(currency)currency.textContent='GTQ · aprox';
+    }else{
+      el.textContent=`$${usd}`;
+      if(currency)currency.textContent='USD';
     }
+  });
+  const hero=document.getElementById('heroWebPrice'),heroNote=document.getElementById('heroWebPriceNote');
+  if(hero){hero.textContent=isGuatemalaVisitor()?`Desde ${formatGtq(gtqFromUsd(350))}`:'Desde $350'}
+  if(heroNote){heroNote.innerHTML=isGuatemalaVisitor()?`GTQ aprox · equivalente a $350 USD<br>dominio + correo empresarial el primer año`:`USD · desarrollo profesional<br>dominio + correo empresarial el primer año`}
+  const renewal=document.getElementById('webRenewalPrice');
+  if(renewal)renewal.textContent=isGuatemalaVisitor()?`Renovación anual posterior: ${formatGtq(gtqFromUsd(150))} GTQ aprox. ($150 USD).`:'Renovación anual posterior: $150 USD.';
+  try{if(selectedPlan)applySelectedPlan(selectedPlan.id)}catch(_){}
+  try{if(document.getElementById('checkoutPlanPrice'))fillCheckoutSummary()}catch(_){}
+}
 
-    
+async function workerRequest(path,payload){
+  if(!currentUser)throw new Error('Tu sesión expiró. Inicia sesión nuevamente.');
+  const token=await currentUser.getIdToken();
+  const response=await fetch(`${EVOLUTION_WORKER_URL}${path}`,{method:'POST',headers:{'content-type':'application/json','authorization':`Bearer ${token}`},body:JSON.stringify(payload||{})});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||data?.ok===false)throw new Error(data?.error||'El servidor de Evolution Design no pudo completar la solicitud.');
+  return data;
+}
+
+function readFileAsDataURL(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result||''));r.onerror=()=>reject(new Error('No se pudo leer el archivo.'));r.readAsDataURL(file)})}
+function imageFromFile(file){return new Promise((resolve,reject)=>{const u=URL.createObjectURL(file),img=new Image();img.onload=()=>{URL.revokeObjectURL(u);resolve(img)};img.onerror=()=>{URL.revokeObjectURL(u);reject(new Error('La imagen no es válida.'))};img.src=u})}
+async function compressImageToDataUrl(file,maxSide=1100,quality=.78,maxChars=560000){
+  const img=await imageFromFile(file);let scale=Math.min(1,maxSide/Math.max(img.naturalWidth||1,img.naturalHeight||1));
+  for(let tries=0;tries<5;tries++){
+    const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.naturalWidth*scale));c.height=Math.max(1,Math.round(img.naturalHeight*scale));
+    const x=c.getContext('2d',{alpha:true});x.drawImage(img,0,0,c.width,c.height);
+    const data=c.toDataURL('image/webp',Math.max(.48,quality-tries*.08));
+    if(data.length<=maxChars)return data;scale*=.78;
+  }
+  throw new Error('La imagen sigue siendo demasiado pesada. Usa una captura o imagen más ligera.');
+}
+
+let preparedBrandLogo=null,brandLogoPromise=Promise.resolve(null);
+async function prepareBrandLogo(file){
+  if(!file)return null;
+  if(file.size>5*1024*1024)throw new Error('El logo no puede superar 5 MB.');
+  if(!['image/png','image/jpeg','image/webp'].includes(file.type))throw new Error('El logo debe ser PNG, JPG o WEBP.');
+  const dataUrl=await compressImageToDataUrl(file,760,.84,500000);
+  return {dataUrl,name:String(file.name||'logo').slice(-140),type:'image/webp',originalType:file.type,size:file.size};
+}
+async function prepareManualReceipt(file){
+  if(!file)throw new Error('Adjunta el comprobante del pago.');
+  if(file.size>8*1024*1024)throw new Error('El comprobante no puede superar 8 MB.');
+  let dataUrl='';
+  if(/^image\//i.test(file.type))dataUrl=await compressImageToDataUrl(file,1280,.74,570000);
+  else if(file.type==='application/pdf'){
+    if(file.size>380*1024)throw new Error('Para proteger el envío, el PDF debe pesar menos de 380 KB. También puedes subir una captura JPG/PNG.');
+    dataUrl=await readFileAsDataURL(file);
+  } else throw new Error('El comprobante debe ser imagen o PDF.');
+  return {dataUrl,name:String(file.name||'comprobante').slice(-160),type:file.type||'application/octet-stream',size:file.size};
+}
 
 function bankAccountConfigured(account){return Boolean(account?.accountHolder&&account?.accountNumber&&account?.accountType)}
 function manualPaymentProjectId(method){
@@ -939,7 +1002,7 @@ function setAuthMode(mode='login'){
   if(authError){authError.style.display='none';authError.textContent=''}
 }
 window.abrirAuthModal=()=>{
-  if($('authPlanContext'))$('authPlanContext').textContent=`${selectedPlan?.name||'Sitio Web Pro'} · $${selectedPlan?.price||500} USD`;
+  if($('authPlanContext'))$('authPlanContext').textContent=`${selectedPlan?.name||'Sitio Web Pro'} · ${localPriceText(selectedPlan?.price||500)}`;
   modal.classList.add('show');modal.setAttribute('aria-hidden','false');
 };
 function closeAuth(){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');if(authError){authError.style.display='none';authError.textContent=''}}
@@ -969,6 +1032,19 @@ $('authEmailForm')?.addEventListener('submit',async e=>{
 setAuthMode('login');
 onAuthStateChanged(auth,async user=>{currentUser=user||null;const desk=$('auth-desktop-wrapper'),mob=$('auth-mobile-wrapper'),profile=$('floating-profile-desktop'),admin=$('admin-badge-container-desktop'),p1=$('linkProyectosDesktop'),p2=$('linkProyectosMenuDesktop'),p3=$('linkProyectosMobile');if(!user){p1?.classList.add('hidden');p2?.classList.add('hidden');p3?.classList.add('hidden');if(desk)desk.innerHTML='<a href="#" onclick="abrirAuthModal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Login</a>';if(mob)mob.innerHTML='<a href="#" class="icon-btn" onclick="abrirAuthModal();return false" aria-label="Login"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></a>';if(profile)profile.innerHTML='';if(admin)admin.innerHTML='';return}p1?.classList.remove('hidden');p2?.classList.remove('hidden');p3?.classList.remove('hidden');const photo=user.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||'U')}&background=d4b895&color=111`,isAdmin=['evolutiongt01@gmail.com','tepaz2025@gmail.com'].includes(String(user.email||'').toLowerCase());if(desk)desk.innerHTML='<a href="#" onclick="cerrarSesionGlobal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Salir</a>';if(profile)profile.innerHTML=`<a href="perfil.html" aria-label="Mi perfil"><img class="profile-pic-liquid" src="${photo}" alt="Perfil"></a>`;if(admin)admin.innerHTML=isAdmin?'<a href="admin.html" class="admin-badge-btn">Panel Admin</a>':'';if(mob)mob.innerHTML=`<div class="mobile-auth-actions"><a href="perfil.html" class="mobile-profile-link"><img src="${photo}" alt="Perfil"></a>${isAdmin?'<a href="admin.html" class="mobile-auth-action" aria-label="Panel Admin">A</a>':''}<a href="#" onclick="cerrarSesionGlobal();return false" class="mobile-auth-action" aria-label="Cerrar sesión">↗</a></div>`;try{await setDoc(doc(db,'users',user.uid),{uid:user.uid,email:user.email||'',displayName:user.displayName||'',photoURL:user.photoURL||'',lastSeenAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true})}catch(e){console.info('Perfil no sincronizado',e?.message||e)}if(!$('leadEmail').value&&user.email)$('leadEmail').value=user.email;if(!$('leadName').value&&user.displayName)$('leadName').value=user.displayName;window.dispatchEvent(new CustomEvent('evolution-auth-ready'))});
 
+
+
+const brandLogoInput=$('brandLogoFile'),brandLogoZone=$('brandLogoZone'),brandLogoPreview=$('brandLogoPreview'),brandLogoMeta=$('brandLogoMeta');
+brandLogoInput?.addEventListener('change',()=>{
+  const file=brandLogoInput.files?.[0];
+  if(!file){preparedBrandLogo=null;brandLogoMeta.textContent='Máximo 5 MB';brandLogoPreview.innerHTML='SIN<br>LOGO';return}
+  const localUrl=URL.createObjectURL(file);brandLogoPreview.innerHTML=`<img src="${localUrl}" alt="Vista previa del logo">`;brandLogoMeta.textContent='Optimizando logo…';
+  brandLogoPromise=prepareBrandLogo(file).then(result=>{preparedBrandLogo=result;brandLogoMeta.textContent=`${result.name} · listo ✓`;return result}).catch(err=>{preparedBrandLogo=null;brandLogoMeta.textContent=err.message;brandLogoInput.value='';return null});
+});
+['dragenter','dragover'].forEach(evt=>brandLogoZone?.addEventListener(evt,e=>{e.preventDefault();brandLogoZone.classList.add('drag')}));
+['dragleave','drop'].forEach(evt=>brandLogoZone?.addEventListener(evt,e=>{e.preventDefault();brandLogoZone.classList.remove('drag')}));
+brandLogoZone?.addEventListener('drop',e=>{const f=e.dataTransfer?.files?.[0];if(!f)return;const dt=new DataTransfer();dt.items.add(f);brandLogoInput.files=dt.files;brandLogoInput.dispatchEvent(new Event('change'))});
+
 (function(){const preview=document.getElementById('builderPreview'),browser=document.getElementById('previewBrowser'),presetLabel=document.getElementById('builderPresetLabel'),accentLabel=document.getElementById('builderAccentLabel'),title=document.getElementById('previewTitle'),copy=document.getElementById('previewCopy'),kicker=document.getElementById('previewKicker');if(!preview||!browser)return;const presets={premium:{label:'Premium',k:'EXPERIENCIA PREMIUM',t:'Tu marca puede sentirse así de bien.',c:'Jerarquía, profundidad y detalles finos para una presencia digital de alto nivel.',rounded:true},minimal:{label:'Minimal',k:'CLARIDAD PRIMERO',t:'Menos ruido. Más intención.',c:'Un sistema limpio donde tipografía, espacio y contenido llevan toda la atención.',rounded:false},tech:{label:'Tech',k:'SYSTEM / ONLINE',t:'Diseño con precisión digital.',c:'Interfaces dinámicas, datos, motion y una estética tecnológica con personalidad.',rounded:true}};document.querySelectorAll('[data-preset]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-preset]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const p=presets[btn.dataset.preset]||presets.premium;presetLabel.textContent=p.label;kicker.textContent=p.k;title.textContent=p.t;copy.textContent=p.c;browser.classList.toggle('rounded',p.rounded)}));document.querySelectorAll('[data-accent]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-accent]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');preview.style.setProperty('--builder-accent',btn.dataset.accent);browser.style.setProperty('--builder-accent',btn.dataset.accent);accentLabel.textContent=btn.dataset.name||'Custom'}));const glass=document.getElementById('toggleBuilderGlass'),motion=document.getElementById('toggleBuilderMotion');glass?.addEventListener('click',()=>{const on=browser.classList.toggle('glass');glass.classList.toggle('active',on);glass.textContent=`Glass ${on?'ON':'OFF'}`});motion?.addEventListener('click',()=>{const on=browser.classList.toggle('motion');motion.classList.toggle('active',on);motion.textContent=`Motion ${on?'ON':'OFF'}`})})();
 
 const overlay=$('surveyOverlay'),form=$('webSurvey'),progress=$('surveyProgress'),status=$('surveyStatus');
@@ -991,9 +1067,11 @@ let step=1,selectedPlan=PLAN_CONFIG.pro,pendingPlanAfterLogin=null,currentWebReq
 function applySelectedPlan(key){
   selectedPlan=PLAN_CONFIG[key]||PLAN_CONFIG.pro;
   const strip=$('selectedPlanStrip'),text=$('selectedPlanText'),brand=$('surveyBrand');
+  const shown=localPriceText(selectedPlan.price);
   if(strip)strip.classList.add('show');
-  if(text)text.textContent=`${selectedPlan.name} · $${selectedPlan.price} USD`;
-  if(brand)brand.textContent=`Evolution Web · ${selectedPlan.name} · $${selectedPlan.price} USD`;
+  if(text)text.textContent=`${selectedPlan.name} · ${shown}`;
+  if(brand)brand.textContent=`Evolution Web · ${selectedPlan.name} · ${shown}`;
+  const authContext=$('authPlanContext');if(authContext)authContext.textContent=`${selectedPlan.name} · ${shown}`;
 }
 function renderStep(){
   document.querySelectorAll('.survey-step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===step));
@@ -1079,45 +1157,12 @@ async function createManualWebProject({method,reference,payerName,receipt,bankKe
   if(!currentWebRequestId)throw new Error('No encontramos el brief asociado.');
   const cleanReference=String(reference||'').trim().slice(0,140);
   if(!cleanReference)throw new Error('Ingresa el ID o referencia de la transacción.');
-  const brief=buildWebBrief(),projectConfig=buildWebProjectConfig(),geo=window.webPaymentGeo||window.evolutionGeo||{};
-  const isBank=method==='bank_transfer';
-  if(isBank&&String(geo.countryCode||'').toUpperCase()!=='GT')throw new Error('Transferencia bancaria solo está disponible para IP detectada en Guatemala.');
-  const projectId=manualPaymentProjectId(method),receiptInfo=await uploadManualReceipt(currentUser,projectId,receipt);
-  const baseUsd=Number(selectedPlan.price),paymentCurrency=isBank?'GTQ':'USDT';
-  const paymentAmount=isBank?(baseUsd*Number(window.webGtqRate||7.65)):baseUsd;
-  const bank=BANK_TRANSFER_ACCOUNTS[bankKey]||null;
-  const displayOrderId=`#EVO-WM${Date.now().toString().slice(-6)}`;
-  const paymentMethod=isBank?`Transferencia bancaria - ${bank?.bank||'Guatemala'}`:'Binance Pay';
-  const projectData={
-    ownerUid:currentUser.uid,ownerEmail:currentUser.email||brief.email||'',
-    payerName:String(payerName||currentUser.displayName||brief.name||currentUser.email||'Cliente').trim().slice(0,120),
-    payerEmail:currentUser.email||brief.email||'',payerRegion:geo.region||geo.city||'No reportada',
-    payerCountry:geo.country||'No reportado',payerCountryCode:String(geo.countryCode||'').toUpperCase(),
-    transactionId:cleanReference,manualPaymentReference:cleanReference,paymentMethod,
-    paymentProvider:isBank?'bank_transfer':'binance_pay',bankKey:isBank?bankKey:'',bankName:isBank?(bank?.bank||''):'',
-    amount:paymentAmount.toFixed(2),currency:paymentCurrency,baseUsd,expectedAmount:paymentAmount.toFixed(2),
-    expectedCurrency:paymentCurrency,displayOrderId,projectType:'Diseño Web',
-    projectTitle:`Diseño Web · ${selectedPlan.name} · ${brief.businessName||brief.name}`,projectConfig,
-    source:isBank?'diseno-web-bank-manual':'diseno-web-binance-manual',serviceType:'web_design',customOrder:false,
-    webRequestId:currentWebRequestId,webPlanId:selectedPlan.id,webPlanName:selectedPlan.name,webBrief:brief,
-    paymentStatus:'pending_review',paymentReviewStatus:'pending',status:'awaiting_payment',paymentVerifiedByAdmin:false,
-    receiptStoragePath:receiptInfo.storagePath,receiptName:receiptInfo.name,receiptSize:receiptInfo.size,
-    receiptContentType:receiptInfo.contentType,architectName:'Pendiente',professionalRole:'Diseñador Web',
-    clientFileCount:0,deliveryFileCount:0,
-    clientComments:[brief.notes,brief.referenceSites?`Referencias: ${brief.referenceSites}`:''].filter(Boolean).join('\n\n'),
-    deliveryNote:'',
-    lastGeo:{city:geo.city||'',region:geo.region||'',country:geo.country||'',countryCode:geo.countryCode||'',currency:geo.currency||''},
-    createdAt:serverTimestamp(),updatedAt:serverTimestamp(),paymentSubmittedAt:serverTimestamp()
-  };
-  await setDoc(doc(db,'users',currentUser.uid,'projects',projectId),projectData,{merge:true});
-  try{
-    await setDoc(doc(db,'users',currentUser.uid),{
-      uid:currentUser.uid,email:currentUser.email||brief.email||'',displayName:currentUser.displayName||brief.name||'',
-      lastWebProjectId:projectId,lastWebRequestId:currentWebRequestId,lastManualPaymentMethod:paymentMethod,
-      lastManualPaymentAt:serverTimestamp(),updatedAt:serverTimestamp()
-    },{merge:true});
-  }catch(e){console.info('Proyecto manual registrado; perfil no actualizado:',e)}
-  return {projectId,displayOrderId,paymentMethod,paymentAmount,paymentCurrency};
+  const receiptInfo=await prepareManualReceipt(receipt);
+  return workerRequest('/web/manual-payment',{
+    webRequestId:currentWebRequestId,planId:selectedPlan.id,method,reference:cleanReference,
+    payerName:String(payerName||'').trim().slice(0,120),bankKey,
+    receipt:receiptInfo,clientGeo:window.webPaymentGeo||{}
+  });
 }
 
 function renderWebManualPayment(panel,method){
@@ -1126,21 +1171,26 @@ function renderWebManualPayment(panel,method){
   if(isBank&&String(geo.countryCode||'').toUpperCase()!=='GT'){
     panel.innerHTML='<div class="manual-warning">Transferencia bancaria está disponible únicamente para clientes detectados en Guatemala.</div>';return;
   }
-  const amount=isBank?Number(selectedPlan.price)*Number(window.webGtqRate||7.65):Number(selectedPlan.price);
-  const amountText=isBank?`Q ${amount.toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2})}`:`${amount.toFixed(2)} USDT`;
+
+  const usd=Number(selectedPlan.price);
+  const amount=isBank?gtqFromUsd(usd):usd;
+  const amountText=isBank?`${formatGtq(amount)} GTQ`:`${usd.toFixed(2)} USDT`;
   const banks=Object.entries(BANK_TRANSFER_ACCOUNTS);
   const firstConfigured=banks.find(([,b])=>bankAccountConfigured(b))?.[0]||banks[0]?.[0]||'';
+
   panel.innerHTML=`<div class="manual-payment-card" data-manual-method="${method}">
     <div class="manual-payment-head"><strong>${isBank?'Transferencia bancaria':'Binance Pay · verificación manual'}</strong><span class="manual-payment-amount">${amountText}</span></div>
-    <div class="manual-payment-copy">${isBank?'Transfiere exactamente el monto indicado y adjunta el comprobante. El proyecto quedará pendiente hasta que administración confirme el depósito.':'Escanea el QR desde Binance, envía exactamente el monto indicado en USDT y adjunta el comprobante. Administración validará el ingreso antes de iniciar el proyecto.'}</div>
+    <div class="manual-payment-copy">${isBank?'Transfiere exactamente el monto indicado en quetzales y adjunta el comprobante. El proyecto quedará pendiente hasta que administración confirme el depósito.':'Escanea el mismo QR de Binance Pay usado en Arquitectura, envía exactamente el monto indicado en USDT y adjunta el comprobante. Administración validará el ingreso antes de iniciar el proyecto.'}</div>
     ${isBank?`<div class="bank-choice-grid">${banks.map(([key,b])=>`<button type="button" class="bank-choice ${key===firstConfigured?'active':''}" data-bank-key="${key}">${bankLogoMarkup(key)}<span class="bank-choice-copy"><span class="bank-choice-name">${b.bank}</span><span class="bank-choice-type">${b.accountType}</span></span></button>`).join('')}</div><div class="bank-account-details"></div>`:`<img class="binance-qr-img" src="${BINANCE_PAYMENT.qrImage}" alt="QR Binance Pay Evolution Design"><div class="manual-meta"><div class="manual-meta-row"><span>Alias</span><strong>${BINANCE_PAYMENT.alias}</strong></div><div class="manual-meta-row"><span>Activo</span><strong>${BINANCE_PAYMENT.asset}</strong></div><div class="manual-meta-row"><span>Monto exacto</span><strong>${amountText}</strong></div></div>`}
     <div class="manual-field"><label>Nombre de quien realizó el pago</label><input class="manual-input manual-payer-name" value="${String(currentUser?.displayName||buildWebBrief().name||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" placeholder="Nombre del pagador"></div>
     <div class="manual-field"><label>ID / referencia de la transacción</label><input class="manual-input manual-reference" placeholder="Copia aquí la referencia del pago"></div>
     <div class="manual-field"><label>Comprobante</label><input class="manual-input manual-file" type="file" accept="image/*,application/pdf"></div>
     <button type="button" class="manual-submit">Enviar comprobante para revisión</button><div class="manual-status"></div>
   </div>`;
+
   let selectedBank=firstConfigured;
   const detailsBox=panel.querySelector('.bank-account-details'),submit=panel.querySelector('.manual-submit');
+
   const refreshBank=()=>{
     if(!isBank)return;
     const b=BANK_TRANSFER_ACCOUNTS[selectedBank],configured=bankAccountConfigured(b);
@@ -1152,6 +1202,7 @@ function renderWebManualPayment(panel,method){
     detailsBox.querySelectorAll('[data-copy-account]').forEach(btn=>btn.addEventListener('click',()=>copiarCuentaBanco(btn.dataset.copyAccount,btn)));
     submit.disabled=!configured;
   };
+
   if(isBank){
     panel.querySelectorAll('.bank-choice').forEach(btn=>btn.addEventListener('click',()=>{
       selectedBank=btn.dataset.bankKey;
@@ -1160,17 +1211,29 @@ function renderWebManualPayment(panel,method){
     }));
     refreshBank();
   }
+
   submit.addEventListener('click',async()=>{
-    const reference=panel.querySelector('.manual-reference')?.value.trim(),payerName=panel.querySelector('.manual-payer-name')?.value.trim(),receipt=panel.querySelector('.manual-file')?.files?.[0];
-    if(!reference){webManualStatus(panel,'Ingresa el ID o referencia de la transacción.','error');return}
+    const reference=panel.querySelector('.manual-reference')?.value.trim(),
+          payerName=panel.querySelector('.manual-payer-name')?.value.trim(),
+          receipt=panel.querySelector('.manual-file')?.files?.[0];
+    if(!reference){webManualStatus(panel,'Ingresa la referencia de la transacción.','error');return}
     if(!receipt){webManualStatus(panel,'Adjunta una captura o PDF del comprobante.','error');return}
-    const old=submit.textContent;submit.disabled=true;submit.textContent='Subiendo comprobante…';webManualStatus(panel,'Guardando comprobante para revisión…','info');
+    const old=submit.textContent;
+    submit.disabled=true;
+    submit.textContent='Procesando comprobante…';
+    webManualStatus(panel,'Protegiendo y enviando comprobante al backend…','info');
     try{
       const result=await createManualWebProject({method,reference,payerName,receipt,bankKey:selectedBank});
       webManualStatus(panel,`Comprobante recibido · ${result.displayOrderId}. Abriendo Mis Proyectos…`,'ok');
-      sessionStorage.setItem('evolutionWebRequest',currentWebRequestId);sessionStorage.setItem('evolutionWebManualProject',result.projectId);
+      sessionStorage.setItem('evolutionWebRequest',currentWebRequestId);
+      sessionStorage.setItem('evolutionWebManualProject',result.projectId);
       setTimeout(()=>{window.location.href=`proyectos.html?project=${encodeURIComponent(result.projectId)}`},900);
-    }catch(e){console.error(e);webManualStatus(panel,e?.message||'No se pudo registrar el comprobante.','error');submit.disabled=false;submit.textContent=old}
+    }catch(e){
+      console.error(e);
+      webManualStatus(panel,e?.message||'No se pudo registrar el comprobante.','error');
+      submit.disabled=false;
+      submit.textContent=old;
+    }
   });
 }
 
@@ -1180,20 +1243,22 @@ async function renderWebPaymentMethods(){
   host.innerHTML='<div class="web-payment-detecting">Detectando región y preparando métodos…</div>';
   if(!currentUser?.uid){host.innerHTML='<div class="manual-warning">Inicia sesión nuevamente antes de pagar.</div>';return}
   await Promise.resolve(window.webPaymentGeoReady).catch(()=>{});
-  const geo=window.webPaymentGeo||{},isGuatemala=String(geo.countryCode||'').toUpperCase()==='GT';
-  if(region)region.innerHTML=`<i></i><span>${isGuatemala?'IP detectada en Guatemala · transferencia bancaria habilitada':geo.country?`Región detectada: ${geo.country}`:'Región no identificada · transferencia bancaria no disponible'}</span>`;
+  const geo=window.webPaymentGeo||{},isGuatemala=String(geo.countryCode||'').toUpperCase()==='GT';refreshLocalizedPrices();
+  if(region)region.innerHTML=`<i></i><span>${isGuatemala?`Guatemala detectada · precios en GTQ · transferencia habilitada · tasa aprox. Q ${Number(window.webGtqRate||7.65).toFixed(4)} / USD`:geo.country?`Región detectada: ${geo.country} · precios en USD`:'Región no identificada · precios en USD'}</span>`;
   host.innerHTML=`<div class="payment-checkout-card"><div class="payment-method-title">Selecciona un método de pago</div>
     <div class="payment-method-grid ${isGuatemala?'has-bank':''}">
-      <button type="button" class="payment-method-btn active" data-web-pay="paypal">Tarjeta · PayPal</button>
-      <button type="button" class="payment-method-btn binance" data-web-pay="binance">◆ Binance Pay</button>
+      <button type="button" class="payment-method-btn active" data-web-pay="paypal">PayPal</button>
+      <button type="button" class="payment-method-btn card" data-web-pay="card">Tarjeta débito/crédito</button>
       ${isGuatemala?'<button type="button" class="payment-method-btn bank" data-web-pay="bank">Transferencia bancaria</button>':''}
-    </div><div class="payment-method-panel"></div>${isGuatemala?'<div class="payment-gt-only-note">Transferencias habilitadas porque tu IP fue detectada en Guatemala.</div>':''}</div>`;
+      <button type="button" class="payment-method-btn binance" data-web-pay="binance">◆ Binance Pay</button>
+    </div><div class="payment-method-panel"></div>${isGuatemala?'<div class="payment-gt-only-note">Los precios se muestran en quetzales para Guatemala. PayPal/tarjeta procesan el cargo base en USD; la transferencia se realiza en GTQ.</div>':'<div class="payment-gt-only-note">Pagos internacionales mostrados en USD. Binance Pay se realiza en USDT con el mismo QR usado en Arquitectura.</div>'}</div>`;
   const panel=host.querySelector('.payment-method-panel');
   const selectMethod=async method=>{
     host.querySelectorAll('.payment-method-btn').forEach(b=>b.classList.toggle('active',b.dataset.webPay===method));panel.innerHTML='';setCheckoutStatus('');
-    if(method==='paypal'){panel.innerHTML='<div class="paypal-white-card"><div id="paypalWebButtons"></div></div>';await renderWebPayPal()}
-    else if(method==='binance')renderWebManualPayment(panel,'binance_pay');
+    if(method==='paypal'){panel.innerHTML='<div class="paypal-white-card"><div id="paypalWebButtons"></div><div class="paypal-processing-overlay" id="paypalProcessingOverlay"><span class="paypal-processing-spinner"></span><span id="paypalProcessingText">Verificando pago con PayPal…</span></div></div>';await renderWebPayPal('paypal')}
+    else if(method==='card'){panel.innerHTML='<div class="paypal-white-card"><div id="paypalWebButtons"></div><div class="paypal-processing-overlay" id="paypalProcessingOverlay"><span class="paypal-processing-spinner"></span><span id="paypalProcessingText">Verificando pago con tarjeta…</span></div></div>';await renderWebPayPal('card')}
     else if(method==='bank')renderWebManualPayment(panel,'bank_transfer');
+    else if(method==='binance')renderWebManualPayment(panel,'binance_pay');
   };
   host.querySelectorAll('.payment-method-btn').forEach(btn=>btn.addEventListener('click',()=>selectMethod(btn.dataset.webPay)));
   await selectMethod('paypal');
@@ -1213,7 +1278,9 @@ function buildWebBrief(){
     domainIdea:$('domainIdea').value.trim(),
     timeline:$('timeline').value,
     referenceSites:$('referenceSites').value.trim(),
-    notes:$('leadNotes').value.trim()
+    notes:$('leadNotes').value.trim(),
+    brandLogoName:preparedBrandLogo?.name||'',
+    brandLogoType:preparedBrandLogo?.type||''
   };
 }
 function setCheckoutStatus(message,type='info'){
@@ -1224,129 +1291,54 @@ function setCheckoutStatus(message,type='info'){
 function fillCheckoutSummary(){
   const brief=buildWebBrief();
   if($('checkoutPlanName'))$('checkoutPlanName').textContent=selectedPlan.name;
-  if($('checkoutPlanPrice'))$('checkoutPlanPrice').textContent=`$${selectedPlan.price} USD`;
+  if($('checkoutPlanPrice'))$('checkoutPlanPrice').textContent=localPriceText(selectedPlan.price);
   if($('checkoutBusinessName'))$('checkoutBusinessName').textContent=brief.businessName||'Tu proyecto';
   if($('checkoutServiceLabel'))$('checkoutServiceLabel').textContent=selectedPlan.category;
   if($('checkoutClientLabel'))$('checkoutClientLabel').textContent=brief.name||currentUser?.email||'Cliente';
   if($('checkoutRequestId'))$('checkoutRequestId').textContent=currentWebRequestId?`Solicitud ${currentWebRequestId.slice(0,8).toUpperCase()} · brief guardado`:'Brief preparado';
 }
-async function createPaidWebProject(details,data){
-  if(!currentUser?.uid)throw new Error('La sesión del cliente ya no está disponible.');
-  if(!currentWebRequestId)throw new Error('No encontramos la solicitud asociada a este pago.');
-  const brief=buildWebBrief();
-  const capture=details?.purchase_units?.[0]?.payments?.captures?.[0]||{};
-  const orderId=String(data?.orderID||details?.id||'').trim();
-  if(!orderId)throw new Error('PayPal no devolvió el ID de la orden.');
-  const transactionId=String(capture?.id||orderId);
-  const safeOrderId=orderId.replace(/[^A-Za-z0-9_-]/g,'').slice(0,90);
-  const projectId=`web_paypal_${safeOrderId}`;
-  const displayOrderId=`#EVO-W${transactionId.slice(-7).toUpperCase()}`;
-  const payerName=[details?.payer?.name?.given_name,details?.payer?.name?.surname].filter(Boolean).join(' ')||brief.name||currentUser.displayName||'Cliente';
-  const payerCountry=details?.payer?.address?.country_code||'';
-  const projectConfig={
-    category:'Diseño Web',
-    packageCode:selectedPlan.id,
-    packageName:selectedPlan.name,
-    shortPackageName:selectedPlan.name,
-    description:`${selectedPlan.name} para ${brief.businessName||'cliente Evolution Design'}`,
-    specs:brief.features||[],
-    uploadTitle:'Contenido para tu sitio web',
-    uploadCopy:'Sube logotipo, fotografías, textos, referencias y cualquier material necesario para desarrollar tu sitio.',
-    uploadFormats:'Imágenes, logos, documentos, textos y referencias',
-    includedHighlights:selectedPlan.included||[],
-    custom:false,
-    baseUsd:selectedPlan.price
-  };
-  const projectData={
-    ownerUid:currentUser.uid,
-    ownerEmail:currentUser.email||brief.email||'',
-    payerName,
-    payerEmail:details?.payer?.email_address||currentUser.email||brief.email||'',
-    payerCountry,
-    transactionId,
-    paypalTransactionId:transactionId,
-    paypalOrderId:orderId,
-    paypalStatus:capture?.status||details?.status||'COMPLETED',
-    paymentMethod:'PayPal',
-    amount:Number(selectedPlan.price).toFixed(2),
-    currency:'USD',
-    baseUsd:Number(selectedPlan.price),
-    displayOrderId,
-    projectType:'Diseño Web',
-    projectTitle:`Diseño Web · ${selectedPlan.name} · ${brief.businessName||brief.name}`,
-    projectConfig,
-    source:'diseno-web-paypal',
-    serviceType:'web_design',
-    customOrder:false,
-    webRequestId:currentWebRequestId,
-    webPlanId:selectedPlan.id,
-    webPlanName:selectedPlan.name,
-    webBrief:brief,
-    paymentStatus:'paid',
-    status:'waiting_files',
-    architectName:'Pendiente',
-    professionalRole:'Diseñador Web',
-    clientFileCount:0,
-    deliveryFileCount:0,
-    clientComments:[brief.notes,brief.referenceSites?`Referencias: ${brief.referenceSites}`:''].filter(Boolean).join('\n\n'),
-    deliveryNote:'',
-    createdAt:serverTimestamp(),
-    updatedAt:serverTimestamp(),
-    paidAt:serverTimestamp()
-  };
-  await setDoc(doc(db,'users',currentUser.uid,'projects',projectId),projectData,{merge:true});
-  try{
-    await setDoc(doc(db,'users',currentUser.uid),{
-      uid:currentUser.uid,email:currentUser.email||brief.email||'',displayName:currentUser.displayName||brief.name||'',
-      lastWebProjectId:projectId,lastWebRequestId:currentWebRequestId,lastPurchaseAt:serverTimestamp(),updatedAt:serverTimestamp()
-    },{merge:true});
-  }catch(profileError){console.info('Proyecto registrado; perfil no actualizado:',profileError)}
-  return {projectId,displayOrderId,transactionId,orderId};
+function setPayPalProcessing(show,message='Verificando pago…'){
+  const overlay=$('paypalProcessingOverlay'),label=$('paypalProcessingText');if(label)label.textContent=message;if(overlay)overlay.classList.toggle('show',Boolean(show));
 }
-async function renderWebPayPal(){
+async function renderWebPayPal(funding='paypal'){
   fillCheckoutSummary();
   const host=$('paypalWebButtons');if(!host)return;
-  host.innerHTML='';
-  setCheckoutStatus('');
+  host.innerHTML='';setCheckoutStatus('');setPayPalProcessing(false);
   if(!currentUser?.uid){setCheckoutStatus('Inicia sesión nuevamente antes de pagar.','error');return}
-  if(typeof window.paypal==='undefined'||!window.paypal?.Buttons){
-    setCheckoutStatus('No se pudo cargar PayPal. Recarga la página e inténtalo nuevamente.','error');return;
-  }
+  if(typeof window.paypal==='undefined'||!window.paypal?.Buttons){setCheckoutStatus('No se pudo cargar PayPal. Recarga la página e inténtalo nuevamente.','error');return}
+  const fundingSource=funding==='card'?window.paypal.FUNDING.CARD:window.paypal.FUNDING.PAYPAL;
   try{
     paypalButtonsInstance=window.paypal.Buttons({
-      style:{layout:'vertical',color:'black',shape:'rect',label:'pay',height:46},
-      createOrder:(data,actions)=>{
-        setCheckoutStatus('Preparando pago seguro…','info');
-        return actions.order.create({
-          purchase_units:[{
-            amount:{currency_code:'USD',value:Number(selectedPlan.price).toFixed(2)},
-            description:`Evolution Design · ${selectedPlan.name}`.slice(0,127),
-            custom_id:currentWebRequestId
-          }]
+      fundingSource,
+      style:{layout:'vertical',color:funding==='card'?'black':'black',shape:'rect',label:funding==='card'?'pay':'paypal',height:46},
+      createOrder:async()=>{
+        setCheckoutStatus('Preparando pago seguro en el backend…','info');
+        const result=await workerRequest('/paypal/create-order',{
+          mode:'web_purchase',webRequestId:currentWebRequestId,planId:selectedPlan.id,
+          fundingSource:funding==='card'?'card':'paypal',clientGeo:window.webPaymentGeo||{}
         });
+        return result.orderId;
       },
-      onApprove:async(data,actions)=>{
-        setCheckoutStatus('Pago aprobado. Registrando tu proyecto…','info');
+      onApprove:async data=>{
+        setPayPalProcessing(true,funding==='card'?'Verificando pago con tarjeta…':'Verificando pago con PayPal…');
+        setCheckoutStatus('Pago aprobado. Evolution Design está verificándolo con PayPal…','info');
         try{
-          const details=await actions.order.capture();
-          const result=await createPaidWebProject(details,data);
-          setCheckoutStatus(`Pago confirmado · ${result.displayOrderId}. Abriendo Mis Proyectos…`,'ok');
-          sessionStorage.setItem('evolutionWebRequest',currentWebRequestId);
-          sessionStorage.setItem('evolutionWebPaidProject',result.projectId);
-          setTimeout(()=>{window.location.href=`proyectos.html?project=${encodeURIComponent(result.projectId)}`},900);
-        }catch(error){
-          console.error('PayPal aprobado pero no se registró proyecto:',error);
-          setCheckoutStatus(`PayPal aprobó el pago, pero no pudimos registrar el proyecto. NO vuelvas a pagar.${data?.orderID?' Orden PayPal: '+data.orderID:''}`,'error');
-        }
+          const result=await workerRequest('/paypal/capture-order',{orderId:data.orderID});
+          setPayPalProcessing(true,'Pago confirmado · abriendo Mis Proyectos…');
+          setCheckoutStatus(`Pago confirmado · ${result.displayOrderId||'Evolution Design'}. Abriendo Mis Proyectos…`,'ok');
+          sessionStorage.setItem('evolutionWebRequest',currentWebRequestId);sessionStorage.setItem('evolutionWebPaidProject',result.projectId||'');
+          setTimeout(()=>{window.location.href=`proyectos.html?project=${encodeURIComponent(result.projectId||'')}`},900);
+        }catch(error){console.error('Pago aprobado pero verificación falló:',error);setPayPalProcessing(false);setCheckoutStatus(`No pudimos verificar el pago todavía. NO vuelvas a pagar.${data?.orderID?' Orden PayPal: '+data.orderID:''}`,'error')}
       },
-      onCancel:()=>setCheckoutStatus('Pago cancelado. Tu brief sigue guardado y puedes intentarlo nuevamente.','info'),
-      onError:(err)=>{console.error('PayPal:',err);setCheckoutStatus('PayPal no pudo completar el pago. Intenta nuevamente.','error')}
+      onCancel:()=>{setPayPalProcessing(false);setCheckoutStatus('Pago cancelado. Tu brief sigue guardado y puedes intentarlo nuevamente.','info')},
+      onError:err=>{console.error('PayPal:',err);setPayPalProcessing(false);setCheckoutStatus('PayPal no pudo completar el pago. Intenta nuevamente.','error')}
     });
     if(!paypalButtonsInstance.isEligible()){
-      setCheckoutStatus('PayPal no está disponible en este dispositivo o navegador.','error');return;
+      setCheckoutStatus(funding==='card'?'La opción de tarjeta directa no está disponible para este navegador/región. Puedes usar PayPal o Binance Pay.':'PayPal no está disponible en este dispositivo o navegador.','error');return;
     }
     await paypalButtonsInstance.render('#paypalWebButtons');
-  }catch(error){console.error(error);setCheckoutStatus('No pudimos iniciar el checkout de PayPal.','error')}
+    const note=document.createElement('div');note.className='payment-usd-charge-note';note.textContent=isGuatemalaVisitor()?`Se mostrará el equivalente en quetzales, pero PayPal procesa el cargo base de $${selectedPlan.price.toFixed(2)} USD.`:`Cargo: $${selectedPlan.price.toFixed(2)} USD.`;host.parentElement?.appendChild(note);
+  }catch(error){console.error(error);setPayPalProcessing(false);setCheckoutStatus('No pudimos iniciar el checkout de PayPal.','error')}
 }
 
 form.addEventListener('submit',async e=>{
@@ -1362,6 +1354,8 @@ form.addEventListener('submit',async e=>{
   const btn=$('submitSurvey'),old=btn.textContent;
   btn.disabled=true;btn.textContent='Preparando checkout…';status.className='survey-status';
   try{
+    await Promise.resolve(window.webPaymentGeoReady).catch(()=>{});
+    if(brandLogoInput?.files?.[0]) await brandLogoPromise;
     if(!currentWebRequestId){
       const brief=buildWebBrief();
       const payload={
@@ -1370,6 +1364,13 @@ form.addEventListener('submit',async e=>{
         planName:selectedPlan.name,
         category:selectedPlan.category,
         basePriceUsd:selectedPlan.price,
+        displayCurrency:isGuatemalaVisitor()?'GTQ':'USD',
+        displayGtqRate:Number(window.webGtqRate||7.65),
+        clientGeo:window.webPaymentGeo||{},
+        brandLogoDataUrl:preparedBrandLogo?.dataUrl||'',
+        brandLogoName:preparedBrandLogo?.name||'',
+        brandLogoType:preparedBrandLogo?.type||'',
+        brandLogoOriginalType:preparedBrandLogo?.originalType||'',
         ...brief,
         status:'new',
         source:'diseno-web',
