@@ -17,6 +17,7 @@
 .view{display:none}.view.active{display:block}.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:18px}.metric{padding:16px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.012));min-width:0}.metric-label{font-size:10px;color:var(--muted);margin-bottom:8px}.metric-value{font-size:22px;font-weight:700;letter-spacing:-.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.metric-sub{font-size:9px;color:#666;margin-top:5px}.metric.profit{border-color:rgba(212,184,149,.22);background:linear-gradient(160deg,rgba(212,184,149,.08),rgba(255,255,255,.012))}.grid-2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.7fr);gap:14px}.panel{border:1px solid var(--line);background:rgba(13,13,14,.88);border-radius:var(--radius);overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;border-bottom:1px solid var(--soft)}.panel-title{font-size:13px;font-weight:700}.panel-copy{font-size:10px;color:var(--muted);margin-top:3px}.panel-body{padding:15px}.country-list{display:grid;gap:9px}.country-row{display:grid;grid-template-columns:minmax(0,1fr) 1fr 34px;gap:8px;align-items:center;font-size:10px}.country-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.country-track{height:5px;border-radius:9px;background:rgba(255,255,255,.06);overflow:hidden}.country-bar{height:100%;background:var(--accent);border-radius:9px}.country-count{text-align:right;color:#aaa}
 .toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.search{min-width:240px;flex:1;border:1px solid var(--line);background:#0c0c0d;color:#fff;padding:10px 12px;border-radius:11px;outline:none}.select{border:1px solid var(--line);background:#0c0c0d;color:#ddd;padding:10px 11px;border-radius:11px;outline:none}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:rgba(10,10,11,.75)}table{width:100%;border-collapse:collapse;min-width:900px}th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#6f6f75;font-weight:700;padding:11px 13px;border-bottom:1px solid var(--line)}td{padding:12px 13px;border-bottom:1px solid var(--soft);font-size:11px;color:#d3d3d6;vertical-align:middle}tr:last-child td{border-bottom:0}tr:hover td{background:rgba(255,255,255,.016)}.strong{font-weight:700;color:#fff}.sub{font-size:9px;color:#777;margin-top:3px}.pill{display:inline-flex;padding:4px 7px;border-radius:999px;font-size:9px;border:1px solid var(--line);color:#bbb;background:rgba(255,255,255,.025)}.pill.green{color:#65df93;border-color:rgba(57,212,119,.2);background:rgba(57,212,119,.05)}.pill.gold{color:#ddc19f;border-color:rgba(212,184,149,.2);background:rgba(212,184,149,.05)}.pill.red{color:#ff8d97;border-color:rgba(255,102,115,.2);background:rgba(255,102,115,.05)}
 .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:#777;margin:0 0 6px}.input,.textarea{width:100%;border:1px solid var(--line);background:#09090a;color:#fff;padding:10px 11px;border-radius:10px;outline:none}.textarea{min-height:95px;resize:vertical;line-height:1.55}.field.full{grid-column:1/-1}.hint{font-size:9px;color:#666;margin-top:5px}.check{display:flex;align-items:center;gap:8px;font-size:11px;color:#bbb;margin-top:8px}.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.status-quick-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.status-quick-btn{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.025);color:#aaa;border-radius:999px;padding:6px 9px;font-size:9px;font-weight:700;cursor:pointer;transition:.18s ease}.status-quick-btn:hover{color:#fff;border-color:rgba(212,184,149,.35)}.status-quick-btn.active{color:#111;background:var(--accent);border-color:var(--accent)}.status-quick-btn.danger.active{background:#ff6673;border-color:#ff6673;color:#160508}.delivery-publish-warning{display:none;margin-top:8px;padding:9px 10px;border-radius:10px;border:1px solid rgba(255,190,80,.2);background:rgba(255,190,80,.055);color:#e8c484;font-size:9px;line-height:1.5}.delivery-publish-warning.show{display:block}
 .role-toggle{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:4px;border:1px solid var(--line);background:#09090a;border-radius:11px}.role-toggle button{border:1px solid transparent;background:transparent;color:#85858b;border-radius:8px;padding:8px 9px;font-size:10px;font-weight:700;cursor:pointer;transition:.18s ease}.role-toggle button:hover{color:#ddd;background:rgba(255,255,255,.025)}.role-toggle button.active{color:#17120d;background:var(--accent);border-color:var(--accent);box-shadow:0 5px 16px rgba(212,184,149,.12)}.payment-method-wrap{margin-top:10px;padding:11px 12px;border:1px solid var(--soft);border-radius:12px;background:rgba(255,255,255,.014)}.payment-method-wrap.hidden{display:none!important}
 
 /* CLIENTES — foto de perfil + última conexión */
@@ -348,6 +349,12 @@
 .external-links-admin{margin-top:14px;border:1px solid rgba(91,170,255,.16);border-radius:14px;background:linear-gradient(145deg,rgba(91,170,255,.045),rgba(255,255,255,.012));padding:14px}
 .external-links-admin-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}.external-links-admin-head strong{display:block;font-size:11px;color:#edf6ff}.external-links-admin-head span{display:block;font-size:9px;color:#718091;margin-top:3px;line-height:1.5}.external-link-count{padding:5px 8px;border-radius:999px;border:1px solid rgba(91,170,255,.2);background:rgba(91,170,255,.055);color:#a9d2ff;font-size:9px;font-weight:800;white-space:nowrap}
 .external-link-form{display:grid;grid-template-columns:minmax(130px,.42fr) minmax(150px,.62fr) minmax(0,1.4fr);gap:9px;align-items:end}.external-link-form .field{margin:0}.external-link-form .field.full{grid-column:1/-1}.external-link-submit-row{grid-column:1/-1;display:flex;gap:8px;align-items:center;justify-content:flex-end}.external-link-submit-row .hint{margin-right:auto;max-width:650px}.external-link-list{display:grid;gap:8px;margin-top:12px}.external-link-item{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.07);border-radius:11px;background:rgba(0,0,0,.22);min-width:0}.external-link-icon{width:39px;height:39px;border-radius:10px;border:1px solid rgba(91,170,255,.15);background:rgba(91,170,255,.06);color:#a9d2ff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;flex:0 0 39px}.external-link-info{min-width:0;flex:1}.external-link-title{font-size:11px;color:#eee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.external-link-meta{font-size:9px;color:#677789;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.external-link-note{font-size:9px;color:#8b8b91;line-height:1.45;margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}.external-link-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.external-link-open{color:#9dd0ff!important;border-color:rgba(91,170,255,.19)!important}
+.file-visibility{display:inline-flex;align-items:center;gap:5px;margin-top:5px;padding:4px 7px;border-radius:999px;font-size:8px;font-weight:850;letter-spacing:.04em;border:1px solid rgba(255,255,255,.08)}
+.file-visibility.visible{color:#72e39c;border-color:rgba(43,200,102,.25);background:rgba(43,200,102,.07)}
+.file-visibility.locked{color:#f3cc83;border-color:rgba(233,188,101,.25);background:rgba(233,188,101,.07)}
+.file-visibility.hidden{color:#ff9099;border-color:rgba(255,102,115,.24);background:rgba(255,102,115,.06)}
+.file-client-activity{margin-top:5px;color:#7f8790;font-size:8.5px;line-height:1.45}.file-client-activity strong{color:#b9c1ca;font-weight:700}
+.activity-refresh-btn{border-color:rgba(91,170,255,.22)!important;color:#a9d2ff!important}
 @media(max-width:900px){.external-link-form{grid-template-columns:1fr 1fr}.external-link-form .field.url-field{grid-column:1/-1}}
 @media(max-width:620px){.external-link-form{grid-template-columns:1fr}.external-link-form .field.url-field,.external-link-form .field.full{grid-column:auto}.external-link-submit-row{display:grid;grid-template-columns:1fr}.external-link-submit-row .hint{margin:0}.external-link-item{align-items:flex-start;flex-wrap:wrap}.external-link-actions{width:100%;justify-content:flex-start;padding-left:49px}}
 
@@ -388,7 +395,7 @@
     </table>
   </div>
 </section>
-<section id="view-projects" class="view"><div class="toolbar"><input id="projectSearch" class="search" placeholder="Buscar proyecto, cliente, orden o transacción"><select id="statusFilter" class="select"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="payment_pending_review">Comprobante por revisar</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En desarrollo</option><option value="review">Revisión</option><option value="delivered">Entregado</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
+<section id="view-projects" class="view"><div class="toolbar"><input id="projectSearch" class="search" placeholder="Buscar proyecto, cliente, orden o transacción"><select id="statusFilter" class="select"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="payment_pending_review">Comprobante por revisar</option><option value="payment_failed">Fallo de pago</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En proceso</option><option value="review">Revisión</option><option value="delivered">Entregado</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
 <section id="view-clients" class="view"><div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar nombre, correo o país"></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Ubicación</th><th>Última conexión / actividad</th><th>Órdenes</th><th>Total comprado</th><th></th></tr></thead><tbody id="clientsBody"></tbody></table></div></section>
 <section id="view-webrequests" class="view">
   <div class="webreq-card-grid">
@@ -545,14 +552,26 @@
             <label>Estado</label>
             <select id="editStatus" class="input">
               <option value="awaiting_payment">Pago pendiente</option>
+              <option value="payment_pending_review">Comprobante por revisar</option>
+              <option value="payment_failed">Fallo de pago</option>
               <option value="waiting_files">Esperando archivos</option>
               <option value="files_received">Archivos recibidos</option>
               <option value="assigned">Profesional asignado</option>
-              <option value="in_progress">En desarrollo</option>
+              <option value="in_progress">En proceso</option>
               <option value="review">En revisión</option>
               <option value="delivered">Entregado</option>
               <option value="cancelled">Cancelado</option>
             </select>
+            <div class="status-quick-grid" id="statusQuickGrid">
+              <button type="button" class="status-quick-btn" data-status="awaiting_payment" onclick="setProjectStatusQuick('awaiting_payment')">Pago pendiente</button>
+              <button type="button" class="status-quick-btn danger" data-status="payment_failed" onclick="setProjectStatusQuick('payment_failed')">Fallo de pago</button>
+              <button type="button" class="status-quick-btn" data-status="waiting_files" onclick="setProjectStatusQuick('waiting_files')">Esperando archivos</button>
+              <button type="button" class="status-quick-btn" data-status="files_received" onclick="setProjectStatusQuick('files_received')">Archivos recibidos</button>
+              <button type="button" class="status-quick-btn" data-status="in_progress" onclick="setProjectStatusQuick('in_progress')">En proceso</button>
+              <button type="button" class="status-quick-btn" data-status="review" onclick="setProjectStatusQuick('review')">En revisión</button>
+              <button type="button" class="status-quick-btn" data-status="delivered" onclick="setProjectStatusQuick('delivered')">Entregado</button>
+            </div>
+            <div id="deliveryPublishWarning" class="delivery-publish-warning">⚠️ <strong>Entregado publica la entrega al cliente.</strong> Tener archivos finales cargados no los publica por sí solo.</div>
           </div>
 
           <div class="field">
@@ -657,7 +676,8 @@
     <div class="section">
       <div class="section-h">
         <div>Enviar archivos al cliente</div>
-        <div class="section-h-copy">Selecciona uno o varios archivos finales. Todos quedarán disponibles en “Mis Proyectos”.</div>
+        <div class="section-h-copy">Subir archivos no los publica automáticamente. Aquí puedes ver si están visibles, bloqueados o aún ocultos para el cliente.</div>
+        <button class="mini activity-refresh-btn" type="button" onclick="refreshDeliveryActivity()">Actualizar actividad</button>
       </div>
       <div class="section-b">
         <div class="upload-box">
@@ -771,7 +791,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 function usd(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Number(n||0))}
 function bytes(n){n=Number(n||0);return n<1024?`${n} B`:n<1048576?`${(n/1024).toFixed(1)} KB`:`${(n/1048576).toFixed(1)} MB`}
 function dateMs(v){if(!v)return 0;if(typeof v.toMillis==='function')return v.toMillis();if(typeof v.toDate==='function')return v.toDate().getTime();const d=new Date(v);return Number.isNaN(d.getTime())?0:d.getTime()}
-function statusLabel(s){return({awaiting_payment:'Pago pendiente',waiting_files:'Esperando archivos',files_received:'Archivos recibidos',assigned:'Asignado',in_progress:'En desarrollo',review:'Revisión',delivered:'Entregado',cancelled:'Cancelado'})[s]||s||'—'}
+function statusLabel(s){return({awaiting_payment:'Pago pendiente',payment_pending_review:'Comprobante por revisar',payment_failed:'Fallo de pago',waiting_files:'Esperando archivos',files_received:'Archivos recibidos',assigned:'Asignado',in_progress:'En proceso',review:'Revisión',delivered:'Entregado',cancelled:'Cancelado'})[s]||s||'—'}
 function pill(s){const c=s==='delivered'?'green':s==='awaiting_payment'?'gold':s==='cancelled'?'red':'';return `<span class="pill ${c}">${esc(statusLabel(s))}</span>`}
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3200)}
 function projectProfit(p){return Number(p.baseUsd||0)-Number(p.adminMeta?.internalCostUsd||0)}
@@ -823,6 +843,14 @@ window.setProfessionalRole=function(role,markDirty=true){
 };
 function paymentMethodCode(v){return String(v||'PAGO').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').toUpperCase().slice(0,24)||'PAGO'}
 
+function refreshStatusQuickUI(){
+  const value=String($('editStatus')?.value||'');
+  document.querySelectorAll('#statusQuickGrid [data-status]').forEach(btn=>btn.classList.toggle('active',btn.dataset.status===value));
+  $('deliveryPublishWarning')?.classList.toggle('show',value==='delivered');
+}
+window.setProjectStatusQuick=function(status){
+  const select=$('editStatus');if(!select)return;select.value=status;refreshStatusQuickUI();setProjectDirty(true);
+};
 window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
 function currentEditPrice(){return Math.max(0,Number($('editPrice')?.value||0))}
@@ -867,6 +895,7 @@ document.addEventListener('input',e=>{
 });
 
 document.addEventListener('change',e=>{
+  if(e.target?.id==='editStatus')refreshStatusQuickUI();
   if(selected&&e.target?.closest('#projectModal')&&['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName))setProjectDirty(true);
   if(e.target?.id==='clientAdminFileInput'){
     addFilesToQueue('client',e.target.files);
@@ -1135,7 +1164,8 @@ window.approveManualPayment=async function(){
   try{
     if(btn){btn.disabled=true;btn.textContent='Aprobando…';}
     let keepStatus=selected.paymentRequestProjectStatus||selected.status||'waiting_files';
-    if(keepStatus==='awaiting_payment')keepStatus=Number(selected.deliveryFileCount||0)>0?'delivered':'waiting_files';
+    if(keepStatus==='payment_pending_review'||keepStatus==='payment_failed')keepStatus='waiting_files';
+    if(keepStatus==='awaiting_payment')keepStatus='waiting_files';
     const patch={paymentStatus:'paid',paymentReviewStatus:'approved',paymentVerifiedByAdmin:true,paymentVerifiedByAdminEmail:auth.currentUser?.email||'',paymentReviewNote:note,paymentRequested:false,paymentRequestStatus:'paid',deliveryLocked:false,paymentUnlockedAt:serverTimestamp(),status:keepStatus,paidAt:serverTimestamp(),paymentVerifiedAt:serverTimestamp(),updatedAt:serverTimestamp()};
     await updateDoc(doc(db,'users',uid,'projects',id),patch);toast('Pago aprobado. Entregas desbloqueadas.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value=keepStatus;renderPaymentRequestAdmin();await renderPaymentProof();
   }catch(e){console.error(e);toast(e?.message||'No se pudo aprobar el pago.');}
@@ -1156,7 +1186,7 @@ window.rejectManualPayment=async function(){
 }
 
 function projectRow(p){return `<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)} · ${esc(p.transactionId||'sin transacción')}</div>${paymentStatusExtra(p)}</td><td><div>${esc(p.payerName||p.ownerEmail||'Cliente')}</div><div class="sub">${esc(p.ownerEmail||'')}</div></td><td>${esc(p.payerCountry||p.lastGeo?.country||'No reportado')}</td><td><span class="strong">${usd(p.baseUsd)}</span><div class="sub">${esc(p.currency||'USD')} ${esc(p.amount||'')}</div></td><td><span class="strong">${usd(projectProfit(p))}</span><div class="sub">Costo ${usd(p.adminMeta?.internalCostUsd)}</div></td><td>${pill(p.status)}</td><td>${Number(p.clientFileCount||0)} recibidos · ${Number(p.deliveryFileCount||0)} enviados</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`}
-function renderProjects(){const term=$('projectSearch').value.toLowerCase(),st=$('statusFilter').value;const rows=data.projects.filter(p=>{const statusOk=!st||(st==='payment_pending_review'?hasPaymentReceipt(p)&&paymentReviewState(p)==='pending':p.status===st);return statusOk&&(!term||[p.projectTitle,p.ownerEmail,p.payerName,p.displayOrderId,p.transactionId,p.payerCountry,p.lastGeo?.country,p.paymentMethod,p.bankName,p.manualPaymentReference].some(x=>String(x||'').toLowerCase().includes(term)))});$('projectsBody').innerHTML=rows.map(projectRow).join('')||'<tr><td colspan="8">Sin resultados.</td></tr>'}
+function renderProjects(){const term=$('projectSearch').value.toLowerCase(),st=$('statusFilter').value;const rows=data.projects.filter(p=>{const statusOk=!st||(st==='payment_pending_review'?hasPaymentReceipt(p)&&paymentReviewState(p)==='pending':st==='payment_failed'?paymentReviewState(p)==='rejected'||p.status==='payment_failed':p.status===st);return statusOk&&(!term||[p.projectTitle,p.ownerEmail,p.payerName,p.displayOrderId,p.transactionId,p.payerCountry,p.lastGeo?.country,p.paymentMethod,p.bankName,p.manualPaymentReference].some(x=>String(x||'').toLowerCase().includes(term)))});$('projectsBody').innerHTML=rows.map(projectRow).join('')||'<tr><td colspan="8">Sin resultados.</td></tr>'}
 function renderRecent(){const rows=data.projects.slice(0,8);$('recentProjects').innerHTML=rows.length?`<table><thead><tr><th>Proyecto</th><th>Cliente</th><th>Venta</th><th>Estado</th><th></th></tr></thead><tbody>${rows.map(p=>`<tr><td><div class="strong">${esc(p.projectTitle||'Proyecto')}</div><div class="sub">${esc(p.displayOrderId||p.id)}</div></td><td>${esc(p.ownerEmail||p.payerName||'')}</td><td>${usd(p.baseUsd)}</td><td>${pill(p.status)}</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Abrir</button></td></tr>`).join('')}</tbody></table>`:'<div class="loading">Aún no hay proyectos.</div>'}
 function renderCountries(){const max=Math.max(1,...data.countries.map(x=>x.count));$('countryList').innerHTML=data.countries.length?data.countries.map(x=>`<div class="country-row"><div class="country-name">${esc(x.country)}</div><div class="country-track"><div class="country-bar" style="width:${Math.round(x.count/max*100)}%"></div></div><div class="country-count">${x.count}</div></div>`).join(''):'<div class="sub">Aún no hay ubicaciones registradas.</div>'}
 function authProviderLabel(c){const p=Array.isArray(c.providers)?c.providers:[];if(p.includes('google.com'))return 'Google';if(p.includes('password'))return 'Correo';if(p.includes('phone'))return 'Teléfono';return p[0]||'Firebase';}
@@ -1367,7 +1397,14 @@ function renderPaymentPreviewAdmin(){
   if(badge){badge.textContent=path?'Lámina activa':'Sin lámina';badge.className=`payment-request-badge ${path?'paid':''}`.trim();}
   if(remove)remove.disabled=!path;
   if(!path){view.innerHTML='<div class="payment-preview-empty">Aún no has subido una lámina de muestra para este proyecto.</div>';if(meta)meta.textContent='JPG, PNG, WEBP o AVIF · Máx. 50 MB.';return;}
-  if(meta)meta.textContent=`${selected.paymentPreviewName||'Lámina de muestra'}${selected.paymentPreviewSize?` · ${bytes(selected.paymentPreviewSize)}`:''}`;
+  if(meta){
+    const viewed=selected.paymentPreviewLastViewedAt?niceDateTime(selected.paymentPreviewLastViewedAt):'Aún no vista por el cliente';
+    const count=Math.max(0,Number(selected.paymentPreviewViewCount||0));
+    const published=selected.deliveryPublished===true||(selected.deliveryPublished==null&&!!selected.deliveredAt&&String(selected.status||'')==='delivered');
+    const paid=String(selected.paymentStatus||'').toLowerCase()==='paid'||selected.paymentVerifiedByAdmin===true;
+    const teaserVisible=published&&!paid&&selected.deliveryLocked!==false;
+    meta.textContent=`${selected.paymentPreviewName||'Lámina de muestra'}${selected.paymentPreviewSize?` · ${bytes(selected.paymentPreviewSize)}`:''} · ${teaserVisible?'VISIBLE COMO MUESTRA':'NO MOSTRADA AL CLIENTE'} · ${viewed}${count?` · ${count} vista${count===1?'':'s'}`:''}`;
+  }
   if(!s3){view.innerHTML='<div class="payment-preview-empty">Lámina guardada. La vista previa requiere conexión a R2.</div>';return;}
   try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:path,Expires:900});view.innerHTML=`<img src="${esc(url)}" alt="Lámina arquitectónica de muestra"><span class="payment-preview-watermark">MUESTRA · EVOLUTION DESIGN</span>`;}catch(e){console.error(e);view.innerHTML='<div class="payment-preview-empty">No se pudo cargar la vista previa de la lámina.</div>';}
 }
@@ -1442,7 +1479,8 @@ window.markProjectPaidManual=async function(){
   try{
     if(btn){btn.disabled=true;btn.textContent='Confirmando…';}
     let keepStatus=selected.paymentRequestProjectStatus||selected.status||'waiting_files';
-    if(keepStatus==='awaiting_payment')keepStatus=Number(selected.deliveryFileCount||0)>0?'delivered':'waiting_files';
+    if(keepStatus==='payment_pending_review'||keepStatus==='payment_failed')keepStatus='waiting_files';
+    if(keepStatus==='awaiting_payment')keepStatus='waiting_files';
     const patch={paymentStatus:'paid',paymentRequestStatus:'paid',paymentRequested:false,deliveryLocked:false,paymentMethod:method,transactionId:selected.transactionId||`ADMIN-${Date.now()}`,paymentVerifiedByAdmin:true,paymentVerifiedByAdminEmail:auth.currentUser?.email||'',paidAt:serverTimestamp(),paymentVerifiedAt:serverTimestamp(),paymentUnlockedAt:serverTimestamp(),status:keepStatus,updatedAt:serverTimestamp()};
     await updateDoc(doc(db,'users',uid,'projects',id),patch);
     toast('Pago confirmado. Entregas desbloqueadas.');await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||selected;if($('editStatus'))$('editStatus').value=keepStatus;renderPaymentRequestAdmin();await renderPaymentProof();
@@ -1480,6 +1518,7 @@ window.openProject=async function(uid,id){
   ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
   $('editProjectTitle').value=selected.projectTitle||'Proyecto';
   $('editStatus').value=selected.status||'waiting_files';
+  refreshStatusQuickUI();
   setProfessionalRole(adminIsWebProject(selected)?(selected.professionalRole||'Desarrollador Web Full-Stack'):(selected.professionalRole||'Arquitecto'),false);
   $('editArchitect').value=selected.architectName||'';
   $('editPrice').value=Number(selected.baseUsd||0).toFixed(2);
@@ -1525,11 +1564,29 @@ window.addEventListener('beforeunload',e=>{if(projectDirty&&$('projectModal')?.c
 let previewObjectUrls=[];
 function clearPreviewObjectUrls(){previewObjectUrls.forEach(url=>{try{URL.revokeObjectURL(url)}catch{}});previewObjectUrls=[]}
 function isImageFile(f){const type=String(f.contentType||'').toLowerCase(),name=String(f.name||'').toLowerCase();return type.startsWith('image/')||/\.(jpe?g|png|webp|gif|avif|bmp|svg)$/i.test(name)}
+function adminDeliveryAccessState(project=selected){
+  const published=String(project?.status||'').toLowerCase()==='delivered'&&(project?.deliveryPublished===true||(project?.deliveryPublished==null&&!!project?.deliveredAt));
+  if(!published)return {label:'NO VISIBLE',cls:'hidden',help:'La entrega todavía no está publicada'};
+  const paid=String(project?.paymentStatus||'').toLowerCase()==='paid'||project?.paymentVerifiedByAdmin===true;
+  const locked=!paid&&project?.deliveryLocked!==false;
+  if(locked)return {label:'BLOQUEADO',cls:'locked',help:'Visible como entrega protegida, sin descarga'};
+  return {label:'VISIBLE',cls:'visible',help:'El cliente puede descargarlo'};
+}
 function fileHTML(f,role){
   if(f.availability==='deleted') return '';
   const ext=String(f.name||'FILE').split('.').pop().slice(0,4).toUpperCase(),image=isImageFile(f);
   const icon=image?`<div class="file-ico has-preview"><img class="file-preview-img" data-storage-path="${esc(f.storagePath)}" data-fallback="${esc(ext)}" alt="Vista previa de ${esc(f.label||f.name)}" loading="lazy"></div>`:`<div class="file-ico">${esc(ext)}</div>`;
-  return `<div class="file">${icon}<div class="file-info"><div class="file-name">${esc(f.label||f.name)}</div><div class="file-meta">${bytes(f.size)} · ${role==='client'?(f.uploadedByAdmin?'Añadido por administración':'Cliente'):'Evolution Design'}${f.source==='admin_whatsapp'?' · WhatsApp':''}</div></div><div class="file-actions"><button class="mini" onclick="downloadR2File('${esc(f.storagePath)}','${esc(f.label||f.name)}',this)">Descargar</button><button class="mini delete" onclick="deleteR2File('${esc(f.fileId||f.id)}','${role}','${esc(f.storagePath)}')">Eliminar</button></div></div>`;
+  let accessMarkup='',activityMarkup='';
+  if(role==='delivery'){
+    const state=adminDeliveryAccessState(selected),fid=String(f.fileId||f.id||''),activity=selected?.deliveryActivity?.[fid]||{};
+    const downloaded=activity.lastDownloadedAt?niceDateTime(activity.lastDownloadedAt):'Nunca descargado';
+    const count=Math.max(0,Number(activity.downloadCount||0));
+    accessMarkup=`<span class="file-visibility ${state.cls}" title="${esc(state.help)}">${esc(state.label)}</span>`;
+    activityMarkup=`<div class="file-client-activity"><strong>Cliente:</strong> ${esc(downloaded)}${count?` · ${count} descarga${count===1?'':'s'}`:''}</div>`;
+  }else{
+    accessMarkup='<span class="file-visibility visible">VISIBLE PARA EL CLIENTE</span>';
+  }
+  return `<div class="file">${icon}<div class="file-info"><div class="file-name">${esc(f.label||f.name)}</div><div class="file-meta">${bytes(f.size)} · ${role==='client'?(f.uploadedByAdmin?'Añadido por administración':'Cliente'):'Evolution Design'}${f.source==='admin_whatsapp'?' · WhatsApp':''}</div>${accessMarkup}${activityMarkup}</div><div class="file-actions"><button class="mini" onclick="downloadR2File('${esc(f.storagePath)}','${esc(f.label||f.name)}',this)">Descargar</button><button class="mini delete" onclick="deleteR2File('${esc(f.fileId||f.id)}','${role}','${esc(f.storagePath)}')">Eliminar</button></div></div>`;
 }
 async function hydrateImagePreviews(root){if(!s3||!root)return;const imgs=[...root.querySelectorAll('.file-preview-img[data-storage-path]')];imgs.forEach(img=>{if(img.dataset.loaded==='1')return;img.dataset.loaded='1';try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:img.dataset.storagePath,Expires:3600});img.src=url;img.onload=()=>img.classList.add('ready');img.onerror=()=>{const box=img.parentElement;if(box){box.classList.remove('has-preview');box.textContent=img.dataset.fallback||'IMG'}};}catch(e){console.info('Vista previa no disponible:',e);const box=img.parentElement;if(box){box.classList.remove('has-preview');box.textContent=img.dataset.fallback||'IMG'}}});}
 
@@ -1566,7 +1623,8 @@ async function loadExternalDeliveryLinks(){
     if(badge)badge.textContent=`${links.length} enlace${links.length===1?'':'s'}`;
     host.innerHTML=links.length?links.map(link=>{
       const safeUrl=normalizeExternalUrl(link.url),provider=link.provider||externalProviderFromUrl(safeUrl),title=link.title||link.label||'Archivo externo';
-      return `<div class="external-link-item"><div class="external-link-icon">${esc(providerAbbr(provider))}</div><div class="external-link-info"><div class="external-link-title">${esc(title)}</div><div class="external-link-meta">${esc(provider)} · ${esc(safeUrl||'Enlace no válido')}</div>${link.note?`<div class="external-link-note">${esc(link.note)}</div>`:''}</div><div class="external-link-actions">${safeUrl?`<a class="mini external-link-open" href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">Abrir</a>`:''}<button class="mini delete" onclick="deleteExternalDeliveryLink('${esc(link.id)}')">Eliminar</button></div></div>`;
+      const state=adminDeliveryAccessState(selected),activity=selected?.externalDeliveryActivity?.[String(link.id)]||{},opened=activity.lastOpenedAt?niceDateTime(activity.lastOpenedAt):'Nunca abierto',openCount=Math.max(0,Number(activity.openCount||0));
+      return `<div class="external-link-item"><div class="external-link-icon">${esc(providerAbbr(provider))}</div><div class="external-link-info"><div class="external-link-title">${esc(title)}</div><div class="external-link-meta">${esc(provider)} · ${esc(safeUrl||'Enlace no válido')}</div>${link.note?`<div class="external-link-note">${esc(link.note)}</div>`:''}<span class="file-visibility ${state.cls}">${esc(state.label)}</span><div class="file-client-activity"><strong>Cliente:</strong> ${esc(opened)}${openCount?` · ${openCount} apertura${openCount===1?'':'s'}`:''}</div></div><div class="external-link-actions">${safeUrl?`<a class="mini external-link-open" href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">Abrir</a>`:''}<button class="mini delete" onclick="deleteExternalDeliveryLink('${esc(link.id)}')">Eliminar</button></div></div>`;
     }).join(''):'<div class="sub">Aún no hay enlaces externos.</div>';
   }catch(e){console.error(e);host.innerHTML='<div class="sub">No se pudieron cargar los enlaces externos.</div>';}
 }
@@ -1600,8 +1658,19 @@ window.deleteExternalDeliveryLink=async function(linkId){
   }catch(e){console.error(e);toast(e?.message||'No se pudo eliminar el enlace.');}
 };
 
+window.refreshDeliveryActivity=async function(){
+  if(!selected)return;
+  try{
+    const snap=await getDoc(doc(db,'users',selected.ownerUid,'projects',selected.id));
+    if(snap.exists())Object.assign(selected,snap.data());
+    renderPaymentPreviewAdmin();
+    await loadFiles();
+    toast('Actividad del cliente actualizada.');
+  }catch(e){console.error(e);toast('No se pudo actualizar la actividad.');}
+};
+
 async function getProjectFiles(role){const col=role==='delivery'?'deliveryFiles':'clientFiles';const s=await getDocs(collection(db,'users',selected.ownerUid,'projects',selected.id,col));return s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateMs(b.uploadedAt)-dateMs(a.uploadedAt))}
-async function loadFiles(){if(!selected)return;try{clearPreviewObjectUrls();const [clientFilesAll,deliveryFilesAll]=await Promise.all([getProjectFiles('client'),getProjectFiles('delivery')]);await loadExternalDeliveryLinks();const clientFiles=clientFilesAll.filter(f=>f.availability!=='deleted');const deliveryFiles=deliveryFilesAll.filter(f=>f.availability!=='deleted');$('clientFiles').innerHTML=clientFiles.map(f=>fileHTML(f,'client')).join('')||'<div class="sub">No hay archivos del cliente disponibles.</div>';$('deliveryFiles').innerHTML=deliveryFiles.map(f=>fileHTML(f,'delivery')).join('')||'<div class="sub">Aún no has enviado archivos al cliente.</div>';await Promise.allSettled([hydrateImagePreviews($('clientFiles')),hydrateImagePreviews($('deliveryFiles'))])}catch(e){console.error(e);$('clientFiles').innerHTML='<div class="sub">No se pudieron cargar los archivos.</div>'}}
+async function loadFiles(){if(!selected)return;try{clearPreviewObjectUrls();const latest=await getDoc(doc(db,'users',selected.ownerUid,'projects',selected.id));if(latest.exists())Object.assign(selected,latest.data());renderPaymentPreviewAdmin();const [clientFilesAll,deliveryFilesAll]=await Promise.all([getProjectFiles('client'),getProjectFiles('delivery')]);await loadExternalDeliveryLinks();const clientFiles=clientFilesAll.filter(f=>f.availability!=='deleted');const deliveryFiles=deliveryFilesAll.filter(f=>f.availability!=='deleted');$('clientFiles').innerHTML=clientFiles.map(f=>fileHTML(f,'client')).join('')||'<div class="sub">No hay archivos del cliente disponibles.</div>';$('deliveryFiles').innerHTML=deliveryFiles.map(f=>fileHTML(f,'delivery')).join('')||'<div class="sub">Aún no has enviado archivos al cliente.</div>';await Promise.allSettled([hydrateImagePreviews($('clientFiles')),hydrateImagePreviews($('deliveryFiles'))])}catch(e){console.error(e);$('clientFiles').innerHTML='<div class="sub">No se pudieron cargar los archivos.</div>'}}
 
 // === LÓGICA DE CLOUDFLARE R2 PARA DESCARGAR ARCHIVOS ===
 window.downloadR2File = async function(storagePath, fileName, btn) {
@@ -1684,6 +1753,27 @@ window.saveProject=async function(){
       updatedAt:serverTimestamp()
     };
 
+    // Estados de pago visibles en el selector, sin confundirlos con una entrega real.
+    if(nextStatus==='payment_pending_review'){
+      projectPatch.paymentStatus='pending_review';
+      projectPatch.paymentReviewStatus='pending';
+      projectPatch.paymentVerifiedByAdmin=false;
+      projectPatch.deliveryLocked=true;
+    }else if(nextStatus==='payment_failed'){
+      projectPatch.paymentStatus='rejected';
+      projectPatch.paymentReviewStatus='rejected';
+      projectPatch.paymentVerifiedByAdmin=false;
+      projectPatch.deliveryLocked=true;
+    }
+
+    // PUBLICACIÓN EXPLÍCITA: los archivos finales solo se publican cuando Administración guarda Entregado.
+    if(nextStatus==='delivered'){
+      projectPatch.deliveryPublished=true;
+      projectPatch.deliveryPublishedAt=selected.deliveryPublished===true?selected.deliveryPublishedAt||serverTimestamp():serverTimestamp();
+    }else{
+      projectPatch.deliveryPublished=false;
+    }
+
     // Historial del proceso: se registra la primera vez que el proyecto alcanza cada etapa.
     // También sirve para proyectos antiguos: si ya estaba en Entregado y no tenía deliveredAt,
     // al guardar nuevamente se fija la fecha final sin alterar sus archivos ni el pago.
@@ -1717,6 +1807,7 @@ window.saveProject=async function(){
     selected.projectConfig={...(selected.projectConfig||{}),baseUsd:newPrice};
     selected.projectTitle=newTitle;
     selected.status=nextStatus;
+    selected.deliveryPublished=nextStatus==='delivered';
     if(nextStatus==='files_received'&&!selected.filesReceivedAt)selected.filesReceivedAt=new Date();
     if(nextStatus==='assigned'&&!selected.assignedAt)selected.assignedAt=new Date();
     if(nextStatus==='in_progress'&&!selected.workStartedAt)selected.workStartedAt=new Date();
@@ -1727,6 +1818,7 @@ window.saveProject=async function(){
 
     $('drawerTitle').textContent=newTitle;
     updateFinancialPreview(false);
+    refreshStatusQuickUI();
     setProjectDirty(false);
 
     if(btn){
