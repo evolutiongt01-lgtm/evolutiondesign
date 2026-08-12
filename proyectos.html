@@ -1644,7 +1644,32 @@
       function dateTimeText(v){const d=dateValue(v);if(!d)return '';let s=new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'numeric',month:'long',hour:'numeric',minute:'2-digit',hour12:true}).format(d).replace(/^./,x=>x.toUpperCase());return s.replace(/a\.\s*m\./gi,'AM').replace(/p\.\s*m\./gi,'PM');}
       function ext(name){const p=String(name||'').split('.');return p.length>1?p.pop().slice(0,4).toUpperCase():'FILE';}
       function isImageFile(file){const type=String(file?.contentType||'').toLowerCase(),name=String(file?.name||file?.label||'').toLowerCase();return type.startsWith('image/')||/\.(jpe?g|png|webp|gif|bmp|avif|heic|heif)$/i.test(name);}
-      function projectPaid(project){return project?.paymentStatus==='paid'||(!project?.paymentStatus&&!!project?.transactionId);}
+      function projectPaid(project){
+        const raw=String(project?.paymentStatus||'').trim().toLowerCase();
+        if(raw==='paid')return true;
+        // Un estado explícitamente pendiente/rechazado SIEMPRE manda sobre referencias antiguas.
+        if(['pending','pending_review','rejected','awaiting_payment','payment_failed','failed'].includes(raw))return false;
+        const request=String(project?.paymentRequestStatus||'').trim().toLowerCase();
+        if(project?.paymentRequested===true||['pending','pending_review','rejected'].includes(request)||project?.deliveryLocked===true)return false;
+        // Compatibilidad LEGACY: solo considerar una transacción antigua como pagada cuando no existe
+        // ninguna señal de cobro pendiente ni una corrección administrativa explícita.
+        return !raw&&!!project?.transactionId&&project?.paymentVerifiedByAdmin!==false;
+      }
+      function normalizeProjectRecord(raw,id,userUid){
+        const source=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
+        const cfg=source.projectConfig&&typeof source.projectConfig==='object'&&!Array.isArray(source.projectConfig)?source.projectConfig:{};
+        const geo=source.lastGeo&&typeof source.lastGeo==='object'&&!Array.isArray(source.lastGeo)?source.lastGeo:{};
+        return {
+          id:String(id||source.id||''),ownerUid:userUid||source.ownerUid||'',...source,
+          projectConfig:cfg,lastGeo:geo,
+          status:typeof source.status==='string'&&source.status.trim()?source.status:'waiting_files',
+          paymentStatus:typeof source.paymentStatus==='string'?source.paymentStatus:'',
+          paymentRequestStatus:typeof source.paymentRequestStatus==='string'?source.paymentRequestStatus:'',
+          paymentMethod:typeof source.paymentMethod==='string'?source.paymentMethod:'',
+          clientComments:source.clientComments==null?'':source.clientComments,
+          deliveryNote:source.deliveryNote==null?'':source.deliveryNote
+        };
+      }
       function paymentRequestActive(project){
         if(projectPaid(project))return false;
         if(project?.paymentRequestStatus==='cancelled'||project?.paymentRequestStatus==='paid')return false;
@@ -2513,6 +2538,16 @@
         }catch(e){console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo preparar PayPal.</div>';if(button)button.style.display='inline-block';}
       };
 
+      function renderProjectSafe(project,index){
+        try{return renderProject(project,index)}
+        catch(error){
+          console.error('No se pudo renderizar el proyecto:',project?.id,error);
+          const title=project?.projectTitle||project?.projectConfig?.packageName||'Proyecto Evolution Design';
+          const order=project?.displayOrderId||project?.id||'—';
+          return `<section class="project-shell" data-project-id="${esc(project?.id||'')}"><div class="empty-panel"><div class="page-kicker">Proyecto disponible</div><h4 class="text-white fw-bold mb-2">${esc(title)}</h4><p class="text-secondary small mb-2">${esc(order)}</p><p class="text-secondary small mb-0">Tuvimos un problema mostrando un detalle de esta ficha, pero tu proyecto y tus archivos siguen seguros. Recarga la página; si persiste, administración puede revisar este proyecto sin afectar los demás.</p></div></section>`;
+        }
+      }
+
       function emptyState(title,text){const c=document.getElementById('lista-proyectos-container'),e=document.getElementById('sin-proyectos-msg');if(c)c.innerHTML='';if(e){e.style.display='block';const h=e.querySelector('h4'),p=e.querySelector('p');if(h)h.textContent=title;if(p)p.textContent=text;}}
       function clearFileListeners(){while(fileListeners.length){try{fileListeners.pop()();}catch{}}}
 
@@ -2592,7 +2627,7 @@
       const loadingWatchdog=setTimeout(()=>{
         if(projectsResolved)return;
         const c=document.getElementById('lista-proyectos-container');
-        if(c&&c.textContent.includes('Cargando tus proyectos')) c.innerHTML='<div class="empty-panel text-center"><h4 class="text-white fw-bold mb-2">Firebase está tardando demasiado</h4><p class="text-secondary small mb-0">La sesión está abierta, pero Firestore todavía no respondió. Verifica que hayas publicado las reglas de Firestore.</p></div>';
+        if(c&&c.textContent.includes('Cargando tus proyectos')) c.innerHTML='<div class="empty-panel text-center"><h4 class="text-white fw-bold mb-2">Estamos cargando tus proyectos</h4><p class="text-secondary small mb-0">La sesión está abierta, pero la información está tardando más de lo normal. Recarga la página si continúa así.</p></div>';
       },8000);
 
       function listenSubscriptions(user){
@@ -2660,41 +2695,48 @@
 
         unsubscribeProjects=onSnapshot(projectsCol,snap=>{
           projectsResolved=true;clearTimeout(loadingWatchdog);
+          try{
+            const uiState=captureProjectUiState(container);
+            const collapseIds=new Set(collapseProjectOnNextSnapshot);
+            collapseProjectOnNextSnapshot.clear();
+            collapseIds.forEach(id=>uiState.openProjects.delete(id));
 
-          const uiState=captureProjectUiState(container);
-          const collapseIds=new Set(collapseProjectOnNextSnapshot);
-          collapseProjectOnNextSnapshot.clear();
-          collapseIds.forEach(id=>uiState.openProjects.delete(id));
+            clearFileListeners();
 
-          clearFileListeners();
+            const projects=snap.docs
+              .map(d=>normalizeProjectRecord(d.data(),d.id,user.uid))
+              .sort((a,b)=>(dateValue(b.createdAt)?.getTime?.()||0)-(dateValue(a.createdAt)?.getTime?.()||0));
 
-          const projects=snap.docs
-            .map(d=>({id:d.id,ownerUid:user.uid,...d.data()}))
-            .sort((a,b)=>dateValue(b.createdAt)-dateValue(a.createdAt));
+            const webProjects=projects.filter(p=>{try{return isWebProjectPortal(p)}catch(e){console.info('Clasificación web omitida:',p?.id,e);return false}});
+            const architectureProjects=projects.filter(p=>!webProjects.includes(p));
 
-          const webProjects=projects.filter(isWebProjectPortal);
-          const architectureProjects=projects.filter(p=>!isWebProjectPortal(p));
+            if(architectureCount)architectureCount.textContent=String(architectureProjects.length);
 
-          if(architectureCount)architectureCount.textContent=String(architectureProjects.length);
+            let webProjectCount=0;
+            try{webProjectCount=renderWebProjectsMinimal(webProjects)}catch(e){console.error('Render proyectos web:',e);if(webHost)webHost.innerHTML='<div class="receipt-empty">No pudimos mostrar temporalmente los proyectos web.</div>'}
+            if(webCount)webCount.textContent=String(webProjectCount||0);
 
-          const webProjectCount=renderWebProjectsMinimal(webProjects);
-          if(webCount)webCount.textContent=String(webProjectCount);
+            if(container){
+              container.innerHTML=architectureProjects.length
+                ?architectureProjects.map((p,i)=>renderProjectSafe(p,i)).join('')
+                :'';
+            }
+            if(architectureEmpty)architectureEmpty.style.display=architectureProjects.length?'none':'block';
 
-          if(container){
-            container.innerHTML=architectureProjects.length
-              ?architectureProjects.map(renderProject).join('')
-              :'';
+            try{restoreProjectUiState(container,uiState,collapseIds)}catch(e){console.info('Estado visual omitido:',e)}
+
+            // Un fallo en archivos/actividad de UN proyecto jamás puede bloquear toda la lista.
+            architectureProjects.forEach(p=>{
+              try{
+                if(projectPaid(p)||paymentRequestActive(p)||p.deliveryLocked===true||String(p.paymentPreviewStoragePath||'').trim()||String(p.status||'')==='delivered')attachFiles(user,p);
+              }catch(e){console.error('Archivos del proyecto omitidos:',p?.id,e)}
+            });
+
+            if(generalEmpty)generalEmpty.style.display='none';
+          }catch(renderError){
+            console.error('Render general de Mis Proyectos:',renderError);
+            if(container)container.innerHTML='<div class="empty-panel text-center"><h4 class="text-white fw-bold mb-2">Tus proyectos están seguros</h4><p class="text-secondary small mb-0">No pudimos mostrar temporalmente la lista. Recarga la página; ningún archivo fue eliminado.</p></div>';
           }
-          if(architectureEmpty)architectureEmpty.style.display=architectureProjects.length?'none':'block';
-
-          restoreProjectUiState(container,uiState,collapseIds);
-
-          // Arquitectura conserva exactamente el sistema privado de archivos.
-          architectureProjects.forEach(p=>{
-            if((p.paymentStatus==='paid'||(!p.paymentStatus&&p.transactionId)||paymentRequestActive(p)||p.deliveryLocked===true||String(p.paymentPreviewStoragePath||'').trim()||String(p.status||'')==='delivered'))attachFiles(user,p);
-          });
-
-          if(generalEmpty)generalEmpty.style.display='none';
         },e=>{
           projectsResolved=true;clearTimeout(loadingWatchdog);
           console.error('Firestore projects:',e);
