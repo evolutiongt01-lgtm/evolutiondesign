@@ -326,7 +326,20 @@
 .payment-request-badge.paid{border-color:rgba(43,200,102,.25);background:rgba(43,200,102,.07);color:#55d981}.payment-request-badge.review{color:#f0cf91}.payment-request-badge.cancelled{color:#999;border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.03)}
 .payment-request-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.payment-request-actions .btn{flex:1;min-width:160px}.payment-request-actions .btn.payment-manual{border-color:rgba(43,200,102,.25);color:#62dd8c}.payment-request-actions .btn.payment-cancel{border-color:rgba(255,255,255,.1);color:#aaa}
 .payment-request-lock{margin-top:10px;padding:10px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(0,0,0,.16)}
-@media(max-width:700px){.payment-request-status-row{align-items:flex-start}.payment-request-actions{display:grid;grid-template-columns:1fr}.payment-request-actions .btn{min-width:0}}
+.payment-client-message-admin{margin:0 0 12px;padding:12px;border:1px solid rgba(91,170,255,.18);border-radius:12px;background:linear-gradient(145deg,rgba(91,170,255,.055),rgba(255,255,255,.012))}.payment-client-message-admin.hidden{display:none}.payment-client-message-admin-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}.payment-client-message-admin-head strong{font-size:11px;color:#dcecff}.payment-client-message-admin-head span{font-size:9px;color:#6f7d8e}.payment-client-message-admin-text{white-space:pre-wrap;overflow-wrap:anywhere;color:#d7d7db;font-size:11px;line-height:1.55}
+.payment-preview-admin{margin-top:12px;border:1px solid rgba(212,184,149,.16);border-radius:13px;background:rgba(0,0,0,.18);padding:12px}
+.payment-preview-admin-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}.payment-preview-admin-head strong{display:block;font-size:11px;color:#fff}.payment-preview-admin-head span{display:block;font-size:9px;color:#777;margin-top:3px;line-height:1.45}
+.payment-preview-admin-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(210px,.65fr);gap:10px;align-items:stretch}.payment-preview-drop{min-height:160px;border:1px dashed rgba(212,184,149,.28);border-radius:11px;background:#080809;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}.payment-preview-drop img{width:100%;height:100%;max-height:310px;object-fit:contain;display:block;background:#070708}.payment-preview-empty{padding:20px;text-align:center;color:#777;font-size:10px;line-height:1.5}.payment-preview-watermark{position:absolute;inset:auto 10px 10px auto;padding:5px 8px;border-radius:999px;background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.12);color:#ddd;font-size:8px;font-weight:800;letter-spacing:.08em}
+.payment-preview-controls{display:flex;flex-direction:column;justify-content:center;gap:8px}.payment-preview-controls .input{padding:8px;font-size:10px}.payment-preview-controls .btn{width:100%}.payment-preview-meta{font-size:9px;color:#777;line-height:1.45;overflow-wrap:anywhere}.payment-preview-remove{border-color:rgba(255,100,100,.18)!important;color:#ff8f96!important}
+@media(max-width:700px){.payment-request-status-row{align-items:flex-start}.payment-request-actions{display:grid;grid-template-columns:1fr}.payment-request-actions .btn{min-width:0}.payment-preview-admin-grid{grid-template-columns:1fr}.payment-preview-drop{min-height:190px}}
+
+
+/* ENLACES EXTERNOS DE ENTREGA · MEGA / DRIVE / DROPBOX / OTROS */
+.external-links-admin{margin-top:14px;border:1px solid rgba(91,170,255,.16);border-radius:14px;background:linear-gradient(145deg,rgba(91,170,255,.045),rgba(255,255,255,.012));padding:14px}
+.external-links-admin-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}.external-links-admin-head strong{display:block;font-size:11px;color:#edf6ff}.external-links-admin-head span{display:block;font-size:9px;color:#718091;margin-top:3px;line-height:1.5}.external-link-count{padding:5px 8px;border-radius:999px;border:1px solid rgba(91,170,255,.2);background:rgba(91,170,255,.055);color:#a9d2ff;font-size:9px;font-weight:800;white-space:nowrap}
+.external-link-form{display:grid;grid-template-columns:minmax(130px,.42fr) minmax(150px,.62fr) minmax(0,1.4fr);gap:9px;align-items:end}.external-link-form .field{margin:0}.external-link-form .field.full{grid-column:1/-1}.external-link-submit-row{grid-column:1/-1;display:flex;gap:8px;align-items:center;justify-content:flex-end}.external-link-submit-row .hint{margin-right:auto;max-width:650px}.external-link-list{display:grid;gap:8px;margin-top:12px}.external-link-item{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.07);border-radius:11px;background:rgba(0,0,0,.22);min-width:0}.external-link-icon{width:39px;height:39px;border-radius:10px;border:1px solid rgba(91,170,255,.15);background:rgba(91,170,255,.06);color:#a9d2ff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;flex:0 0 39px}.external-link-info{min-width:0;flex:1}.external-link-title{font-size:11px;color:#eee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.external-link-meta{font-size:9px;color:#677789;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.external-link-note{font-size:9px;color:#8b8b91;line-height:1.45;margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}.external-link-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.external-link-open{color:#9dd0ff!important;border-color:rgba(91,170,255,.19)!important}
+@media(max-width:900px){.external-link-form{grid-template-columns:1fr 1fr}.external-link-form .field.url-field{grid-column:1/-1}}
+@media(max-width:620px){.external-link-form{grid-template-columns:1fr}.external-link-form .field.url-field,.external-link-form .field.full{grid-column:auto}.external-link-submit-row{display:grid;grid-template-columns:1fr}.external-link-submit-row .hint{margin:0}.external-link-item{align-items:flex-start;flex-wrap:wrap}.external-link-actions{width:100%;justify-content:flex-start;padding-left:49px}}
 
 </style>
 </head>
@@ -467,12 +480,25 @@
       <div class="section-b">
         <div class="payment-request-card">
           <div class="payment-request-status-row"><div class="payment-request-status-copy"><strong id="paymentRequestStatusTitle">Sin solicitud activa</strong><span id="paymentRequestStatusHelp">Puedes solicitar el pago sin borrar ni volver a subir archivos.</span></div><span id="paymentRequestBadge" class="payment-request-badge">Pendiente</span></div>
+          <div id="clientPaymentMessageAdmin" class="payment-client-message-admin hidden"><div class="payment-client-message-admin-head"><strong>Mensaje del cliente sobre el pago</strong><span id="clientPaymentMessageDate">—</span></div><div id="clientPaymentMessageText" class="payment-client-message-admin-text"></div></div>
           <div class="form-grid">
             <div class="field"><label>Monto a cobrar USD</label><div class="price-field-wrap"><span class="price-prefix">$</span><input id="paymentRequestAmount" class="input" type="number" min="1" step="0.01" inputmode="decimal"></div><div class="hint">Se usa como importe de la pasarela PayPal de esta orden.</div></div>
             <div class="field"><label>Vista previa antes del pago</label><input class="input" value="1 imagen" disabled><div class="hint">Solo se firma y muestra una imagen; los demás archivos no reciben enlace de R2.</div></div>
             <div class="field full"><label>Mensaje para el cliente</label><textarea id="paymentRequestNote" class="textarea" placeholder="Ej. Tu proyecto ya está terminado. Completa el pago para descargar la entrega final."></textarea></div>
           </div>
           <label class="check payment-request-lock"><input id="paymentRequestLock" type="checkbox" checked> Bloquear entregas hasta que el pago sea confirmado</label>
+          <div class="payment-preview-admin">
+            <div class="payment-preview-admin-head"><div><strong>Lámina arquitectónica de muestra</strong><span>Sube una imagen teaser independiente de los archivos finales. El cliente la verá antes de pagar con marca de muestra y sin botón de descarga.</span></div><span id="paymentPreviewStatusBadge" class="payment-request-badge">Sin lámina</span></div>
+            <div class="payment-preview-admin-grid">
+              <div id="paymentPreviewAdminView" class="payment-preview-drop"><div class="payment-preview-empty">Aún no has subido una lámina de muestra para este proyecto.</div></div>
+              <div class="payment-preview-controls">
+                <input id="paymentPreviewInput" class="input" type="file" accept="image/jpeg,image/png,image/webp,image/avif">
+                <button id="paymentPreviewUploadBtn" class="btn btn-accent" type="button" onclick="uploadPaymentPreview()">Subir / reemplazar lámina</button>
+                <button id="paymentPreviewRemoveBtn" class="btn payment-preview-remove" type="button" onclick="deletePaymentPreview()">Quitar lámina</button>
+                <div id="paymentPreviewMeta" class="payment-preview-meta">JPG, PNG, WEBP o AVIF · Máx. 50 MB.</div>
+              </div>
+            </div>
+          </div>
           <div class="payment-request-actions">
             <button id="requestPaymentBtn" class="btn btn-accent" type="button" onclick="requestClientPayment()">Solicitar pago al cliente</button>
             <button id="markPaidManualBtn" class="btn payment-manual" type="button" onclick="markProjectPaidManual()">Marcar pagado / desbloquear</button>
@@ -640,6 +666,45 @@
           <div id="deliveryUploadStatus" class="upload-status"></div>
         </div>
         <div id="deliveryFiles" class="files"></div>
+
+        <div class="external-links-admin">
+          <div class="external-links-admin-head">
+            <div><strong>Enlaces externos de entrega</strong><span>Para archivos pesados puedes usar MEGA, Google Drive, Dropbox, OneDrive, WeTransfer u otra nube sin consumir almacenamiento de R2. Si el proyecto tiene cobro bloqueado, estos enlaces también permanecen ocultos hasta confirmar el pago.</span></div>
+            <span id="deliveryLinkCountBadge" class="external-link-count">0 enlaces</span>
+          </div>
+          <div class="external-link-form">
+            <div class="field">
+              <label>Proveedor</label>
+              <select id="deliveryLinkProvider" class="input">
+                <option value="auto">Detectar automáticamente</option>
+                <option value="MEGA">MEGA</option>
+                <option value="Google Drive">Google Drive</option>
+                <option value="Dropbox">Dropbox</option>
+                <option value="OneDrive">OneDrive</option>
+                <option value="WeTransfer">WeTransfer</option>
+                <option value="Otro">Otra nube</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Nombre para el cliente</label>
+              <input id="deliveryLinkTitle" class="input" placeholder="Ej. Modelo SketchUp completo">
+            </div>
+            <div class="field url-field">
+              <label>Enlace</label>
+              <input id="deliveryLinkUrl" class="input" type="url" inputmode="url" placeholder="https://mega.nz/...">
+            </div>
+            <div class="field full">
+              <label>Nota opcional</label>
+              <input id="deliveryLinkNote" class="input" placeholder="Ej. Archivo de 3.8 GB · contraseña incluida en el mensaje de entrega">
+            </div>
+            <div class="external-link-submit-row">
+              <div class="hint">El enlace se guarda en Firestore, no en R2. Se mostrará al cliente únicamente cuando la entrega esté desbloqueada.</div>
+              <button id="deliveryLinkAddBtn" class="btn btn-accent" type="button" onclick="addExternalDeliveryLink()">Agregar enlace</button>
+            </div>
+          </div>
+          <div id="deliveryLinksAdminList" class="external-link-list"><div class="sub">Aún no hay enlaces externos.</div></div>
+        </div>
+
       </div>
     </div>
 
@@ -999,7 +1064,7 @@ function paymentStatusExtra(p){if(!hasPaymentReceipt(p))return'';const state=pay
 function renderPaymentReceipts(){
   const term=String($('paymentSearch')?.value||'').toLowerCase(),filter=$('paymentReviewFilter')?.value||'';
   const all=(data.projects||[]).filter(hasPaymentReceipt);
-  const rows=all.filter(p=>{const state=paymentReviewState(p);const hay=[p.displayOrderId,p.projectTitle,p.ownerEmail,p.payerName,p.paymentMethod,p.bankName,p.manualPaymentReference,p.transactionId].some(x=>String(x||'').toLowerCase().includes(term));return(!filter||state===filter)&&(!term||hay)});
+  const rows=all.filter(p=>{const state=paymentReviewState(p);const hay=[p.displayOrderId,p.projectTitle,p.ownerEmail,p.payerName,p.paymentMethod,p.bankName,p.manualPaymentReference,p.transactionId,p.clientPaymentComment].some(x=>String(x||'').toLowerCase().includes(term));return(!filter||state===filter)&&(!term||hay)});
   if($('paymentReceiptsBody'))$('paymentReceiptsBody').innerHTML=rows.map(p=>{const state=paymentReviewState(p);return `<tr><td><div class="strong">${esc(p.displayOrderId||p.id)}</div><div class="sub">${esc(p.projectTitle||'Proyecto')}</div></td><td><div>${esc(p.payerName||p.ownerEmail||'Cliente')}</div><div class="sub">${esc(p.ownerEmail||'')}</div></td><td><div>${esc(p.paymentMethod||'Pago manual')}</div>${p.bankName?`<div class="sub">${esc(p.bankName)}</div>`:''}</td><td><span class="strong">${esc(paymentExpectedText(p))}</span><div class="sub">${usd(p.baseUsd)} base</div></td><td>${esc(p.manualPaymentReference||p.transactionId||'—')}</td><td><span class="payment-table-status ${state}">${esc(paymentReviewLabel(p))}</span></td><td>${esc(niceDateTime(p.paymentSubmittedAt||p.createdAt))}</td><td><button class="mini" onclick="openProject('${esc(p.ownerUid)}','${esc(p.id)}')">Revisar</button></td></tr>`}).join('')||'<tr><td colspan="8">No hay comprobantes en este filtro.</td></tr>';
   const pending=all.filter(p=>paymentReviewState(p)==='pending').length,approved=all.filter(p=>paymentReviewState(p)==='approved').length,rejected=all.filter(p=>paymentReviewState(p)==='rejected').length;
   if($('paymentReviewCount')){$('paymentReviewCount').textContent=pending;$('paymentReviewCount').classList.toggle('zero',pending===0)}
@@ -1014,7 +1079,7 @@ async function renderPaymentProof(){
   const state=paymentReviewState(selected),badge=$('paymentProofBadge');
   if(badge){badge.className=`payment-proof-badge ${state==='approved'?'approved':state==='rejected'?'rejected':''}`;badge.textContent=paymentReviewLabel(selected)}
   if($('paymentReviewNote'))$('paymentReviewNote').value=selected.paymentReviewNote||selected.paymentRejectionReason||'';
-  const details=[['Método',selected.paymentMethod||selected.paymentProvider||'Pago manual'],['Monto esperado',paymentExpectedText(selected)],['Referencia',selected.manualPaymentReference||selected.transactionId||'—'],['Banco',selected.bankName||selected.bankKey||'—'],['Archivo',selected.receiptName||'Comprobante'],['Enviado',niceDateTime(selected.paymentSubmittedAt||selected.createdAt)]];
+  const details=[['Método',selected.paymentMethod||selected.paymentProvider||'Pago manual'],['Monto esperado',paymentExpectedText(selected)],['Referencia',selected.manualPaymentReference||selected.transactionId||'—'],['Banco',selected.bankName||selected.bankKey||'—'],['Archivo',selected.receiptName||'Comprobante'],['Enviado',niceDateTime(selected.paymentSubmittedAt||selected.createdAt)],...(String(selected.clientPaymentComment||'').trim()?[['Mensaje del cliente',selected.clientPaymentComment]]:[])];
   $('paymentProofDetails').innerHTML=details.map(x=>`<div class="payment-proof-detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
   const preview=$('paymentReceiptPreview');preview.innerHTML='<div class="payment-receipt-empty"><strong>Cargando comprobante…</strong>Preparando vista previa.</div>';
   if(!s3){preview.innerHTML='<div class="payment-receipt-empty"><strong>R2 no disponible</strong>Usa la descarga cuando la conexión esté disponible.</div>';return}
@@ -1251,11 +1316,52 @@ function renderPaymentRequestAdmin(){
   }
   if($('paymentRequestAmount'))$('paymentRequestAmount').value=Number(selected.paymentRequestedAmountUsd??selected.baseUsd??0).toFixed(2);
   if($('paymentRequestNote'))$('paymentRequestNote').value=selected.paymentRequestNote||'';
+  const clientPaymentMessage=String(selected.clientPaymentComment||'').trim(),clientPaymentBox=$('clientPaymentMessageAdmin');
+  if(clientPaymentBox){clientPaymentBox.classList.toggle('hidden',!clientPaymentMessage);if($('clientPaymentMessageText'))$('clientPaymentMessageText').textContent=clientPaymentMessage;if($('clientPaymentMessageDate'))$('clientPaymentMessageDate').textContent=clientPaymentMessage?(selected.clientPaymentCommentAt?niceDateTime(selected.clientPaymentCommentAt):'Mensaje recibido'):'—';}
   if($('paymentRequestLock'))$('paymentRequestLock').checked=selected.deliveryLocked!==false;
   if($('requestPaymentBtn'))$('requestPaymentBtn').disabled=paid||selected.paymentStatus==='pending_review';
   if($('markPaidManualBtn'))$('markPaidManualBtn').disabled=paid;
   if($('cancelPaymentRequestBtn'))$('cancelPaymentRequestBtn').disabled=paid||!(selected.paymentRequested===true||selected.paymentRequestStatus==='pending');
+  renderPaymentPreviewAdmin();
 }
+function paymentPreviewIsImage(file){return !!file&&(/^image\/(jpeg|png|webp|avif)$/i.test(String(file.type||''))||/\.(jpe?g|png|webp|avif)$/i.test(String(file.name||'')))}
+function renderPaymentPreviewAdmin(){
+  const view=$('paymentPreviewAdminView'),badge=$('paymentPreviewStatusBadge'),meta=$('paymentPreviewMeta'),remove=$('paymentPreviewRemoveBtn');
+  if(!view||!selected)return;
+  const path=String(selected.paymentPreviewStoragePath||'').trim();
+  if(badge){badge.textContent=path?'Lámina activa':'Sin lámina';badge.className=`payment-request-badge ${path?'paid':''}`.trim();}
+  if(remove)remove.disabled=!path;
+  if(!path){view.innerHTML='<div class="payment-preview-empty">Aún no has subido una lámina de muestra para este proyecto.</div>';if(meta)meta.textContent='JPG, PNG, WEBP o AVIF · Máx. 50 MB.';return;}
+  if(meta)meta.textContent=`${selected.paymentPreviewName||'Lámina de muestra'}${selected.paymentPreviewSize?` · ${bytes(selected.paymentPreviewSize)}`:''}`;
+  if(!s3){view.innerHTML='<div class="payment-preview-empty">Lámina guardada. La vista previa requiere conexión a R2.</div>';return;}
+  try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:path,Expires:900});view.innerHTML=`<img src="${esc(url)}" alt="Lámina arquitectónica de muestra"><span class="payment-preview-watermark">MUESTRA · EVOLUTION DESIGN</span>`;}catch(e){console.error(e);view.innerHTML='<div class="payment-preview-empty">No se pudo cargar la vista previa de la lámina.</div>';}
+}
+window.uploadPaymentPreview=async function(){
+  if(!selected)return;
+  const input=$('paymentPreviewInput'),file=input?.files?.[0];
+  if(!file){toast('Selecciona la imagen de la lámina.');return;}
+  if(!paymentPreviewIsImage(file)){toast('La lámina debe ser JPG, PNG, WEBP o AVIF.');return;}
+  if(file.size>50*1024*1024){toast('La lámina supera el máximo de 50 MB.');return;}
+  if(!s3){toast('No hay conexión a Cloudflare R2.');return;}
+  const btn=$('paymentPreviewUploadBtn'),oldPath=String(selected.paymentPreviewStoragePath||'').trim();
+  try{
+    if(btn){btn.disabled=true;btn.textContent='Subiendo lámina…';}
+    const fileId=newFileId(),safeName=safeR2Name(file.name||'lamina-muestra.jpg'),path=`projects/${selected.ownerUid}/${selected.id}/payment-preview/${fileId}/${safeName}`;
+    const req=s3.putObject({Bucket:R2_BUCKET_NAME,Key:path,Body:file,ContentType:file.type||'image/jpeg'});
+    await req.promise();
+    const patch={paymentPreviewStoragePath:path,paymentPreviewName:file.name||safeName,paymentPreviewContentType:file.type||'image/jpeg',paymentPreviewSize:Number(file.size||0),paymentPreviewUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()};
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
+    if(oldPath&&oldPath!==path){try{await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:oldPath}).promise();}catch(e){console.info('La lámina anterior no pudo eliminarse de R2:',e);}}
+    Object.assign(selected,patch);if(input)input.value='';renderPaymentPreviewAdmin();toast('Lámina de muestra actualizada. El cliente la verá antes de pagar.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo subir la lámina de muestra.');}
+  finally{if(btn){btn.disabled=false;btn.textContent='Subir / reemplazar lámina';}}
+};
+window.deletePaymentPreview=async function(){
+  if(!selected)return;const path=String(selected.paymentPreviewStoragePath||'').trim();if(!path){toast('Este proyecto no tiene lámina de muestra.');return;}
+  if(!confirm('¿Quitar la lámina de muestra? Los archivos finales no se tocarán.'))return;
+  const btn=$('paymentPreviewRemoveBtn');
+  try{if(btn){btn.disabled=true;btn.textContent='Quitando…';}if(s3){try{await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:path}).promise();}catch(e){console.info('No se pudo borrar la lámina de R2:',e);}}const patch={paymentPreviewStoragePath:'',paymentPreviewName:'',paymentPreviewContentType:'',paymentPreviewSize:0,paymentPreviewUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()};await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);Object.assign(selected,patch);renderPaymentPreviewAdmin();toast('Lámina de muestra eliminada. Las entregas finales siguen intactas.');}catch(e){console.error(e);toast(e?.message||'No se pudo quitar la lámina.');}finally{if(btn){btn.disabled=false;btn.textContent='Quitar lámina';}}
+};
 window.requestClientPayment=async function(){
   if(!selected)return;
   if(String(selected.paymentStatus||'').toLowerCase()==='paid'){toast('Este proyecto ya está pagado.');return;}
@@ -1335,7 +1441,7 @@ window.openProject=async function(uid,id){
       ['Entrega estimada',adminWebEtaText(selected)],
       ['Plazo','4 días hábiles · lunes a viernes']
     ]:[]),
-    ['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados`]
+    ['Archivos',`${selected.clientFileCount||0} recibidos · ${selected.deliveryFileCount||0} enviados · ${selected.deliveryLinkCount||0} enlaces externos`]
   ].map(x=>`<div class="detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
   $('editProjectTitle').value=selected.projectTitle||'Proyecto';
   $('editStatus').value=selected.status||'waiting_files';
@@ -1348,6 +1454,7 @@ window.openProject=async function(uid,id){
   $('editDeliveryNote').value=selected.deliveryNote||'';
   $('editAdminNotes').value=selected.adminMeta?.adminNotes||'';
   renderPaymentRequestAdmin();
+  if($('paymentPreviewInput'))$('paymentPreviewInput').value='';
   $('includedList').innerHTML=(selected.projectConfig?.includedHighlights||[]).map(x=>`<span>${esc(x)}</span>`).join('')||'<span>Orden personalizada</span>';
   pendingClientAdminFiles=[];
   pendingDeliveryFiles=[];
@@ -1356,6 +1463,10 @@ window.openProject=async function(uid,id){
   $('clientAdminLabel').value='';
   $('deliveryFileInput').value='';
   $('deliveryLabel').value='';
+  if($('deliveryLinkProvider'))$('deliveryLinkProvider').value='auto';
+  if($('deliveryLinkTitle'))$('deliveryLinkTitle').value='';
+  if($('deliveryLinkUrl'))$('deliveryLinkUrl').value='';
+  if($('deliveryLinkNote'))$('deliveryLinkNote').value='';
   renderPendingFiles('client');
   renderPendingFiles('delivery');
   $('clientAdminProgress').style.width='0%';
@@ -1385,8 +1496,75 @@ function fileHTML(f,role){
 }
 async function hydrateImagePreviews(root){if(!s3||!root)return;const imgs=[...root.querySelectorAll('.file-preview-img[data-storage-path]')];imgs.forEach(img=>{if(img.dataset.loaded==='1')return;img.dataset.loaded='1';try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:img.dataset.storagePath,Expires:3600});img.src=url;img.onload=()=>img.classList.add('ready');img.onerror=()=>{const box=img.parentElement;if(box){box.classList.remove('has-preview');box.textContent=img.dataset.fallback||'IMG'}};}catch(e){console.info('Vista previa no disponible:',e);const box=img.parentElement;if(box){box.classList.remove('has-preview');box.textContent=img.dataset.fallback||'IMG'}}});}
 
+
+
+// === ENLACES EXTERNOS DE ENTREGA (MEGA / DRIVE / DROPBOX / ETC.) ===
+function normalizeExternalUrl(raw){
+  const value=String(raw||'').trim();
+  if(!value)return '';
+  try{const u=new URL(value);if(!['http:','https:'].includes(u.protocol))return '';return u.href;}catch{return '';}
+}
+function externalProviderFromUrl(url){
+  try{
+    const host=new URL(url).hostname.toLowerCase();
+    if(host.includes('mega.nz')||host.includes('mega.io'))return'MEGA';
+    if(host.includes('drive.google.com')||host.includes('docs.google.com'))return'Google Drive';
+    if(host.includes('dropbox.com'))return'Dropbox';
+    if(host.includes('1drv.ms')||host.includes('onedrive.live.com')||host.includes('sharepoint.com'))return'OneDrive';
+    if(host.includes('wetransfer.com')||host.includes('we.tl'))return'WeTransfer';
+  }catch{}
+  return'Otra nube';
+}
+function providerAbbr(name){const s=String(name||'LINK').toUpperCase();if(s.includes('MEGA'))return'MEGA';if(s.includes('GOOGLE'))return'DRIVE';if(s.includes('DROPBOX'))return'DROP';if(s.includes('ONEDRIVE'))return'1DR';if(s.includes('WETRANSFER'))return'WET';return'LINK'}
+async function getExternalDeliveryLinks(){
+  if(!selected)return[];
+  const snap=await getDocs(collection(db,'users',selected.ownerUid,'projects',selected.id,'deliveryLinks'));
+  return snap.docs.map(d=>({id:d.id,...d.data()})).filter(x=>x.availability!=='deleted').sort((a,b)=>dateMs(b.createdAt)-dateMs(a.createdAt));
+}
+async function loadExternalDeliveryLinks(){
+  const host=$('deliveryLinksAdminList'),badge=$('deliveryLinkCountBadge');
+  if(!host||!selected)return;
+  try{
+    const links=await getExternalDeliveryLinks();
+    if(badge)badge.textContent=`${links.length} enlace${links.length===1?'':'s'}`;
+    host.innerHTML=links.length?links.map(link=>{
+      const safeUrl=normalizeExternalUrl(link.url),provider=link.provider||externalProviderFromUrl(safeUrl),title=link.title||link.label||'Archivo externo';
+      return `<div class="external-link-item"><div class="external-link-icon">${esc(providerAbbr(provider))}</div><div class="external-link-info"><div class="external-link-title">${esc(title)}</div><div class="external-link-meta">${esc(provider)} · ${esc(safeUrl||'Enlace no válido')}</div>${link.note?`<div class="external-link-note">${esc(link.note)}</div>`:''}</div><div class="external-link-actions">${safeUrl?`<a class="mini external-link-open" href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">Abrir</a>`:''}<button class="mini delete" onclick="deleteExternalDeliveryLink('${esc(link.id)}')">Eliminar</button></div></div>`;
+    }).join(''):'<div class="sub">Aún no hay enlaces externos.</div>';
+  }catch(e){console.error(e);host.innerHTML='<div class="sub">No se pudieron cargar los enlaces externos.</div>';}
+}
+window.addExternalDeliveryLink=async function(){
+  if(!selected)return;
+  const url=normalizeExternalUrl($('deliveryLinkUrl')?.value),title=String($('deliveryLinkTitle')?.value||'').trim().slice(0,120),note=String($('deliveryLinkNote')?.value||'').trim().slice(0,500);
+  if(!url){toast('Pega un enlace válido que comience con https://');return;}
+  if(!title){toast('Escribe un nombre para que el cliente sepa qué contiene el enlace.');return;}
+  const selectedProvider=String($('deliveryLinkProvider')?.value||'auto'),provider=selectedProvider==='auto'?externalProviderFromUrl(url):selectedProvider;
+  const btn=$('deliveryLinkAddBtn');
+  try{
+    if(btn){btn.disabled=true;btn.textContent='Agregando…';}
+    const ref=doc(collection(db,'users',selected.ownerUid,'projects',selected.id,'deliveryLinks'));
+    const payload={ownerUid:selected.ownerUid,projectId:selected.id,linkId:ref.id,role:'delivery_external',provider,title,label:title,url,note,availability:'active',createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
+    await setDoc(ref,payload);
+    const nextCount=Math.max(0,Number(selected.deliveryLinkCount||0))+1;
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),{deliveryLinkCount:nextCount,updatedAt:serverTimestamp()});
+    selected.deliveryLinkCount=nextCount;
+    if($('deliveryLinkUrl'))$('deliveryLinkUrl').value='';if($('deliveryLinkTitle'))$('deliveryLinkTitle').value='';if($('deliveryLinkNote'))$('deliveryLinkNote').value='';if($('deliveryLinkProvider'))$('deliveryLinkProvider').value='auto';
+    await loadExternalDeliveryLinks();toast('Enlace externo agregado a la entrega.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo agregar el enlace.');}
+  finally{if(btn){btn.disabled=false;btn.textContent='Agregar enlace';}}
+};
+window.deleteExternalDeliveryLink=async function(linkId){
+  if(!selected||!linkId||!confirm('¿Eliminar este enlace de la entrega del cliente? El archivo original en MEGA/Drive no se borrará.'))return;
+  try{
+    await deleteDoc(doc(db,'users',selected.ownerUid,'projects',selected.id,'deliveryLinks',linkId));
+    const nextCount=Math.max(0,Number(selected.deliveryLinkCount||0)-1);
+    await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),{deliveryLinkCount:nextCount,updatedAt:serverTimestamp()});
+    selected.deliveryLinkCount=nextCount;await loadExternalDeliveryLinks();toast('Enlace eliminado del proyecto.');
+  }catch(e){console.error(e);toast(e?.message||'No se pudo eliminar el enlace.');}
+};
+
 async function getProjectFiles(role){const col=role==='delivery'?'deliveryFiles':'clientFiles';const s=await getDocs(collection(db,'users',selected.ownerUid,'projects',selected.id,col));return s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>dateMs(b.uploadedAt)-dateMs(a.uploadedAt))}
-async function loadFiles(){if(!selected)return;try{clearPreviewObjectUrls();const [clientFilesAll,deliveryFilesAll]=await Promise.all([getProjectFiles('client'),getProjectFiles('delivery')]);const clientFiles=clientFilesAll.filter(f=>f.availability!=='deleted');const deliveryFiles=deliveryFilesAll.filter(f=>f.availability!=='deleted');$('clientFiles').innerHTML=clientFiles.map(f=>fileHTML(f,'client')).join('')||'<div class="sub">No hay archivos del cliente disponibles.</div>';$('deliveryFiles').innerHTML=deliveryFiles.map(f=>fileHTML(f,'delivery')).join('')||'<div class="sub">Aún no has enviado archivos al cliente.</div>';await Promise.allSettled([hydrateImagePreviews($('clientFiles')),hydrateImagePreviews($('deliveryFiles'))])}catch(e){console.error(e);$('clientFiles').innerHTML='<div class="sub">No se pudieron cargar los archivos.</div>'}}
+async function loadFiles(){if(!selected)return;try{clearPreviewObjectUrls();const [clientFilesAll,deliveryFilesAll]=await Promise.all([getProjectFiles('client'),getProjectFiles('delivery')]);await loadExternalDeliveryLinks();const clientFiles=clientFilesAll.filter(f=>f.availability!=='deleted');const deliveryFiles=deliveryFilesAll.filter(f=>f.availability!=='deleted');$('clientFiles').innerHTML=clientFiles.map(f=>fileHTML(f,'client')).join('')||'<div class="sub">No hay archivos del cliente disponibles.</div>';$('deliveryFiles').innerHTML=deliveryFiles.map(f=>fileHTML(f,'delivery')).join('')||'<div class="sub">Aún no has enviado archivos al cliente.</div>';await Promise.allSettled([hydrateImagePreviews($('clientFiles')),hydrateImagePreviews($('deliveryFiles'))])}catch(e){console.error(e);$('clientFiles').innerHTML='<div class="sub">No se pudieron cargar los archivos.</div>'}}
 
 // === LÓGICA DE CLOUDFLARE R2 PARA DESCARGAR ARCHIVOS ===
 window.downloadR2File = async function(storagePath, fileName, btn) {
@@ -1860,7 +2038,7 @@ window.deleteProject=async function(){
       }
     }
     
-    for(const sub of ['clientFiles','deliveryFiles']){const snap=await getDocs(collection(db,'users',selected.ownerUid,'projects',selected.id,sub));for(const d of snap.docs)await deleteDoc(d.ref)}
+    for(const sub of ['clientFiles','deliveryFiles','deliveryLinks']){const snap=await getDocs(collection(db,'users',selected.ownerUid,'projects',selected.id,sub));for(const d of snap.docs)await deleteDoc(d.ref)}
     await deleteDoc(doc(db,'users',selected.ownerUid,'projects',selected.id));
     await deleteDoc(doc(db,'adminProjectData',`${selected.ownerUid}__${selected.id}`)).catch(()=>{});
     closeProject();toast('Proyecto y archivos eliminados.');await refresh();
