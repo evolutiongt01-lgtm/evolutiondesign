@@ -336,6 +336,12 @@
 .payment-request-badge{padding:5px 8px;border-radius:999px;border:1px solid rgba(212,184,149,.23);background:rgba(212,184,149,.07);color:#d4b895;font-size:9px;font-weight:800;white-space:nowrap}
 .payment-request-badge.paid{border-color:rgba(43,200,102,.25);background:rgba(43,200,102,.07);color:#55d981}.payment-request-badge.review{color:#f0cf91}.payment-request-badge.cancelled{color:#999;border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.03)}
 .payment-request-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.payment-request-actions .btn{flex:1;min-width:160px}.payment-request-actions .btn.payment-manual{border-color:rgba(43,200,102,.25);color:#62dd8c}.payment-request-actions .btn.payment-cancel{border-color:rgba(255,255,255,.1);color:#aaa}
+.payment-paid-correction{display:none;margin:12px 0 0;padding:13px 14px;border:1px solid rgba(255,89,89,.35);border-radius:14px;background:linear-gradient(135deg,rgba(255,70,70,.11),rgba(255,255,255,.018));box-shadow:0 10px 30px rgba(255,60,60,.05)}
+.payment-paid-correction.show{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.payment-paid-correction-copy strong{display:block;color:#ff9b9b;font-size:.78rem;letter-spacing:.02em}.payment-paid-correction-copy span{display:block;color:#b7b7bb;font-size:.67rem;line-height:1.5;margin-top:3px}
+.payment-paid-correction .btn{border-color:rgba(255,89,89,.45);color:#ff9b9b;background:rgba(255,70,70,.06);font-weight:800}
+.payment-paid-correction .btn:hover{background:rgba(255,70,70,.14);color:#fff}
+
 .payment-request-lock{margin-top:10px;padding:10px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(0,0,0,.16)}
 .payment-client-message-admin{margin:0 0 12px;padding:12px;border:1px solid rgba(91,170,255,.18);border-radius:12px;background:linear-gradient(145deg,rgba(91,170,255,.055),rgba(255,255,255,.012))}.payment-client-message-admin.hidden{display:none}.payment-client-message-admin-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}.payment-client-message-admin-head strong{font-size:11px;color:#dcecff}.payment-client-message-admin-head span{font-size:9px;color:#6f7d8e}.payment-client-message-admin-text{white-space:pre-wrap;overflow-wrap:anywhere;color:#d7d7db;font-size:11px;line-height:1.55}
 .payment-preview-admin{margin-top:12px;border:1px solid rgba(212,184,149,.16);border-radius:13px;background:rgba(0,0,0,.18);padding:12px}
@@ -509,6 +515,10 @@
             <div class="field full"><label>Mensaje para el cliente</label><textarea id="paymentRequestNote" class="textarea" placeholder="Ej. Tu proyecto ya está terminado. Completa el pago para descargar la entrega final."></textarea></div>
           </div>
           <label class="check payment-request-lock"><input id="paymentRequestLock" type="checkbox" checked> Bloquear entregas hasta que el pago sea confirmado</label>
+          <div id="paidCorrectionBox" class="payment-paid-correction">
+            <div class="payment-paid-correction-copy"><strong>⚠ ESTE PROYECTO FIGURA COMO PAGADO</strong><span>Mientras Firestore tenga el pago como confirmado, el cliente puede descargar las entregas publicadas. Si fue marcado por error, corrígelo antes de que el cliente entre.</span></div>
+            <button id="reopenPaymentBtn" class="btn" type="button" onclick="reopenPaymentAsPending()">Corregir → marcar pendiente y bloquear</button>
+          </div>
           <div class="payment-preview-admin">
             <div class="payment-preview-admin-head"><div><strong>Lámina arquitectónica de muestra</strong><span>Sube una imagen teaser independiente de los archivos finales. El cliente la verá antes de pagar con marca de muestra y sin botón de descarga.</span></div><span id="paymentPreviewStatusBadge" class="payment-request-badge">Sin lámina</span></div>
             <div class="payment-preview-admin-grid">
@@ -1384,6 +1394,8 @@ function renderPaymentRequestAdmin(){
   const clientPaymentMessage=String(selected.clientPaymentComment||'').trim(),clientPaymentBox=$('clientPaymentMessageAdmin');
   if(clientPaymentBox){clientPaymentBox.classList.toggle('hidden',!clientPaymentMessage);if($('clientPaymentMessageText'))$('clientPaymentMessageText').textContent=clientPaymentMessage;if($('clientPaymentMessageDate'))$('clientPaymentMessageDate').textContent=clientPaymentMessage?(selected.clientPaymentCommentAt?niceDateTime(selected.clientPaymentCommentAt):'Mensaje recibido'):'—';}
   if($('paymentRequestLock'))$('paymentRequestLock').checked=selected.deliveryLocked!==false;
+  const correctionBox=$('paidCorrectionBox');
+  if(correctionBox)correctionBox.classList.toggle('show',paid);
   if($('requestPaymentBtn'))$('requestPaymentBtn').disabled=paid||selected.paymentStatus==='pending_review';
   if($('markPaidManualBtn'))$('markPaidManualBtn').disabled=paid;
   if($('cancelPaymentRequestBtn'))$('cancelPaymentRequestBtn').disabled=paid||!(selected.paymentRequested===true||selected.paymentRequestStatus==='pending');
@@ -1434,6 +1446,59 @@ window.deletePaymentPreview=async function(){
   const btn=$('paymentPreviewRemoveBtn');
   try{if(btn){btn.disabled=true;btn.textContent='Quitando…';}if(s3){try{await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:path}).promise();}catch(e){console.info('No se pudo borrar la lámina de R2:',e);}}const patch={paymentPreviewStoragePath:'',paymentPreviewName:'',paymentPreviewContentType:'',paymentPreviewSize:0,paymentPreviewUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()};await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);Object.assign(selected,patch);renderPaymentPreviewAdmin();toast('Lámina de muestra eliminada. Las entregas finales siguen intactas.');}catch(e){console.error(e);toast(e?.message||'No se pudo quitar la lámina.');}finally{if(btn){btn.disabled=false;btn.textContent='Quitar lámina';}}
 };
+
+window.reopenPaymentAsPending=async function(){
+  if(!selected)return;
+  const raw=String(selected.paymentStatus||'').toLowerCase();
+  if(raw!=='paid'){toast('Este proyecto ya no figura como pagado.');renderPaymentRequestAdmin();return;}
+  const amount=Math.max(0,Number($('paymentRequestAmount')?.value||selected.paymentRequestedAmountUsd||selected.baseUsd||0));
+  if(!Number.isFinite(amount)||amount<=0){toast('Escribe primero el monto real a cobrar.');return;}
+  const lock=$('paymentRequestLock')?.checked!==false;
+  const note=String($('paymentRequestNote')?.value||selected.paymentRequestNote||'').trim().slice(0,600);
+  const keepStatus=selected.status||'delivered';
+  const msg=`Este proyecto está marcado como PAGADO y por eso el cliente tiene acceso a las entregas.\n\n¿Corregirlo a PAGO PENDIENTE por ${usd(amount)}${lock?' y bloquear inmediatamente las entregas':''}?\n\nNo se borrará ningún archivo, lámina ni enlace.`;
+  if(!confirm(msg))return;
+  const btn=$('reopenPaymentBtn'),uid=selected.ownerUid,id=selected.id;
+  try{
+    if(btn){btn.disabled=true;btn.textContent='Corrigiendo…';}
+    const patch={
+      previousPaymentStatus:'paid',
+      previousPaidAt:selected.paidAt||null,
+      previousPaymentMethod:selected.paymentMethod||'',
+      previousTransactionId:selected.transactionId||'',
+      paymentStatus:'pending',
+      paymentReviewStatus:'pending',
+      paymentVerifiedByAdmin:false,
+      paymentVerifiedByAdminEmail:'',
+      paymentRequested:true,
+      paymentRequestStatus:'pending',
+      paymentRequestedAmountUsd:amount,
+      paymentRequestNote:note,
+      paymentRequestProjectStatus:keepStatus,
+      deliveryLocked:lock,
+      paymentMethod:'Pendiente de elección',
+      paidAt:null,
+      paymentVerifiedAt:null,
+      paymentUnlockedAt:null,
+      paymentCorrectedAt:serverTimestamp(),
+      paymentCorrectedByAdminEmail:auth.currentUser?.email||'',
+      updatedAt:serverTimestamp()
+    };
+    await updateDoc(doc(db,'users',uid,'projects',id),patch);
+    toast(lock?'Pago corregido a pendiente. Entregas bloqueadas.':'Pago corregido a pendiente.');
+    await refresh();
+    selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||{...selected,...patch};
+    renderPaymentRequestAdmin();
+    await loadFiles();
+    await renderPaymentProof();
+  }catch(e){
+    console.error(e);
+    toast(e?.message||'No se pudo corregir el estado de pago.');
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='Corregir → marcar pendiente y bloquear';}
+  }
+};
+
 window.requestClientPayment=async function(){
   if(!selected)return;
   if(String(selected.paymentStatus||'').toLowerCase()==='paid'){toast('Este proyecto ya está pagado.');return;}
