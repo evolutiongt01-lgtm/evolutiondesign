@@ -1243,7 +1243,7 @@
       .file-empty{color:var(--muted);font-size:.65rem;padding:.8rem;border:1px dashed var(--line-soft);border-radius:11px;text-align:center;margin-top:.8rem}
       .submit-files-wrap{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-top:.9rem}.submit-files-wrap .send-btn{width:auto;min-width:190px;margin:0}.files-feedback{color:var(--muted);font-size:.63rem;line-height:1.45;flex:1;min-width:180px}.files-feedback.success{color:#55d981}.files-feedback.error{color:#ff7d88}
       .delivery-files-card{margin-top:1rem;padding:1.45rem}.delivery-files-card .project-file-icon{color:#55d981;background:rgba(43,200,102,.08);border-color:rgba(43,200,102,.16)}
-      .pending-order-box{padding:1rem;border-radius:14px;border:1px solid rgba(212,184,149,.2);background:linear-gradient(135deg,rgba(212,184,149,.08),rgba(255,255,255,.015));margin-top:1rem}.pending-order-title{font-size:.78rem;font-weight:700}.pending-order-copy{font-size:.65rem;color:var(--muted);line-height:1.5;margin:.3rem 0 .8rem}.pending-pay-btn{border:0;border-radius:11px;padding:.68rem .9rem;background:var(--accent);color:#111;font-size:.7rem;font-weight:800;cursor:pointer}.custom-paypal-wrap{margin-top:.8rem;background:#fff;border-radius:12px;padding:.8rem;display:none}
+      .pending-order-box{padding:1rem;border-radius:14px;border:1px solid rgba(212,184,149,.2);background:linear-gradient(135deg,rgba(212,184,149,.08),rgba(255,255,255,.015));margin-top:1rem}.pending-order-title{font-size:.78rem;font-weight:700}.pending-order-copy{font-size:.65rem;color:var(--muted);line-height:1.5;margin:.3rem 0 .8rem}.pending-pay-btn{border:0;border-radius:11px;padding:.68rem .9rem;background:var(--accent);color:#111;font-size:.7rem;font-weight:800;cursor:pointer}.custom-paypal-wrap{position:relative;margin-top:.8rem;background:#fff;border-radius:12px;padding:.8rem;display:none;overflow:hidden}.project-paypal-processing{position:absolute;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;background:rgba(10,10,11,.965);color:#f4f1ec;padding:1rem;text-align:center}.project-paypal-processing-box{display:flex;align-items:center;gap:.65rem;font-size:.72rem;font-weight:800}.project-paypal-spinner{width:17px;height:17px;border:2px solid rgba(212,184,149,.24);border-top-color:#d4b895;border-radius:50%;animation:projectPaySpin .72s linear infinite}@keyframes projectPaySpin{to{transform:rotate(360deg)}}
       .payment-pending-note{display:flex;align-items:center;gap:.5rem;color:#d7bd9b;font-size:.68rem;margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--line-soft)}
       @media(max-width:575.98px){.file-upload-head{align-items:stretch}.file-pick-btn{width:100%;min-height:44px}.project-file-row{padding:.65rem}.submit-files-wrap{display:block}.submit-files-wrap .send-btn{width:100%;margin-bottom:.65rem}.delivery-files-card{padding:1.1rem}.project-file-name{font-size:.67rem}}
 
@@ -1658,6 +1658,20 @@
       function dateValue(v){if(!v)return null;if(typeof v.toDate==='function')return v.toDate();const d=new Date(v);return Number.isNaN(d.getTime())?null:d;}
       function dateText(v){const d=dateValue(v);if(!d)return '';return new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'numeric',month:'long'}).format(d).replace(/^./,x=>x.toUpperCase());}
       function dateTimeText(v){const d=dateValue(v);if(!d)return '';let s=new Intl.DateTimeFormat('es-GT',{weekday:'long',day:'numeric',month:'long',hour:'numeric',minute:'2-digit',hour12:true}).format(d).replace(/^./,x=>x.toUpperCase());return s.replace(/a\.\s*m\./gi,'AM').replace(/p\.\s*m\./gi,'PM');}
+      function estimatedDeliveryFromPayment(v){
+        const base=dateValue(v)||new Date();
+        const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Guatemala',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(base);
+        const pick=t=>Number(parts.find(p=>p.type===t)?.value||0);
+        const calendar=new Date(Date.UTC(pick('year'),pick('month')-1,pick('day')));
+        let added=0;
+        while(added<3){
+          calendar.setUTCDate(calendar.getUTCDate()+1);
+          const weekday=calendar.getUTCDay();
+          if(weekday!==0&&weekday!==6)added++;
+        }
+        const randomMinute=Math.floor(Math.random()*60);
+        return new Date(Date.UTC(calendar.getUTCFullYear(),calendar.getUTCMonth(),calendar.getUTCDate(),28,randomMinute,0,0));
+      }
       function ext(name){const p=String(name||'').split('.');return p.length>1?p.pop().slice(0,4).toUpperCase():'FILE';}
       function isImageFile(file){const type=String(file?.contentType||'').toLowerCase(),name=String(file?.name||file?.label||'').toLowerCase();return type.startsWith('image/')||/\.(jpe?g|png|webp|gif|bmp|avif|heic|heif)$/i.test(name);}
       function projectPaid(project){
@@ -2221,7 +2235,7 @@
           :paid?`<div class="ui-card comments-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"></path></svg></span>Comentarios del Cliente</h3><p class="section-copy">Añade especificaciones o notas especiales para el profesional asignado y confirma cuando hayas terminado de cargar tus archivos.</p><textarea id="comments-${unique}" class="custom-textarea" rows="3" placeholder="Ej. El terreno tiene una pendiente en la parte de atrás…">${esc(p.clientComments||'')}</textarea><div class="submit-files-wrap"><button class="send-btn" onclick="enviarArchivosProyecto('${esc(p.id)}','comments-${unique}','file-feedback-${unique}',this)">${submitted?'Guardar cambios':'Enviar archivos al equipo'}</button><div id="file-feedback-${unique}" class="files-feedback">${submitted?'Puedes agregar, eliminar o cambiar archivos y comentarios.':'Tus archivos se almacenan de forma segura en servidores de Evolution Group.'}</div></div></div>`:'';
         const finalTimeline=deliveredProcessTimeline(p);
 
-        const projectBody=`<div class="row g-0"><div class="col-12 col-lg-8 project-content-col"><div class="project-main"><div class="project-hero"><div class="hero-copy"><span class="project-badge">${esc(info.label)}</span><h2 class="project-name fw-bold text-white">${esc(title)}</h2><div class="order-id">Orden ID: <span>${esc(orderId)}</span></div>${renderSpecs(cfg.specs)}</div></div><div class="content-grid">${priceCard}${uploader}</div>${renderIncluded(cfg.includedHighlights)}${clientPreviewCard(p,unique)}<div id="delivery-files-card-${unique}"></div><div id="delivery-links-card-${unique}"></div>${comments}${finalTimeline}</div></div><div class="col-12 col-lg-4 project-status-col"><div class="status-wrap"><aside class="status-panel"><div class="status-title-row"><h3 class="status-heading">Estado del Proyecto</h3><span class="status-pill">${esc(info.label)}</span></div><div class="tracker-container"><div class="tracker-step ${step1}"><div class="tracker-icon">${paid?'✓':'1'}</div><div class="tracker-text"><div class="tracker-title">${step1Title}</div><p class="tracker-desc">${paid?'Transacción confirmada y proyecto habilitado.':pendingReview?'Tu comprobante está siendo verificado por administración.':rejectedPayment?'El pago no fue confirmado. Revisa la observación del administrador.':'Completa la orden personalizada para iniciar.'}</p></div></div><div class="tracker-step ${step2}"><div class="tracker-icon">${hasFiles?'✓':'2'}</div><div class="tracker-text"><div class="tracker-title">${step2Title}</div><p class="tracker-desc">${paid?(hasFiles?'Tu información ya está disponible para el equipo.':'Sube directamente los archivos requeridos.'):(pendingReview?'Se habilita cuando administración apruebe el pago.':'Disponible después del pago.')}</p></div></div><div class="tracker-step ${step3}"><div class="tracker-icon">${delivered?'✓':'3'}</div><div class="tracker-text"><div class="tracker-title">${step3Title}</div><p class="tracker-desc">${esc(professionalRole)} delegado: <span class="text-white fw-medium">${esc(professionalName)}</span></p></div></div></div><div class="delivery-card"><div class="delivery-label">◷ Entrega estimada</div><span class="delivery-date">${due?`Entrega estimada: <span class="accent-text">${esc(due)}</span>`:(paid?'Se calcula al enviar tus archivos.':'Se habilita después del pago.')}</span><span class="delivery-help">Las entregas se programan entre 10:00 PM y 11:00 PM del día estimado.</span></div></aside></div></div></div>`;
+        const projectBody=`<div class="row g-0"><div class="col-12 col-lg-8 project-content-col"><div class="project-main"><div class="project-hero"><div class="hero-copy"><span class="project-badge">${esc(info.label)}</span><h2 class="project-name fw-bold text-white">${esc(title)}</h2><div class="order-id">Orden ID: <span>${esc(orderId)}</span></div>${renderSpecs(cfg.specs)}</div></div><div class="content-grid">${priceCard}${uploader}</div>${renderIncluded(cfg.includedHighlights)}${clientPreviewCard(p,unique)}<div id="delivery-files-card-${unique}"></div><div id="delivery-links-card-${unique}"></div>${comments}${finalTimeline}</div></div><div class="col-12 col-lg-4 project-status-col"><div class="status-wrap"><aside class="status-panel"><div class="status-title-row"><h3 class="status-heading">Estado del Proyecto</h3><span class="status-pill">${esc(info.label)}</span></div><div class="tracker-container"><div class="tracker-step ${step1}"><div class="tracker-icon">${paid?'✓':'1'}</div><div class="tracker-text"><div class="tracker-title">${step1Title}</div><p class="tracker-desc">${paid?'Transacción confirmada y proyecto habilitado.':pendingReview?'Tu comprobante está siendo verificado por administración.':rejectedPayment?'El pago no fue confirmado. Revisa la observación del administrador.':'Completa la orden personalizada para iniciar.'}</p></div></div><div class="tracker-step ${step2}"><div class="tracker-icon">${hasFiles?'✓':'2'}</div><div class="tracker-text"><div class="tracker-title">${step2Title}</div><p class="tracker-desc">${paid?(hasFiles?'Tu información ya está disponible para el equipo.':'Sube directamente los archivos requeridos.'):(pendingReview?'Se habilita cuando administración apruebe el pago.':'Disponible después del pago.')}</p></div></div><div class="tracker-step ${step3}"><div class="tracker-icon">${delivered?'✓':'3'}</div><div class="tracker-text"><div class="tracker-title">${step3Title}</div><p class="tracker-desc">${esc(professionalRole)} delegado: <span class="text-white fw-medium">${esc(professionalName)}</span></p></div></div></div><div class="delivery-card"><div class="delivery-label">◷ Entrega estimada</div><span class="delivery-date">${due?`Entrega estimada: <span class="accent-text">${esc(due)}</span>`:(paid?'La fecha se fija al confirmar el pago.':'Se habilita después del pago.')}</span><span class="delivery-help">Las entregas se programan entre 10:00 PM y 11:00 PM del día estimado.</span></div></aside></div></div></div>`;
 
         if(submitted||inputClosed){
           return `<details class="project-shell project-archive" data-project-id="${esc(p.id)}"><summary class="project-archive-summary"><div class="archive-main"><span class="archive-icon">✓</span><div class="archive-copy"><div class="archive-kicker">${delivered?'Proyecto finalizado':'Proyecto archivado'}</div><div class="archive-title">${esc(title)}</div><div class="archive-sub">${esc(orderId)} · ${delivered?'Entrega completada · historial conservado':'Información y archivos enviados'}</div></div></div><div class="archive-finance"><span class="archive-finance-label">Inversión total</span><span class="archive-finance-value">${esc(amount)} <small>${esc(currency)}</small></span><div class="archive-meta"><span class="archive-status">${esc(info.label)}</span>${due?`<span>${esc(due)}</span>`:''}</div></div><span class="archive-action"><span class="action-label">${delivered?'Ver historial':'Ver / actualizar'}</span><span class="chevron">⌄</span></span></summary><div class="project-archive-body">${projectBody}</div></details>`;
@@ -2393,18 +2407,11 @@
           }
           let estimatedDeliveryAt=current.estimatedDeliveryAt||null;
 
-          // La fecha se calcula una sola vez: 3 días hábiles después de la primera confirmación.
-          // La hora queda fija entre 10:00 PM y 10:59 PM para que no cambie al editar después.
+          // Normalmente el Worker fija esta fecha al confirmar el pago.
+          // Este fallback existe únicamente para proyectos antiguos/manuales que aún no la tengan:
+          // siempre parte de paidAt/paymentVerifiedAt, nunca del momento en que el cliente edita.
           if(!estimatedDeliveryAt){
-            const d=new Date();
-            let added=0;
-            while(added<3){
-              d.setDate(d.getDate()+1);
-              if(d.getDay()!==0&&d.getDay()!==6)added++;
-            }
-            const randomMinute=Math.floor(Math.random()*60);
-            d.setHours(22,randomMinute,0,0);
-            estimatedDeliveryAt=d;
+            estimatedDeliveryAt=estimatedDeliveryFromPayment(current.paidAt||current.paymentVerifiedAt||new Date());
           }
 
           // Solo el botón Guardar/Enviar debe cerrar la ficha.
@@ -2531,6 +2538,21 @@
         });
         return paypalPromises[currency];
       }
+
+      function setProjectPayPalProcessing(box,active,text='Verificando pago con PayPal…'){
+        if(!box)return;
+        let overlay=box.querySelector('.project-paypal-processing');
+        if(!active){overlay?.remove();return;}
+        if(!overlay){
+          overlay=document.createElement('div');
+          overlay.className='project-paypal-processing';
+          overlay.innerHTML='<div class="project-paypal-processing-box"><span class="project-paypal-spinner"></span><span class="project-paypal-processing-text"></span></div>';
+          box.appendChild(overlay);
+        }
+        const label=overlay.querySelector('.project-paypal-processing-text');
+        if(label)label.textContent=text;
+      }
+
       window.prepararPagoPersonalizado=async function(projectId,containerId,button){
         const box=document.getElementById(containerId);if(!box)return;
         const user=auth.currentUser;if(!user?.uid){box.innerHTML='<div style="color:#a00;padding:.6rem">Tu sesión ya no está activa.</div>';return;}
@@ -2552,17 +2574,21 @@
             },
             onApprove:async d=>{
               try{
-                box.innerHTML='Confirmando pago seguro…';
+                setProjectPayPalProcessing(box,true,'Verificando pago con PayPal…');
                 const result=await evolutionWorkerPost('/paypal/capture-order',{orderId:d.orderID});
                 box.innerHTML=`<div style="color:#176b38;padding:.7rem;font-weight:700">✓ Pago confirmado${result.emailSent?' y correo enviado':''}. ${result.mode==='project_balance'?'El saldo quedó desbloqueado. La entrega final se publicará por separado cuando corresponda.':'Tu cuenta ya fue actualizada.'}</div>`;
               }catch(e){
                 console.error(e);
-                box.innerHTML=`<div style="color:#a00;padding:.6rem">${esc(e?.message||'No se pudo confirmar el pago en el servidor.')}</div>`;
+                setProjectPayPalProcessing(box,false);
+                const error=document.createElement('div');
+                error.style.cssText='color:#a00;padding:.6rem;text-align:center;font-size:.72rem';
+                error.textContent=e?.message||'No se pudo confirmar el pago en el servidor.';
+                box.appendChild(error);
                 if(button)button.style.display='inline-block';
               }
             },
-            onCancel:()=>{box.innerHTML='<div style="color:#777;padding:.6rem">Pago cancelado. Puedes intentarlo nuevamente.</div>';if(button)button.style.display='inline-block';},
-            onError:e=>{console.error(e);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo completar el pago.</div>';if(button)button.style.display='inline-block';}
+            onCancel:()=>{setProjectPayPalProcessing(box,false);box.innerHTML='<div style="color:#777;padding:.6rem">Pago cancelado. Puedes intentarlo nuevamente.</div>';if(button)button.style.display='inline-block';},
+            onError:e=>{console.error(e);setProjectPayPalProcessing(box,false);box.innerHTML='<div style="color:#a00;padding:.6rem">No se pudo completar el pago.</div>';if(button)button.style.display='inline-block';}
           }).render(`#${containerId}`);
         }catch(e){console.error(e);box.innerHTML=`<div style="color:#a00;padding:.6rem">${esc(e?.message||'No se pudo preparar PayPal.')}</div>`;if(button)button.style.display='inline-block';}
       };
