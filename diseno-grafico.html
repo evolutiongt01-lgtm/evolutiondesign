@@ -1340,6 +1340,27 @@ body.gd-modal-open{overflow:hidden}
 .gd-logo-upload-note{margin-top:9px;padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.05);color:#626773;font-size:.49rem;line-height:1.55}
 @media(max-width:767px){.gd-logo-upload-grid{grid-template-columns:1fr}.gd-logo-upload-card{min-height:112px}}
 
+
+/* =========================================================
+   TIEMPOS DE ENTREGA · CREATIVE SERVICES
+   ========================================================= */
+.gd-delivery-pill{
+  display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:7px 10px;
+  border:1px solid rgba(255,255,255,.075);border-radius:999px;
+  background:rgba(255,255,255,.022);color:#9297a1;
+  font-size:.51rem;font-weight:700;letter-spacing:.035em;
+}
+.gd-delivery-pill::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+  background:#78b5ff;box-shadow:0 0 12px rgba(120,181,255,.38)
+}
+.gd-logo-design .gd-delivery-pill::before{
+  background:#c18fff;box-shadow:0 0 12px rgba(193,143,255,.38)
+}
+.gd-video-card .gd-delivery-pill::before{
+  background:#8ad9b1;box-shadow:0 0 12px rgba(138,217,177,.35)
+}
+
 </style>
 <link href="index.html" rel="prefetch"/><link href="arquitectura.html" rel="prefetch"/><link href="diseno-web.html" rel="prefetch"/><style>
     /* =========================================================
@@ -1883,6 +1904,7 @@ body.gd-modal-open{overflow:hidden}
             <small>Precio por pieza</small>
           </div>
         </div>
+        <div class="gd-delivery-pill">Entrega estimada · 3 días hábiles</div>
 
         <div class="gd-custom-tags">
           <span>Post publicitario</span>
@@ -1934,6 +1956,7 @@ body.gd-modal-open{overflow:hidden}
           <span id="dgCurrencyLogo">USD / logo · pago único</span>
           <small class="gd-logo-price-note">Logo profesional desde cero o rediseño de una identidad existente.</small>
         </div>
+        <div class="gd-delivery-pill">Entrega estimada · 3 días hábiles</div>
 
         <div class="gd-logo-tags">
           <span>Logotipo</span>
@@ -1985,6 +2008,7 @@ body.gd-modal-open{overflow:hidden}
               <small id="dgVideoExtraRate">+$8 USD por minuto adicional iniciado</small>
             </div>
           </div>
+          <div class="gd-delivery-pill">Entrega estimada · 1 semana (5 días hábiles)</div>
 
           <a id="dgVideoCta"
              class="gd-video-cta"
@@ -2614,6 +2638,8 @@ body.gd-modal-open{overflow:hidden}
   const SERVICES={
     custom_design:{
       priceUsd:16,
+      deliveryBusinessDays:3,
+      deliveryLabel:'3 días hábiles',
       title:'Cuéntanos qué vamos a diseñar.',
       serviceLabel:'DISEÑO PERSONALIZADO',
       serviceName:'Diseño personalizado en Photoshop',
@@ -2631,6 +2657,8 @@ body.gd-modal-open{overflow:hidden}
     },
     logo_design:{
       priceUsd:100,
+      deliveryBusinessDays:3,
+      deliveryLabel:'3 días hábiles',
       title:'Construyamos la identidad de tu marca.',
       serviceLabel:'CREACIÓN DE LOGO',
       serviceName:'Creación de logo profesional',
@@ -2648,6 +2676,8 @@ body.gd-modal-open{overflow:hidden}
     },
     video_edit:{
       priceUsd:30,
+      deliveryBusinessDays:5,
+      deliveryLabel:'1 semana (5 días hábiles)',
       includedSeconds:60,
       extraMinuteUsd:8,
       title:'Cuéntanos qué video vamos a crear.',
@@ -2757,11 +2787,11 @@ body.gd-modal-open{overflow:hidden}
     document.getElementById('gdPayTotal').textContent=gt?`${localized} GTQ · PayPal cobra $${usd} USD`:`$${usd} USD`;
 
     if(activeService==='video_edit'){
-      document.getElementById('gdPayDescription').textContent=`Hasta 60 segundos cuestan $30 USD. Después se suman $8 USD por cada minuto adicional iniciado. PayPal procesará $${usd} USD; Binance Pay usa ${usd} USDT.`;
+      document.getElementById('gdPayDescription').textContent=`Hasta 60 segundos cuestan $30 USD. Después se suman $8 USD por cada minuto adicional iniciado. Entrega estimada: ${s.deliveryLabel}. PayPal procesará $${usd} USD; Binance Pay usa ${usd} USDT.`;
     }else if(activeService==='logo_design'){
       document.getElementById('gdPayDescription').textContent='Creación de logo profesional: $100 USD. PayPal procesa $100 USD, Binance Pay usa 100 USDT y en Guatemala también puedes pagar por transferencia en GTQ.';
     }else{
-      document.getElementById('gdPayDescription').textContent='PayPal procesará el cobro base de $16 USD. Binance Pay usa 16 USDT. En Guatemala también puedes pagar por transferencia en GTQ.';
+      document.getElementById('gdPayDescription').textContent=`Entrega estimada: ${s.deliveryLabel}. PayPal procesará el cobro base de $16 USD. Binance Pay usa 16 USDT. En Guatemala también puedes pagar por transferencia en GTQ.`;
     }
   };
 
