@@ -90,66 +90,42 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
 
 
 /* =========================================================
-   EXPERIENCE FINDER · 4 SOLUCIONES INTERACTIVAS
+   MAC PREVIEW WINDOWS · 4 SOLUCIONES
    ========================================================= */
-.finder-showcase-section{background:
-  radial-gradient(circle at 14% 12%,rgba(112,231,255,.055),transparent 24%),
-  radial-gradient(circle at 88% 82%,rgba(212,184,149,.055),transparent 26%),
-  linear-gradient(180deg,#050505,#070708)}
-.finder-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.finder-window{position:relative;min-width:0;border:1px solid rgba(255,255,255,.11);border-radius:23px;background:rgba(12,12,14,.88);box-shadow:0 26px 70px rgba(0,0,0,.28);overflow:hidden;transition:transform .36s var(--ease),border-color .36s ease,box-shadow .36s ease}
-.finder-window:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.19);box-shadow:0 35px 90px rgba(0,0,0,.38)}
-.finder-window.focused{grid-column:1/-1;transform:none}
-.finder-titlebar{height:48px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.075);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018))}
-.finder-traffic{display:flex;gap:6px}.finder-traffic i{width:10px;height:10px;border-radius:50%}.finder-traffic i:nth-child(1){background:#ff5f57}.finder-traffic i:nth-child(2){background:#febc2e}.finder-traffic i:nth-child(3){background:#28c840}
-.finder-title{text-align:center;min-width:0}.finder-title span{display:block;color:#d8d8dc;font-size:.64rem;font-weight:800}.finder-title small{display:block;margin-top:2px;color:#56565e;font-size:.48rem}
-.finder-focus{width:30px;height:30px;border-radius:9px;border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.025);color:#74747c;cursor:pointer;transition:.2s}.finder-focus:hover{background:rgba(255,255,255,.08);color:#fff}
-.finder-shell{display:grid;grid-template-columns:150px minmax(0,1fr);min-height:390px}
-.finder-sidebar{display:flex;flex-direction:column;padding:14px 9px 11px;border-right:1px solid rgba(255,255,255,.065);background:linear-gradient(180deg,rgba(255,255,255,.022),rgba(255,255,255,.008))}
-.finder-sidebar-label{padding:2px 9px 9px;color:#4f4f57;font-size:.49rem;font-weight:900;letter-spacing:.14em}
-.finder-nav{display:flex;align-items:center;gap:8px;width:100%;min-height:36px;padding:0 9px;border:0;border-radius:9px;background:transparent;color:#777780;text-align:left;font-size:.58rem;cursor:pointer;transition:.2s}.finder-nav span{width:18px;color:#606069;text-align:center;font-size:.68rem}.finder-nav:hover{color:#c9c9ce;background:rgba(255,255,255,.035)}.finder-nav.active{color:#f1f1f1;background:rgba(255,255,255,.075)}
-.finder-sidebar-bottom{display:flex;align-items:center;gap:7px;margin-top:auto;padding:10px 9px 1px;color:#54545c;font-size:.48rem}.finder-live-dot{width:6px;height:6px;border-radius:50%;background:#67f0a0;box-shadow:0 0 12px rgba(103,240,160,.45)}
-.finder-content{position:relative;min-width:0;padding:20px;background:radial-gradient(circle at 88% 10%,rgba(112,231,255,.035),transparent 24%)}
-.finder-pane{display:none;animation:finderPaneIn .3s var(--ease) both}.finder-pane.active{display:block}@keyframes finderPaneIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-.finder-content-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px}.finder-content-head small{color:#5d5d65;font-size:.49rem;font-weight:900;letter-spacing:.13em}.finder-content-head h3{max-width:480px;margin:7px 0 0;font-size:clamp(1.35rem,2vw,2.15rem);line-height:1;letter-spacing:-.05em}
-.finder-chip{flex:0 0 auto;padding:6px 8px;border:1px solid rgba(112,231,255,.11);border-radius:999px;background:rgba(112,231,255,.035);color:#70d8ed;font-size:.47rem;font-weight:900;letter-spacing:.08em}
-.finder-product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.finder-product{padding:9px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.016)}.finder-product-art{height:110px;border-radius:10px;background:#101114;position:relative;overflow:hidden}.finder-product-art::before{content:"";position:absolute;width:64px;height:64px;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-12deg);border-radius:20px;background:linear-gradient(145deg,var(--a),var(--b));box-shadow:0 15px 30px rgba(0,0,0,.28)}.art-one{--a:#d7d0c4;--b:#4e4942}.art-two{--a:#6ee6ff;--b:#1d3859}.art-three{--a:#b49cff;--b:#3b2467}.finder-product strong{display:block;margin-top:9px;font-size:.63rem}.finder-product small{display:block;margin-top:3px;color:#5f5f67;font-size:.49rem}
-.finder-list{display:grid;gap:7px}.finder-list>div{display:grid;grid-template-columns:28px 1fr auto auto;align-items:center;gap:9px;padding:9px 10px;border:1px solid rgba(255,255,255,.06);border-radius:11px;background:rgba(255,255,255,.012)}.finder-list-icon{width:26px;height:26px;border-radius:8px;background:linear-gradient(145deg,#262a31,#111216)}.finder-list strong{font-size:.58rem}.finder-list small{color:#5d5d65;font-size:.48rem}.finder-list b{font-size:.55rem}.finder-demo-action{margin-top:11px;min-height:36px;padding:0 12px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:#f1f1ef;color:#080808;font-size:.55rem;font-weight:900;cursor:pointer}
-.finder-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.finder-metrics>div{padding:15px;border:1px solid rgba(255,255,255,.07);border-radius:13px;background:rgba(255,255,255,.015)}.finder-metrics span{display:block;color:#62626a;font-size:.5rem}.finder-metrics strong{display:block;margin-top:8px;font-size:1.2rem;letter-spacing:-.04em}.finder-metrics small{display:block;margin-top:4px;color:#67d799;font-size:.48rem}
-.finder-school .finder-chip{border-color:rgba(103,240,160,.13);background:rgba(103,240,160,.04);color:#79dea1}.school-hero-mini{min-height:215px;padding:24px;border-radius:16px;background:radial-gradient(circle at 80% 18%,rgba(103,240,160,.16),transparent 27%),linear-gradient(145deg,#111814,#090d0b);display:flex;flex-direction:column;justify-content:flex-end}.school-hero-mini span{color:#70cc92;font-size:.48rem;font-weight:900;letter-spacing:.14em}.school-hero-mini strong{display:block;margin-top:8px;font-size:1.8rem;line-height:.95;letter-spacing:-.05em}.school-hero-mini button,.finder-form-demo button,.portfolio-contact-card button{width:max-content;margin-top:14px;min-height:34px;padding:0 12px;border:0;border-radius:999px;background:#f2f2ef;color:#090909;font-size:.52rem;font-weight:900}
-.finder-form-demo{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:15px;border:1px solid rgba(255,255,255,.07);border-radius:14px}.finder-form-demo label{display:grid;gap:6px;color:#66666e;font-size:.49rem}.finder-form-demo input,.finder-form-demo select{height:37px;padding:0 10px;border:1px solid rgba(255,255,255,.07);border-radius:9px;background:#0c0c0e;color:#cfcfd3;font-size:.55rem}.finder-form-demo button{grid-column:1/-1}
-.finder-events{display:grid;gap:7px}.finder-events>div{display:grid;grid-template-columns:42px 1fr;gap:10px;align-items:center;padding:10px;border:1px solid rgba(255,255,255,.06);border-radius:11px}.finder-events b{width:42px;height:42px;display:grid;place-items:center;border-radius:11px;background:rgba(103,240,160,.07);color:#7bd99c}.finder-events strong,.finder-events small{display:block}.finder-events strong{font-size:.58rem}.finder-events small{margin-top:3px;color:#5d5d64;font-size:.48rem}
-.finder-portfolio .finder-chip{border-color:rgba(174,140,255,.15);background:rgba(174,140,255,.045);color:#bca4ff}.portfolio-grid-mini{display:grid;grid-template-columns:1.25fr .75fr;grid-template-rows:110px 110px;gap:8px}.portfolio-shot{position:relative;border-radius:13px;overflow:hidden;background:linear-gradient(145deg,var(--s1),var(--s2))}.portfolio-shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.55))}.portfolio-shot span{position:absolute;z-index:2;left:10px;bottom:9px;color:#fff;font-size:.49rem;font-weight:900}.shot-a{grid-row:1/3;--s1:#30343a;--s2:#0f1114}.shot-b{--s1:#6d5597;--s2:#201833}.shot-c{--s1:#927c5e;--s2:#2c261e}
-.service-lines{display:grid;gap:7px}.service-lines>div{display:grid;grid-template-columns:30px 1fr auto;align-items:center;padding:11px;border-top:1px solid rgba(255,255,255,.065)}.service-lines strong{color:#625a76;font-size:.49rem}.service-lines span{font-size:.63rem}.service-lines b{color:#777781}
-.portfolio-contact-card{min-height:190px;padding:20px;border-radius:15px;background:radial-gradient(circle at 88% 16%,rgba(174,140,255,.18),transparent 29%),linear-gradient(145deg,#17141d,#0c0b0f);display:flex;flex-direction:column;justify-content:flex-end}.portfolio-contact-card span{color:#7e6f96;font-size:.49rem}.portfolio-contact-card strong{max-width:360px;margin-top:7px;font-size:1.45rem;line-height:1;letter-spacing:-.04em}
-.finder-legal .finder-chip{border-color:rgba(212,184,149,.16);background:rgba(212,184,149,.05);color:#d5b894}.booking-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:9px}.booking-calendar,.booking-slots{padding:15px;border:1px solid rgba(255,255,255,.07);border-radius:14px}.booking-calendar>span{color:#76664f;font-size:.48rem;font-weight:900;letter-spacing:.12em}.booking-days{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:14px}.booking-days i{height:38px;display:grid;place-items:center;border-radius:9px;background:rgba(255,255,255,.025);color:#777;font-style:normal;font-size:.54rem}.booking-days i.selected{background:#d4b895;color:#18120d}.booking-slots{display:grid;gap:6px}.booking-slots button{border:1px solid rgba(255,255,255,.07);border-radius:9px;background:rgba(255,255,255,.02);color:#777;font-size:.52rem}.booking-slots button.active{background:#f1f1ef;color:#080808}
-.legal-service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.legal-service-grid>div{min-height:110px;padding:13px;border:1px solid rgba(212,184,149,.11);border-radius:13px;background:linear-gradient(145deg,rgba(212,184,149,.045),rgba(255,255,255,.012));display:flex;flex-direction:column;justify-content:flex-end}.legal-service-grid strong{font-size:.6rem}.legal-service-grid small{margin-top:4px;color:#665f56;font-size:.48rem}
-.finder-docs{display:grid;gap:7px}.finder-docs>div{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:9px;padding:11px;border:1px solid rgba(255,255,255,.065);border-radius:11px}.finder-docs span{width:38px;height:32px;display:grid;place-items:center;border-radius:8px;background:rgba(212,184,149,.08);color:#c1a888;font-size:.45rem;font-weight:900}.finder-docs strong{font-size:.57rem}.finder-docs small{color:#5d5d65;font-size:.48rem}
-.finder-showcase-note{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;margin-top:16px;padding:18px 20px;border:1px solid rgba(255,255,255,.075);border-radius:17px;background:rgba(255,255,255,.018)}.finder-showcase-note span{color:#6c6c74;font-size:.5rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.finder-showcase-note strong{font-size:.72rem;line-height:1.45}
+.finder-showcase-section{
+  background:
+    radial-gradient(circle at 12% 10%,rgba(112,231,255,.05),transparent 25%),
+    radial-gradient(circle at 88% 86%,rgba(212,184,149,.055),transparent 27%),
+    linear-gradient(180deg,#050505,#070708);
+}
+.mac-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.mac-preview-window{position:relative;min-width:0;border:1px solid rgba(255,255,255,.11);border-radius:22px;background:#0b0b0d;box-shadow:0 30px 80px rgba(0,0,0,.34);overflow:hidden;transition:transform .35s var(--ease),border-color .35s ease,box-shadow .35s ease}
+.mac-preview-window:hover{transform:translateY(-5px);border-color:rgba(212,184,149,.25);box-shadow:0 42px 100px rgba(0,0,0,.45)}
+.mac-preview-window.expanded{grid-column:1/-1}
+.mac-preview-bar{height:48px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.075);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));backdrop-filter:blur(20px)}
+.mac-dots{display:flex;gap:6px}.mac-dots i{width:10px;height:10px;border-radius:50%}.mac-dots i:nth-child(1){background:#ff5f57}.mac-dots i:nth-child(2){background:#febc2e}.mac-dots i:nth-child(3){background:#28c840}
+.mac-preview-title{min-width:0;text-align:center}.mac-preview-title strong{display:block;color:#e7e7e9;font-size:.63rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mac-preview-title span{display:block;margin-top:2px;color:#595960;font-size:.46rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mac-expand-btn{width:30px;height:30px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:rgba(255,255,255,.025);color:#77777f;cursor:pointer;transition:.2s}.mac-expand-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.mac-preview-screen{position:relative;aspect-ratio:4/3;background:#050505;overflow:hidden}
+.mac-preview-screen::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.018)}
+.mac-preview-screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .65s cubic-bezier(.22,.61,.36,1),filter .35s ease}
+.mac-preview-window:hover .mac-preview-screen img{transform:scale(1.018);filter:saturate(1.05) contrast(1.02)}
+.mac-preview-note{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;margin-top:17px;padding:18px 20px;border:1px solid rgba(255,255,255,.075);border-radius:17px;background:rgba(255,255,255,.018)}
+.mac-preview-note span{color:#777780;font-size:.5rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+.mac-preview-note strong{font-size:.7rem;line-height:1.48;color:#bdbdc2}
 
 @media(max-width:991.98px){
-  .finder-grid{grid-template-columns:1fr}
-  .finder-window.focused{grid-column:auto}
-  .finder-shell{grid-template-columns:130px minmax(0,1fr)}
+  .mac-preview-grid{grid-template-columns:1fr}
+  .mac-preview-window.expanded{grid-column:auto}
 }
 @media(max-width:640px){
-  .finder-titlebar{height:46px;padding:0 10px}
-  .finder-shell{display:block;min-height:0}
-  .finder-sidebar{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:8px;border-right:0;border-bottom:1px solid rgba(255,255,255,.06)}
-  .finder-sidebar-label,.finder-sidebar-bottom{display:none}
-  .finder-nav{justify-content:center;padding:0 5px;font-size:.50rem}.finder-nav span{display:none}
-  .finder-content{padding:14px}
-  .finder-content-head{margin-bottom:13px}
-  .finder-product-grid{grid-template-columns:repeat(3,1fr);gap:5px}.finder-product{padding:6px}.finder-product-art{height:72px}
-  .finder-product strong{font-size:.52rem}.finder-product small{font-size:.43rem}
-  .finder-list>div{grid-template-columns:24px 1fr auto}.finder-list small{display:none}
-  .finder-metrics{grid-template-columns:1fr 1fr}.finder-metrics>div:last-child{grid-column:1/-1}
-  .portfolio-grid-mini{grid-template-rows:85px 85px}
-  .booking-grid,.finder-form-demo{grid-template-columns:1fr}
-  .legal-service-grid{grid-template-columns:1fr}
-  .finder-showcase-note{grid-template-columns:1fr;gap:7px}
+  .mac-preview-grid{gap:11px}
+  .mac-preview-window{border-radius:17px}
+  .mac-preview-bar{height:44px;padding:0 10px}
+  .mac-preview-title strong{font-size:.57rem}
+  .mac-preview-title span{font-size:.43rem}
+  .mac-preview-note{grid-template-columns:1fr;gap:7px;padding:15px}
 }
-
 
 /* ECOMMERCE / ADMIN RESPONSIVE */
 @media(max-width:991.98px){
@@ -778,8 +754,8 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
   </div>
 </div>
 
-<nav class="desktop-nav"><div class="desktop-nav-inner"><div class="nav-pill"><div class="brand-group"><div class="menu-wrap"><a href="#" class="icon-btn" id="desktopMenuBtn" aria-label="Menú"><svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a><ul class="dropdown-menu-ed" id="desktopDropdown"><li><a href="index.html">Home</a></li><li><a href="arquitectura.html">Arquitectura</a></li><li><a href="diseno-grafico.html">Diseño Gráfico</a></li><li><a class="active" href="diseno-web.html">Diseño Web</a></li><li id="linkProyectosMenuDesktop"><a href="proyectos.html">Mis Proyectos</a></li></ul></div><a href="index.html" class="brand-link"><img src="img/logo.png" alt="Evolution Design"></a><div id="admin-badge-container-desktop"></div></div><div class="nav-links"><a href="index.html" class="nav-link-ed">Home</a><a href="arquitectura.html" class="nav-link-ed">Arquitectura</a><a href="diseno-grafico.html" class="nav-link-ed">Diseño Gráfico</a><a href="diseno-web.html" class="nav-link-ed active">Diseño Web</a><a href="proyectos.html" id="linkProyectosDesktop" class="nav-link-ed">Mis Proyectos</a><div id="auth-desktop-wrapper"><a href="#" onclick="abrirAuthModal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Login</a></div></div><div class="nav-actions"><a class="software-mini" href="https://dingloft.com" target="_blank" rel="noopener">Software <span>↗</span></a></div></div><div id="floating-profile-desktop" class="profile-slot"></div></div></nav>
-<nav class="mobile-nav" id="mobileNav"><div class="mobile-top"><div class="menu-wrap"><a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a><ul class="dropdown-menu-ed" id="mobileDropdown"><li><a href="index.html">Home</a></li><li><a href="arquitectura.html">Arquitectura</a></li><li><a href="diseno-grafico.html">Diseño Gráfico</a></li><li><a class="active" href="diseno-web.html">Diseño Web</a></li><li id="linkProyectosMobile"><a href="proyectos.html">Mis Proyectos</a></li></ul></div><a href="index.html" class="mobile-logo"><img src="img/logo.png" alt="Evolution Design"></a><div id="auth-mobile-wrapper"><a href="#" class="icon-btn" onclick="abrirAuthModal();return false" aria-label="Login"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></a></div></div><div class="mobile-tabs"><a class="mobile-tab" href="index.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a><a class="mobile-tab" href="arquitectura.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V5l8-3 8 3v16M8 9h8M8 13h8M8 17h8"/></svg>Arquitectura</a><a class="mobile-tab" href="diseno-grafico.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18"/></svg>Gráfico</a><a class="mobile-tab active" href="diseno-web.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M8 9l-2 2 2 2M16 9l2 2-2 2"/></svg>Web</a><a class="mobile-tab" href="proyectos.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7V5a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v2"/></svg>Proyectos</a></div></nav>
+<nav class="desktop-nav"><div class="desktop-nav-inner"><div class="nav-pill"><div class="brand-group"><div class="menu-wrap"><a href="#" class="icon-btn" id="desktopMenuBtn" aria-label="Menú"><svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a><ul class="dropdown-menu-ed" id="desktopDropdown"><li><a href="index.html">Home</a></li><li><a href="arquitectura.html">Arquitectura</a></li><li><a href="diseno-grafico.html">Diseño Gráfico</a></li><li><a class="active" href="diseno-web.html">Diseño Web</a></li><li id="linkProyectosMenuDesktop" class="hidden"><a href="proyectos.html">Mis Proyectos</a></li></ul></div><a href="index.html" class="brand-link"><img src="img/logo.png" alt="Evolution Design"></a><div id="admin-badge-container-desktop"></div></div><div class="nav-links"><a href="index.html" class="nav-link-ed">Home</a><a href="arquitectura.html" class="nav-link-ed">Arquitectura</a><a href="diseno-grafico.html" class="nav-link-ed">Diseño Gráfico</a><a href="diseno-web.html" class="nav-link-ed active">Diseño Web</a><a href="proyectos.html" id="linkProyectosDesktop" class="nav-link-ed hidden">Mis Proyectos</a><div id="auth-desktop-wrapper"><a href="#" onclick="abrirAuthModal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Login</a></div></div><div class="nav-actions"><a class="software-mini" href="https://dingloft.com" target="_blank" rel="noopener">Software <span>↗</span></a></div></div><div id="floating-profile-desktop" class="profile-slot"></div></div></nav>
+<nav class="mobile-nav" id="mobileNav"><div class="mobile-top"><div class="menu-wrap"><a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a><ul class="dropdown-menu-ed" id="mobileDropdown"><li><a href="index.html">Home</a></li><li><a href="arquitectura.html">Arquitectura</a></li><li><a href="diseno-grafico.html">Diseño Gráfico</a></li><li><a class="active" href="diseno-web.html">Diseño Web</a></li><li id="linkProyectosMobile" class="hidden"><a href="proyectos.html">Mis Proyectos</a></li></ul></div><a href="index.html" class="mobile-logo"><img src="img/logo.png" alt="Evolution Design"></a><div id="auth-mobile-wrapper"><a href="#" class="icon-btn" onclick="abrirAuthModal();return false" aria-label="Login"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></a></div></div><div class="mobile-tabs"><a class="mobile-tab" href="index.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a><a class="mobile-tab" href="arquitectura.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 21V5l8-3 8 3v16M8 9h8M8 13h8M8 17h8"/></svg>Arquitectura</a><a class="mobile-tab" href="diseno-grafico.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18"/></svg>Gráfico</a><a class="mobile-tab active" href="diseno-web.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M8 9l-2 2 2 2M16 9l2 2-2 2"/></svg>Web</a><a class="mobile-tab hidden" id="linkProyectosTabMobile" href="proyectos.html"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7V5a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v2"/></svg>Proyectos</a></div></nav>
 
 <main>
 <section class="web-hero" id="inicio"><canvas id="heroCanvas" class="hero-canvas"></canvas><div class="web-hero-inner"><div><div class="hero-kicker">Evolution Web Studio · Interactive Experiences</div><h1>Tu web no debería <span>sentirse normal.</span></h1><p class="hero-copy">Diseñamos sitios, portales y plataformas web totalmente personalizados con UI/UX de alto nivel, panel administrativo, automatización, seguridad reforzada y experiencias interactivas creadas alrededor de cada proyecto.</p><div class="hero-actions"><a class="primary-cta" href="#planes">Ver planes <span>→</span></a><a class="secondary-cta" href="#casos">Explorar soluciones <span>↓</span></a></div><div class="price-inline"><strong id="heroWebPrice" data-usd-price="500">Desde $500</strong><small id="heroWebPriceNote">USD · pago único por creación<br>dominio + correo empresarial el primer año</small></div><div class="included-mini"><span>UI / UX</span><span>Sitios Web</span><span>Portales</span><span>E-commerce</span><span>Panel Admin</span><span>Automatización</span><span>Seguridad reforzada</span></div></div><div class="hero-interface" id="heroInterface"><div class="interface-top"><div class="traffic"><i></i><i></i><i></i></div><span>EVOLUTION / LIVE EXPERIENCE</span><span>01</span></div><div class="interface-stage"><div class="floating-window code-window"><span style="color:#6c6c73;font:600 .58rem ui-monospace;letter-spacing:.12em">INTERACTION_ENGINE.JS</span><div class="code-line" style="width:42%"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div><div class="code-line"></div></div><div class="floating-window device-window"><div class="phone-mock"><div class="phone-notch"></div><div class="phone-glow"></div><div class="phone-bars"><i></i><i></i><i></i></div></div></div><div class="cursor-dot"></div></div></div></div></section>
@@ -788,7 +764,7 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
   <div class="section-inner">
     <div class="plans-intro reveal">
       <span class="eyebrow">Desarrollo web a medida</span>
-      <h2>No vendemos plantillas. Construimos productos digitales.</h2>
+      <h2>Diseñamos sitios y plataformas que trabajan para tu negocio.</h2>
       <p>Cada proyecto se desarrolla con código limpio, UI/UX diseñado para tu marca y una arquitectura preparada para crecer. En los planes avanzados entregamos un portal administrativo para que tu equipo gestione contenido, productos y operación sin depender de un constructor o marketplace.</p>
     </div>
 
@@ -905,31 +881,68 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
   <div class="section-inner">
     <div class="section-head reveal">
       <div>
-        <span class="eyebrow">Experience Finder · 04 soluciones</span>
-        <h2>Una muestra de lo que podemos construir para ti.</h2>
+        <span class="eyebrow">04 experiencias · diseño a medida</span>
+        <h2>Imagina cómo podría verse tu próximo proyecto.</h2>
       </div>
-      <p>No todos los proyectos necesitan lo mismo. Explora cuatro conceptos interactivos: comercio, educación, portafolio y servicios profesionales. Cada ventana simula un sistema real con navegación, contenido y administración.</p>
+      <p>Estas muestras representan distintas direcciones visuales que podemos desarrollar. Cada proyecto se diseña desde cero alrededor de la marca, el público y la operación del cliente.</p>
     </div>
 
-    <div class="finder-grid reveal">
+    <div class="mac-preview-grid reveal">
 
-      <!-- 01 · E-COMMERCE -->
-      <article class="finder-window" data-finder-window="commerce">
-        <div class="finder-titlebar">
-          <div class="finder-traffic"><i></i><i></i><i></i></div>
-          <div class="finder-title"><span>NØVA Commerce</span><small>ecommerce.evolution</small></div>
-          <button class="finder-focus" type="button" aria-label="Ampliar ventana">↗</button>
+      <article class="mac-preview-window">
+        <div class="mac-preview-bar">
+          <div class="mac-dots"><i></i><i></i><i></i></div>
+          <div class="mac-preview-title"><strong>E-commerce</strong><span>tienda-premium.evolution</span></div>
+          <button type="button" class="mac-expand-btn" aria-label="Ampliar E-commerce">↗</button>
         </div>
-        <div class="finder-shell">
-          <aside class="finder-sidebar">
-            <div class="finder-sidebar-label">COMERCIO</div>
-            <button class="finder-nav active" type="button" data-pane="commerce-store"><span>◫</span>Tienda</button>
-            <button class="finder-nav" type="button" data-pane="commerce-products"><span>◇</span>Productos</button>
-            <button class="finder-nav" type="button" data-pane="commerce-orders"><span>☷</span>Pedidos</button>
-            <div class="finder-sidebar-bottom"><span class="finder-live-dot"></span>Panel conectado</div>
-          </aside>
-          <div class="finder-content">
-            <section class="finder-pane active" data-pane-id="commerce-store">
+        <div class="mac-preview-screen">
+          <img src="img/showcase-ecommerce.png" alt="Ejemplo premium de sitio web E-commerce diseñado por Evolution Design" loading="lazy">
+        </div>
+      </article>
+
+      <article class="mac-preview-window">
+        <div class="mac-preview-bar">
+          <div class="mac-dots"><i></i><i></i><i></i></div>
+          <div class="mac-preview-title"><strong>Escuelas / colegios</strong><span>academy.evolution</span></div>
+          <button type="button" class="mac-expand-btn" aria-label="Ampliar Escuelas">↗</button>
+        </div>
+        <div class="mac-preview-screen">
+          <img src="img/showcase-escuelas.png" alt="Ejemplo premium de sitio web para escuelas y colegios diseñado por Evolution Design" loading="lazy">
+        </div>
+      </article>
+
+      <article class="mac-preview-window">
+        <div class="mac-preview-bar">
+          <div class="mac-dots"><i></i><i></i><i></i></div>
+          <div class="mac-preview-title"><strong>Portafolio / marca / agencia</strong><span>studio.evolution</span></div>
+          <button type="button" class="mac-expand-btn" aria-label="Ampliar Portafolio">↗</button>
+        </div>
+        <div class="mac-preview-screen">
+          <img src="img/showcase-portafolio.png" alt="Ejemplo premium de portafolio, marca o agencia diseñado por Evolution Design" loading="lazy">
+        </div>
+      </article>
+
+      <article class="mac-preview-window">
+        <div class="mac-preview-bar">
+          <div class="mac-dots"><i></i><i></i><i></i></div>
+          <div class="mac-preview-title"><strong>Reservas / bufetes</strong><span>consultas.evolution</span></div>
+          <button type="button" class="mac-expand-btn" aria-label="Ampliar Reservas y bufetes">↗</button>
+        </div>
+        <div class="mac-preview-screen">
+          <img src="img/showcase-bufetes.png" alt="Ejemplo premium de reservas, bufetes y servicios profesionales diseñado por Evolution Design" loading="lazy">
+        </div>
+      </article>
+
+    </div>
+
+    <div class="mac-preview-note reveal">
+      <span>Diseño visual + desarrollo real</span>
+      <strong>Las imágenes son referencias conceptuales. La interfaz final, funciones y panel administrativo se construyen específicamente para cada cliente.</strong>
+    </div>
+  </div>
+</section>
+
+<section class="finder-pane active" data-pane-id="commerce-store">
               <div class="finder-content-head"><div><small>TIENDA DIGITAL</small><h3>Una experiencia que vende.</h3></div><span class="finder-chip">LIVE STORE</span></div>
               <div class="finder-product-grid">
                 <div class="finder-product"><div class="finder-product-art art-one"></div><strong>Halo Audio</strong><small>$129 · 24 en stock</small></div>
@@ -1308,25 +1321,21 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 })();
 (function(){if(!matchMedia('(pointer:fine)').matches)return;document.querySelectorAll('.tilt').forEach(card=>{card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(800px) rotateX(${(-y*5).toFixed(2)}deg) rotateY(${(x*6).toFixed(2)}deg) translateY(-3px)`});card.addEventListener('pointerleave',()=>card.style.transform='')});const area=document.getElementById('magneticCard'),btn=document.getElementById('magneticBtn');area?.addEventListener('pointermove',e=>{const r=btn.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,dx=e.clientX-cx,dy=e.clientY-cy,dist=Math.hypot(dx,dy);if(dist<190)btn.style.transform=`translate(${dx*.18}px,${dy*.18}px) scale(1.03)`});area?.addEventListener('pointerleave',()=>btn.style.transform='')})();
 
-// EXPERIENCE FINDER · navegación y focus de ventanas
-document.querySelectorAll('[data-finder-window]').forEach(win=>{
-  const navs=[...win.querySelectorAll('.finder-nav[data-pane]')];
-  const panes=[...win.querySelectorAll('.finder-pane[data-pane-id]')];
-
-  navs.forEach(btn=>btn.addEventListener('click',()=>{
-    const target=btn.dataset.pane;
-    navs.forEach(n=>n.classList.toggle('active',n===btn));
-    panes.forEach(p=>p.classList.toggle('active',p.dataset.paneId===target));
-  }));
-
-  win.querySelector('.finder-focus')?.addEventListener('click',e=>{
-    const willFocus=!win.classList.contains('focused');
-    document.querySelectorAll('.finder-window.focused').forEach(other=>{
-      if(other!==win)other.classList.remove('focused');
+// MAC PREVIEW WINDOWS · expandir / contraer
+document.querySelectorAll('.mac-preview-window').forEach(win=>{
+  const btn=win.querySelector('.mac-expand-btn');
+  btn?.addEventListener('click',()=>{
+    const expand=!win.classList.contains('expanded');
+    document.querySelectorAll('.mac-preview-window.expanded').forEach(other=>{
+      if(other!==win){
+        other.classList.remove('expanded');
+        const otherBtn=other.querySelector('.mac-expand-btn');
+        if(otherBtn)otherBtn.textContent='↗';
+      }
     });
-    win.classList.toggle('focused',willFocus);
-    e.currentTarget.textContent=willFocus?'↙':'↗';
-    if(willFocus)setTimeout(()=>win.scrollIntoView({behavior:'smooth',block:'center'}),120);
+    win.classList.toggle('expanded',expand);
+    btn.textContent=expand?'↙':'↗';
+    if(expand)setTimeout(()=>win.scrollIntoView({behavior:'smooth',block:'center'}),120);
   });
 });
 
@@ -1685,7 +1694,7 @@ $('authEmailForm')?.addEventListener('submit',async e=>{
   }
 });
 setAuthMode('login');
-onAuthStateChanged(auth,async user=>{currentUser=user||null;const desk=$('auth-desktop-wrapper'),mob=$('auth-mobile-wrapper'),profile=$('floating-profile-desktop'),admin=$('admin-badge-container-desktop'),p1=$('linkProyectosDesktop'),p2=$('linkProyectosMenuDesktop'),p3=$('linkProyectosMobile');if(!user){p1?.classList.add('hidden');p2?.classList.add('hidden');p3?.classList.add('hidden');if(desk)desk.innerHTML='<a href="#" onclick="abrirAuthModal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Login</a>';if(mob)mob.innerHTML='<a href="#" class="icon-btn" onclick="abrirAuthModal();return false" aria-label="Login"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></a>';if(profile)profile.innerHTML='';if(admin)admin.innerHTML='';return}p1?.classList.remove('hidden');p2?.classList.remove('hidden');p3?.classList.remove('hidden');const photo=user.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||'U')}&background=d4b895&color=111`,isAdmin=['evolutiongt01@gmail.com','tepaz2025@gmail.com'].includes(String(user.email||'').toLowerCase());if(desk)desk.innerHTML='<a href="#" onclick="cerrarSesionGlobal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Salir</a>';if(profile)profile.innerHTML=`<a href="perfil.html" aria-label="Mi perfil"><img class="profile-pic-liquid" src="${photo}" alt="Perfil"></a>`;if(admin)admin.innerHTML=isAdmin?'<a href="admin.html" class="admin-badge-btn">Panel Admin</a>':'';if(mob)mob.innerHTML=`<div class="mobile-auth-actions"><a href="perfil.html" class="mobile-profile-link"><img src="${photo}" alt="Perfil"></a>${isAdmin?'<a href="admin.html" class="mobile-auth-action" aria-label="Panel Admin">A</a>':''}<a href="#" onclick="cerrarSesionGlobal();return false" class="mobile-auth-action" aria-label="Cerrar sesión">↗</a></div>`;try{await setDoc(doc(db,'users',user.uid),{uid:user.uid,email:user.email||'',displayName:user.displayName||'',photoURL:user.photoURL||'',lastSeenAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true})}catch(e){console.info('Perfil no sincronizado',e?.message||e)}if(!$('leadEmail').value&&user.email)$('leadEmail').value=user.email;if(!$('leadName').value&&user.displayName)$('leadName').value=user.displayName;window.dispatchEvent(new CustomEvent('evolution-auth-ready'))});
+onAuthStateChanged(auth,async user=>{currentUser=user||null;const desk=$('auth-desktop-wrapper'),mob=$('auth-mobile-wrapper'),profile=$('floating-profile-desktop'),admin=$('admin-badge-container-desktop'),p1=$('linkProyectosDesktop'),p2=$('linkProyectosMenuDesktop'),p3=$('linkProyectosMobile'),p4=$('linkProyectosTabMobile');if(!user){p1?.classList.add('hidden');p2?.classList.add('hidden');p3?.classList.add('hidden');p4?.classList.add('hidden');if(desk)desk.innerHTML='<a href="#" onclick="abrirAuthModal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Login</a>';if(mob)mob.innerHTML='<a href="#" class="icon-btn" onclick="abrirAuthModal();return false" aria-label="Login"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></a>';if(profile)profile.innerHTML='';if(admin)admin.innerHTML='';return}p1?.classList.remove('hidden');p2?.classList.remove('hidden');p3?.classList.remove('hidden');p4?.classList.remove('hidden');const photo=user.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||'U')}&background=d4b895&color=111`,isAdmin=['evolutiongt01@gmail.com','tepaz2025@gmail.com'].includes(String(user.email||'').toLowerCase());if(desk)desk.innerHTML='<a href="#" onclick="cerrarSesionGlobal();return false" class="nav-link-ed" style="color:var(--accent);font-weight:700">Salir</a>';if(profile)profile.innerHTML=`<a href="perfil.html" aria-label="Mi perfil"><img class="profile-pic-liquid" src="${photo}" alt="Perfil"></a>`;if(admin)admin.innerHTML=isAdmin?'<a href="admin.html" class="admin-badge-btn">Panel Admin</a>':'';if(mob)mob.innerHTML=`<div class="mobile-auth-actions"><a href="perfil.html" class="mobile-profile-link"><img src="${photo}" alt="Perfil"></a>${isAdmin?'<a href="admin.html" class="mobile-auth-action" aria-label="Panel Admin">A</a>':''}<a href="#" onclick="cerrarSesionGlobal();return false" class="mobile-auth-action" aria-label="Cerrar sesión">↗</a></div>`;try{await setDoc(doc(db,'users',user.uid),{uid:user.uid,email:user.email||'',displayName:user.displayName||'',photoURL:user.photoURL||'',lastSeenAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true})}catch(e){console.info('Perfil no sincronizado',e?.message||e)}if(!$('leadEmail').value&&user.email)$('leadEmail').value=user.email;if(!$('leadName').value&&user.displayName)$('leadName').value=user.displayName;window.dispatchEvent(new CustomEvent('evolution-auth-ready'))});
 
 
 
