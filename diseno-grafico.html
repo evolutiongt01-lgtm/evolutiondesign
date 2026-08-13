@@ -1151,6 +1151,22 @@ body.gd-modal-open{overflow:hidden}
   .gd-bank-selector{grid-template-columns:1fr}.gd-bank-sheet{grid-template-columns:1fr}
 }
 
+
+/* =========================================================
+   VIDEO · DURACIÓN Y PRECIO DINÁMICO
+   ========================================================= */
+.gd-video-duration-box{padding:12px;border:1px solid rgba(255,255,255,.075);border-radius:13px;background:rgba(255,255,255,.018)}
+.gd-duration-inputs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center}
+.gd-duration-inputs>b{color:#676b76;font-size:1.2rem;text-align:center}
+.gd-duration-inputs label{position:relative;display:block}
+.gd-duration-inputs input{padding-right:42px!important;font-size:.83rem!important;font-weight:750!important}
+.gd-duration-inputs small{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:#626773;font-size:.49rem;pointer-events:none}
+.gd-duration-price-rule{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.05)}
+.gd-duration-price-rule span{color:#777c86;font-size:.49rem}.gd-duration-price-rule strong{color:#86b9ff;font-size:.49rem;text-align:right}
+.gd-video-live-price{display:none;margin-top:9px;padding:10px 11px;border:1px solid rgba(90,155,255,.13);border-radius:10px;background:rgba(64,129,255,.045);color:#8cbcff;font-size:.55rem}
+.gd-video-duration-box .gd-video-live-price{display:block}
+@media(max-width:767px){.gd-duration-price-rule{align-items:flex-start;flex-direction:column}.gd-duration-price-rule strong{text-align:left}}
+
 </style>
 <link href="index.html" rel="prefetch"/><link href="arquitectura.html" rel="prefetch"/><link href="diseno-web.html" rel="prefetch"/><style>
     /* =========================================================
@@ -1736,8 +1752,8 @@ body.gd-modal-open{overflow:hidden}
           <div class="gd-video-price">
             <strong id="dgPriceVideo">$30</strong>
             <div>
-              <span id="dgCurrencyVideo">USD / video</span>
-              <small>Precio por pieza de video</small>
+              <span id="dgCurrencyVideo">USD · hasta 60 s</span>
+              <small id="dgVideoExtraRate">+$8 USD por minuto adicional iniciado</small>
             </div>
           </div>
 
@@ -1745,7 +1761,7 @@ body.gd-modal-open{overflow:hidden}
              class="gd-video-cta"
              href="#"
              onclick="abrirPedidoVideo();return false;">
-            Solicitar video por $30 <b>→</b>
+            Solicitar video desde $30 <b>→</b>
           </a>
         </div>
       </div>
@@ -1870,16 +1886,25 @@ body.gd-modal-open{overflow:hidden}
               <option>Otro formato</option>
             </select>
           </label>
-          <label class="gd-field gd-video-only-field" id="gdVideoDurationWrap" hidden>
-            <span>Duración aproximada *</span>
-            <select id="gdVideoDuration" name="videoDuration">
-              <option value="">Seleccionar</option>
-              <option>Hasta 15 segundos</option>
-              <option>Hasta 30 segundos</option>
-              <option>Hasta 60 segundos</option>
-              <option>Duración personalizada</option>
-            </select>
-          </label>
+          <div class="gd-field gd-video-only-field gd-video-duration-box" id="gdVideoDurationWrap" hidden>
+            <span>Duración final estimada *</span>
+            <div class="gd-duration-inputs">
+              <label>
+                <input id="gdVideoMinutes" name="videoMinutes" type="number" min="0" max="1440" step="1" inputmode="numeric" value="0" aria-label="Minutos">
+                <small>min</small>
+              </label>
+              <b>:</b>
+              <label>
+                <input id="gdVideoSeconds" name="videoSeconds" type="number" min="0" max="59" step="1" inputmode="numeric" value="30" aria-label="Segundos">
+                <small>seg</small>
+              </label>
+            </div>
+            <div class="gd-duration-price-rule">
+              <span>Hasta 60 s = $30 USD</span>
+              <strong>+ $8 USD por cada minuto adicional iniciado</strong>
+            </div>
+            <div class="gd-video-live-price" id="gdVideoLivePrice">30 segundos · $30 USD</div>
+          </div>
         </div>
       </div>
 
@@ -2119,6 +2144,7 @@ body.gd-modal-open{overflow:hidden}
       video: 30
     };
     let gtqRate = 7.65;
+    window.evolutionGraphicGtqRate = gtqRate;
 
     const moneyGtq = usd => `Q ${(usd * gtqRate).toLocaleString('es-GT',{
       minimumFractionDigits:2,
@@ -2144,7 +2170,7 @@ body.gd-modal-open{overflow:hidden}
       set('gdPayTotal','$16 USD');
 
       set('dgPriceVideo','$30');
-      set('dgCurrencyVideo','USD / video');
+      set('dgCurrencyVideo','USD · hasta 60 s');
 
       const sub=document.getElementById('dgSubscribeCta');
       if(sub) sub.innerHTML='Suscribirme por $27/mes <b>→</b>';
@@ -2153,7 +2179,7 @@ body.gd-modal-open{overflow:hidden}
       if(custom) custom.innerHTML='Solicitar diseño por $16 <b>↗</b>';
 
       const video=document.getElementById('dgVideoCta');
-      if(video) video.innerHTML='Solicitar video por $30 <b>→</b>';
+      if(video) video.innerHTML='Solicitar video desde $30 <b>→</b>';
 
       document.documentElement.dataset.priceCurrency='USD';
     };
@@ -2181,7 +2207,7 @@ body.gd-modal-open{overflow:hidden}
       set('gdPayTotal',`${customPrice} GTQ · PayPal cobra $16 USD`);
 
       set('dgPriceVideo',videoPrice);
-      set('dgCurrencyVideo','GTQ / video');
+      set('dgCurrencyVideo','GTQ · hasta 60 s');
 
       const sub=document.getElementById('dgSubscribeCta');
       if(sub) sub.innerHTML=`Suscribirme por ${membership}/mes <b>→</b>`;
@@ -2190,7 +2216,7 @@ body.gd-modal-open{overflow:hidden}
       if(custom) custom.innerHTML=`Solicitar diseño por ${customPrice} <b>↗</b>`;
 
       const video=document.getElementById('dgVideoCta');
-      if(video) video.innerHTML=`Solicitar video por ${videoPrice} <b>→</b>`;
+      if(video) video.innerHTML=`Solicitar video desde ${videoPrice} <b>→</b>`;
 
       document.documentElement.dataset.priceCurrency='GTQ';
     };
@@ -2216,6 +2242,7 @@ body.gd-modal-open{overflow:hidden}
         const rate=rateResult.status==='fulfilled'?rateResult.value:null;
         if(rate?.result==='success'&&Number(rate?.rates?.GTQ)>0){
           gtqRate=Number(rate.rates.GTQ);
+          window.evolutionGraphicGtqRate = gtqRate;
         }
 
         const geo=geoResult.status==='fulfilled'?geoResult.value:null;
@@ -2277,6 +2304,8 @@ body.gd-modal-open{overflow:hidden}
     },
     video_edit:{
       priceUsd:30,
+      includedSeconds:60,
+      extraMinuteUsd:8,
       title:'Cuéntanos qué video vamos a crear.',
       serviceLabel:'VIDEO PERSONALIZADO',
       serviceName:'Edición y creación de video',
@@ -2316,12 +2345,73 @@ body.gd-modal-open{overflow:hidden}
     select.innerHTML='<option value="">Seleccionar</option>'+items.map(x=>`<option>${esc(x)}</option>`).join('');
   };
 
-  const currentDisplayPrice=()=>{
-    if(activeService==='video_edit'){
-      const t=String(document.getElementById('dgPriceVideo')?.textContent||'$30').trim();
-      return t;
+  const videoDurationSeconds=()=>{
+    const mins=Math.max(0,Math.floor(Number(document.getElementById('gdVideoMinutes')?.value||0)));
+    const secs=Math.max(0,Math.min(59,Math.floor(Number(document.getElementById('gdVideoSeconds')?.value||0))));
+    return mins*60+secs;
+  };
+
+  const videoPriceUsd=seconds=>{
+    const total=Math.max(1,Math.floor(Number(seconds)||0));
+    if(total<=60)return 30;
+    const extraMinutes=Math.ceil((total-60)/60);
+    return 30+(extraMinutes*8);
+  };
+
+  const currentTotalUsd=()=>{
+    if(activeService==='video_edit')return videoPriceUsd(videoDurationSeconds());
+    return 16;
+  };
+
+  const gtqRate=()=>Number(window.evolutionGraphicGtqRate||7.65);
+
+  const displayPriceForUsd=usd=>{
+    if(isGuatemala()){
+      return `Q ${(usd*gtqRate()).toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
     }
-    return String(document.getElementById('dgPriceCustom')?.textContent||'$16').trim();
+    return `$${Number(usd).toFixed(2).replace(/\.00$/,'')}`;
+  };
+
+  const currentDisplayPrice=()=>displayPriceForUsd(currentTotalUsd());
+
+  const durationLabel=seconds=>{
+    const total=Math.max(0,Math.floor(Number(seconds)||0));
+    const m=Math.floor(total/60),s=total%60;
+    if(m&&s)return `${m} min ${s} s`;
+    if(m)return `${m} min`;
+    return `${s} s`;
+  };
+
+  const updateVideoLivePrice=()=>{
+    if(activeService!=='video_edit')return;
+    const seconds=videoDurationSeconds();
+    const usd=videoPriceUsd(seconds);
+    const extra=usd-30;
+    const live=document.getElementById('gdVideoLivePrice');
+    if(live){
+      live.textContent=seconds
+        ? `${durationLabel(seconds)} · ${displayPriceForUsd(usd)}${extra>0?` · incluye $${extra} USD de tiempo extra`:''}`
+        : 'Ingresa la duración del video';
+    }
+    updateModalPricing();
+  };
+
+  const updateModalPricing=()=>{
+    const s=service();
+    const usd=currentTotalUsd();
+    const localized=displayPriceForUsd(usd);
+    const gt=isGuatemala();
+
+    document.getElementById('gdModalDesignPrice').textContent=localized;
+    document.getElementById('gdModalDesignCurrency').textContent=gt?'GTQ · referencia local':'USD · pago único';
+    document.getElementById('gdBriefSummaryPrice').textContent=gt?`${localized} GTQ`:`$${usd} USD`;
+    document.getElementById('gdPayTotal').textContent=gt?`${localized} GTQ · PayPal cobra $${usd} USD`:`$${usd} USD`;
+
+    if(activeService==='video_edit'){
+      document.getElementById('gdPayDescription').textContent=`Hasta 60 segundos cuestan $30 USD. Después se suman $8 USD por cada minuto adicional iniciado. PayPal procesará $${usd} USD; Binance Pay usa ${usd} USDT.`;
+    }else{
+      document.getElementById('gdPayDescription').textContent='PayPal procesará el cobro base de $16 USD. Binance Pay usa 16 USDT. En Guatemala también puedes pagar por transferencia en GTQ.';
+    }
   };
 
   const updateModalService=()=>{
@@ -2339,18 +2429,15 @@ body.gd-modal-open{overflow:hidden}
     setSelectOptions(document.getElementById('gdFormat'),s.formatOptions);
 
     const durationWrap=document.getElementById('gdVideoDurationWrap');
-    const duration=document.getElementById('gdVideoDuration');
     durationWrap.hidden=!s.video;
-    duration.required=!!s.video;
-    if(!s.video)duration.value='';
-
-    const localized=currentDisplayPrice();
-    const gt=localized.startsWith('Q ');
-    document.getElementById('gdModalDesignPrice').textContent=localized;
-    document.getElementById('gdModalDesignCurrency').textContent=gt?'GTQ · referencia local':'USD · pago único';
-    document.getElementById('gdBriefSummaryPrice').textContent=gt?`${localized} GTQ`:`$${s.priceUsd} USD`;
-    document.getElementById('gdPayTotal').textContent=gt?`${localized} GTQ · PayPal cobra $${s.priceUsd} USD`:`$${s.priceUsd} USD`;
-    document.getElementById('gdPayDescription').textContent=`PayPal procesará el cobro base de $${s.priceUsd} USD. Binance Pay usa ${s.priceUsd} USDT. En Guatemala también puedes pagar por transferencia en GTQ.`;
+    if(!s.video){
+      const mins=document.getElementById('gdVideoMinutes');
+      const secs=document.getElementById('gdVideoSeconds');
+      if(mins)mins.value='0';
+      if(secs)secs.value='30';
+    }
+    updateModalPricing();
+    if(s.video)updateVideoLivePrice();
   };
 
   const openService=type=>{
@@ -2364,6 +2451,19 @@ body.gd-modal-open{overflow:hidden}
   };
   window.abrirPedidoDiseno=()=>openService('custom_design');
   window.abrirPedidoVideo=()=>openService('video_edit');
+
+  ['gdVideoMinutes','gdVideoSeconds'].forEach(id=>{
+    document.getElementById(id)?.addEventListener('input',()=>{
+      const mins=document.getElementById('gdVideoMinutes');
+      const secs=document.getElementById('gdVideoSeconds');
+      if(mins&&Number(mins.value)<0)mins.value='0';
+      if(secs){
+        if(Number(secs.value)<0)secs.value='0';
+        if(Number(secs.value)>59)secs.value='59';
+      }
+      updateVideoLivePrice();
+    });
+  });
 
   const close=()=>{modal?.classList.remove('show');modal?.setAttribute('aria-hidden','true');document.body.classList.remove('gd-modal-open')};
   modal?.querySelectorAll('[data-close-design-order]').forEach(el=>el.addEventListener('click',close));
@@ -2379,7 +2479,8 @@ body.gd-modal-open{overflow:hidden}
     eventLocation:document.getElementById('gdEventLocation')?.value.trim()||'',
     contactText:document.getElementById('gdContactText')?.value.trim()||'',
     format:document.getElementById('gdFormat')?.value||'',
-    videoDuration:document.getElementById('gdVideoDuration')?.value||'',
+    videoDurationSeconds:activeService==='video_edit'?videoDurationSeconds():0,
+    videoDuration:activeService==='video_edit'?durationLabel(videoDurationSeconds()):'',
     visualStyle:document.getElementById('gdVisualStyle')?.value.trim()||'',
     referenceUrl:document.getElementById('gdReferenceUrl')?.value.trim()||'',
     notes:document.getElementById('gdNotes')?.value.trim()||''
@@ -2458,9 +2559,8 @@ body.gd-modal-open{overflow:hidden}
   };
 
   const localGtqText=()=>{
-    const el=activeService==='video_edit'?document.getElementById('dgPriceVideo'):document.getElementById('dgPriceCustom');
-    const t=String(el?.textContent||'').trim();
-    return t.startsWith('Q ')?t:'Q —';
+    if(!isGuatemala())return 'Q —';
+    return `Q ${(currentTotalUsd()*gtqRate()).toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
   };
   const manualStatus=(msg,type='info')=>{const el=methodPanel.querySelector('.gd-manual-status');if(!el)return;el.textContent=msg;el.className=`gd-manual-status show ${type}`};
 
@@ -2481,7 +2581,7 @@ body.gd-modal-open{overflow:hidden}
   };
 
   const renderBinance=()=>{
-    const amount=service().priceUsd;
+    const amount=currentTotalUsd();
     methodPanel.innerHTML=`<div class="gd-manual-card">
       <div class="gd-manual-head"><strong>Binance Pay</strong><span>${amount.toFixed(2)} USDT</span></div>
       <div class="gd-manual-copy">Escanea el QR desde cualquier país, envía exactamente ${amount.toFixed(2)} USDT y adjunta el comprobante. El proyecto quedará pendiente hasta validación.</div>
@@ -2545,7 +2645,7 @@ body.gd-modal-open{overflow:hidden}
 
   const prepareRegionalMethods=async()=>{
     await Promise.resolve(window.evolutionGraphicGeoReady).catch(()=>{});
-    const gt=isGuatemala(),amount=service().priceUsd;
+    const gt=isGuatemala(),amount=currentTotalUsd();
     binanceTab.hidden=false;bankTab.hidden=!gt;
     regionNote.textContent=gt
       ?`Guatemala detectada · PayPal cobra $${amount} USD · Binance Pay usa ${amount} USDT · transferencia se realiza en GTQ.`
@@ -2557,6 +2657,10 @@ body.gd-modal-open{overflow:hidden}
   form?.addEventListener('submit',async e=>{
     e.preventDefault();const msg=document.getElementById('gdBriefMessage');msg.classList.remove('show');
     if(!form.reportValidity())return;
+    if(activeService==='video_edit'&&videoDurationSeconds()<1){
+      msg.textContent='Indica una duración válida para calcular el precio del video.';
+      msg.classList.add('show');return;
+    }
     if(!window.evolutionCurrentUser){msg.textContent='Inicia sesión para guardar el pedido y continuar al pago.';msg.classList.add('show');window.abrirAuthModal?.();return}
     currentBrief=briefFromForm();renderBrief(currentBrief);form.hidden=true;payPanel.hidden=false;success.hidden=true;updateModalService();await prepareRegionalMethods();await selectMethod('paypal');
   });
