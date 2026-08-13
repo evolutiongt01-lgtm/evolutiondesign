@@ -710,6 +710,28 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 .payment-usd-charge-note{margin:10px 0 0;color:#6f6f77;font-size:.56rem;line-height:1.45;text-align:center}
 @media(max-width:575.98px){.logo-upload-zone{grid-template-columns:68px 1fr;padding:10px}.logo-upload-preview{width:58px;height:58px}.logo-upload-action{grid-column:1/-1;width:100%}.price-card.popular .price-card-kicker{padding-right:105px}}
 
+
+/* LEGACY KILL SWITCH — elimina cualquier demo Finder/E-commerce viejo */
+.finder-window,
+.finder-pane,
+.finder-showcase-note,
+#storeDemo,
+#storeViewport,
+.interactive-section,
+.store-shell,
+.store-demo,
+.store-viewport,
+.live-controls,
+.finder-product-grid,
+.finder-list,
+.finder-metrics,
+.finder-events,
+.finder-docs,
+.booking-grid,
+.legal-service-grid{
+  display:none !important;
+}
+
 </style>
 </head>
 <body>
@@ -1028,40 +1050,40 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
       <article class="evolution-compare-card">
         <div class="evo-compare-top">
           <div>
-            <span class="evo-compare-kicker">Evolution Design · Custom Build</span>
-            <h3 class="evo-compare-card-title">Construido alrededor de tu negocio.</h3>
-            <p class="evo-compare-card-copy">No empezamos con un tema para ver cuánto podemos modificarlo. Diseñamos la arquitectura, el portal administrativo y la experiencia alrededor de tu operación para que puedas gestionar el negocio desde tu propio sistema.</p>
+            <span class="evo-compare-kicker">Evolution Design · Sitio Web Esencial</span>
+            <h3 class="evo-compare-card-title">Tu sitio profesional. Un solo pago.</h3>
+            <p class="evo-compare-card-copy">Una presencia web profesional creada a medida para tu marca, empresa, institución o proyecto. Sin mensualidad de Evolution por usar el sitio y sin depender de un constructor visual.</p>
           </div>
-          <span class="evo-compare-badge">Recomendado para crecer</span>
+          <span class="evo-compare-badge">Pago único</span>
         </div>
 
         <div class="evo-investment">
           <div>
-            <span>Plataforma Web Avanzada · pago único</span>
-            <strong id="evoCompareInvestment">$5,890</strong>
-            <small>Creación y desarrollo completo · UI/UX + sistema + portal administrativo</small>
+            <span id="evoComparePlanLabel">Sitio Web Esencial · pago único</span>
+            <strong id="evoCompareInvestment">$500</strong>
+            <small id="evoCompareInvestmentCaption">Creación y desarrollo completo del sitio · UI/UX responsive</small>
           </div>
           <div class="evo-three-year">
             <span id="evoComparePeriodLabel">Inversión año 1</span>
-            <strong id="evoComparePeriodTotal">$5,890</strong>
-            <small id="evoComparePeriodNote">Incluye el desarrollo inicial. Renovación posterior: $150/año.</small>
+            <strong id="evoComparePeriodTotal">$500</strong>
+            <small id="evoComparePeriodNote">Pago único por creación. Desde el segundo año: renovación de $150 USD/año.</small>
           </div>
         </div>
 
         <div class="evo-value-grid">
-          <div class="evo-value"><i>01</i><strong>Código a medida</strong><small>Sin depender de un constructor visual para definir la experiencia.</small></div>
-          <div class="evo-value"><i>02</i><strong>UI/UX propio</strong><small>Interfaz diseñada específicamente para la identidad y operación de tu marca.</small></div>
-          <div class="evo-value"><i>03</i><strong>Portal administrativo propio</strong><small>Publica productos, contenido y gestiona la operación sin crear páginas manualmente.</small></div>
-          <div class="evo-value"><i>04</i><strong>Evolución del producto</strong><small>Integraciones y funciones se pueden desarrollar alrededor de necesidades reales.</small></div>
+          <div class="evo-value"><i>01</i><strong>Código a medida</strong><small>Desarrollo limpio y personalizado para tu presencia digital.</small></div>
+          <div class="evo-value"><i>02</i><strong>UI/UX propio</strong><small>Diseño responsive adaptado a la identidad de tu marca o proyecto.</small></div>
+          <div class="evo-value"><i>03</i><strong>Pago único</strong><small>Pagas una vez por la creación del sitio; no una mensualidad de plataforma.</small></div>
+          <div class="evo-value"><i>04</i><strong>Dominio + publicación</strong><small>Servicios esenciales incluidos durante el primer año.</small></div>
           <div class="evo-value"><i>05</i><strong>Seguimiento Evolution</strong><small>Brief, pago y avance del proyecto centralizados en tu cuenta.</small></div>
-          <div class="evo-value"><i>06</i><strong>Sin lock-in de plataforma</strong><small>La inversión principal está en tu sistema, diseño, ingeniería y personalización.</small></div>
+          <div class="evo-value"><i>06</i><strong>Renovación clara</strong><small>Desde el segundo año: $150 USD anuales por los servicios esenciales.</small></div>
         </div>
       </article>
     </div>
 
     <div class="compare-verdict reveal">
       <span>La diferencia</span>
-      <strong>No pagas para que tu negocio encaje en una plataforma. Construimos la plataforma para que encaje en tu negocio.</strong>
+      <strong>No necesitas una suscripción mensual para tener una presencia web profesional. Pagas por crear tu sitio y luego solo renuevas los servicios esenciales.</strong>
       <p>Una suscripción puede darte herramientas excelentes. Un desarrollo a medida busca darte control operativo, un portal administrable y una arquitectura diseñada específicamente para tu empresa.</p>
     </div>
 
@@ -1114,50 +1136,47 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 </div></form></div>
 
 <script>
+
+// EVOLUTION CLEANUP V2 — borra cualquier markup viejo si el hosting mezcla builds.
+(function(){
+  const purgeLegacy=()=>{
+    document.querySelectorAll(
+      '.finder-window,.finder-pane,.finder-showcase-note,#storeDemo,#storeViewport,.interactive-section,.store-shell,.store-demo,.store-viewport,.live-controls'
+    ).forEach(el=>el.remove());
+
+    const bannedTexts=[
+      'Vértice Legal',
+      'Agenda una consulta sin llamadas.',
+      'TIENDA DIGITAL',
+      'Una experiencia que vende.',
+      'Administra tu catálogo.',
+      '04 industrias · una misma filosofía'
+    ];
+
+    [...document.body.querySelectorAll('section,article,div')].forEach(el=>{
+      const txt=(el.textContent||'').trim();
+      if(bannedTexts.some(t=>txt.includes(t)) && !el.closest('.mac-preview-window')){
+        el.remove();
+      }
+    });
+  };
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',purgeLegacy,{once:true});
+  }else{
+    purgeLegacy();
+  }
+
+  window.addEventListener('load',()=>setTimeout(purgeLegacy,120),{once:true});
+})();
+
 (function(){const d=document,desktopBtn=d.getElementById('desktopMenuBtn'),mobileBtn=d.getElementById('mobileMenuBtn'),desktop=d.getElementById('desktopDropdown'),mobile=d.getElementById('mobileDropdown');function toggle(menu){menu?.classList.toggle('show')}desktopBtn?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();toggle(desktop)});mobileBtn?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();toggle(mobile)});d.addEventListener('click',()=>{desktop?.classList.remove('show');mobile?.classList.remove('show')});window.addEventListener('keydown',e=>{if(e.key==='Escape'){desktop?.classList.remove('show');mobile?.classList.remove('show')}})})();
 (function(){const nav=document.getElementById('mobileNav');let hidden=false,ticking=false;function update(){const y=window.scrollY||0;const shouldHide=y>145;if(shouldHide!==hidden){hidden=shouldHide;nav?.classList.toggle('hidden',hidden)}ticking=false}window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});update()})();
 (function(){if(matchMedia('(pointer:fine)').matches){document.addEventListener('pointermove',e=>{document.documentElement.style.setProperty('--mx',`${e.clientX/window.innerWidth*100}%`);document.documentElement.style.setProperty('--my',`${e.clientY/window.innerHeight*100}%`)})}})();
 (function(){const c=document.getElementById('heroCanvas');if(!c||matchMedia('(prefers-reduced-motion:reduce)').matches)return;const x=c.getContext('2d');let w=0,h=0,dpr=1,pts=[],last=0;function resize(){w=c.clientWidth;h=c.clientHeight;dpr=Math.min(window.devicePixelRatio||1,innerWidth<700?1.15:1.7);c.width=w*dpr;c.height=h*dpr;x.setTransform(dpr,0,0,dpr,0,0);const count=Math.min(54,Math.max(22,Math.floor(w/28)));pts=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18}))}function frame(t){requestAnimationFrame(frame);if(t-last<(innerWidth<700?34:22))return;last=t;x.clearRect(0,0,w,h);for(const p of pts){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1}for(let i=0;i<pts.length;i++){for(let j=i+1;j<pts.length;j++){const a=pts[i],b=pts[j],dx=a.x-b.x,dy=a.y-b.y,dd=Math.hypot(dx,dy);if(dd<135){x.strokeStyle=`rgba(112,231,255,${(1-dd/135)*.09})`;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke()}}}for(const p of pts){x.fillStyle='rgba(220,245,255,.26)';x.beginPath();x.arc(p.x,p.y,1.15,0,Math.PI*2);x.fill()}}resize();addEventListener('resize',resize,{passive:true});requestAnimationFrame(frame)})();
-(function(){
-  const demo=document.getElementById('storeDemo'), viewport=document.getElementById('storeViewport'),
-        cartCount=document.getElementById('cartCount'), cartItemsLabel=document.getElementById('cartItemsLabel'),
-        subtotal=document.getElementById('cartSubtotal'), total=document.getElementById('cartTotal'),
-        checkout=document.getElementById('checkoutDemo'), uxLabel=document.getElementById('uxLabel'),
-        accentLabel=document.getElementById('storeAccentLabel');
-  if(!demo||!viewport)return;
-  let cart=[];
-  const renderCart=()=>{
-    const sum=cart.reduce((a,x)=>a+x.price,0);
-    if(cartCount)cartCount.textContent=cart.length;
-    if(cartItemsLabel)cartItemsLabel.textContent=`${cart.length} ${cart.length===1?'item':'items'}`;
-    if(subtotal)subtotal.textContent=`$${sum}`;
-    if(total)total.textContent=`$${sum}`;
-    if(checkout){checkout.classList.remove('success');checkout.textContent=cart.length?'Simular checkout →':'Agrega un producto primero';}
-  };
-  document.querySelectorAll('.add-cart').forEach(btn=>btn.addEventListener('click',()=>{
-    cart.push({name:btn.dataset.name||'Producto',price:Number(btn.dataset.price||0)});
-    btn.classList.add('added');btn.textContent='Agregado ✓';setTimeout(()=>{btn.classList.remove('added');btn.textContent='Agregar +'},900);renderCart();
-  }));
-  document.querySelectorAll('[data-device]').forEach(btn=>btn.addEventListener('click',()=>{
-    document.querySelectorAll('[data-device]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-    viewport.classList.toggle('mobile-preview',btn.dataset.device==='mobile');
-  }));
-  document.querySelectorAll('[data-ux]').forEach(btn=>btn.addEventListener('click',()=>{
-    document.querySelectorAll('[data-ux]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-    demo.classList.remove('ux-minimal','ux-luxury');if(btn.dataset.ux!=='premium')demo.classList.add(`ux-${btn.dataset.ux}`);
-    if(uxLabel)uxLabel.textContent=btn.textContent;
-  }));
-  document.querySelectorAll('[data-store-accent]').forEach(btn=>btn.addEventListener('click',()=>{
-    document.querySelectorAll('[data-store-accent]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-    demo.style.setProperty('--store-accent',btn.dataset.storeAccent);if(accentLabel)accentLabel.textContent=btn.dataset.name||'Custom';
-  }));
-  checkout?.addEventListener('click',()=>{
-    if(!cart.length)return;
-    checkout.textContent='Validando carrito…';checkout.disabled=true;
-    setTimeout(()=>{checkout.textContent='Checkout listo ✓';checkout.classList.add('success');checkout.disabled=false},800);
-  });
-  renderCart();
-})();
+
+// Legacy store demo removed
+
 
 (function(){
  const tabs=document.querySelectorAll('[data-admin-view]'),table=document.getElementById('adminPreviewTable'),
@@ -1422,20 +1441,58 @@ function refreshPlatformComparison(){
     if(labelEl)labelEl.textContent=`${compareYears} ${compareYears===1?'año':'años'} de plataforma`;
   });
 
-  const initial=5890,renewal=150;
-  const evoTotal=initial + Math.max(0,compareYears-1)*renewal;
+  const internationalInitialUsd=500;
+  const guatemalaInitialGtq=2000;
+  const renewalUsd=150;
+  const isGt=isGuatemalaVisitor();
+
   const investment=document.getElementById('evoCompareInvestment');
+  const investmentCaption=document.getElementById('evoCompareInvestmentCaption');
   const periodLabel=document.getElementById('evoComparePeriodLabel');
   const periodTotal=document.getElementById('evoComparePeriodTotal');
   const periodNote=document.getElementById('evoComparePeriodNote');
 
-  if(investment)investment.textContent=formatCompareMoney(initial);
-  if(periodLabel)periodLabel.textContent=compareYears===1?'Inversión año 1':`Referencia a ${compareYears} años`;
-  if(periodTotal)periodTotal.textContent=formatCompareMoney(evoTotal);
+  const renewalGtq=gtqFromUsd(renewalUsd);
+  const renewals=Math.max(0,compareYears-1);
+
+  if(investment){
+    investment.textContent=isGt
+      ?`${formatGtq(guatemalaInitialGtq)} GTQ`
+      :`$${internationalInitialUsd.toLocaleString('en-US')} USD`;
+  }
+
+  if(investmentCaption){
+    investmentCaption.textContent=isGt
+      ?'Precio especial Guatemala · creación y desarrollo completo del sitio'
+      :'Precio internacional · creación y desarrollo completo del sitio';
+  }
+
+  if(periodLabel){
+    periodLabel.textContent=compareYears===1
+      ?'Inversión año 1'
+      :`Referencia a ${compareYears} años`;
+  }
+
+  if(periodTotal){
+    if(isGt){
+      const totalGtq=guatemalaInitialGtq+(renewals*renewalGtq);
+      periodTotal.textContent=`${formatGtq(totalGtq)} GTQ aprox`;
+    }else{
+      const totalUsd=internationalInitialUsd+(renewals*renewalUsd);
+      periodTotal.textContent=`$${totalUsd.toLocaleString('en-US')} USD`;
+    }
+  }
+
   if(periodNote){
-    periodNote.textContent=compareYears===1
-      ?`Pago único por creación. Desde el segundo año: renovación de ${formatCompareMoney(renewal)}/año.`
-      :`Pago único de creación + ${compareYears-1} ${compareYears-1===1?'renovación anual':'renovaciones anuales'} de ${formatCompareMoney(renewal)}.`;
+    if(compareYears===1){
+      periodNote.textContent=isGt
+        ?'Pago único de Q2,000 por la creación. Desde el segundo año: renovación de $150 USD/año.'
+        :'Pago único de $500 USD por la creación. Desde el segundo año: renovación de $150 USD/año.';
+    }else{
+      periodNote.textContent=isGt
+        ?`Q2,000 de creación + ${renewals} ${renewals===1?'renovación anual':'renovaciones anuales'} de $150 USD.`
+        :`$500 USD de creación + ${renewals} ${renewals===1?'renovación anual':'renovaciones anuales'} de $150 USD.`;
+    }
   }
 }
 
