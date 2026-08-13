@@ -1183,6 +1183,15 @@ body.gd-modal-open{overflow:hidden}
   .gd-project.medium{grid-column:auto;min-height:360px}
 }
 
+
+.gd-project .tool-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.gd-project .tool-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(10,10,14,.58);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 8px 24px rgba(0,0,0,.20)}
+.gd-project .tool-badge svg{width:14px;height:14px;display:block;flex:0 0 14px}
+.gd-project .tool-badge span{font-size:.50rem;letter-spacing:.12em;color:#d9dbe4;line-height:1;font-weight:700}
+.gd-project .tool-badge.ps svg{filter:drop-shadow(0 0 8px rgba(64,170,255,.24))}
+.gd-project .tool-badge.c4d svg{filter:drop-shadow(0 0 8px rgba(136,107,255,.20))}
+@media(max-width:767px){.gd-project .tool-badges{gap:6px}.gd-project .tool-badge{padding:5px 9px}}
+
 </style>
 <link href="index.html" rel="prefetch"/><link href="arquitectura.html" rel="prefetch"/><link href="diseno-web.html" rel="prefetch"/><style>
     /* =========================================================
@@ -1627,7 +1636,7 @@ body.gd-modal-open{overflow:hidden}
 </div></section>
 
 <section class="gd-projects" id="proyectos-psd"><div class="gd-wrap">
-  <div class="gd-heading reveal"><div><span>PORTAFOLIO · 01—06</span><h2>Una selección de trabajos que muestra nuestro <em>nivel visual.</em></h2></div><p>Explora distintas composiciones, campañas y direcciones gráficas desarrolladas por Evolution Design.</p></div>
+  <div class="gd-heading reveal"><div><span>PORTAFOLIO · 01—09</span><h2>Una selección de trabajos que muestra nuestro <em>nivel visual.</em></h2></div><p>Explora distintas composiciones, campañas y direcciones gráficas desarrolladas por Evolution Design.</p></div>
   <div class="gd-gallery">
     <article class="gd-project big reveal"><img src="img/diseno-grafico/psd-01.jpg" alt="Proyecto PSD 01"><div class="shade"></div><i>01</i><div class="info"><small>FEATURED COMPOSITION</small><h3>Proyecto PSD 01</h3><p>Composición principal lista para personalizar.</p></div></article>
     <article class="gd-project small reveal"><img src="img/diseno-grafico/psd-02.jpg" alt="Proyecto PSD 02"><div class="shade"></div><i>02</i><div class="info"><small>LAYOUT STUDY</small><h3>Proyecto PSD 02</h3><p>Jerarquía visual y capas organizadas.</p></div></article>
@@ -1653,6 +1662,39 @@ body.gd-modal-open{overflow:hidden}
         <small>GRAPHIC CAMPAIGN</small>
         <h3>Proyecto PSD 06</h3>
         <p>Composición gráfica enfocada en impacto visual y marca.</p>
+      </div>
+    </article>
+
+    <article class="gd-project medium reveal">
+      <img src="img/diseno-grafico/psd-07.jpg" alt="Proyecto PSD 07" loading="lazy">
+      <div class="shade"></div>
+      <i>07</i>
+      <div class="info">
+        <div class="tool-badges"><span class="tool-badge ps" aria-label="Adobe Photoshop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="#0b1f34" stroke="#31A8FF" stroke-width="1.5"/><text x="12" y="15.2" text-anchor="middle" font-size="9.5" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="#31A8FF">Ps</text></svg><span>PHOTOSHOP</span></span><span class="tool-badge c4d" aria-label="Cinema 4D"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="c4dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7ED3FF"/><stop offset="60%" stop-color="#6F64FF"/><stop offset="100%" stop-color="#FF8DD8"/></linearGradient></defs><circle cx="12" cy="12" r="9.5" fill="url(#c4dg)" opacity=".92"/><circle cx="12" cy="12" r="4.3" fill="#f4f7ff" opacity=".88"/><circle cx="10.2" cy="10.2" r="1.35" fill="#cfe7ff" opacity=".95"/></svg><span>CINEMA 4D</span></span></div>
+        <h3>Proyecto PSD 07</h3>
+        <p>Composición publicitaria y dirección visual.</p>
+      </div>
+    </article>
+
+    <article class="gd-project medium reveal">
+      <img src="img/diseno-grafico/psd-08.jpg" alt="Proyecto PSD 08" loading="lazy">
+      <div class="shade"></div>
+      <i>08</i>
+      <div class="info">
+        <div class="tool-badges"><span class="tool-badge ps" aria-label="Adobe Photoshop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="#0b1f34" stroke="#31A8FF" stroke-width="1.5"/><text x="12" y="15.2" text-anchor="middle" font-size="9.5" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="#31A8FF">Ps</text></svg><span>PHOTOSHOP</span></span><span class="tool-badge c4d" aria-label="Cinema 4D"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="c4dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7ED3FF"/><stop offset="60%" stop-color="#6F64FF"/><stop offset="100%" stop-color="#FF8DD8"/></linearGradient></defs><circle cx="12" cy="12" r="9.5" fill="url(#c4dg)" opacity=".92"/><circle cx="12" cy="12" r="4.3" fill="#f4f7ff" opacity=".88"/><circle cx="10.2" cy="10.2" r="1.35" fill="#cfe7ff" opacity=".95"/></svg><span>CINEMA 4D</span></span></div>
+        <h3>Proyecto PSD 08</h3>
+        <p>Diseño de campaña con composición cinematográfica.</p>
+      </div>
+    </article>
+
+    <article class="gd-project medium reveal">
+      <img src="img/diseno-grafico/psd-09.jpg" alt="Proyecto PSD 09" loading="lazy">
+      <div class="shade"></div>
+      <i>09</i>
+      <div class="info">
+        <div class="tool-badges"><span class="tool-badge ps" aria-label="Adobe Photoshop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="#0b1f34" stroke="#31A8FF" stroke-width="1.5"/><text x="12" y="15.2" text-anchor="middle" font-size="9.5" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="#31A8FF">Ps</text></svg><span>PHOTOSHOP</span></span><span class="tool-badge c4d" aria-label="Cinema 4D"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="c4dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7ED3FF"/><stop offset="60%" stop-color="#6F64FF"/><stop offset="100%" stop-color="#FF8DD8"/></linearGradient></defs><circle cx="12" cy="12" r="9.5" fill="url(#c4dg)" opacity=".92"/><circle cx="12" cy="12" r="4.3" fill="#f4f7ff" opacity=".88"/><circle cx="10.2" cy="10.2" r="1.35" fill="#cfe7ff" opacity=".95"/></svg><span>CINEMA 4D</span></span></div>
+        <h3>Proyecto PSD 09</h3>
+        <p>Arte promocional con tratamiento visual avanzado.</p>
       </div>
     </article>
   </div>
