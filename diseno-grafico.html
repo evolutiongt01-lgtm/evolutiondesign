@@ -1192,6 +1192,154 @@ body.gd-modal-open{overflow:hidden}
 .gd-project .tool-badge.c4d svg{filter:drop-shadow(0 0 8px rgba(136,107,255,.20))}
 @media(max-width:767px){.gd-project .tool-badges{gap:6px}.gd-project .tool-badge{padding:5px 9px}}
 
+
+/* =========================================================
+   PORTAFOLIO FINAL · 6 PIEZAS / FULL 16:9
+   ========================================================= */
+.gd-gallery-six{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+.gd-gallery-six .gd-project{
+  grid-column:auto!important;
+  grid-row:auto!important;
+  margin-top:0!important;
+  min-height:0!important;
+  aspect-ratio:16/9;
+  border-radius:22px;
+  cursor:zoom-in;
+  background:#08090c;
+}
+.gd-gallery-six .gd-project img{
+  object-fit:cover;
+  object-position:center;
+  transform:none!important;
+}
+.gd-gallery-six .gd-project:hover img{transform:scale(1.018)!important}
+.gd-gallery-six .gd-project .shade{
+  background:linear-gradient(180deg,rgba(0,0,0,.01) 45%,rgba(0,0,0,.10) 64%,rgba(0,0,0,.82) 100%);
+}
+.gd-gallery-six .gd-project>i{
+  top:15px;left:15px;
+  padding:6px 8px;border-radius:999px;
+  background:rgba(6,7,10,.52);border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  color:#fff;
+}
+.gd-gallery-six .gd-project .info{
+  left:17px;right:17px;bottom:15px;
+  display:grid;grid-template-columns:1fr auto;grid-template-areas:"small small" "title desc";align-items:end;gap:2px 15px;
+}
+.gd-gallery-six .gd-project .info small{grid-area:small;color:#b2b5be;font-size:.46rem}
+.gd-gallery-six .gd-project .info h3{grid-area:title;margin:3px 0 0;font-size:1.18rem}
+.gd-gallery-six .gd-project .info p{grid-area:desc;color:#d4d6dc;font-size:.52rem;white-space:nowrap}
+
+.gd-portfolio-lightbox{
+  position:fixed;inset:0;z-index:100000;
+  display:flex;align-items:center;justify-content:center;
+  padding:36px;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .24s ease,visibility .24s ease;
+}
+.gd-portfolio-lightbox.show{opacity:1;visibility:visible;pointer-events:auto}
+.gd-lightbox-stage{
+  width:min(1480px,95vw);
+  max-height:91vh;
+  overflow:hidden;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.13);
+  background:#08090b;
+  box-shadow:0 40px 120px rgba(0,0,0,.65);
+}
+.gd-lightbox-stage img{
+  display:block;width:100%;height:auto;max-height:83vh;object-fit:contain;background:#060608;
+}
+.gd-lightbox-caption{
+  min-height:58px;padding:0 18px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.gd-lightbox-caption span{font-weight:750;font-size:.72rem}
+.gd-lightbox-caption small{color:#686c76;font-size:.47rem;letter-spacing:.12em}
+.gd-lightbox-close{
+  position:fixed;right:24px;top:20px;z-index:3;
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.14);background:rgba(13,14,18,.75);color:#fff;
+  font-size:1.5rem;line-height:1;cursor:pointer;backdrop-filter:blur(14px);
+}
+
+/* =========================================================
+   LOGO / IDENTIDAD VISUAL
+   ========================================================= */
+.gd-offer-grid-single{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  max-width:none!important;
+  align-items:stretch;
+}
+.gd-logo-design{
+  position:relative;min-height:610px;padding:30px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.11);border-radius:30px;
+  background:
+    radial-gradient(circle at 82% 12%,rgba(173,108,255,.17),transparent 26%),
+    radial-gradient(circle at 6% 78%,rgba(255,104,166,.10),transparent 27%),
+    linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.012)),#0a0810;
+  box-shadow:0 34px 90px rgba(0,0,0,.38);isolation:isolate;
+}
+.gd-logo-grid{
+  position:absolute;inset:0;pointer-events:none;opacity:.18;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:28px 28px;mask-image:linear-gradient(to bottom,#000,transparent 82%);
+}
+.gd-logo-head{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;color:#777b86;font-size:.52rem;letter-spacing:.13em}
+.gd-logo-head b{padding:5px 7px;border-radius:999px;border:1px solid rgba(192,128,255,.20);background:rgba(143,74,235,.10);color:#cba3ff;font-size:.47rem}
+.gd-logo-title-row{position:relative;z-index:2;display:flex;justify-content:space-between;gap:20px;margin-top:34px}
+.gd-logo-title-row small{color:#bf8df6;font-size:.54rem;letter-spacing:.14em;font-weight:800}
+.gd-logo-title-row h3{margin:8px 0 0;font-size:clamp(2.2rem,3.6vw,4rem);line-height:.91;letter-spacing:-.06em}
+.gd-logo-orb{width:66px;height:66px;flex:0 0 66px;border-radius:20px;display:grid;place-items:center;background:linear-gradient(145deg,#2b1648,#702cb8);border:1px solid rgba(209,157,255,.30);box-shadow:0 16px 42px rgba(90,30,164,.28),0 0 36px rgba(173,92,255,.14)}
+.gd-logo-orb svg{width:36px;height:36px}
+.gd-logo-price{position:relative;z-index:2;margin-top:25px}
+.gd-logo-price strong{display:block;font-size:clamp(2.35rem,4vw,3.8rem);line-height:.92;letter-spacing:-.055em}
+.gd-logo-price span{display:block;margin-top:7px;color:#777b86;font-size:.58rem}
+.gd-logo-tags{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:6px;margin-top:25px}
+.gd-logo-tags span{padding:7px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);color:#92959f;font-size:.54rem}
+.gd-logo-showcase{position:relative;z-index:2;height:160px;margin-top:26px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-items:center}
+.gd-logo-mark{height:116px;border-radius:18px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.025);display:grid;place-items:center;transition:.35s cubic-bezier(.16,1,.3,1)}
+.gd-logo-mark svg{width:54px;height:54px;opacity:.88}.gd-logo-mark:nth-child(2){transform:translateY(-9px);background:linear-gradient(145deg,rgba(142,65,223,.11),rgba(255,255,255,.02))}.gd-logo-design:hover .gd-logo-mark:nth-child(1){transform:translateY(-5px) rotate(-2deg)}.gd-logo-design:hover .gd-logo-mark:nth-child(2){transform:translateY(-14px)}.gd-logo-design:hover .gd-logo-mark:nth-child(3){transform:translateY(-5px) rotate(2deg)}
+.gd-logo-cta{position:relative;z-index:2;min-height:53px;padding:0 17px;margin-top:7px;border-radius:15px;display:flex;align-items:center;justify-content:space-between;text-decoration:none;background:linear-gradient(90deg,#6d2db8,#9f4ce3);color:#fff;font-size:.73rem;font-weight:800;box-shadow:0 15px 34px rgba(112,44,184,.20);transition:.25s ease}.gd-logo-cta:hover{color:#fff;transform:translateY(-2px);box-shadow:0 20px 42px rgba(135,56,210,.28)}
+
+@media(max-width:900px){
+  .gd-gallery-six{grid-template-columns:1fr}
+  .gd-offer-grid-single{grid-template-columns:1fr!important}
+}
+@media(max-width:767px){
+  .gd-gallery-six{gap:12px}.gd-gallery-six .gd-project{border-radius:17px}
+  .gd-gallery-six .gd-project .info{grid-template-columns:1fr;grid-template-areas:"small" "title";bottom:12px}.gd-gallery-six .gd-project .info p{display:none}
+  .gd-gallery-six .gd-project .info h3{font-size:1rem}
+  .gd-portfolio-lightbox{padding:12px}.gd-lightbox-close{right:12px;top:12px}.gd-lightbox-stage{border-radius:15px}.gd-lightbox-caption small{display:none}
+  .gd-logo-design{min-height:585px;padding:22px}.gd-logo-title-row h3{font-size:2.6rem}
+}
+
+
+/* =========================================================
+   LOGO CHECKOUT · $100 + referencias protegidas
+   ========================================================= */
+.gd-logo-price-note{display:block;margin-top:9px;max-width:430px;color:#696e79;font-size:.52rem;line-height:1.5}
+.gd-logo-brief-section{background:
+  radial-gradient(circle at 100% 0%,rgba(153,83,255,.08),transparent 26%),
+  rgba(255,255,255,.012)}
+.gd-logo-upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.gd-logo-upload-card{position:relative;min-height:128px;padding:17px;border:1px dashed rgba(190,135,255,.20);border-radius:16px;background:rgba(144,77,224,.035);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;cursor:pointer;transition:.24s ease;overflow:hidden}
+.gd-logo-upload-card:hover{transform:translateY(-2px);border-color:rgba(196,146,255,.40);background:rgba(144,77,224,.07)}
+.gd-logo-upload-card.has-file{border-style:solid;border-color:rgba(104,213,160,.28);background:rgba(65,180,124,.055)}
+.gd-logo-upload-card input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.gd-logo-upload-icon{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;margin-bottom:10px;background:rgba(175,105,255,.11);border:1px solid rgba(187,126,255,.16);color:#caa4ff;font-size:.9rem}
+.gd-logo-upload-card strong{font-size:.67rem;color:#f1eef7}.gd-logo-upload-card small{display:block;margin-top:5px;color:#707580;font-size:.49rem;line-height:1.45;max-width:92%}
+.gd-logo-upload-card.has-file small{color:#82d8a8}
+.gd-logo-upload-note{margin-top:9px;padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.05);color:#626773;font-size:.49rem;line-height:1.55}
+@media(max-width:767px){.gd-logo-upload-grid{grid-template-columns:1fr}.gd-logo-upload-card{min-height:112px}}
+
 </style>
 <link href="index.html" rel="prefetch"/><link href="arquitectura.html" rel="prefetch"/><link href="diseno-web.html" rel="prefetch"/><style>
     /* =========================================================
@@ -1636,69 +1784,57 @@ body.gd-modal-open{overflow:hidden}
 </div></section>
 
 <section class="gd-projects" id="proyectos-psd"><div class="gd-wrap">
-  <div class="gd-heading reveal"><div><span>PORTAFOLIO · 01—09</span><h2>Una selección de trabajos que muestra nuestro <em>nivel visual.</em></h2></div><p>Explora distintas composiciones, campañas y direcciones gráficas desarrolladas por Evolution Design.</p></div>
-  <div class="gd-gallery">
-    <article class="gd-project big reveal"><img src="img/diseno-grafico/psd-01.jpg" alt="Proyecto PSD 01"><div class="shade"></div><i>01</i><div class="info"><small>FEATURED COMPOSITION</small><h3>Proyecto PSD 01</h3><p>Composición principal lista para personalizar.</p></div></article>
-    <article class="gd-project small reveal"><img src="img/diseno-grafico/psd-02.jpg" alt="Proyecto PSD 02"><div class="shade"></div><i>02</i><div class="info"><small>LAYOUT STUDY</small><h3>Proyecto PSD 02</h3><p>Jerarquía visual y capas organizadas.</p></div></article>
-    <article class="gd-project small reveal"><img src="img/diseno-grafico/psd-03.jpg" alt="Proyecto PSD 03"><div class="shade"></div><i>03</i><div class="info"><small>VISUAL SYSTEM</small><h3>Proyecto PSD 03</h3><p>Diseño premium con estructura editable.</p></div></article>
-    <article class="gd-project wide reveal"><img src="img/diseno-grafico/psd-04.jpg" alt="Proyecto PSD 04"><div class="shade"></div><i>04</i><div class="info"><small>FULL PREVIEW</small><h3>Proyecto PSD 04</h3><p>Última muestra completa antes del contenido premium.</p></div></article>
+  <div class="gd-heading reveal">
+    <div><span>PORTAFOLIO · 01—06</span><h2>Una selección de trabajos que muestra nuestro <em>nivel visual.</em></h2></div>
+    <p>Seis piezas seleccionadas para que cada composición se aprecie completa, sin recortes y con mayor protagonismo visual.</p>
+  </div>
 
-    <article class="gd-project medium reveal">
+  <div class="gd-gallery gd-gallery-six">
+    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-01.jpg" data-portfolio-title="Proyecto PSD 01" tabindex="0" role="button" aria-label="Ver Proyecto PSD 01 en grande">
+      <img src="img/diseno-grafico/psd-01.jpg" alt="Proyecto PSD 01" loading="eager">
+      <div class="shade"></div><i>01</i>
+      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 01</h3><p>Ver proyecto completo ↗</p></div>
+    </article>
+
+    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-02.jpg" data-portfolio-title="Proyecto PSD 02" tabindex="0" role="button" aria-label="Ver Proyecto PSD 02 en grande">
+      <img src="img/diseno-grafico/psd-02.jpg" alt="Proyecto PSD 02" loading="lazy">
+      <div class="shade"></div><i>02</i>
+      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 02</h3><p>Ver proyecto completo ↗</p></div>
+    </article>
+
+    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-03.jpg" data-portfolio-title="Proyecto PSD 03" tabindex="0" role="button" aria-label="Ver Proyecto PSD 03 en grande">
+      <img src="img/diseno-grafico/psd-03.jpg" alt="Proyecto PSD 03" loading="lazy">
+      <div class="shade"></div><i>03</i>
+      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 03</h3><p>Ver proyecto completo ↗</p></div>
+    </article>
+
+    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-04.jpg" data-portfolio-title="Proyecto PSD 04" tabindex="0" role="button" aria-label="Ver Proyecto PSD 04 en grande">
+      <img src="img/diseno-grafico/psd-04.jpg" alt="Proyecto PSD 04" loading="lazy">
+      <div class="shade"></div><i>04</i>
+      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 04</h3><p>Ver proyecto completo ↗</p></div>
+    </article>
+
+    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-05.jpg" data-portfolio-title="Proyecto PSD 05" tabindex="0" role="button" aria-label="Ver Proyecto PSD 05 en grande">
       <img src="img/diseno-grafico/psd-05.jpg" alt="Proyecto PSD 05" loading="lazy">
-      <div class="shade"></div>
-      <i>05</i>
-      <div class="info">
-        <small>CREATIVE DIRECTION</small>
-        <h3>Proyecto PSD 05</h3>
-        <p>Exploración visual para campañas y contenido digital.</p>
-      </div>
+      <div class="shade"></div><i>05</i>
+      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 05</h3><p>Ver proyecto completo ↗</p></div>
     </article>
 
-    <article class="gd-project medium reveal">
+    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-06.jpg" data-portfolio-title="Proyecto PSD 06" tabindex="0" role="button" aria-label="Ver Proyecto PSD 06 en grande">
       <img src="img/diseno-grafico/psd-06.jpg" alt="Proyecto PSD 06" loading="lazy">
-      <div class="shade"></div>
-      <i>06</i>
-      <div class="info">
-        <small>GRAPHIC CAMPAIGN</small>
-        <h3>Proyecto PSD 06</h3>
-        <p>Composición gráfica enfocada en impacto visual y marca.</p>
-      </div>
-    </article>
-
-    <article class="gd-project medium reveal">
-      <img src="img/diseno-grafico/psd-07.jpg" alt="Proyecto PSD 07" loading="lazy">
-      <div class="shade"></div>
-      <i>07</i>
-      <div class="info">
-        <div class="tool-badges"><span class="tool-badge ps" aria-label="Adobe Photoshop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="#0b1f34" stroke="#31A8FF" stroke-width="1.5"/><text x="12" y="15.2" text-anchor="middle" font-size="9.5" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="#31A8FF">Ps</text></svg><span>PHOTOSHOP</span></span><span class="tool-badge c4d" aria-label="Cinema 4D"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="c4dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7ED3FF"/><stop offset="60%" stop-color="#6F64FF"/><stop offset="100%" stop-color="#FF8DD8"/></linearGradient></defs><circle cx="12" cy="12" r="9.5" fill="url(#c4dg)" opacity=".92"/><circle cx="12" cy="12" r="4.3" fill="#f4f7ff" opacity=".88"/><circle cx="10.2" cy="10.2" r="1.35" fill="#cfe7ff" opacity=".95"/></svg><span>CINEMA 4D</span></span></div>
-        <h3>Proyecto PSD 07</h3>
-        <p>Composición publicitaria y dirección visual.</p>
-      </div>
-    </article>
-
-    <article class="gd-project medium reveal">
-      <img src="img/diseno-grafico/psd-08.jpg" alt="Proyecto PSD 08" loading="lazy">
-      <div class="shade"></div>
-      <i>08</i>
-      <div class="info">
-        <div class="tool-badges"><span class="tool-badge ps" aria-label="Adobe Photoshop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="#0b1f34" stroke="#31A8FF" stroke-width="1.5"/><text x="12" y="15.2" text-anchor="middle" font-size="9.5" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="#31A8FF">Ps</text></svg><span>PHOTOSHOP</span></span><span class="tool-badge c4d" aria-label="Cinema 4D"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="c4dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7ED3FF"/><stop offset="60%" stop-color="#6F64FF"/><stop offset="100%" stop-color="#FF8DD8"/></linearGradient></defs><circle cx="12" cy="12" r="9.5" fill="url(#c4dg)" opacity=".92"/><circle cx="12" cy="12" r="4.3" fill="#f4f7ff" opacity=".88"/><circle cx="10.2" cy="10.2" r="1.35" fill="#cfe7ff" opacity=".95"/></svg><span>CINEMA 4D</span></span></div>
-        <h3>Proyecto PSD 08</h3>
-        <p>Diseño de campaña con composición cinematográfica.</p>
-      </div>
-    </article>
-
-    <article class="gd-project medium reveal">
-      <img src="img/diseno-grafico/psd-09.jpg" alt="Proyecto PSD 09" loading="lazy">
-      <div class="shade"></div>
-      <i>09</i>
-      <div class="info">
-        <div class="tool-badges"><span class="tool-badge ps" aria-label="Adobe Photoshop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="#0b1f34" stroke="#31A8FF" stroke-width="1.5"/><text x="12" y="15.2" text-anchor="middle" font-size="9.5" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="#31A8FF">Ps</text></svg><span>PHOTOSHOP</span></span><span class="tool-badge c4d" aria-label="Cinema 4D"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="c4dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7ED3FF"/><stop offset="60%" stop-color="#6F64FF"/><stop offset="100%" stop-color="#FF8DD8"/></linearGradient></defs><circle cx="12" cy="12" r="9.5" fill="url(#c4dg)" opacity=".92"/><circle cx="12" cy="12" r="4.3" fill="#f4f7ff" opacity=".88"/><circle cx="10.2" cy="10.2" r="1.35" fill="#cfe7ff" opacity=".95"/></svg><span>CINEMA 4D</span></span></div>
-        <h3>Proyecto PSD 09</h3>
-        <p>Arte promocional con tratamiento visual avanzado.</p>
-      </div>
+      <div class="shade"></div><i>06</i>
+      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 06</h3><p>Ver proyecto completo ↗</p></div>
     </article>
   </div>
 </div></section>
+
+<div class="gd-portfolio-lightbox" id="gdPortfolioLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Vista ampliada del portafolio">
+  <button type="button" class="gd-lightbox-close" id="gdPortfolioClose" aria-label="Cerrar vista ampliada">×</button>
+  <div class="gd-lightbox-stage">
+    <img id="gdPortfolioLightboxImg" src="" alt="">
+    <div class="gd-lightbox-caption"><span id="gdPortfolioLightboxTitle">Proyecto</span><small>EVOLUTION DESIGN · PORTFOLIO</small></div>
+  </div>
+</div>
 
 <section class="gd-system"><div class="gd-wrap">
   <div class="gd-heading one reveal"><div><span>BUILT FOR CREATORS</span><h2>No es una carpeta con archivos. Es un <em>sistema de trabajo.</em></h2></div></div>
@@ -1719,7 +1855,7 @@ body.gd-modal-open{overflow:hidden}
         <h2>¿Te gustó el portafolio? Pide una pieza <em>hecha para ti.</em></h2>
       </div>
       <p>
-        Solicita una pieza gráfica personalizada desarrollada desde cero en Photoshop y adaptada a tu campaña, evento o marca.
+        Diseño gráfico, creación de logos e identidad visual para campañas, marcas y proyectos que necesitan una presencia profesional.
       </p>
     </div>
 
@@ -1769,6 +1905,53 @@ body.gd-modal-open{overflow:hidden}
            href="#"
            onclick="abrirPedidoDiseno();return false;">
           Solicitar diseño por $16 <b>↗</b>
+        </a>
+      </aside>
+
+      <!-- CREACIÓN DE LOGOS -->
+      <aside class="gd-logo-design reveal">
+        <div class="gd-logo-grid"></div>
+        <div class="gd-logo-head">
+          <span>BRANDING · LOGO · IDENTIDAD</span>
+          <b>PERSONALIZADO</b>
+        </div>
+
+        <div class="gd-logo-title-row">
+          <div>
+            <small>CREACIÓN DE LOGOS</small>
+            <h3>Una identidad que<br>se reconozca.</h3>
+          </div>
+          <div class="gd-logo-orb" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+              <path d="M14 42 26 18l9 18 7-13 8 19" stroke="#e2c5ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="32" cy="32" r="25" stroke="#a968ef" stroke-width="2" opacity=".55"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="gd-logo-price">
+          <strong id="dgPriceLogo">$100</strong>
+          <span id="dgCurrencyLogo">USD / logo · pago único</span>
+          <small class="gd-logo-price-note">Logo profesional desde cero o rediseño de una identidad existente.</small>
+        </div>
+
+        <div class="gd-logo-tags">
+          <span>Logotipo</span>
+          <span>Isotipo</span>
+          <span>Imagotipo</span>
+          <span>Monograma</span>
+          <span>Emblema</span>
+          <span>Rediseño</span>
+        </div>
+
+        <div class="gd-logo-showcase" aria-hidden="true">
+          <div class="gd-logo-mark"><svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="25" stroke="#b98ae8" stroke-width="3"/><path d="M27 47 40 25l13 22" stroke="#f1e3ff" stroke-width="4" stroke-linecap="round"/></svg></div>
+          <div class="gd-logo-mark"><svg viewBox="0 0 80 80" fill="none"><rect x="17" y="17" width="46" height="46" rx="14" stroke="#d2a8ff" stroke-width="3"/><path d="M27 51V29h9c9 0 16 4 16 11s-7 11-16 11h-9Z" stroke="#fff" stroke-width="3"/></svg></div>
+          <div class="gd-logo-mark"><svg viewBox="0 0 80 80" fill="none"><path d="M16 52 31 22l10 20 9-15 14 25" stroke="#c18fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 57h34" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
+        </div>
+
+        <a id="dgLogoCta" class="gd-logo-cta" href="#" onclick="abrirPedidoLogo();return false;">
+          Crear mi logo por $100 <b>↗</b>
         </a>
       </aside>
     </div>
@@ -1899,12 +2082,12 @@ body.gd-modal-open{overflow:hidden}
         </label>
 
         <label class="gd-field">
-          <span>Texto secundario / información adicional</span>
+          <span id="gdSecondaryTextLabel">Texto secundario / información adicional</span>
           <textarea id="gdSecondaryText" name="secondaryText" maxlength="1200" rows="3" placeholder="Horarios, invitados, promociones, descripción, etc."></textarea>
         </label>
       </div>
 
-      <div class="gd-form-section">
+      <div class="gd-form-section" id="gdEventSection">
         <div class="gd-form-title"><span>02</span><div><strong>Datos del evento</strong><small>Déjalos vacíos si no aplican.</small></div></div>
 
         <div class="gd-form-grid three">
@@ -1954,6 +2137,89 @@ body.gd-modal-open{overflow:hidden}
         </div>
       </div>
 
+      <div class="gd-form-section gd-logo-brief-section" id="gdLogoDetailsWrap" hidden>
+        <div class="gd-form-title"><span>02</span><div><strong>Identidad de la marca</strong><small>Cuéntanos qué debe representar tu nuevo logo.</small></div></div>
+
+        <div class="gd-form-grid two">
+          <label class="gd-field">
+            <span>Sector / giro de la marca *</span>
+            <input id="gdLogoIndustry" type="text" maxlength="120" placeholder="Ej. arquitectura, restaurante, iglesia, música">
+          </label>
+          <label class="gd-field">
+            <span>Estilo que buscas *</span>
+            <select id="gdLogoStyle">
+              <option value="">Seleccionar</option>
+              <option>Minimalista</option>
+              <option>Elegante / Premium</option>
+              <option>Moderno / Tecnológico</option>
+              <option>Corporativo</option>
+              <option>Creativo / Artístico</option>
+              <option>Orgánico / Artesanal</option>
+              <option>Deportivo / Enérgico</option>
+              <option>Religioso / Institucional</option>
+              <option>Otro estilo</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="gd-form-grid two">
+          <label class="gd-field">
+            <span>Uso principal *</span>
+            <select id="gdLogoUse">
+              <option value="">Seleccionar</option>
+              <option>Redes sociales y web</option>
+              <option>Negocio / local comercial</option>
+              <option>Impresión y papelería</option>
+              <option>Uniformes / bordado</option>
+              <option>Empaques / etiquetas</option>
+              <option>Rótulos / fachada</option>
+              <option>Uso general de marca</option>
+            </select>
+          </label>
+          <label class="gd-field">
+            <span>Público al que quieres llegar</span>
+            <input id="gdLogoAudience" type="text" maxlength="180" placeholder="Ej. jóvenes, empresas, familias, clientes premium">
+          </label>
+        </div>
+
+        <div class="gd-form-grid two">
+          <label class="gd-field">
+            <span>Colores que te gustaría usar</span>
+            <input id="gdLogoPreferredColors" type="text" maxlength="160" placeholder="Ej. negro, dorado y blanco">
+          </label>
+          <label class="gd-field">
+            <span>Colores o elementos que debemos evitar</span>
+            <input id="gdLogoAvoidColors" type="text" maxlength="180" placeholder="Opcional">
+          </label>
+        </div>
+
+        <label class="gd-field">
+          <span>Estado de tu identidad actual</span>
+          <select id="gdLogoExistingStatus">
+            <option value="No tengo logo">No tengo logo</option>
+            <option value="Tengo logo y quiero rediseñarlo">Tengo logo y quiero rediseñarlo</option>
+            <option value="Tengo logo y solo sirve como referencia">Tengo logo y solo sirve como referencia</option>
+            <option value="Tengo un boceto o idea">Tengo un boceto o idea</option>
+          </select>
+        </label>
+
+        <div class="gd-logo-upload-grid">
+          <label class="gd-logo-upload-card">
+            <input id="gdLogoCurrentFile" type="file" accept="image/*,application/pdf">
+            <span class="gd-logo-upload-icon">↥</span>
+            <strong>Subir logo actual</strong>
+            <small id="gdLogoCurrentName">PNG, JPG, WEBP o PDF · opcional</small>
+          </label>
+          <label class="gd-logo-upload-card">
+            <input id="gdLogoSketchFile" type="file" accept="image/*,application/pdf">
+            <span class="gd-logo-upload-icon">✎</span>
+            <strong>Subir boceto / idea</strong>
+            <small id="gdLogoSketchName">Foto de tu dibujo o referencia · opcional</small>
+          </label>
+        </div>
+        <div class="gd-logo-upload-note">Puedes subir uno, ambos o ninguno. Los archivos se adjuntan al proyecto después de registrar el pago y quedan asociados únicamente a tu pedido.</div>
+      </div>
+
       <div class="gd-form-section">
         <div class="gd-form-title"><span>03</span><div><strong>Dirección visual</strong><small>Ayúdanos a entender la estética que buscas.</small></div></div>
 
@@ -1974,7 +2240,7 @@ body.gd-modal-open{overflow:hidden}
           <textarea id="gdNotes" name="notes" maxlength="1500" rows="3" placeholder="Logo que debe aparecer, elementos obligatorios, indicaciones especiales, etc."></textarea>
         </label>
 
-        <div class="gd-files-note">
+        <div class="gd-files-note" id="gdGenericFilesNote">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
           <div><strong>Logo, fotos y archivos</strong><span>Después del pago podrás subirlos desde <b>Mis Proyectos</b>.</span></div>
         </div>
@@ -2033,7 +2299,7 @@ body.gd-modal-open{overflow:hidden}
       </div>
       <span>PAGO CONFIRMADO</span>
       <h3>Tu proyecto ya fue creado.</h3>
-      <p>Guardamos tus especificaciones junto con el pago. Ahora puedes subir tu logo, fotografías o archivos desde Mis Proyectos.</p>
+      <p id="gdSuccessText">Guardamos tus especificaciones junto con el pago. Ahora puedes subir fotografías o archivos adicionales desde Mis Proyectos.</p>
       <a class="gd-success-projects" href="proyectos.html">Ir a Mis Proyectos <b>→</b></a>
     </div>
   </section>
@@ -2187,7 +2453,8 @@ body.gd-modal-open{overflow:hidden}
     const PRICES_USD = {
       membership: 27,
       custom: 16,
-      video: 30
+      video: 30,
+      logo: 100
     };
     let gtqRate = 7.65;
     window.evolutionGraphicGtqRate = gtqRate;
@@ -2217,6 +2484,8 @@ body.gd-modal-open{overflow:hidden}
 
       set('dgPriceVideo','$30');
       set('dgCurrencyVideo','USD · hasta 60 s');
+      set('dgPriceLogo','$100');
+      set('dgCurrencyLogo','USD / logo · pago único');
 
       const sub=document.getElementById('dgSubscribeCta');
       if(sub) sub.innerHTML='Suscribirme por $27/mes <b>→</b>';
@@ -2226,6 +2495,9 @@ body.gd-modal-open{overflow:hidden}
 
       const video=document.getElementById('dgVideoCta');
       if(video) video.innerHTML='Solicitar video desde $30 <b>→</b>';
+
+      const logo=document.getElementById('dgLogoCta');
+      if(logo) logo.innerHTML='Crear mi logo por $100 <b>↗</b>';
 
       document.documentElement.dataset.priceCurrency='USD';
     };
@@ -2239,6 +2511,7 @@ body.gd-modal-open{overflow:hidden}
       const membership=moneyGtq(PRICES_USD.membership);
       const customPrice=moneyGtq(PRICES_USD.custom);
       const videoPrice=moneyGtq(PRICES_USD.video);
+      const logoPrice=moneyGtq(PRICES_USD.logo);
 
       set('dgPriceHero',membership);
       set('dgCurrencyHero','GTQ / mes');
@@ -2254,6 +2527,8 @@ body.gd-modal-open{overflow:hidden}
 
       set('dgPriceVideo',videoPrice);
       set('dgCurrencyVideo','GTQ · hasta 60 s');
+      set('dgPriceLogo',logoPrice);
+      set('dgCurrencyLogo','GTQ / logo · referencia local');
 
       const sub=document.getElementById('dgSubscribeCta');
       if(sub) sub.innerHTML=`Suscribirme por ${membership}/mes <b>→</b>`;
@@ -2263,6 +2538,9 @@ body.gd-modal-open{overflow:hidden}
 
       const video=document.getElementById('dgVideoCta');
       if(video) video.innerHTML=`Solicitar video desde ${videoPrice} <b>→</b>`;
+
+      const logo=document.getElementById('dgLogoCta');
+      if(logo) logo.innerHTML=`Crear mi logo por ${logoPrice} <b>↗</b>`;
 
       document.documentElement.dataset.priceCurrency='GTQ';
     };
@@ -2346,7 +2624,27 @@ body.gd-modal-open{overflow:hidden}
       styleLabel:'Colores / estilo',
       typeOptions:['Post publicitario','Historia / Story','Flyer','Banner','Portada','Carrusel','Invitación','Otro'],
       formatOptions:['Instagram / Facebook 1:1','Instagram 4:5','Historia / Reel 9:16','Facebook portada','Banner horizontal 16:9','Impresión','Otro formato'],
-      video:false
+      video:false,
+      logo:false,
+      secondaryLabel:'Texto secundario / información adicional',
+      secondaryPlaceholder:'Horarios, invitados, promociones, descripción, etc.'
+    },
+    logo_design:{
+      priceUsd:100,
+      title:'Construyamos la identidad de tu marca.',
+      serviceLabel:'CREACIÓN DE LOGO',
+      serviceName:'Creación de logo profesional',
+      payTitle:'Confirma tu proyecto de logo.',
+      eventLabel:'Nombre de la marca / negocio *',
+      typeLabel:'¿Qué tipo de logo necesitas? *',
+      mainLabel:'Nombre exacto que llevará el logo *',
+      styleLabel:'Estilo visual / referencias',
+      secondaryLabel:'Eslogan / descripción breve de la marca',
+      secondaryPlaceholder:'Ej. Arquitectura y construcción · Calidad que transforma espacios',
+      typeOptions:['Logo desde cero','Rediseño de logo actual','Logotipo tipográfico','Isotipo / símbolo','Imagotipo','Monograma','Emblema','Otro'],
+      formatOptions:['Logo / múltiples aplicaciones'],
+      video:false,
+      logo:true
     },
     video_edit:{
       priceUsd:30,
@@ -2362,7 +2660,10 @@ body.gd-modal-open{overflow:hidden}
       styleLabel:'Estilo visual / ritmo',
       typeOptions:['Video promocional','Reel / social','Anuncio de campaña','Edición + composición','Intro / Outro','Video para evento','Otro'],
       formatOptions:['Vertical 9:16','Horizontal 16:9','Cuadrado 1:1','Feed 4:5','Otro formato'],
-      video:true
+      video:true,
+      logo:false,
+      secondaryLabel:'Información adicional del video',
+      secondaryPlaceholder:'Guion, escenas, textos, referencias o indicaciones importantes.'
     }
   };
 
@@ -2380,6 +2681,7 @@ body.gd-modal-open{overflow:hidden}
 
   let activeService='custom_design';
   let currentBrief=null;
+  let currentLogoReferences=[];
   let sdkPromise=null;
 
   const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -2406,6 +2708,7 @@ body.gd-modal-open{overflow:hidden}
 
   const currentTotalUsd=()=>{
     if(activeService==='video_edit')return videoPriceUsd(videoDurationSeconds());
+    if(activeService==='logo_design')return 100;
     return 16;
   };
 
@@ -2455,6 +2758,8 @@ body.gd-modal-open{overflow:hidden}
 
     if(activeService==='video_edit'){
       document.getElementById('gdPayDescription').textContent=`Hasta 60 segundos cuestan $30 USD. Después se suman $8 USD por cada minuto adicional iniciado. PayPal procesará $${usd} USD; Binance Pay usa ${usd} USDT.`;
+    }else if(activeService==='logo_design'){
+      document.getElementById('gdPayDescription').textContent='Creación de logo profesional: $100 USD. PayPal procesa $100 USD, Binance Pay usa 100 USDT y en Guatemala también puedes pagar por transferencia en GTQ.';
     }else{
       document.getElementById('gdPayDescription').textContent='PayPal procesará el cobro base de $16 USD. Binance Pay usa 16 USDT. En Guatemala también puedes pagar por transferencia en GTQ.';
     }
@@ -2470,12 +2775,28 @@ body.gd-modal-open{overflow:hidden}
     document.getElementById('gdDesignTypeLabel').textContent=s.typeLabel;
     document.getElementById('gdMainTextLabel').textContent=s.mainLabel;
     document.getElementById('gdVisualStyleLabel').textContent=s.styleLabel;
+    document.getElementById('gdSecondaryTextLabel').textContent=s.secondaryLabel||'Texto secundario / información adicional';
+    document.getElementById('gdSecondaryText').placeholder=s.secondaryPlaceholder||'Información adicional';
 
-    setSelectOptions(document.getElementById('gdDesignType'),s.typeOptions);
-    setSelectOptions(document.getElementById('gdFormat'),s.formatOptions);
+    const typeSelect=document.getElementById('gdDesignType');
+    const formatSelect=document.getElementById('gdFormat');
+    setSelectOptions(typeSelect,s.typeOptions);
+    setSelectOptions(formatSelect,s.formatOptions);
+    if(s.logo && formatSelect?.options?.length>1) formatSelect.selectedIndex=1;
 
     const durationWrap=document.getElementById('gdVideoDurationWrap');
+    const logoWrap=document.getElementById('gdLogoDetailsWrap');
+    const eventSection=document.getElementById('gdEventSection');
+    const genericFiles=document.getElementById('gdGenericFilesNote');
     durationWrap.hidden=!s.video;
+    logoWrap.hidden=!s.logo;
+    eventSection.hidden=!!s.logo;
+    genericFiles.hidden=!!s.logo;
+
+    ['gdLogoIndustry','gdLogoStyle','gdLogoUse'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.required=!!s.logo;
+    });
+
     if(!s.video){
       const mins=document.getElementById('gdVideoMinutes');
       const secs=document.getElementById('gdVideoSeconds');
@@ -2489,6 +2810,11 @@ body.gd-modal-open{overflow:hidden}
   const openService=type=>{
     activeService=type;
     form.reset();
+    currentLogoReferences=[];
+    ['gdLogoCurrentFile','gdLogoSketchFile'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    document.getElementById('gdLogoCurrentName').textContent='PNG, JPG, WEBP o PDF · opcional';
+    document.getElementById('gdLogoSketchName').textContent='Foto de tu dibujo o referencia · opcional';
+    document.querySelectorAll('.gd-logo-upload-card').forEach(x=>x.classList.remove('has-file'));
     updateModalService();
     modal?.classList.add('show');modal?.setAttribute('aria-hidden','false');
     document.body.classList.add('gd-modal-open');
@@ -2496,6 +2822,7 @@ body.gd-modal-open{overflow:hidden}
     payError.classList.remove('show');payError.textContent='';
   };
   window.abrirPedidoDiseno=()=>openService('custom_design');
+  window.abrirPedidoLogo=()=>openService('logo_design');
   window.abrirPedidoVideo=()=>openService('video_edit');
 
   ['gdVideoMinutes','gdVideoSeconds'].forEach(id=>{
@@ -2510,6 +2837,18 @@ body.gd-modal-open{overflow:hidden}
       updateVideoLivePrice();
     });
   });
+
+  const bindLogoFileName=(inputId,labelId)=>{
+    const input=document.getElementById(inputId),label=document.getElementById(labelId);
+    input?.addEventListener('change',()=>{
+      const card=input.closest('.gd-logo-upload-card');
+      const file=input.files?.[0];
+      card?.classList.toggle('has-file',!!file);
+      if(label) label.textContent=file?`${file.name} · ${(file.size/1024/1024).toFixed(2)} MB`:(inputId==='gdLogoCurrentFile'?'PNG, JPG, WEBP o PDF · opcional':'Foto de tu dibujo o referencia · opcional');
+    });
+  };
+  bindLogoFileName('gdLogoCurrentFile','gdLogoCurrentName');
+  bindLogoFileName('gdLogoSketchFile','gdLogoSketchName');
 
   const close=()=>{modal?.classList.remove('show');modal?.setAttribute('aria-hidden','true');document.body.classList.remove('gd-modal-open')};
   modal?.querySelectorAll('[data-close-design-order]').forEach(el=>el.addEventListener('click',close));
@@ -2529,11 +2868,23 @@ body.gd-modal-open{overflow:hidden}
     videoDuration:activeService==='video_edit'?durationLabel(videoDurationSeconds()):'',
     visualStyle:document.getElementById('gdVisualStyle')?.value.trim()||'',
     referenceUrl:document.getElementById('gdReferenceUrl')?.value.trim()||'',
-    notes:document.getElementById('gdNotes')?.value.trim()||''
+    notes:document.getElementById('gdNotes')?.value.trim()||'',
+    logoIndustry:document.getElementById('gdLogoIndustry')?.value.trim()||'',
+    logoStyle:document.getElementById('gdLogoStyle')?.value||'',
+    logoUse:document.getElementById('gdLogoUse')?.value||'',
+    logoAudience:document.getElementById('gdLogoAudience')?.value.trim()||'',
+    logoPreferredColors:document.getElementById('gdLogoPreferredColors')?.value.trim()||'',
+    logoAvoidColors:document.getElementById('gdLogoAvoidColors')?.value.trim()||'',
+    logoExistingStatus:document.getElementById('gdLogoExistingStatus')?.value||''
   });
 
   const renderBrief=brief=>{
-    const rows=[
+    const rows=activeService==='logo_design' ? [
+      ['Marca / negocio',brief.eventName],['Proyecto',brief.designType],
+      ['Nombre del logo',brief.mainText],['Sector',brief.logoIndustry],
+      ['Estilo',brief.logoStyle],['Uso principal',brief.logoUse],
+      ['Referencias adjuntas',currentLogoReferences.length?`${currentLogoReferences.length} archivo(s)`:'Sin archivos']
+    ] : [
       ['Evento / campaña',brief.eventName],['Tipo',brief.designType],
       ['Mensaje principal',brief.mainText],['Formato',brief.format],
       ...(activeService==='video_edit'?[['Duración',brief.videoDuration||'Por definir']]:[]),
@@ -2568,6 +2919,41 @@ body.gd-modal-open{overflow:hidden}
     return{dataUrl,name:String(file.name||'comprobante').slice(-160),type:file.type||'application/octet-stream',size:file.size};
   };
 
+  const prepareCreativeReference=async(file,kind)=>{
+    if(!file)return null;
+    if(file.size>8*1024*1024)throw new Error('Cada referencia debe pesar menos de 8 MB.');
+    let dataUrl='';
+    if(/^image\//i.test(file.type)){
+      const img=await imageFromFile(file);let scale=Math.min(1,1400/Math.max(img.naturalWidth||1,img.naturalHeight||1));
+      for(let i=0;i<6;i++){
+        const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.naturalWidth*scale));c.height=Math.max(1,Math.round(img.naturalHeight*scale));
+        c.getContext('2d',{alpha:true}).drawImage(img,0,0,c.width,c.height);
+        dataUrl=c.toDataURL('image/webp',Math.max(.46,.76-i*.06));
+        if(dataUrl.length<=560000)break;scale*=.80;
+      }
+      if(dataUrl.length>560000)throw new Error('La referencia es demasiado pesada incluso después de optimizarla.');
+    }else if(file.type==='application/pdf'){
+      if(file.size>360*1024)throw new Error('Para PDF usa un archivo menor a 360 KB o sube una captura JPG/PNG.');
+      dataUrl=await readFileAsDataURL(file);
+    }else throw new Error('La referencia debe ser imagen o PDF.');
+    return{kind,file:{dataUrl,name:String(file.name||'referencia').slice(-160),type:file.type||'application/octet-stream',size:file.size}};
+  };
+
+  const prepareLogoReferences=async()=>{
+    if(activeService!=='logo_design')return[];
+    const refs=[];
+    const current=document.getElementById('gdLogoCurrentFile')?.files?.[0];
+    const sketch=document.getElementById('gdLogoSketchFile')?.files?.[0];
+    if(current)refs.push(await prepareCreativeReference(current,'current_logo'));
+    if(sketch)refs.push(await prepareCreativeReference(sketch,'sketch'));
+    return refs.filter(Boolean);
+  };
+
+  const uploadLogoReferences=async projectId=>{
+    if(activeService!=='logo_design'||!currentLogoReferences.length||!projectId)return{ok:true,count:0};
+    return api('/graphic/logo-references',{projectId,references:currentLogoReferences});
+  };
+
   const copyText=async(value,btn)=>{
     try{await navigator.clipboard.writeText(String(value||''))}
     catch(_){const t=document.createElement('textarea');t.value=String(value||'');document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}
@@ -2597,7 +2983,18 @@ body.gd-modal-open{overflow:hidden}
           const d=await api('/paypal/create-order',{mode:'graphic_design_purchase',graphicService:activeService,brief:currentBrief,clientGeo:window.evolutionGraphicGeo||{}});
           return d.orderId;
         },
-        onApprove:async data=>{await api('/paypal/capture-order',{orderId:data.orderID});form.hidden=true;payPanel.hidden=true;success.hidden=false},
+        onApprove:async data=>{
+          const result=await api('/paypal/capture-order',{orderId:data.orderID});
+          let refWarning='';
+          if(activeService==='logo_design'&&currentLogoReferences.length){
+            try{await uploadLogoReferences(result.projectId)}catch(e){refWarning=' No pudimos adjuntar una referencia; podrás subirla nuevamente desde Mis Proyectos.'}
+          }
+          const successText=document.getElementById('gdSuccessText');
+          if(successText)successText.textContent=activeService==='logo_design'
+            ? `Pago confirmado. Guardamos el brief del logo${currentLogoReferences.length?' y tus referencias':''}.${refWarning}`
+            : 'Guardamos tus especificaciones junto con el pago. Ahora puedes subir fotografías o archivos adicionales desde Mis Proyectos.';
+          form.hidden=true;payPanel.hidden=true;success.hidden=false
+        },
         onCancel:()=>{payError.textContent='El pago fue cancelado. Tus especificaciones siguen aquí.';payError.classList.add('show')},
         onError:err=>{payError.textContent=err?.message||'No se pudo completar el pago con PayPal.';payError.classList.add('show')}
       }).render('#gdPayPalButtons');
@@ -2621,8 +3018,13 @@ body.gd-modal-open{overflow:hidden}
     try{
       const receipt=await prepareReceipt(file);
       const result=await api('/graphic/manual-payment',{method,reference,payerName,bankKey,receipt,graphicService:activeService,brief:currentBrief,clientGeo:window.evolutionGraphicGeo||{}});
-      manualStatus(`Comprobante recibido · ${result.displayOrderId}. Pendiente de validación. Abriendo Mis Proyectos…`,'ok');
-      setTimeout(()=>location.href=`proyectos.html?project=${encodeURIComponent(result.projectId)}`,1100);
+      let referenceNote='';
+      if(activeService==='logo_design'&&currentLogoReferences.length){
+        try{await uploadLogoReferences(result.projectId);referenceNote=' · referencias adjuntas'}
+        catch(_){referenceNote=' · referencias pendientes de volver a subir'}
+      }
+      manualStatus(`Comprobante recibido · ${result.displayOrderId}${referenceNote}. Pendiente de validación. Abriendo Mis Proyectos…`,'ok');
+      setTimeout(()=>location.href=`proyectos.html?project=${encodeURIComponent(result.projectId)}`,1300);
     }catch(err){manualStatus(err?.message||'No se pudo registrar el comprobante.','error');btn.disabled=false;btn.textContent=old}
   };
 
@@ -2708,7 +3110,13 @@ body.gd-modal-open{overflow:hidden}
       msg.classList.add('show');return;
     }
     if(!window.evolutionCurrentUser){msg.textContent='Inicia sesión para guardar el pedido y continuar al pago.';msg.classList.add('show');window.abrirAuthModal?.();return}
-    currentBrief=briefFromForm();renderBrief(currentBrief);form.hidden=true;payPanel.hidden=false;success.hidden=true;updateModalService();await prepareRegionalMethods();await selectMethod('paypal');
+    if(activeService==='logo_design'){
+      try{
+        msg.textContent='Optimizando tus referencias…';msg.classList.add('show');
+        currentLogoReferences=await prepareLogoReferences();
+      }catch(err){msg.textContent=err?.message||'No se pudo preparar una referencia.';msg.classList.add('show');return}
+    }
+    currentBrief=briefFromForm();renderBrief(currentBrief);msg.classList.remove('show');form.hidden=true;payPanel.hidden=false;success.hidden=true;updateModalService();await prepareRegionalMethods();await selectMethod('paypal');
   });
   backBtn?.addEventListener('click',()=>{payPanel.hidden=true;form.hidden=false});
 })();
@@ -2839,5 +3247,37 @@ body.gd-modal-open{overflow:hidden}
       glass.addEventListener('pointerleave', reset, {passive:true});
     })();
   </script>
+
+<script>
+(() => {
+  const box=document.getElementById('gdPortfolioLightbox');
+  const img=document.getElementById('gdPortfolioLightboxImg');
+  const title=document.getElementById('gdPortfolioLightboxTitle');
+  const closeBtn=document.getElementById('gdPortfolioClose');
+  if(!box||!img)return;
+
+  const open=(card)=>{
+    img.src=card.dataset.portfolioSrc||card.querySelector('img')?.src||'';
+    img.alt=card.dataset.portfolioTitle||'Proyecto de portafolio';
+    if(title)title.textContent=card.dataset.portfolioTitle||'Proyecto';
+    box.classList.add('show');box.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+  };
+  const close=()=>{
+    box.classList.remove('show');box.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    setTimeout(()=>{if(!box.classList.contains('show'))img.src=''},180);
+  };
+
+  document.querySelectorAll('[data-portfolio-src]').forEach(card=>{
+    card.addEventListener('click',()=>open(card));
+    card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(card)}});
+  });
+  closeBtn?.addEventListener('click',close);
+  box.addEventListener('click',e=>{if(e.target===box)close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&box.classList.contains('show'))close()});
+})();
+</script>
+
 </body>
 </html>
