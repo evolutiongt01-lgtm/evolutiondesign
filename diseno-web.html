@@ -119,6 +119,8 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
   .mac-preview-window.expanded{grid-column:auto}
 }
 @media(max-width:640px){
+  .mac-expand-btn{display:none!important}
+  .mac-preview-bar{grid-template-columns:auto 1fr}
   .mac-preview-grid{gap:11px}
   .mac-preview-window{border-radius:17px}
   .mac-preview-bar{height:44px;padding:0 10px}
@@ -242,8 +244,17 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
 .platform-card{position:relative;padding:21px;border:1px solid rgba(255,255,255,.08);border-radius:22px;background:linear-gradient(150deg,rgba(255,255,255,.035),rgba(255,255,255,.012));overflow:hidden}
 .platform-card::after{content:"";position:absolute;width:170px;height:170px;border-radius:50%;right:-90px;bottom:-110px;background:rgba(255,255,255,.025);pointer-events:none}
 .platform-brand{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
-.platform-brand-label{display:flex;align-items:center;gap:9px}
+.platform-brand-label{display:flex;align-items:center;gap:10px}
 .platform-monogram{width:34px;height:34px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.10);border-radius:11px;background:#0d0d0f;color:#bbb;font-weight:900;font-size:.66rem}
+.platform-brand-logo{width:36px;height:36px;display:grid;place-items:center;flex:0 0 auto;border:1px solid rgba(255,255,255,.10);border-radius:11px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 22px rgba(0,0,0,.18);overflow:hidden}
+.platform-brand-logo img{width:20px;height:20px;display:block;filter:brightness(0) invert(1)}
+.platform-brand-logo-shopify{background:linear-gradient(145deg,#95bf47,#5f7f29)}
+.platform-brand-logo-wordpress{background:linear-gradient(145deg,#21759b,#124763)}
+.platform-brand-logo-woo{background:linear-gradient(145deg,#96588a,#60365a)}
+.platform-logo-cluster{display:flex;align-items:center;min-width:54px}
+.platform-logo-cluster .platform-brand-logo{width:34px;height:34px}
+.platform-logo-cluster .platform-brand-logo+.platform-brand-logo{margin-left:-12px;border-color:rgba(255,255,255,.20);box-shadow:0 0 0 3px #101012,0 8px 22px rgba(0,0,0,.18)}
+.platform-logo-cluster .platform-brand-logo img{width:18px;height:18px}
 .platform-brand strong{display:block;font-size:.86rem}
 .platform-brand small{display:block;margin-top:3px;color:#626269;font-size:.55rem}
 .platform-tag{padding:6px 8px;border:1px solid rgba(255,255,255,.075);border-radius:999px;color:#696970;font-size:.50rem;white-space:nowrap}
@@ -992,7 +1003,9 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
         <article class="platform-card">
           <div class="platform-brand">
             <div class="platform-brand-label">
-              <span class="platform-monogram">S</span>
+              <span class="platform-brand-logo platform-brand-logo-shopify" aria-hidden="true">
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@16.28.0/icons/shopify.svg" alt="">
+              </span>
               <div><strong>Shopify</strong><small>Plataforma SaaS de e-commerce</small></div>
             </div>
             <span class="platform-tag">Suscripción</span>
@@ -1019,7 +1032,14 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
         <article class="platform-card">
           <div class="platform-brand">
             <div class="platform-brand-label">
-              <span class="platform-monogram">W</span>
+              <span class="platform-logo-cluster" aria-hidden="true">
+                <span class="platform-brand-logo platform-brand-logo-wordpress">
+                  <img src="https://cdn.jsdelivr.net/npm/simple-icons@16.28.0/icons/wordpress.svg" alt="">
+                </span>
+                <span class="platform-brand-logo platform-brand-logo-woo">
+                  <img src="https://cdn.jsdelivr.net/npm/simple-icons@16.28.0/icons/woocommerce.svg" alt="">
+                </span>
+              </span>
               <div><strong>WordPress / WooCommerce</strong><small>CMS + ecosistema de plugins</small></div>
             </div>
             <span class="platform-tag">Ecosistema</span>
@@ -1050,7 +1070,7 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
       <article class="evolution-compare-card">
         <div class="evo-compare-top">
           <div>
-            <span class="evo-compare-kicker">Evolution Design · Sitio Web Esencial</span>
+            <span class="evo-compare-kicker">Evolution Design · Custom Build</span>
             <h3 class="evo-compare-card-title">Tu sitio profesional. Un solo pago.</h3>
             <p class="evo-compare-card-copy">Una presencia web profesional creada a medida para tu marca, empresa, institución o proyecto. Sin mensualidad de Evolution por usar el sitio y sin depender de un constructor visual.</p>
           </div>
@@ -1059,13 +1079,13 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 
         <div class="evo-investment">
           <div>
-            <span id="evoComparePlanLabel">Sitio Web Esencial · pago único</span>
-            <strong id="evoCompareInvestment">$500</strong>
+            <span>Sitio Web Esencial · pago único</span>
+            <strong id="evoCompareInvestment">$500 USD</strong>
             <small id="evoCompareInvestmentCaption">Creación y desarrollo completo del sitio · UI/UX responsive</small>
           </div>
           <div class="evo-three-year">
             <span id="evoComparePeriodLabel">Inversión año 1</span>
-            <strong id="evoComparePeriodTotal">$500</strong>
+            <strong id="evoComparePeriodTotal">$5,890</strong>
             <small id="evoComparePeriodNote">Pago único por creación. Desde el segundo año: renovación de $150 USD/año.</small>
           </div>
         </div>
@@ -1073,7 +1093,7 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
         <div class="evo-value-grid">
           <div class="evo-value"><i>01</i><strong>Código a medida</strong><small>Desarrollo limpio y personalizado para tu presencia digital.</small></div>
           <div class="evo-value"><i>02</i><strong>UI/UX propio</strong><small>Diseño responsive adaptado a la identidad de tu marca o proyecto.</small></div>
-          <div class="evo-value"><i>03</i><strong>Pago único</strong><small>Pagas una vez por la creación del sitio; no una mensualidad de plataforma.</small></div>
+          <div class="evo-value"><i>03</i><strong>Pago único</strong><small>Pagas una sola vez por la creación del sitio.</small></div>
           <div class="evo-value"><i>04</i><strong>Dominio + publicación</strong><small>Servicios esenciales incluidos durante el primer año.</small></div>
           <div class="evo-value"><i>05</i><strong>Seguimiento Evolution</strong><small>Brief, pago y avance del proyecto centralizados en tu cuenta.</small></div>
           <div class="evo-value"><i>06</i><strong>Renovación clara</strong><small>Desde el segundo año: $150 USD anuales por los servicios esenciales.</small></div>
@@ -1468,9 +1488,7 @@ function refreshPlatformComparison(){
   }
 
   if(periodLabel){
-    periodLabel.textContent=compareYears===1
-      ?'Inversión año 1'
-      :`Referencia a ${compareYears} años`;
+    periodLabel.textContent=compareYears===1?'Inversión año 1':`Referencia a ${compareYears} años`;
   }
 
   if(periodTotal){
