@@ -2,7 +2,7 @@
 <html lang="es" class="h-100">
 <head>
   <meta charset="utf-8">
-  <meta name="evolution-build" content="2026-08-14-profile-cloudflare-r2-worker-v2">
+  <meta name="evolution-build" content="2026-08-14-profile-r2-firestore-worker-v3">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#050505">
   <meta name="color-scheme" content="dark">
@@ -653,7 +653,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
     const firebaseConfig={
       apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",
@@ -887,6 +887,34 @@
       return body;
     }
 
+    async function updateProfileDataViaWorker(data){
+      if(!currentUser)throw new Error('AUTH_MISSING');
+
+      const idToken=await currentUser.getIdToken();
+
+      const response=await fetch(`${EVOLUTION_WORKER_URL}/profile/update`,{
+        method:'POST',
+        headers:{
+          'Authorization':`Bearer ${idToken}`,
+          'Content-Type':'application/json',
+          'Accept':'application/json'
+        },
+        body:JSON.stringify(data),
+        cache:'no-store'
+      });
+
+      const body=await response.json().catch(()=>({}));
+
+      if(!response.ok||body?.ok!==true){
+        const error=new Error(body?.error||'No se pudo actualizar el perfil.');
+        error.code=body?.code||`HTTP_${response.status}`;
+        throw error;
+      }
+
+      return body;
+    }
+
+
 
     $('profileForm').addEventListener('submit',async e=>{
       e.preventDefault();
@@ -936,18 +964,22 @@
           ...(photoURL?{photoURL}:{})
         });
 
-        /* Perfil principal sigue en Firestore. */
-        await setDoc(doc(db,'users',currentUser.uid),{
-          uid:currentUser.uid,
-          email:currentUser.email||'',
+        /*
+         * PERFIL -> Evolution Backend -> Firestore Admin.
+         * Las reglas Firestore pueden seguir con allow write: if false.
+         */
+        const profilePayload={
           displayName,
-          birthDate,
-          photoURL:photoURL||'',
-          profilePhotoPath:profilePhotoPath||'',
-          profilePhotoProvider:photoURL&&photoURL.includes('/profile/photo/')?'cloudflare-r2-worker':(currentProfile.profilePhotoProvider||''),
-          profileCompleted:true,
-          updatedAt:serverTimestamp()
-        },{merge:true});
+          birthDate
+        };
+
+        if(photoUploaded){
+          profilePayload.photoURL=photoURL;
+          profilePayload.profilePhotoPath=profilePhotoPath;
+          profilePayload.profilePhotoProvider='cloudflare-r2-worker';
+        }
+
+        await updateProfileDataViaWorker(profilePayload);
 
         currentProfile={
           ...currentProfile,
@@ -990,8 +1022,10 @@
 
         if(error?.code==='auth/requires-recent-login'){
           $('saveStatus').textContent='Por seguridad, vuelve a iniciar sesión e inténtalo nuevamente.';
-        }else if(error?.code==='permission-denied'){
-          $('saveStatus').textContent='Firestore rechazó la actualización del perfil. Revisa las reglas de users.';
+        }else if(error?.code==='AUTH_INVALID'||error?.code==='AUTH_MISSING'){
+          $('saveStatus').textContent='Tu sesión ya no es válida. Inicia sesión nuevamente.';
+        }else if(error?.code==='FIRESTORE_ADMIN_WRITE_FAILED'){
+          $('saveStatus').textContent='Evolution Backend no pudo guardar el perfil en Firestore.';
         }else{
           $('saveStatus').textContent=error?.message||'No se pudieron guardar los cambios.';
         }
