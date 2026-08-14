@@ -1,400 +1,445 @@
-/* Evolution Design · Service Worker · v13 */
+/* Evolution Design · Service Worker · v14 · Redirect Fix */
 
-const VERSION='evolution-v13-nav';
+const VERSION = 'evolution-v14-nav-redirect-fix';
+const PAGES = `${VERSION}-pages`;
+const ASSETS = `${VERSION}-assets`;
 
-const PAGES=`${VERSION}-pages`;
-const ASSETS=`${VERSION}-assets`;
-
-const PUBLIC=[
+const PUBLIC = [
   '/',
   '/index.html',
-
   '/arquitectura',
   '/arquitectura.html',
-
   '/diseno-grafico',
   '/diseno-grafico.html',
-
   '/diseno-web',
   '/diseno-web.html',
-
   '/sobre-nosotros',
   '/sobre-nosotros.html',
-
   '/feedback',
   '/feedback.html'
 ];
 
-const PRELOAD=[
+const PRELOAD = [
   '/index.html',
   '/arquitectura.html',
   '/diseno-grafico.html',
   '/diseno-web.html',
-
   '/evolution-nav.js',
-
   '/img/logo.png',
   '/manifest.webmanifest'
 ];
 
-const PRIVATE=[
+const PRIVATE = [
   '/proyectos',
   '/perfil',
   '/admin',
   '/portal',
   '/account',
-
   '/checkout',
   '/payment',
   '/pago',
   '/login',
-
   '/api/',
   '/recaptcha',
-
   '/__/auth',
   '/__/firebase'
 ];
 
-const privatePath=p=>
-  PRIVATE.some(x=>
-    p.toLowerCase().includes(x)
+const privatePath = pathname =>
+  PRIVATE.some(part =>
+    pathname.toLowerCase().includes(part)
   );
 
-const assetPath=p=>
-  p==='/evolution-nav.js' ||
-  p==='/manifest.webmanifest' ||
-  p.startsWith('/img/') ||
-  p.startsWith('/css/') ||
-  p.startsWith('/js/') ||
-  p.startsWith('/fonts/') ||
-  p.startsWith('/assets/');
+const assetPath = pathname =>
+  pathname === '/evolution-nav.js' ||
+  pathname === '/manifest.webmanifest' ||
+  pathname.startsWith('/img/') ||
+  pathname.startsWith('/css/') ||
+  pathname.startsWith('/js/') ||
+  pathname.startsWith('/fonts/') ||
+  pathname.startsWith('/assets/');
 
 
-async function safeFetch(req,options){
+async function normalizeResponse(response) {
 
-  const res=await fetch(req,options);
-
-  if(!res.redirected){
-    return res;
+  if (!response) {
+    return null;
   }
 
-  try{
+  if (!response.redirected) {
+    return response;
+  }
 
-    const url=new URL(res.url);
+  try {
 
-    if(url.origin!==self.location.origin){
+    const finalURL = new URL(response.url);
+
+    if (finalURL.origin !== self.location.origin) {
       return null;
     }
 
-    const body=
-      await res.clone().arrayBuffer();
+    const body = await response.clone().arrayBuffer();
+    const headers = new Headers(response.headers);
 
-    return new Response(body,{
-      status:res.status,
-      statusText:res.statusText,
-      headers:new Headers(res.headers)
+    return new Response(body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers
     });
 
-  }catch(_){
+  } catch (error) {
+
+    console.warn(
+      'Evolution SW · redirect normalize failed',
+      error
+    );
 
     return null;
-
   }
 }
 
 
-async function networkFirst(req){
+async function fetchNormalized(request, options = {}) {
 
-  const cache=
-    await caches.open(PAGES);
+  const response = await fetch(request, {
+    ...options,
+    redirect: 'follow'
+  });
 
-  try{
+  return normalizeResponse(response);
+}
 
-    const fresh=
-      await safeFetch(req,{
-        cache:'no-cache'
-      });
 
-    if(
-      fresh?.ok &&
-      fresh.type==='basic'
-    ){
+async function networkFirst(request) {
+
+  const cache = await caches.open(PAGES);
+
+  try {
+
+    const fresh = await fetchNormalized(
+      request,
+      {
+        cache: 'no-store'
+      }
+    );
+
+    if (fresh && fresh.ok) {
 
       await cache.put(
-        req,
+        request,
         fresh.clone()
       );
 
       return fresh;
     }
 
-    throw new Error('network');
+    throw new Error('NETWORK_RESPONSE_INVALID');
 
-  }catch(_){
+  } catch (error) {
 
-    return (
-      await cache.match(
-        req,
-        {ignoreSearch:true}
-      )
-    )
-    ||
-    (
-      await cache.match(
-        '/index.html'
-      )
-    )
-    ||
-    new Response(
-      `<!doctype html>
-      <meta charset="utf-8">
-
-      <meta
-        name="viewport"
-        content="width=device-width,initial-scale=1"
-      >
-
-      <body
-        style="
-          margin:0;
-          background:#050505;
-          color:#fff;
-          font:16px system-ui;
-          display:grid;
-          place-items:center;
-          min-height:100vh
-        "
-      >
-        Sin conexión
-      </body>`,
+    const cached = await cache.match(
+      request,
       {
-        headers:{
-          'content-type':
-          'text/html;charset=utf-8'
-        }
+        ignoreSearch: true
       }
     );
 
+    if (cached) {
+      return cached;
+    }
+
+    const url = new URL(request.url);
+    const pathname = url.pathname;
+
+    let alias = '';
+
+    if (pathname.endsWith('.html')) {
+      alias = pathname.slice(0, -5);
+    } else if (
+      pathname !== '/' &&
+      !pathname.includes('.')
+    ) {
+      alias = `${pathname}.html`;
+    }
+
+    if (alias) {
+
+      const aliasCached = await cache.match(
+        alias,
+        {
+          ignoreSearch: true
+        }
+      );
+
+      if (aliasCached) {
+        return aliasCached;
+      }
+    }
+
+    return new Response(
+      `<!doctype html>
+      <html lang="es">
+      <head>
+        <meta charset="utf-8">
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1"
+        >
+        <title>Evolution Design</title>
+      </head>
+      <body style="
+        margin:0;
+        min-height:100vh;
+        display:grid;
+        place-items:center;
+        background:#050505;
+        color:#fff;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      ">
+        <div style="text-align:center;padding:32px">
+          <strong style="font-size:20px">
+            Sin conexión
+          </strong>
+          <p style="
+            margin:10px 0 0;
+            color:#85858d;
+            font-size:14px;
+          ">
+            Conéctate a internet e inténtalo nuevamente.
+          </p>
+        </div>
+      </body>
+      </html>`,
+      {
+        status: 503,
+        headers: {
+          'content-type':
+            'text/html;charset=utf-8',
+          'cache-control':
+            'no-store'
+        }
+      }
+    );
   }
 }
 
 
-async function staleAsset(req){
+async function staleAsset(request) {
 
-  const cache=
-    await caches.open(ASSETS);
+  const cache = await caches.open(ASSETS);
 
-  const cached=
-    await cache.match(
-      req,
-      {ignoreSearch:true}
-    );
-
-  const update=
-    safeFetch(req,{
-      cache:'no-cache'
-    })
-    .then(async fresh=>{
-
-      if(
-        fresh?.ok &&
-        fresh.type==='basic'
-      ){
-
-        await cache.put(
-          req,
-          fresh.clone()
-        );
-
-        return fresh;
-      }
-
-      return null;
-
-    })
-    .catch(()=>null);
-
-  return (
-    cached ||
-    await update ||
-    Response.error()
+  const cached = await cache.match(
+    request,
+    {
+      ignoreSearch: true
+    }
   );
+
+  const update = fetchNormalized(
+    request,
+    {
+      cache: 'no-store'
+    }
+  )
+  .then(async fresh => {
+
+    if (fresh && fresh.ok) {
+
+      await cache.put(
+        request,
+        fresh.clone()
+      );
+
+      return fresh;
+    }
+
+    return null;
+  })
+  .catch(() => null);
+
+  if (cached) {
+
+    update.catch(() => {});
+
+    return cached;
+  }
+
+  const fresh = await update;
+
+  return fresh || Response.error();
 }
 
 
 self.addEventListener(
   'install',
-  event=>{
+  event => {
 
     self.skipWaiting();
 
     event.waitUntil(
-      (async()=>{
+      (async () => {
 
-        const pageCache=
+        const pageCache =
           await caches.open(PAGES);
 
-        const assetCache=
+        const assetCache =
           await caches.open(ASSETS);
 
         await Promise.allSettled(
 
           PRELOAD.map(
-            async url=>{
+            async url => {
 
-              const req=
+              const request =
                 new Request(
                   url,
-                  {cache:'reload'}
+                  {
+                    cache: 'reload'
+                  }
                 );
 
-              const res=
-                await safeFetch(req);
+              const response =
+                await fetchNormalized(
+                  request,
+                  {
+                    cache: 'no-store'
+                  }
+                );
 
-              if(
-                !res?.ok ||
-                res.type!=='basic'
-              ){
+              if (
+                !response ||
+                !response.ok
+              ) {
                 return;
               }
 
-              if(
-                assetPath(
-                  new URL(
-                    url,
-                    self.location.origin
-                  ).pathname
-                )
-              ){
+              const pathname =
+                new URL(
+                  url,
+                  self.location.origin
+                ).pathname;
+
+              if (assetPath(pathname)) {
 
                 await assetCache.put(
                   url,
-                  res
+                  response.clone()
                 );
 
-              }else{
+              } else {
 
                 await pageCache.put(
                   url,
-                  res
+                  response.clone()
                 );
 
+                if (pathname.endsWith('.html')) {
+
+                  const pretty =
+                    pathname.slice(0, -5);
+
+                  if (pretty) {
+
+                    await pageCache.put(
+                      pretty,
+                      response.clone()
+                    );
+                  }
+                }
               }
             }
           )
         );
-
       })()
     );
-
   }
 );
 
 
 self.addEventListener(
   'activate',
-  event=>{
+  event => {
 
     event.waitUntil(
-      (async()=>{
+      (async () => {
 
-        const keys=
+        const keys =
           await caches.keys();
 
         await Promise.all(
 
           keys
-          .filter(
-            k=>
-              k.startsWith('evolution') &&
-              !k.startsWith(VERSION)
-          )
-          .map(
-            k=>caches.delete(k)
-          )
+            .filter(
+              key =>
+                key.startsWith('evolution') &&
+                !key.startsWith(VERSION)
+            )
+            .map(
+              key =>
+                caches.delete(key)
+            )
         );
 
         await self.clients.claim();
-
       })()
     );
-
   }
 );
 
 
 self.addEventListener(
   'fetch',
-  event=>{
+  event => {
 
-    const req=
+    const request =
       event.request;
 
-    if(req.method!=='GET'){
+    if (request.method !== 'GET') {
       return;
     }
 
-    const url=
-      new URL(req.url);
+    const url =
+      new URL(request.url);
 
-    if(
+    if (
       url.origin !==
       self.location.origin
-    ){
+    ) {
       return;
     }
 
 
-    if(
-      privatePath(
-        url.pathname
-      )
-    ){
+    if (
+      privatePath(url.pathname)
+    ) {
 
       event.respondWith(
-        fetch(req)
+        fetch(request)
       );
 
       return;
     }
 
 
-    if(
-      req.mode==='navigate'
-    ){
+    if (
+      request.mode === 'navigate'
+    ) {
 
-      if(
-        PUBLIC.includes(
-          url.pathname
-        )
-        ||
-        url.pathname.endsWith(
-          '.html'
-        )
-      ){
-
-        event.respondWith(
-          networkFirst(req)
-        );
-
-      }
+      event.respondWith(
+        networkFirst(request)
+      );
 
       return;
     }
 
 
-    if(
-      assetPath(
-        url.pathname
-      )
-    ){
+    if (
+      assetPath(url.pathname)
+    ) {
 
       event.respondWith(
-        staleAsset(req)
+        staleAsset(request)
       );
-
     }
-
   }
 );
