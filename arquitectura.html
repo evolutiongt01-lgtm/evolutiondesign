@@ -17,7 +17,7 @@
 <link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="img/favicon.png" rel="icon" sizes="96x96" type="image/png"/>
 <meta content="Evolution Design" name="author"/>
-<meta name="evolution-build" content="2026-08-14-arquitectura-mobile-ultra-fluid-v5">
+<meta name="evolution-build" content="2026-08-14-arquitectura-safari-sw-redirect-fix-v6">
 <title>Evolution Design - Arquitectura, Renders y Planos</title>
 <!-- PRELOAD DE RECURSOS CLAVE PARA VELOCIDAD -->
 <link as="style" href="css/theme.min.css" rel="preload"/>
@@ -4862,6 +4862,33 @@ html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shad
   document.addEventListener('visibilitychange',()=>{
     if(document.hidden)videos.forEach(v=>v.pause());
   },{passive:true});
+})();
+</script>
+
+
+<script id="evolution-safari-sw-rescue">
+(() => {
+  if (!('serviceWorker' in navigator)) return;
+
+  let already = false;
+  try {
+    already = localStorage.getItem('evolution_sw_redirect_fix_v6') === '1';
+  } catch (_) {}
+
+  if (already) return;
+
+  navigator.serviceWorker.ready.then(registration => {
+    const worker =
+      registration.waiting ||
+      registration.active ||
+      navigator.serviceWorker.controller;
+
+    worker?.postMessage({ type:'CLEAR_EVOLUTION_CACHES' });
+
+    try {
+      localStorage.setItem('evolution_sw_redirect_fix_v6','1');
+    } catch (_) {}
+  }).catch(() => {});
 })();
 </script>
 
