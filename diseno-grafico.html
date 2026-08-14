@@ -12,7 +12,7 @@
 <meta content="Evolution Design — Diseño gráfico, proyectos PSD editables y biblioteca premium para miembros." name="description"/>
 <meta content="Evolution Design" name="author"/>
 <meta content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" name="google-site-verification"/>
-<meta name="evolution-build" content="2026-08-14-diseno-grafico-ios-autofill-fix-v8">
+<meta name="evolution-build" content="2026-08-14-diseno-grafico-shared-nav-v11">
 <title>Diseño Gráfico — Recursos PSD y Membresía | Evolution Design</title>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -1803,117 +1803,6 @@ body.gd-modal-open{overflow:hidden}
     ]
   }
   </script>
-<style id="evolution-master-navigation">
-  /* MASTER NAV — mismo aspecto e iconos de Arquitectura */
-  .desktop-nav{
-    display:none!important;
-    padding-top:calc(25px + env(safe-area-inset-top,0px));
-    pointer-events:none;
-    z-index:1040;
-  }
-  @media(min-width:992px){
-    .desktop-nav{display:block!important}
-    .mobile-app-nav{display:none!important}
-  }
-  .desktop-nav>.container{max-width:1320px;width:100%;margin-inline:auto}
-  .nav-pill{
-    pointer-events:auto;position:relative;isolation:isolate;overflow:hidden;
-    display:flex;justify-content:space-between;align-items:center;
-    width:100%;max-width:1400px;margin:0 auto;
-    padding:.6rem .8rem .6rem 1.5rem;border-radius:100px;
-    background:linear-gradient(135deg,rgba(23,23,27,.97),rgba(12,12,15,.965) 54%,rgba(23,20,18,.97))!important;
-    -webkit-backdrop-filter:blur(34px) saturate(190%)!important;
-    backdrop-filter:blur(34px) saturate(190%)!important;
-    border:1px solid rgba(255,255,255,.17)!important;
-    box-shadow:0 20px 52px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -1px 0 rgba(255,255,255,.035)!important;
-  }
-  .nav-pill:before{
-    content:"";position:absolute;inset:1px;border-radius:inherit;z-index:-1;pointer-events:none;
-    background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.03) 32%,rgba(255,255,255,.01));
-  }
-  .nav-pill-links{display:flex;gap:1.5rem;align-items:center}
-  .nav-pill-link,#auth-desktop-wrapper .nav-link-ed{
-    color:rgba(255,255,255,.65)!important;text-decoration:none!important;
-    font-size:.9rem!important;font-weight:400;position:relative;transition:color .3s;
-  }
-  .nav-pill-link:hover,.nav-pill-link.active,.nav-pill-link.current-area,#auth-desktop-wrapper .nav-link-ed:hover{color:#fff!important}
-  .nav-pill-link.active:after,.nav-pill-link.current-area:after{
-    content:"";position:absolute;left:0;bottom:-6px;width:100%;height:2px;border-radius:2px;
-    background:#d4b895;box-shadow:0 0 12px rgba(212,184,149,.35)
-  }
-  .desktop-dropdown-menu,.mobile-dropdown-menu{
-    display:none;flex-direction:column;position:absolute;top:55px;left:0;min-width:180px!important;
-    margin:0;padding:.5rem!important;gap:5px;list-style:none!important;opacity:0;
-    transform:translateY(-10px) scale(.95);transform-origin:top left;
-    transition:all .3s cubic-bezier(.25,1,.5,1);z-index:1050;
-    background:rgba(15,15,15,.95)!important;border:1px solid rgba(255,255,255,.1)!important;
-    border-radius:16px!important;-webkit-backdrop-filter:blur(20px)!important;backdrop-filter:blur(20px)!important;
-    box-shadow:0 10px 40px rgba(0,0,0,.5)!important;
-  }
-  .desktop-dropdown-menu li,.mobile-dropdown-menu li{list-style:none!important}
-  .desktop-dropdown-menu.show,.mobile-dropdown-menu.show{display:flex;opacity:1;transform:translateY(0) scale(1)}
-  .menu-item{
-    display:flex!important;align-items:center!important;gap:12px!important;padding:.8rem 1rem!important;
-    border-radius:10px!important;color:#ddd!important;text-decoration:none!important;background:transparent!important;
-    font-size:.95rem!important;font-weight:500!important;transition:all .2s!important;
-  }
-  .menu-item:hover,.menu-item.active,.menu-item.current-area{background:rgba(255,255,255,.1)!important;color:#fff!important}
-  .icon-btn{
-    width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.15);
-    display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05);
-    color:#fff!important;text-decoration:none!important;transition:all .3s;
-  }
-  .icon-btn:hover{background:rgba(255,255,255,.15)!important;transform:scale(1.05)}
-  .desktop-nav .icon-btn{
-    background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.16)!important;
-    -webkit-backdrop-filter:blur(18px) saturate(165%);backdrop-filter:blur(18px) saturate(165%);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 24px rgba(0,0,0,.18)
-  }
-  .profile-pic-liquid{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid rgba(212,184,149,.6);background:rgba(255,255,255,.05)}
-  .admin-badge-btn{display:flex;align-items:center;gap:5px;padding:.4rem .8rem;border-radius:50px;background:rgba(220,53,69,.2);border:1px solid rgba(220,53,69,.5);color:#fff;text-decoration:none;font-size:.75rem;font-weight:700}
-
-  .mobile-app-nav{
-    position:fixed;top:0;left:0;right:0;width:100%;width:100dvw;z-index:1030;
-    padding-top:env(safe-area-inset-top,0px);
-    background:rgba(5,5,5,.94)!important;
-    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
-    border-bottom:1px solid rgba(255,255,255,.07)!important;box-shadow:0 8px 28px rgba(0,0,0,.28);
-    transition:transform .34s cubic-bezier(.22,.61,.36,1),box-shadow .25s ease;will-change:transform;
-  }
-  .mobile-app-nav.hidden{display:block!important}
-  .mobile-app-nav.nav-hidden{transform:translate3d(0,-105%,0);box-shadow:none}
-  .mobile-app-nav.nav-at-top{box-shadow:none}
-  .app-nav-top{min-height:60px;padding:10px 14px 9px!important;gap:12px;display:flex;justify-content:space-between;align-items:center}
-  .app-nav-top>*{min-width:0}
-  .app-nav-top>a img{display:block;max-width:128px;max-height:27px!important;object-fit:contain}
-  .mobile-app-nav .icon-btn{
-    width:40px;height:40px;min-width:40px;min-height:40px;background:rgba(255,255,255,.05)!important;
-    border-color:rgba(255,255,255,.15)!important;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;
-  }
-  .app-tabs{
-    width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr))!important;
-    gap:2px;padding:0 7px!important;overflow:visible;justify-content:initial;margin:0;border:0;background:transparent;box-shadow:none;
-  }
-  .tab-item{
-    min-width:0;display:flex;flex-direction:column;align-items:center;padding:7px 1px 9px;
-    border-bottom:2px solid transparent;color:#888!important;text-decoration:none!important;
-    font-size:.62rem;line-height:1.15;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .4s;
-  }
-  .tab-item svg{width:19px;height:19px;margin-bottom:4px;opacity:.7;transition:transform .4s}
-  .tab-item:hover,.tab-item.active,.tab-item.current-area{color:#fff!important;border-bottom-color:#d4b895!important}
-  .tab-item.active svg,.tab-item.current-area svg{opacity:1;transform:scale(1.12)}
-  .mobile-auth-actions{display:flex;align-items:center;gap:10px}
-  .mobile-profile-link,.mobile-auth-action{
-    width:36px;height:36px;min-width:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
-    text-decoration:none!important;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.13);
-  }
-  .mobile-profile-link{border-color:rgba(212,184,149,.55);background:rgba(212,184,149,.055)}
-  .mobile-profile-link img,.mobile-profile-link .profile-pic-liquid{width:28px!important;height:28px!important;border-radius:50%;object-fit:cover}
-  .mobile-auth-action{color:#d4b895!important;border-color:rgba(212,184,149,.28)}
-  @media(min-width:1200px) and (max-width:1399.98px){.nav-pill-links{gap:1rem}.nav-pill-link,#auth-desktop-wrapper .nav-link-ed{font-size:.82rem!important}.nav-pill{padding-left:1.1rem}}
-  @media(max-width:991.98px){.desktop-nav{display:none!important}.mobile-app-nav{display:block!important}}
-  @media(max-width:389.98px){.app-nav-top>a img{max-width:116px}.tab-item{font-size:.58rem}.tab-item svg{width:18px;height:18px}}
-</style>
 <style id="evolution-offline-style">
   .evo-offline-pill{
     position:fixed;z-index:20000;top:calc(env(safe-area-inset-top,0px) + 10px);left:50%;
@@ -2253,6 +2142,7 @@ body.gd-modal-open{overflow:hidden}
     }
   }
 </style>
+<script src="/evolution-nav.js" data-evolution-shared-nav="v11"></script>
 </head>
 <body class="graphic-page">
 <div aria-hidden="true" id="evolutionLaunchScreen">
@@ -2292,80 +2182,7 @@ body.gd-modal-open{overflow:hidden}
 </div>
 </div>
 <!-- DESKTOP NAV -->
-<nav class="desktop-nav fixed-top" id="navScroll">
-<div class="container px-0 position-relative">
-<div class="d-flex align-items-center justify-content-center gap-3 w-100">
-<!-- BARRA PRINCIPAL ANCHA -->
-<div class="nav-pill w-100" style="max-width: 1400px; position: relative;">
-<div class="d-flex align-items-center gap-3">
-<div style="position: relative;">
-<a aria-label="Menú" class="icon-btn" href="#" id="desktopMenuBtn">
-<svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
-</a>
-<ul class="desktop-dropdown-menu" id="desktopDropdownMenu">
-<li><a class="menu-item" data-evolution-nav="" href="index.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
-<li><a class="menu-item" data-evolution-nav="" href="arquitectura.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M4 21V10l8-7 8 7v11"></path><path d="M9 21v-7h6v7"></path></svg> Arquitectura</a></li>
-<li><a aria-current="page" class="menu-item current-area active" data-evolution-nav="" href="diseno-grafico.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg> Diseño Gráfico</a></li>
-<li><a class="menu-item" data-evolution-nav="" href="diseno-web.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><rect height="16" rx="2" width="18" x="3" y="4"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg> Diseño Web</a></li>
-<li><a class="menu-item" href="sobre-nosotros"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="16" y2="12"></line><line x1="12" x2="12.01" y1="8" y2="8"></line></svg> Sobre Nosotros</a></li>
-<li><a class="menu-item" href="feedback"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
-<!-- Solo aparece al iniciar sesión -->
-<li class="d-none" id="linkProyectosMenuDesktop"><a class="menu-item" data-evolution-nav="" href="proyectos.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
-</ul>
-</div>
-<a aria-label="Ir a Home" class="d-flex align-items-center" data-evolution-nav="" href="index.html"><img alt="Evolution Design" decoding="async" loading="eager" src="img/logo.png" style="max-height: 35px; width: auto;"/></a>
-<!-- BOTÓN ADMIN FLOTANDO EXACTAMENTE DEBAJO DEL LOGO (MAC) -->
-<div id="admin-badge-container-desktop" style="position: absolute; top: calc(100% + 5px); left: 3.5rem; z-index: 10;"></div>
-</div>
-<div class="nav-pill-links d-none d-xl-flex">
-<a class="nav-pill-link" data-evolution-nav="" href="index.html">Home</a>
-<a class="nav-pill-link" data-evolution-nav="" href="arquitectura.html">Arquitectura</a>
-<a aria-current="page" class="nav-pill-link current-area active" data-evolution-nav="" href="diseno-grafico.html">Diseño Gráfico</a>
-<a class="nav-pill-link" data-evolution-nav="" href="diseno-web.html">Diseño Web</a>
-<!-- ENLACE A MIS PROYECTOS (SE MOSTRARÁ AL INICIAR SESIÓN) -->
-<a class="nav-pill-link d-none" data-evolution-nav="" href="proyectos.html" id="linkProyectosDesktop" style="white-space: nowrap; color: #fff;">Mis Proyectos</a>
-<!-- CONTENEDOR LOGIN Y LOGOUT DENTRO DE LA BARRA ESCRITORIO -->
-<div class="d-flex align-items-center" id="auth-desktop-wrapper">
-<!-- Por defecto Login -->
-<a class="nav-pill-link d-flex align-items-center gap-1" href="#" onclick="abrirAuthModal(); return false;" style="color: #d4b895; font-weight: bold; white-space: nowrap;"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg> Login</a>
-</div>
-</div>
-<a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" rel="noopener" style="font-size: 0.9rem; white-space: nowrap;" target="_blank">Catálogo de Software →</a>
-</div>
-<!-- FOTO DE PERFIL LIQUID GLASS A LA PAR DE LA BARRA (MAC) -->
-<div class="shrink-0 d-none d-xl-block" id="floating-profile-desktop"></div>
-</div>
-</div>
-</nav>
-<nav class="mobile-app-nav" id="mobileNav">
-<div class="app-nav-top">
-<div style="position: relative;">
-<a aria-label="Menú" class="icon-btn" href="#" id="mobileMenuBtn"><svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M3 12h18M3 6h18M3 18h18"></path></svg></a>
-<ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
-<li><a class="menu-item" data-evolution-nav="" href="index.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Home</a></li>
-<li><a class="menu-item" data-evolution-nav="" href="arquitectura.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M4 21V10l8-7 8 7v11"></path><path d="M9 21v-7h6v7"></path></svg> Arquitectura</a></li>
-<li><a aria-current="page" class="menu-item current-area active" data-evolution-nav="" href="diseno-grafico.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg> Diseño Gráfico</a></li>
-<li><a class="menu-item" data-evolution-nav="" href="diseno-web.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><rect height="16" rx="2" width="18" x="3" y="4"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg> Diseño Web</a></li>
-<li><a class="menu-item" href="sobre-nosotros"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="16" y2="12"></line><line x1="12" x2="12.01" y1="8" y2="8"></line></svg> Sobre Nosotros</a></li>
-<li><a class="menu-item" href="feedback"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
-</ul>
-</div>
-<a aria-label="Ir a Home" class="" data-evolution-nav="" href="index.html"><img alt="Evolution Design" decoding="async" loading="eager" src="img/logo.png" style="max-height: 28px; width: auto;"/></a>
-<!-- CONTENEDOR LOGIN Y PERFIL MÓVIL -->
-<div class="d-flex align-items-center" id="auth-mobile-wrapper">
-<a aria-label="Login" class="icon-btn" href="#" onclick="abrirAuthModal(); return false;">
-<svg fill="none" height="20" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="20"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"></path></svg>
-</a>
-</div>
-</div>
-<div class="app-tabs">
-<a class="tab-item" data-evolution-nav="" href="index.html"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Home</a>
-<a class="tab-item" data-evolution-nav="" href="arquitectura.html"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M4 21V10l8-7 8 7v11"></path><path d="M9 21v-7h6v7"></path></svg>Arquitectura</a>
-<a aria-current="page" class="tab-item current-area active" data-evolution-nav="" href="diseno-grafico.html"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><circle cx="12" cy="12" r="9"></circle><path d="M8 15c1.5-4 3.5-6.5 7-8"></path><circle cx="8" cy="15" r="1"></circle></svg>Diseño G.</a>
-<a class="tab-item" data-evolution-nav="" href="diseno-web.html"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><rect height="16" rx="2" width="18" x="3" y="4"></rect><path d="M3 9h18"></path><path d="m9 13-2 2 2 2M15 13l2 2-2 2"></path></svg>Diseño Web</a>
-<a class="tab-item d-none" data-evolution-nav="" href="proyectos.html" id="linkProyectosMobile"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>Proyectos</a>
-</div>
-</nav>
+<evolution-nav active="grafico"></evolution-nav>
 <main class="graphic-main graphic-pro-v3">
 <section class="gd-hero">
 <div class="gd-gridfx"></div><div class="gd-orb a"></div><div class="gd-orb b"></div>
@@ -3968,25 +3785,6 @@ body.gd-modal-open{overflow:hidden}
       }
     })();
   </script>
-<script id="evolution-master-mobile-nav">
-(() => {
-  const nav=document.querySelector('.mobile-app-nav');if(!nav)return;
-  let lastY=Math.max(scrollY,0),ticking=false;
-  const sync=()=>{
-    const y=Math.max(scrollY,0),mobile=matchMedia('(max-width:991.98px)').matches;
-    nav.classList.remove('hidden');
-    if(!mobile){nav.classList.remove('nav-hidden','nav-at-top');lastY=y;ticking=false;return}
-    nav.classList.toggle('nav-at-top',y<12);
-    const open=document.getElementById('mobileDropdownMenu')?.classList.contains('show');
-    if(open||y<90)nav.classList.remove('nav-hidden');
-    else if(y>lastY+7)nav.classList.add('nav-hidden');
-    else if(y<lastY-7)nav.classList.remove('nav-hidden');
-    lastY=y;ticking=false;
-  };
-  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(sync)}},{passive:true});
-  addEventListener('resize',sync,{passive:true});addEventListener('pageshow',sync,{passive:true});sync();
-})();
-</script>
 <script id="evolution-offline-controller">
 (() => {
   const pill=document.getElementById('evoOfflinePill');
