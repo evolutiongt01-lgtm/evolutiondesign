@@ -5,7 +5,7 @@
    - Deletes all older Evolution caches.
    - Keeps private/auth/payment routes network-only.
 */
-const VERSION = 'evolution-app-2026-08-14-v6-safari-redirect-safe';
+const VERSION = 'evolution-app-2026-08-14-v7-web-freeze-fix';
 const PAGE_CACHE = `${VERSION}-pages`;
 const ASSET_CACHE = `${VERSION}-assets`;
 
@@ -13,8 +13,11 @@ const PUBLIC = new Set([
   '/',
   '/index.html',
   '/arquitectura.html',
+  '/arquitectura',
   '/diseno-grafico.html',
+  '/diseno-grafico',
   '/diseno-web.html',
+  '/diseno-web',
   '/sobre-nosotros',
   '/sobre-nosotros.html',
   '/feedback',
@@ -25,7 +28,9 @@ const PREPAGES = [
   '/',
   '/index.html',
   '/arquitectura.html',
+  '/arquitectura',
   '/diseno-grafico.html',
+  '/diseno-grafico',
   '/diseno-web.html'
 ];
 
