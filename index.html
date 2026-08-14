@@ -15,7 +15,7 @@
 <meta content="Evolution Design — estudio creativo de arquitectura, diseño gráfico y diseño web." name="description"/>
 <meta content="Evolution Design" name="author"/>
 <meta content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" name="google-site-verification"/>
-<meta name="evolution-build" content="2026-08-14-index-mobile-ultra-fluid-v5">
+<meta name="evolution-build" content="2026-08-14-index-safari-sw-redirect-fix-v6">
 <title>Evolution Design — Arquitectura, Diseño Gráfico y Diseño Web</title>
 <link href="/img/evolution-app-icon.png" rel="apple-touch-icon"/>
 <link href="/manifest.webmanifest" rel="manifest"/>
@@ -2325,5 +2325,32 @@
     }
   }
 </style>
+
+<script id="evolution-safari-sw-rescue">
+(() => {
+  if (!('serviceWorker' in navigator)) return;
+
+  let already = false;
+  try {
+    already = localStorage.getItem('evolution_sw_redirect_fix_v6') === '1';
+  } catch (_) {}
+
+  if (already) return;
+
+  navigator.serviceWorker.ready.then(registration => {
+    const worker =
+      registration.waiting ||
+      registration.active ||
+      navigator.serviceWorker.controller;
+
+    worker?.postMessage({ type:'CLEAR_EVOLUTION_CACHES' });
+
+    try {
+      localStorage.setItem('evolution_sw_redirect_fix_v6','1');
+    } catch (_) {}
+  }).catch(() => {});
+})();
+</script>
+
 </body>
 </html>
