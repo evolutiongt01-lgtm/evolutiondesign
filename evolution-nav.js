@@ -1,0 +1,233 @@
+/* Evolution Design · Persistent App Shell Navigation · v16 */
+(() => {
+  'use strict';
+
+  const ICONS = {
+    menu:`<svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>`,
+    home:`<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>`,
+    arq:`<svg viewBox="0 0 24 24"><path d="M4 21V10l8-7 8 7v11"/><path d="M9 21v-7h6v7"/></svg>`,
+    graf:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 15c1.5-4 3.5-6.5 7-8"/><circle cx="8" cy="15" r="1"/></svg>`,
+    web:`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 13l-2 2 2 2M15 13l2 2-2 2"/></svg>`,
+    folder:`<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
+    login:`<svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>`,
+    logout:`<svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>`,
+    shield:`<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
+  };
+
+  const PAGES = [
+    {key:'home',href:'/index.html',label:'Home',short:'Home',icon:'home'},
+    {key:'arquitectura',href:'/arquitectura.html',label:'Arquitectura',short:'Arquitectura',icon:'arq'},
+    {key:'grafico',href:'/diseno-grafico.html',label:'Diseño Gráfico',short:'Diseño G.',icon:'graf'},
+    {key:'web',href:'/diseno-web.html',label:'Diseño Web',short:'Diseño Web',icon:'web'}
+  ];
+
+  const escapeHTML = value => String(value ?? '')
+    .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+    .replaceAll('"','&quot;').replaceAll("'",'&#39;');
+
+  const inferKey = value => {
+    let p='';
+    try { p=new URL(value || location.href,location.href).pathname.toLowerCase(); } catch (_) {}
+    if(p.includes('arquitectura')) return 'arquitectura';
+    if(p.includes('diseno-grafico')) return 'grafico';
+    if(p.includes('diseno-web')) return 'web';
+    return 'home';
+  };
+
+  const style = document.createElement('style');
+  style.id='evolution-shell-nav-style';
+  style.textContent = `
+    :root{--evo-accent:#d4b895}
+    evolution-nav{display:block;position:relative;z-index:2147483000}
+    .evo-nav,.evo-nav *{box-sizing:border-box}
+    .evo-nav a{text-decoration:none;-webkit-tap-highlight-color:transparent}
+    .evo-nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6}
+    .evo-d-none{display:none!important}
+
+    .evo-desktop{display:none;position:fixed;top:0;left:0;right:0;z-index:2147483000;padding:calc(22px + env(safe-area-inset-top,0px)) 22px 0;pointer-events:none}
+    .evo-desktop-inner{width:min(1400px,100%);margin:auto;display:flex;align-items:center;gap:12px}
+    .evo-pill{pointer-events:auto;position:relative;isolation:isolate;flex:1;min-height:58px;padding:7px 9px 7px 14px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:linear-gradient(135deg,rgba(25,25,28,.965),rgba(8,8,10,.975));box-shadow:0 18px 50px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.09);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);display:flex;align-items:center;gap:16px}
+    .evo-brand{display:flex;align-items:center;gap:12px;position:relative;flex:0 0 auto}
+    .evo-logo{display:flex;align-items:center}
+    .evo-logo img{display:block;height:31px;width:auto;max-width:150px}
+    .evo-menu-wrap{position:relative}
+    .evo-icon{width:42px;height:42px;min-width:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;transition:transform .2s cubic-bezier(.16,1,.3,1),background .18s ease,border-color .18s ease}
+    .evo-icon:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22);transform:scale(1.04)}
+    .evo-icon:active{transform:scale(.95)}
+    .evo-links{margin-left:auto;display:flex;align-items:center;gap:clamp(12px,1.3vw,21px);min-width:0}
+    .evo-link{position:relative;color:#96969d;font:600 clamp(.70rem,.78vw,.86rem)/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:color .18s ease}
+    .evo-link:hover,.evo-link.active{color:#fff}
+    .evo-link.active:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:2px;border-radius:999px;background:var(--evo-accent);box-shadow:0 0 10px rgba(212,184,149,.35)}
+    .evo-login{color:var(--evo-accent)!important;font-weight:800!important;display:inline-flex;align-items:center;gap:5px}
+    .evo-software{height:42px;padding:0 17px;border-radius:999px;background:#f5f5f3;color:#080808;display:inline-flex;align-items:center;font:800 .73rem/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:transform .18s ease}
+    .evo-software:hover{transform:translateY(-1px)}
+    #floating-profile-desktop{pointer-events:auto;width:42px;height:42px;display:flex;align-items:center;justify-content:center}
+    .evo-profile-pic{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid rgba(212,184,149,.58);background:#111;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+    .evo-avatar-fallback{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#1b1b1e;border:2px solid rgba(212,184,149,.58);color:#fff;font:800 .78rem system-ui}
+    #admin-badge-container-desktop{position:absolute;top:49px;left:53px;z-index:10}
+    .evo-admin-badge{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:999px;background:rgba(190,38,55,.25);border:1px solid rgba(220,53,69,.48);color:#fff!important;font:800 .61rem/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    .evo-admin-badge svg{width:13px;height:13px}
+
+    .evo-drop{position:absolute;left:0;top:52px;min-width:220px;margin:0;padding:7px;list-style:none;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:rgba(13,13,15,.97);box-shadow:0 18px 50px rgba(0,0,0,.5);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-7px) scale(.98);transform-origin:top left;transition:opacity .18s ease,transform .22s cubic-bezier(.16,1,.3,1),visibility .18s}
+    .evo-drop.show{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+    .evo-drop li{list-style:none;margin:0;padding:0}
+    .evo-menu-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:#c4c4c8;font:600 .76rem/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .evo-menu-item svg{width:18px;height:18px;opacity:.8}
+    .evo-menu-item:hover,.evo-menu-item.active{background:rgba(255,255,255,.08);color:#fff}
+
+    .evo-mobile{display:block;position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:2147483000!important;padding-top:env(safe-area-inset-top,0px)!important;background:rgba(5,5,6,.96)!important;border-bottom:1px solid rgba(255,255,255,.07)!important;box-shadow:0 8px 28px rgba(0,0,0,.28)!important;backdrop-filter:blur(12px) saturate(130%)!important;-webkit-backdrop-filter:blur(12px) saturate(130%)!important;transform:none!important}
+    .evo-mobile-top{min-height:60px;padding:10px 14px 9px;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:10px}
+    .evo-mobile .evo-logo{justify-self:center}
+    .evo-mobile .evo-logo img{height:27px;max-width:128px}
+    .evo-mobile .evo-icon{width:40px;height:40px;min-width:40px}
+    #auth-mobile-wrapper{min-width:40px;display:flex;align-items:center;justify-content:flex-end;gap:7px}
+    .evo-mobile-auth{display:flex;align-items:center;gap:7px}
+    .evo-mobile-profile,.evo-mobile-action{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.04);color:#fff!important}
+    .evo-mobile-profile{border-color:rgba(212,184,149,.5)}
+    .evo-mobile-profile img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+    .evo-mobile-profile .evo-avatar-fallback{width:28px;height:28px;border:0;font-size:.62rem}
+    .evo-tabs{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(62px,1fr))!important;padding:0 7px!important;gap:2px!important}
+    .evo-tab{min-width:0;min-height:54px;padding:5px 1px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7d7d85;border-bottom:2px solid transparent;font:600 .58rem/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:color .18s ease,border-color .18s ease,transform .18s ease}
+    .evo-tab svg{width:19px;height:19px;margin-bottom:4px;opacity:.68}
+    .evo-tab.active{color:#fff;border-bottom-color:var(--evo-accent)}
+    .evo-tab.active svg{opacity:1}
+    .evo-tab:active{transform:scale(.95)}
+
+    @media(min-width:992px){.evo-desktop{display:block}.evo-mobile{display:none!important}}
+    @media(max-width:390px){.evo-mobile-top{padding-left:10px;padding-right:10px}.evo-mobile .evo-logo img{max-width:112px}.evo-tab{font-size:.53rem}}
+    @media(prefers-reduced-motion:reduce){.evo-nav *{transition:none!important;animation:none!important}}
+  `;
+  document.head.appendChild(style);
+
+  const menuRows = active => PAGES.map(p => `
+    <li><a href="${p.href}" class="evo-menu-item${p.key===active?' active':''}" data-evo-route="${p.key}">${ICONS[p.icon]}<span>${p.label}</span></a></li>
+  `).join('') + `
+    <li><a href="/sobre-nosotros" class="evo-menu-item"><span>Sobre Nosotros</span></a></li>
+    <li><a href="/feedback" class="evo-menu-item"><span>Feedback</span></a></li>
+    <li id="linkProyectosMenuDesktop" class="evo-d-none"><a href="/proyectos.html" class="evo-menu-item">${ICONS.folder}<span>Mis Proyectos</span></a></li>
+  `;
+
+  class EvolutionNav extends HTMLElement {
+    connectedCallback(){
+      if(this.dataset.rendered==='1') return;
+      this.dataset.rendered='1';
+      const active=inferKey(location.href);
+
+      this.innerHTML=`
+        <nav class="evo-nav evo-desktop" aria-label="Navegación principal">
+          <div class="evo-desktop-inner">
+            <div class="evo-pill">
+              <div class="evo-brand">
+                <div class="evo-menu-wrap">
+                  <a href="#" class="evo-icon" id="desktopMenuBtn" aria-label="Menú" aria-expanded="false">${ICONS.menu}</a>
+                  <ul class="evo-drop" id="desktopDropdownMenu">${menuRows(active)}</ul>
+                </div>
+                <a href="/index.html" class="evo-logo" data-evo-route="home" aria-label="Evolution Design Home"><img src="/img/logo.png" alt="Evolution Design"></a>
+                <div id="admin-badge-container-desktop"></div>
+              </div>
+
+              <div class="evo-links">
+                ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-link${p.key===active?' active':''}">${p.label}</a>`).join('')}
+                <a href="/proyectos.html" id="linkProyectosDesktop" class="evo-link evo-d-none">Mis Proyectos</a>
+                <div id="auth-desktop-wrapper"><a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a></div>
+              </div>
+
+              <a href="https://dingloft.com" target="_blank" rel="noopener" class="evo-software">Catálogo de Software →</a>
+            </div>
+            <div id="floating-profile-desktop"></div>
+          </div>
+        </nav>
+
+        <nav class="evo-nav evo-mobile" aria-label="Navegación móvil">
+          <div class="evo-mobile-top">
+            <div class="evo-menu-wrap">
+              <a href="#" class="evo-icon" id="mobileMenuBtn" aria-label="Menú" aria-expanded="false">${ICONS.menu}</a>
+              <ul class="evo-drop" id="mobileDropdownMenu">${menuRows(active)}</ul>
+            </div>
+            <a href="/index.html" class="evo-logo" data-evo-route="home" aria-label="Evolution Design Home"><img src="/img/logo.png" alt="Evolution Design"></a>
+            <div id="auth-mobile-wrapper"><a href="#" class="evo-icon" data-evo-login aria-label="Login">${ICONS.login}</a></div>
+          </div>
+          <div class="evo-tabs">
+            ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-tab${p.key===active?' active':''}">${ICONS[p.icon]}<span>${p.short}</span></a>`).join('')}
+            <a href="/proyectos.html" id="linkProyectosMobile" class="evo-tab evo-d-none">${ICONS.folder}<span>Proyectos</span></a>
+          </div>
+        </nav>`;
+    }
+  }
+
+  if(!customElements.get('evolution-nav')) customElements.define('evolution-nav',EvolutionNav);
+
+  const closeMenus=()=>{
+    document.getElementById('desktopDropdownMenu')?.classList.remove('show');
+    document.getElementById('mobileDropdownMenu')?.classList.remove('show');
+    document.getElementById('desktopMenuBtn')?.setAttribute('aria-expanded','false');
+    document.getElementById('mobileMenuBtn')?.setAttribute('aria-expanded','false');
+  };
+
+  document.addEventListener('click',e=>{
+    const el=e.target instanceof Element?e.target:null;
+    if(!el) return;
+    const d=el.closest('#desktopMenuBtn');
+    const m=el.closest('#mobileMenuBtn');
+    if(d){e.preventDefault();e.stopImmediatePropagation();const menu=document.getElementById('desktopDropdownMenu');const on=!menu?.classList.contains('show');closeMenus();menu?.classList.toggle('show',on);d.setAttribute('aria-expanded',String(on));return}
+    if(m){e.preventDefault();e.stopImmediatePropagation();const menu=document.getElementById('mobileDropdownMenu');const on=!menu?.classList.contains('show');closeMenus();menu?.classList.toggle('show',on);m.setAttribute('aria-expanded',String(on));return}
+    if(el.closest('[data-evo-login]')){e.preventDefault();e.stopImmediatePropagation();document.dispatchEvent(new CustomEvent('evolution:auth-request'));return}
+    if(el.closest('[data-evo-logout]')){e.preventDefault();e.stopImmediatePropagation();document.dispatchEvent(new CustomEvent('evolution:logout-request'));return}
+    if(!el.closest('.evo-menu-wrap')) closeMenus();
+  },true);
+
+  document.addEventListener('keydown',e=>{if(e.key==='Escape') closeMenus()});
+
+  const api = {
+    setActive(key){
+      document.querySelectorAll('[data-evo-route]').forEach(a=>{
+        const on=a.dataset.evoRoute===key;
+        a.classList.toggle('active',on);
+        if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+      });
+      api.syncProjects();
+      closeMenus();
+    },
+    state:{user:null,isAdmin:false,route:inferKey(location.href)},
+    syncProjects(){
+      const show=Boolean(api.state.user)||api.state.route==='web';
+      ['linkProyectosDesktop','linkProyectosMenuDesktop','linkProyectosMobile'].forEach(id=>document.getElementById(id)?.classList.toggle('evo-d-none',!show));
+    },
+    setAuth(payload={}){
+      const user=payload.user||null;
+      const isAdmin=Boolean(payload.isAdmin);
+      api.state.user=user;
+      api.state.isAdmin=isAdmin;
+      const desktop=document.getElementById('auth-desktop-wrapper');
+      const mobile=document.getElementById('auth-mobile-wrapper');
+      const profile=document.getElementById('floating-profile-desktop');
+      const admin=document.getElementById('admin-badge-container-desktop');
+
+      if(!user){
+        if(desktop)desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a>`;
+        if(mobile)mobile.innerHTML=`<a href="#" class="evo-icon" data-evo-login aria-label="Login">${ICONS.login}</a>`;
+        if(profile)profile.innerHTML='';
+        if(admin)admin.innerHTML='';
+        api.syncProjects();
+        return;
+      }
+
+      const initials=escapeHTML((user.displayName||user.email||'U').trim().charAt(0).toUpperCase()||'U');
+      const avatar=user.photoURL
+        ? `<img src="${escapeHTML(user.photoURL)}" alt="Perfil" class="evo-profile-pic">`
+        : `<span class="evo-avatar-fallback">${initials}</span>`;
+      const mobileAvatar=user.photoURL
+        ? `<img src="${escapeHTML(user.photoURL)}" alt="Perfil">`
+        : `<span class="evo-avatar-fallback">${initials}</span>`;
+
+      if(desktop)desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-logout>${ICONS.logout}<span>Salir</span></a>`;
+      if(profile)profile.innerHTML=`<a href="/perfil.html" aria-label="Mi perfil">${avatar}</a>`;
+      if(mobile)mobile.innerHTML=`<div class="evo-mobile-auth"><a href="/perfil.html" class="evo-mobile-profile" aria-label="Mi perfil">${mobileAvatar}</a>${isAdmin?`<a href="/admin.html" class="evo-mobile-action" aria-label="Panel Admin">${ICONS.shield}</a>`:''}<a href="#" class="evo-mobile-action" data-evo-logout aria-label="Salir">${ICONS.logout}</a></div>`;
+      if(admin)admin.innerHTML=isAdmin?`<a href="/admin.html" class="evo-admin-badge">${ICONS.shield}<span>Panel Admin</span></a>`:'';
+      api.syncProjects();
+    }
+  };
+
+  window.EvolutionNav=api;
+  addEventListener('evolution:route-changed',e=>{api.state.route=e.detail?.key||inferKey(location.href);api.setActive(api.state.route)});
+})();
