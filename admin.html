@@ -418,6 +418,60 @@
 @media(max-width:800px){.evo-creative-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.evo-creative-grid,.evo-reference-grid{grid-template-columns:1fr}.evo-creative-item.full{grid-column:auto}}
 
+
+
+/* =========================================================
+   ZOHO · NOTIFICACIÓN DE MUESTRA AL CLIENTE
+   ========================================================= */
+.zoho-notify-status{
+  margin-top:10px;padding:10px 12px;border:1px solid rgba(255,255,255,.07);
+  border-radius:11px;background:rgba(255,255,255,.015);font-size:9px;
+  color:#818188;line-height:1.5
+}
+.zoho-notify-status strong{color:#d9d9dc}
+.zoho-notify-status.sent{border-color:rgba(72,211,132,.16);background:rgba(72,211,132,.035);color:#86d8aa}
+.zoho-notify-status.failed{border-color:rgba(255,102,115,.18);background:rgba(255,102,115,.04);color:#ff939d}
+.zoho-notify-status.sending{border-color:rgba(117,184,255,.18);background:rgba(117,184,255,.04);color:#93c7ff}
+
+.zoho-modal{
+  position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;
+  padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(12px)
+}
+.zoho-modal.show{display:flex}
+.zoho-modal-card{
+  width:min(520px,100%);border:1px solid rgba(255,255,255,.10);border-radius:20px;
+  background:linear-gradient(180deg,#121214,#0b0b0d);box-shadow:0 24px 80px rgba(0,0,0,.55);
+  overflow:hidden
+}
+.zoho-modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:19px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.zoho-modal-head strong{display:block;font-size:15px;color:#f3f3f4}
+.zoho-modal-head span{display:block;margin-top:5px;color:#777;font-size:9px;line-height:1.5}
+.zoho-close{width:32px;height:32px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:#171719;color:#aaa;cursor:pointer;font-size:17px}
+.zoho-modal-body{padding:18px 20px}
+.zoho-provider{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px;border:1px solid rgba(93,170,255,.14);border-radius:12px;
+  background:rgba(93,170,255,.035);margin-bottom:12px
+}
+.zoho-provider-left{display:flex;align-items:center;gap:10px;min-width:0}
+.zoho-provider-icon{
+  width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(255,255,255,.06);font-size:11px;font-weight:900;color:#9dccff
+}
+.zoho-provider strong{display:block;font-size:10px;color:#e9e9eb}
+.zoho-provider small{display:block;color:#717178;font-size:8px;margin-top:3px}
+.zoho-recipient{padding:12px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(0,0,0,.15)}
+.zoho-recipient span{display:block;color:#67676d;font-size:8px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.zoho-recipient strong{display:block;color:#eee;font-size:11px;overflow-wrap:anywhere}
+.zoho-copy{margin:12px 0 0;color:#777;font-size:9px;line-height:1.6}
+.zoho-modal-actions{display:grid;grid-template-columns:1fr 1.35fr;gap:9px;padding:0 20px 20px}
+.zoho-send-btn{
+  border-color:rgba(92,183,255,.28)!important;
+  background:linear-gradient(135deg,rgba(55,143,255,.18),rgba(111,92,255,.13))!important;
+  color:#dcecff!important
+}
+@media(max-width:520px){.zoho-modal-actions{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -598,8 +652,11 @@
             </div>
           </div>
           <div class="work-completion-actions">
-            <button id="notifyClientPreviewBtn" class="btn preview-notify-btn" type="button" onclick="notifyClientPreview()">Notificar al cliente · mostrar muestra</button>
+            <button id="notifyClientPreviewBtn" class="btn preview-notify-btn" type="button" onclick="openZohoNotify()">Notificar al cliente · enviar correo</button>
             <button id="withdrawClientPreviewBtn" class="btn preview-withdraw-btn" type="button" onclick="withdrawClientPreview()">Retirar muestra del cliente</button>
+          </div>
+          <div id="zohoNotifyStatus" class="zoho-notify-status">
+            Zoho Mail · La muestra todavía no ha sido enviada por correo.
           </div>
         </div>
       </div>
@@ -869,6 +926,38 @@
   </div>
 </div>
 
+
+<div id="zohoNotifyModal" class="zoho-modal" aria-hidden="true">
+  <div class="zoho-modal-card">
+    <div class="zoho-modal-head">
+      <div>
+        <strong>Notificar al cliente</strong>
+        <span>La muestra se publicará en Mis Proyectos y se enviará un correo transaccional desde Evolution Design.</span>
+      </div>
+      <button class="zoho-close" type="button" onclick="closeZohoNotify()" aria-label="Cerrar">×</button>
+    </div>
+    <div class="zoho-modal-body">
+      <div class="zoho-provider">
+        <div class="zoho-provider-left">
+          <div class="zoho-provider-icon">Z</div>
+          <div><strong>Zoho Mail</strong><small>Envío seguro mediante Cloudflare Worker</small></div>
+        </div>
+        <span class="pill green">CONECTADO</span>
+      </div>
+      <div class="zoho-recipient">
+        <span>Destinatario</span>
+        <strong id="zohoNotifyEmail">—</strong>
+      </div>
+      <p class="zoho-copy">Se enviará el aviso de que el proyecto está listo para revisión. Los archivos finales continuarán ocultos; el cliente verá únicamente la muestra protegida.</p>
+      <div id="zohoModalError" class="zoho-notify-status failed hidden"></div>
+    </div>
+    <div class="zoho-modal-actions">
+      <button class="btn" type="button" onclick="closeZohoNotify()">Cancelar</button>
+      <button id="zohoSendBtn" class="btn zoho-send-btn" type="button" onclick="sendZohoClientNotification()">Enviar con Zoho + mostrar muestra</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script type="module">
@@ -881,6 +970,7 @@ const R2_ACCOUNT_ID = "d94e264f8a09f87496e21e72bd3731aa";
 const R2_ACCESS_KEY_ID = "ea76378ab014694c3f387477de604782"; 
 const R2_SECRET_ACCESS_KEY = "cf9a573453b35a875f4adb07c88374f942047b9ae9e358c3a3c11a629a0af4f6"; 
 const R2_BUCKET_NAME = "evolution-design-files";
+const EVOLUTION_BACKEND_URL = "https://evolution-design-backend.evolutiongt01.workers.dev";
 
 let s3 = null;
 if (window.AWS) {
@@ -1571,6 +1661,10 @@ async function refresh(){
   }
 }
 
+
+document.getElementById('zohoNotifyModal')?.addEventListener('click',e=>{if(e.target?.id==='zohoNotifyModal')closeZohoNotify()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('zohoNotifyModal')?.classList.contains('show'))closeZohoNotify()});
+
 $('refreshBtn').onclick=()=>refresh();
 $('projectSearch').oninput=renderProjects;
 $('statusFilter').onchange=renderProjects;
@@ -1630,6 +1724,92 @@ function adminPreviewPublished(project=selected){
   // Compatibilidad con la muestra antigua: solo estaba visible cuando la entrega completa ya había sido publicada.
   return !!adminPreviewPath(project)&&project?.deliveryPublished===true;
 }
+
+function renderZohoNotifyStatus(){
+  const box=$('zohoNotifyStatus');
+  if(!box||!selected)return;
+  const status=String(selected.clientNotificationStatus||'').toLowerCase();
+  const provider=String(selected.clientNotificationProvider||'').toLowerCase();
+  const email=selected.clientNotificationEmail||selected.ownerEmail||selected.payerEmail||'';
+  box.className='zoho-notify-status';
+  if(status==='sent'){
+    box.classList.add('sent');
+    const when=selected.clientNotificationSentAt?niceDateTime(selected.clientNotificationSentAt):'Enviado';
+    box.innerHTML=`<strong>Correo enviado con Zoho ✓</strong><br>${esc(email)} · ${esc(when)}`;
+  }else if(status==='failed'){
+    box.classList.add('failed');
+    box.innerHTML=`<strong>Zoho no pudo enviar el correo.</strong><br>${esc(selected.clientNotificationError||'Puedes volver a intentarlo.')}`;
+  }else if(status==='sending'){
+    box.classList.add('sending');
+    box.innerHTML=`<strong>Enviando con Zoho…</strong><br>${esc(email)}`;
+  }else if(provider.includes('zoho')){
+    box.innerHTML=`<strong>Zoho Mail configurado</strong><br>${esc(email||'Destinatario pendiente')}`;
+  }else{
+    box.innerHTML='Zoho Mail · La muestra todavía no ha sido enviada por correo.';
+  }
+}
+
+window.openZohoNotify=function(){
+  if(!selected)return;
+  if(!adminWorkCompleted(selected)){toast('Primero marca el trabajo como terminado.');return}
+  if(!adminPreviewPath(selected)){toast('Primero sube una muestra del trabajo.');return}
+  const email=String(selected.ownerEmail||selected.payerEmail||'').trim();
+  if(!email){toast('Este proyecto no tiene correo de cliente.');return}
+  $('zohoNotifyEmail').textContent=email;
+  const err=$('zohoModalError');if(err){err.classList.add('hidden');err.textContent=''}
+  const modal=$('zohoNotifyModal');modal?.classList.add('show');modal?.setAttribute('aria-hidden','false');
+};
+window.closeZohoNotify=function(){
+  const modal=$('zohoNotifyModal');modal?.classList.remove('show');modal?.setAttribute('aria-hidden','true');
+};
+window.sendZohoClientNotification=async function(){
+  if(!selected)return;
+  const btn=$('zohoSendBtn'),err=$('zohoModalError');
+  try{
+    if(!auth.currentUser)throw new Error('Tu sesión de administración expiró.');
+    if(btn){btn.disabled=true;btn.textContent='Enviando con Zoho…'}
+    if(err){err.classList.add('hidden');err.textContent=''}
+    const token=await auth.currentUser.getIdToken(true);
+    const response=await fetch(`${EVOLUTION_BACKEND_URL}/notify-client-preview`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},
+      body:JSON.stringify({ownerUid:selected.ownerUid,projectId:selected.id})
+    });
+    const result=await response.json().catch(()=>({}));
+    if(!response.ok||result.ok!==true)throw new Error(result.error||`No se pudo enviar la notificación (${response.status}).`);
+
+    const latest=await getDoc(doc(db,'users',selected.ownerUid,'projects',selected.id));
+    if(latest.exists())Object.assign(selected,latest.data());
+    else{
+      selected.clientPreviewPublished=result.previewPublished===true;
+      selected.clientNotificationStatus=result.emailSent===true?'sent':'failed';
+      selected.clientNotificationEmail=result.toAddress||selected.ownerEmail||selected.payerEmail||'';
+    }
+
+    renderWorkCompletionAdmin();
+    renderDeliveryPublishAdmin();
+
+    if(result.emailSent===true){
+      closeZohoNotify();
+      toast(`Correo enviado con Zoho a ${result.toAddress||selected.clientNotificationEmail||'cliente'} ✓`);
+    }else{
+      if(err){
+        err.textContent=result.error||'La muestra quedó visible, pero Zoho no pudo enviar el correo. Puedes reintentarlo.';
+        err.classList.remove('hidden');
+      }
+      toast('La muestra fue publicada, pero el correo de Zoho no se pudo enviar.');
+    }
+  }catch(e){
+    console.error('Zoho notify:',e);
+    if(err){err.textContent=e?.message||'No se pudo enviar el correo con Zoho.';err.classList.remove('hidden')}
+    toast(e?.message||'No se pudo enviar el correo con Zoho.');
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='Enviar con Zoho + mostrar muestra'}
+  }
+};
+// Alias para compatibilidad con botones/versiones antiguas.
+window.notifyClientPreview=window.openZohoNotify;
+
 function renderWorkCompletionAdmin(){
   if(!selected)return;
   const done=adminWorkCompleted(selected),preview=adminPreviewPath(selected),notified=adminPreviewPublished(selected);
@@ -1642,6 +1822,7 @@ function renderWorkCompletionAdmin(){
   if($('notifyClientPreviewBtn'))$('notifyClientPreviewBtn').disabled=!done||!preview||notified;
   if($('withdrawClientPreviewBtn')){$('withdrawClientPreviewBtn').disabled=!notified;$('withdrawClientPreviewBtn').style.display=notified?'inline-flex':'none';}
   renderPaymentPreviewAdmin();
+  renderZohoNotifyStatus();
 }
 window.markWorkCompleted=async function(){
   if(!selected||adminWorkCompleted(selected))return;
