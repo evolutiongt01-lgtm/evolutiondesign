@@ -710,6 +710,297 @@
       .founder-principle{min-height:88px}
     }
 
+
+    /* =========================================================
+       FOUNDER · CINEMATIC AMBIENT / INTERACTIVE LIGHT
+       ========================================================= */
+    .founder-section{
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .founder-section::before{
+      content:"";
+      position:absolute;
+      inset:-18% -8%;
+      z-index:-3;
+      background:
+        radial-gradient(circle at 20% 42%,rgba(212,184,149,.16),transparent 25%),
+        radial-gradient(circle at 72% 26%,rgba(112,231,255,.095),transparent 23%),
+        radial-gradient(circle at 82% 74%,rgba(142,115,255,.10),transparent 24%);
+      filter:blur(55px) saturate(1.35);
+      opacity:.52;
+      animation:founderAmbientDrift 13s ease-in-out infinite alternate;
+      pointer-events:none;
+    }
+    .founder-section::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:-2;
+      background:
+        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+      background-size:46px 46px;
+      opacity:.22;
+      -webkit-mask-image:radial-gradient(circle at 50% 48%,#000 15%,transparent 76%);
+      mask-image:radial-gradient(circle at 50% 48%,#000 15%,transparent 76%);
+      animation:founderGridMove 18s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes founderAmbientDrift{
+      0%{transform:translate3d(-2%,0,0) scale(1)}
+      50%{transform:translate3d(2%,-1.5%,0) scale(1.05)}
+      100%{transform:translate3d(0,2%,0) scale(1.02)}
+    }
+    @keyframes founderGridMove{
+      to{background-position:46px 46px}
+    }
+
+    .founder-shell{
+      position:relative;
+      isolation:isolate;
+      --mx:50%;
+      --my:50%;
+    }
+    .founder-shell::before{
+      content:"";
+      position:absolute;
+      inset:-34px;
+      z-index:-2;
+      border-radius:44px;
+      background:
+        radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.10),transparent 15%),
+        radial-gradient(circle at 18% 48%,rgba(212,184,149,.12),transparent 27%),
+        radial-gradient(circle at 78% 62%,rgba(112,231,255,.075),transparent 28%);
+      filter:blur(34px);
+      opacity:.66;
+      pointer-events:none;
+      transition:opacity .3s ease;
+    }
+
+    /* Ambient Mode tipo YouTube usando hero-pc como fuente cromática */
+    .founder-portrait{
+      overflow:visible;
+    }
+    .founder-portrait::after{
+      content:"";
+      position:absolute;
+      z-index:-3;
+      left:7%;
+      right:7%;
+      top:8%;
+      bottom:-8%;
+      border-radius:38px;
+      background:url('img/hero-pc.jpg') center/cover no-repeat;
+      filter:blur(52px) saturate(1.50) brightness(.66);
+      opacity:.42;
+      transform:scale(1.06);
+      pointer-events:none;
+      animation:founderYoutubeGlow 8s ease-in-out infinite alternate;
+    }
+    @keyframes founderYoutubeGlow{
+      0%{opacity:.34;transform:scale(1.035) translateY(0)}
+      100%{opacity:.58;transform:scale(1.085) translateY(4px)}
+    }
+
+    .founder-portrait{
+      background:
+        radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.075),transparent 23%),
+        radial-gradient(circle at 50% 24%,rgba(212,184,149,.10),transparent 30%),
+        linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.008)),
+        #09090c;
+      transition:transform .45s var(--ease),border-color .35s ease,box-shadow .45s ease;
+    }
+    .founder-portrait:hover{
+      transform:translateY(-5px);
+      border-color:rgba(212,184,149,.22);
+      box-shadow:
+        0 42px 110px rgba(0,0,0,.42),
+        inset 0 1px 0 rgba(255,255,255,.065);
+    }
+
+    .founder-scan{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      overflow:hidden;
+      border-radius:inherit;
+      pointer-events:none;
+    }
+    .founder-scan::before{
+      content:"";
+      position:absolute;
+      left:-25%;
+      top:-20%;
+      width:150%;
+      height:30%;
+      background:linear-gradient(180deg,transparent,rgba(255,255,255,.055),transparent);
+      transform:rotate(-8deg);
+      animation:founderScan 7.5s ease-in-out infinite;
+      filter:blur(3px);
+      opacity:.52;
+    }
+    @keyframes founderScan{
+      0%,15%{transform:translateY(-170%) rotate(-8deg)}
+      55%,100%{transform:translateY(520%) rotate(-8deg)}
+    }
+
+    .founder-rings{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+    }
+    .founder-rings i{
+      position:absolute;
+      left:50%;
+      top:43%;
+      border-radius:50%;
+      border:1px solid rgba(212,184,149,.10);
+      transform:translate(-50%,-50%);
+      animation:founderRingSpin 20s linear infinite;
+    }
+    .founder-rings i:nth-child(1){width:285px;height:285px}
+    .founder-rings i:nth-child(2){
+      width:365px;height:365px;
+      border-color:rgba(112,231,255,.07);
+      border-style:dashed;
+      animation-duration:15s;
+      animation-direction:reverse;
+    }
+    .founder-rings i:nth-child(3){
+      width:440px;height:440px;
+      border-color:rgba(142,115,255,.055);
+      animation-duration:28s;
+    }
+    @keyframes founderRingSpin{
+      to{transform:translate(-50%,-50%) rotate(360deg)}
+    }
+
+    .founder-monogram{
+      z-index:3;
+      overflow:hidden;
+      animation:founderMonogramFloat 5.2s ease-in-out infinite;
+    }
+    .founder-monogram::before{
+      content:"";
+      position:absolute;
+      inset:-45%;
+      background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.22) 48%,transparent 60%);
+      transform:translateX(-90%) rotate(8deg);
+      animation:founderSheen 5.6s ease-in-out infinite;
+      pointer-events:none;
+    }
+    .founder-monogram::after{
+      content:"";
+      position:absolute;
+      inset:1px;
+      border-radius:inherit;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset 0 -20px 42px rgba(0,0,0,.12);
+      pointer-events:none;
+    }
+    @keyframes founderMonogramFloat{
+      50%{transform:translateY(-8px) rotate(.8deg)}
+    }
+    @keyframes founderSheen{
+      0%,22%{transform:translateX(-95%) rotate(8deg)}
+      55%,100%{transform:translateX(100%) rotate(8deg)}
+    }
+
+    .founder-portrait-meta{
+      z-index:4;
+      box-shadow:0 16px 42px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.05);
+    }
+
+    .founder-copy h2{
+      position:relative;
+    }
+    .founder-copy h2::after{
+      content:"";
+      display:block;
+      width:0;
+      height:1px;
+      margin-top:20px;
+      background:linear-gradient(90deg,var(--gold),rgba(112,231,255,.6),transparent);
+      transition:width 1.1s var(--ease) .15s;
+    }
+    .founder-copy.visible h2::after{
+      width:min(420px,76%);
+    }
+
+    .founder-motto{
+      overflow:hidden;
+      isolation:isolate;
+      transition:transform .4s var(--ease),border-color .3s ease,box-shadow .4s ease;
+    }
+    .founder-motto::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:-1;
+      background:
+        radial-gradient(circle at var(--mx) var(--my),rgba(212,184,149,.13),transparent 26%),
+        linear-gradient(115deg,transparent 20%,rgba(255,255,255,.045),transparent 62%);
+      transform:translateX(-18%);
+      opacity:.70;
+      pointer-events:none;
+    }
+    .founder-motto:hover{
+      transform:translateX(6px);
+      border-color:rgba(212,184,149,.20);
+      box-shadow:0 18px 46px rgba(0,0,0,.20);
+    }
+    .founder-motto strong{
+      background:linear-gradient(95deg,#fff 0%,#fff 45%,#d4b895 68%,#8cecff 100%);
+      background-size:220% 100%;
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      animation:mottoShimmer 6s ease-in-out infinite;
+    }
+    @keyframes mottoShimmer{
+      0%,25%{background-position:0 0}
+      65%,100%{background-position:100% 0}
+    }
+
+    .founder-principle{
+      position:relative;
+      overflow:hidden;
+      transition:transform .32s var(--ease),border-color .3s ease,background .3s ease;
+    }
+    .founder-principle::before{
+      content:"";
+      position:absolute;
+      width:110px;height:110px;
+      right:-65px;top:-70px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(212,184,149,.11),transparent 68%);
+      opacity:.4;
+      transition:.35s ease;
+    }
+    .founder-principle:hover{
+      transform:translateY(-4px);
+      border-color:rgba(212,184,149,.16);
+      background:rgba(255,255,255,.028);
+    }
+    .founder-principle:hover::before{
+      transform:scale(1.25);
+      opacity:.8;
+    }
+
+    @media(max-width:575.98px){
+      .founder-portrait::after{
+        left:9%;right:9%;bottom:-5%;
+        filter:blur(30px) saturate(1.30) brightness(.62);
+        opacity:.30;
+      }
+      .founder-rings i:nth-child(1){width:220px;height:220px}
+      .founder-rings i:nth-child(2){width:285px;height:285px}
+      .founder-rings i:nth-child(3){width:345px;height:345px}
+      .founder-motto:hover{transform:none}
+    }
+
     /* =========================================================
        SYSTEM / CONNECTED WORKFLOW
        ========================================================= */
@@ -1273,16 +1564,18 @@
         <div class="founder-shell">
 
           <div class="founder-portrait reveal">
+            <div class="founder-scan"></div>
+            <div class="founder-rings" aria-hidden="true"><i></i><i></i><i></i></div>
             <div class="founder-monogram" aria-label="César Mátzar"><span>CM</span></div>
 
             <div class="founder-portrait-meta">
-              <small>Founder · Evolution Design</small>
+              <small>Founder · Evolution Group</small>
               <strong>César Mátzar</strong>
             </div>
           </div>
 
           <div class="founder-copy reveal">
-            <span>Fundador / Dirección Creativa</span>
+            <span>Fundador · Evolution Group</span>
             <h2>César Mátzar.<em>Diseñar es decidir qué dejar fuera.</em></h2>
 
             <div class="founder-motto">
@@ -1291,7 +1584,7 @@
             </div>
 
             <p>
-              Como fundador de Evolution Design, César dirige una visión en la que arquitectura, diseño y tecnología no compiten entre sí: se complementan. La meta no es llenar cada proyecto de elementos, sino encontrar la solución más clara, funcional y visualmente sólida para cada necesidad.
+              Como fundador de Evolution Group, César impulsa una visión donde arquitectura, diseño, tecnología y productos digitales funcionan como partes de un mismo ecosistema. Evolution Design nace dentro de esa visión: resolver con claridad, intención y una ejecución visualmente sólida.
             </p>
 
             <div class="founder-principles">
@@ -1444,7 +1737,7 @@
 
       <div class="footer-bottom">
         <span>© 2026 Evolution Design · Todos los derechos reservados.</span>
-        <span>EVOLUTION GROUP</span>
+        <span>EVOLUTION GROUP · FOUNDED BY CÉSAR MÁTZAR</span>
       </div>
     </div>
   </footer>
@@ -1521,6 +1814,36 @@
         if(!ticking){ticking=true;requestAnimationFrame(update)}
       },{passive:true});
       update();
+    })();
+
+    /* Founder interactive cinematic light */
+    (function(){
+      const shell=document.querySelector('.founder-shell');
+      const portrait=document.querySelector('.founder-portrait');
+      const motto=document.querySelector('.founder-motto');
+
+      if(!shell || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+      function setLight(e,el){
+        const r=el.getBoundingClientRect();
+        const x=((e.clientX-r.left)/r.width)*100;
+        const y=((e.clientY-r.top)/r.height)*100;
+        el.style.setProperty('--mx',`${Math.max(0,Math.min(100,x))}%`);
+        el.style.setProperty('--my',`${Math.max(0,Math.min(100,y))}%`);
+      }
+
+      shell.addEventListener('pointermove',e=>{
+        setLight(e,shell);
+        if(portrait && portrait.contains(e.target)) setLight(e,portrait);
+        if(motto && motto.contains(e.target)) setLight(e,motto);
+      },{passive:true});
+
+      shell.addEventListener('pointerleave',()=>{
+        [shell,portrait,motto].filter(Boolean).forEach(el=>{
+          el.style.setProperty('--mx','50%');
+          el.style.setProperty('--my','50%');
+        });
+      },{passive:true});
     })();
 
     /* Reveal */
