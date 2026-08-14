@@ -15,7 +15,7 @@
 <meta content="Evolution Design — estudio creativo de arquitectura, diseño gráfico y diseño web." name="description"/>
 <meta content="Evolution Design" name="author"/>
 <meta content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" name="google-site-verification"/>
-<meta name="evolution-build" content="2026-08-14-index-safari-sw-redirect-fix-v6">
+<meta name="evolution-build" content="2026-08-14-index-ios-autofill-fix-v8">
 <title>Evolution Design — Arquitectura, Diseño Gráfico y Diseño Web</title>
 <link href="/img/evolution-app-icon.png" rel="apple-touch-icon"/>
 <link href="/manifest.webmanifest" rel="manifest"/>
@@ -1269,7 +1269,6 @@
     }
   }
 </style>
-
 <style id="evolution-mobile-ultra-performance">
   /* Segunda capa: elimina los efectos que más castigan iPhone/Android. */
   @media(max-width:991.98px){
@@ -1323,7 +1322,6 @@
     }
   }
 </style>
-
 </head>
 <body>
 <div aria-hidden="true" id="evolutionLaunchScreen">
@@ -1353,9 +1351,9 @@
         Continuar con Google
       </button>
 <div class="d-flex align-items-center my-3"><hr class="flex-grow-1 border-secondary m-0"/><span class="px-2 text-secondary small">o</span><hr class="flex-grow-1 border-secondary m-0"/></div>
-<form id="authEmailForm">
-<div class="mb-2"><input autocomplete="email" class="auth-input" id="authEmail" placeholder="Correo electrónico" required="" type="email"/></div>
-<div class="mb-3"><input autocomplete="current-password" class="auth-input" id="authPassword" minlength="6" placeholder="Contraseña" required="" type="password"/></div>
+<form autocomplete="off" id="authEmailForm">
+<div class="mb-2"><input autocomplete="off" class="auth-input" data-evolution-autocomplete="email" disabled="" id="authEmail" placeholder="Correo electrónico" required="" type="email"/></div>
+<div class="mb-3"><input autocomplete="off" class="auth-input" data-evolution-autocomplete="current-password" disabled="" id="authPassword" minlength="6" placeholder="Contraseña" required="" type="password"/></div>
 <button class="auth-submit" id="btnSubmitAuth" type="submit">Ingresar</button>
 </form>
 <div class="text-center mt-3"><a class="text-secondary small text-decoration-none" href="#" id="toggleAuthMode">¿No tienes cuenta? <span style="color:var(--accent);font-weight:600;">Regístrate</span></a></div>
@@ -2325,7 +2323,6 @@
     }
   }
 </style>
-
 <script id="evolution-safari-sw-rescue">
 (() => {
   if (!('serviceWorker' in navigator)) return;
@@ -2349,6 +2346,81 @@
       localStorage.setItem('evolution_sw_redirect_fix_v6','1');
     } catch (_) {}
   }).catch(() => {});
+})();
+</script>
+
+<script id="evolution-ios-auth-autofill-guard">
+(() => {
+  const modal = document.getElementById('authModal');
+  const email = document.getElementById('authEmail');
+  const password = document.getElementById('authPassword');
+  const form = document.getElementById('authEmailForm');
+
+  if (!modal || !email || !password) return;
+
+  const lockFields = () => {
+    email.disabled = true;
+    password.disabled = true;
+    email.setAttribute('autocomplete','off');
+    password.setAttribute('autocomplete','off');
+    form?.setAttribute('autocomplete','off');
+  };
+
+  const unlockFields = () => {
+    email.disabled = false;
+    password.disabled = false;
+
+    email.setAttribute(
+      'autocomplete',
+      email.dataset.evolutionAutocomplete || 'email'
+    );
+
+    password.setAttribute(
+      'autocomplete',
+      password.dataset.evolutionAutocomplete || 'current-password'
+    );
+
+    form?.setAttribute('autocomplete','on');
+  };
+
+  /* Al cargar la página Safari NO ve credenciales editables. */
+  lockFields();
+
+  /*
+   * Los módulos Firebase de estas páginas terminan de ejecutarse
+   * antes de DOMContentLoaded. En ese momento envolvemos abrirAuthModal
+   * sin cambiar la lógica existente.
+   */
+  window.addEventListener('DOMContentLoaded', () => {
+    const originalOpen = window.abrirAuthModal;
+
+    window.abrirAuthModal = (...args) => {
+      unlockFields();
+
+      if (typeof originalOpen === 'function') {
+        return originalOpen(...args);
+      }
+
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+    };
+
+    /*
+     * Si cualquier lógica existente cierra el modal,
+     * volvemos a bloquear los campos para la próxima navegación.
+     */
+    const observer = new MutationObserver(() => {
+      if (!modal.classList.contains('show')) {
+        password.value = '';
+        lockFields();
+      }
+    });
+
+    observer.observe(modal, {
+      attributes:true,
+      attributeFilter:['class','aria-hidden']
+    });
+  }, { once:true });
 })();
 </script>
 
