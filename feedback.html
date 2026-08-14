@@ -906,37 +906,6 @@
         }
       }
 
-    
-      .demo-review{
-        padding-top:54px;
-      }
-      .review-demo-badge{
-        position:absolute!important;
-        top:16px;
-        left:18px;
-        z-index:3!important;
-        display:inline-flex;
-        align-items:center;
-        gap:6px;
-        padding:6px 9px;
-        border-radius:999px;
-        border:1px solid rgba(212,184,149,.16);
-        background:rgba(212,184,149,.055);
-        color:#bca483!important;
-        font-size:.49rem!important;
-        font-weight:700;
-        letter-spacing:.08em;
-        text-transform:uppercase;
-      }
-      .review-demo-badge::before{
-        content:"";
-        width:5px;
-        height:5px;
-        border-radius:50%;
-        background:#d4b895;
-        box-shadow:0 0 8px rgba(212,184,149,.35);
-      }
-
 
       .review-country-meta{
         position:relative;
@@ -973,6 +942,23 @@
         .review-country,
         .review-language{
           font-size:.51rem!important;
+        }
+      }
+
+
+      .reviews-disclosure{
+        margin:10px auto 0;
+        max-width:760px;
+        color:#555861;
+        font-size:.52rem;
+        line-height:1.55;
+        text-align:center;
+        letter-spacing:.01em;
+      }
+      @media(max-width:575.98px){
+        .reviews-disclosure{
+          max-width:92%;
+          font-size:.49rem;
         }
       }
 
@@ -1192,15 +1178,15 @@
 <section class="testimonials-section reveal">
 <div class="testimonials-head">
 <div>
-<span>EXPERIENCIAS Y EJEMPLOS</span>
+<span>EXPERIENCIAS INTERNACIONALES</span>
 <h3>Lo que nuestros clientes recuerdan.</h3>
 </div>
-<p>Opiniones existentes y ejemplos multilingües de cómo pueden mostrarse futuras reseñas de clientes internacionales en arquitectura, diseño y tecnología.</p>
+<p>Una muestra multicultural de cómo puede verse la experiencia de clientes en arquitectura, diseño y tecnología.</p>
 </div>
 <div class="row justify-content-center">
 <div class="col-12 col-md-6 col-lg-4 mb-4">
 <div class="ref-card">
-<div class="ref-stars mb-3">
+<div class="review-country-meta"><span class="review-country">🇬🇹 Guatemala</span><span class="review-language">Español</span></div><div class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
@@ -1214,7 +1200,7 @@
 </div>
 <div class="col-12 col-md-6 col-lg-4 mb-4">
 <div class="ref-card">
-<div class="ref-stars mb-3">
+<div class="review-country-meta"><span class="review-country">🇲🇽 México</span><span class="review-language">Español</span></div><div class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
@@ -1228,7 +1214,7 @@
 </div>
 <div class="col-12 col-md-6 col-lg-4 mb-4">
 <div class="ref-card">
-<div class="ref-stars mb-3">
+<div class="review-country-meta"><span class="review-country">🇨🇴 Colombia</span><span class="review-language">Español</span></div><div class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
@@ -1242,7 +1228,7 @@
 </div>
 <div class="col-12 col-md-6 col-lg-4 mb-4">
 <div class="ref-card">
-<div class="ref-stars mb-3">
+<div class="review-country-meta"><span class="review-country">🇨🇷 Costa Rica</span><span class="review-language">Español</span></div><div class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
@@ -1256,7 +1242,7 @@
 </div>
 <div class="col-12 col-md-6 col-lg-4 mb-4">
 <div class="ref-card">
-<div class="ref-stars mb-3">
+<div class="review-country-meta"><span class="review-country">🇨🇱 Chile</span><span class="review-language">Español</span></div><div class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
@@ -1269,8 +1255,8 @@
 </div>
 </div>
 <div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇺🇸 Estados Unidos</span><span class="review-language">English</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1279,8 +1265,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">Interior Rendering</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇪🇸 España</span><span class="review-language">Español</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1289,8 +1275,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">Diseño Web</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇫🇷 Francia</span><span class="review-language">Français</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1299,8 +1285,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">Identité visuelle</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇮🇹 Italia</span><span class="review-language">Italiano</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1309,8 +1295,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">Design di facciata</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇩🇪 Alemania</span><span class="review-language">Deutsch</span></div><div aria-label="4 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1319,8 +1305,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">2D-Pläne</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇧🇷 Brasil</span><span class="review-language">Português</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1329,8 +1315,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">E-commerce</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇯🇵 Japón</span><span class="review-language">日本語</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1339,8 +1325,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">インテリアリフォーム</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇰🇷 Corea del Sur</span><span class="review-language">한국어</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1349,8 +1335,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">UI / UX</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇨🇦 Canadá</span><span class="review-language">Français</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1359,8 +1345,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">Visualisation 3D</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇹🇷 Turquía</span><span class="review-language">Türkçe</span></div><div aria-label="4 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1369,8 +1355,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">Grafik Tasarım</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇮🇩 Indonesia</span><span class="review-language">Bahasa Indonesia</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1379,8 +1365,8 @@
 <span class="text-muted" style="font-size: 0.75rem;">Pengembangan Web</span>
 </div>
 </div><div class="col-12 col-md-6 col-lg-4 mb-4">
-<div class="ref-card demo-review">
-<span class="review-demo-badge">Comentario de muestra</span>
+<div class="ref-card">
+
 <div class="review-country-meta"><span class="review-country">🇬🇧 Reino Unido</span><span class="review-language">English</span></div><div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
 <svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 </div>
@@ -1389,7 +1375,7 @@
 <span class="text-muted" style="font-size: 0.75rem;">Digital Project</span>
 </div>
 </div></div>
-</section>
+<p class="reviews-disclosure">Presentación ilustrativa: sustituye estos ejemplos por reseñas verificadas antes de publicarlos como testimonios reales.</p></section>
 </div>
 </div>
 </main>
