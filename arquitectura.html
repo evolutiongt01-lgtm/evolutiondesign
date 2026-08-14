@@ -11,13 +11,13 @@
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="Evolution Design - Arquitectura, renders fotorrealistas, planos 2D, fachadas y visualización 3D" name="description"/>
 <!-- GOOGLE SEARCH CONSOLE VERIFICATION -->
-<meta content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" name="google-site-verification">
+<meta content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" name="google-site-verification"/>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
 <link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="img/favicon.png" rel="icon" sizes="96x96" type="image/png"/>
-<meta content="Evolution Design" name="author"/>
-<meta name="evolution-build" content="2026-08-14-arquitectura-safari-sw-redirect-fix-v6">
+<meta content="Evolution Design" name="author">
+<meta name="evolution-build" content="2026-08-14-arquitectura-ios-autofill-fix-v8">
 <title>Evolution Design - Arquitectura, Renders y Planos</title>
 <!-- PRELOAD DE RECURSOS CLAVE PARA VELOCIDAD -->
 <link as="style" href="css/theme.min.css" rel="preload"/>
@@ -1751,7 +1751,6 @@ html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shad
     }
   }
 </style>
-</meta>
 <style id="evolution-mobile-ultra-performance">
   /* Segunda capa: elimina los efectos que más castigan iPhone/Android. */
   @media(max-width:991.98px){
@@ -1805,8 +1804,7 @@ html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shad
     }
   }
 </style>
-
-</head>
+</meta></head>
 <body data-bs-spy="scroll" data-bs-target="#navScroll">
 <div aria-hidden="true" id="evolutionLaunchScreen">
 <div class="evolution-launch-inner">
@@ -1839,12 +1837,12 @@ html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shad
 <span class="px-2 text-secondary small">o con correo</span>
 <hr class="flex-grow-1 border-secondary m-0"/>
 </div>
-<form id="authEmailForm">
+<form autocomplete="off" id="authEmailForm">
 <div class="mb-3">
-<input class="form-control calc-input-group-pro text-white" id="authEmail" placeholder="Correo electrónico" required="" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.6rem 1.2rem;" type="email"/>
+<input autocomplete="off" class="form-control calc-input-group-pro text-white" data-evolution-autocomplete="email" disabled="" id="authEmail" placeholder="Correo electrónico" required="" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.6rem 1.2rem;" type="email"/>
 </div>
 <div class="mb-3">
-<input class="form-control calc-input-group-pro text-white" id="authPassword" placeholder="Contraseña" required="" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.6rem 1.2rem;" type="password"/>
+<input autocomplete="off" class="form-control calc-input-group-pro text-white" data-evolution-autocomplete="current-password" disabled="" id="authPassword" placeholder="Contraseña" required="" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.6rem 1.2rem;" type="password"/>
 </div>
 <button class="btn w-100 fw-bold rounded-pill py-2 mt-2" id="btnSubmitAuth" style="background-color: #d4b895; color: #000;" type="submit">Ingresar</button>
 </form>
@@ -4820,7 +4818,6 @@ html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shad
     }
   }
 </style>
-
 <script id="evolution-smart-video-controller">
 (() => {
   const videos=[...document.querySelectorAll('video[data-evolution-smart-video]')];
@@ -4864,8 +4861,6 @@ html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shad
   },{passive:true});
 })();
 </script>
-
-
 <script id="evolution-safari-sw-rescue">
 (() => {
   if (!('serviceWorker' in navigator)) return;
@@ -4889,6 +4884,81 @@ html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shad
       localStorage.setItem('evolution_sw_redirect_fix_v6','1');
     } catch (_) {}
   }).catch(() => {});
+})();
+</script>
+
+<script id="evolution-ios-auth-autofill-guard">
+(() => {
+  const modal = document.getElementById('authModal');
+  const email = document.getElementById('authEmail');
+  const password = document.getElementById('authPassword');
+  const form = document.getElementById('authEmailForm');
+
+  if (!modal || !email || !password) return;
+
+  const lockFields = () => {
+    email.disabled = true;
+    password.disabled = true;
+    email.setAttribute('autocomplete','off');
+    password.setAttribute('autocomplete','off');
+    form?.setAttribute('autocomplete','off');
+  };
+
+  const unlockFields = () => {
+    email.disabled = false;
+    password.disabled = false;
+
+    email.setAttribute(
+      'autocomplete',
+      email.dataset.evolutionAutocomplete || 'email'
+    );
+
+    password.setAttribute(
+      'autocomplete',
+      password.dataset.evolutionAutocomplete || 'current-password'
+    );
+
+    form?.setAttribute('autocomplete','on');
+  };
+
+  /* Al cargar la página Safari NO ve credenciales editables. */
+  lockFields();
+
+  /*
+   * Los módulos Firebase de estas páginas terminan de ejecutarse
+   * antes de DOMContentLoaded. En ese momento envolvemos abrirAuthModal
+   * sin cambiar la lógica existente.
+   */
+  window.addEventListener('DOMContentLoaded', () => {
+    const originalOpen = window.abrirAuthModal;
+
+    window.abrirAuthModal = (...args) => {
+      unlockFields();
+
+      if (typeof originalOpen === 'function') {
+        return originalOpen(...args);
+      }
+
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+    };
+
+    /*
+     * Si cualquier lógica existente cierra el modal,
+     * volvemos a bloquear los campos para la próxima navegación.
+     */
+    const observer = new MutationObserver(() => {
+      if (!modal.classList.contains('show')) {
+        password.value = '';
+        lockFields();
+      }
+    });
+
+    observer.observe(modal, {
+      attributes:true,
+      attributeFilter:['class','aria-hidden']
+    });
+  }, { once:true });
 })();
 </script>
 
