@@ -1,4 +1,4 @@
-/* Evolution Design · Persistent App Shell Navigation · v17 */
+/* Evolution Design · Smart Persistent Navigation · v18 */
 (() => {
   'use strict';
 
@@ -11,7 +11,8 @@
     folder:`<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
     login:`<svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>`,
     logout:`<svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>`,
-    shield:`<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
+    shield:`<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    install:`<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>`
   };
 
   const PAGES = [
@@ -35,7 +36,7 @@
   };
 
   const style = document.createElement('style');
-  style.id='evolution-shell-nav-style';
+  style.id='evolution-smart-nav-style';
   style.textContent = `
     :root{--evo-accent:#d4b895}
     evolution-nav{display:block;position:relative;z-index:2147483000}
@@ -46,7 +47,8 @@
 
     .evo-desktop{display:none;position:fixed;top:0;left:0;right:0;z-index:2147483000;padding:calc(22px + env(safe-area-inset-top,0px)) 22px 0;pointer-events:none}
     .evo-desktop-inner{width:min(1400px,100%);margin:auto;display:flex;align-items:center;gap:12px}
-    .evo-pill{pointer-events:auto;position:relative;isolation:isolate;flex:1;min-height:58px;padding:7px 9px 7px 14px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:linear-gradient(135deg,rgba(25,25,28,.965),rgba(8,8,10,.975));box-shadow:0 18px 50px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.09);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);display:flex;align-items:center;gap:16px}
+    .evo-pill{pointer-events:auto;position:relative;isolation:isolate;flex:1;min-height:58px;padding:7px 9px 7px 14px;border:1px solid rgba(255,255,255,.13);border-radius:999px;background:linear-gradient(135deg,rgba(24,24,27,.86),rgba(7,7,9,.88));box-shadow:0 14px 42px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);display:flex;align-items:center;gap:16px;transition:background .28s ease,border-color .28s ease,box-shadow .28s ease,backdrop-filter .28s ease,-webkit-backdrop-filter .28s ease}
+    evolution-nav.evo-is-scrolled .evo-pill{background:linear-gradient(135deg,rgba(20,20,23,.965),rgba(7,7,9,.975));border-color:rgba(255,255,255,.17);box-shadow:0 20px 55px rgba(0,0,0,.50),inset 0 1px rgba(255,255,255,.10);backdrop-filter:blur(30px) saturate(175%);-webkit-backdrop-filter:blur(30px) saturate(175%)}
     .evo-brand{display:flex;align-items:center;gap:12px;position:relative;flex:0 0 auto}
     .evo-logo{display:flex;align-items:center}
     .evo-logo img{display:block;height:31px;width:auto;max-width:150px}
@@ -54,10 +56,16 @@
     .evo-icon{width:42px;height:42px;min-width:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;transition:transform .2s cubic-bezier(.16,1,.3,1),background .18s ease,border-color .18s ease}
     .evo-icon:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22);transform:scale(1.04)}
     .evo-icon:active{transform:scale(.95)}
-    .evo-links{margin-left:auto;display:flex;align-items:center;gap:clamp(12px,1.3vw,21px);min-width:0}
-    .evo-link{position:relative;color:#96969d;font:600 clamp(.70rem,.78vw,.86rem)/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:color .18s ease}
+
+    .evo-links{position:relative;margin-left:auto;display:flex;align-items:center;gap:clamp(12px,1.3vw,21px);min-width:0}
+    .evo-link{position:relative;color:#929299;font:600 clamp(.70rem,.78vw,.86rem)/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:color .18s ease,transform .20s cubic-bezier(.16,1,.3,1)}
     .evo-link:hover,.evo-link.active{color:#fff}
-    .evo-link.active:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:2px;border-radius:999px;background:var(--evo-accent);box-shadow:0 0 10px rgba(212,184,149,.35)}
+    .evo-link.active{transform:translateY(-1px)}
+    .evo-link.active:after{display:none!important}
+
+    .evo-route-indicator{position:absolute;left:0;bottom:-10px;height:2px;width:var(--evo-ind-w,0px);border-radius:999px;background:var(--evo-accent);box-shadow:0 0 12px rgba(212,184,149,.42);transform:translate3d(var(--evo-ind-x,0px),0,0);opacity:0;pointer-events:none;transition:width .34s cubic-bezier(.16,1,.3,1),transform .34s cubic-bezier(.16,1,.3,1),opacity .18s ease}
+    .evo-route-indicator.ready{opacity:1}
+
     .evo-login{color:var(--evo-accent)!important;font-weight:800!important;display:inline-flex;align-items:center;gap:5px}
     .evo-software{height:42px;padding:0 17px;border-radius:999px;background:#f5f5f3;color:#080808;display:inline-flex;align-items:center;font:800 .73rem/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:transform .18s ease}
     .evo-software:hover{transform:translateY(-1px)}
@@ -75,7 +83,8 @@
     .evo-menu-item svg{width:18px;height:18px;opacity:.8}
     .evo-menu-item:hover,.evo-menu-item.active{background:rgba(255,255,255,.08);color:#fff}
 
-    .evo-mobile{display:block;position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:2147483000!important;padding-top:env(safe-area-inset-top,0px)!important;background:rgba(5,5,6,.96)!important;border-bottom:1px solid rgba(255,255,255,.07)!important;box-shadow:0 8px 28px rgba(0,0,0,.28)!important;backdrop-filter:blur(12px) saturate(130%)!important;-webkit-backdrop-filter:blur(12px) saturate(130%)!important;transform:none!important}
+    .evo-mobile{display:block;position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:2147483000!important;padding-top:env(safe-area-inset-top,0px)!important;background:rgba(5,5,6,.90)!important;border-bottom:1px solid rgba(255,255,255,.055)!important;box-shadow:0 6px 20px rgba(0,0,0,.18)!important;backdrop-filter:blur(10px) saturate(120%)!important;-webkit-backdrop-filter:blur(10px) saturate(120%)!important;transform:none!important;transition:background .28s ease,border-color .28s ease,box-shadow .28s ease,backdrop-filter .28s ease,-webkit-backdrop-filter .28s ease}
+    evolution-nav.evo-is-scrolled .evo-mobile{background:rgba(5,5,6,.975)!important;border-bottom-color:rgba(255,255,255,.09)!important;box-shadow:0 10px 34px rgba(0,0,0,.38)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important}
     .evo-mobile-top{min-height:60px;padding:10px 14px 9px;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:10px}
     .evo-mobile .evo-logo{justify-self:center}
     .evo-mobile .evo-logo img{height:27px;max-width:128px}
@@ -86,12 +95,20 @@
     .evo-mobile-profile{border-color:rgba(212,184,149,.5)}
     .evo-mobile-profile img{width:28px;height:28px;border-radius:50%;object-fit:cover}
     .evo-mobile-profile .evo-avatar-fallback{width:28px;height:28px;border:0;font-size:.62rem}
-    .evo-tabs{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:0 7px!important;gap:2px!important}
-    .evo-tab{min-width:0;min-height:54px;padding:5px 1px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7d7d85;border-bottom:2px solid transparent;font:600 .58rem/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:color .18s ease,border-color .18s ease,transform .18s ease}
-    .evo-tab svg{width:19px;height:19px;margin-bottom:4px;opacity:.68}
-    .evo-tab.active{color:#fff;border-bottom-color:var(--evo-accent)}
-    .evo-tab.active svg{opacity:1}
+
+    .evo-tabs{position:relative;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:0 7px!important;gap:2px!important}
+    .evo-tab{min-width:0;min-height:54px;padding:5px 1px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7d7d85;border-bottom:2px solid transparent;font:600 .58rem/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:color .18s ease,transform .22s cubic-bezier(.16,1,.3,1)}
+    .evo-tab svg{width:19px;height:19px;margin-bottom:4px;opacity:.66;transition:opacity .18s ease,transform .30s cubic-bezier(.16,1,.3,1)}
+    .evo-tab.active{color:#fff}
+    .evo-tab.active svg{opacity:1;transform:translateY(-1px) scale(1.09)}
     .evo-tab:active{transform:scale(.95)}
+    .evo-mobile-indicator{bottom:0;height:2px}
+
+    evolution-nav[data-network="slow"] .evo-pill,
+    evolution-nav[data-network="slow"] .evo-mobile{
+      backdrop-filter:blur(8px)!important;
+      -webkit-backdrop-filter:blur(8px)!important;
+    }
 
     @media(min-width:992px){.evo-desktop{display:block}.evo-mobile{display:none!important}}
     @media(max-width:390px){.evo-mobile-top{padding-left:10px;padding-right:10px}.evo-mobile .evo-logo img{max-width:112px}.evo-tab{font-size:.53rem}}
@@ -104,7 +121,8 @@
   `).join('') + `
     <li><a href="/sobre-nosotros" class="evo-menu-item"><span>Sobre Nosotros</span></a></li>
     <li><a href="/feedback" class="evo-menu-item"><span>Feedback</span></a></li>
-    <li id="linkProyectosMenuDesktop"><a href="/proyectos.html" class="evo-menu-item">${ICONS.folder}<span>Mis Proyectos</span></a></li>
+    <li><a href="/proyectos.html" class="evo-menu-item">${ICONS.folder}<span>Mis Proyectos</span></a></li>
+    <li class="evo-install-item evo-d-none"><a href="#" class="evo-menu-item" data-evo-install>${ICONS.install}<span>Instalar Evolution</span></a></li>
   `;
 
   class EvolutionNav extends HTMLElement {
@@ -128,8 +146,9 @@
 
               <div class="evo-links">
                 ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-link${p.key===active?' active':''}">${p.label}</a>`).join('')}
-                <a href="/proyectos.html" id="linkProyectosDesktop" class="evo-link">Mis Proyectos</a>
+                <a href="/proyectos.html" class="evo-link">Mis Proyectos</a>
                 <div id="auth-desktop-wrapper"><a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a></div>
+                <span class="evo-route-indicator evo-desktop-indicator" aria-hidden="true"></span>
               </div>
 
               <a href="https://dingloft.com" target="_blank" rel="noopener" class="evo-software">Catálogo de Software →</a>
@@ -147,18 +166,18 @@
             <a href="/index.html" class="evo-logo" data-evo-route="home" aria-label="Evolution Design Home"><img src="/img/logo.png" alt="Evolution Design"></a>
             <div id="auth-mobile-wrapper"><a href="#" class="evo-icon" data-evo-login aria-label="Login">${ICONS.login}</a></div>
           </div>
-
           <div class="evo-tabs">
             ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-tab${p.key===active?' active':''}">${ICONS[p.icon]}<span>${p.short}</span></a>`).join('')}
-            <a href="/proyectos.html" id="linkProyectosMobile" class="evo-tab">${ICONS.folder}<span>Proyectos</span></a>
+            <a href="/proyectos.html" class="evo-tab">${ICONS.folder}<span>Proyectos</span></a>
+            <span class="evo-route-indicator evo-mobile-indicator" aria-hidden="true"></span>
           </div>
         </nav>`;
+
+      requestAnimationFrame(()=>requestAnimationFrame(()=>window.EvolutionNav?.positionIndicators()));
     }
   }
 
-  if(!customElements.get('evolution-nav')){
-    customElements.define('evolution-nav',EvolutionNav);
-  }
+  if(!customElements.get('evolution-nav')) customElements.define('evolution-nav',EvolutionNav);
 
   const closeMenus=()=>{
     document.getElementById('desktopDropdownMenu')?.classList.remove('show');
@@ -175,92 +194,87 @@
     const m=el.closest('#mobileMenuBtn');
 
     if(d){
-      e.preventDefault();
-      e.stopImmediatePropagation();
-
+      e.preventDefault();e.stopImmediatePropagation();
       const menu=document.getElementById('desktopDropdownMenu');
       const on=!menu?.classList.contains('show');
-
-      closeMenus();
-      menu?.classList.toggle('show',on);
-      d.setAttribute('aria-expanded',String(on));
-      return;
+      closeMenus();menu?.classList.toggle('show',on);d.setAttribute('aria-expanded',String(on));return;
     }
 
     if(m){
-      e.preventDefault();
-      e.stopImmediatePropagation();
-
+      e.preventDefault();e.stopImmediatePropagation();
       const menu=document.getElementById('mobileDropdownMenu');
       const on=!menu?.classList.contains('show');
-
-      closeMenus();
-      menu?.classList.toggle('show',on);
-      m.setAttribute('aria-expanded',String(on));
-      return;
+      closeMenus();menu?.classList.toggle('show',on);m.setAttribute('aria-expanded',String(on));return;
     }
 
     if(el.closest('[data-evo-login]')){
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      document.dispatchEvent(new CustomEvent('evolution:auth-request'));
-      return;
+      e.preventDefault();e.stopImmediatePropagation();
+      document.dispatchEvent(new CustomEvent('evolution:auth-request'));return;
     }
 
     if(el.closest('[data-evo-logout]')){
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      document.dispatchEvent(new CustomEvent('evolution:logout-request'));
-      return;
+      e.preventDefault();e.stopImmediatePropagation();
+      document.dispatchEvent(new CustomEvent('evolution:logout-request'));return;
     }
 
-    if(!el.closest('.evo-menu-wrap')){
-      closeMenus();
+    if(el.closest('[data-evo-install]')){
+      e.preventDefault();e.stopImmediatePropagation();
+      document.dispatchEvent(new CustomEvent('evolution:install-request'));closeMenus();return;
     }
+
+    if(!el.closest('.evo-menu-wrap')) closeMenus();
   },true);
 
-  document.addEventListener('keydown',e=>{
-    if(e.key==='Escape') closeMenus();
-  });
+  document.addEventListener('keydown',e=>{if(e.key==='Escape') closeMenus()});
 
   const api = {
+    state:{user:null,isAdmin:false,route:inferKey(location.href),scrollY:0,network:'normal'},
+
     setActive(key){
+      api.state.route=key;
       document.querySelectorAll('[data-evo-route]').forEach(a=>{
         const on=a.dataset.evoRoute===key;
-
         a.classList.toggle('active',on);
-
-        if(on){
-          a.setAttribute('aria-current','page');
-        }else{
-          a.removeAttribute('aria-current');
-        }
+        if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
       });
-
-      api.syncProjects();
+      requestAnimationFrame(()=>api.positionIndicators());
       closeMenus();
     },
 
-    state:{
-      user:null,
-      isAdmin:false,
-      route:inferKey(location.href)
+    positionIndicators(){
+      const position=(containerSelector,linkSelector,indicatorSelector)=>{
+        const container=document.querySelector(containerSelector);
+        const link=container?.querySelector(linkSelector);
+        const indicator=container?.querySelector(indicatorSelector);
+        if(!container||!link||!indicator)return;
+        indicator.style.setProperty('--evo-ind-x',`${link.offsetLeft}px`);
+        indicator.style.setProperty('--evo-ind-w',`${link.offsetWidth}px`);
+        indicator.classList.add('ready');
+      };
+
+      const key=api.state.route||inferKey(location.href);
+      position('.evo-links',`[data-evo-route="${key}"]`,'.evo-desktop-indicator');
+      position('.evo-tabs',`[data-evo-route="${key}"]`,'.evo-mobile-indicator');
     },
 
-    syncProjects(){
-      [
-        'linkProyectosDesktop',
-        'linkProyectosMenuDesktop',
-        'linkProyectosMobile'
-      ].forEach(id=>{
-        document.getElementById(id)?.classList.remove('evo-d-none');
-      });
+    setScroll(y=0){
+      api.state.scrollY=Math.max(0,Number(y)||0);
+      document.querySelector('evolution-nav')?.classList.toggle('evo-is-scrolled',api.state.scrollY>22);
+    },
+
+    setNetwork(mode='normal'){
+      api.state.network=mode;
+      const host=document.querySelector('evolution-nav');
+      if(host)host.dataset.network=mode;
+    },
+
+    setInstallAvailable(on){
+      document.querySelectorAll('.evo-install-item').forEach(el=>el.classList.toggle('evo-d-none',!on));
     },
 
     setAuth(payload={}){
       const user=payload.user||null;
       const isAdmin=Boolean(payload.isAdmin);
-
       api.state.user=user;
       api.state.isAdmin=isAdmin;
 
@@ -270,78 +284,30 @@
       const admin=document.getElementById('admin-badge-container-desktop');
 
       if(!user){
-        if(desktop){
-          desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a>`;
-        }
-
-        if(mobile){
-          mobile.innerHTML=`<a href="#" class="evo-icon" data-evo-login aria-label="Login">${ICONS.login}</a>`;
-        }
-
-        if(profile) profile.innerHTML='';
-        if(admin) admin.innerHTML='';
-
-        api.syncProjects();
+        if(desktop)desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a>`;
+        if(mobile)mobile.innerHTML=`<a href="#" class="evo-icon" data-evo-login aria-label="Login">${ICONS.login}</a>`;
+        if(profile)profile.innerHTML='';
+        if(admin)admin.innerHTML='';
         return;
       }
 
-      const initials=escapeHTML(
-        (user.displayName||user.email||'U')
-          .trim()
-          .charAt(0)
-          .toUpperCase()
-          ||
-          'U'
-      );
-
+      const initials=escapeHTML((user.displayName||user.email||'U').trim().charAt(0).toUpperCase()||'U');
       const avatar=user.photoURL
         ? `<img src="${escapeHTML(user.photoURL)}" alt="Perfil" class="evo-profile-pic">`
         : `<span class="evo-avatar-fallback">${initials}</span>`;
-
       const mobileAvatar=user.photoURL
         ? `<img src="${escapeHTML(user.photoURL)}" alt="Perfil">`
         : `<span class="evo-avatar-fallback">${initials}</span>`;
 
-      if(desktop){
-        desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-logout>${ICONS.logout}<span>Salir</span></a>`;
-      }
-
-      if(profile){
-        profile.innerHTML=`<a href="/perfil.html" aria-label="Mi perfil">${avatar}</a>`;
-      }
-
-      if(mobile){
-        mobile.innerHTML=`
-          <div class="evo-mobile-auth">
-            <a href="/perfil.html" class="evo-mobile-profile" aria-label="Mi perfil">
-              ${mobileAvatar}
-            </a>
-
-            ${isAdmin
-              ? `<a href="/admin.html" class="evo-mobile-action" aria-label="Panel Admin">${ICONS.shield}</a>`
-              : ''
-            }
-
-            <a href="#" class="evo-mobile-action" data-evo-logout aria-label="Salir">
-              ${ICONS.logout}
-            </a>
-          </div>`;
-      }
-
-      if(admin){
-        admin.innerHTML=isAdmin
-          ? `<a href="/admin.html" class="evo-admin-badge">${ICONS.shield}<span>Panel Admin</span></a>`
-          : '';
-      }
-
-      api.syncProjects();
+      if(desktop)desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-logout>${ICONS.logout}<span>Salir</span></a>`;
+      if(profile)profile.innerHTML=`<a href="/perfil.html" aria-label="Mi perfil">${avatar}</a>`;
+      if(mobile)mobile.innerHTML=`<div class="evo-mobile-auth"><a href="/perfil.html" class="evo-mobile-profile" aria-label="Mi perfil">${mobileAvatar}</a>${isAdmin?`<a href="/admin.html" class="evo-mobile-action" aria-label="Panel Admin">${ICONS.shield}</a>`:''}<a href="#" class="evo-mobile-action" data-evo-logout aria-label="Salir">${ICONS.logout}</a></div>`;
+      if(admin)admin.innerHTML=isAdmin?`<a href="/admin.html" class="evo-admin-badge">${ICONS.shield}<span>Panel Admin</span></a>`:'';
     }
   };
 
   window.EvolutionNav=api;
 
-  addEventListener('evolution:route-changed',e=>{
-    api.state.route=e.detail?.key||inferKey(location.href);
-    api.setActive(api.state.route);
-  });
+  addEventListener('resize',()=>requestAnimationFrame(()=>api.positionIndicators()),{passive:true});
+  addEventListener('evolution:route-changed',e=>api.setActive(e.detail?.key||inferKey(location.href)));
 })();
