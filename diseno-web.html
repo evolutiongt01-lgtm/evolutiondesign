@@ -11,7 +11,7 @@
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="Evolution Design — Diseño web premium, e-commerce, UI/UX, panel administrativo, seguridad reforzada y experiencias interactivas con planes profesionales desde $500 USD." name="description"/>
 <meta content="Evolution Design" name="author"/>
-<meta name="evolution-build" content="2026-08-14-diseno-web-splash-freeze-fix-v7">
+<meta name="evolution-build" content="2026-08-14-diseno-web-ios-autofill-fix-v8">
 <title>Diseño Web Profesional | Evolution Design</title>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -1631,7 +1631,6 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 <div aria-hidden="true" class="evolution-launch-line"></div>
 </div>
 </div>
-
 <script id="evolution-splash-early-failsafe">
 (() => {
   const dismiss=()=>{
@@ -1654,7 +1653,6 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
   setTimeout(dismiss,1800);
 })();
 </script>
-
 <div aria-live="polite" class="evo-offline-pill" id="evoOfflinePill" role="status"><i></i><span>Modo sin conexión · navegación disponible</span></div>
 <div aria-live="assertive" class="evo-offline-toast" id="evoOfflineToast" role="alert">
 <span class="ico"><svg fill="none" height="19" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24" width="19"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.6 2.8 17a2 2 0 0 0 1.74 3h14.92a2 2 0 0 0 1.74-3L13.7 3.6a2 2 0 0 0-3.4 0Z"></path></svg></span>
@@ -1690,9 +1688,9 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
         Continuar con Google
       </button>
 <div class="auth-divider">o con correo</div>
-<form id="authEmailForm">
-<div class="auth-field"><label for="authEmail">Correo electrónico</label><input autocomplete="email" class="auth-input" id="authEmail" placeholder="tu@correo.com" required="" type="email"/></div>
-<div class="auth-field"><label for="authPassword">Contraseña</label><input autocomplete="current-password" class="auth-input" id="authPassword" minlength="6" placeholder="Mínimo 6 caracteres" required="" type="password"/></div>
+<form autocomplete="off" id="authEmailForm">
+<div class="auth-field"><label for="authEmail">Correo electrónico</label><input autocomplete="off" class="auth-input" data-evolution-autocomplete="email" disabled="" id="authEmail" placeholder="tu@correo.com" required="" type="email"/></div>
+<div class="auth-field"><label for="authPassword">Contraseña</label><input autocomplete="off" class="auth-input" data-evolution-autocomplete="current-password" disabled="" id="authPassword" minlength="6" placeholder="Mínimo 6 caracteres" required="" type="password"/></div>
 <button class="auth-submit" id="btnSubmitAuth" type="submit">Ingresar y continuar</button>
 </form>
 <div class="auth-secure-note"><svg fill="none" height="14" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="14"><rect height="10" rx="2" width="14" x="5" y="10"></rect><path d="M8 10V7a4 4 0 018 0v3"></path></svg><span>Tu cuenta protege el brief, el pago y el historial del proyecto. Nunca compartimos tus credenciales.</span></div>
@@ -3705,7 +3703,6 @@ window.addEventListener('evolution-auth-ready',()=>{
   }).catch(() => {});
 })();
 </script>
-
 <script id="evolution-projects-nav-visible-safe">
 (() => {
   const ids=[
@@ -3728,6 +3725,81 @@ window.addEventListener('evolution-auth-ready',()=>{
   show();
   window.addEventListener('pageshow',show,{passive:true});
   window.addEventListener('evolution-auth-ready',show,{passive:true});
+})();
+</script>
+
+<script id="evolution-ios-auth-autofill-guard">
+(() => {
+  const modal = document.getElementById('authModal');
+  const email = document.getElementById('authEmail');
+  const password = document.getElementById('authPassword');
+  const form = document.getElementById('authEmailForm');
+
+  if (!modal || !email || !password) return;
+
+  const lockFields = () => {
+    email.disabled = true;
+    password.disabled = true;
+    email.setAttribute('autocomplete','off');
+    password.setAttribute('autocomplete','off');
+    form?.setAttribute('autocomplete','off');
+  };
+
+  const unlockFields = () => {
+    email.disabled = false;
+    password.disabled = false;
+
+    email.setAttribute(
+      'autocomplete',
+      email.dataset.evolutionAutocomplete || 'email'
+    );
+
+    password.setAttribute(
+      'autocomplete',
+      password.dataset.evolutionAutocomplete || 'current-password'
+    );
+
+    form?.setAttribute('autocomplete','on');
+  };
+
+  /* Al cargar la página Safari NO ve credenciales editables. */
+  lockFields();
+
+  /*
+   * Los módulos Firebase de estas páginas terminan de ejecutarse
+   * antes de DOMContentLoaded. En ese momento envolvemos abrirAuthModal
+   * sin cambiar la lógica existente.
+   */
+  window.addEventListener('DOMContentLoaded', () => {
+    const originalOpen = window.abrirAuthModal;
+
+    window.abrirAuthModal = (...args) => {
+      unlockFields();
+
+      if (typeof originalOpen === 'function') {
+        return originalOpen(...args);
+      }
+
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+    };
+
+    /*
+     * Si cualquier lógica existente cierra el modal,
+     * volvemos a bloquear los campos para la próxima navegación.
+     */
+    const observer = new MutationObserver(() => {
+      if (!modal.classList.contains('show')) {
+        password.value = '';
+        lockFields();
+      }
+    });
+
+    observer.observe(modal, {
+      attributes:true,
+      attributeFilter:['class','aria-hidden']
+    });
+  }, { once:true });
 })();
 </script>
 
