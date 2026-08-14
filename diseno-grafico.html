@@ -12,7 +12,7 @@
 <meta content="Evolution Design — Diseño gráfico, proyectos PSD editables y biblioteca premium para miembros." name="description"/>
 <meta content="Evolution Design" name="author"/>
 <meta content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" name="google-site-verification"/>
-<meta content="2026-08-08-graphic-design-membership-v1" name="evolution-build"/>
+<meta name="evolution-build" content="2026-08-14-diseno-grafico-mobile-ultra-fluid-v5">
 <title>Diseño Gráfico — Recursos PSD y Membresía | Evolution Design</title>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -20,17 +20,7 @@
 <link href="img/favicon.png" rel="icon" sizes="96x96" type="image/png"/>
 <link as="style" href="css/theme.min.css" rel="preload"/>
 <link href="css/theme.min.css" rel="stylesheet"/>
-
 <!-- Chat: se conserva porque sí pertenece al Home -->
-<script>
-    window.ORKA_APP_ID = "6a6e1491fcaf85963eaf05d6";
-    (function () {
-      const s = document.createElement("script");
-      s.src = "//widget.orka.chat/app.js";
-      s.async = true;
-      document.head.appendChild(s);
-    })();
-  </script>
 <style>
     @font-face { font-family:'Inter'; font-style:normal; font-weight:300; font-display:swap; src:url('fonts/inter-v12-latin-300.woff2') format('woff2'); }
     @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('fonts/inter-v12-latin-regular.woff2') format('woff2'); }
@@ -1801,8 +1791,8 @@ body.gd-modal-open{overflow:hidden}
       .member-plan-head { flex-direction:column; }
     }
 </style>
-  <!-- Evolution App Speed · navegación anticipada en Chrome -->
-  <script type="speculationrules">
+<!-- Evolution App Speed · navegación anticipada en Chrome -->
+<script type="speculationrules">
   {
     "prefetch": [
       {
@@ -1813,8 +1803,6 @@ body.gd-modal-open{overflow:hidden}
     ]
   }
   </script>
-
-
 <style id="evolution-master-navigation">
   /* MASTER NAV — mismo aspecto e iconos de Arquitectura */
   .desktop-nav{
@@ -1926,8 +1914,6 @@ body.gd-modal-open{overflow:hidden}
   @media(max-width:991.98px){.desktop-nav{display:none!important}.mobile-app-nav{display:block!important}}
   @media(max-width:389.98px){.app-nav-top>a img{max-width:116px}.tab-item{font-size:.58rem}.tab-item svg{width:18px;height:18px}}
 </style>
-
-
 <style id="evolution-offline-style">
   .evo-offline-pill{
     position:fixed;z-index:20000;top:calc(env(safe-area-inset-top,0px) + 10px);left:50%;
@@ -1953,8 +1939,6 @@ body.gd-modal-open{overflow:hidden}
   .evo-offline-toast strong{display:block;margin-bottom:4px;font-size:.76rem}
   .evo-offline-toast small{display:block;color:#85858d;font-size:.63rem;line-height:1.45}
 </style>
-
-
 <style id="evolution-launch-style">
   #evolutionLaunchScreen{
     position:fixed;
@@ -2044,35 +2028,257 @@ body.gd-modal-open{overflow:hidden}
     }
   }
 </style>
+<style id="evolution-mobile-performance">
+  /* =========================================================
+     EVOLUTION MOBILE FLUID · rendimiento + animación ligera
+     ========================================================= */
+
+  /* Las animaciones móviles solo usan compositor: transform + opacity. */
+  @media (max-width:991.98px) {
+    html {
+      scroll-behavior:smooth;
+    }
+
+    body {
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior-y:none;
+    }
+
+    /* Evita recalcular zonas muy grandes fuera de pantalla. */
+    section,
+    footer,
+    .studio-section,
+    .payment-strip {
+      content-visibility:auto;
+      contain-intrinsic-size:1px 700px;
+    }
+
+    /* Hero y navegación siempre visibles, no usar content-visibility. */
+    .hero,
+    .mobile-app-nav,
+    .login-modal-overlay,
+    #evolutionLaunchScreen,
+    #evolutionNetworkToast,
+    #evoOfflineToast,
+    #evoOfflinePill {
+      content-visibility:visible;
+      contain:none;
+    }
+
+    /* Blur reducido en móvil: conserva look glass sin castigar GPU. */
+    .mobile-app-nav {
+      -webkit-backdrop-filter:blur(14px) saturate(135%) !important;
+      backdrop-filter:blur(14px) saturate(135%) !important;
+    }
+
+    .hero-index,
+    .login-card,
+    .modal-content,
+    .payment-card,
+    .evolution-network-toast,
+    .evo-offline-toast {
+      -webkit-backdrop-filter:blur(12px) saturate(125%) !important;
+      backdrop-filter:blur(12px) saturate(125%) !important;
+    }
+
+    /* Entrada ligera tipo app. */
+    .evo-mobile-enter {
+      opacity:0;
+      transform:translate3d(0,18px,0) scale(.985);
+      transition:
+        opacity .52s cubic-bezier(.16,1,.3,1),
+        transform .58s cubic-bezier(.16,1,.3,1);
+      will-change:transform,opacity;
+    }
+
+    .evo-mobile-enter.evo-in {
+      opacity:1;
+      transform:translate3d(0,0,0) scale(1);
+    }
+
+    /* Elementos principales del hero entran rápido, sin blur. */
+    .hero-kicker,
+    .hero h1,
+    .hero-copy,
+    .hero-actions,
+    .hero-side-stack {
+      animation:evoHeroMobileIn .62s cubic-bezier(.16,1,.3,1) both;
+    }
+    .hero h1 { animation-delay:.04s; }
+    .hero-copy { animation-delay:.08s; }
+    .hero-actions { animation-delay:.12s; }
+    .hero-side-stack { animation-delay:.16s; }
+
+    @keyframes evoHeroMobileIn {
+      from { opacity:0; transform:translate3d(0,14px,0); }
+      to { opacity:1; transform:none; }
+    }
+
+    /* Feedback táctil sin reflow. */
+    a,
+    button,
+    .studio-row,
+    .discipline-card,
+    .payment-card,
+    .service-card,
+    .portfolio-card,
+    .project-card {
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .studio-row:active,
+    .discipline-card:active,
+    .payment-card:active,
+    .service-card:active,
+    .portfolio-card:active,
+    .hero-primary:active,
+    .hero-secondary:active,
+    button:active {
+      transform:scale(.985);
+      transition-duration:.10s !important;
+    }
+
+    /* Canvas/efectos decorativos: menos trabajo en móvil. */
+    canvas.digital-rain,
+    .digital-scan {
+      opacity:.22 !important;
+    }
+
+    /* Imágenes: evitan saltos y ayudan al compositor. */
+    img {
+      height:auto;
+      transform:translateZ(0);
+    }
+
+    /* Evita hover virtual caro en pantallas touch. */
+    @media (hover:none) {
+      .studio-row:hover,
+      .discipline-card:hover,
+      .payment-card:hover,
+      .digital-ecosystem:hover,
+      .import-card:hover {
+        transform:none;
+      }
+    }
+  }
+
+  /* En teléfonos pequeños reducimos aún más efectos costosos. */
+  @media (max-width:575.98px) {
+    .mobile-app-nav {
+      -webkit-backdrop-filter:blur(10px) saturate(120%) !important;
+      backdrop-filter:blur(10px) saturate(120%) !important;
+    }
+
+    .hero-index,
+    .login-card,
+    .modal-content,
+    .payment-card {
+      -webkit-backdrop-filter:blur(8px) !important;
+      backdrop-filter:blur(8px) !important;
+    }
+
+    canvas.digital-rain {
+      display:none !important;
+    }
+
+    .digital-scan {
+      animation:none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion:reduce) {
+    .evo-mobile-enter,
+    .hero-kicker,
+    .hero h1,
+    .hero-copy,
+    .hero-actions,
+    .hero-side-stack {
+      opacity:1 !important;
+      transform:none !important;
+      animation:none !important;
+      transition:none !important;
+    }
+  }
+</style>
+
+<style id="evolution-mobile-ultra-performance">
+  /* Segunda capa: elimina los efectos que más castigan iPhone/Android. */
+  @media(max-width:991.98px){
+    /* View Transitions sin blur: el blur durante navegación es caro en móviles. */
+    ::view-transition-old(root),
+    ::view-transition-new(root),
+    ::view-transition-old(evolution-content),
+    ::view-transition-new(evolution-content),
+    ::view-transition-old(evolution-navigation),
+    ::view-transition-new(evolution-navigation){
+      filter:none !important;
+      animation-duration:.20s !important;
+    }
+
+    .reveal,
+    .reveal.visible,
+    [data-aos]{
+      filter:none !important;
+    }
+
+    /* Sombras grandes producen rasterización extra al hacer scroll. */
+    .hero-index,
+    .discipline-grid,
+    .discipline-card,
+    .service-card,
+    .payment-card,
+    .portfolio-card,
+    .digital-ecosystem{
+      box-shadow:0 10px 26px rgba(0,0,0,.16) !important;
+    }
+
+    /* Los efectos decorativos no deben provocar repaint continuo. */
+    .hero::after,
+    .web-hero::after{
+      animation:none !important;
+    }
+
+    /* Animación escalonada ligera. */
+    .evo-mobile-enter:nth-child(2){transition-delay:.035s}
+    .evo-mobile-enter:nth-child(3){transition-delay:.07s}
+    .evo-mobile-enter:nth-child(4){transition-delay:.105s}
+    .evo-mobile-enter:nth-child(5){transition-delay:.14s}
+  }
+
+  @media(max-width:767.98px){
+    /* Matrix/canvas se ve bien en desktop, pero es de los efectos más caros en teléfono. */
+    #heroCanvas,
+    canvas.hero-canvas,
+    canvas.digital-rain{
+      display:none !important;
+    }
+  }
+</style>
 
 </head>
 <body class="graphic-page">
-
-<div id="evolutionLaunchScreen" aria-hidden="true">
-  <div class="evolution-launch-inner">
-    <img class="evolution-launch-icon" src="/img/evolution-app-icon.png" alt="">
-    <div class="evolution-launch-word">Evolution Design</div>
-    <div class="evolution-launch-sub">Architecture · Brand · Digital</div>
-    <div class="evolution-launch-line" aria-hidden="true"></div>
-  </div>
+<div aria-hidden="true" id="evolutionLaunchScreen">
+<div class="evolution-launch-inner">
+<img alt="" class="evolution-launch-icon" decoding="async" fetchpriority="high" loading="eager" src="/img/evolution-app-icon.png"/>
+<div class="evolution-launch-word">Evolution Design</div>
+<div class="evolution-launch-sub">Architecture · Brand · Digital</div>
+<div aria-hidden="true" class="evolution-launch-line"></div>
 </div>
-
-
-<div id="evoOfflinePill" class="evo-offline-pill" role="status" aria-live="polite"><i></i><span>Modo sin conexión · navegación disponible</span></div>
-<div id="evoOfflineToast" class="evo-offline-toast" role="alert" aria-live="assertive">
-  <span class="ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.6 2.8 17a2 2 0 0 0 1.74 3h14.92a2 2 0 0 0 1.74-3L13.7 3.6a2 2 0 0 0-3.4 0Z"/></svg></span>
-  <span><strong>Sin conexión a internet</strong><small>Esta acción necesita conexión. Puedes seguir explorando el contenido guardado en Evolution.</small></span>
 </div>
-
+<div aria-live="polite" class="evo-offline-pill" id="evoOfflinePill" role="status"><i></i><span>Modo sin conexión · navegación disponible</span></div>
+<div aria-live="assertive" class="evo-offline-toast" id="evoOfflineToast" role="alert">
+<span class="ico"><svg fill="none" height="19" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24" width="19"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.6 2.8 17a2 2 0 0 0 1.74 3h14.92a2 2 0 0 0 1.74-3L13.7 3.6a2 2 0 0 0-3.4 0Z"></path></svg></span>
+<span><strong>Sin conexión a internet</strong><small>Esta acción necesita conexión. Puedes seguir explorando el contenido guardado en Evolution.</small></span>
+</div>
 <!-- LOGIN -->
 <div aria-hidden="true" class="login-modal-overlay" id="authModal">
 <div aria-labelledby="authModalTitle" aria-modal="true" class="login-card" role="dialog">
 <button aria-label="Cerrar" class="close-modal" id="closeAuthModal">×</button>
 <div class="text-center mb-4">
-<img alt="Evolution Design" src="img/logo.png" style="max-height:27px;margin-bottom:16px;"/>
+<img alt="Evolution Design" decoding="async" fetchpriority="high" loading="eager" src="img/logo.png" style="max-height:27px;margin-bottom:16px;">
 <h4 class="fw-bold text-white mb-1" id="authModalTitle">Iniciar Sesión</h4>
 <p class="text-secondary small mb-0">Accede a tu cuenta y a tus proyectos.</p>
-</div>
+</img></div>
 <button class="btn btn-light w-100 rounded-pill py-2 mb-3 fw-bold d-flex justify-content-center align-items-center gap-2 text-dark" id="btnGoogleLogin" type="button">
 <svg height="18" viewbox="0 0 24 24" width="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
         Continuar con Google
@@ -2109,7 +2315,7 @@ body.gd-modal-open{overflow:hidden}
 <li class="d-none" id="linkProyectosMenuDesktop"><a class="menu-item" data-evolution-nav="" href="proyectos.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
 </ul>
 </div>
-<a aria-label="Ir a Home" class="d-flex align-items-center" data-evolution-nav="" href="index.html"><img alt="Evolution Design" loading="lazy" src="img/logo.png" style="max-height: 35px; width: auto;"/></a>
+<a aria-label="Ir a Home" class="d-flex align-items-center" data-evolution-nav="" href="index.html"><img alt="Evolution Design" decoding="async" loading="eager" src="img/logo.png" style="max-height: 35px; width: auto;"/></a>
 <!-- BOTÓN ADMIN FLOTANDO EXACTAMENTE DEBAJO DEL LOGO (MAC) -->
 <div id="admin-badge-container-desktop" style="position: absolute; top: calc(100% + 5px); left: 3.5rem; z-index: 10;"></div>
 </div>
@@ -2146,7 +2352,7 @@ body.gd-modal-open{overflow:hidden}
 <li><a class="menu-item" href="feedback"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
 </ul>
 </div>
-<a aria-label="Ir a Home" class="" data-evolution-nav="" href="index.html"><img alt="Evolution Design" loading="lazy" src="img/logo.png" style="max-height: 28px; width: auto;"/></a>
+<a aria-label="Ir a Home" class="" data-evolution-nav="" href="index.html"><img alt="Evolution Design" decoding="async" loading="eager" src="img/logo.png" style="max-height: 28px; width: auto;"/></a>
 <!-- CONTENEDOR LOGIN Y PERFIL MÓVIL -->
 <div class="d-flex align-items-center" id="auth-mobile-wrapper">
 <a aria-label="Login" class="icon-btn" href="#" onclick="abrirAuthModal(); return false;">
@@ -2162,570 +2368,496 @@ body.gd-modal-open{overflow:hidden}
 <a class="tab-item d-none" data-evolution-nav="" href="proyectos.html" id="linkProyectosMobile"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>Proyectos</a>
 </div>
 </nav>
-
 <main class="graphic-main graphic-pro-v3">
 <section class="gd-hero">
-  <div class="gd-gridfx"></div><div class="gd-orb a"></div><div class="gd-orb b"></div>
-  <div class="gd-wrap gd-hero-layout">
-    <div class="gd-copy reveal">
-      <div class="gd-badge"><i></i> EVOLUTION GRAPHIC STUDIO <span>PSD · BRAND · SOCIAL</span></div>
-      <h1>Diseño que<br><em>se siente.</em></h1>
-      <p>Una biblioteca visual para diseñadores que quieren trabajar más rápido sin sacrificar nivel. PSD editables, composiciones profesionales y recursos premium.</p>
-      <div class="gd-actions">
-        <a class="gd-btn light" href="#proyectos-psd">Explorar proyectos <b>↓</b></a>
-        <a class="gd-btn dark" href="#servicios">Ver servicios <b>↗</b></a>
-      </div>
-      <div class="gd-stats"><div><b>06</b><span>Proyectos</span></div><div><b>PSD</b><span>Editables</span></div><div><b>24/7</b><span>Acceso</span></div></div>
-    </div>
-
-    <div class="gd-console reveal" id="gdConsole">
-      <div class="gd-console-bar"><div><i></i><i></i><i></i></div><span>evolution.graphics/workspace</span><b>LIVE</b></div>
-      <div class="gd-console-stage">
-        <div class="gd-stage-grid"></div><div class="gd-ring r1"></div><div class="gd-ring r2"></div>
-        <div class="gd-core"><span>ED</span></div>
-        <article class="gd-float ps"><strong>Ps</strong><div><b>Photoshop</b><span>PSD editable</span></div><small>READY</small></article>
-        <article class="gd-float grid"><strong class="mini-grid"><i></i><i></i><i></i><i></i></strong><div><b>Composition</b><span>12 column grid</span></div><small>ACTIVE</small></article>
-        <article class="gd-float color"><strong class="wheel"></strong><div><b>Color system</b><span>Dynamic palette</span></div><small>RGB</small></article>
-        <div class="gd-console-foot"><span>WORKFLOW / DESIGN · EDIT · EXPORT</span><span>CREATIVE SYSTEM ONLINE</span></div>
-      </div>
-    </div>
-  </div>
+<div class="gd-gridfx"></div><div class="gd-orb a"></div><div class="gd-orb b"></div>
+<div class="gd-wrap gd-hero-layout">
+<div class="gd-copy reveal">
+<div class="gd-badge"><i></i> EVOLUTION GRAPHIC STUDIO <span>PSD · BRAND · SOCIAL</span></div>
+<h1>Diseño que<br/><em>se siente.</em></h1>
+<p>Una biblioteca visual para diseñadores que quieren trabajar más rápido sin sacrificar nivel. PSD editables, composiciones profesionales y recursos premium.</p>
+<div class="gd-actions">
+<a class="gd-btn light" href="#proyectos-psd">Explorar proyectos <b>↓</b></a>
+<a class="gd-btn dark" href="#servicios">Ver servicios <b>↗</b></a>
+</div>
+<div class="gd-stats"><div><b>06</b><span>Proyectos</span></div><div><b>PSD</b><span>Editables</span></div><div><b>24/7</b><span>Acceso</span></div></div>
+</div>
+<div class="gd-console reveal" id="gdConsole">
+<div class="gd-console-bar"><div><i></i><i></i><i></i></div><span>evolution.graphics/workspace</span><b>LIVE</b></div>
+<div class="gd-console-stage">
+<div class="gd-stage-grid"></div><div class="gd-ring r1"></div><div class="gd-ring r2"></div>
+<div class="gd-core"><span>ED</span></div>
+<article class="gd-float ps"><strong>Ps</strong><div><b>Photoshop</b><span>PSD editable</span></div><small>READY</small></article>
+<article class="gd-float grid"><strong class="mini-grid"><i></i><i></i><i></i><i></i></strong><div><b>Composition</b><span>12 column grid</span></div><small>ACTIVE</small></article>
+<article class="gd-float color"><strong class="wheel"></strong><div><b>Color system</b><span>Dynamic palette</span></div><small>RGB</small></article>
+<div class="gd-console-foot"><span>WORKFLOW / DESIGN · EDIT · EXPORT</span><span>CREATIVE SYSTEM ONLINE</span></div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="gd-marquee"><div>
 <span>BRANDING</span><b>✦</b><span>SOCIAL MEDIA</span><b>✦</b><span>PSD EDITABLE</span><b>✦</b><span>ADVERTISING</span><b>✦</b><span>COMPOSITION</span><b>✦</b><span>UI GRAPHICS</span><b>✦</b>
 <span>BRANDING</span><b>✦</b><span>SOCIAL MEDIA</span><b>✦</b><span>PSD EDITABLE</span><b>✦</b><span>ADVERTISING</span><b>✦</b><span>COMPOSITION</span><b>✦</b><span>UI GRAPHICS</span><b>✦</b>
 </div></section>
-
 <section class="gd-projects" id="proyectos-psd"><div class="gd-wrap">
-  <div class="gd-heading reveal">
-    <div><span>PORTAFOLIO · 01—06</span><h2>Una selección de trabajos que muestra nuestro <em>nivel visual.</em></h2></div>
-    <p>Seis piezas seleccionadas para que cada composición se aprecie completa, sin recortes y con mayor protagonismo visual.</p>
-  </div>
-
-  <div class="gd-gallery gd-gallery-six">
-    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-01.jpg" data-portfolio-title="Proyecto PSD 01" tabindex="0" role="button" aria-label="Ver Proyecto PSD 01 en grande">
-      <img src="img/diseno-grafico/psd-01.jpg" alt="Proyecto PSD 01" loading="eager">
-      <div class="shade"></div><i>01</i>
-      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 01</h3><p>Ver proyecto completo ↗</p></div>
-    </article>
-
-    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-02.jpg" data-portfolio-title="Proyecto PSD 02" tabindex="0" role="button" aria-label="Ver Proyecto PSD 02 en grande">
-      <img src="img/diseno-grafico/psd-02.jpg" alt="Proyecto PSD 02" loading="lazy">
-      <div class="shade"></div><i>02</i>
-      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 02</h3><p>Ver proyecto completo ↗</p></div>
-    </article>
-
-    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-03.jpg" data-portfolio-title="Proyecto PSD 03" tabindex="0" role="button" aria-label="Ver Proyecto PSD 03 en grande">
-      <img src="img/diseno-grafico/psd-03.jpg" alt="Proyecto PSD 03" loading="lazy">
-      <div class="shade"></div><i>03</i>
-      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 03</h3><p>Ver proyecto completo ↗</p></div>
-    </article>
-
-    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-04.jpg" data-portfolio-title="Proyecto PSD 04" tabindex="0" role="button" aria-label="Ver Proyecto PSD 04 en grande">
-      <img src="img/diseno-grafico/psd-04.jpg" alt="Proyecto PSD 04" loading="lazy">
-      <div class="shade"></div><i>04</i>
-      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 04</h3><p>Ver proyecto completo ↗</p></div>
-    </article>
-
-    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-05.jpg" data-portfolio-title="Proyecto PSD 05" tabindex="0" role="button" aria-label="Ver Proyecto PSD 05 en grande">
-      <img src="img/diseno-grafico/psd-05.jpg" alt="Proyecto PSD 05" loading="lazy">
-      <div class="shade"></div><i>05</i>
-      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 05</h3><p>Ver proyecto completo ↗</p></div>
-    </article>
-
-    <article class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-06.jpg" data-portfolio-title="Proyecto PSD 06" tabindex="0" role="button" aria-label="Ver Proyecto PSD 06 en grande">
-      <img src="img/diseno-grafico/psd-06.jpg" alt="Proyecto PSD 06" loading="lazy">
-      <div class="shade"></div><i>06</i>
-      <div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 06</h3><p>Ver proyecto completo ↗</p></div>
-    </article>
-  </div>
-</div></section>
-
-<div class="gd-portfolio-lightbox" id="gdPortfolioLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Vista ampliada del portafolio">
-  <button type="button" class="gd-lightbox-close" id="gdPortfolioClose" aria-label="Cerrar vista ampliada">×</button>
-  <div class="gd-lightbox-stage">
-    <img id="gdPortfolioLightboxImg" src="" alt="">
-    <div class="gd-lightbox-caption"><span id="gdPortfolioLightboxTitle">Proyecto</span><small>EVOLUTION DESIGN · PORTFOLIO</small></div>
-  </div>
+<div class="gd-heading reveal">
+<div><span>PORTAFOLIO · 01—06</span><h2>Una selección de trabajos que muestra nuestro <em>nivel visual.</em></h2></div>
+<p>Seis piezas seleccionadas para que cada composición se aprecie completa, sin recortes y con mayor protagonismo visual.</p>
 </div>
-
-<section class="gd-system"><div class="gd-wrap">
-  <div class="gd-heading one reveal"><div><span>BUILT FOR CREATORS</span><h2>No es una carpeta con archivos. Es un <em>sistema de trabajo.</em></h2></div></div>
-  <div class="gd-bento">
-    <article class="gd-bento-card reveal"><b class="ico">⌘</b><span>01 / ORGANIZACIÓN</span><h3>Capas que sí entiendes.</h3><p>Entra, edita y exporta sin perder tiempo buscando elementos.</p><div class="layers"><i></i><i></i><i></i><i></i></div></article>
-    <article class="gd-bento-card reveal"><b class="ico">Aa</b><span>02 / TIPOGRAFÍA</span><h3>Jerarquía lista para estudiar.</h3><p>Titulares, subtítulos y bloques secundarios con una lógica clara.</p><div class="type-demo"><strong>EVOLUTION</strong><small>Graphic hierarchy system</small></div></article>
-    <article class="gd-bento-card reveal"><b class="ico">◉</b><span>03 / COLOR</span><h3>Paletas con intención.</h3><p>Contraste, profundidad y atmósfera aplicados a piezas reales.</p><div class="palette"><i></i><i></i><i></i><i></i><i></i></div></article>
-    <article class="gd-bento-card wide reveal"><div><b class="ico">↗</b><span>04 / VELOCIDAD</span><h3>Empieza con una base profesional, no con un lienzo vacío.</h3></div><div class="speed"><div><small>Blank canvas</small><b>00:00</b></div><i><em></em></i><div><small>Editable PSD</small><b>READY</b></div></div></article>
-  </div>
+<div class="gd-gallery gd-gallery-six">
+<article aria-label="Ver Proyecto PSD 01 en grande" class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-01.jpg" data-portfolio-title="Proyecto PSD 01" role="button" tabindex="0">
+<img alt="Proyecto PSD 01" decoding="async" fetchpriority="low" loading="lazy" src="img/diseno-grafico/psd-01.jpg"/>
+<div class="shade"></div><i>01</i>
+<div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 01</h3><p>Ver proyecto completo ↗</p></div>
+</article>
+<article aria-label="Ver Proyecto PSD 02 en grande" class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-02.jpg" data-portfolio-title="Proyecto PSD 02" role="button" tabindex="0">
+<img alt="Proyecto PSD 02" decoding="async" fetchpriority="low" loading="lazy" src="img/diseno-grafico/psd-02.jpg"/>
+<div class="shade"></div><i>02</i>
+<div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 02</h3><p>Ver proyecto completo ↗</p></div>
+</article>
+<article aria-label="Ver Proyecto PSD 03 en grande" class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-03.jpg" data-portfolio-title="Proyecto PSD 03" role="button" tabindex="0">
+<img alt="Proyecto PSD 03" decoding="async" fetchpriority="low" loading="lazy" src="img/diseno-grafico/psd-03.jpg"/>
+<div class="shade"></div><i>03</i>
+<div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 03</h3><p>Ver proyecto completo ↗</p></div>
+</article>
+<article aria-label="Ver Proyecto PSD 04 en grande" class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-04.jpg" data-portfolio-title="Proyecto PSD 04" role="button" tabindex="0">
+<img alt="Proyecto PSD 04" decoding="async" fetchpriority="low" loading="lazy" src="img/diseno-grafico/psd-04.jpg"/>
+<div class="shade"></div><i>04</i>
+<div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 04</h3><p>Ver proyecto completo ↗</p></div>
+</article>
+<article aria-label="Ver Proyecto PSD 05 en grande" class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-05.jpg" data-portfolio-title="Proyecto PSD 05" role="button" tabindex="0">
+<img alt="Proyecto PSD 05" decoding="async" fetchpriority="low" loading="lazy" src="img/diseno-grafico/psd-05.jpg"/>
+<div class="shade"></div><i>05</i>
+<div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 05</h3><p>Ver proyecto completo ↗</p></div>
+</article>
+<article aria-label="Ver Proyecto PSD 06 en grande" class="gd-project reveal" data-portfolio-src="img/diseno-grafico/psd-06.jpg" data-portfolio-title="Proyecto PSD 06" role="button" tabindex="0">
+<img alt="Proyecto PSD 06" decoding="async" fetchpriority="low" loading="lazy" src="img/diseno-grafico/psd-06.jpg"/>
+<div class="shade"></div><i>06</i>
+<div class="info"><small>PORTFOLIO / SELECTED WORK</small><h3>Proyecto PSD 06</h3><p>Ver proyecto completo ↗</p></div>
+</article>
+</div>
 </div></section>
-
-
+<div aria-hidden="true" aria-label="Vista ampliada del portafolio" aria-modal="true" class="gd-portfolio-lightbox" id="gdPortfolioLightbox" role="dialog">
+<button aria-label="Cerrar vista ampliada" class="gd-lightbox-close" id="gdPortfolioClose" type="button">×</button>
+<div class="gd-lightbox-stage">
+<img alt="" decoding="async" fetchpriority="low" id="gdPortfolioLightboxImg" loading="lazy" src=""/>
+<div class="gd-lightbox-caption"><span id="gdPortfolioLightboxTitle">Proyecto</span><small>EVOLUTION DESIGN · PORTFOLIO</small></div>
+</div>
+</div>
+<section class="gd-system"><div class="gd-wrap">
+<div class="gd-heading one reveal"><div><span>BUILT FOR CREATORS</span><h2>No es una carpeta con archivos. Es un <em>sistema de trabajo.</em></h2></div></div>
+<div class="gd-bento">
+<article class="gd-bento-card reveal"><b class="ico">⌘</b><span>01 / ORGANIZACIÓN</span><h3>Capas que sí entiendes.</h3><p>Entra, edita y exporta sin perder tiempo buscando elementos.</p><div class="layers"><i></i><i></i><i></i><i></i></div></article>
+<article class="gd-bento-card reveal"><b class="ico">Aa</b><span>02 / TIPOGRAFÍA</span><h3>Jerarquía lista para estudiar.</h3><p>Titulares, subtítulos y bloques secundarios con una lógica clara.</p><div class="type-demo"><strong>EVOLUTION</strong><small>Graphic hierarchy system</small></div></article>
+<article class="gd-bento-card reveal"><b class="ico">◉</b><span>03 / COLOR</span><h3>Paletas con intención.</h3><p>Contraste, profundidad y atmósfera aplicados a piezas reales.</p><div class="palette"><i></i><i></i><i></i><i></i><i></i></div></article>
+<article class="gd-bento-card wide reveal"><div><b class="ico">↗</b><span>04 / VELOCIDAD</span><h3>Empieza con una base profesional, no con un lienzo vacío.</h3></div><div class="speed"><div><small>Blank canvas</small><b>00:00</b></div><i><em></em></i><div><small>Editable PSD</small><b>READY</b></div></div></article>
+</div>
+</div></section>
 <section class="gd-membership" id="servicios">
-  <div class="gd-wrap">
-    <div class="gd-member-header reveal">
-      <div>
-        <span>EVOLUTION CREATIVE SERVICES</span>
-        <h2>¿Te gustó el portafolio? Pide una pieza <em>hecha para ti.</em></h2>
-      </div>
-      <p>
+<div class="gd-wrap">
+<div class="gd-member-header reveal">
+<div>
+<span>EVOLUTION CREATIVE SERVICES</span>
+<h2>¿Te gustó el portafolio? Pide una pieza <em>hecha para ti.</em></h2>
+</div>
+<p>
         Diseño gráfico, creación de logos e identidad visual para campañas, marcas y proyectos que necesitan una presencia profesional.
       </p>
-    </div>
-
-    <div class="gd-offer-grid gd-offer-grid-single">
+</div>
+<div class="gd-offer-grid gd-offer-grid-single">
 <!-- DISEÑO PERSONALIZADO -->
-      <aside class="gd-custom-design reveal">
-        <div class="gd-custom-noise"></div>
-        <div class="gd-custom-head">
-          <span>PHOTOSHOP · CUSTOM DESIGN</span>
-          <b>POR PIEZA</b>
-        </div>
-
-        <div class="gd-custom-title-row">
-          <div>
-            <small>DISEÑO PERSONALIZADO</small>
-            <h3>Una pieza hecha<br>para tu campaña.</h3>
-          </div>
-          <div class="gd-ps-orb">Ps</div>
-        </div>
-
-        <div class="gd-custom-price">
-          <strong id="dgPriceCustom">$16</strong>
-          <div>
-            <span id="dgCurrencyCustom">USD / diseño</span>
-            <small>Precio por pieza</small>
-          </div>
-        </div>
-        <div class="gd-delivery-pill">Entrega estimada · 3 días hábiles</div>
-
-        <div class="gd-custom-tags">
-          <span>Post publicitario</span>
-          <span>Campaña</span>
-          <span>Story</span>
-          <span>Flyer</span>
-          <span>Banner</span>
-          <span>Carrusel</span>
-          <span>Portada</span>
-        </div>
-
-        <div class="gd-custom-preview" aria-hidden="true">
-          <div class="gd-preview-card p1"><i></i><strong>CAMPAIGN</strong><span>01 / SOCIAL</span></div>
-          <div class="gd-preview-card p2"><i></i><strong>BRAND POST</strong><span>02 / GRAPHIC</span></div>
-          <div class="gd-preview-card p3"><i></i><strong>LAUNCH</strong><span>03 / AD</span></div>
-        </div>
-
-        <a id="dgCustomCta"
-           class="gd-custom-cta"
-           href="#"
-           onclick="abrirPedidoDiseno();return false;">
+<aside class="gd-custom-design reveal">
+<div class="gd-custom-noise"></div>
+<div class="gd-custom-head">
+<span>PHOTOSHOP · CUSTOM DESIGN</span>
+<b>POR PIEZA</b>
+</div>
+<div class="gd-custom-title-row">
+<div>
+<small>DISEÑO PERSONALIZADO</small>
+<h3>Una pieza hecha<br/>para tu campaña.</h3>
+</div>
+<div class="gd-ps-orb">Ps</div>
+</div>
+<div class="gd-custom-price">
+<strong id="dgPriceCustom">$16</strong>
+<div>
+<span id="dgCurrencyCustom">USD / diseño</span>
+<small>Precio por pieza</small>
+</div>
+</div>
+<div class="gd-delivery-pill">Entrega estimada · 3 días hábiles</div>
+<div class="gd-custom-tags">
+<span>Post publicitario</span>
+<span>Campaña</span>
+<span>Story</span>
+<span>Flyer</span>
+<span>Banner</span>
+<span>Carrusel</span>
+<span>Portada</span>
+</div>
+<div aria-hidden="true" class="gd-custom-preview">
+<div class="gd-preview-card p1"><i></i><strong>CAMPAIGN</strong><span>01 / SOCIAL</span></div>
+<div class="gd-preview-card p2"><i></i><strong>BRAND POST</strong><span>02 / GRAPHIC</span></div>
+<div class="gd-preview-card p3"><i></i><strong>LAUNCH</strong><span>03 / AD</span></div>
+</div>
+<a class="gd-custom-cta" href="#" id="dgCustomCta" onclick="abrirPedidoDiseno();return false;">
           Solicitar diseño por $16 <b>↗</b>
-        </a>
-      </aside>
-
-      <!-- CREACIÓN DE LOGOS -->
-      <aside class="gd-logo-design reveal">
-        <div class="gd-logo-grid"></div>
-        <div class="gd-logo-head">
-          <span>BRANDING · LOGO · IDENTIDAD</span>
-          <b>PERSONALIZADO</b>
-        </div>
-
-        <div class="gd-logo-title-row">
-          <div>
-            <small>CREACIÓN DE LOGOS</small>
-            <h3>Una identidad que<br>se reconozca.</h3>
-          </div>
-          <div class="gd-logo-orb" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none">
-              <path d="M14 42 26 18l9 18 7-13 8 19" stroke="#e2c5ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="32" cy="32" r="25" stroke="#a968ef" stroke-width="2" opacity=".55"/>
-            </svg>
-          </div>
-        </div>
-
-        <div class="gd-logo-price">
-          <strong id="dgPriceLogo">$100</strong>
-          <span id="dgCurrencyLogo">USD / logo · pago único</span>
-          <small class="gd-logo-price-note">Logo profesional desde cero o rediseño de una identidad existente.</small>
-        </div>
-        <div class="gd-delivery-pill">Entrega estimada · 3 días hábiles</div>
-
-        <div class="gd-logo-tags">
-          <span>Logotipo</span>
-          <span>Isotipo</span>
-          <span>Imagotipo</span>
-          <span>Monograma</span>
-          <span>Emblema</span>
-          <span>Rediseño</span>
-        </div>
-
-        <div class="gd-logo-showcase" aria-hidden="true">
-          <div class="gd-logo-mark"><svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="25" stroke="#b98ae8" stroke-width="3"/><path d="M27 47 40 25l13 22" stroke="#f1e3ff" stroke-width="4" stroke-linecap="round"/></svg></div>
-          <div class="gd-logo-mark"><svg viewBox="0 0 80 80" fill="none"><rect x="17" y="17" width="46" height="46" rx="14" stroke="#d2a8ff" stroke-width="3"/><path d="M27 51V29h9c9 0 16 4 16 11s-7 11-16 11h-9Z" stroke="#fff" stroke-width="3"/></svg></div>
-          <div class="gd-logo-mark"><svg viewBox="0 0 80 80" fill="none"><path d="M16 52 31 22l10 20 9-15 14 25" stroke="#c18fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 57h34" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
-        </div>
-
-        <a id="dgLogoCta" class="gd-logo-cta" href="#" onclick="abrirPedidoLogo();return false;">
+</a>
+</aside>
+<!-- CREACIÓN DE LOGOS -->
+<aside class="gd-logo-design reveal">
+<div class="gd-logo-grid"></div>
+<div class="gd-logo-head">
+<span>BRANDING · LOGO · IDENTIDAD</span>
+<b>PERSONALIZADO</b>
+</div>
+<div class="gd-logo-title-row">
+<div>
+<small>CREACIÓN DE LOGOS</small>
+<h3>Una identidad que<br/>se reconozca.</h3>
+</div>
+<div aria-hidden="true" class="gd-logo-orb">
+<svg fill="none" viewbox="0 0 64 64">
+<path d="M14 42 26 18l9 18 7-13 8 19" stroke="#e2c5ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+<circle cx="32" cy="32" opacity=".55" r="25" stroke="#a968ef" stroke-width="2"></circle>
+</svg>
+</div>
+</div>
+<div class="gd-logo-price">
+<strong id="dgPriceLogo">$100</strong>
+<span id="dgCurrencyLogo">USD / logo · pago único</span>
+<small class="gd-logo-price-note">Logo profesional desde cero o rediseño de una identidad existente.</small>
+</div>
+<div class="gd-delivery-pill">Entrega estimada · 3 días hábiles</div>
+<div class="gd-logo-tags">
+<span>Logotipo</span>
+<span>Isotipo</span>
+<span>Imagotipo</span>
+<span>Monograma</span>
+<span>Emblema</span>
+<span>Rediseño</span>
+</div>
+<div aria-hidden="true" class="gd-logo-showcase">
+<div class="gd-logo-mark"><svg fill="none" viewbox="0 0 80 80"><circle cx="40" cy="40" r="25" stroke="#b98ae8" stroke-width="3"></circle><path d="M27 47 40 25l13 22" stroke="#f1e3ff" stroke-linecap="round" stroke-width="4"></path></svg></div>
+<div class="gd-logo-mark"><svg fill="none" viewbox="0 0 80 80"><rect height="46" rx="14" stroke="#d2a8ff" stroke-width="3" width="46" x="17" y="17"></rect><path d="M27 51V29h9c9 0 16 4 16 11s-7 11-16 11h-9Z" stroke="#fff" stroke-width="3"></path></svg></div>
+<div class="gd-logo-mark"><svg fill="none" viewbox="0 0 80 80"><path d="M16 52 31 22l10 20 9-15 14 25" stroke="#c18fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path><path d="M23 57h34" stroke="#fff" stroke-linecap="round" stroke-width="3"></path></svg></div>
+</div>
+<a class="gd-logo-cta" href="#" id="dgLogoCta" onclick="abrirPedidoLogo();return false;">
           Crear mi logo por $100 <b>↗</b>
-        </a>
-      </aside>
-    </div>
-  </div>
+</a>
+</aside>
+</div>
+</div>
 </section>
-
 <!-- VIDEO -->
 <section class="gd-video-section" id="videos">
-  <div class="gd-wrap">
-    <div class="gd-video-card reveal">
-      <div class="gd-video-copy">
-        <span class="gd-video-kicker">VIDEO · SOCIAL · CAMPAIGNS</span>
-        <h2>Haz que la campaña también <em>se mueva.</em></h2>
-        <p>
+<div class="gd-wrap">
+<div class="gd-video-card reveal">
+<div class="gd-video-copy">
+<span class="gd-video-kicker">VIDEO · SOCIAL · CAMPAIGNS</span>
+<h2>Haz que la campaña también <em>se mueva.</em></h2>
+<p>
           Edición visual para piezas promocionales, anuncios, reels y contenido de campaña.
           Una opción pensada para acompañar tu diseño gráfico con una entrega en video.
         </p>
-
-        <div class="gd-video-includes">
-          <span>Video promocional</span>
-          <span>Reel / social</span>
-          <span>Anuncio de campaña</span>
-          <span>Edición + composición</span>
-        </div>
-
-        <div class="gd-video-price-row">
-          <div class="gd-video-price">
-            <strong id="dgPriceVideo">$30</strong>
-            <div>
-              <span id="dgCurrencyVideo">USD · hasta 60 s</span>
-              <small id="dgVideoExtraRate">+$8 USD por minuto adicional iniciado</small>
-            </div>
-          </div>
-          <div class="gd-delivery-pill">Entrega estimada · 1 semana (5 días hábiles)</div>
-
-          <a id="dgVideoCta"
-             class="gd-video-cta"
-             href="#"
-             onclick="abrirPedidoVideo();return false;">
+<div class="gd-video-includes">
+<span>Video promocional</span>
+<span>Reel / social</span>
+<span>Anuncio de campaña</span>
+<span>Edición + composición</span>
+</div>
+<div class="gd-video-price-row">
+<div class="gd-video-price">
+<strong id="dgPriceVideo">$30</strong>
+<div>
+<span id="dgCurrencyVideo">USD · hasta 60 s</span>
+<small id="dgVideoExtraRate">+$8 USD por minuto adicional iniciado</small>
+</div>
+</div>
+<div class="gd-delivery-pill">Entrega estimada · 1 semana (5 días hábiles)</div>
+<a class="gd-video-cta" href="#" id="dgVideoCta" onclick="abrirPedidoVideo();return false;">
             Solicitar video desde $30 <b>→</b>
-          </a>
-        </div>
-      </div>
-
-      <div class="gd-video-visual" aria-hidden="true">
-        <div class="gd-video-browser">
-          <div class="gd-video-top">
-            <div><i></i><i></i><i></i></div>
-            <span>campaign_edit_01</span>
-            <b>00:18:24</b>
-          </div>
-          <div class="gd-video-preview">
-            <div class="gd-play-ring"><span>▶</span></div>
-            <div class="gd-frame-copy">
-              <small>EVOLUTION / CAMPAIGN</small>
-              <strong>MAKE IT<br>MOVE.</strong>
-            </div>
-          </div>
-          <div class="gd-timeline">
-            <div class="gd-time-ruler"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <div class="gd-track"><span class="clip c1"></span><span class="clip c2"></span><span class="clip c3"></span><em></em></div>
-            <div class="gd-track audio"><span class="wave"></span><em></em></div>
-            <div class="gd-playhead"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+</a>
+</div>
+</div>
+<div aria-hidden="true" class="gd-video-visual">
+<div class="gd-video-browser">
+<div class="gd-video-top">
+<div><i></i><i></i><i></i></div>
+<span>campaign_edit_01</span>
+<b>00:18:24</b>
+</div>
+<div class="gd-video-preview">
+<div class="gd-play-ring"><span>▶</span></div>
+<div class="gd-frame-copy">
+<small>EVOLUTION / CAMPAIGN</small>
+<strong>MAKE IT<br/>MOVE.</strong>
+</div>
+</div>
+<div class="gd-timeline">
+<div class="gd-time-ruler"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="gd-track"><span class="clip c1"></span><span class="clip c2"></span><span class="clip c3"></span><em></em></div>
+<div class="gd-track audio"><span class="wave"></span><em></em></div>
+<div class="gd-playhead"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 </main>
-
 <!-- Presentación visual de métodos aceptados. Sin SDK ni checkout en Home. -->
-
-
 <!-- =========================================================
      PEDIDO DISEÑO PERSONALIZADO · BRIEF + PAGO
      ========================================================= -->
-<div class="gd-order-modal" id="gdDesignOrderModal" aria-hidden="true">
-  <div class="gd-order-backdrop" data-close-design-order></div>
-
-  <section class="gd-order-dialog" role="dialog" aria-modal="true" aria-labelledby="gdOrderTitle">
-    <button class="gd-order-close" type="button" data-close-design-order aria-label="Cerrar">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
-    </button>
-
-    <div class="gd-order-head">
-      <div>
-        <span>EVOLUTION GRAPHIC STUDIO</span>
-        <h2 id="gdOrderTitle">Cuéntanos qué vamos a diseñar.</h2>
-        <p>Completa los datos de tu pieza. Después podrás pagar aquí mismo y el proyecto aparecerá en Mis Proyectos.</p>
-      </div>
-
-      <div class="gd-order-price">
-        <small id="gdOrderServiceLabel">DISEÑO PERSONALIZADO</small>
-        <strong id="gdModalDesignPrice">$16</strong>
-        <span id="gdModalDesignCurrency">USD · pago único</span>
-      </div>
-    </div>
-
-    <form id="gdDesignBriefForm" class="gd-order-form">
-      <div class="gd-form-section">
-        <div class="gd-form-title"><span>01</span><div><strong>Información principal</strong><small>Lo que debe comunicar el diseño.</small></div></div>
-
-        <div class="gd-form-grid two">
-          <label class="gd-field">
-            <span id="gdEventNameLabel">Nombre del evento / campaña *</span>
-            <input id="gdEventName" name="eventName" type="text" maxlength="100" placeholder="Ej. Concierto Renacer 2026" required>
-          </label>
-
-          <label class="gd-field">
-            <span id="gdDesignTypeLabel">Tipo de diseño *</span>
-            <select id="gdDesignType" name="designType" required>
-              <option value="">Seleccionar</option>
-              <option>Post publicitario</option>
-              <option>Historia / Story</option>
-              <option>Flyer</option>
-              <option>Banner</option>
-              <option>Portada</option>
-              <option>Carrusel</option>
-              <option>Invitación</option>
-              <option>Otro</option>
-            </select>
-          </label>
-        </div>
-
-        <label class="gd-field">
-          <span id="gdMainTextLabel">Título o texto principal *</span>
-          <input id="gdMainText" name="mainText" type="text" maxlength="180" placeholder="Ej. Inscripciones abiertas 2027" required>
-        </label>
-
-        <label class="gd-field">
-          <span id="gdSecondaryTextLabel">Texto secundario / información adicional</span>
-          <textarea id="gdSecondaryText" name="secondaryText" maxlength="1200" rows="3" placeholder="Horarios, invitados, promociones, descripción, etc."></textarea>
-        </label>
-      </div>
-
-      <div class="gd-form-section" id="gdEventSection">
-        <div class="gd-form-title"><span>02</span><div><strong>Datos del evento</strong><small>Déjalos vacíos si no aplican.</small></div></div>
-
-        <div class="gd-form-grid three">
-          <label class="gd-field"><span>Fecha</span><input id="gdEventDate" name="eventDate" type="date"></label>
-          <label class="gd-field"><span>Hora</span><input id="gdEventTime" name="eventTime" type="time"></label>
-          <label class="gd-field"><span>Lugar</span><input id="gdEventLocation" name="eventLocation" type="text" maxlength="140" placeholder="Ciudad / dirección"></label>
-        </div>
-
-        <div class="gd-form-grid two">
-          <label class="gd-field">
-            <span>Contacto / llamada a la acción</span>
-            <input id="gdContactText" name="contactText" type="text" maxlength="180" placeholder="WhatsApp, web, reserva, compra, etc.">
-          </label>
-
-          <label class="gd-field">
-            <span>Formato / plataforma *</span>
-            <select id="gdFormat" name="format" required>
-              <option value="">Seleccionar</option>
-              <option>Instagram / Facebook 1:1</option>
-              <option>Instagram 4:5</option>
-              <option>Historia / Reel 9:16</option>
-              <option>Facebook portada</option>
-              <option>Banner horizontal 16:9</option>
-              <option>Impresión</option>
-              <option>Otro formato</option>
-            </select>
-          </label>
-          <div class="gd-field gd-video-only-field gd-video-duration-box" id="gdVideoDurationWrap" hidden>
-            <span>Duración final estimada *</span>
-            <div class="gd-duration-inputs">
-              <label>
-                <input id="gdVideoMinutes" name="videoMinutes" type="number" min="0" max="1440" step="1" inputmode="numeric" value="0" aria-label="Minutos">
-                <small>min</small>
-              </label>
-              <b>:</b>
-              <label>
-                <input id="gdVideoSeconds" name="videoSeconds" type="number" min="0" max="59" step="1" inputmode="numeric" value="30" aria-label="Segundos">
-                <small>seg</small>
-              </label>
-            </div>
-            <div class="gd-duration-price-rule">
-              <span>Hasta 60 s = $30 USD</span>
-              <strong>+ $8 USD por cada minuto adicional iniciado</strong>
-            </div>
-            <div class="gd-video-live-price" id="gdVideoLivePrice">30 segundos · $30 USD</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="gd-form-section gd-logo-brief-section" id="gdLogoDetailsWrap" hidden>
-        <div class="gd-form-title"><span>02</span><div><strong>Identidad de la marca</strong><small>Cuéntanos qué debe representar tu nuevo logo.</small></div></div>
-
-        <div class="gd-form-grid two">
-          <label class="gd-field">
-            <span>Sector / giro de la marca *</span>
-            <input id="gdLogoIndustry" type="text" maxlength="120" placeholder="Ej. arquitectura, restaurante, iglesia, música">
-          </label>
-          <label class="gd-field">
-            <span>Estilo que buscas *</span>
-            <select id="gdLogoStyle">
-              <option value="">Seleccionar</option>
-              <option>Minimalista</option>
-              <option>Elegante / Premium</option>
-              <option>Moderno / Tecnológico</option>
-              <option>Corporativo</option>
-              <option>Creativo / Artístico</option>
-              <option>Orgánico / Artesanal</option>
-              <option>Deportivo / Enérgico</option>
-              <option>Religioso / Institucional</option>
-              <option>Otro estilo</option>
-            </select>
-          </label>
-        </div>
-
-        <div class="gd-form-grid two">
-          <label class="gd-field">
-            <span>Uso principal *</span>
-            <select id="gdLogoUse">
-              <option value="">Seleccionar</option>
-              <option>Redes sociales y web</option>
-              <option>Negocio / local comercial</option>
-              <option>Impresión y papelería</option>
-              <option>Uniformes / bordado</option>
-              <option>Empaques / etiquetas</option>
-              <option>Rótulos / fachada</option>
-              <option>Uso general de marca</option>
-            </select>
-          </label>
-          <label class="gd-field">
-            <span>Público al que quieres llegar</span>
-            <input id="gdLogoAudience" type="text" maxlength="180" placeholder="Ej. jóvenes, empresas, familias, clientes premium">
-          </label>
-        </div>
-
-        <div class="gd-form-grid two">
-          <label class="gd-field">
-            <span>Colores que te gustaría usar</span>
-            <input id="gdLogoPreferredColors" type="text" maxlength="160" placeholder="Ej. negro, dorado y blanco">
-          </label>
-          <label class="gd-field">
-            <span>Colores o elementos que debemos evitar</span>
-            <input id="gdLogoAvoidColors" type="text" maxlength="180" placeholder="Opcional">
-          </label>
-        </div>
-
-        <label class="gd-field">
-          <span>Estado de tu identidad actual</span>
-          <select id="gdLogoExistingStatus">
-            <option value="No tengo logo">No tengo logo</option>
-            <option value="Tengo logo y quiero rediseñarlo">Tengo logo y quiero rediseñarlo</option>
-            <option value="Tengo logo y solo sirve como referencia">Tengo logo y solo sirve como referencia</option>
-            <option value="Tengo un boceto o idea">Tengo un boceto o idea</option>
-          </select>
-        </label>
-
-        <div class="gd-logo-upload-grid">
-          <label class="gd-logo-upload-card">
-            <input id="gdLogoCurrentFile" type="file" accept="image/*,application/pdf">
-            <span class="gd-logo-upload-icon">↥</span>
-            <strong>Subir logo actual</strong>
-            <small id="gdLogoCurrentName">PNG, JPG, WEBP o PDF · opcional</small>
-          </label>
-          <label class="gd-logo-upload-card">
-            <input id="gdLogoSketchFile" type="file" accept="image/*,application/pdf">
-            <span class="gd-logo-upload-icon">✎</span>
-            <strong>Subir boceto / idea</strong>
-            <small id="gdLogoSketchName">Foto de tu dibujo o referencia · opcional</small>
-          </label>
-        </div>
-        <div class="gd-logo-upload-note">Puedes subir uno, ambos o ninguno. Los archivos se adjuntan al proyecto después de registrar el pago y quedan asociados únicamente a tu pedido.</div>
-      </div>
-
-      <div class="gd-form-section">
-        <div class="gd-form-title"><span>03</span><div><strong>Dirección visual</strong><small>Ayúdanos a entender la estética que buscas.</small></div></div>
-
-        <div class="gd-form-grid two">
-          <label class="gd-field">
-            <span id="gdVisualStyleLabel">Colores / estilo</span>
-            <input id="gdVisualStyle" name="visualStyle" type="text" maxlength="220" placeholder="Ej. elegante, negro + dorado, juvenil, minimalista">
-          </label>
-
-          <label class="gd-field">
-            <span>Referencia (opcional)</span>
-            <input id="gdReferenceUrl" name="referenceUrl" type="url" maxlength="500" placeholder="https://...">
-          </label>
-        </div>
-
-        <label class="gd-field">
-          <span>Notas finales</span>
-          <textarea id="gdNotes" name="notes" maxlength="1500" rows="3" placeholder="Logo que debe aparecer, elementos obligatorios, indicaciones especiales, etc."></textarea>
-        </label>
-
-        <div class="gd-files-note" id="gdGenericFilesNote">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
-          <div><strong>Logo, fotos y archivos</strong><span>Después del pago podrás subirlos desde <b>Mis Proyectos</b>.</span></div>
-        </div>
-      </div>
-
-      <div class="gd-order-summary">
-        <div><span>Servicio</span><strong id="gdBriefServiceName">Diseño personalizado en Photoshop</strong></div>
-        <div><span>Precio base</span><strong id="gdBriefSummaryPrice">$16 USD</strong></div>
-      </div>
-
-      <div id="gdBriefMessage" class="gd-brief-message"></div>
-
-      <button class="gd-continue-pay" id="gdContinuePay" type="submit">
+<div aria-hidden="true" class="gd-order-modal" id="gdDesignOrderModal">
+<div class="gd-order-backdrop" data-close-design-order=""></div>
+<section aria-labelledby="gdOrderTitle" aria-modal="true" class="gd-order-dialog" role="dialog">
+<button aria-label="Cerrar" class="gd-order-close" data-close-design-order="" type="button">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+</button>
+<div class="gd-order-head">
+<div>
+<span>EVOLUTION GRAPHIC STUDIO</span>
+<h2 id="gdOrderTitle">Cuéntanos qué vamos a diseñar.</h2>
+<p>Completa los datos de tu pieza. Después podrás pagar aquí mismo y el proyecto aparecerá en Mis Proyectos.</p>
+</div>
+<div class="gd-order-price">
+<small id="gdOrderServiceLabel">DISEÑO PERSONALIZADO</small>
+<strong id="gdModalDesignPrice">$16</strong>
+<span id="gdModalDesignCurrency">USD · pago único</span>
+</div>
+</div>
+<form class="gd-order-form" id="gdDesignBriefForm">
+<div class="gd-form-section">
+<div class="gd-form-title"><span>01</span><div><strong>Información principal</strong><small>Lo que debe comunicar el diseño.</small></div></div>
+<div class="gd-form-grid two">
+<label class="gd-field">
+<span id="gdEventNameLabel">Nombre del evento / campaña *</span>
+<input id="gdEventName" maxlength="100" name="eventName" placeholder="Ej. Concierto Renacer 2026" required="" type="text"/>
+</label>
+<label class="gd-field">
+<span id="gdDesignTypeLabel">Tipo de diseño *</span>
+<select id="gdDesignType" name="designType" required="">
+<option value="">Seleccionar</option>
+<option>Post publicitario</option>
+<option>Historia / Story</option>
+<option>Flyer</option>
+<option>Banner</option>
+<option>Portada</option>
+<option>Carrusel</option>
+<option>Invitación</option>
+<option>Otro</option>
+</select>
+</label>
+</div>
+<label class="gd-field">
+<span id="gdMainTextLabel">Título o texto principal *</span>
+<input id="gdMainText" maxlength="180" name="mainText" placeholder="Ej. Inscripciones abiertas 2027" required="" type="text"/>
+</label>
+<label class="gd-field">
+<span id="gdSecondaryTextLabel">Texto secundario / información adicional</span>
+<textarea id="gdSecondaryText" maxlength="1200" name="secondaryText" placeholder="Horarios, invitados, promociones, descripción, etc." rows="3"></textarea>
+</label>
+</div>
+<div class="gd-form-section" id="gdEventSection">
+<div class="gd-form-title"><span>02</span><div><strong>Datos del evento</strong><small>Déjalos vacíos si no aplican.</small></div></div>
+<div class="gd-form-grid three">
+<label class="gd-field"><span>Fecha</span><input id="gdEventDate" name="eventDate" type="date"/></label>
+<label class="gd-field"><span>Hora</span><input id="gdEventTime" name="eventTime" type="time"/></label>
+<label class="gd-field"><span>Lugar</span><input id="gdEventLocation" maxlength="140" name="eventLocation" placeholder="Ciudad / dirección" type="text"/></label>
+</div>
+<div class="gd-form-grid two">
+<label class="gd-field">
+<span>Contacto / llamada a la acción</span>
+<input id="gdContactText" maxlength="180" name="contactText" placeholder="WhatsApp, web, reserva, compra, etc." type="text"/>
+</label>
+<label class="gd-field">
+<span>Formato / plataforma *</span>
+<select id="gdFormat" name="format" required="">
+<option value="">Seleccionar</option>
+<option>Instagram / Facebook 1:1</option>
+<option>Instagram 4:5</option>
+<option>Historia / Reel 9:16</option>
+<option>Facebook portada</option>
+<option>Banner horizontal 16:9</option>
+<option>Impresión</option>
+<option>Otro formato</option>
+</select>
+</label>
+<div class="gd-field gd-video-only-field gd-video-duration-box" hidden="" id="gdVideoDurationWrap">
+<span>Duración final estimada *</span>
+<div class="gd-duration-inputs">
+<label>
+<input aria-label="Minutos" id="gdVideoMinutes" inputmode="numeric" max="1440" min="0" name="videoMinutes" step="1" type="number" value="0"/>
+<small>min</small>
+</label>
+<b>:</b>
+<label>
+<input aria-label="Segundos" id="gdVideoSeconds" inputmode="numeric" max="59" min="0" name="videoSeconds" step="1" type="number" value="30"/>
+<small>seg</small>
+</label>
+</div>
+<div class="gd-duration-price-rule">
+<span>Hasta 60 s = $30 USD</span>
+<strong>+ $8 USD por cada minuto adicional iniciado</strong>
+</div>
+<div class="gd-video-live-price" id="gdVideoLivePrice">30 segundos · $30 USD</div>
+</div>
+</div>
+</div>
+<div class="gd-form-section gd-logo-brief-section" hidden="" id="gdLogoDetailsWrap">
+<div class="gd-form-title"><span>02</span><div><strong>Identidad de la marca</strong><small>Cuéntanos qué debe representar tu nuevo logo.</small></div></div>
+<div class="gd-form-grid two">
+<label class="gd-field">
+<span>Sector / giro de la marca *</span>
+<input id="gdLogoIndustry" maxlength="120" placeholder="Ej. arquitectura, restaurante, iglesia, música" type="text"/>
+</label>
+<label class="gd-field">
+<span>Estilo que buscas *</span>
+<select id="gdLogoStyle">
+<option value="">Seleccionar</option>
+<option>Minimalista</option>
+<option>Elegante / Premium</option>
+<option>Moderno / Tecnológico</option>
+<option>Corporativo</option>
+<option>Creativo / Artístico</option>
+<option>Orgánico / Artesanal</option>
+<option>Deportivo / Enérgico</option>
+<option>Religioso / Institucional</option>
+<option>Otro estilo</option>
+</select>
+</label>
+</div>
+<div class="gd-form-grid two">
+<label class="gd-field">
+<span>Uso principal *</span>
+<select id="gdLogoUse">
+<option value="">Seleccionar</option>
+<option>Redes sociales y web</option>
+<option>Negocio / local comercial</option>
+<option>Impresión y papelería</option>
+<option>Uniformes / bordado</option>
+<option>Empaques / etiquetas</option>
+<option>Rótulos / fachada</option>
+<option>Uso general de marca</option>
+</select>
+</label>
+<label class="gd-field">
+<span>Público al que quieres llegar</span>
+<input id="gdLogoAudience" maxlength="180" placeholder="Ej. jóvenes, empresas, familias, clientes premium" type="text"/>
+</label>
+</div>
+<div class="gd-form-grid two">
+<label class="gd-field">
+<span>Colores que te gustaría usar</span>
+<input id="gdLogoPreferredColors" maxlength="160" placeholder="Ej. negro, dorado y blanco" type="text"/>
+</label>
+<label class="gd-field">
+<span>Colores o elementos que debemos evitar</span>
+<input id="gdLogoAvoidColors" maxlength="180" placeholder="Opcional" type="text"/>
+</label>
+</div>
+<label class="gd-field">
+<span>Estado de tu identidad actual</span>
+<select id="gdLogoExistingStatus">
+<option value="No tengo logo">No tengo logo</option>
+<option value="Tengo logo y quiero rediseñarlo">Tengo logo y quiero rediseñarlo</option>
+<option value="Tengo logo y solo sirve como referencia">Tengo logo y solo sirve como referencia</option>
+<option value="Tengo un boceto o idea">Tengo un boceto o idea</option>
+</select>
+</label>
+<div class="gd-logo-upload-grid">
+<label class="gd-logo-upload-card">
+<input accept="image/*,application/pdf" id="gdLogoCurrentFile" type="file"/>
+<span class="gd-logo-upload-icon">↥</span>
+<strong>Subir logo actual</strong>
+<small id="gdLogoCurrentName">PNG, JPG, WEBP o PDF · opcional</small>
+</label>
+<label class="gd-logo-upload-card">
+<input accept="image/*,application/pdf" id="gdLogoSketchFile" type="file"/>
+<span class="gd-logo-upload-icon">✎</span>
+<strong>Subir boceto / idea</strong>
+<small id="gdLogoSketchName">Foto de tu dibujo o referencia · opcional</small>
+</label>
+</div>
+<div class="gd-logo-upload-note">Puedes subir uno, ambos o ninguno. Los archivos se adjuntan al proyecto después de registrar el pago y quedan asociados únicamente a tu pedido.</div>
+</div>
+<div class="gd-form-section">
+<div class="gd-form-title"><span>03</span><div><strong>Dirección visual</strong><small>Ayúdanos a entender la estética que buscas.</small></div></div>
+<div class="gd-form-grid two">
+<label class="gd-field">
+<span id="gdVisualStyleLabel">Colores / estilo</span>
+<input id="gdVisualStyle" maxlength="220" name="visualStyle" placeholder="Ej. elegante, negro + dorado, juvenil, minimalista" type="text"/>
+</label>
+<label class="gd-field">
+<span>Referencia (opcional)</span>
+<input id="gdReferenceUrl" maxlength="500" name="referenceUrl" placeholder="https://..." type="url"/>
+</label>
+</div>
+<label class="gd-field">
+<span>Notas finales</span>
+<textarea id="gdNotes" maxlength="1500" name="notes" placeholder="Logo que debe aparecer, elementos obligatorios, indicaciones especiales, etc." rows="3"></textarea>
+</label>
+<div class="gd-files-note" id="gdGenericFilesNote">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="18"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg>
+<div><strong>Logo, fotos y archivos</strong><span>Después del pago podrás subirlos desde <b>Mis Proyectos</b>.</span></div>
+</div>
+</div>
+<div class="gd-order-summary">
+<div><span>Servicio</span><strong id="gdBriefServiceName">Diseño personalizado en Photoshop</strong></div>
+<div><span>Precio base</span><strong id="gdBriefSummaryPrice">$16 USD</strong></div>
+</div>
+<div class="gd-brief-message" id="gdBriefMessage"></div>
+<button class="gd-continue-pay" id="gdContinuePay" type="submit">
         Continuar al pago
         <span>→</span>
-      </button>
-    </form>
-
-    <div class="gd-pay-panel" id="gdPayPanel" hidden>
-      <button class="gd-back-brief" id="gdBackBrief" type="button">← Editar especificaciones</button>
-
-      <div class="gd-pay-head">
-        <div>
-          <span>PAGO SEGURO</span>
-          <h3 id="gdPayTitle">Confirma tu diseño.</h3>
-          <p id="gdPayDescription">PayPal procesará el cobro base en USD. En Guatemala mostramos el equivalente en GTQ como referencia local.</p>
-        </div>
-        <div class="gd-pay-total"><small>TOTAL</small><strong id="gdPayTotal">$16 USD</strong></div>
-      </div>
-
-      <div class="gd-pay-brief-preview" id="gdPayBriefPreview"></div>
-
-      <div class="gd-payment-methods">
-        <div class="gd-payment-method-title">Selecciona un método de pago</div>
-        <div class="gd-payment-tabs">
-          <button type="button" class="gd-payment-tab active" data-gd-pay="paypal">PayPal / Tarjeta</button>
-          <button type="button" class="gd-payment-tab" id="gdBinanceTab" data-gd-pay="binance" hidden>Binance Pay</button>
-          <button type="button" class="gd-payment-tab" id="gdBankTab" data-gd-pay="bank" hidden>Transferencia</button>
-        </div>
-
-        <div class="gd-payment-method-panel" id="gdPaymentMethodPanel">
-          <div class="gd-paypal-box">
-            <div id="gdPayPalButtons"></div>
-            <div class="gd-pay-loading" id="gdPayLoading">Preparando PayPal…</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="gd-region-pay-note" id="gdRegionPayNote">PayPal procesa el cobro base en USD.</div>
-      <div id="gdPayError" class="gd-pay-error"></div>
-    </div>
-
-    <div class="gd-pay-success" id="gdPaySuccess" hidden>
-      <div class="gd-success-icon">
-        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>
-      </div>
-      <span>PAGO CONFIRMADO</span>
-      <h3>Tu proyecto ya fue creado.</h3>
-      <p id="gdSuccessText">Guardamos tus especificaciones junto con el pago. Ahora puedes subir fotografías o archivos adicionales desde Mis Proyectos.</p>
-      <a class="gd-success-projects" href="proyectos.html">Ir a Mis Proyectos <b>→</b></a>
-    </div>
-  </section>
+</button>
+</form>
+<div class="gd-pay-panel" hidden="" id="gdPayPanel">
+<button class="gd-back-brief" id="gdBackBrief" type="button">← Editar especificaciones</button>
+<div class="gd-pay-head">
+<div>
+<span>PAGO SEGURO</span>
+<h3 id="gdPayTitle">Confirma tu diseño.</h3>
+<p id="gdPayDescription">PayPal procesará el cobro base en USD. En Guatemala mostramos el equivalente en GTQ como referencia local.</p>
 </div>
-
+<div class="gd-pay-total"><small>TOTAL</small><strong id="gdPayTotal">$16 USD</strong></div>
+</div>
+<div class="gd-pay-brief-preview" id="gdPayBriefPreview"></div>
+<div class="gd-payment-methods">
+<div class="gd-payment-method-title">Selecciona un método de pago</div>
+<div class="gd-payment-tabs">
+<button class="gd-payment-tab active" data-gd-pay="paypal" type="button">PayPal / Tarjeta</button>
+<button class="gd-payment-tab" data-gd-pay="binance" hidden="" id="gdBinanceTab" type="button">Binance Pay</button>
+<button class="gd-payment-tab" data-gd-pay="bank" hidden="" id="gdBankTab" type="button">Transferencia</button>
+</div>
+<div class="gd-payment-method-panel" id="gdPaymentMethodPanel">
+<div class="gd-paypal-box">
+<div id="gdPayPalButtons"></div>
+<div class="gd-pay-loading" id="gdPayLoading">Preparando PayPal…</div>
+</div>
+</div>
+</div>
+<div class="gd-region-pay-note" id="gdRegionPayNote">PayPal procesa el cobro base en USD.</div>
+<div class="gd-pay-error" id="gdPayError"></div>
+</div>
+<div class="gd-pay-success" hidden="" id="gdPaySuccess">
+<div class="gd-success-icon">
+<svg fill="none" height="28" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="28"><path d="m5 12 4 4L19 6"></path></svg>
+</div>
+<span>PAGO CONFIRMADO</span>
+<h3>Tu proyecto ya fue creado.</h3>
+<p id="gdSuccessText">Guardamos tus especificaciones junto con el pago. Ahora puedes subir fotografías o archivos adicionales desde Mis Proyectos.</p>
+<a class="gd-success-projects" href="proyectos.html">Ir a Mis Proyectos <b>→</b></a>
+</div>
+</section>
+</div>
 <footer class="site-footer" id="contacto">
 <div class="footer-inner">
 <div class="footer-grid">
-<div class="footer-brand"><a href="index.html"><img alt="Evolution Design" src="img/logo.png"/></a><p>Diseño gráfico, recursos PSD y experiencias digitales bajo una misma dirección creativa.</p></div>
+<div class="footer-brand"><a href="index.html"><img alt="Evolution Design" decoding="async" fetchpriority="low" loading="lazy" src="img/logo.png"/></a><p>Diseño gráfico, recursos PSD y experiencias digitales bajo una misma dirección creativa.</p></div>
 <div class="footer-col"><span>Estudio</span><a href="arquitectura.html">Arquitectura</a><a href="diseno-grafico.html">Diseño Gráfico</a><a href="diseno-web.html">Diseño Web</a></div>
 <div class="footer-col"><span>Contacto</span><p>support@evolutiondesing.com</p><a href="https://dingloft.com" rel="noopener" target="_blank">Dingloft ↗</a></div>
 </div>
@@ -2838,8 +2970,6 @@ body.gd-modal-open{overflow:hidden}
       }
     })();
   </script>
-
-
 <script>
 (() => {
   const items=document.querySelectorAll('.graphic-pro-v3 .reveal');
@@ -2859,8 +2989,6 @@ body.gd-modal-open{overflow:hidden}
   }
 })();
 </script>
-
-
 <script>
   /* =========================================================
      DISEÑO GRÁFICO · MONEDA AUTOMÁTICA POR IP
@@ -3015,10 +3143,6 @@ body.gd-modal-open{overflow:hidden}
     })();
   })();
 </script>
-
-
-
-
 <script>
 (() => {
   const BACKEND='https://evolution-design-backend.evolutiongt01.workers.dev';
@@ -3630,7 +3754,6 @@ body.gd-modal-open{overflow:hidden}
   backBtn?.addEventListener('click',()=>{payPanel.hidden=true;form.hidden=false});
 })();
 </script>
-
 <script type="module">
     // Firebase del Home: SOLO autenticación, sesión, perfil y acceso Admin/Proyectos.
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
@@ -3767,7 +3890,6 @@ body.gd-modal-open{overflow:hidden}
       glass.addEventListener('pointerleave', reset, {passive:true});
     })();
   </script>
-
 <script>
 (() => {
   const box=document.getElementById('gdPortfolioLightbox');
@@ -3798,8 +3920,6 @@ body.gd-modal-open{overflow:hidden}
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&box.classList.contains('show'))close()});
 })();
 </script>
-
-
 <script>
 /* CINEMATIC AMBIENT LIGHT · cada PSD ilumina su propia tarjeta */
 (function(){
@@ -3821,10 +3941,8 @@ body.gd-modal-open{overflow:hidden}
   });
 })();
 </script>
-
-
-  <!-- Evolution App Speed · Service Worker -->
-  <script>
+<!-- Evolution App Speed · Service Worker -->
+<script>
     (() => {
       if (!('serviceWorker' in navigator)) return;
 
@@ -3852,8 +3970,6 @@ body.gd-modal-open{overflow:hidden}
       }
     })();
   </script>
-
-
 <script id="evolution-master-mobile-nav">
 (() => {
   const nav=document.querySelector('.mobile-app-nav');if(!nav)return;
@@ -3873,8 +3989,6 @@ body.gd-modal-open{overflow:hidden}
   addEventListener('resize',sync,{passive:true});addEventListener('pageshow',sync,{passive:true});sync();
 })();
 </script>
-
-
 <script id="evolution-offline-controller">
 (() => {
   const pill=document.getElementById('evoOfflinePill');
@@ -3925,8 +4039,6 @@ body.gd-modal-open{overflow:hidden}
   window.evolutionOffline={isOffline:offline,showNoConnection:warn};
 })();
 </script>
-
-
 <script id="evolution-launch-controller">
 (() => {
   const splash = document.getElementById('evolutionLaunchScreen');
@@ -3965,6 +4077,175 @@ body.gd-modal-open{overflow:hidden}
   setTimeout(() => splash.classList.add('is-hidden'), maximum);
 })();
 </script>
+<script id="evolution-mobile-performance-controller">
+(() => {
+  const mobile = matchMedia('(max-width:991.98px)');
+  if (!mobile.matches) return;
 
+  /* ---------------------------------------------------------
+     1) Lazy loading automático
+     --------------------------------------------------------- */
+  document.querySelectorAll('img:not([loading])').forEach((img,index) => {
+    // Logo / primeras imágenes del hero deben cargar inmediatamente.
+    const critical =
+      img.closest('.mobile-app-nav,.desktop-nav,#evolutionLaunchScreen,.hero') ||
+      index < 2;
+
+    img.loading = critical ? 'eager' : 'lazy';
+    img.decoding = 'async';
+
+    if (!critical) {
+      img.fetchPriority = 'low';
+    }
+  });
+
+  document.querySelectorAll('iframe:not([loading])').forEach(frame => {
+    frame.loading = 'lazy';
+  });
+
+  /* ---------------------------------------------------------
+     2) Reveal ligero con IntersectionObserver
+     --------------------------------------------------------- */
+  const candidates = [
+    '.studio-section .section-head',
+    '.discipline-card',
+    '.payment-card',
+    '.service-card',
+    '.portfolio-card',
+    '.project-card',
+    '.digital-ecosystem',
+    'footer .footer-grid'
+  ];
+
+  const nodes = [...document.querySelectorAll(candidates.join(','))]
+    .filter(el => !el.closest('.hero'));
+
+  nodes.forEach(el => el.classList.add('evo-mobile-enter'));
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('evo-in');
+        io.unobserve(entry.target);
+      });
+    }, {
+      rootMargin:'0px 0px -6% 0px',
+      threshold:.06
+    });
+
+    nodes.forEach(el => io.observe(el));
+  } else {
+    nodes.forEach(el => el.classList.add('evo-in'));
+  }
+
+  /* ---------------------------------------------------------
+     3) Pausar videos cuando salen de pantalla
+     --------------------------------------------------------- */
+  const videos = [...document.querySelectorAll('video')];
+  if (videos.length && 'IntersectionObserver' in window) {
+    const vio = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (!entry.isIntersecting && !video.paused) {
+          video.dataset.evolutionWasPlaying = '1';
+          video.pause();
+        } else if (
+          entry.isIntersecting &&
+          video.dataset.evolutionWasPlaying === '1' &&
+          video.autoplay
+        ) {
+          video.play().catch(() => {});
+          delete video.dataset.evolutionWasPlaying;
+        }
+      });
+    }, { threshold:.08 });
+
+    videos.forEach(video => vio.observe(video));
+  }
+
+  /* ---------------------------------------------------------
+     4) Pausar animaciones decorativas cuando la pestaña no está visible
+     --------------------------------------------------------- */
+  const syncVisibility = () => {
+    document.documentElement.classList.toggle(
+      'evolution-page-hidden',
+      document.hidden
+    );
+  };
+  document.addEventListener('visibilitychange',syncVisibility,{passive:true});
+  syncVisibility();
+
+  /* ---------------------------------------------------------
+     5) Toque anticipado: precargar destino al poner el dedo
+     --------------------------------------------------------- */
+  const prefetched = new Set();
+
+  document.addEventListener('pointerdown',event => {
+    const link = event.target instanceof Element
+      ? event.target.closest('a[href]')
+      : null;
+
+    if (!link) return;
+
+    try {
+      const url = new URL(link.href,location.href);
+      if (
+        url.origin !== location.origin ||
+        url.pathname === location.pathname ||
+        prefetched.has(url.href)
+      ) return;
+
+      if (/proyectos|admin|perfil|checkout|payment|pago/i.test(url.pathname)) {
+        return;
+      }
+
+      const preload = document.createElement('link');
+      preload.rel = 'prefetch';
+      preload.href = url.href;
+      document.head.appendChild(preload);
+      prefetched.add(url.href);
+    } catch (_) {}
+  },{passive:true});
+
+  /* ---------------------------------------------------------
+     6) Navegación visual: micro fade al tocar otra página
+     No bloquea la navegación.
+     --------------------------------------------------------- */
+  document.addEventListener('click',event => {
+    const link = event.target instanceof Element
+      ? event.target.closest('a[href]')
+      : null;
+
+    if (!link || link.target === '_blank') return;
+
+    try {
+      const url = new URL(link.href,location.href);
+      if (
+        url.origin === location.origin &&
+        url.pathname !== location.pathname &&
+        !url.pathname.includes('proyectos') &&
+        !url.pathname.includes('admin')
+      ) {
+        document.documentElement.classList.add('evolution-navigating');
+      }
+    } catch (_) {}
+  },true);
+})();
+</script>
+<style id="evolution-mobile-navigation-transition">
+  @media(max-width:991.98px){
+    body{
+      transition:opacity .14s ease,transform .14s ease;
+    }
+    html.evolution-navigating body{
+      opacity:.94;
+      transform:translate3d(0,-2px,0);
+    }
+    html.evolution-page-hidden *{
+      animation-play-state:paused !important;
+    }
+  }
+</style>
 </body>
 </html>
