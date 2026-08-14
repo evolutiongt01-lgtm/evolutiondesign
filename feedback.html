@@ -1,19 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html class="h-100" lang="es">
-
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
-    <meta name="description" content="Feedback - Evolution Design">
-    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
-    <meta name="author" content="Evolution Design">
-    <title>Feedback - Evolution Design</title>
-    <link rel="stylesheet" href="css/theme.min.css">
-
-    <style>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" name="viewport"/>
+<meta content="Feedback - Evolution Design" name="description"/>
+<link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="img/favicon.png" rel="icon" sizes="96x96" type="image/png"/>
+<meta content="Evolution Design" name="author"/>
+<title>Feedback - Evolution Design</title>
+<link href="css/theme.min.css" rel="stylesheet"/>
+<style>
       @font-face {
         font-family: 'Inter';
         font-style: normal;
@@ -274,341 +273,1108 @@
       }
       .ref-card:hover { border-color: rgba(212, 184, 149, 0.3); transform: translateY(-5px); }
       .ref-stars svg { width: 16px; height: 16px; color: #d4b895; margin-right: 2px; }
-
-      /* BOTONES FLOTANTES REDES */
-      .lang-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
-      @supports (-webkit-touch-callout: none) { .lang-float-container { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); } }
       footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important; }
-    </style>
-  </head>
+    
+      /* =========================================================
+         FEEDBACK · PREMIUM LIQUID / CINEMATIC
+         ========================================================= */
+      :root{
+        --ed-gold:#d4b895;
+        --ed-cyan:#70e7ff;
+        --ed-violet:#8e73ff;
+        --ed-surface:rgba(12,12,15,.72);
+        --ed-line:rgba(255,255,255,.095);
+        --ed-ease:cubic-bezier(.16,1,.3,1);
+      }
 
-  <body data-bs-spy="scroll" data-bs-target="#navScroll">
+      body{
+        background:#050505;
+        overflow-x:hidden;
+      }
 
-    <div class="page-bg"></div>
+      .page-bg{
+        background:
+          linear-gradient(180deg,rgba(5,5,5,.68),rgba(5,5,5,.96) 68%,#050505),
+          url('img/hero-pc.jpg') center/cover no-repeat;
+        filter:saturate(.88);
+      }
 
-    <!-- NAVEGACIÓN ESCRITORIO -->
-    <nav class="desktop-nav fixed-top" id="navScroll">
-      <div class="container px-0">
-        <div class="nav-pill">
-          <a href="index.html" class="d-flex align-items-center">
-            <img src="img/logo.png" alt="Evolution Design" style="max-height: 35px; width: auto;">
-          </a>
-          <div class="nav-pill-links">
-            <a href="index.html" class="nav-pill-link">Inicio</a>
-            <a href="sobre-nosotros.html" class="nav-pill-link">Sobre Nosotros</a>
-            <a href="feedback.html" class="nav-pill-link active">Feedback</a>
-            <a href="portal.html" class="nav-pill-link" style="color: #d4b895;">Portal de Entregas</a>
-          </div>
-          <a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" target="_blank" style="font-size: 0.9rem;">Descargar Software &rarr;</a>
-        </div>
-      </div>
-    </nav>
+      .page-bg::after{
+        content:"";
+        position:absolute;
+        inset:0;
+        background:
+          radial-gradient(circle at 18% 26%,rgba(212,184,149,.085),transparent 24%),
+          radial-gradient(circle at 78% 18%,rgba(112,231,255,.055),transparent 25%),
+          radial-gradient(circle at 84% 70%,rgba(142,115,255,.045),transparent 27%);
+        pointer-events:none;
+      }
 
-    <!-- NAVEGACIÓN MÓVIL TIPO APP (CON MENÚ HAMBURGUESA IDÉNTICO AL INDEX) -->
-    <nav class="mobile-app-nav">
-      <div class="app-nav-top">
-        <div style="position: relative;">
-          <a href="#" class="icon-btn" id="mobileMenuBtn" aria-label="Menú">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
-          </a>
-          
-          <ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
-            <li>
-              <a class="menu-item" href="index.html">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      .main-content-spaced{
+        margin-top:145px;
+        margin-bottom:90px;
+      }
+
+      .nav-pill{
+        max-width:1280px;
+        background:
+          linear-gradient(135deg,rgba(255,255,255,.05),rgba(255,255,255,.012)),
+          rgba(12,12,14,.96)!important;
+        border:1px solid rgba(255,255,255,.12)!important;
+        box-shadow:0 18px 50px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06);
+      }
+
+      .feedback-hero{
+        position:relative;
+        overflow:hidden;
+        min-height:480px;
+        padding:48px;
+        display:grid;
+        grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);
+        gap:50px;
+        align-items:center;
+        border:1px solid rgba(255,255,255,.10);
+        border-radius:32px;
+        background:
+          linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.01)),
+          rgba(8,8,11,.78);
+        -webkit-backdrop-filter:blur(24px) saturate(150%);
+        backdrop-filter:blur(24px) saturate(150%);
+        box-shadow:0 35px 95px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.045);
+        isolation:isolate;
+      }
+
+      .feedback-hero::before{
+        content:"";
+        position:absolute;
+        left:6%;
+        right:6%;
+        bottom:-15%;
+        height:42%;
+        z-index:-3;
+        background:url('img/hero-pc.jpg') center 64%/cover no-repeat;
+        filter:blur(50px) saturate(1.45) brightness(.65);
+        opacity:.38;
+        transform:scale(1.05);
+        animation:feedbackAmbient 11s ease-in-out infinite alternate;
+      }
+
+      @keyframes feedbackAmbient{
+        to{opacity:.54;transform:scale(1.09) translateY(5px)}
+      }
+
+      .feedback-hero-grid{
+        position:absolute;
+        inset:0;
+        z-index:-2;
+        opacity:.18;
+        background-image:
+          linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+          linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+        background-size:42px 42px;
+        -webkit-mask-image:radial-gradient(circle at 72% 50%,#000,transparent 70%);
+        mask-image:radial-gradient(circle at 72% 50%,#000,transparent 70%);
+      }
+
+      .feedback-hero-glow{
+        position:absolute;
+        z-index:-1;
+        width:420px;
+        height:420px;
+        right:-140px;
+        top:-170px;
+        border-radius:50%;
+        background:radial-gradient(circle,rgba(142,115,255,.12),rgba(112,231,255,.045),transparent 68%);
+        filter:blur(10px);
+      }
+
+      .feedback-kicker{
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+        color:var(--ed-gold);
+        font-size:.62rem;
+        font-weight:800;
+        letter-spacing:.17em;
+      }
+      .feedback-kicker::before{
+        content:"";
+        width:32px;
+        height:1px;
+        background:var(--ed-gold);
+      }
+
+      .feedback-hero h1{
+        margin:19px 0 0;
+        max-width:760px;
+        font-size:clamp(3.2rem,5.6vw,6rem);
+        line-height:.91;
+        letter-spacing:-.065em;
+      }
+
+      .feedback-hero h1 em{
+        display:block;
+        font-style:normal;
+        font-weight:500;
+        background:linear-gradient(100deg,#fff,#d4b895 35%,#82ebff 68%,#9b87ff);
+        -webkit-background-clip:text;
+        background-clip:text;
+        color:transparent;
+      }
+
+      .feedback-hero-copy>p{
+        max-width:640px;
+        margin:22px 0 0;
+        color:#8f9098;
+        font-size:.84rem;
+        line-height:1.78;
+      }
+
+      .feedback-hero-meta{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-top:28px;
+      }
+
+      .feedback-hero-meta div{
+        min-width:118px;
+        padding:12px 13px;
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.07);
+        background:rgba(255,255,255,.025);
+      }
+      .feedback-hero-meta strong{
+        display:block;
+        color:#d6d6da;
+        font:700 .56rem ui-monospace,SFMono-Regular,Menlo,monospace;
+      }
+      .feedback-hero-meta span{
+        display:block;
+        margin-top:4px;
+        color:#686a73;
+        font-size:.56rem;
+      }
+
+      .feedback-hero-orbit{
+        position:relative;
+        min-height:330px;
+        display:grid;
+        place-items:center;
+      }
+
+      .feedback-core{
+        position:relative;
+        z-index:4;
+        width:126px;
+        height:126px;
+        border-radius:38px;
+        display:grid;
+        place-items:center;
+        color:var(--ed-gold);
+        border:1px solid rgba(255,255,255,.12);
+        background:
+          radial-gradient(circle at 30% 18%,rgba(255,255,255,.13),transparent 23%),
+          linear-gradient(145deg,rgba(212,184,149,.09),rgba(112,231,255,.045),rgba(142,115,255,.05)),
+          rgba(14,14,18,.88);
+        box-shadow:
+          0 26px 60px rgba(0,0,0,.35),
+          0 0 55px rgba(112,231,255,.045),
+          inset 0 1px 0 rgba(255,255,255,.08);
+        animation:feedbackCoreFloat 5.2s ease-in-out infinite;
+      }
+
+      @keyframes feedbackCoreFloat{50%{transform:translateY(-8px) rotate(.8deg)}}
+
+      .orbit-ring{
+        position:absolute;
+        left:50%;
+        top:50%;
+        border-radius:50%;
+        border:1px solid rgba(255,255,255,.075);
+        transform:translate(-50%,-50%);
+        animation:feedbackSpin 22s linear infinite;
+      }
+      .ring-a{width:275px;height:275px}
+      .ring-b{width:355px;height:355px;border-style:dashed;border-color:rgba(212,184,149,.085);animation-duration:31s;animation-direction:reverse}
+      @keyframes feedbackSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+      .orbit-chip{
+        position:absolute;
+        z-index:5;
+        padding:8px 10px;
+        border-radius:999px;
+        border:1px solid rgba(255,255,255,.09);
+        background:rgba(10,10,13,.72);
+        -webkit-backdrop-filter:blur(16px);
+        backdrop-filter:blur(16px);
+        color:#8f9098;
+        font-size:.54rem;
+        box-shadow:0 10px 26px rgba(0,0,0,.25);
+      }
+      .chip-1{left:1%;top:22%}
+      .chip-2{right:1%;top:46%}
+      .chip-3{left:14%;bottom:10%}
+
+      .feedback-principles{
+        display:grid;
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:10px;
+        margin:18px 0 50px;
+      }
+
+      .feedback-principle{
+        position:relative;
+        min-height:180px;
+        padding:18px;
+        border-radius:20px;
+        border:1px solid rgba(255,255,255,.075);
+        background:
+          linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.01)),
+          rgba(9,9,12,.72);
+        -webkit-backdrop-filter:blur(16px);
+        backdrop-filter:blur(16px);
+        overflow:hidden;
+        transition:transform .32s var(--ed-ease),border-color .3s ease,background .3s ease;
+      }
+
+      .feedback-principle::after{
+        content:"";
+        position:absolute;
+        width:150px;
+        height:150px;
+        right:-90px;
+        top:-90px;
+        border-radius:50%;
+        background:radial-gradient(circle,rgba(212,184,149,.12),transparent 68%);
+        opacity:.45;
+        transition:.35s ease;
+      }
+
+      .feedback-principle:hover{
+        transform:translateY(-4px);
+        border-color:rgba(212,184,149,.17);
+        background:rgba(255,255,255,.025);
+      }
+      .feedback-principle:hover::after{transform:scale(1.25);opacity:.8}
+
+      .principle-index{
+        position:absolute;
+        right:16px;
+        top:14px;
+        color:#4d4f57;
+        font:700 .48rem ui-monospace,SFMono-Regular,Menlo,monospace;
+      }
+
+      .principle-icon{
+        width:40px;
+        height:40px;
+        border-radius:12px;
+        display:grid;
+        place-items:center;
+        color:var(--ed-gold);
+        border:1px solid rgba(212,184,149,.13);
+        background:rgba(212,184,149,.055);
+      }
+
+      .feedback-principle strong{
+        display:block;
+        margin-top:28px;
+        font-size:.76rem;
+      }
+      .feedback-principle span:last-child{
+        display:block;
+        margin-top:7px;
+        color:#74767e;
+        font-size:.63rem;
+        line-height:1.55;
+      }
+
+      .feedback-form-stage{
+        position:relative;
+        margin-bottom:90px;
+        isolation:isolate;
+      }
+
+      .form-ambient{
+        position:absolute;
+        z-index:-2;
+        left:6%;
+        right:6%;
+        top:10%;
+        bottom:-5%;
+        border-radius:40px;
+        background:
+          radial-gradient(circle at 22% 20%,rgba(212,184,149,.17),transparent 28%),
+          radial-gradient(circle at 78% 70%,rgba(112,231,255,.09),transparent 28%),
+          radial-gradient(circle at 68% 15%,rgba(142,115,255,.08),transparent 23%);
+        filter:blur(34px);
+        opacity:.48;
+      }
+
+      .main-form-glass{
+        position:relative;
+        border-radius:28px;
+        padding:34px;
+        background:
+          linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.012)),
+          rgba(10,10,13,.88);
+        border:1px solid rgba(255,255,255,.105);
+        box-shadow:0 32px 85px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.045);
+      }
+
+      .form-stage-head{
+        display:flex;
+        align-items:flex-start;
+        justify-content:space-between;
+        gap:20px;
+        padding-bottom:24px;
+        margin-bottom:25px;
+        border-bottom:1px solid rgba(255,255,255,.065);
+      }
+
+      .form-stage-kicker{
+        display:block;
+        color:var(--ed-gold);
+        font-size:.55rem;
+        font-weight:800;
+        letter-spacing:.16em;
+      }
+
+      .form-stage-head h2{
+        margin:8px 0 0;
+        font-size:clamp(2rem,3.2vw,3rem);
+        letter-spacing:-.045em;
+      }
+
+      .form-stage-status{
+        display:inline-flex;
+        align-items:center;
+        gap:7px;
+        flex:0 0 auto;
+        padding:8px 10px;
+        border-radius:999px;
+        border:1px solid rgba(118,241,164,.13);
+        background:rgba(118,241,164,.045);
+        color:#8f9f95;
+        font-size:.53rem;
+      }
+
+      .form-stage-status i{
+        width:6px;
+        height:6px;
+        border-radius:50%;
+        background:#74e99e;
+        box-shadow:0 0 10px rgba(116,233,158,.45);
+      }
+
+      .form-label-custom{
+        color:#a9aab1;
+        font-size:.67rem;
+        font-weight:600;
+        letter-spacing:.015em;
+      }
+
+      .glass-input{
+        min-height:52px;
+        border-radius:14px;
+        padding:.9rem 1rem;
+        background:rgba(255,255,255,.028);
+        border:1px solid rgba(255,255,255,.085);
+        font-size:.82rem;
+      }
+      .glass-input:focus{
+        background:rgba(255,255,255,.045);
+        border-color:rgba(212,184,149,.46);
+        box-shadow:0 0 0 4px rgba(212,184,149,.045),0 12px 32px rgba(0,0,0,.16);
+      }
+
+      textarea.glass-input{
+        min-height:145px;
+        resize:vertical;
+      }
+
+      .rating-stars{
+        gap:10px;
+        width:max-content;
+        padding:10px 12px;
+        border-radius:16px;
+        border:1px solid rgba(255,255,255,.07);
+        background:rgba(255,255,255,.018);
+      }
+      .star-icon{
+        width:30px;
+        height:30px;
+        color:#44464d;
+        filter:drop-shadow(0 0 0 transparent);
+        transition:color .22s ease,transform .28s var(--ed-ease),filter .28s ease;
+      }
+      .rating-stars span:hover .star-icon,
+      .rating-stars span.selected .star-icon{
+        color:#e0c29c;
+        transform:translateY(-2px) scale(1.12);
+        filter:drop-shadow(0 0 9px rgba(212,184,149,.28));
+      }
+
+      .btn-gold-pill{
+        min-height:52px;
+        max-width:360px;
+        border-radius:999px;
+        background:linear-gradient(180deg,#f2dfc4,#d0ad82);
+        color:#111;
+        font-size:.76rem;
+        font-weight:800;
+        box-shadow:0 14px 36px rgba(212,184,149,.14);
+      }
+      .btn-gold-pill:hover{
+        transform:translateY(-2px);
+        box-shadow:0 18px 42px rgba(212,184,149,.19);
+      }
+
+      .testimonials-section{
+        margin-top:40px;
+        padding-top:15px;
+      }
+
+      .testimonials-head{
+        display:grid;
+        grid-template-columns:1fr minmax(260px,.5fr);
+        gap:45px;
+        align-items:end;
+        margin-bottom:30px;
+      }
+      .testimonials-head span{
+        color:var(--ed-gold);
+        font-size:.56rem;
+        font-weight:800;
+        letter-spacing:.17em;
+      }
+      .testimonials-head h3{
+        margin:10px 0 0;
+        max-width:720px;
+        font-size:clamp(2rem,3.5vw,3.7rem);
+        line-height:.96;
+        letter-spacing:-.052em;
+      }
+      .testimonials-head p{
+        margin:0;
+        color:#777981;
+        font-size:.69rem;
+        line-height:1.68;
+      }
+
+      .ref-card{
+        position:relative;
+        overflow:hidden;
+        min-height:250px;
+        padding:22px;
+        border-radius:21px;
+        background:
+          linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008)),
+          rgba(8,8,11,.72);
+        border:1px solid rgba(255,255,255,.075);
+        box-shadow:0 18px 45px rgba(0,0,0,.16);
+      }
+      .ref-card::before{
+        content:"";
+        position:absolute;
+        width:180px;
+        height:180px;
+        right:-100px;
+        bottom:-110px;
+        border-radius:50%;
+        background:radial-gradient(circle,rgba(112,231,255,.07),rgba(142,115,255,.035),transparent 68%);
+        transition:.4s ease;
+      }
+      .ref-card:hover{
+        transform:translateY(-4px);
+        border-color:rgba(212,184,149,.15);
+      }
+      .ref-card:hover::before{transform:scale(1.25);opacity:.9}
+      .ref-stars{position:relative;z-index:1}
+      .ref-card p,.ref-card h6,.ref-card span{position:relative;z-index:1}
+
+      footer{
+        background:#050505!important;
+        border-color:rgba(255,255,255,.055)!important;
+      }
+
+      /* Orka external frame cleanup */
+      iframe[src*="orka.chat"]{
+        border:0!important;
+        outline:0!important;
+        background:transparent!important;
+      }
+
+      .reveal{
+        opacity:0;
+        transform:translateY(18px);
+        transition:opacity .7s var(--ed-ease),transform .7s var(--ed-ease);
+      }
+      .reveal.visible{
+        opacity:1;
+        transform:none;
+      }
+
+      @media(max-width:991.98px){
+        .main-content-spaced{margin-top:150px}
+        .feedback-hero{
+          grid-template-columns:1fr;
+          padding:32px;
+        }
+        .feedback-hero-orbit{min-height:300px}
+        .feedback-principles{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .testimonials-head{grid-template-columns:1fr;gap:14px}
+      }
+
+      @media(max-width:575.98px){
+        .main-content-spaced{
+          margin-top:142px;
+          padding-left:12px;
+          padding-right:12px;
+        }
+        .feedback-hero{
+          min-height:auto;
+          padding:24px 18px;
+          border-radius:23px;
+          gap:25px;
+        }
+        .feedback-hero::before{
+          filter:blur(28px) saturate(1.25) brightness(.66);
+          opacity:.25;
+        }
+        .feedback-hero h1{
+          font-size:clamp(2.7rem,12.5vw,4rem);
+        }
+        .feedback-hero-copy>p{font-size:.77rem;line-height:1.68}
+        .feedback-hero-meta{
+          display:grid;
+          grid-template-columns:repeat(3,1fr);
+          gap:6px;
+        }
+        .feedback-hero-meta div{min-width:0;padding:10px}
+        .feedback-hero-orbit{min-height:250px}
+        .feedback-core{width:98px;height:98px;border-radius:30px}
+        .ring-a{width:205px;height:205px}
+        .ring-b{width:265px;height:265px}
+        .orbit-chip{font-size:.48rem}
+        .feedback-principles{
+          grid-template-columns:1fr;
+          gap:8px;
+          margin-bottom:35px;
+        }
+        .feedback-principle{min-height:138px}
+        .main-form-glass{
+          padding:20px 16px;
+          border-radius:22px;
+        }
+        .form-stage-head{
+          display:block;
+          padding-bottom:18px;
+          margin-bottom:20px;
+        }
+        .form-stage-status{
+          margin-top:13px;
+        }
+        .glass-input{
+          font-size:16px;
+        }
+        .rating-stars{
+          gap:6px;
+          width:100%;
+          justify-content:space-between;
+        }
+        .star-icon{width:28px;height:28px}
+        .form-ambient{
+          filter:blur(22px);
+          opacity:.34;
+        }
+        .testimonials-head h3{
+          font-size:2.2rem;
+        }
+        .ref-card{min-height:220px}
+      }
+
+      @media(prefers-reduced-motion:reduce){
+        *,*::before,*::after{
+          animation:none!important;
+          transition-duration:.01ms!important;
+        }
+        .reveal{
+          opacity:1!important;
+          transform:none!important;
+        }
+      }
+
+    
+      .demo-review{
+        padding-top:54px;
+      }
+      .review-demo-badge{
+        position:absolute!important;
+        top:16px;
+        left:18px;
+        z-index:3!important;
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:6px 9px;
+        border-radius:999px;
+        border:1px solid rgba(212,184,149,.16);
+        background:rgba(212,184,149,.055);
+        color:#bca483!important;
+        font-size:.49rem!important;
+        font-weight:700;
+        letter-spacing:.08em;
+        text-transform:uppercase;
+      }
+      .review-demo-badge::before{
+        content:"";
+        width:5px;
+        height:5px;
+        border-radius:50%;
+        background:#d4b895;
+        box-shadow:0 0 8px rgba(212,184,149,.35);
+      }
+
+</style>
+<!-- ORKA CHAT · Evolution Design -->
+<script type="text/javascript">
+      window.ORKA_APP_ID = "6a6e1491fcaf85963eaf05d6";
+      (function () {
+        const d = document;
+        const s = d.createElement("script");
+        s.src = "//widget.orka.chat/app.js";
+        s.async = true;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navScroll">
+<div class="page-bg"></div>
+<!-- NAVEGACIÓN ESCRITORIO -->
+<nav class="desktop-nav fixed-top" id="navScroll">
+<div class="container px-0">
+<div class="nav-pill">
+<a class="d-flex align-items-center" href="index.html">
+<img alt="Evolution Design" src="img/logo.png" style="max-height: 35px; width: auto;"/>
+</a>
+<div class="nav-pill-links">
+<a class="nav-pill-link" href="index.html">Inicio</a>
+<a class="nav-pill-link" href="sobre-nosotros.html">Sobre Nosotros</a>
+<a class="nav-pill-link active" href="feedback.html">Feedback</a>
+<a class="nav-pill-link" href="proyectos.html" style="color: #d4b895;">Mis Proyectos</a>
+</div>
+<a class="btn btn-light rounded-pill px-4 text-black fw-bold py-2" href="https://dingloft.com" style="font-size: 0.9rem;" target="_blank">Descargar Software →</a>
+</div>
+</div>
+</nav>
+<!-- NAVEGACIÓN MÓVIL TIPO APP (CON MENÚ HAMBURGUESA IDÉNTICO AL INDEX) -->
+<nav class="mobile-app-nav">
+<div class="app-nav-top">
+<div style="position: relative;">
+<a aria-label="Menú" class="icon-btn" href="#" id="mobileMenuBtn">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+</a>
+<ul class="mobile-dropdown-menu" id="mobileDropdownMenu">
+<li>
+<a class="menu-item" href="index.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 Home
               </a>
-            </li>
-            <li>
-              <a class="menu-item" href="sobre-nosotros.html">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+</li>
+<li>
+<a class="menu-item" href="sobre-nosotros.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="16" y2="12"></line><line x1="12" x2="12.01" y1="8" y2="8"></line></svg>
                 Sobre Nosotros
               </a>
-            </li>
-            <li>
-              <a class="menu-item active" href="feedback.html">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+</li>
+<li>
+<a class="menu-item active" href="feedback.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                 Feedback
               </a>
-            </li>
-          </ul>
-        </div>
-
-        <a href="index.html">
-          <img src="img/logo.png" alt="Evolution Design" style="max-height: 28px; width: auto;">
-        </a>
-        
-        <a href="portal.html" class="icon-btn" aria-label="Portal de Entregas">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        </a>
-      </div>
-
-      <div class="app-tabs">
-        <a href="index.html" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+</li>
+</ul>
+</div>
+<a href="index.html">
+<img alt="Evolution Design" src="img/logo.png" style="max-height: 28px; width: auto;"/>
+</a>
+<a aria-label="Mis Proyectos" class="icon-btn" href="proyectos.html">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+</a>
+</div>
+<div class="app-tabs">
+<a class="tab-item" href="index.html">
+<svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           Inicio
         </a>
-        <a href="index.html#servicios-destacados" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+<a class="tab-item" href="index.html#servicios-destacados">
+<svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><rect height="7" width="7" x="3" y="3"></rect><rect height="7" width="7" x="14" y="3"></rect><rect height="7" width="7" x="14" y="14"></rect><rect height="7" width="7" x="3" y="14"></rect></svg>
           Servicios
         </a>
-        <a href="index.html#servicios-tecnicos" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="13" x2="21" y2="13"></line></svg>
+<a class="tab-item" href="index.html#servicios-tecnicos">
+<svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><rect height="18" rx="2" ry="2" width="18" x="3" y="3"></rect><line x1="9" x2="9" y1="3" y2="21"></line><line x1="3" x2="21" y1="13" y2="13"></line></svg>
           Planos
         </a>
-        <a href="index.html#visualizacion" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+<a class="tab-item" href="index.html#visualizacion">
+<svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" x2="12" y1="22.08" y2="12"></line></svg>
           Tarifas 3D
         </a>
-        <a href="index.html#cuantificacion" class="tab-item">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="8.01" y2="10"></line><line x1="12" y1="10" x2="12.01" y2="10"></line><line x1="16" y1="10" x2="16.01" y2="10"></line><line x1="8" y1="14" x2="8.01" y2="14"></line><line x1="12" y1="14" x2="12.01" y2="14"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg>
+<a class="tab-item" href="index.html#cuantificacion">
+<svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><rect height="20" rx="2" width="16" x="4" y="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="8" x2="8.01" y1="10" y2="10"></line><line x1="12" x2="12.01" y1="10" y2="10"></line><line x1="16" x2="16.01" y1="10" y2="10"></line><line x1="8" x2="8.01" y1="14" y2="14"></line><line x1="12" x2="12.01" y1="14" y2="14"></line><line x1="16" x2="16.01" y1="14" y2="14"></line></svg>
           Cuantif.
         </a>
-      </div>
-    </nav>
-
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="container flex-grow-1 main-content-spaced">
-      <div class="row justify-content-center">
-        <div class="col-12 col-xl-10">
-          
-          <!-- ENCABEZADO -->
-          <div class="text-center mb-5">
-            <span class="accent-text fw-medium text-uppercase d-block mb-2" style="letter-spacing: 2px; font-size: 0.8rem;">VALORAMOS TU OPINIÓN</span>
-            <h1 class="display-3 fw-bold text-white mb-3">Déjanos tu Feedback</h1>
-            <p class="text-secondary mx-auto" style="max-width: 600px;">Tu experiencia nos ayuda a mejorar cada día. Cuéntanos qué te pareció nuestro servicio de diseño o entregas.</p>
-          </div>
-
-          <!-- TARJETAS DE BENEFICIOS -->
-          <div class="row mb-5">
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
-              <div class="feature-glass-card">
-                <div class="f-icon-circle">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path><line x1="9" y1="12" x2="15" y2="12"></line><line x1="12" y1="9" x2="12" y2="15"></line></svg>
-                </div>
-                <div class="f-text mt-1">
-                  <h6>Tu opinión importa</h6>
-                  <p>Cada comentario nos ayuda a mejorar nuestros servicios.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
-              <div class="feature-glass-card">
-                <div class="f-icon-circle">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                </div>
-                <div class="f-text mt-1">
-                  <h6>Calidad y compromiso</h6>
-                  <p>Trabajamos para superar tus expectativas.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
-              <div class="feature-glass-card">
-                <div class="f-icon-circle">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                </div>
-                <div class="f-text mt-1">
-                  <h6>Respuesta rápida</h6>
-                  <p>Leemos cada mensaje y te respondemos pronto.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
-              <div class="feature-glass-card">
-                <div class="f-icon-circle">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                </div>
-                <div class="f-text mt-1">
-                  <h6>Información segura</h6>
-                  <p>Tus datos están protegidos y son confidenciales.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- FORMULARIO PRINCIPAL -->
-          <div class="main-form-glass mb-5">
-            <form id="feedbackForm" onsubmit="enviarFeedback(event)">
-              <div class="row mb-4">
-                
-                <div class="col-12 col-md-6 mb-4">
-                  <label class="form-label-custom">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+</div>
+</nav>
+<!-- CONTENIDO PRINCIPAL -->
+<main class="container flex-grow-1 main-content-spaced">
+<div class="row justify-content-center">
+<div class="col-12 col-xl-10">
+<!-- ENCABEZADO PREMIUM -->
+<section class="feedback-hero reveal">
+<div class="feedback-hero-grid"></div>
+<div class="feedback-hero-glow"></div>
+<div class="feedback-hero-copy">
+<span class="feedback-kicker">EVOLUTION DESIGN · CLIENT EXPERIENCE</span>
+<h1>Tu experiencia también <em>diseña nuestra evolución.</em></h1>
+<p>Cuéntanos qué funcionó, qué podemos mejorar y cómo fue trabajar con Evolution. Cada comentario nos ayuda a tomar mejores decisiones y ofrecer una experiencia más clara.</p>
+<div class="feedback-hero-meta">
+<div><strong>01</strong><span>Califica</span></div>
+<div><strong>02</strong><span>Comparte</span></div>
+<div><strong>03</strong><span>Evolucionamos</span></div>
+</div>
+</div>
+<div aria-hidden="true" class="feedback-hero-orbit">
+<div class="orbit-ring ring-a"></div>
+<div class="orbit-ring ring-b"></div>
+<div class="feedback-core">
+<svg fill="none" height="42" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24" width="42">
+<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+</svg>
+</div>
+<span class="orbit-chip chip-1">Arquitectura</span>
+<span class="orbit-chip chip-2">Diseño Web</span>
+<span class="orbit-chip chip-3">Diseño Gráfico</span>
+</div>
+</section>
+<!-- EXPERIENCE PRINCIPLES -->
+<div class="feedback-principles reveal">
+<article class="feedback-principle">
+<span class="principle-index">01</span>
+<div class="principle-icon">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="20"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path></svg>
+</div>
+<div><strong>Tu opinión importa</strong><span>Leemos cada comentario para detectar oportunidades reales de mejora.</span></div>
+</article>
+<article class="feedback-principle">
+<span class="principle-index">02</span>
+<div class="principle-icon">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="20"><path d="M12 2l2.9 5.88L21 9l-4.5 4.38L17.56 20 12 17.1 6.44 20l1.06-6.62L3 9l6.1-1.12z"></path></svg>
+</div>
+<div><strong>Calidad medible</strong><span>Tu valoración nos ayuda a entender qué estamos haciendo bien.</span></div>
+</article>
+<article class="feedback-principle">
+<span class="principle-index">03</span>
+<div class="principle-icon">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="20"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"></path><circle cx="12" cy="12" r="4"></circle></svg>
+</div>
+<div><strong>Mejora continua</strong><span>El feedback forma parte del proceso de evolución del estudio.</span></div>
+</article>
+<article class="feedback-principle">
+<span class="principle-index">04</span>
+<div class="principle-icon">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="20"><rect height="10" rx="2" width="18" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+</div>
+<div><strong>Privacidad</strong><span>La información del formulario se utiliza únicamente para atender tu experiencia.</span></div>
+</article>
+</div>
+<!-- FORMULARIO PRINCIPAL -->
+<section class="feedback-form-stage reveal">
+<div aria-hidden="true" class="form-ambient"></div>
+<div class="main-form-glass">
+<div class="form-stage-head">
+<div>
+<span class="form-stage-kicker">COMPARTE TU EXPERIENCIA</span>
+<h2>Queremos escucharte.</h2>
+</div>
+<span class="form-stage-status"><i></i> Formulario activo</span>
+</div>
+<form id="feedbackForm" onsubmit="enviarFeedback(event)">
+<div class="row mb-4">
+<div class="col-12 col-md-6 mb-4">
+<label class="form-label-custom">
+<svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     Tu Nombre o Empresa
                   </label>
-                  <input type="text" id="fbName" class="glass-input" placeholder="Ej. Juan Pérez" required>
-                </div>
-
-                <div class="col-12 col-md-6 mb-4">
-                  <label class="form-label-custom">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+<input class="glass-input" id="fbName" placeholder="Ej. Juan Pérez" required="" type="text"/>
+</div>
+<div class="col-12 col-md-6 mb-4">
+<label class="form-label-custom">
+<svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                     Correo Electrónico
                   </label>
-                  <input type="email" id="fbEmail" class="glass-input" placeholder="tuemail@ejemplo.com" required>
-                </div>
-
-                <div class="col-12 mb-4">
-                  <label class="form-label-custom mb-3">Calificación del Servicio</label>
-                  <div class="rating-stars" id="starContainer">
-                    <span data-value="1"><svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                    <span data-value="2"><svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                    <span data-value="3"><svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                    <span data-value="4"><svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                    <span data-value="5"><svg class="star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                  </div>
-                  <input type="hidden" id="fbRating" value="0">
-                </div>
-
-                <div class="col-12 mb-4" style="position: relative;">
-                  <label class="form-label-custom">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+<input class="glass-input" id="fbEmail" placeholder="tuemail@ejemplo.com" required="" type="email"/>
+</div>
+<div class="col-12 mb-4">
+<label class="form-label-custom mb-3">Calificación del Servicio</label>
+<div class="rating-stars" id="starContainer">
+<span data-value="1"><svg class="star-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+<span data-value="2"><svg class="star-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+<span data-value="3"><svg class="star-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+<span data-value="4"><svg class="star-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+<span data-value="5"><svg class="star-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+</div>
+<input id="fbRating" type="hidden" value="0"/>
+</div>
+<div class="col-12 mb-4" style="position: relative;">
+<label class="form-label-custom">
+<svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                     Tu Comentario
                   </label>
-                  <textarea id="fbMessage" class="glass-input" rows="5" maxlength="500" placeholder="Cuéntanos tu experiencia, sugerencias o cualquier comentario..." required></textarea>
-                  <div class="char-counter" id="charCount">0/500</div>
+<textarea class="glass-input" id="fbMessage" maxlength="500" placeholder="Cuéntanos tu experiencia, sugerencias o cualquier comentario..." required="" rows="5"></textarea>
+<div class="char-counter" id="charCount">0/500</div>
+</div>
+</div>
+<div class="mt-4 text-center">
+<button class="btn-gold-pill" type="submit">
+                  Enviar mi experiencia
+                  <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+</button>
+<div class="mt-3 text-secondary d-flex justify-content-center align-items-center gap-2" style="font-size: 0.75rem;">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="14"><rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  Tu comentario se procesa únicamente para mejorar la experiencia de Evolution.
                 </div>
-
-              </div>
-
-              <div class="mt-4 text-center">
-                <button type="submit" class="btn-gold-pill">
-                  Enviar Feedback
-                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
-                <div class="mt-3 text-secondary d-flex justify-content-center align-items-center gap-2" style="font-size: 0.75rem;">
-                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                  Tus datos están protegidos y no serán compartidos.
-                </div>
-              </div>
-
-            </form>
-          </div>
-
-          <!-- SECCIÓN DE REFERENCIAS / TESTIMONIOS -->
-          <div class="mt-5 pt-4">
-            <h3 class="text-center text-white fw-bold mb-5 pb-2" style="font-size: 1.5rem;">Lo que dicen nuestros clientes</h3>
-            
-            <div class="row justify-content-center">
-              
-              <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="ref-card">
-                  <div class="ref-stars mb-3">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                  </div>
-                  <p class="text-secondary small mb-4" style="line-height: 1.6;">"Excelente servicio. Me entregaron mis renders 3D justo a tiempo y la calidad superó por completo mis expectativas. Ahora estoy mucho más seguro de mi inversión."</p>
-                  <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Carlos M.</h6>
-                  <span class="text-muted" style="font-size: 0.75rem;">Proyecto Residencial</span>
-                </div>
-              </div>
-              
-              <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="ref-card">
-                  <div class="ref-stars mb-3">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                  </div>
-                  <p class="text-secondary small mb-4" style="line-height: 1.6;">"El portal de entregas es una maravilla. Pude descargar todos mis planos en PDF desde mi teléfono en la obra sin ninguna complicación. Totalmente recomendados."</p>
-                  <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Constructora Sur</h6>
-                  <span class="text-muted" style="font-size: 0.75rem;">Planos 2D y Cuantificación</span>
-                </div>
-              </div>
-              
-              <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="ref-card">
-                  <div class="ref-stars mb-3">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                  </div>
-                  <p class="text-secondary small mb-4" style="line-height: 1.6;">"Me encantó que me mandaran 3 propuestas diferentes para mi fachada. Nos ayudó muchísimo a decidir los acabados antes de comprar los materiales."</p>
-                  <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Ana G.</h6>
-                  <span class="text-muted" style="font-size: 0.75rem;">Diseño de Fachada</span>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="ref-card">
-                  <div class="ref-stars mb-3">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                  </div>
-                  <p class="text-secondary small mb-4" style="line-height: 1.6;">"Muy profesionales. El detalle en la cuantificación de materiales nos ahorró bastante presupuesto a la hora de comprar el acero y el cemento. Recomendadísimos."</p>
-                  <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Javier R.</h6>
-                  <span class="text-muted" style="font-size: 0.75rem;">Planos Estructurales</span>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="ref-card">
-                  <div class="ref-stars mb-3">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                  </div>
-                  <p class="text-secondary small mb-4" style="line-height: 1.6;">"La calidad del hiperrealismo es de otro nivel. Gracias a los recorridos virtuales logramos mostrar la visión completa a los inversionistas de forma perfecta."</p>
-                  <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Estudio Vértice</h6>
-                  <span class="text-muted" style="font-size: 0.75rem;">Renders Comerciales</span>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer id="contacto" class="bg-black border-top pt-5 pb-4 mt-auto" style="border-color: #222 !important;">
-      <div class="container text-secondary fw-lighter">
-        <div class="row g-4">
-          <div class="col-12 col-lg-5 text-center text-lg-start">
-            <a href="index.html">
-              <img src="img/logo.png" alt="Evolution Design" style="max-height: 40px; width: auto;" class="mb-3">
-            </a>
-            <p class="small">Precisión en cada línea, valor en cada detalle.</p>
-          </div>
-          <div class="col-12 col-lg-7 text-center text-lg-end">
-            <span class="h6 text-white mb-3 d-block">Contacto Directo</span>
-            <p class="small mb-1">support@evolutiondesing.com</p>
-            <p class="small mb-0">+1 (832) 977-4150</p>
-          </div>
-        </div>
-      </div>
-      <div class="container text-center small py-vh-2 mt-4 border-top text-secondary" style="border-color: #111 !important;">
+</div>
+</form>
+</div>
+</section>
+<!-- SECCIÓN DE REFERENCIAS / TESTIMONIOS -->
+<section class="testimonials-section reveal">
+<div class="testimonials-head">
+<div>
+<span>EXPERIENCIAS Y EJEMPLOS</span>
+<h3>Lo que nuestros clientes recuerdan.</h3>
+</div>
+<p>Reseñas existentes y ejemplos de cómo pueden mostrarse futuras opiniones verificadas de clientes en arquitectura, diseño y tecnología.</p>
+</div>
+<div class="row justify-content-center">
+<div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card">
+<div class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">"Excelente servicio. Me entregaron mis renders 3D justo a tiempo y la calidad superó por completo mis expectativas. Ahora estoy mucho más seguro de mi inversión."</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Carlos M.</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Proyecto Residencial</span>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card">
+<div class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">"El área de Mis Proyectos es una maravilla. Pude descargar todos mis planos en PDF desde mi teléfono en la obra sin ninguna complicación. Totalmente recomendados."</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Constructora Sur</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Planos 2D y Cuantificación</span>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card">
+<div class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">"Me encantó que me mandaran 3 propuestas diferentes para mi fachada. Nos ayudó muchísimo a decidir los acabados antes de comprar los materiales."</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Ana G.</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Diseño de Fachada</span>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card">
+<div class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">"Muy profesionales. El detalle en la cuantificación de materiales nos ahorró bastante presupuesto a la hora de comprar el acero y el cemento. Recomendadísimos."</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Javier R.</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Planos Estructurales</span>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card">
+<div class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">"La calidad del hiperrealismo es de otro nivel. Gracias a los recorridos virtuales logramos mostrar la visión completa a los inversionistas de forma perfecta."</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Estudio Vértice</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Renders Comerciales</span>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“Nos ayudaron a visualizar la casa antes de comenzar los acabados. Poder comparar materiales y distribución nos facilitó muchísimo la decisión final.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Cliente residencial</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Render de interiores</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“Necesitábamos una página clara, rápida y fácil de usar desde el teléfono. El resultado se siente mucho más profesional que lo que teníamos antes.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Emprendimiento local</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Diseño Web</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“La propuesta de marca quedó limpia y coherente. Nos gustó que no intentaran llenar todo de elementos y que cada decisión tuviera una razón.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Estudio creativo</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Identidad visual</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“Con las propuestas pudimos ver cómo cambiaría la fachada sin tocar la estructura original. Eso nos dio mucha seguridad antes de invertir.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Cliente particular</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Diseño de fachada</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="4 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“La documentación llegó ordenada y fácil de revisar. Pudimos compartirla con el equipo de obra sin estar explicando cada archivo por separado.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Empresa constructora</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Planos 2D</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“El proceso fue bastante claro. La tienda quedó pensada para que el cliente encuentre rápido lo que busca y pueda comprar sin tantas vueltas.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Negocio local</h6>
+<span class="text-muted" style="font-size: 0.75rem;">E-commerce</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“Nos presentaron una solución moderna sin cambiar la distribución que ya teníamos. Se sintió como una mejora real y no como empezar de cero.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Cliente residencial</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Remodelación interior</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“Nos gustó mucho el nivel de detalle de las interfaces. La navegación se siente más simple y visualmente todo quedó mucho más consistente.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Agencia independiente</h6>
+<span class="text-muted" style="font-size: 0.75rem;">UI / UX</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“Los renders nos ayudaron a entender proporciones, iluminación y materiales antes de construir. Fue mucho más fácil tomar decisiones en familia.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Cliente de arquitectura</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Visualización 3D</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="4 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“El equipo entendió la dirección que buscábamos y propuso una imagen más ordenada. Las piezas se sienten parte de la misma marca.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Marca emergente</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Diseño gráfico</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“Valoramos que se adaptaran al presupuesto y priorizaran lo más importante primero. Pudimos lanzar una primera versión sólida sin complicarnos.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Empresa de servicios</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Desarrollo Web</span>
+</div>
+</div><div class="col-12 col-md-6 col-lg-4 mb-4">
+<div class="ref-card demo-review">
+<span class="review-demo-badge">Comentario de muestra</span>
+<div aria-label="5 de 5 estrellas" class="ref-stars mb-3">
+<svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg fill="currentColor" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<p class="text-secondary small mb-4" style="line-height: 1.6;">“Todo el seguimiento desde Mis Proyectos fue cómodo. Pudimos revisar avances, archivos y pagos desde el mismo lugar sin depender de mensajes sueltos.”</p>
+<h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">Cliente remoto</h6>
+<span class="text-muted" style="font-size: 0.75rem;">Proyecto digital</span>
+</div>
+</div></div>
+</section>
+</div>
+</div>
+</main>
+<!-- FOOTER -->
+<footer class="bg-black border-top pt-5 pb-4 mt-auto" id="contacto" style="border-color: #222 !important;">
+<div class="container text-secondary fw-lighter">
+<div class="row g-4">
+<div class="col-12 col-lg-5 text-center text-lg-start">
+<a href="index.html">
+<img alt="Evolution Design" class="mb-3" src="img/logo.png" style="max-height: 40px; width: auto;"/>
+</a>
+<p class="small">Arquitectura, diseño y tecnología dentro de un mismo ecosistema creativo.</p>
+</div>
+<div class="col-12 col-lg-7 text-center text-lg-end">
+<span class="h6 text-white mb-3 d-block">Contacto</span>
+<p class="small mb-1">support@evolutiondesing.com</p>
+</div>
+</div>
+</div>
+<div class="container text-center small py-vh-2 mt-4 border-top text-secondary" style="border-color: #111 !important;">
         © 2026 Evolution Design. Todos los derechos reservados.
       </div>
-    </footer>
-
-    <!-- BOTONES FLOTANTES REDES -->
-    <div class="lang-float-container">
-      <a href="https://wa.me/50231256942?text=Hola,%20quiero%20dejar%20un%20comentario%20sobre%20mi%20proyecto" target="_blank" aria-label="WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(37, 211, 102, 0.4); background-color: rgba(37, 211, 102, 0.1); color: #25d366; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.558 6.558 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34l-.38-.007c-.133 0-.36.05-.55.26-.197.198-.753.735-.753 1.794s.77 2.073.878 2.221c.11.133 1.516 2.31 3.678 3.243.517.223.921.356 1.23.456.516.165.985.142 1.359-.086.413-.26 1.17-.478 1.336-.94.166-.46.166-.855.117-.94-.05-.084-.183-.134-.38-.232"/></svg>
-      </a>
-      <a href="https://t.me/Evolutiongt01" target="_blank" aria-label="Telegram" style="width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42, 171, 238, 0.4); background-color: rgba(42, 171, 238, 0.1); color: #2AABEE; backdrop-filter: blur(8px); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.9)'; this.style.color='#fff'; this.style.border='1px solid #2AABEE';" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='rgba(42, 171, 238, 0.1)'; this.style.color='#2AABEE'; this.style.border='1px solid rgba(42, 171, 238, 0.4);'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 2px; margin-top: 2px;"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
-      </a>
-    </div>
-
-    <script>
+</footer>
+<script>
       // Lógica Menú Hamburguesa Móvil (Idéntica al Index)
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
@@ -664,20 +1430,101 @@
       // Envío de formulario a WhatsApp
       function enviarFeedback(event) {
         event.preventDefault();
-        const name = document.getElementById('fbName').value;
-        const email = document.getElementById('fbEmail').value;
-        const rating = document.getElementById('fbRating').value;
-        const message = document.getElementById('fbMessage').value;
 
-        if (rating === "0") {
-          alert("Por favor, selecciona una calificación de estrellas antes de enviar.");
+        const form=event.currentTarget;
+        const submit=form.querySelector('button[type="submit"]');
+        const name=document.getElementById('fbName').value.trim();
+        const email=document.getElementById('fbEmail').value.trim();
+        const rating=document.getElementById('fbRating').value;
+        const message=document.getElementById('fbMessage').value.trim();
+
+        if(rating==="0"){
+          alert("Selecciona una calificación antes de enviar tu experiencia.");
           return;
         }
 
-        const textoWa = encodeURIComponent(`Hola, soy ${name} (${email}). Acabo de dejar un feedback en el sitio web.\n\nCalificación del servicio: ${rating}/5 estrellas.\n\nComentario:\n"${message}"`);
-        window.open(`https://wa.me/18329774150?text=${textoWa}`, '_blank');
-      }
-    </script>
+        const old=submit.innerHTML;
+        submit.disabled=true;
+        submit.style.opacity='.72';
+        submit.innerHTML='Preparando tu feedback…';
 
-  </body>
+        const textoWa=encodeURIComponent(`Hola, soy ${name} (${email}). Acabo de dejar un feedback en el sitio web.\n\nCalificación del servicio: ${rating}/5 estrellas.\n\nComentario:\n"${message}"`);
+
+        setTimeout(()=>{
+          window.open(`https://wa.me/18329774150?text=${textoWa}`,'_blank','noopener,noreferrer');
+          submit.disabled=false;
+          submit.style.opacity='';
+          submit.innerHTML=old;
+        },280);
+      }
+
+      // Reveal optimizado
+      const revealObserver=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },{threshold:.08,rootMargin:'0px 0px -30px'});
+      document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+      // Iluminación sutil del formulario siguiendo el cursor (desktop)
+      (function(){
+        const stage=document.querySelector('.feedback-form-stage');
+        const ambient=document.querySelector('.form-ambient');
+        if(!stage||!ambient||matchMedia('(pointer:coarse)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+
+        let raf=0;
+        let last=null;
+
+        stage.addEventListener('pointermove',e=>{
+          last=e;
+          if(raf)return;
+          raf=requestAnimationFrame(()=>{
+            raf=0;
+            const r=stage.getBoundingClientRect();
+            const x=((last.clientX-r.left)/r.width)*100;
+            const y=((last.clientY-r.top)/r.height)*100;
+            ambient.style.background=`
+              radial-gradient(circle at ${x}% ${y}%,rgba(255,255,255,.09),transparent 18%),
+              radial-gradient(circle at 22% 20%,rgba(212,184,149,.17),transparent 28%),
+              radial-gradient(circle at 78% 70%,rgba(112,231,255,.09),transparent 28%),
+              radial-gradient(circle at 68% 15%,rgba(142,115,255,.08),transparent 23%)`;
+          });
+        },{passive:true});
+      })();
+
+    </script>
+<script>
+      /* ORKA · limpieza de marco exterior */
+      (function(){
+        function cleanOrka(){
+          document.querySelectorAll('iframe[src*="orka.chat"]').forEach(frame=>{
+            frame.style.setProperty('border','0','important');
+            frame.style.setProperty('outline','0','important');
+            frame.style.setProperty('background','transparent','important');
+
+            const rect=frame.getBoundingClientRect();
+            if(rect.width>240&&rect.height>250){
+              frame.style.setProperty('border-radius',window.innerWidth<600?'18px':'22px','important');
+              frame.style.setProperty('box-shadow','0 28px 80px rgba(0,0,0,.42)','important');
+
+              const wrapper=frame.parentElement;
+              if(wrapper&&wrapper!==document.body){
+                wrapper.style.setProperty('background','transparent','important');
+                wrapper.style.setProperty('border','0','important');
+                wrapper.style.setProperty('padding','0','important');
+                wrapper.style.setProperty('box-shadow','none','important');
+              }
+            }
+          });
+        }
+
+        const obs=new MutationObserver(()=>requestAnimationFrame(cleanOrka));
+        obs.observe(document.documentElement,{childList:true,subtree:true});
+        window.addEventListener('load',()=>{cleanOrka();setTimeout(cleanOrka,700);setTimeout(cleanOrka,1600)});
+      })();
+    </script>
+</body>
 </html>
