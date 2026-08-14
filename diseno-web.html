@@ -141,6 +141,160 @@ footer{padding:64px 5vw calc(28px + env(safe-area-inset-bottom,0px));border-top:
   .mac-preview-note{grid-template-columns:1fr;gap:7px;padding:15px}
 }
 
+
+/* =========================================================
+   FINDER SHOWCASE · CINEMATIC AMBIENT LIGHT
+   Cada ventana proyecta los colores de SU PROPIA captura.
+   ========================================================= */
+.finder-showcase-section{
+  overflow:hidden;
+}
+.mac-preview-grid{
+  position:relative;
+  isolation:isolate;
+  gap:34px 24px;
+  padding:12px 8px 22px;
+}
+.mac-preview-window{
+  overflow:visible;
+  isolation:isolate;
+  z-index:1;
+  background:#0b0b0d;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.36),
+    inset 0 1px 0 rgba(255,255,255,.035);
+}
+.mac-preview-window::before{
+  content:"";
+  position:absolute;
+  z-index:-2;
+  left:5%;
+  right:5%;
+  top:11%;
+  bottom:-9%;
+  border-radius:34px;
+  background-image:var(--mac-ambient-image,none);
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  filter:blur(48px) saturate(1.48) brightness(.70);
+  opacity:.50;
+  transform:scale(1.065);
+  pointer-events:none;
+  transition:
+    opacity .45s ease,
+    filter .45s ease,
+    transform .58s cubic-bezier(.16,1,.3,1);
+}
+.mac-preview-window::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-10px;
+  border-radius:32px;
+  background:
+    radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.055),transparent 64%),
+    linear-gradient(180deg,transparent 56%,rgba(5,5,7,.20));
+  filter:blur(12px);
+  opacity:.62;
+  pointer-events:none;
+}
+.mac-preview-window:hover{
+  z-index:3;
+  border-color:rgba(255,255,255,.17);
+  box-shadow:
+    0 42px 100px rgba(0,0,0,.46),
+    inset 0 1px 0 rgba(255,255,255,.05);
+}
+.mac-preview-window:hover::before{
+  opacity:.72;
+  filter:blur(52px) saturate(1.62) brightness(.82);
+  transform:scale(1.095) translateY(3px);
+}
+
+/* Al quitar overflow:hidden del contenedor principal,
+   recortamos solamente la interfaz interna. */
+.mac-preview-bar{
+  position:relative;
+  z-index:2;
+  border-radius:21px 21px 0 0;
+  overflow:hidden;
+}
+.mac-preview-screen{
+  position:relative;
+  z-index:1;
+  border-radius:0 0 21px 21px;
+  overflow:hidden;
+}
+.mac-preview-screen img{
+  border-radius:0 0 21px 21px;
+}
+
+/* Ventana expandida: halo más amplio y menos agresivo. */
+.mac-preview-window.expanded::before{
+  left:8%;
+  right:8%;
+  bottom:-7%;
+  opacity:.58;
+  filter:blur(58px) saturate(1.48) brightness(.72);
+}
+
+/* Tablet / móvil: menos bloom y menos GPU, mismo efecto visual. */
+@media(max-width:991.98px){
+  .mac-preview-grid{
+    gap:28px;
+    padding:8px 5px 18px;
+  }
+  .mac-preview-window::before{
+    left:7%;
+    right:7%;
+    top:13%;
+    bottom:-7%;
+    filter:blur(38px) saturate(1.38) brightness(.68);
+    opacity:.43;
+    transform:scale(1.045);
+  }
+  .mac-preview-window:hover::before{
+    opacity:.50;
+    filter:blur(40px) saturate(1.42) brightness(.72);
+    transform:scale(1.06);
+  }
+}
+@media(max-width:640px){
+  .mac-preview-grid{
+    gap:22px;
+    padding:5px 2px 12px;
+  }
+  .mac-preview-window::before{
+    left:8%;
+    right:8%;
+    top:15%;
+    bottom:-6%;
+    border-radius:24px;
+    filter:blur(28px) saturate(1.28) brightness(.64);
+    opacity:.34;
+    transform:scale(1.035);
+  }
+  .mac-preview-window::after{
+    inset:-5px;
+    border-radius:22px;
+    filter:blur(8px);
+    opacity:.46;
+  }
+  .mac-preview-bar{
+    border-radius:16px 16px 0 0;
+  }
+  .mac-preview-screen,
+  .mac-preview-screen img{
+    border-radius:0 0 16px 16px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .mac-preview-window::before{
+    transition:none!important;
+  }
+}
+
 /* ECOMMERCE / ADMIN RESPONSIVE */
 @media(max-width:991.98px){
   .commerce-lab,.ops-grid{grid-template-columns:1fr}
@@ -2687,4 +2841,26 @@ window.addEventListener('evolution-auth-ready',()=>{
     setTimeout(()=>openSurveyForPlan(plan),120);
   }
 });</script>
+
+<script>
+/* FINDER CINEMATIC AMBIENT LIGHT */
+(function(){
+  const windows=document.querySelectorAll('.mac-preview-window');
+
+  windows.forEach(win=>{
+    const img=win.querySelector('.mac-preview-screen img');
+    if(!img)return;
+
+    const applyAmbient=()=>{
+      const src=img.currentSrc||img.getAttribute('src')||'';
+      if(!src)return;
+      win.style.setProperty('--mac-ambient-image',`url("${src.replace(/"/g,'\\"')}")`);
+    };
+
+    if(img.complete)applyAmbient();
+    else img.addEventListener('load',applyAmbient,{once:true});
+  });
+})();
+</script>
+
 </body></html>
