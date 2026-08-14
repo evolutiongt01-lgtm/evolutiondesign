@@ -11,7 +11,7 @@
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="Evolution Design — Diseño web premium, plataformas empresariales, e-commerce, UI/UX, panel administrativo y app empresarial instalable incluida en planes Pro y Avanzada cuando el proyecto la requiere." name="description"/>
 <meta content="Evolution Design" name="author"/>
-<meta name="evolution-build" content="2026-08-14-diseno-web-business-app-plans-v9">
+<meta name="evolution-build" content="2026-08-14-diseno-web-app-zero-commission-v10">
 <title>Diseño Web Profesional | Evolution Design</title>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -1723,6 +1723,96 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
   }
 </style>
 
+
+<style id="evolution-zero-commission">
+  .zero-commission{
+    position:relative;
+    overflow:hidden;
+    margin:0 0 16px;
+    padding:16px;
+    border:1px solid rgba(142,238,176,.20);
+    border-radius:16px;
+    background:
+      radial-gradient(circle at 92% 12%,rgba(142,238,176,.12),transparent 34%),
+      linear-gradient(145deg,rgba(142,238,176,.055),rgba(255,255,255,.015));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  .zero-commission::after{
+    content:"0%";
+    position:absolute;
+    right:10px;
+    bottom:-8px;
+    color:rgba(142,238,176,.045);
+    font-size:4.5rem;
+    font-weight:950;
+    letter-spacing:-.08em;
+    pointer-events:none;
+  }
+
+  .zero-commission-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:8px;
+  }
+
+  .zero-commission-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    color:#8eeeb0;
+    font-size:.52rem;
+    font-weight:950;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+  }
+
+  .zero-commission-badge::before{
+    content:"";
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#8eeeb0;
+    box-shadow:0 0 14px rgba(142,238,176,.38);
+  }
+
+  .zero-commission strong{
+    display:block;
+    max-width:420px;
+    color:#f5f5f5;
+    font-size:.73rem;
+    line-height:1.34;
+    letter-spacing:-.015em;
+  }
+
+  .zero-commission p{
+    margin:7px 0 0;
+    max-width:460px;
+    color:#777780;
+    font-size:.55rem;
+    line-height:1.55;
+  }
+
+  .zero-commission-note{
+    margin-top:9px;
+    color:#5f6067;
+    font-size:.47rem;
+    line-height:1.45;
+  }
+
+  @media(max-width:575.98px){
+    .zero-commission{
+      padding:14px;
+      border-radius:15px;
+    }
+    .zero-commission strong{font-size:.76rem}
+    .zero-commission p{font-size:.58rem}
+    .zero-commission::after{font-size:3.7rem}
+  }
+</style>
+
 </head>
 <body>
 <div aria-hidden="true" id="evolutionLaunchScreen">
@@ -1920,7 +2010,7 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 </article>
 <article class="price-card popular">
 <span class="popular-badge">Más popular</span>
-<span class="price-card-kicker">02 · Plataforma empresarial</span><span class="plan-value-badge">Portal + App empresarial</span>
+<span class="price-card-kicker">02 · Plataforma empresarial</span><span class="plan-value-badge">Portal + App · 0% comisión</span>
 <h3>Sitio Web Pro</h3>
 <p class="price-card-copy">Para empresas que quieren una plataforma propia y administrable: tu equipo puede publicar contenido, actualizar secciones y operar desde un portal privado. Si el proyecto lo necesita, el mismo sistema puede entregarse también como una app empresarial instalable con identidad propia.</p>
 <div class="price-big"><strong data-plan-id="pro" data-usd-price="2800">$2,800</strong><span data-price-currency="">USD</span></div>
@@ -1938,11 +2028,21 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
     <span>iPhone</span><span>Android</span><span>Mac</span><span>Windows</span>
   </div>
 </div>
+<div class="zero-commission">
+  <div class="zero-commission-top">
+    <span class="zero-commission-badge">0% comisión Evolution</span>
+  </div>
+  <strong>Tu venta es tuya. Nosotros no nos quedamos con un porcentaje.</strong>
+  <p>A diferencia de plataformas que cobran comisión por cada pedido, Evolution Design no cobra porcentaje sobre tus ventas por utilizar el sistema desarrollado para tu negocio.</p>
+  <div class="zero-commission-note">*Las pasarelas de pago, bancos o proveedores externos pueden aplicar sus propias tarifas de procesamiento.</div>
+</div>
+
 
 <ul class="plan-features">
 <li>Hasta 5 páginas base + contenido dinámico administrable</li>
 <li>Portal privado para publicar y editar contenido</li>
 <li>App empresarial instalable incluida cuando el proyecto la requiere</li>
+<li><strong>0% comisión de Evolution por cada venta</strong></li>
 <li>UI/UX premium + animaciones avanzadas</li>
 <li>Formularios, automatizaciones e integraciones según alcance</li>
 <li>Roles de acceso y control administrativo</li>
@@ -1954,7 +2054,7 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 <div class="plan-login-note"><svg fill="none" height="12" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="12"><rect height="10" rx="2" width="14" x="5" y="10"></rect><path d="M8 10V7a4 4 0 018 0v3"></path></svg>Tu solicitud queda ligada a tu cuenta</div>
 </article>
 <article class="price-card">
-<span class="price-card-kicker">03 · Sistemas web avanzados</span><span class="plan-value-badge">Sistema + App empresarial</span>
+<span class="price-card-kicker">03 · Sistemas web avanzados</span><span class="plan-value-badge">Sistema + App · 0% comisión</span>
 <h3>Plataforma Web Avanzada</h3>
 <p class="price-card-copy">Para proyectos que necesitan mucho más que una web informativa: e-commerce, marketplaces, membresías, reservas, academias, directorios, portales de clientes o sistemas personalizados. Cuando la operación lo requiere, incluimos también una experiencia de app empresarial instalada sobre el mismo ecosistema.</p>
 <div class="price-big"><strong data-plan-id="ecommerce" data-usd-price="5890">$5,890</strong><span data-price-currency="">USD</span></div>
@@ -1972,10 +2072,20 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
     <span>iPhone</span><span>Android</span><span>Mac</span><span>Windows</span>
   </div>
 </div>
+<div class="zero-commission">
+  <div class="zero-commission-top">
+    <span class="zero-commission-badge">0% comisión por venta</span>
+  </div>
+  <strong>Escala tus ventas sin pagarle a Evolution por cada transacción.</strong>
+  <p>Tu plataforma puede crecer en pedidos, membresías, reservas o transacciones sin que Evolution Design cobre una comisión porcentual sobre lo que vende tu empresa.</p>
+  <div class="zero-commission-note">*Solo aplican, cuando corresponda, las tarifas propias de la pasarela de pago o servicio financiero elegido.</div>
+</div>
+
 
 <ul class="plan-features">
 <li>Portal administrativo personalizado según el proyecto</li>
 <li>App empresarial integrada al mismo sistema cuando aplica</li>
+<li><strong>0% comisión de Evolution sobre tus transacciones</strong></li>
 <li>E-commerce: catálogo administrable de hasta 10,000 productos</li>
 <li>Productos, contenido, usuarios o registros administrables</li>
 <li>Marketplaces, membresías, reservas, academias o directorios</li>
@@ -1994,7 +2104,7 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 <div class="client-ownership-copy">
 <span class="eyebrow">Tu plataforma, bajo tu control</span>
 <h3>Nosotros construimos el sistema. Tú administras el negocio.</h3>
-<p>En Sitio Web Pro y Plataforma Web Avanzada no tienes que pedirnos que creemos una página nueva por cada publicación, producto o registro. Dejamos un portal privado para administrar la operación directamente y, cuando tiene sentido para el negocio, la misma plataforma puede instalarse como app empresarial sin crear un ecosistema separado.</p>
+<p>En Sitio Web Pro y Plataforma Web Avanzada no tienes que pedirnos que creemos una página nueva por cada publicación, producto o registro. Dejamos un portal privado para administrar la operación directamente y, cuando tiene sentido para el negocio, la misma plataforma puede instalarse como app empresarial sin crear un ecosistema separado. Además, Evolution Design no cobra comisión porcentual por cada venta realizada dentro del sistema.</p>
 </div>
 <div class="client-ownership-grid">
 <div><i>01</i><strong>Publica sin depender de nosotros</strong><small>Contenido y productos desde tu panel.</small></div>
