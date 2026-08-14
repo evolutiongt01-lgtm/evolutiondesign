@@ -12,7 +12,7 @@
 <meta content="Evolution Design — Diseño gráfico, proyectos PSD editables y biblioteca premium para miembros." name="description"/>
 <meta content="Evolution Design" name="author"/>
 <meta content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" name="google-site-verification"/>
-<meta name="evolution-build" content="2026-08-14-diseno-grafico-mobile-ultra-fluid-v5">
+<meta name="evolution-build" content="2026-08-14-diseno-grafico-safari-sw-redirect-fix-v6">
 <title>Diseño Gráfico — Recursos PSD y Membresía | Evolution Design</title>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -4247,5 +4247,32 @@ body.gd-modal-open{overflow:hidden}
     }
   }
 </style>
+
+<script id="evolution-safari-sw-rescue">
+(() => {
+  if (!('serviceWorker' in navigator)) return;
+
+  let already = false;
+  try {
+    already = localStorage.getItem('evolution_sw_redirect_fix_v6') === '1';
+  } catch (_) {}
+
+  if (already) return;
+
+  navigator.serviceWorker.ready.then(registration => {
+    const worker =
+      registration.waiting ||
+      registration.active ||
+      navigator.serviceWorker.controller;
+
+    worker?.postMessage({ type:'CLEAR_EVOLUTION_CACHES' });
+
+    try {
+      localStorage.setItem('evolution_sw_redirect_fix_v6','1');
+    } catch (_) {}
+  }).catch(() => {});
+})();
+</script>
+
 </body>
 </html>
