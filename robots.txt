@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /perfil.html
+Disallow: /proyectos.html
+Disallow: /portal.html
+Disallow: /system.html
+
+Sitemap: https://evolutiondesing.com/sitemap.xml
