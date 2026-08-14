@@ -5,7 +5,7 @@
    - Deletes all older Evolution caches.
    - Keeps private/auth/payment routes network-only.
 */
-const VERSION = 'evolution-app-2026-08-14-v7-web-freeze-fix';
+const VERSION = 'evolution-app-2026-08-14-v8-ios-auth-autofill-fix';
 const PAGE_CACHE = `${VERSION}-pages`;
 const ASSET_CACHE = `${VERSION}-assets`;
 
