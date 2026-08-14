@@ -1,12 +1,12 @@
-/* Evolution Design · Persistent App Shell Navigation · v16 */
+/* Evolution Design · Persistent App Shell Navigation · v17 */
 (() => {
   'use strict';
 
   const ICONS = {
     menu:`<svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>`,
     home:`<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>`,
-    arq:`<svg viewBox="0 0 24 24"><path d="M4 21V10l8-7 8 7v11"/><path d="M9 21v-7h6v7"/></svg>`,
-    graf:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 15c1.5-4 3.5-6.5 7-8"/><circle cx="8" cy="15" r="1"/></svg>`,
+    arq:`<svg viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M12 4v17"/><path d="M8.5 21h7"/><path d="M6 2v4M9 2v4M12 2v4M15 2v4M18 2v4"/></svg>`,
+    graf:`<svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><path d="m9 5 3-3 3 3M9 19l3 3 3-3M5 9l-3 3 3 3M19 9l3 3-3 3"/></svg>`,
     web:`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 13l-2 2 2 2M15 13l2 2-2 2"/></svg>`,
     folder:`<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
     login:`<svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>`,
@@ -86,7 +86,7 @@
     .evo-mobile-profile{border-color:rgba(212,184,149,.5)}
     .evo-mobile-profile img{width:28px;height:28px;border-radius:50%;object-fit:cover}
     .evo-mobile-profile .evo-avatar-fallback{width:28px;height:28px;border:0;font-size:.62rem}
-    .evo-tabs{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(62px,1fr))!important;padding:0 7px!important;gap:2px!important}
+    .evo-tabs{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:0 7px!important;gap:2px!important}
     .evo-tab{min-width:0;min-height:54px;padding:5px 1px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7d7d85;border-bottom:2px solid transparent;font:600 .58rem/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:color .18s ease,border-color .18s ease,transform .18s ease}
     .evo-tab svg{width:19px;height:19px;margin-bottom:4px;opacity:.68}
     .evo-tab.active{color:#fff;border-bottom-color:var(--evo-accent)}
@@ -104,7 +104,7 @@
   `).join('') + `
     <li><a href="/sobre-nosotros" class="evo-menu-item"><span>Sobre Nosotros</span></a></li>
     <li><a href="/feedback" class="evo-menu-item"><span>Feedback</span></a></li>
-    <li id="linkProyectosMenuDesktop" class="evo-d-none"><a href="/proyectos.html" class="evo-menu-item">${ICONS.folder}<span>Mis Proyectos</span></a></li>
+    <li id="linkProyectosMenuDesktop"><a href="/proyectos.html" class="evo-menu-item">${ICONS.folder}<span>Mis Proyectos</span></a></li>
   `;
 
   class EvolutionNav extends HTMLElement {
@@ -128,7 +128,7 @@
 
               <div class="evo-links">
                 ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-link${p.key===active?' active':''}">${p.label}</a>`).join('')}
-                <a href="/proyectos.html" id="linkProyectosDesktop" class="evo-link evo-d-none">Mis Proyectos</a>
+                <a href="/proyectos.html" id="linkProyectosDesktop" class="evo-link">Mis Proyectos</a>
                 <div id="auth-desktop-wrapper"><a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a></div>
               </div>
 
@@ -147,15 +147,18 @@
             <a href="/index.html" class="evo-logo" data-evo-route="home" aria-label="Evolution Design Home"><img src="/img/logo.png" alt="Evolution Design"></a>
             <div id="auth-mobile-wrapper"><a href="#" class="evo-icon" data-evo-login aria-label="Login">${ICONS.login}</a></div>
           </div>
+
           <div class="evo-tabs">
             ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-tab${p.key===active?' active':''}">${ICONS[p.icon]}<span>${p.short}</span></a>`).join('')}
-            <a href="/proyectos.html" id="linkProyectosMobile" class="evo-tab evo-d-none">${ICONS.folder}<span>Proyectos</span></a>
+            <a href="/proyectos.html" id="linkProyectosMobile" class="evo-tab">${ICONS.folder}<span>Proyectos</span></a>
           </div>
         </nav>`;
     }
   }
 
-  if(!customElements.get('evolution-nav')) customElements.define('evolution-nav',EvolutionNav);
+  if(!customElements.get('evolution-nav')){
+    customElements.define('evolution-nav',EvolutionNav);
+  }
 
   const closeMenus=()=>{
     document.getElementById('desktopDropdownMenu')?.classList.remove('show');
@@ -167,67 +170,178 @@
   document.addEventListener('click',e=>{
     const el=e.target instanceof Element?e.target:null;
     if(!el) return;
+
     const d=el.closest('#desktopMenuBtn');
     const m=el.closest('#mobileMenuBtn');
-    if(d){e.preventDefault();e.stopImmediatePropagation();const menu=document.getElementById('desktopDropdownMenu');const on=!menu?.classList.contains('show');closeMenus();menu?.classList.toggle('show',on);d.setAttribute('aria-expanded',String(on));return}
-    if(m){e.preventDefault();e.stopImmediatePropagation();const menu=document.getElementById('mobileDropdownMenu');const on=!menu?.classList.contains('show');closeMenus();menu?.classList.toggle('show',on);m.setAttribute('aria-expanded',String(on));return}
-    if(el.closest('[data-evo-login]')){e.preventDefault();e.stopImmediatePropagation();document.dispatchEvent(new CustomEvent('evolution:auth-request'));return}
-    if(el.closest('[data-evo-logout]')){e.preventDefault();e.stopImmediatePropagation();document.dispatchEvent(new CustomEvent('evolution:logout-request'));return}
-    if(!el.closest('.evo-menu-wrap')) closeMenus();
+
+    if(d){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      const menu=document.getElementById('desktopDropdownMenu');
+      const on=!menu?.classList.contains('show');
+
+      closeMenus();
+      menu?.classList.toggle('show',on);
+      d.setAttribute('aria-expanded',String(on));
+      return;
+    }
+
+    if(m){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      const menu=document.getElementById('mobileDropdownMenu');
+      const on=!menu?.classList.contains('show');
+
+      closeMenus();
+      menu?.classList.toggle('show',on);
+      m.setAttribute('aria-expanded',String(on));
+      return;
+    }
+
+    if(el.closest('[data-evo-login]')){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      document.dispatchEvent(new CustomEvent('evolution:auth-request'));
+      return;
+    }
+
+    if(el.closest('[data-evo-logout]')){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      document.dispatchEvent(new CustomEvent('evolution:logout-request'));
+      return;
+    }
+
+    if(!el.closest('.evo-menu-wrap')){
+      closeMenus();
+    }
   },true);
 
-  document.addEventListener('keydown',e=>{if(e.key==='Escape') closeMenus()});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape') closeMenus();
+  });
 
   const api = {
     setActive(key){
       document.querySelectorAll('[data-evo-route]').forEach(a=>{
         const on=a.dataset.evoRoute===key;
+
         a.classList.toggle('active',on);
-        if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+
+        if(on){
+          a.setAttribute('aria-current','page');
+        }else{
+          a.removeAttribute('aria-current');
+        }
       });
+
       api.syncProjects();
       closeMenus();
     },
-    state:{user:null,isAdmin:false,route:inferKey(location.href)},
-    syncProjects(){
-      const show=Boolean(api.state.user)||api.state.route==='web';
-      ['linkProyectosDesktop','linkProyectosMenuDesktop','linkProyectosMobile'].forEach(id=>document.getElementById(id)?.classList.toggle('evo-d-none',!show));
+
+    state:{
+      user:null,
+      isAdmin:false,
+      route:inferKey(location.href)
     },
+
+    syncProjects(){
+      [
+        'linkProyectosDesktop',
+        'linkProyectosMenuDesktop',
+        'linkProyectosMobile'
+      ].forEach(id=>{
+        document.getElementById(id)?.classList.remove('evo-d-none');
+      });
+    },
+
     setAuth(payload={}){
       const user=payload.user||null;
       const isAdmin=Boolean(payload.isAdmin);
+
       api.state.user=user;
       api.state.isAdmin=isAdmin;
+
       const desktop=document.getElementById('auth-desktop-wrapper');
       const mobile=document.getElementById('auth-mobile-wrapper');
       const profile=document.getElementById('floating-profile-desktop');
       const admin=document.getElementById('admin-badge-container-desktop');
 
       if(!user){
-        if(desktop)desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a>`;
-        if(mobile)mobile.innerHTML=`<a href="#" class="evo-icon" data-evo-login aria-label="Login">${ICONS.login}</a>`;
-        if(profile)profile.innerHTML='';
-        if(admin)admin.innerHTML='';
+        if(desktop){
+          desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a>`;
+        }
+
+        if(mobile){
+          mobile.innerHTML=`<a href="#" class="evo-icon" data-evo-login aria-label="Login">${ICONS.login}</a>`;
+        }
+
+        if(profile) profile.innerHTML='';
+        if(admin) admin.innerHTML='';
+
         api.syncProjects();
         return;
       }
 
-      const initials=escapeHTML((user.displayName||user.email||'U').trim().charAt(0).toUpperCase()||'U');
+      const initials=escapeHTML(
+        (user.displayName||user.email||'U')
+          .trim()
+          .charAt(0)
+          .toUpperCase()
+          ||
+          'U'
+      );
+
       const avatar=user.photoURL
         ? `<img src="${escapeHTML(user.photoURL)}" alt="Perfil" class="evo-profile-pic">`
         : `<span class="evo-avatar-fallback">${initials}</span>`;
+
       const mobileAvatar=user.photoURL
         ? `<img src="${escapeHTML(user.photoURL)}" alt="Perfil">`
         : `<span class="evo-avatar-fallback">${initials}</span>`;
 
-      if(desktop)desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-logout>${ICONS.logout}<span>Salir</span></a>`;
-      if(profile)profile.innerHTML=`<a href="/perfil.html" aria-label="Mi perfil">${avatar}</a>`;
-      if(mobile)mobile.innerHTML=`<div class="evo-mobile-auth"><a href="/perfil.html" class="evo-mobile-profile" aria-label="Mi perfil">${mobileAvatar}</a>${isAdmin?`<a href="/admin.html" class="evo-mobile-action" aria-label="Panel Admin">${ICONS.shield}</a>`:''}<a href="#" class="evo-mobile-action" data-evo-logout aria-label="Salir">${ICONS.logout}</a></div>`;
-      if(admin)admin.innerHTML=isAdmin?`<a href="/admin.html" class="evo-admin-badge">${ICONS.shield}<span>Panel Admin</span></a>`:'';
+      if(desktop){
+        desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-logout>${ICONS.logout}<span>Salir</span></a>`;
+      }
+
+      if(profile){
+        profile.innerHTML=`<a href="/perfil.html" aria-label="Mi perfil">${avatar}</a>`;
+      }
+
+      if(mobile){
+        mobile.innerHTML=`
+          <div class="evo-mobile-auth">
+            <a href="/perfil.html" class="evo-mobile-profile" aria-label="Mi perfil">
+              ${mobileAvatar}
+            </a>
+
+            ${isAdmin
+              ? `<a href="/admin.html" class="evo-mobile-action" aria-label="Panel Admin">${ICONS.shield}</a>`
+              : ''
+            }
+
+            <a href="#" class="evo-mobile-action" data-evo-logout aria-label="Salir">
+              ${ICONS.logout}
+            </a>
+          </div>`;
+      }
+
+      if(admin){
+        admin.innerHTML=isAdmin
+          ? `<a href="/admin.html" class="evo-admin-badge">${ICONS.shield}<span>Panel Admin</span></a>`
+          : '';
+      }
+
       api.syncProjects();
     }
   };
 
   window.EvolutionNav=api;
-  addEventListener('evolution:route-changed',e=>{api.state.route=e.detail?.key||inferKey(location.href);api.setActive(api.state.route)});
+
+  addEventListener('evolution:route-changed',e=>{
+    api.state.route=e.detail?.key||inferKey(location.href);
+    api.setActive(api.state.route);
+  });
 })();
