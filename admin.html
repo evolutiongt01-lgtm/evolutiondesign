@@ -1,14 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#050505">
+<meta charset="utf-8"/>
+<meta content="2026-08-14-admin-optimized-home-v1" name="evolution-build"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#050505" name="theme-color"/>
 <title>Evolution Design · Admin</title>
-<link rel="icon" type="image/png" href="img/favicon.png">
+<link href="img/favicon.png" rel="icon" type="image/png"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+<link crossorigin="" href="https://www.gstatic.com" rel="preconnect"/>
+<link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
+<link href="//www.gstatic.com" rel="dns-prefetch"/>
 <!-- SDK DE AWS v2 (Tanque de guerra para Cloudflare R2 en navegadores) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1390.0/aws-sdk.min.js"></script>
-
 <style>
 @font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-v12-latin-regular.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-v12-latin-500.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-v12-latin-700.woff2') format('woff2')}
 :root{--bg:#050505;--panel:#0d0d0e;--panel2:#121213;--line:rgba(255,255,255,.09);--soft:rgba(255,255,255,.055);--text:#f6f6f3;--muted:#8c8c92;--accent:#d4b895;--accent2:#e4c9a7;--green:#39d477;--red:#ff6673;--yellow:#e9bc65;--radius:18px}*{box-sizing:border-box}html{background:#050505;color-scheme:dark}body{margin:0;background:radial-gradient(circle at 30% -10%,rgba(212,184,149,.08),transparent 32%),#050505;color:var(--text);font-family:Inter,system-ui,sans-serif;min-height:100vh}button,input,select,textarea{font:inherit}.hidden{display:none!important}
@@ -473,493 +478,619 @@
 @media(max-width:520px){.zoho-modal-actions{grid-template-columns:1fr}}
 
 </style>
+<style id="evolution-admin-performance">
+/* =========================================================
+   EVOLUTION ADMIN · PERFORMANCE + HOME EXIT
+   ========================================================= */
+.admin-home-btn,
+.admin-home-side{
+  text-decoration:none!important;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+.admin-home-btn{
+  border-color:rgba(212,184,149,.24)!important;
+  background:rgba(212,184,149,.065)!important;
+  color:#e1c8a8!important;
+}
+.admin-home-btn:hover{
+  background:rgba(212,184,149,.12)!important;
+  border-color:rgba(212,184,149,.42)!important;
+  color:#fff!important;
+}
+.admin-home-side{
+  width:100%;
+  min-height:38px;
+  margin-top:10px;
+  padding:0 10px;
+  border:1px solid rgba(212,184,149,.18);
+  border-radius:10px;
+  background:rgba(212,184,149,.045);
+  color:#d4b895;
+  font-size:10px;
+  font-weight:700;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,transform .18s ease;
+}
+.admin-home-side:hover{
+  background:rgba(212,184,149,.10);
+  border-color:rgba(212,184,149,.34);
+  color:#fff;
+  transform:translateY(-1px);
+}
+.admin-home-mobile{
+  display:none;
+  margin-left:auto;
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  border:1px solid rgba(212,184,149,.20);
+  background:rgba(212,184,149,.055);
+  color:#d4b895;
+  text-decoration:none;
+}
+
+/* View changes feel instant but not abrupt. */
+.view.active{
+  animation:adminViewIn .22s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes adminViewIn{
+  from{opacity:.72;transform:translate3d(0,5px,0)}
+  to{opacity:1;transform:none}
+}
+
+/* Isolate independent UI cards from unnecessary repaint work. */
+.metric,
+.panel,
+.webreq-stat,
+.sub-metric,
+.financial-card,
+.detail{
+  contain:layout paint style;
+}
+.table-wrap{
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-gutter:stable;
+}
+
+/* Pause decorative motion when app/tab isn't visible. */
+html.admin-page-hidden *{
+  animation-play-state:paused!important;
+}
+
+/* Slightly cheaper rendering on touch devices. */
+@media(max-width:800px){
+  .sidebar{
+    backdrop-filter:blur(11px)!important;
+    -webkit-backdrop-filter:blur(11px)!important;
+  }
+  .modal-back{
+    backdrop-filter:blur(4px)!important;
+    -webkit-backdrop-filter:blur(4px)!important;
+  }
+  .drawer-head{
+    backdrop-filter:blur(8px) saturate(125%)!important;
+    -webkit-backdrop-filter:blur(8px) saturate(125%)!important;
+  }
+  .form-actions.sticky-actions,
+  .unsaved-guard{
+    backdrop-filter:blur(7px)!important;
+    -webkit-backdrop-filter:blur(7px)!important;
+  }
+  .brand{
+    align-items:center;
+  }
+  .admin-home-mobile{
+    display:inline-flex;
+  }
+  .topbar{
+    gap:12px;
+  }
+  .top-actions{
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+  .admin-home-btn span{
+    display:none;
+  }
+  .admin-home-btn{
+    width:38px;
+    height:38px;
+    padding:0;
+    border-radius:50%;
+  }
+  .panel,
+  .metric,
+  .webreq-stat,
+  .sub-metric{
+    box-shadow:none!important;
+  }
+}
+
+@media(max-width:560px){
+  .main{
+    contain:paint;
+  }
+  .topbar{
+    position:relative;
+    align-items:center;
+  }
+  .top-actions{
+    gap:6px;
+  }
+  .btn{
+    min-height:38px;
+  }
+}
+
+/* Don't add animation cost when the OS asks for less motion. */
+@media(prefers-reduced-motion:reduce){
+  .view.active{
+    animation:none!important;
+  }
+  .admin-home-side{
+    transition:none!important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="admin-shell" id="adminShell" style="visibility:hidden">
-<aside class="sidebar"><div class="brand"><img src="img/logo.png" alt="Evolution Design"><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="subscriptions"><span class="dot"></span>Suscripciones <span class="sub-count" id="subscriptionCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div id="adminEmail" class="admin-user">—</div><button id="logoutBtn" class="logout">Cerrar sesión</button></div></aside>
-<main class="main"><div id="systemAlert" class="system-alert"></div>
-<div class="topbar"><div><div class="kicker">Evolution Design · Administración</div><h1 id="pageTitle" class="title">Dashboard</h1></div><div class="top-actions"><button id="refreshBtn" class="btn">Actualizar datos</button><a href="index.html" class="btn" style="text-decoration:none">Ver sitio</a></div></div>
-<section id="view-dashboard" class="view active"><div id="metrics" class="metrics"></div><div class="grid-2"><div class="panel"><div class="panel-head"><div><div class="panel-title">Proyectos recientes</div><div class="panel-copy">Compras, órdenes personalizadas y estado operativo.</div></div><button class="btn" onclick="switchView('projects')">Ver todos</button></div><div id="recentProjects" class="panel-body"></div></div><div class="panel"><div class="panel-head"><div><div class="panel-title">Clientes por país</div><div class="panel-copy">País reportado por PayPal o última ubicación.</div></div></div><div id="countryList" class="panel-body country-list"></div></div></div></section>
-<section id="view-payments" class="view">
+<aside class="sidebar"><div class="brand"><img alt="Evolution Design" src="img/logo.png"/><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div><a aria-label="Volver al Home" class="admin-home-mobile" href="index.html" title="Volver al Home"><svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="18"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg></a></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="subscriptions"><span class="dot"></span>Suscripciones <span class="sub-count" id="subscriptionCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div class="admin-user" id="adminEmail">—</div><a class="admin-home-side" href="index.html"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="15"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Volver al Home</span></a><button class="logout" id="logoutBtn">Cerrar sesión</button></div></aside>
+<main class="main"><div class="system-alert" id="systemAlert"></div>
+<div class="topbar"><div><div class="kicker">Evolution Design · Administración</div><h1 class="title" id="pageTitle">Dashboard</h1></div><div class="top-actions"><button class="btn" id="refreshBtn">Actualizar datos</button><a aria-label="Volver al Home" class="btn admin-home-btn" href="index.html"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="14"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Volver al Home</span></a></div></div>
+<section class="view active" id="view-dashboard"><div class="metrics" id="metrics"></div><div class="grid-2"><div class="panel"><div class="panel-head"><div><div class="panel-title">Proyectos recientes</div><div class="panel-copy">Compras, órdenes personalizadas y estado operativo.</div></div><button class="btn" onclick="switchView('projects')">Ver todos</button></div><div class="panel-body" id="recentProjects"></div></div><div class="panel"><div class="panel-head"><div><div class="panel-title">Clientes por país</div><div class="panel-copy">País reportado por PayPal o última ubicación.</div></div></div><div class="panel-body country-list" id="countryList"></div></div></div></section>
+<section class="view" id="view-payments">
 <div class="webreq-card-grid"><div class="webreq-stat"><span>Por revisar</span><strong id="paymentPendingMetric">0</strong></div><div class="webreq-stat"><span>Aprobados</span><strong id="paymentApprovedMetric">0</strong></div><div class="webreq-stat"><span>Rechazados</span><strong id="paymentRejectedMetric">0</strong></div></div>
-<div class="toolbar"><input id="paymentSearch" class="search" placeholder="Buscar orden, cliente, referencia, banco o Binance"><select id="paymentReviewFilter" class="select"><option value="">Todos los comprobantes</option><option value="pending">Por revisar</option><option value="approved">Aprobados</option><option value="rejected">Rechazados</option></select></div>
+<div class="toolbar"><input class="search" id="paymentSearch" placeholder="Buscar orden, cliente, referencia, banco o Binance"/><select class="select" id="paymentReviewFilter"><option value="">Todos los comprobantes</option><option value="pending">Por revisar</option><option value="approved">Aprobados</option><option value="rejected">Rechazados</option></select></div>
 <div class="table-wrap"><table><thead><tr><th>Orden</th><th>Cliente</th><th>Método</th><th>Monto esperado</th><th>Referencia</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody id="paymentReceiptsBody"></tbody></table></div>
 </section>
-
-<section id="view-subscriptions" class="view">
-  <div class="sub-metrics">
-    <div class="sub-metric"><span>Suscripciones activas</span><strong id="subActiveMetric">0</strong></div>
-    <div class="sub-metric"><span>Renuevan ≤ 7 días</span><strong id="subSoonMetric">0</strong></div>
-    <div class="sub-metric"><span>Vencidas</span><strong id="subExpiredMetric">0</strong></div>
-    <div class="sub-metric"><span>Ingreso mensual activo</span><strong id="subMrrMetric">$0.00</strong></div>
-  </div>
-  <div class="toolbar">
-    <input id="subscriptionSearch" class="search" placeholder="Buscar cliente, correo, plan o ID">
-    <select id="subscriptionFilter" class="select">
-      <option value="">Todas</option>
-      <option value="active">Activas</option>
-      <option value="expiring">Renuevan pronto</option>
-      <option value="expired">Vencidas</option>
-    </select>
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Cliente</th><th>Plan</th><th>Precio</th><th>Estado</th><th>Días restantes</th><th>Próximo pago</th><th>Proveedor</th><th></th></tr></thead>
-      <tbody id="subscriptionsBody"></tbody>
-    </table>
-  </div>
+<section class="view" id="view-subscriptions">
+<div class="sub-metrics">
+<div class="sub-metric"><span>Suscripciones activas</span><strong id="subActiveMetric">0</strong></div>
+<div class="sub-metric"><span>Renuevan ≤ 7 días</span><strong id="subSoonMetric">0</strong></div>
+<div class="sub-metric"><span>Vencidas</span><strong id="subExpiredMetric">0</strong></div>
+<div class="sub-metric"><span>Ingreso mensual activo</span><strong id="subMrrMetric">$0.00</strong></div>
+</div>
+<div class="toolbar">
+<input class="search" id="subscriptionSearch" placeholder="Buscar cliente, correo, plan o ID"/>
+<select class="select" id="subscriptionFilter">
+<option value="">Todas</option>
+<option value="active">Activas</option>
+<option value="expiring">Renuevan pronto</option>
+<option value="expired">Vencidas</option>
+</select>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Cliente</th><th>Plan</th><th>Precio</th><th>Estado</th><th>Días restantes</th><th>Próximo pago</th><th>Proveedor</th><th></th></tr></thead>
+<tbody id="subscriptionsBody"></tbody>
+</table>
+</div>
 </section>
-<section id="view-projects" class="view"><div class="toolbar"><input id="projectSearch" class="search" placeholder="Buscar proyecto, cliente, orden o transacción"><select id="statusFilter" class="select"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="payment_pending_review">Comprobante por revisar</option><option value="payment_failed">Fallo de pago</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En proceso</option><option value="review">Revisión</option><option value="delivered" disabled>Entregado · automático al publicar entrega final</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
-<section id="view-clients" class="view"><div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar nombre, correo o país"></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Ubicación</th><th>Última conexión / actividad</th><th>Órdenes</th><th>Total comprado</th><th></th></tr></thead><tbody id="clientsBody"></tbody></table></div></section>
-<section id="view-webrequests" class="view">
-  <div class="webreq-card-grid">
-    <div class="webreq-stat"><span>Nuevas</span><strong id="webReqNew">0</strong></div>
-    <div class="webreq-stat"><span>En revisión</span><strong id="webReqReview">0</strong></div>
-    <div class="webreq-stat"><span>Aprobadas / convertidas</span><strong id="webReqApproved">0</strong></div>
-  </div>
-  <div class="toolbar">
-    <input id="webRequestSearch" class="search" placeholder="Buscar cliente, negocio, plan o correo">
-    <select id="webRequestStatus" class="select">
-      <option value="">Todos los estados</option>
-      <option value="new">Nueva</option>
-      <option value="reviewing">En revisión</option>
-      <option value="approved">Aprobada</option>
-      <option value="rejected">Rechazada</option>
-      <option value="converted">Convertida a proyecto</option>
-    </select>
-  </div>
-  <div class="table-wrap"><table><thead><tr><th>Solicitud</th><th>Cliente</th><th>Negocio</th><th>Plan</th><th>Precio</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody id="webRequestsBody"></tbody></table></div>
+<section class="view" id="view-projects"><div class="toolbar"><input class="search" id="projectSearch" placeholder="Buscar proyecto, cliente, orden o transacción"/><select class="select" id="statusFilter"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="payment_pending_review">Comprobante por revisar</option><option value="payment_failed">Fallo de pago</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En proceso</option><option value="review">Revisión</option><option disabled="" value="delivered">Entregado · automático al publicar entrega final</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
+<section class="view" id="view-clients"><div class="toolbar"><input class="search" id="clientSearch" placeholder="Buscar nombre, correo o país"/></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Ubicación</th><th>Última conexión / actividad</th><th>Órdenes</th><th>Total comprado</th><th></th></tr></thead><tbody id="clientsBody"></tbody></table></div></section>
+<section class="view" id="view-webrequests">
+<div class="webreq-card-grid">
+<div class="webreq-stat"><span>Nuevas</span><strong id="webReqNew">0</strong></div>
+<div class="webreq-stat"><span>En revisión</span><strong id="webReqReview">0</strong></div>
+<div class="webreq-stat"><span>Aprobadas / convertidas</span><strong id="webReqApproved">0</strong></div>
+</div>
+<div class="toolbar">
+<input class="search" id="webRequestSearch" placeholder="Buscar cliente, negocio, plan o correo"/>
+<select class="select" id="webRequestStatus">
+<option value="">Todos los estados</option>
+<option value="new">Nueva</option>
+<option value="reviewing">En revisión</option>
+<option value="approved">Aprobada</option>
+<option value="rejected">Rechazada</option>
+<option value="converted">Convertida a proyecto</option>
+</select>
+</div>
+<div class="table-wrap"><table><thead><tr><th>Solicitud</th><th>Cliente</th><th>Negocio</th><th>Plan</th><th>Precio</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody id="webRequestsBody"></tbody></table></div>
 </section>
-<section id="view-custom" class="view"><div class="panel"><div class="panel-head"><div><div class="panel-title">Crear orden personalizada</div><div class="panel-copy">La orden aparecerá directamente en “Mis Proyectos” del cliente. Puede quedar pendiente de PayPal o marcarse pagada manualmente.</div></div></div><div class="panel-body"><form id="customOrderForm"><div class="form-grid"><div class="field full"><label>Cliente</label><select id="customClient" class="input" required></select></div><div class="field"><label>Nombre de la orden</label><input id="customTitle" class="input" required placeholder="Ej. Remodelación integral vivienda"></div><div class="field"><label>Categoría</label><input id="customCategory" class="input" value="Orden personalizada"></div><div class="field"><label>Precio USD</label><input id="customPrice" class="input" type="number" min="1" step="0.01" required></div><div class="field"><label>Costo interno USD</label><input id="customCost" class="input" type="number" min="0" step="0.01" value="0"><div class="hint">Solo visible en el panel admin; se usa para calcular ganancia.</div></div><div class="field full"><label>Descripción para el cliente</label><textarea id="customDescription" class="textarea" placeholder="Explica el alcance de la orden…"></textarea></div><div class="field full"><label>Archivos requeridos</label><textarea id="customUpload" class="textarea" placeholder="Ej. Sube plano PDF/DWG, fotografías actuales y medidas principales."></textarea></div><div class="field full"><label>Incluye (una línea por elemento)</label><textarea id="customIncluded" class="textarea" placeholder="Modelado 3D completo\n12 renders hiperrealistas\n2 revisiones"></textarea></div><div class="field full"><label>Notas internas</label><textarea id="customAdminNotes" class="textarea" placeholder="Solo administración…"></textarea></div></div><label class="check"><input id="customManualPaid" type="checkbox"> Marcar esta orden como pagada</label><label class="check"><input id="customRequestPaymentNow" type="checkbox" checked> Solicitar el pago inmediatamente si queda pendiente</label><div id="customPaymentMethodWrap" class="payment-method-wrap hidden"><div class="field"><label>Método con el que pagó el cliente</label><select id="customPaymentMethod" class="input"><option value="Binance">Binance</option><option value="POS">POS</option><option value="Efectivo">Efectivo</option><option value="Tarjeta de crédito o débito">Tarjeta de crédito o débito</option><option value="PayPal">PayPal</option></select><div class="hint">Este método quedará guardado en la orden y visible en el panel administrativo.</div></div></div><div class="form-actions"><button class="btn btn-accent" type="submit">Crear orden personalizada</button></div></form></div></div></section>
+<section class="view" id="view-custom"><div class="panel"><div class="panel-head"><div><div class="panel-title">Crear orden personalizada</div><div class="panel-copy">La orden aparecerá directamente en “Mis Proyectos” del cliente. Puede quedar pendiente de PayPal o marcarse pagada manualmente.</div></div></div><div class="panel-body"><form id="customOrderForm"><div class="form-grid"><div class="field full"><label>Cliente</label><select class="input" id="customClient" required=""></select></div><div class="field"><label>Nombre de la orden</label><input class="input" id="customTitle" placeholder="Ej. Remodelación integral vivienda" required=""/></div><div class="field"><label>Categoría</label><input class="input" id="customCategory" value="Orden personalizada"/></div><div class="field"><label>Precio USD</label><input class="input" id="customPrice" min="1" required="" step="0.01" type="number"/></div><div class="field"><label>Costo interno USD</label><input class="input" id="customCost" min="0" step="0.01" type="number" value="0"/><div class="hint">Solo visible en el panel admin; se usa para calcular ganancia.</div></div><div class="field full"><label>Descripción para el cliente</label><textarea class="textarea" id="customDescription" placeholder="Explica el alcance de la orden…"></textarea></div><div class="field full"><label>Archivos requeridos</label><textarea class="textarea" id="customUpload" placeholder="Ej. Sube plano PDF/DWG, fotografías actuales y medidas principales."></textarea></div><div class="field full"><label>Incluye (una línea por elemento)</label><textarea class="textarea" id="customIncluded" placeholder="Modelado 3D completo\n12 renders hiperrealistas\n2 revisiones"></textarea></div><div class="field full"><label>Notas internas</label><textarea class="textarea" id="customAdminNotes" placeholder="Solo administración…"></textarea></div></div><label class="check"><input id="customManualPaid" type="checkbox"/> Marcar esta orden como pagada</label><label class="check"><input checked="" id="customRequestPaymentNow" type="checkbox"/> Solicitar el pago inmediatamente si queda pendiente</label><div class="payment-method-wrap hidden" id="customPaymentMethodWrap"><div class="field"><label>Método con el que pagó el cliente</label><select class="input" id="customPaymentMethod"><option value="Binance">Binance</option><option value="POS">POS</option><option value="Efectivo">Efectivo</option><option value="Tarjeta de crédito o débito">Tarjeta de crédito o débito</option><option value="PayPal">PayPal</option></select><div class="hint">Este método quedará guardado en la orden y visible en el panel administrativo.</div></div></div><div class="form-actions"><button class="btn btn-accent" type="submit">Crear orden personalizada</button></div></form></div></div></section>
 </main></div>
-
-
-<div id="subscriptionModal" class="modal-back">
-  <div class="drawer">
-    <div class="drawer-head">
-      <div><div class="kicker">Evolution PSD · Membresía</div><div id="subDrawerTitle" class="drawer-title">—</div><div id="subDrawerSub" class="sub"></div></div>
-      <button class="drawer-close" onclick="closeSubscription()" aria-label="Cerrar">×</button>
-    </div>
-    <div id="subDrawerGrid" class="sub-drawer-grid"></div>
-    <div class="section"><div class="section-h">Control de membresía</div><div class="section-b">
-      <div class="form-grid">
-        <div class="field"><label>Estado</label><select id="subEditStatus" class="input"><option value="active">Activa</option><option value="past_due">Pago pendiente</option><option value="cancelled">Cancelada</option><option value="expired">Vencida</option></select></div>
-        <div class="field"><label>Precio mensual USD</label><input id="subEditPrice" class="input" type="number" min="0" step="0.01"></div>
-        <div class="field full"><label>Nota administrativa</label><textarea id="subAdminNote" class="textarea" placeholder="Notas sobre la suscripción…"></textarea></div>
-      </div>
-      <div class="form-actions"><button class="btn btn-accent" type="button" onclick="saveSubscriptionAdmin()">Guardar cambios</button></div>
-    </div></div>
-  </div>
+<div class="modal-back" id="subscriptionModal">
+<div class="drawer">
+<div class="drawer-head">
+<div><div class="kicker">Evolution PSD · Membresía</div><div class="drawer-title" id="subDrawerTitle">—</div><div class="sub" id="subDrawerSub"></div></div>
+<button aria-label="Cerrar" class="drawer-close" onclick="closeSubscription()">×</button>
 </div>
-
-<div id="webRequestModal" class="modal-back">
-  <div class="drawer">
-    <div class="drawer-head">
-      <div><div class="kicker">Solicitud Diseño Web</div><div id="webReqDrawerTitle" class="drawer-title">—</div><div id="webReqDrawerSub" class="sub"></div></div>
-      <button class="drawer-close" onclick="closeWebRequest()" aria-label="Cerrar">×</button>
-    </div>
-    <div id="webReqDetails" class="detail-grid"></div>
-    <div class="section"><div class="section-h">Brief del cliente</div><div class="section-b"><div id="webReqBrief" class="webreq-brief-grid"></div></div></div>
-    <div class="section">
-      <div class="section-h"><div>Revisión administrativa</div><div class="section-h-copy">Actualiza el estado o conviértela en un proyecto real del cliente.</div></div>
-      <div class="section-b">
-        <div class="form-grid">
-          <div class="field"><label>Estado</label><select id="webReqEditStatus" class="input"><option value="new">Nueva</option><option value="reviewing">En revisión</option><option value="approved">Aprobada</option><option value="rejected">Rechazada</option><option value="converted">Convertida a proyecto</option></select></div>
-          <div class="field"><label>Precio aprobado USD</label><input id="webReqApprovedPrice" class="input" type="number" min="0" step="0.01"></div>
-          <div class="field full"><label>Notas internas</label><textarea id="webReqAdminNotes" class="textarea" placeholder="Notas de revisión…"></textarea></div>
-        </div>
-        <div class="form-actions"><button class="btn" type="button" onclick="saveWebRequest()">Guardar revisión</button><button class="btn btn-accent" type="button" onclick="convertWebRequestToProject()">Aprobar y crear proyecto →</button><button class="btn btn-danger" type="button" onclick="deleteWebRequest()">Eliminar solicitud</button></div>
-        <div class="webreq-action-note">Al crear el proyecto, se genera una orden pendiente de pago dentro de la cuenta del cliente. No se marca como pagada automáticamente.</div>
-      </div>
-    </div>
-  </div>
+<div class="sub-drawer-grid" id="subDrawerGrid"></div>
+<div class="section"><div class="section-h">Control de membresía</div><div class="section-b">
+<div class="form-grid">
+<div class="field"><label>Estado</label><select class="input" id="subEditStatus"><option value="active">Activa</option><option value="past_due">Pago pendiente</option><option value="cancelled">Cancelada</option><option value="expired">Vencida</option></select></div>
+<div class="field"><label>Precio mensual USD</label><input class="input" id="subEditPrice" min="0" step="0.01" type="number"/></div>
+<div class="field full"><label>Nota administrativa</label><textarea class="textarea" id="subAdminNote" placeholder="Notas sobre la suscripción…"></textarea></div>
 </div>
-
-<div id="projectModal" class="modal-back">
-  <div class="drawer">
-    <div class="drawer-head">
-      <div>
-        <div class="kicker">Proyecto / Orden</div>
-        <div id="drawerTitle" class="drawer-title">—</div>
-        <div id="drawerSub" class="sub"></div>
-      </div>
-      <div class="drawer-head-actions">
-        <div id="unsavedPill" class="unsaved-pill">Cambios sin guardar</div>
-        <button class="drawer-close" onclick="closeProject()" aria-label="Cerrar">×</button>
-      </div>
-    </div>
-
-    <div id="unsavedGuard" class="unsaved-guard" role="status" aria-live="polite">
-      <div class="unsaved-guard-copy"><span class="unsaved-guard-icon">!</span><div class="unsaved-guard-text"><strong>Cambios sin guardar</strong><span>No cierres este proyecto. Guarda para que el cliente y el resto del equipo vean los cambios.</span></div></div>
-      <button type="button" class="btn" onclick="saveProject()">Guardar ahora</button>
-    </div>
-
-    <div id="drawerDetails" class="detail-grid"></div>
-
-    <div id="creativeBriefSection" class="section hidden">
-      <div class="section-h">
-        <div>Brief creativo</div>
-        <div class="section-h-copy">Solo aparece en pedidos de Diseño Gráfico, Logo o Video.</div>
-      </div>
-      <div class="section-b">
-        <div id="creativeBriefGrid" class="evo-creative-grid"></div>
-        <div id="creativeReferenceWrap" class="evo-reference-wrap hidden">
-          <div class="evo-reference-title">Logo actual / boceto enviado por el cliente</div>
-          <div id="creativeReferenceGrid" class="evo-reference-grid"></div>
-        </div>
-      </div>
-    </div>
-
-
-    <div id="paymentProofSection" class="section payment-proof-section hidden">
-      <div class="section-h"><div class="payment-proof-head"><div><div>Comprobante de pago</div><div class="section-h-copy">Binance Pay o transferencia bancaria · revisión manual de administración.</div></div><span id="paymentProofBadge" class="payment-proof-badge">Por revisar</span></div></div>
-      <div class="section-b"><div class="payment-proof-layout">
-        <div id="paymentReceiptPreview" class="payment-receipt-preview"><div class="payment-receipt-empty"><strong>Sin vista previa</strong>Abre el comprobante para revisarlo.</div></div>
-        <div class="payment-proof-info">
-          <div id="paymentProofDetails" class="payment-proof-grid"></div>
-          <div class="payment-proof-actions"><button id="openReceiptBtn" class="btn" type="button" onclick="openPaymentReceipt(false)">Ver comprobante</button><button id="downloadReceiptBtn" class="btn" type="button" onclick="openPaymentReceipt(true)">Descargar archivo</button></div>
-          <div class="payment-proof-review"><label>Nota de revisión</label><textarea id="paymentReviewNote" class="textarea" placeholder="Ej. Depósito confirmado en BAC / referencia coincide."></textarea><div class="payment-review-buttons"><button id="rejectPaymentBtn" class="btn payment-reject" type="button" onclick="rejectManualPayment()">Rechazar comprobante</button><button id="approvePaymentBtn" class="btn payment-approve" type="button" onclick="approveManualPayment()">Aprobar pago ✓</button></div></div>
-        </div>
-      </div></div>
-    </div>
-
-
-    <div class="section" id="workCompletionSection">
-      <div class="section-h">
-        <div>Trabajo terminado · muestra al cliente</div>
-        <div class="section-h-copy">Esta etapa es independiente del pago y de la entrega final. Aquí el delegado confirma que terminó y envía únicamente una muestra protegida.</div>
-      </div>
-      <div class="section-b">
-        <div class="work-completion-card">
-          <div class="work-completion-status">
-            <div><strong id="workCompletionTitle">Trabajo todavía en proceso</strong><span id="workCompletionHelp">Marca el trabajo como terminado cuando el delegado ya no necesite editar la propuesta.</span></div>
-            <span id="workCompletionBadge" class="work-status-pill wait">EN PROCESO</span>
-          </div>
-          <div class="work-completion-actions">
-            <button id="markWorkCompletedBtn" class="btn" type="button" onclick="markWorkCompleted()">Marcar trabajo terminado</button>
-            <button id="reopenWorkBtn" class="btn preview-withdraw-btn" type="button" onclick="reopenWorkForChanges()">Reabrir para cambios</button>
-          </div>
-          <div class="payment-preview-admin" style="margin-top:14px">
-            <div class="payment-preview-admin-head"><div><strong>Muestra protegida del trabajo</strong><span>Sube una lámina o wallpaper de muestra. Es independiente de los PDF, SKP, DWG, ZIP y enlaces finales. La muestra solo aparece cuando pulses “Notificar al cliente”.</span></div><span id="paymentPreviewStatusBadge" class="payment-request-badge">Sin muestra</span></div>
-            <div class="payment-preview-admin-grid">
-              <div id="paymentPreviewAdminView" class="payment-preview-drop"><div class="payment-preview-empty">Aún no has subido una muestra para este proyecto.</div></div>
-              <div class="payment-preview-controls">
-                <input id="paymentPreviewInput" class="input" type="file" accept="image/jpeg,image/png,image/webp,image/avif">
-                <button id="paymentPreviewUploadBtn" class="btn btn-accent" type="button" onclick="uploadPaymentPreview()">Subir / reemplazar muestra</button>
-                <button id="paymentPreviewRemoveBtn" class="btn payment-preview-remove" type="button" onclick="deletePaymentPreview()">Quitar muestra</button>
-                <div id="paymentPreviewMeta" class="payment-preview-meta">JPG, PNG, WEBP o AVIF · Máx. 50 MB. El video se añadirá como una función separada después.</div>
-              </div>
-            </div>
-          </div>
-          <div class="work-completion-actions">
-            <button id="notifyClientPreviewBtn" class="btn preview-notify-btn" type="button" onclick="openZohoNotify()">Notificar al cliente · enviar correo</button>
-            <button id="withdrawClientPreviewBtn" class="btn preview-withdraw-btn" type="button" onclick="withdrawClientPreview()">Retirar muestra del cliente</button>
-          </div>
-          <div id="zohoNotifyStatus" class="zoho-notify-status">
+<div class="form-actions"><button class="btn btn-accent" onclick="saveSubscriptionAdmin()" type="button">Guardar cambios</button></div>
+</div></div>
+</div>
+</div>
+<div class="modal-back" id="webRequestModal">
+<div class="drawer">
+<div class="drawer-head">
+<div><div class="kicker">Solicitud Diseño Web</div><div class="drawer-title" id="webReqDrawerTitle">—</div><div class="sub" id="webReqDrawerSub"></div></div>
+<button aria-label="Cerrar" class="drawer-close" onclick="closeWebRequest()">×</button>
+</div>
+<div class="detail-grid" id="webReqDetails"></div>
+<div class="section"><div class="section-h">Brief del cliente</div><div class="section-b"><div class="webreq-brief-grid" id="webReqBrief"></div></div></div>
+<div class="section">
+<div class="section-h"><div>Revisión administrativa</div><div class="section-h-copy">Actualiza el estado o conviértela en un proyecto real del cliente.</div></div>
+<div class="section-b">
+<div class="form-grid">
+<div class="field"><label>Estado</label><select class="input" id="webReqEditStatus"><option value="new">Nueva</option><option value="reviewing">En revisión</option><option value="approved">Aprobada</option><option value="rejected">Rechazada</option><option value="converted">Convertida a proyecto</option></select></div>
+<div class="field"><label>Precio aprobado USD</label><input class="input" id="webReqApprovedPrice" min="0" step="0.01" type="number"/></div>
+<div class="field full"><label>Notas internas</label><textarea class="textarea" id="webReqAdminNotes" placeholder="Notas de revisión…"></textarea></div>
+</div>
+<div class="form-actions"><button class="btn" onclick="saveWebRequest()" type="button">Guardar revisión</button><button class="btn btn-accent" onclick="convertWebRequestToProject()" type="button">Aprobar y crear proyecto →</button><button class="btn btn-danger" onclick="deleteWebRequest()" type="button">Eliminar solicitud</button></div>
+<div class="webreq-action-note">Al crear el proyecto, se genera una orden pendiente de pago dentro de la cuenta del cliente. No se marca como pagada automáticamente.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal-back" id="projectModal">
+<div class="drawer">
+<div class="drawer-head">
+<div>
+<div class="kicker">Proyecto / Orden</div>
+<div class="drawer-title" id="drawerTitle">—</div>
+<div class="sub" id="drawerSub"></div>
+</div>
+<div class="drawer-head-actions">
+<div class="unsaved-pill" id="unsavedPill">Cambios sin guardar</div>
+<button aria-label="Cerrar" class="drawer-close" onclick="closeProject()">×</button>
+</div>
+</div>
+<div aria-live="polite" class="unsaved-guard" id="unsavedGuard" role="status">
+<div class="unsaved-guard-copy"><span class="unsaved-guard-icon">!</span><div class="unsaved-guard-text"><strong>Cambios sin guardar</strong><span>No cierres este proyecto. Guarda para que el cliente y el resto del equipo vean los cambios.</span></div></div>
+<button class="btn" onclick="saveProject()" type="button">Guardar ahora</button>
+</div>
+<div class="detail-grid" id="drawerDetails"></div>
+<div class="section hidden" id="creativeBriefSection">
+<div class="section-h">
+<div>Brief creativo</div>
+<div class="section-h-copy">Solo aparece en pedidos de Diseño Gráfico, Logo o Video.</div>
+</div>
+<div class="section-b">
+<div class="evo-creative-grid" id="creativeBriefGrid"></div>
+<div class="evo-reference-wrap hidden" id="creativeReferenceWrap">
+<div class="evo-reference-title">Logo actual / boceto enviado por el cliente</div>
+<div class="evo-reference-grid" id="creativeReferenceGrid"></div>
+</div>
+</div>
+</div>
+<div class="section payment-proof-section hidden" id="paymentProofSection">
+<div class="section-h"><div class="payment-proof-head"><div><div>Comprobante de pago</div><div class="section-h-copy">Binance Pay o transferencia bancaria · revisión manual de administración.</div></div><span class="payment-proof-badge" id="paymentProofBadge">Por revisar</span></div></div>
+<div class="section-b"><div class="payment-proof-layout">
+<div class="payment-receipt-preview" id="paymentReceiptPreview"><div class="payment-receipt-empty"><strong>Sin vista previa</strong>Abre el comprobante para revisarlo.</div></div>
+<div class="payment-proof-info">
+<div class="payment-proof-grid" id="paymentProofDetails"></div>
+<div class="payment-proof-actions"><button class="btn" id="openReceiptBtn" onclick="openPaymentReceipt(false)" type="button">Ver comprobante</button><button class="btn" id="downloadReceiptBtn" onclick="openPaymentReceipt(true)" type="button">Descargar archivo</button></div>
+<div class="payment-proof-review"><label>Nota de revisión</label><textarea class="textarea" id="paymentReviewNote" placeholder="Ej. Depósito confirmado en BAC / referencia coincide."></textarea><div class="payment-review-buttons"><button class="btn payment-reject" id="rejectPaymentBtn" onclick="rejectManualPayment()" type="button">Rechazar comprobante</button><button class="btn payment-approve" id="approvePaymentBtn" onclick="approveManualPayment()" type="button">Aprobar pago ✓</button></div></div>
+</div>
+</div></div>
+</div>
+<div class="section" id="workCompletionSection">
+<div class="section-h">
+<div>Trabajo terminado · muestra al cliente</div>
+<div class="section-h-copy">Esta etapa es independiente del pago y de la entrega final. Aquí el delegado confirma que terminó y envía únicamente una muestra protegida.</div>
+</div>
+<div class="section-b">
+<div class="work-completion-card">
+<div class="work-completion-status">
+<div><strong id="workCompletionTitle">Trabajo todavía en proceso</strong><span id="workCompletionHelp">Marca el trabajo como terminado cuando el delegado ya no necesite editar la propuesta.</span></div>
+<span class="work-status-pill wait" id="workCompletionBadge">EN PROCESO</span>
+</div>
+<div class="work-completion-actions">
+<button class="btn" id="markWorkCompletedBtn" onclick="markWorkCompleted()" type="button">Marcar trabajo terminado</button>
+<button class="btn preview-withdraw-btn" id="reopenWorkBtn" onclick="reopenWorkForChanges()" type="button">Reabrir para cambios</button>
+</div>
+<div class="payment-preview-admin" style="margin-top:14px">
+<div class="payment-preview-admin-head"><div><strong>Muestra protegida del trabajo</strong><span>Sube una lámina o wallpaper de muestra. Es independiente de los PDF, SKP, DWG, ZIP y enlaces finales. La muestra solo aparece cuando pulses “Notificar al cliente”.</span></div><span class="payment-request-badge" id="paymentPreviewStatusBadge">Sin muestra</span></div>
+<div class="payment-preview-admin-grid">
+<div class="payment-preview-drop" id="paymentPreviewAdminView"><div class="payment-preview-empty">Aún no has subido una muestra para este proyecto.</div></div>
+<div class="payment-preview-controls">
+<input accept="image/jpeg,image/png,image/webp,image/avif" class="input" id="paymentPreviewInput" type="file"/>
+<button class="btn btn-accent" id="paymentPreviewUploadBtn" onclick="uploadPaymentPreview()" type="button">Subir / reemplazar muestra</button>
+<button class="btn payment-preview-remove" id="paymentPreviewRemoveBtn" onclick="deletePaymentPreview()" type="button">Quitar muestra</button>
+<div class="payment-preview-meta" id="paymentPreviewMeta">JPG, PNG, WEBP o AVIF · Máx. 50 MB. El video se añadirá como una función separada después.</div>
+</div>
+</div>
+</div>
+<div class="work-completion-actions">
+<button class="btn preview-notify-btn" id="notifyClientPreviewBtn" onclick="openZohoNotify()" type="button">Notificar al cliente · enviar correo</button>
+<button class="btn preview-withdraw-btn" id="withdrawClientPreviewBtn" onclick="withdrawClientPreview()" type="button">Retirar muestra del cliente</button>
+</div>
+<div class="zoho-notify-status" id="zohoNotifyStatus">
             Zoho Mail · La muestra todavía no ha sido enviada por correo.
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section" id="paymentRequestSection">
-      <div class="section-h">
-        <div>Solicitar pago al cliente</div>
-        <div class="section-h-copy">Activa o revisa el cobro de una orden personalizada. Confirmar el pago NO publica por sí solo la entrega final.</div>
-      </div>
-      <div class="section-b">
-        <div class="payment-request-card">
-          <div class="payment-request-status-row"><div class="payment-request-status-copy"><strong id="paymentRequestStatusTitle">Sin solicitud activa</strong><span id="paymentRequestStatusHelp">Puedes solicitar el pago sin borrar ni volver a subir archivos.</span></div><span id="paymentRequestBadge" class="payment-request-badge">Pendiente</span></div>
-          <div id="clientPaymentMessageAdmin" class="payment-client-message-admin hidden"><div class="payment-client-message-admin-head"><strong>Mensaje del cliente sobre el pago</strong><span id="clientPaymentMessageDate">—</span></div><div id="clientPaymentMessageText" class="payment-client-message-admin-text"></div></div>
-          <div class="form-grid">
-            <div class="field"><label>Monto a cobrar USD</label><div class="price-field-wrap"><span class="price-prefix">$</span><input id="paymentRequestAmount" class="input" type="number" min="1" step="0.01" inputmode="decimal"></div><div class="hint">Este monto se sincroniza con “Precio del proyecto”. PayPal y Binance lo leen en USD/USDT; en Guatemala la transferencia calcula automáticamente el equivalente en GTQ.</div></div>
-            <div class="field"><label>Estado de la entrega final</label><input class="input" value="Control independiente" disabled><div class="hint">El pago y la publicación final son etapas separadas. Los archivos finales solo aparecen después de “Publicar entrega final”.</div></div>
-            <div class="field full"><label>Mensaje para el cliente</label><textarea id="paymentRequestNote" class="textarea" placeholder="Ej. Tu proyecto ya está terminado. Completa el pago para descargar la entrega final."></textarea></div>
-          </div>
-          <label class="check payment-request-lock"><input id="paymentRequestLock" type="checkbox" checked> Mantener archivos finales bloqueados mientras el pago esté pendiente</label>
-          <div id="paidCorrectionBox" class="payment-paid-correction">
-            <div class="payment-paid-correction-copy"><strong>⚠ ESTE PROYECTO FIGURA COMO PAGADO</strong><span>Mientras Firestore tenga el pago como confirmado, el cliente puede descargar las entregas publicadas. Si fue marcado por error, corrígelo antes de que el cliente entre.</span></div>
-            <button id="reopenPaymentBtn" class="btn" type="button" onclick="reopenPaymentAsPending()">Corregir → marcar pendiente y bloquear</button>
-          </div>
-          <div class="payment-request-actions">
-            <button id="requestPaymentBtn" class="btn btn-accent" type="button" onclick="requestClientPayment()">Solicitar pago al cliente</button>
-            <button id="markPaidManualBtn" class="btn payment-manual" type="button" onclick="markProjectPaidManual()">Marcar pagado</button>
-            <button id="cancelPaymentRequestBtn" class="btn payment-cancel" type="button" onclick="cancelClientPaymentRequest()">Cancelar solicitud</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-h">
-        <div>Gestión del proyecto</div>
-        <div class="section-h-copy">Edita la información que verá el cliente y controla el estado operativo.</div>
-      </div>
-      <div class="section-b">
-        <div class="financial-grid">
-          <div id="financeSaleCard" class="financial-card"><span>Precio del proyecto</span><strong id="financeSale">$0.00</strong></div>
-          <div id="financeCostCard" class="financial-card"><span>Costo interno</span><strong id="financeCost">$0.00</strong></div>
-          <div id="financeProfitCard" class="financial-card profit"><span>Ganancia estimada</span><strong id="financeProfit">$0.00</strong></div>
-        </div>
-        <div class="form-grid">
-          <div class="field full">
-            <label>Título del proyecto</label>
-            <input id="editProjectTitle" class="input" maxlength="160" placeholder="Nombre visible del proyecto">
-            <div class="hint">Este nombre se actualizará también en “Mis Proyectos” del cliente.</div>
-          </div>
-
-          <div class="field">
-            <label>Estado</label>
-            <select id="editStatus" class="input">
-              <option value="awaiting_payment">Pago pendiente</option>
-              <option value="payment_pending_review">Comprobante por revisar</option>
-              <option value="payment_failed">Fallo de pago</option>
-              <option value="waiting_files">Esperando archivos</option>
-              <option value="files_received">Archivos recibidos</option>
-              <option value="assigned">Profesional asignado</option>
-              <option value="in_progress">En proceso</option>
-              <option value="review">En revisión</option>
-              <option value="delivered">Entregado</option>
-              <option value="cancelled">Cancelado</option>
-            </select>
-            <div class="status-quick-grid" id="statusQuickGrid">
-              <button type="button" class="status-quick-btn" data-status="awaiting_payment" onclick="setProjectStatusQuick('awaiting_payment')">Pago pendiente</button>
-              <button type="button" class="status-quick-btn danger" data-status="payment_failed" onclick="setProjectStatusQuick('payment_failed')">Fallo de pago</button>
-              <button type="button" class="status-quick-btn" data-status="waiting_files" onclick="setProjectStatusQuick('waiting_files')">Esperando archivos</button>
-              <button type="button" class="status-quick-btn" data-status="files_received" onclick="setProjectStatusQuick('files_received')">Archivos recibidos</button>
-              <button type="button" class="status-quick-btn" data-status="in_progress" onclick="setProjectStatusQuick('in_progress')">En proceso</button>
-              <button type="button" class="status-quick-btn" data-status="review" onclick="setProjectStatusQuick('review')">En revisión</button>
-            </div>
-            <div id="deliveryPublishWarning" class="delivery-publish-warning">ℹ️ <strong>“Entregado” ahora se establece únicamente al publicar la entrega final.</strong> Para indicar que el delegado terminó, usa “Marcar trabajo terminado”.</div>
-          </div>
-
-          <div class="field">
-            <label>Tipo de profesional</label>
-            <div id="professionalRoleToggle" class="role-toggle">
-              <button type="button" data-role="Arquitecto" class="active" onclick="setProfessionalRole('Arquitecto')">Arquitecto</button>
-              <button type="button" data-role="Ingeniero" onclick="setProfessionalRole('Ingeniero')">Ingeniero</button>
-              <button type="button" data-role="Desarrollador Web Full-Stack" onclick="setProfessionalRole('Desarrollador Web Full-Stack')">Desarrollador Web Full‑Stack</button>
-            </div>
-            <input id="editProfessionalRole" type="hidden" value="Arquitecto">
-          </div>
-
-          <div class="field">
-            <label id="editProfessionalNameLabel">Nombre del arquitecto</label>
-            <input id="editArchitect" class="input" placeholder="Nombre del arquitecto">
-          </div>
-
-          <div class="field">
-            <label>Precio del proyecto USD</label>
-            <div class="price-field-wrap"><span class="price-prefix">$</span><input id="editPrice" class="input" type="number" min="0" step="0.01" inputmode="decimal"></div>
-            <div class="bank-like-help">Este precio se mostrará al cliente en “Mis Proyectos”.</div>
-          </div>
-
-          <div class="field">
-            <label>Costo interno USD</label>
-            <div class="price-field-wrap"><span class="price-prefix">$</span><input id="editCost" class="input" type="number" min="0" step="0.01" inputmode="decimal"></div>
-            <div class="bank-like-help">Solo visible para administración.</div>
-          </div>
-
-          <div class="field">
-            <label>Ganancia estimada</label>
-            <input id="editProfit" class="input" disabled>
-          </div>
-
-          <div class="field full">
-            <div class="client-instructions-tools">
-              <div>
-                <label style="margin-bottom:4px">Indicaciones del cliente</label>
-                <div class="hint">Puedes complementar aquí instrucciones recibidas por WhatsApp, llamada o presencialmente.</div>
-              </div>
-              <button type="button" class="btn btn-download-text" onclick="downloadClientInstructionsTxt()">Descargar indicaciones .TXT</button>
-            </div>
-            <textarea id="editClientComments" class="textarea" placeholder="Ej. Mantener la escalera actual, fachada en tonos grises, incluir mobiliario..."></textarea>
-          </div>
-
-          <div class="field full">
-            <label>Nota de entrega para el cliente</label>
-            <textarea id="editDeliveryNote" class="textarea"></textarea>
-          </div>
-
-          <div class="field full">
-            <label>Notas internas</label>
-            <textarea id="editAdminNotes" class="textarea"></textarea>
-          </div>
-        </div>
-
-        <div class="form-actions sticky-actions">
-          <button id="saveProjectBtn" class="btn btn-accent save-project-btn" onclick="saveProject()">Guardar cambios</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-h">La tarifa / orden incluye</div>
-      <div id="includedList" class="section-b included"></div>
-    </div>
-
-    <div class="section">
-      <div class="section-h">
-        <div class="section-h-row">
-          <div>
-            <div>Archivos recibidos del cliente</div>
-            <div class="section-h-copy">También puedes añadir aquí fotos o archivos que el cliente haya enviado por WhatsApp.</div>
-          </div>
-        </div>
-      </div>
-      <div class="section-b">
-        <div class="upload-box">
-          <div class="upload-row">
-            <div class="field">
-              <label>Fotos / archivos recibidos</label>
-              <input id="clientAdminFileInput" class="input" type="file" multiple accept="image/*,.pdf,.dwg,.dxf,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx,.txt">
-              <div class="hint">Puedes elegir varios de una vez o volver a pulsar “Elegir archivos” para ir agregando más.</div>
-            </div>
-            <div class="field">
-              <label>Nota opcional</label>
-              <input id="clientAdminLabel" class="input" placeholder="Ej. Recibido por WhatsApp">
-            </div>
-            <button id="clientAdminUploadBtn" class="btn btn-accent" onclick="uploadClientFilesAdmin()">Agregar archivos</button>
-          </div>
-          <div id="clientSelectedFilesWrap" class="selected-files-wrap">
-            <div class="selected-files-head"><strong>Archivos preparados</strong><span id="clientSelectedCount">0 archivos</span></div>
-            <div id="clientSelectedFiles" class="selected-files-list"></div>
-          </div>
-          <div class="upload-progress"><span id="clientAdminProgress"></span></div>
-          <div id="clientAdminUploadStatus" class="upload-status"></div>
-        </div>
-        <div id="clientFiles" class="files"><div class="loading">Cargando…</div></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-h">
-        <div>Preparar y publicar entrega final</div>
-        <div class="section-h-copy">Los archivos y enlaces se preparan primero. Publicar la entrega final es una acción independiente y requiere el pago confirmado.</div>
-        <button class="mini activity-refresh-btn" type="button" onclick="refreshDeliveryActivity()">Actualizar actividad</button>
-      </div>
-      <div class="section-b">
-        <div id="deliveryPublishControl" class="delivery-publish-control">
-          <div class="delivery-publish-head">
-            <div class="delivery-publish-copy">
-              <strong id="deliveryPublishTitle">Entrega final todavía no publicada</strong>
-              <span id="deliveryPublishHelp">Puedes subir y revisar los archivos primero. Nada final se publica hasta que pulses “Publicar entrega final”.</span>
-            </div>
-            <span id="deliveryPublishBadge" class="delivery-publish-badge">NO PUBLICADA</span>
-          </div>
-          <div class="delivery-publish-actions">
-            <button id="publishDeliveryBtn" class="btn delivery-publish-send" type="button" onclick="publishDeliveryToClient()">Publicar entrega final</button>
-            <button id="withdrawDeliveryBtn" class="btn delivery-publish-withdraw" type="button" onclick="withdrawDeliveryFromClient()">Retirar entrega final</button>
-            <span id="deliveryPublishTime" class="delivery-publish-time"></span>
-          </div>
-        </div>
-        <div class="upload-box">
-          <div class="upload-row">
-            <div class="field">
-              <label>Archivos finales</label>
-              <input id="deliveryFileInput" class="input" type="file" multiple>
-              <div class="hint">Máximo 500 MB por archivo. Puedes seleccionar varios o agregarlos en varias tandas antes de enviar.</div>
-            </div>
-            <div class="field">
-              <label>Etiqueta general opcional</label>
-              <input id="deliveryLabel" class="input" placeholder="Ej. Entrega final">
-            </div>
-            <button id="deliveryUploadBtn" class="btn btn-accent" onclick="uploadDelivery()">Subir archivos</button>
-          </div>
-          <div id="deliverySelectedFilesWrap" class="selected-files-wrap">
-            <div class="selected-files-head"><strong>Archivos preparados</strong><span id="deliverySelectedCount">0 archivos</span></div>
-            <div id="deliverySelectedFiles" class="selected-files-list"></div>
-          </div>
-          <div class="upload-progress"><span id="deliveryProgress"></span></div>
-          <div id="deliveryUploadStatus" class="upload-status"></div>
-        </div>
-        <div id="deliveryFiles" class="files"></div>
-
-        <div class="external-links-admin">
-          <div class="external-links-admin-head">
-            <div><strong>Enlaces externos de entrega</strong><span>Para archivos pesados puedes usar MEGA, Google Drive, Dropbox, OneDrive, WeTransfer u otra nube sin consumir almacenamiento de R2. Los enlaces nuevos quedan “Pendientes de publicar”. Los enlaces ya publicados no desaparecen cuando agregas otro.</span></div>
-            <span id="deliveryLinkCountBadge" class="external-link-count">0 enlaces</span>
-          </div>
-          <div class="external-link-form">
-            <div class="field">
-              <label>Proveedor</label>
-              <select id="deliveryLinkProvider" class="input">
-                <option value="auto">Detectar automáticamente</option>
-                <option value="MEGA">MEGA</option>
-                <option value="Google Drive">Google Drive</option>
-                <option value="Dropbox">Dropbox</option>
-                <option value="OneDrive">OneDrive</option>
-                <option value="WeTransfer">WeTransfer</option>
-                <option value="Otro">Otra nube</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Nombre para el cliente</label>
-              <input id="deliveryLinkTitle" class="input" placeholder="Ej. Modelo SketchUp completo">
-            </div>
-            <div class="field url-field">
-              <label>Enlace</label>
-              <input id="deliveryLinkUrl" class="input" type="url" inputmode="url" placeholder="https://mega.nz/...">
-            </div>
-            <div class="field full">
-              <label>Nota opcional</label>
-              <input id="deliveryLinkNote" class="input" placeholder="Ej. Archivo de 3.8 GB · contraseña incluida en el mensaje de entrega">
-            </div>
-            <div class="external-link-submit-row">
-              <div class="hint">El enlace se guarda en Firestore, no en R2. Solo se mostrará después de publicarlo como parte de la entrega final.</div>
-              <button id="deliveryLinkAddBtn" class="btn btn-accent" type="button" onclick="addExternalDeliveryLink()">Agregar enlace</button>
-            </div>
-          </div>
-          <div id="deliveryLinksAdminList" class="external-link-list"><div class="sub">Aún no hay enlaces externos.</div></div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="section danger-zone">
-      <div class="section-h">Zona de control</div>
-      <div class="section-b">
-        <p style="font-size:10px;color:#888;line-height:1.5;margin:0 0 10px">Eliminar un proyecto borra también todos sus archivos de Cloudflare R2 y Firebase. Esta acción no se puede deshacer.</p>
-        <button class="btn btn-danger" onclick="deleteProject()">Eliminar proyecto y archivos</button>
-      </div>
-    </div>
-  </div>
 </div>
-
-
-<div id="zohoNotifyModal" class="zoho-modal" aria-hidden="true">
-  <div class="zoho-modal-card">
-    <div class="zoho-modal-head">
-      <div>
-        <strong>Notificar al cliente</strong>
-        <span>La muestra se publicará en Mis Proyectos y se enviará un correo transaccional desde Evolution Design.</span>
-      </div>
-      <button class="zoho-close" type="button" onclick="closeZohoNotify()" aria-label="Cerrar">×</button>
-    </div>
-    <div class="zoho-modal-body">
-      <div class="zoho-provider">
-        <div class="zoho-provider-left">
-          <div class="zoho-provider-icon">Z</div>
-          <div><strong>Zoho Mail</strong><small>Envío seguro mediante Cloudflare Worker</small></div>
-        </div>
-        <span class="pill green">CONECTADO</span>
-      </div>
-      <div class="zoho-recipient">
-        <span>Destinatario</span>
-        <strong id="zohoNotifyEmail">—</strong>
-      </div>
-      <p class="zoho-copy">Se enviará el aviso de que el proyecto está listo para revisión. Los archivos finales continuarán ocultos; el cliente verá únicamente la muestra protegida.</p>
-      <div id="zohoModalError" class="zoho-notify-status failed hidden"></div>
-    </div>
-    <div class="zoho-modal-actions">
-      <button class="btn" type="button" onclick="closeZohoNotify()">Cancelar</button>
-      <button id="zohoSendBtn" class="btn zoho-send-btn" type="button" onclick="sendZohoClientNotification()">Enviar con Zoho + mostrar muestra</button>
-    </div>
-  </div>
 </div>
-
-<div id="toast" class="toast"></div>
-
+</div>
+<div class="section" id="paymentRequestSection">
+<div class="section-h">
+<div>Solicitar pago al cliente</div>
+<div class="section-h-copy">Activa o revisa el cobro de una orden personalizada. Confirmar el pago NO publica por sí solo la entrega final.</div>
+</div>
+<div class="section-b">
+<div class="payment-request-card">
+<div class="payment-request-status-row"><div class="payment-request-status-copy"><strong id="paymentRequestStatusTitle">Sin solicitud activa</strong><span id="paymentRequestStatusHelp">Puedes solicitar el pago sin borrar ni volver a subir archivos.</span></div><span class="payment-request-badge" id="paymentRequestBadge">Pendiente</span></div>
+<div class="payment-client-message-admin hidden" id="clientPaymentMessageAdmin"><div class="payment-client-message-admin-head"><strong>Mensaje del cliente sobre el pago</strong><span id="clientPaymentMessageDate">—</span></div><div class="payment-client-message-admin-text" id="clientPaymentMessageText"></div></div>
+<div class="form-grid">
+<div class="field"><label>Monto a cobrar USD</label><div class="price-field-wrap"><span class="price-prefix">$</span><input class="input" id="paymentRequestAmount" inputmode="decimal" min="1" step="0.01" type="number"/></div><div class="hint">Este monto se sincroniza con “Precio del proyecto”. PayPal y Binance lo leen en USD/USDT; en Guatemala la transferencia calcula automáticamente el equivalente en GTQ.</div></div>
+<div class="field"><label>Estado de la entrega final</label><input class="input" disabled="" value="Control independiente"/><div class="hint">El pago y la publicación final son etapas separadas. Los archivos finales solo aparecen después de “Publicar entrega final”.</div></div>
+<div class="field full"><label>Mensaje para el cliente</label><textarea class="textarea" id="paymentRequestNote" placeholder="Ej. Tu proyecto ya está terminado. Completa el pago para descargar la entrega final."></textarea></div>
+</div>
+<label class="check payment-request-lock"><input checked="" id="paymentRequestLock" type="checkbox"/> Mantener archivos finales bloqueados mientras el pago esté pendiente</label>
+<div class="payment-paid-correction" id="paidCorrectionBox">
+<div class="payment-paid-correction-copy"><strong>⚠ ESTE PROYECTO FIGURA COMO PAGADO</strong><span>Mientras Firestore tenga el pago como confirmado, el cliente puede descargar las entregas publicadas. Si fue marcado por error, corrígelo antes de que el cliente entre.</span></div>
+<button class="btn" id="reopenPaymentBtn" onclick="reopenPaymentAsPending()" type="button">Corregir → marcar pendiente y bloquear</button>
+</div>
+<div class="payment-request-actions">
+<button class="btn btn-accent" id="requestPaymentBtn" onclick="requestClientPayment()" type="button">Solicitar pago al cliente</button>
+<button class="btn payment-manual" id="markPaidManualBtn" onclick="markProjectPaidManual()" type="button">Marcar pagado</button>
+<button class="btn payment-cancel" id="cancelPaymentRequestBtn" onclick="cancelClientPaymentRequest()" type="button">Cancelar solicitud</button>
+</div>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="section-h">
+<div>Gestión del proyecto</div>
+<div class="section-h-copy">Edita la información que verá el cliente y controla el estado operativo.</div>
+</div>
+<div class="section-b">
+<div class="financial-grid">
+<div class="financial-card" id="financeSaleCard"><span>Precio del proyecto</span><strong id="financeSale">$0.00</strong></div>
+<div class="financial-card" id="financeCostCard"><span>Costo interno</span><strong id="financeCost">$0.00</strong></div>
+<div class="financial-card profit" id="financeProfitCard"><span>Ganancia estimada</span><strong id="financeProfit">$0.00</strong></div>
+</div>
+<div class="form-grid">
+<div class="field full">
+<label>Título del proyecto</label>
+<input class="input" id="editProjectTitle" maxlength="160" placeholder="Nombre visible del proyecto"/>
+<div class="hint">Este nombre se actualizará también en “Mis Proyectos” del cliente.</div>
+</div>
+<div class="field">
+<label>Estado</label>
+<select class="input" id="editStatus">
+<option value="awaiting_payment">Pago pendiente</option>
+<option value="payment_pending_review">Comprobante por revisar</option>
+<option value="payment_failed">Fallo de pago</option>
+<option value="waiting_files">Esperando archivos</option>
+<option value="files_received">Archivos recibidos</option>
+<option value="assigned">Profesional asignado</option>
+<option value="in_progress">En proceso</option>
+<option value="review">En revisión</option>
+<option value="delivered">Entregado</option>
+<option value="cancelled">Cancelado</option>
+</select>
+<div class="status-quick-grid" id="statusQuickGrid">
+<button class="status-quick-btn" data-status="awaiting_payment" onclick="setProjectStatusQuick('awaiting_payment')" type="button">Pago pendiente</button>
+<button class="status-quick-btn danger" data-status="payment_failed" onclick="setProjectStatusQuick('payment_failed')" type="button">Fallo de pago</button>
+<button class="status-quick-btn" data-status="waiting_files" onclick="setProjectStatusQuick('waiting_files')" type="button">Esperando archivos</button>
+<button class="status-quick-btn" data-status="files_received" onclick="setProjectStatusQuick('files_received')" type="button">Archivos recibidos</button>
+<button class="status-quick-btn" data-status="in_progress" onclick="setProjectStatusQuick('in_progress')" type="button">En proceso</button>
+<button class="status-quick-btn" data-status="review" onclick="setProjectStatusQuick('review')" type="button">En revisión</button>
+</div>
+<div class="delivery-publish-warning" id="deliveryPublishWarning">ℹ️ <strong>“Entregado” ahora se establece únicamente al publicar la entrega final.</strong> Para indicar que el delegado terminó, usa “Marcar trabajo terminado”.</div>
+</div>
+<div class="field">
+<label>Tipo de profesional</label>
+<div class="role-toggle" id="professionalRoleToggle">
+<button class="active" data-role="Arquitecto" onclick="setProfessionalRole('Arquitecto')" type="button">Arquitecto</button>
+<button data-role="Ingeniero" onclick="setProfessionalRole('Ingeniero')" type="button">Ingeniero</button>
+<button data-role="Desarrollador Web Full-Stack" onclick="setProfessionalRole('Desarrollador Web Full-Stack')" type="button">Desarrollador Web Full‑Stack</button>
+</div>
+<input id="editProfessionalRole" type="hidden" value="Arquitecto"/>
+</div>
+<div class="field">
+<label id="editProfessionalNameLabel">Nombre del arquitecto</label>
+<input class="input" id="editArchitect" placeholder="Nombre del arquitecto"/>
+</div>
+<div class="field">
+<label>Precio del proyecto USD</label>
+<div class="price-field-wrap"><span class="price-prefix">$</span><input class="input" id="editPrice" inputmode="decimal" min="0" step="0.01" type="number"/></div>
+<div class="bank-like-help">Este precio se mostrará al cliente en “Mis Proyectos”.</div>
+</div>
+<div class="field">
+<label>Costo interno USD</label>
+<div class="price-field-wrap"><span class="price-prefix">$</span><input class="input" id="editCost" inputmode="decimal" min="0" step="0.01" type="number"/></div>
+<div class="bank-like-help">Solo visible para administración.</div>
+</div>
+<div class="field">
+<label>Ganancia estimada</label>
+<input class="input" disabled="" id="editProfit"/>
+</div>
+<div class="field full">
+<div class="client-instructions-tools">
+<div>
+<label style="margin-bottom:4px">Indicaciones del cliente</label>
+<div class="hint">Puedes complementar aquí instrucciones recibidas por WhatsApp, llamada o presencialmente.</div>
+</div>
+<button class="btn btn-download-text" onclick="downloadClientInstructionsTxt()" type="button">Descargar indicaciones .TXT</button>
+</div>
+<textarea class="textarea" id="editClientComments" placeholder="Ej. Mantener la escalera actual, fachada en tonos grises, incluir mobiliario..."></textarea>
+</div>
+<div class="field full">
+<label>Nota de entrega para el cliente</label>
+<textarea class="textarea" id="editDeliveryNote"></textarea>
+</div>
+<div class="field full">
+<label>Notas internas</label>
+<textarea class="textarea" id="editAdminNotes"></textarea>
+</div>
+</div>
+<div class="form-actions sticky-actions">
+<button class="btn btn-accent save-project-btn" id="saveProjectBtn" onclick="saveProject()">Guardar cambios</button>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="section-h">La tarifa / orden incluye</div>
+<div class="section-b included" id="includedList"></div>
+</div>
+<div class="section">
+<div class="section-h">
+<div class="section-h-row">
+<div>
+<div>Archivos recibidos del cliente</div>
+<div class="section-h-copy">También puedes añadir aquí fotos o archivos que el cliente haya enviado por WhatsApp.</div>
+</div>
+</div>
+</div>
+<div class="section-b">
+<div class="upload-box">
+<div class="upload-row">
+<div class="field">
+<label>Fotos / archivos recibidos</label>
+<input accept="image/*,.pdf,.dwg,.dxf,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx,.txt" class="input" id="clientAdminFileInput" multiple="" type="file"/>
+<div class="hint">Puedes elegir varios de una vez o volver a pulsar “Elegir archivos” para ir agregando más.</div>
+</div>
+<div class="field">
+<label>Nota opcional</label>
+<input class="input" id="clientAdminLabel" placeholder="Ej. Recibido por WhatsApp"/>
+</div>
+<button class="btn btn-accent" id="clientAdminUploadBtn" onclick="uploadClientFilesAdmin()">Agregar archivos</button>
+</div>
+<div class="selected-files-wrap" id="clientSelectedFilesWrap">
+<div class="selected-files-head"><strong>Archivos preparados</strong><span id="clientSelectedCount">0 archivos</span></div>
+<div class="selected-files-list" id="clientSelectedFiles"></div>
+</div>
+<div class="upload-progress"><span id="clientAdminProgress"></span></div>
+<div class="upload-status" id="clientAdminUploadStatus"></div>
+</div>
+<div class="files" id="clientFiles"><div class="loading">Cargando…</div></div>
+</div>
+</div>
+<div class="section">
+<div class="section-h">
+<div>Preparar y publicar entrega final</div>
+<div class="section-h-copy">Los archivos y enlaces se preparan primero. Publicar la entrega final es una acción independiente y requiere el pago confirmado.</div>
+<button class="mini activity-refresh-btn" onclick="refreshDeliveryActivity()" type="button">Actualizar actividad</button>
+</div>
+<div class="section-b">
+<div class="delivery-publish-control" id="deliveryPublishControl">
+<div class="delivery-publish-head">
+<div class="delivery-publish-copy">
+<strong id="deliveryPublishTitle">Entrega final todavía no publicada</strong>
+<span id="deliveryPublishHelp">Puedes subir y revisar los archivos primero. Nada final se publica hasta que pulses “Publicar entrega final”.</span>
+</div>
+<span class="delivery-publish-badge" id="deliveryPublishBadge">NO PUBLICADA</span>
+</div>
+<div class="delivery-publish-actions">
+<button class="btn delivery-publish-send" id="publishDeliveryBtn" onclick="publishDeliveryToClient()" type="button">Publicar entrega final</button>
+<button class="btn delivery-publish-withdraw" id="withdrawDeliveryBtn" onclick="withdrawDeliveryFromClient()" type="button">Retirar entrega final</button>
+<span class="delivery-publish-time" id="deliveryPublishTime"></span>
+</div>
+</div>
+<div class="upload-box">
+<div class="upload-row">
+<div class="field">
+<label>Archivos finales</label>
+<input class="input" id="deliveryFileInput" multiple="" type="file"/>
+<div class="hint">Máximo 500 MB por archivo. Puedes seleccionar varios o agregarlos en varias tandas antes de enviar.</div>
+</div>
+<div class="field">
+<label>Etiqueta general opcional</label>
+<input class="input" id="deliveryLabel" placeholder="Ej. Entrega final"/>
+</div>
+<button class="btn btn-accent" id="deliveryUploadBtn" onclick="uploadDelivery()">Subir archivos</button>
+</div>
+<div class="selected-files-wrap" id="deliverySelectedFilesWrap">
+<div class="selected-files-head"><strong>Archivos preparados</strong><span id="deliverySelectedCount">0 archivos</span></div>
+<div class="selected-files-list" id="deliverySelectedFiles"></div>
+</div>
+<div class="upload-progress"><span id="deliveryProgress"></span></div>
+<div class="upload-status" id="deliveryUploadStatus"></div>
+</div>
+<div class="files" id="deliveryFiles"></div>
+<div class="external-links-admin">
+<div class="external-links-admin-head">
+<div><strong>Enlaces externos de entrega</strong><span>Para archivos pesados puedes usar MEGA, Google Drive, Dropbox, OneDrive, WeTransfer u otra nube sin consumir almacenamiento de R2. Los enlaces nuevos quedan “Pendientes de publicar”. Los enlaces ya publicados no desaparecen cuando agregas otro.</span></div>
+<span class="external-link-count" id="deliveryLinkCountBadge">0 enlaces</span>
+</div>
+<div class="external-link-form">
+<div class="field">
+<label>Proveedor</label>
+<select class="input" id="deliveryLinkProvider">
+<option value="auto">Detectar automáticamente</option>
+<option value="MEGA">MEGA</option>
+<option value="Google Drive">Google Drive</option>
+<option value="Dropbox">Dropbox</option>
+<option value="OneDrive">OneDrive</option>
+<option value="WeTransfer">WeTransfer</option>
+<option value="Otro">Otra nube</option>
+</select>
+</div>
+<div class="field">
+<label>Nombre para el cliente</label>
+<input class="input" id="deliveryLinkTitle" placeholder="Ej. Modelo SketchUp completo"/>
+</div>
+<div class="field url-field">
+<label>Enlace</label>
+<input class="input" id="deliveryLinkUrl" inputmode="url" placeholder="https://mega.nz/..." type="url"/>
+</div>
+<div class="field full">
+<label>Nota opcional</label>
+<input class="input" id="deliveryLinkNote" placeholder="Ej. Archivo de 3.8 GB · contraseña incluida en el mensaje de entrega"/>
+</div>
+<div class="external-link-submit-row">
+<div class="hint">El enlace se guarda en Firestore, no en R2. Solo se mostrará después de publicarlo como parte de la entrega final.</div>
+<button class="btn btn-accent" id="deliveryLinkAddBtn" onclick="addExternalDeliveryLink()" type="button">Agregar enlace</button>
+</div>
+</div>
+<div class="external-link-list" id="deliveryLinksAdminList"><div class="sub">Aún no hay enlaces externos.</div></div>
+</div>
+</div>
+</div>
+<div class="section danger-zone">
+<div class="section-h">Zona de control</div>
+<div class="section-b">
+<p style="font-size:10px;color:#888;line-height:1.5;margin:0 0 10px">Eliminar un proyecto borra también todos sus archivos de Cloudflare R2 y Firebase. Esta acción no se puede deshacer.</p>
+<button class="btn btn-danger" onclick="deleteProject()">Eliminar proyecto y archivos</button>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="zoho-modal" id="zohoNotifyModal">
+<div class="zoho-modal-card">
+<div class="zoho-modal-head">
+<div>
+<strong>Notificar al cliente</strong>
+<span>La muestra se publicará en Mis Proyectos y se enviará un correo transaccional desde Evolution Design.</span>
+</div>
+<button aria-label="Cerrar" class="zoho-close" onclick="closeZohoNotify()" type="button">×</button>
+</div>
+<div class="zoho-modal-body">
+<div class="zoho-provider">
+<div class="zoho-provider-left">
+<div class="zoho-provider-icon">Z</div>
+<div><strong>Zoho Mail</strong><small>Envío seguro mediante Cloudflare Worker</small></div>
+</div>
+<span class="pill green">CONECTADO</span>
+</div>
+<div class="zoho-recipient">
+<span>Destinatario</span>
+<strong id="zohoNotifyEmail">—</strong>
+</div>
+<p class="zoho-copy">Se enviará el aviso de que el proyecto está listo para revisión. Los archivos finales continuarán ocultos; el cliente verá únicamente la muestra protegida.</p>
+<div class="zoho-notify-status failed hidden" id="zohoModalError"></div>
+</div>
+<div class="zoho-modal-actions">
+<button class="btn" onclick="closeZohoNotify()" type="button">Cancelar</button>
+<button class="btn zoho-send-btn" id="zohoSendBtn" onclick="sendZohoClientNotification()" type="button">Enviar con Zoho + mostrar muestra</button>
+</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -1460,8 +1591,8 @@ async function renderPaymentProof(){
   if(!s3){preview.innerHTML='<div class="payment-receipt-empty"><strong>R2 no disponible</strong>Usa la descarga cuando la conexión esté disponible.</div>';return}
   try{
     const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:selected.receiptStoragePath,Expires:300}),type=String(selected.receiptContentType||'').toLowerCase(),name=String(selected.receiptName||'').toLowerCase();
-    if(type.startsWith('image/')||/\.(png|jpe?g|webp|gif|avif|bmp)$/i.test(name))preview.innerHTML=`<img src="${esc(url)}" alt="Comprobante de pago">`;
-    else if(type==='application/pdf'||name.endsWith('.pdf'))preview.innerHTML=`<iframe src="${esc(url)}#toolbar=0&navpanes=0" title="Comprobante PDF"></iframe>`;
+    if(type.startsWith('image/')||/\.(png|jpe?g|webp|gif|avif|bmp)$/i.test(name))preview.innerHTML=`<img src="${esc(url)}" alt="Comprobante de pago" loading="lazy" decoding="async">`;
+    else if(type==='application/pdf'||name.endsWith('.pdf'))preview.innerHTML=`<iframe src="${esc(url)}#toolbar=0&navpanes=0" title="Comprobante PDF" loading="lazy"></iframe>`;
     else preview.innerHTML='<div class="payment-receipt-empty"><strong>Vista previa no disponible</strong>Usa “Ver comprobante” o “Descargar archivo”.</div>';
   }catch(e){console.error(e);preview.innerHTML='<div class="payment-receipt-empty"><strong>No se pudo mostrar</strong>Usa el botón de descarga.</div>'}
   if($('approvePaymentBtn'))$('approvePaymentBtn').disabled=state==='approved';
@@ -1546,7 +1677,7 @@ function clientAvatarHtml(c){
   const recent=wasRecentlyOnline(c.authLastSignInAt||c.lastSeenAt);
   return `<div class="client-avatar">
     <span>${esc(clientInitials(c))}</span>
-    ${photo?`<img src="${esc(photo)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">`:''}
+    ${photo?`<img src="${esc(photo)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.style.display='none'">`:''}
     <i class="client-presence ${recent?'recent':''}" title="${recent?'Conectado recientemente':'Sin actividad reciente'}"></i>
   </div>`;
 }
@@ -1665,15 +1796,16 @@ async function refresh(){
 document.getElementById('zohoNotifyModal')?.addEventListener('click',e=>{if(e.target?.id==='zohoNotifyModal')closeZohoNotify()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('zohoNotifyModal')?.classList.contains('show'))closeZohoNotify()});
 
+const adminDebounce=(fn,wait=130)=>{let timer=0;return(...args)=>{clearTimeout(timer);timer=setTimeout(()=>fn(...args),wait)}};
 $('refreshBtn').onclick=()=>refresh();
-$('projectSearch').oninput=renderProjects;
+$('projectSearch').oninput=adminDebounce(renderProjects);
 $('statusFilter').onchange=renderProjects;
-$('clientSearch').oninput=renderClients;
-$('webRequestSearch').oninput=renderWebRequests;
+$('clientSearch').oninput=adminDebounce(renderClients);
+$('webRequestSearch').oninput=adminDebounce(renderWebRequests);
 $('webRequestStatus').onchange=renderWebRequests;
-$('paymentSearch').oninput=renderPaymentReceipts;
+$('paymentSearch').oninput=adminDebounce(renderPaymentReceipts);
 $('paymentReviewFilter').onchange=renderPaymentReceipts;
-$('subscriptionSearch').oninput=renderSubscriptions;
+$('subscriptionSearch').oninput=adminDebounce(renderSubscriptions);
 document.getElementById('subscriptionModal')?.addEventListener('click',e=>{if(e.target?.id==='subscriptionModal')closeSubscription()});
 $('subscriptionFilter').onchange=renderSubscriptions;
 document.getElementById('webRequestModal')?.addEventListener('click',e=>{if(e.target?.id==='webRequestModal')closeWebRequest()});
@@ -1957,7 +2089,7 @@ function renderPaymentPreviewAdmin(){
     meta.textContent=`${selected.clientPreviewName||selected.paymentPreviewName||'Muestra del trabajo'}${(selected.clientPreviewSize||selected.paymentPreviewSize)?` · ${bytes(selected.clientPreviewSize||selected.paymentPreviewSize)}`:''} · ${notified?'VISIBLE PARA EL CLIENTE':'PREPARADA · NO NOTIFICADA'} · ${viewedText}${count?` · ${count} vista${count===1?'':'s'}`:''}`;
   }
   if(!s3){view.innerHTML='<div class="payment-preview-empty">Muestra guardada. La vista previa requiere conexión a R2.</div>';return;}
-  try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:path,Expires:900});view.innerHTML=`<img src="${esc(url)}" alt="Muestra del trabajo"><span class="payment-preview-watermark">MUESTRA · EVOLUTION DESIGN</span>`;}catch(e){console.error(e);view.innerHTML='<div class="payment-preview-empty">No se pudo cargar la muestra.</div>';}
+  try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:path,Expires:900});view.innerHTML=`<img src="${esc(url)}" alt="Muestra del trabajo" loading="lazy" decoding="async"><span class="payment-preview-watermark">MUESTRA · EVOLUTION DESIGN</span>`;}catch(e){console.error(e);view.innerHTML='<div class="payment-preview-empty">No se pudo cargar la muestra.</div>';}
 }
 window.uploadPaymentPreview=async function(){
   if(!selected)return;
@@ -2195,7 +2327,7 @@ function adminDeliveryAccessState(project=selected,item=null){
 function fileHTML(f,role){
   if(f.availability==='deleted') return '';
   const ext=String(f.name||'FILE').split('.').pop().slice(0,4).toUpperCase(),image=isImageFile(f);
-  const icon=image?`<div class="file-ico has-preview"><img class="file-preview-img" data-storage-path="${esc(f.storagePath)}" data-fallback="${esc(ext)}" alt="Vista previa de ${esc(f.label||f.name)}" loading="lazy"></div>`:`<div class="file-ico">${esc(ext)}</div>`;
+  const icon=image?`<div class="file-ico has-preview"><img class="file-preview-img" data-storage-path="${esc(f.storagePath)}" data-fallback="${esc(ext)}" alt="Vista previa de ${esc(f.label||f.name)}" loading="lazy" decoding="async"></div>`:`<div class="file-ico">${esc(ext)}</div>`;
   let accessMarkup='',activityMarkup='';
   if(role==='delivery'){
     const state=adminDeliveryAccessState(selected,f),fid=String(f.fileId||f.id||''),activity=selected?.deliveryActivity?.[fid]||{};
@@ -2208,7 +2340,55 @@ function fileHTML(f,role){
   }
   return `<div class="file">${icon}<div class="file-info"><div class="file-name">${esc(f.label||f.name)}</div><div class="file-meta">${bytes(f.size)} · ${role==='client'?(f.uploadedByAdmin?'Añadido por administración':'Cliente'):'Evolution Design'}${f.source==='admin_whatsapp'?' · WhatsApp':''}</div>${accessMarkup}${activityMarkup}</div><div class="file-actions"><button class="mini" onclick="downloadR2File('${esc(f.storagePath)}','${esc(f.label||f.name)}',this)">Descargar</button><button class="mini delete" onclick="deleteR2File('${esc(f.fileId||f.id)}','${role}','${esc(f.storagePath)}')">Eliminar</button></div></div>`;
 }
-async function hydrateImagePreviews(root){if(!s3||!root)return;const imgs=[...root.querySelectorAll('.file-preview-img[data-storage-path]')];imgs.forEach(img=>{if(img.dataset.loaded==='1')return;img.dataset.loaded='1';try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:img.dataset.storagePath,Expires:3600});img.src=url;img.onload=()=>img.classList.add('ready');img.onerror=()=>{const box=img.parentElement;if(box){box.classList.remove('has-preview');box.textContent=img.dataset.fallback||'IMG'}};}catch(e){console.info('Vista previa no disponible:',e);const box=img.parentElement;if(box){box.classList.remove('has-preview');box.textContent=img.dataset.fallback||'IMG'}}});}
+function loadR2PreviewImage(img){
+  if(!s3||!img||img.dataset.loaded==='1')return;
+  img.dataset.loaded='1';
+  try{
+    const url=s3.getSignedUrl('getObject',{
+      Bucket:R2_BUCKET_NAME,
+      Key:img.dataset.storagePath,
+      Expires:3600
+    });
+    img.src=url;
+    img.onload=()=>img.classList.add('ready');
+    img.onerror=()=>{
+      const box=img.parentElement;
+      if(box){
+        box.classList.remove('has-preview');
+        box.textContent=img.dataset.fallback||'IMG';
+      }
+    };
+  }catch(e){
+    console.info('Vista previa no disponible:',e);
+    const box=img.parentElement;
+    if(box){
+      box.classList.remove('has-preview');
+      box.textContent=img.dataset.fallback||'IMG';
+    }
+  }
+}
+const adminPreviewObserver='IntersectionObserver' in window
+  ?new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting)return;
+        adminPreviewObserver.unobserve(entry.target);
+        loadR2PreviewImage(entry.target);
+      });
+    },{rootMargin:'180px 0px',threshold:.01})
+  :null;
+async function hydrateImagePreviews(root){
+  if(!s3||!root)return;
+  const imgs=[...root.querySelectorAll('.file-preview-img[data-storage-path]')];
+  imgs.forEach(img=>{
+    if(img.dataset.loaded==='1'||img.dataset.previewObserved==='1')return;
+    if(adminPreviewObserver){
+      img.dataset.previewObserved='1';
+      adminPreviewObserver.observe(img);
+    }else{
+      loadR2PreviewImage(img);
+    }
+  });
+}
 
 
 
@@ -2845,5 +3025,20 @@ $('customOrderForm').onsubmit=async e=>{
 
 $('logoutBtn').onclick=async()=>{await signOut(auth);window.location.replace('index.html')};
 let authResolved=false;onAuthStateChanged(auth,async u=>{if(authResolved&&!u)return;authResolved=true;const email=String(u?.email||'').trim().toLowerCase();if(!u){window.location.replace('index.html');return}if(!ADMIN_EMAILS.has(email)){await signOut(auth).catch(()=>{});window.location.replace('index.html');return}$('adminEmail').textContent=u.email||u.uid;$('adminShell').style.visibility='visible';await refresh()});
+</script>
+<script id="evolution-admin-performance-controller">
+(() => {
+  const syncVisibility=()=>{
+    document.documentElement.classList.toggle('admin-page-hidden',document.hidden);
+  };
+  document.addEventListener('visibilitychange',syncVisibility,{passive:true});
+  syncVisibility();
+
+  /* Make the Home exit feel immediate even if an admin request is still pending. */
+  document.querySelectorAll('.admin-home-btn,.admin-home-side,.admin-home-mobile')
+    .forEach(link=>link.addEventListener('click',()=>{
+      document.documentElement.classList.add('admin-leaving');
+    },{passive:true}));
+})();
 </script>
 </body></html>
