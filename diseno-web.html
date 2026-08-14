@@ -1677,6 +1677,123 @@ import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-ap
 const firebaseConfig={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),googleProvider=new GoogleAuthProvider();let currentUser=null,loginMode=true;
 
 const EVOLUTION_WORKER_URL = "https://evolution-design-backend.evolutiongt01.workers.dev".replace(/\/$/,"");
+
+const RECAPTCHA_WEB_ACTION = 'WEB_CHECKOUT';
+const RECAPTCHA_MANUAL_PAYMENT_ACTION = 'MANUAL_PAYMENT';
+
+let evolutionRecaptchaConfigPromise = null;
+let evolutionRecaptchaScriptPromise = null;
+
+async function evolutionWorkerGet(path) {
+  const response = await fetch(`${EVOLUTION_WORKER_URL}${path}`, {
+    method: 'GET',
+    headers: { 'accept': 'application/json' },
+    cache: 'no-store'
+  });
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok || body?.ok === false) {
+    const error = new Error(body?.error || 'No se pudo consultar Evolution Backend.');
+    error.code = body?.code || '';
+    throw error;
+  }
+  return body;
+}
+
+function evolutionRecaptchaConfig() {
+  if (!evolutionRecaptchaConfigPromise) {
+    evolutionRecaptchaConfigPromise = evolutionWorkerGet('/recaptcha/config').then(cfg => {
+      if (!cfg?.siteKey) throw new Error('El Worker no devolvió una clave reCAPTCHA válida.');
+      return cfg;
+    }).catch(error => {
+      evolutionRecaptchaConfigPromise = null;
+      throw error;
+    });
+  }
+  return evolutionRecaptchaConfigPromise;
+}
+
+function loadEvolutionRecaptchaEnterprise(siteKey) {
+  if (window.grecaptcha?.enterprise) return Promise.resolve();
+  if (evolutionRecaptchaScriptPromise) return evolutionRecaptchaScriptPromise;
+
+  evolutionRecaptchaScriptPromise = new Promise((resolve, reject) => {
+    const existing = document.querySelector('script[data-evolution-recaptcha-enterprise]');
+    if (existing) {
+      if (window.grecaptcha?.enterprise) { resolve(); return; }
+      existing.addEventListener('load', () => resolve(), { once: true });
+      existing.addEventListener('error', () => reject(new Error('No se pudo cargar reCAPTCHA Enterprise.')), { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/enterprise.js?render=${encodeURIComponent(siteKey)}`;
+    script.async = true;
+    script.defer = true;
+    script.dataset.evolutionRecaptchaEnterprise = 'true';
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('No se pudo cargar reCAPTCHA Enterprise.'));
+    document.head.appendChild(script);
+  }).catch(error => {
+    evolutionRecaptchaScriptPromise = null;
+    throw error;
+  });
+
+  return evolutionRecaptchaScriptPromise;
+}
+
+async function evolutionRecaptchaToken(action) {
+  const normalizedAction = String(action || '').trim().toUpperCase();
+  const cfg = await evolutionRecaptchaConfig();
+
+  if (Array.isArray(cfg.actions) && !cfg.actions.includes(normalizedAction)) {
+    throw new Error('La acción de seguridad no está habilitada en Evolution Backend.');
+  }
+
+  await loadEvolutionRecaptchaEnterprise(cfg.siteKey);
+  if (!window.grecaptcha?.enterprise) throw new Error('reCAPTCHA Enterprise no está disponible.');
+
+  return new Promise((resolve, reject) => {
+    window.grecaptcha.enterprise.ready(async () => {
+      try {
+        const token = await window.grecaptcha.enterprise.execute(cfg.siteKey, { action: normalizedAction });
+        if (!token) throw new Error('reCAPTCHA no devolvió un token válido.');
+        resolve(token);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  });
+}
+
+async function verifyEvolutionRecaptcha(action) {
+  const normalizedAction = String(action || '').trim().toUpperCase();
+  const token = await evolutionRecaptchaToken(normalizedAction);
+
+  const response = await fetch(`${EVOLUTION_WORKER_URL}/recaptcha/verify`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      token,
+      action: normalizedAction,
+      requestedUri: window.location.href
+    })
+  });
+
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok || body?.ok !== true) {
+    const error = new Error('No pudimos validar la seguridad de esta operación. Inténtalo nuevamente.');
+    error.code = body?.invalidReason || body?.code || 'RECAPTCHA_REJECTED';
+    error.recaptcha = body;
+    throw error;
+  }
+  return body;
+}
+
+/* Precalienta Enterprise sin bloquear el render de la página. */
+evolutionRecaptchaConfig()
+  .then(cfg => loadEvolutionRecaptchaEnterprise(cfg.siteKey))
+  .catch(error => console.info('reCAPTCHA Enterprise se cargará al pagar:', error?.message || error));
+
 const BINANCE_PAYMENT = {
   alias: 'Evolution Desing',
   asset: 'USDT',
@@ -2269,9 +2386,12 @@ function renderWebManualPayment(panel,method){
     if(!receipt){webManualStatus(panel,'Adjunta una captura o PDF del comprobante.','error');return}
     const old=submit.textContent;
     submit.disabled=true;
-    submit.textContent='Procesando comprobante…';
-    webManualStatus(panel,'Protegiendo y enviando comprobante al backend…','info');
+    submit.textContent='Verificando seguridad…';
+    webManualStatus(panel,'Validando operación segura con reCAPTCHA Enterprise…','info');
     try{
+      await verifyEvolutionRecaptcha(RECAPTCHA_MANUAL_PAYMENT_ACTION);
+      submit.textContent='Procesando comprobante…';
+      webManualStatus(panel,'Protegiendo y enviando comprobante al backend…','info');
       const result=await createManualWebProject({method,reference,payerName,receipt,bankKey:selectedBank});
       webManualStatus(panel,`Comprobante recibido · ${result.displayOrderId}. Abriendo Mis Proyectos…`,'ok');
       sessionStorage.setItem('evolutionWebRequest',currentWebRequestId);
@@ -2368,6 +2488,8 @@ async function renderWebPayPal(funding='paypal'){
       fundingSource,
       style:{layout:'vertical',color:funding==='card'?'black':'black',shape:'rect',label:funding==='card'?'pay':'paypal',height:46},
       createOrder:async()=>{
+        setCheckoutStatus('Verificando seguridad con reCAPTCHA Enterprise…','info');
+        await verifyEvolutionRecaptcha(RECAPTCHA_WEB_ACTION);
         setCheckoutStatus('Preparando pago seguro en el backend…','info');
         const result=await workerRequest('/paypal/create-order',{
           mode:'web_purchase',webRequestId:currentWebRequestId,planId:selectedPlan.id,
