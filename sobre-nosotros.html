@@ -511,6 +511,206 @@
     }
 
     /* =========================================================
+       FOUNDER
+       ========================================================= */
+    .founder-section{
+      background:
+        radial-gradient(circle at 18% 20%,rgba(212,184,149,.055),transparent 24%),
+        radial-gradient(circle at 82% 72%,rgba(112,231,255,.025),transparent 24%),
+        linear-gradient(180deg,#050505,#070708);
+      border-top:1px solid rgba(255,255,255,.05);
+    }
+    .founder-shell{
+      display:grid;
+      grid-template-columns:minmax(320px,.78fr) minmax(0,1.22fr);
+      gap:56px;
+      align-items:stretch;
+    }
+    .founder-portrait{
+      position:relative;
+      min-height:560px;
+      overflow:hidden;
+      border-radius:30px;
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(circle at 50% 24%,rgba(212,184,149,.10),transparent 30%),
+        linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.008)),
+        #09090c;
+      box-shadow:0 32px 86px rgba(0,0,0,.32);
+      display:grid;
+      place-items:center;
+      isolation:isolate;
+    }
+    .founder-portrait::before{
+      content:"";
+      position:absolute;inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:38px 38px;
+      opacity:.42;
+      -webkit-mask-image:radial-gradient(circle at center,#000 20%,transparent 78%);
+      mask-image:radial-gradient(circle at center,#000 20%,transparent 78%);
+      z-index:-1;
+    }
+    .founder-monogram{
+      position:relative;
+      width:190px;height:190px;
+      border-radius:52px;
+      display:grid;place-items:center;
+      border:1px solid rgba(212,184,149,.20);
+      background:
+        radial-gradient(circle at 30% 18%,rgba(255,255,255,.10),transparent 25%),
+        linear-gradient(145deg,rgba(212,184,149,.11),rgba(112,231,255,.035),rgba(142,115,255,.04));
+      box-shadow:
+        0 30px 70px rgba(0,0,0,.36),
+        inset 0 1px 0 rgba(255,255,255,.07),
+        0 0 70px rgba(212,184,149,.055);
+    }
+    .founder-monogram span{
+      font-size:4.2rem;
+      font-weight:700;
+      letter-spacing:-.09em;
+      background:linear-gradient(120deg,#fff,#d4b895 45%,#9e876d);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .founder-portrait-meta{
+      position:absolute;
+      left:18px;right:18px;bottom:18px;
+      padding:17px 18px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(8,8,10,.80);
+      -webkit-backdrop-filter:blur(22px) saturate(150%);
+      backdrop-filter:blur(22px) saturate(150%);
+    }
+    .founder-portrait-meta small{
+      display:block;
+      color:var(--gold);
+      font-size:.51rem;
+      font-weight:800;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+    }
+    .founder-portrait-meta strong{
+      display:block;
+      margin-top:6px;
+      font-size:1rem;
+    }
+    .founder-copy{
+      padding:12px 0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .founder-copy>span{
+      color:var(--gold);
+      font-size:.60rem;
+      font-weight:800;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    .founder-copy h2{
+      margin:16px 0 0;
+      font-size:clamp(3.2rem,5.4vw,6rem);
+      line-height:.90;
+      letter-spacing:-.064em;
+    }
+    .founder-copy h2 em{
+      display:block;
+      font-style:normal;
+      color:#787980;
+      font-weight:500;
+    }
+    .founder-motto{
+      position:relative;
+      margin-top:30px;
+      padding:22px 24px 22px 28px;
+      border-left:2px solid var(--gold);
+      border-radius:0 19px 19px 0;
+      background:linear-gradient(90deg,rgba(212,184,149,.06),rgba(255,255,255,.018));
+      border-top:1px solid rgba(255,255,255,.06);
+      border-right:1px solid rgba(255,255,255,.06);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .founder-motto strong{
+      display:block;
+      font-size:clamp(1.65rem,2.7vw,2.8rem);
+      line-height:1.05;
+      letter-spacing:-.045em;
+    }
+    .founder-motto span{
+      display:block;
+      margin-top:8px;
+      color:#777980;
+      font-size:.70rem;
+      line-height:1.65;
+    }
+    .founder-copy>p{
+      max-width:690px;
+      margin:25px 0 0;
+      color:#888a92;
+      font-size:.80rem;
+      line-height:1.78;
+    }
+    .founder-principles{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+      margin-top:28px;
+    }
+    .founder-principle{
+      min-height:112px;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.075);
+      background:rgba(255,255,255,.018);
+    }
+    .founder-principle b{
+      display:block;
+      color:#d8d8dc;
+      font-size:.66rem;
+    }
+    .founder-principle span{
+      display:block;
+      margin-top:5px;
+      color:#666871;
+      font-size:.56rem;
+      line-height:1.55;
+    }
+
+    /* Orka: limpiamos únicamente el marco externo que vive en nuestra página.
+       El contenido interno del chat es cross-origin y se personaliza desde Orka. */
+    iframe[src*="orka.chat"]{
+      border:0!important;
+      outline:0!important;
+      background:transparent!important;
+      box-shadow:none!important;
+    }
+    iframe[data-evolution-orka-open="true"]{
+      border-radius:22px!important;
+      box-shadow:0 28px 80px rgba(0,0,0,.46)!important;
+      overflow:hidden!important;
+    }
+
+    @media(max-width:991.98px){
+      .founder-shell{grid-template-columns:1fr;gap:34px}
+      .founder-portrait{min-height:500px}
+      .founder-copy{padding:0}
+    }
+    @media(max-width:575.98px){
+      .founder-shell{gap:26px}
+      .founder-portrait{min-height:410px;border-radius:22px}
+      .founder-monogram{width:145px;height:145px;border-radius:40px}
+      .founder-monogram span{font-size:3.2rem}
+      .founder-portrait-meta{left:12px;right:12px;bottom:12px;padding:14px;border-radius:16px}
+      .founder-copy h2{font-size:clamp(2.65rem,12vw,3.8rem)}
+      .founder-motto{padding:18px 17px 18px 20px;margin-top:23px}
+      .founder-principles{grid-template-columns:1fr}
+      .founder-principle{min-height:88px}
+    }
+
+    /* =========================================================
        SYSTEM / CONNECTED WORKFLOW
        ========================================================= */
     .system-section{
@@ -782,7 +982,7 @@
 
         <div class="nav-actions">
           <a class="software-mini" href="https://dingloft.com" target="_blank" rel="noopener">Dingloft →</a>
-          <a class="icon-btn" href="portal.html" aria-label="Portal de Entregas">
+          <a class="icon-btn" href="proyectos.html" aria-label="Mis Proyectos">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           </a>
         </div>
@@ -809,7 +1009,7 @@
 
       <a href="index.html" class="mobile-logo"><img src="img/logo.png" alt="Evolution Design"></a>
 
-      <a href="portal.html" class="icon-btn" aria-label="Portal de Entregas">
+      <a href="proyectos.html" class="icon-btn" aria-label="Mis Proyectos">
         <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
       </a>
     </div>
@@ -954,8 +1154,8 @@
             </div>
             <div class="discipline-content">
               <h3>Web, UI/UX y e-commerce.</h3>
-              <p>Sitios web, tiendas, portales, paneles administrativos y experiencias digitales construidas alrededor de cada negocio.</p>
-              <div class="discipline-tags"><span>UI/UX</span><span>E-commerce</span><span>Portal</span><span>Admin Panel</span><span>Payments</span></div>
+              <p>Sitios web, tiendas, áreas de cliente, paneles administrativos y experiencias digitales construidas alrededor de cada negocio.</p>
+              <div class="discipline-tags"><span>UI/UX</span><span>E-commerce</span><span>Mis Proyectos</span><span>Admin Panel</span><span>Payments</span></div>
             </div>
           </article>
 
@@ -966,7 +1166,7 @@
               <div class="flow-node"><b>Evolution</b><span>Procesos inteligentes</span></div>
               <div class="flow-node"><b>Backend</b><span>Pagos / Seguridad</span></div>
               <div class="flow-arrow">→</div>
-              <div class="flow-node"><b>Entrega</b><span>Portal / Proyecto</span></div>
+              <div class="flow-node"><b>Entrega</b><span>Mis Proyectos</span></div>
             </div>
             <div class="discipline-top">
               <span>04 / Automation & AI</span>
@@ -1039,8 +1239,8 @@
                 <div class="evo-phase">EVOLUCIÓN 03</div>
                 <div class="evo-body">
                   <h3>Del diseño visual al producto digital.</h3>
-                  <p>La siguiente etapa fue construir experiencias completas en internet: sitios web, e-commerce, portales de clientes, paneles administrativos y flujos de pago.</p>
-                  <div class="evo-stack"><span>Web</span><span>UI/UX</span><span>E-commerce</span><span>Admin</span><span>Portal</span></div>
+                  <p>La siguiente etapa fue construir experiencias completas en internet: sitios web, e-commerce, áreas de cliente, paneles administrativos y flujos de pago.</p>
+                  <div class="evo-stack"><span>Web</span><span>UI/UX</span><span>E-commerce</span><span>Admin</span><span>Mis Proyectos</span></div>
                 </div>
               </div>
 
@@ -1063,6 +1263,53 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDER -->
+    <section class="section founder-section" id="fundador">
+      <div class="section-inner">
+        <div class="founder-shell">
+
+          <div class="founder-portrait reveal">
+            <div class="founder-monogram" aria-label="César Mátzar"><span>CM</span></div>
+
+            <div class="founder-portrait-meta">
+              <small>Founder · Evolution Design</small>
+              <strong>César Mátzar</strong>
+            </div>
+          </div>
+
+          <div class="founder-copy reveal">
+            <span>Fundador / Dirección Creativa</span>
+            <h2>César Mátzar.<em>Diseñar es decidir qué dejar fuera.</em></h2>
+
+            <div class="founder-motto">
+              <strong>“Menos ruido. Más intención.”</strong>
+              <span>La simplicidad no consiste en quitar por quitar; consiste en dejar únicamente lo que aporta valor.</span>
+            </div>
+
+            <p>
+              Como fundador de Evolution Design, César dirige una visión en la que arquitectura, diseño y tecnología no compiten entre sí: se complementan. La meta no es llenar cada proyecto de elementos, sino encontrar la solución más clara, funcional y visualmente sólida para cada necesidad.
+            </p>
+
+            <div class="founder-principles">
+              <div class="founder-principle">
+                <b>Claridad</b>
+                <span>Una buena solución debe entenderse antes de necesitar una explicación extensa.</span>
+              </div>
+              <div class="founder-principle">
+                <b>Intención</b>
+                <span>Cada detalle debe justificar su presencia dentro del proyecto.</span>
+              </div>
+              <div class="founder-principle">
+                <b>Evolución</b>
+                <span>El criterio permanece; las herramientas y posibilidades siguen avanzando.</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -1189,8 +1436,8 @@
         <div class="footer-col">
           <span>Contacto</span>
           <p>support@evolutiondesing.com</p>
-          <p>Chat en línea disponible con Orka</p>
-          <a href="portal.html">Portal de Entregas</a>
+          <p>Soporte en línea mediante Orka Chat</p>
+          <a href="proyectos.html">Mis Proyectos</a>
           <a href="https://dingloft.com" target="_blank" rel="noopener">Dingloft ↗</a>
         </div>
       </div>
@@ -1201,6 +1448,46 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ORKA · limpieza del marco exterior */
+    (function(){
+      function styleOrkaFrame(){
+        document.querySelectorAll('iframe[src*="orka.chat"]').forEach(frame=>{
+          frame.style.setProperty('border','0','important');
+          frame.style.setProperty('outline','0','important');
+          frame.style.setProperty('background','transparent','important');
+
+          const rect=frame.getBoundingClientRect();
+          const isOpen=rect.width>240 && rect.height>250;
+
+          frame.dataset.evolutionOrkaOpen=isOpen?'true':'false';
+
+          if(isOpen){
+            frame.style.setProperty('border-radius',window.innerWidth<600?'18px':'22px','important');
+            frame.style.setProperty('box-shadow','0 28px 80px rgba(0,0,0,.46)','important');
+
+            const wrapper=frame.parentElement;
+            if(wrapper && wrapper!==document.body){
+              wrapper.style.setProperty('background','transparent','important');
+              wrapper.style.setProperty('border','0','important');
+              wrapper.style.setProperty('box-shadow','none','important');
+              wrapper.style.setProperty('padding','0','important');
+            }
+          }
+        });
+      }
+
+      const observer=new MutationObserver(()=>requestAnimationFrame(styleOrkaFrame));
+      observer.observe(document.documentElement,{childList:true,subtree:true,attributes:true});
+      window.addEventListener('resize',styleOrkaFrame,{passive:true});
+      window.addEventListener('load',()=>{
+        styleOrkaFrame();
+        setTimeout(styleOrkaFrame,600);
+        setTimeout(styleOrkaFrame,1600);
+      });
+    })();
+  </script>
 
   <script>
     /* Mobile menu */
