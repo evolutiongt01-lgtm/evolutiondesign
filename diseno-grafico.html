@@ -1234,6 +1234,123 @@ body.gd-modal-open{overflow:hidden}
 .gd-gallery-six .gd-project .info h3{grid-area:title;margin:3px 0 0;font-size:1.18rem}
 .gd-gallery-six .gd-project .info p{grid-area:desc;color:#d4d6dc;font-size:.52rem;white-space:nowrap}
 
+/* =========================================================
+   PORTAFOLIO · CINEMATIC AMBIENT LIGHT
+   Inspirado en el modo de iluminación ambiental de reproductores modernos.
+   Cada tarjeta usa SU PROPIA imagen como halo de color desenfocado.
+   ========================================================= */
+.gd-gallery-six{
+  position:relative;
+  isolation:isolate;
+  row-gap:34px;
+}
+.gd-gallery-six .gd-project{
+  overflow:visible!important;
+  isolation:isolate;
+  z-index:1;
+  border-color:rgba(255,255,255,.10);
+  box-shadow:
+    0 22px 58px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,255,255,.035);
+}
+.gd-gallery-six .gd-project::before{
+  content:"";
+  position:absolute;
+  z-index:-2;
+  inset:8% 5% -7%;
+  border-radius:32px;
+  background-image:var(--gd-ambient-image,none);
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  filter:blur(42px) saturate(1.38) brightness(.72);
+  opacity:.52;
+  transform:scale(1.055);
+  pointer-events:none;
+  transition:
+    opacity .48s ease,
+    filter .48s ease,
+    transform .6s cubic-bezier(.16,1,.3,1);
+}
+.gd-gallery-six .gd-project::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-8px;
+  border-radius:30px;
+  background:
+    radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.055),transparent 64%),
+    linear-gradient(180deg,transparent 50%,rgba(5,5,8,.24));
+  filter:blur(10px);
+  opacity:.65;
+  pointer-events:none;
+}
+.gd-gallery-six .gd-project>img{
+  z-index:0;
+  border-radius:inherit;
+  clip-path:inset(0 round 22px);
+}
+.gd-gallery-six .gd-project>.shade{
+  border-radius:inherit;
+  overflow:hidden;
+}
+.gd-gallery-six .gd-project:hover{
+  z-index:3;
+  border-color:rgba(255,255,255,.18);
+  box-shadow:
+    0 32px 76px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.055);
+}
+.gd-gallery-six .gd-project:hover::before{
+  opacity:.72;
+  filter:blur(46px) saturate(1.55) brightness(.84);
+  transform:scale(1.09) translateY(3px);
+}
+
+/* Evita que el halo se corte en los bordes generales del portfolio. */
+.gd-projects,
+.gd-projects .gd-wrap{
+  overflow:visible;
+}
+
+/* En móvil: mismo concepto, menos bloom para conservar legibilidad/rendimiento. */
+@media(max-width:900px){
+  .gd-gallery-six{row-gap:24px}
+  .gd-gallery-six .gd-project::before{
+    inset:10% 7% -5%;
+    filter:blur(30px) saturate(1.30) brightness(.68);
+    opacity:.42;
+    transform:scale(1.035);
+  }
+  .gd-gallery-six .gd-project:hover::before{
+    opacity:.50;
+    filter:blur(32px) saturate(1.36) brightness(.72);
+    transform:scale(1.05);
+  }
+}
+@media(max-width:575.98px){
+  .gd-gallery-six{row-gap:19px}
+  .gd-gallery-six .gd-project::before{
+    inset:12% 8% -4%;
+    border-radius:24px;
+    filter:blur(24px) saturate(1.22) brightness(.64);
+    opacity:.34;
+  }
+  .gd-gallery-six .gd-project::after{
+    inset:-4px;
+    border-radius:21px;
+    opacity:.48;
+  }
+  .gd-gallery-six .gd-project>img{
+    clip-path:inset(0 round 17px);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .gd-gallery-six .gd-project::before{
+    transition:none!important;
+  }
+}
+
 .gd-portfolio-lightbox{
   position:fixed;inset:0;z-index:100000;
   display:flex;align-items:center;justify-content:center;
@@ -2629,6 +2746,85 @@ body.gd-modal-open{overflow:hidden}
 <script>
 (() => {
   const BACKEND='https://evolution-design-backend.evolutiongt01.workers.dev';
+  const RECAPTCHA_GRAPHIC_ACTION='GRAPHIC_CHECKOUT';
+  const RECAPTCHA_MANUAL_PAYMENT_ACTION='MANUAL_PAYMENT';
+  let evolutionRecaptchaConfigPromise=null;
+  let evolutionRecaptchaScriptPromise=null;
+
+  const backendGet=async path=>{
+    const r=await fetch(BACKEND+path,{method:'GET',headers:{'Accept':'application/json'},cache:'no-store'});
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok||data?.ok===false)throw new Error(data?.error||'No se pudo consultar Evolution Backend.');
+    return data;
+  };
+
+  const evolutionRecaptchaConfig=()=>{
+    if(!evolutionRecaptchaConfigPromise){
+      evolutionRecaptchaConfigPromise=backendGet('/recaptcha/config').then(cfg=>{
+        if(!cfg?.siteKey)throw new Error('El Worker no devolvió una clave reCAPTCHA válida.');
+        return cfg;
+      }).catch(err=>{evolutionRecaptchaConfigPromise=null;throw err});
+    }
+    return evolutionRecaptchaConfigPromise;
+  };
+
+  const loadEvolutionRecaptchaEnterprise=siteKey=>{
+    if(window.grecaptcha?.enterprise)return Promise.resolve();
+    if(evolutionRecaptchaScriptPromise)return evolutionRecaptchaScriptPromise;
+
+    evolutionRecaptchaScriptPromise=new Promise((resolve,reject)=>{
+      const existing=document.querySelector('script[data-evolution-recaptcha-enterprise]');
+      if(existing){
+        if(window.grecaptcha?.enterprise){resolve();return}
+        existing.addEventListener('load',()=>resolve(),{once:true});
+        existing.addEventListener('error',()=>reject(new Error('No se pudo cargar reCAPTCHA Enterprise.')),{once:true});
+        return;
+      }
+      const s=document.createElement('script');
+      s.src=`https://www.google.com/recaptcha/enterprise.js?render=${encodeURIComponent(siteKey)}`;
+      s.async=true;s.defer=true;s.dataset.evolutionRecaptchaEnterprise='true';
+      s.onload=()=>resolve();
+      s.onerror=()=>reject(new Error('No se pudo cargar reCAPTCHA Enterprise.'));
+      document.head.appendChild(s);
+    }).catch(err=>{evolutionRecaptchaScriptPromise=null;throw err});
+
+    return evolutionRecaptchaScriptPromise;
+  };
+
+  const evolutionRecaptchaToken=async action=>{
+    const normalized=String(action||'').trim().toUpperCase();
+    const cfg=await evolutionRecaptchaConfig();
+    if(Array.isArray(cfg.actions)&&!cfg.actions.includes(normalized))throw new Error('La acción de seguridad no está habilitada en Evolution Backend.');
+    await loadEvolutionRecaptchaEnterprise(cfg.siteKey);
+    if(!window.grecaptcha?.enterprise)throw new Error('reCAPTCHA Enterprise no está disponible.');
+
+    return new Promise((resolve,reject)=>{
+      window.grecaptcha.enterprise.ready(async()=>{
+        try{
+          const token=await window.grecaptcha.enterprise.execute(cfg.siteKey,{action:normalized});
+          if(!token)throw new Error('reCAPTCHA no devolvió un token válido.');
+          resolve(token);
+        }catch(err){reject(err)}
+      });
+    });
+  };
+
+  const verifyEvolutionRecaptcha=async action=>{
+    const normalized=String(action||'').trim().toUpperCase();
+    const token=await evolutionRecaptchaToken(normalized);
+    const r=await fetch(BACKEND+'/recaptcha/verify',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token,action:normalized,requestedUri:window.location.href})
+    });
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok||data?.ok!==true)throw new Error('No pudimos validar la seguridad de esta operación. Inténtalo nuevamente.');
+    return data;
+  };
+
+  evolutionRecaptchaConfig()
+    .then(cfg=>loadEvolutionRecaptchaEnterprise(cfg.siteKey))
+    .catch(err=>console.info('reCAPTCHA Enterprise se cargará al pagar:',err?.message||err));
   const BINANCE={alias:'Evolution Desing',asset:'USDT',qrImage:'img/binance-pay.jpeg'};
   const BANKS={
     bac:{bank:'BAC Credomatic',short:'BAC',holder:'César Mátzar',number:'973883242',type:'Ahorro',currency:'GTQ'},
@@ -3010,7 +3206,12 @@ body.gd-modal-open{overflow:hidden}
       paypal.Buttons({
         style:{layout:'vertical',shape:'pill',label:'paypal',height:45},
         createOrder:async()=>{
+          payError.classList.remove('show');
+          if(loading){loading.style.display='block';loading.textContent='Verificando seguridad…'}
+          await verifyEvolutionRecaptcha(RECAPTCHA_GRAPHIC_ACTION);
+          if(loading)loading.textContent='Preparando pago seguro…';
           const d=await api('/paypal/create-order',{mode:'graphic_design_purchase',graphicService:activeService,brief:currentBrief,clientGeo:window.evolutionGraphicGeo||{}});
+          if(loading)loading.style.display='none';
           return d.orderId;
         },
         onApprove:async data=>{
@@ -3044,8 +3245,10 @@ body.gd-modal-open{overflow:hidden}
     const btn=methodPanel.querySelector('.gd-manual-submit');
     if(!reference){manualStatus('Ingresa la referencia de la transacción.','error');return}
     if(!file){manualStatus('Adjunta una captura o PDF del comprobante.','error');return}
-    const old=btn.textContent;btn.disabled=true;btn.textContent='Procesando comprobante…';manualStatus('Protegiendo y enviando el comprobante…','info');
+    const old=btn.textContent;btn.disabled=true;btn.textContent='Verificando seguridad…';manualStatus('Validando operación segura con reCAPTCHA Enterprise…','info');
     try{
+      await verifyEvolutionRecaptcha(RECAPTCHA_MANUAL_PAYMENT_ACTION);
+      btn.textContent='Procesando comprobante…';manualStatus('Protegiendo y enviando el comprobante…','info');
       const receipt=await prepareReceipt(file);
       const result=await api('/graphic/manual-payment',{method,reference,payerName,bankKey,receipt,graphicService:activeService,brief:currentBrief,clientGeo:window.evolutionGraphicGeo||{}});
       let referenceNote='';
@@ -3306,6 +3509,29 @@ body.gd-modal-open{overflow:hidden}
   closeBtn?.addEventListener('click',close);
   box.addEventListener('click',e=>{if(e.target===box)close()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&box.classList.contains('show'))close()});
+})();
+</script>
+
+
+<script>
+/* CINEMATIC AMBIENT LIGHT · cada PSD ilumina su propia tarjeta */
+(function(){
+  const cards = document.querySelectorAll('.gd-gallery-six .gd-project');
+
+  cards.forEach(card => {
+    const img = card.querySelector(':scope > img');
+    if (!img) return;
+
+    const applyAmbient = () => {
+      const src = img.currentSrc || img.getAttribute('src') || '';
+      if (!src) return;
+      const safe = src.replace(/"/g, '\\"');
+      card.style.setProperty('--gd-ambient-image', `url("${safe}")`);
+    };
+
+    if (img.complete) applyAmbient();
+    else img.addEventListener('load', applyAmbient, {once:true});
+  });
 })();
 </script>
 
