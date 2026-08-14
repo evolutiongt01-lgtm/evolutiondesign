@@ -1,33 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
-  <meta name="theme-color" content="#050505">
-  <meta name="application-name" content="Evolution Design">
-  <meta name="apple-mobile-web-app-title" content="Evolution">
-  <meta name="color-scheme" content="dark">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="description" content="Evolution Design — estudio creativo de arquitectura, diseño gráfico y diseño web.">
-  <meta name="author" content="Evolution Design">
-  <meta name="google-site-verification" content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA">
-  <meta name="evolution-build" content="2026-08-14-index-splash-auth-ios-v3">
-
-  <title>Evolution Design — Arquitectura, Diseño Gráfico y Diseño Web</title>
-
-  <link rel="apple-touch-icon" href="/img/evolution-app-icon.png">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
-  <link rel="preload" href="css/theme.min.css" as="style">
-  <link rel="stylesheet" href="css/theme.min.css">
-  <link rel="prefetch" href="arquitectura.html">
-
-  <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" name="viewport"/>
+<meta content="#050505" name="theme-color"/>
+<meta content="Evolution Design" name="application-name"/>
+<meta content="Evolution" name="apple-mobile-web-app-title"/>
+<meta content="dark" name="color-scheme"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="Evolution Design — estudio creativo de arquitectura, diseño gráfico y diseño web." name="description"/>
+<meta content="Evolution Design" name="author"/>
+<meta content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA" name="google-site-verification"/>
+<meta name="evolution-build" content="2026-08-14-index-mobile-ultra-fluid-v5">
+<title>Evolution Design — Arquitectura, Diseño Gráfico y Diseño Web</title>
+<link href="/img/evolution-app-icon.png" rel="apple-touch-icon"/>
+<link href="/manifest.webmanifest" rel="manifest"/>
+<link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="img/favicon.png" rel="icon" sizes="96x96" type="image/png"/>
+<link as="style" href="css/theme.min.css" rel="preload"/>
+<link href="css/theme.min.css" rel="stylesheet"/>
+<link href="arquitectura.html" rel="prefetch"/>
+<script>
     /* Oculta CTA de instalación cuando Evolution ya corre como app */
     (() => {
       const installedMode =
@@ -862,9 +860,8 @@
     }
 
   </style>
-
-  <!-- Evolution App Speed · navegación anticipada en Chrome -->
-  <script type="speculationrules">
+<!-- Evolution App Speed · navegación anticipada en Chrome -->
+<script type="speculationrules">
   {
     "prefetch": [
       {
@@ -875,8 +872,6 @@
     ]
   }
   </script>
-
-
 <style id="evolution-master-navigation">
   /* MASTER NAV — mismo aspecto e iconos de Arquitectura */
   .desktop-nav{
@@ -988,8 +983,6 @@
   @media(max-width:991.98px){.desktop-nav{display:none!important}.mobile-app-nav{display:block!important}}
   @media(max-width:389.98px){.app-nav-top>a img{max-width:116px}.tab-item{font-size:.58rem}.tab-item svg{width:18px;height:18px}}
 </style>
-
-
 <style id="evolution-offline-style">
   .evo-offline-pill{
     position:fixed;z-index:20000;top:calc(env(safe-area-inset-top,0px) + 10px);left:50%;
@@ -1015,8 +1008,6 @@
   .evo-offline-toast strong{display:block;margin-bottom:4px;font-size:.76rem}
   .evo-offline-toast small{display:block;color:#85858d;font-size:.63rem;line-height:1.45}
 </style>
-
-
 <style id="evolution-launch-style">
   #evolutionLaunchScreen{
     position:fixed;
@@ -1106,53 +1097,273 @@
     }
   }
 </style>
+<style id="evolution-mobile-performance">
+  /* =========================================================
+     EVOLUTION MOBILE FLUID · rendimiento + animación ligera
+     ========================================================= */
+
+  /* Las animaciones móviles solo usan compositor: transform + opacity. */
+  @media (max-width:991.98px) {
+    html {
+      scroll-behavior:smooth;
+    }
+
+    body {
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior-y:none;
+    }
+
+    /* Evita recalcular zonas muy grandes fuera de pantalla. */
+    section,
+    footer,
+    .studio-section,
+    .payment-strip {
+      content-visibility:auto;
+      contain-intrinsic-size:1px 700px;
+    }
+
+    /* Hero y navegación siempre visibles, no usar content-visibility. */
+    .hero,
+    .mobile-app-nav,
+    .login-modal-overlay,
+    #evolutionLaunchScreen,
+    #evolutionNetworkToast,
+    #evoOfflineToast,
+    #evoOfflinePill {
+      content-visibility:visible;
+      contain:none;
+    }
+
+    /* Blur reducido en móvil: conserva look glass sin castigar GPU. */
+    .mobile-app-nav {
+      -webkit-backdrop-filter:blur(14px) saturate(135%) !important;
+      backdrop-filter:blur(14px) saturate(135%) !important;
+    }
+
+    .hero-index,
+    .login-card,
+    .modal-content,
+    .payment-card,
+    .evolution-network-toast,
+    .evo-offline-toast {
+      -webkit-backdrop-filter:blur(12px) saturate(125%) !important;
+      backdrop-filter:blur(12px) saturate(125%) !important;
+    }
+
+    /* Entrada ligera tipo app. */
+    .evo-mobile-enter {
+      opacity:0;
+      transform:translate3d(0,18px,0) scale(.985);
+      transition:
+        opacity .52s cubic-bezier(.16,1,.3,1),
+        transform .58s cubic-bezier(.16,1,.3,1);
+      will-change:transform,opacity;
+    }
+
+    .evo-mobile-enter.evo-in {
+      opacity:1;
+      transform:translate3d(0,0,0) scale(1);
+    }
+
+    /* Elementos principales del hero entran rápido, sin blur. */
+    .hero-kicker,
+    .hero h1,
+    .hero-copy,
+    .hero-actions,
+    .hero-side-stack {
+      animation:evoHeroMobileIn .62s cubic-bezier(.16,1,.3,1) both;
+    }
+    .hero h1 { animation-delay:.04s; }
+    .hero-copy { animation-delay:.08s; }
+    .hero-actions { animation-delay:.12s; }
+    .hero-side-stack { animation-delay:.16s; }
+
+    @keyframes evoHeroMobileIn {
+      from { opacity:0; transform:translate3d(0,14px,0); }
+      to { opacity:1; transform:none; }
+    }
+
+    /* Feedback táctil sin reflow. */
+    a,
+    button,
+    .studio-row,
+    .discipline-card,
+    .payment-card,
+    .service-card,
+    .portfolio-card,
+    .project-card {
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .studio-row:active,
+    .discipline-card:active,
+    .payment-card:active,
+    .service-card:active,
+    .portfolio-card:active,
+    .hero-primary:active,
+    .hero-secondary:active,
+    button:active {
+      transform:scale(.985);
+      transition-duration:.10s !important;
+    }
+
+    /* Canvas/efectos decorativos: menos trabajo en móvil. */
+    canvas.digital-rain,
+    .digital-scan {
+      opacity:.22 !important;
+    }
+
+    /* Imágenes: evitan saltos y ayudan al compositor. */
+    img {
+      height:auto;
+      transform:translateZ(0);
+    }
+
+    /* Evita hover virtual caro en pantallas touch. */
+    @media (hover:none) {
+      .studio-row:hover,
+      .discipline-card:hover,
+      .payment-card:hover,
+      .digital-ecosystem:hover,
+      .import-card:hover {
+        transform:none;
+      }
+    }
+  }
+
+  /* En teléfonos pequeños reducimos aún más efectos costosos. */
+  @media (max-width:575.98px) {
+    .mobile-app-nav {
+      -webkit-backdrop-filter:blur(10px) saturate(120%) !important;
+      backdrop-filter:blur(10px) saturate(120%) !important;
+    }
+
+    .hero-index,
+    .login-card,
+    .modal-content,
+    .payment-card {
+      -webkit-backdrop-filter:blur(8px) !important;
+      backdrop-filter:blur(8px) !important;
+    }
+
+    canvas.digital-rain {
+      display:none !important;
+    }
+
+    .digital-scan {
+      animation:none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion:reduce) {
+    .evo-mobile-enter,
+    .hero-kicker,
+    .hero h1,
+    .hero-copy,
+    .hero-actions,
+    .hero-side-stack {
+      opacity:1 !important;
+      transform:none !important;
+      animation:none !important;
+      transition:none !important;
+    }
+  }
+</style>
+
+<style id="evolution-mobile-ultra-performance">
+  /* Segunda capa: elimina los efectos que más castigan iPhone/Android. */
+  @media(max-width:991.98px){
+    /* View Transitions sin blur: el blur durante navegación es caro en móviles. */
+    ::view-transition-old(root),
+    ::view-transition-new(root),
+    ::view-transition-old(evolution-content),
+    ::view-transition-new(evolution-content),
+    ::view-transition-old(evolution-navigation),
+    ::view-transition-new(evolution-navigation){
+      filter:none !important;
+      animation-duration:.20s !important;
+    }
+
+    .reveal,
+    .reveal.visible,
+    [data-aos]{
+      filter:none !important;
+    }
+
+    /* Sombras grandes producen rasterización extra al hacer scroll. */
+    .hero-index,
+    .discipline-grid,
+    .discipline-card,
+    .service-card,
+    .payment-card,
+    .portfolio-card,
+    .digital-ecosystem{
+      box-shadow:0 10px 26px rgba(0,0,0,.16) !important;
+    }
+
+    /* Los efectos decorativos no deben provocar repaint continuo. */
+    .hero::after,
+    .web-hero::after{
+      animation:none !important;
+    }
+
+    /* Animación escalonada ligera. */
+    .evo-mobile-enter:nth-child(2){transition-delay:.035s}
+    .evo-mobile-enter:nth-child(3){transition-delay:.07s}
+    .evo-mobile-enter:nth-child(4){transition-delay:.105s}
+    .evo-mobile-enter:nth-child(5){transition-delay:.14s}
+  }
+
+  @media(max-width:767.98px){
+    /* Matrix/canvas se ve bien en desktop, pero es de los efectos más caros en teléfono. */
+    #heroCanvas,
+    canvas.hero-canvas,
+    canvas.digital-rain{
+      display:none !important;
+    }
+  }
+</style>
 
 </head>
 <body>
-
-<div id="evolutionLaunchScreen" aria-hidden="true">
-  <div class="evolution-launch-inner">
-    <img class="evolution-launch-icon" src="/img/evolution-app-icon.png" alt="">
-    <div class="evolution-launch-word">Evolution Design</div>
-    <div class="evolution-launch-sub">Architecture · Brand · Digital</div>
-    <div class="evolution-launch-line" aria-hidden="true"></div>
-  </div>
+<div aria-hidden="true" id="evolutionLaunchScreen">
+<div class="evolution-launch-inner">
+<img alt="" class="evolution-launch-icon" decoding="async" fetchpriority="high" loading="eager" src="/img/evolution-app-icon.png"/>
+<div class="evolution-launch-word">Evolution Design</div>
+<div class="evolution-launch-sub">Architecture · Brand · Digital</div>
+<div aria-hidden="true" class="evolution-launch-line"></div>
 </div>
-
-
-<div id="evoOfflinePill" class="evo-offline-pill" role="status" aria-live="polite"><i></i><span>Modo sin conexión · navegación disponible</span></div>
-<div id="evoOfflineToast" class="evo-offline-toast" role="alert" aria-live="assertive">
-  <span class="ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.6 2.8 17a2 2 0 0 0 1.74 3h14.92a2 2 0 0 0 1.74-3L13.7 3.6a2 2 0 0 0-3.4 0Z"/></svg></span>
-  <span><strong>Sin conexión a internet</strong><small>Esta acción necesita conexión. Puedes seguir explorando el contenido guardado en Evolution.</small></span>
 </div>
-
-
-  <!-- LOGIN MODAL -->
-  <div id="authModal" class="login-modal-overlay" aria-hidden="true">
-    <div class="login-card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
-      <button id="closeAuthModal" class="close-modal" aria-label="Cerrar">&times;</button>
-      <div class="text-center mb-4">
-        <img src="img/logo.png" alt="Evolution Design" style="max-height:27px;margin-bottom:16px;">
-        <h4 id="authModalTitle" class="fw-bold text-white mb-1">Iniciar Sesión</h4>
-        <p class="text-secondary small mb-0">Accede a tu cuenta y a tus proyectos.</p>
-      </div>
-      <button id="btnGoogleLogin" class="btn btn-light w-100 rounded-pill py-2 mb-3 fw-bold d-flex justify-content-center align-items-center gap-2 text-dark" type="button">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+<div aria-live="polite" class="evo-offline-pill" id="evoOfflinePill" role="status"><i></i><span>Modo sin conexión · navegación disponible</span></div>
+<div aria-live="assertive" class="evo-offline-toast" id="evoOfflineToast" role="alert">
+<span class="ico"><svg fill="none" height="19" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24" width="19"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.6 2.8 17a2 2 0 0 0 1.74 3h14.92a2 2 0 0 0 1.74-3L13.7 3.6a2 2 0 0 0-3.4 0Z"></path></svg></span>
+<span><strong>Sin conexión a internet</strong><small>Esta acción necesita conexión. Puedes seguir explorando el contenido guardado en Evolution.</small></span>
+</div>
+<!-- LOGIN MODAL -->
+<div aria-hidden="true" class="login-modal-overlay" id="authModal">
+<div aria-labelledby="authModalTitle" aria-modal="true" class="login-card" role="dialog">
+<button aria-label="Cerrar" class="close-modal" id="closeAuthModal">×</button>
+<div class="text-center mb-4">
+<img alt="Evolution Design" decoding="async" fetchpriority="high" loading="eager" src="img/logo.png" style="max-height:27px;margin-bottom:16px;"/>
+<h4 class="fw-bold text-white mb-1" id="authModalTitle">Iniciar Sesión</h4>
+<p class="text-secondary small mb-0">Accede a tu cuenta y a tus proyectos.</p>
+</div>
+<button class="btn btn-light w-100 rounded-pill py-2 mb-3 fw-bold d-flex justify-content-center align-items-center gap-2 text-dark" id="btnGoogleLogin" type="button">
+<svg height="18" viewbox="0 0 24 24" width="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
         Continuar con Google
       </button>
-      <div class="d-flex align-items-center my-3"><hr class="flex-grow-1 border-secondary m-0"><span class="px-2 text-secondary small">o</span><hr class="flex-grow-1 border-secondary m-0"></div>
-      <form id="authEmailForm">
-        <div class="mb-2"><input id="authEmail" class="auth-input" type="email" autocomplete="email" placeholder="Correo electrónico" required></div>
-        <div class="mb-3"><input id="authPassword" class="auth-input" type="password" autocomplete="current-password" placeholder="Contraseña" minlength="6" required></div>
-        <button id="btnSubmitAuth" class="auth-submit" type="submit">Ingresar</button>
-      </form>
-      <div class="text-center mt-3"><a href="#" id="toggleAuthMode" class="text-secondary small text-decoration-none">¿No tienes cuenta? <span style="color:var(--accent);font-weight:600;">Regístrate</span></a></div>
-      <div id="authError" class="small text-center mt-3" style="display:none;color:#ff929b;background:rgba(255,92,104,.07);border:1px solid rgba(255,92,104,.15);border-radius:10px;padding:8px;"></div>
-    </div>
-  </div>
-
-  <!-- NAVEGACIÓN ESCRITORIO (Mac/PC) -->
-  <nav class="desktop-nav fixed-top" id="navScroll">
+<div class="d-flex align-items-center my-3"><hr class="flex-grow-1 border-secondary m-0"/><span class="px-2 text-secondary small">o</span><hr class="flex-grow-1 border-secondary m-0"/></div>
+<form id="authEmailForm">
+<div class="mb-2"><input autocomplete="email" class="auth-input" id="authEmail" placeholder="Correo electrónico" required="" type="email"/></div>
+<div class="mb-3"><input autocomplete="current-password" class="auth-input" id="authPassword" minlength="6" placeholder="Contraseña" required="" type="password"/></div>
+<button class="auth-submit" id="btnSubmitAuth" type="submit">Ingresar</button>
+</form>
+<div class="text-center mt-3"><a class="text-secondary small text-decoration-none" href="#" id="toggleAuthMode">¿No tienes cuenta? <span style="color:var(--accent);font-weight:600;">Regístrate</span></a></div>
+<div class="small text-center mt-3" id="authError" style="display:none;color:#ff929b;background:rgba(255,92,104,.07);border:1px solid rgba(255,92,104,.15);border-radius:10px;padding:8px;"></div>
+</div>
+</div>
+<!-- NAVEGACIÓN ESCRITORIO (Mac/PC) -->
+<nav class="desktop-nav fixed-top" id="navScroll">
 <div class="container px-0 position-relative">
 <div class="d-flex align-items-center justify-content-center gap-3 w-100">
 <!-- BARRA PRINCIPAL ANCHA -->
@@ -1173,7 +1384,7 @@
 <li class="d-none" id="linkProyectosMenuDesktop"><a class="menu-item" data-evolution-nav="" href="proyectos.html"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Mis Proyectos</a></li>
 </ul>
 </div>
-<a aria-label="Ir a Home" class="d-flex align-items-center" data-evolution-nav="" href="index.html"><img alt="Evolution Design" loading="lazy" src="img/logo.png" style="max-height: 35px; width: auto;"/></a>
+<a aria-label="Ir a Home" class="d-flex align-items-center" data-evolution-nav="" href="index.html"><img alt="Evolution Design" decoding="async" loading="eager" src="img/logo.png" style="max-height: 35px; width: auto;"/></a>
 <!-- BOTÓN ADMIN FLOTANDO EXACTAMENTE DEBAJO DEL LOGO (MAC) -->
 <div id="admin-badge-container-desktop" style="position: absolute; top: calc(100% + 5px); left: 3.5rem; z-index: 10;"></div>
 </div>
@@ -1210,7 +1421,7 @@
 <li><a class="menu-item" href="feedback"><svg fill="none" height="18" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Feedback</a></li>
 </ul>
 </div>
-<a aria-label="Ir a Home" class="" data-evolution-nav="" href="index.html"><img alt="Evolution Design" loading="lazy" src="img/logo.png" style="max-height: 28px; width: auto;"/></a>
+<a aria-label="Ir a Home" class="" data-evolution-nav="" href="index.html"><img alt="Evolution Design" decoding="async" loading="eager" src="img/logo.png" style="max-height: 28px; width: auto;"/></a>
 <!-- CONTENEDOR LOGIN Y PERFIL MÓVIL -->
 <div class="d-flex align-items-center" id="auth-mobile-wrapper">
 <a aria-label="Login" class="icon-btn" href="#" onclick="abrirAuthModal(); return false;">
@@ -1226,185 +1437,163 @@
 <a class="tab-item d-none" data-evolution-nav="" href="proyectos.html" id="linkProyectosMobile"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>Proyectos</a>
 </div>
 </nav>
-
-
-  <!-- MODAL INSTALACIÓN EVOLUTION -->
-  <div id="evolutionInstallModal" class="evolution-install-modal" aria-hidden="true">
-    <div class="evolution-install-card" role="dialog" aria-modal="true" aria-labelledby="evolutionInstallModalTitle">
-      <button id="evolutionInstallClose" class="evolution-install-close" type="button" aria-label="Cerrar">×</button>
-
-      <div id="evolutionInstallModalIcon" class="evolution-install-modal-icon" aria-hidden="true"></div>
-      <h3 id="evolutionInstallModalTitle">Instalar Evolution</h3>
-      <p id="evolutionInstallModalText">Añade Evolution a tu dispositivo para abrirla como una app independiente.</p>
-
-      <div id="evolutionInstallSteps" class="evolution-install-steps"></div>
-      <p id="evolutionInstallNote" class="evolution-install-note"></p>
-    </div>
-  </div>
-
-
-  <main>
-    <section class="hero" id="inicio">
-      <div class="hero-inner">
-        <div class="hero-copy-col">
-          <span class="hero-kicker">Evolution Design · Creative Studio</span>
-          <h1>Diseñamos<br>lo que <em>evoluciona.</em></h1>
-          <p class="hero-copy">Un solo estudio para transformar ideas en espacios, identidades y experiencias digitales con una dirección visual coherente.</p>
-          
-          <div class="hero-actions evolution-platform-actions">
-            <button id="installAppleBtn" class="hero-primary evolution-platform-btn evolution-platform-apple" type="button">
-              <svg class="platform-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.2-.07 2.04.66 2.75.72 1.06-.21 2.08-.81 3.21-.73 1.35.11 2.36.64 3.03 1.6-2.79 1.67-2.13 5.34.43 6.37-.51 1.36-1.17 2.72-2.42 4.01ZM12.03 7.25C11.88 5.23 13.53 3.56 15.42 3.4c.26 2.34-2.12 4.09-3.39 3.85Z"/>
-              </svg>
-              <span class="platform-btn-copy">
-                <small>macOS / iPhone</small>
-                <strong>Instalar Evolution</strong>
-              </span>
-            </button>
-
-            <button id="installUniversalBtn" class="hero-secondary evolution-platform-btn evolution-platform-universal" type="button">
-              <span id="installUniversalIcon" class="platform-logo-wrap" aria-hidden="true">
-                <svg class="platform-logo windows-logo" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 4.6 10.5 3.5v7.6H3V4.6Zm8.5-1.25L21 2v9.1h-9.5V3.35ZM3 12.1h7.5v7.6L3 18.6v-6.5Zm8.5 0H21V22l-9.5-1.35V12.1Z"/>
-                </svg>
-              </span>
-              <span class="platform-btn-copy">
-                <small id="installUniversalPlatform">Android / Windows</small>
-                <strong id="installUniversalLabel">Instalar Evolution</strong>
-              </span>
-            </button>
-          </div>
-
-
-
-        </div>
-
-        <div class="hero-side-stack">
-          <div class="hero-index reveal">
-            <div class="hero-index-head"><span>Studio Index</span><span>03 disciplinas</span></div>
-            <a href="arquitectura.html" class="studio-row">
-              <span class="studio-number">01</span><div><strong>Arquitectura</strong><small>Planos · Renders · Fachadas · Interiores</small></div><span class="studio-arrow">→</span>
-            </a>
-            <a href="diseno-grafico.html" class="studio-row">
-              <span class="studio-number">02</span><div><strong>Diseño Gráfico</strong><small>Branding · Identidad · Publicidad · Contenido</small></div><span class="studio-arrow">→</span>
-            </a>
-            <a href="diseno-web.html" class="studio-row">
-              <span class="studio-number">03</span><div><strong>Diseño Web</strong><small>Sitios · Landing pages · Ecommerce · UI/UX</small></div><span class="studio-arrow">→</span>
-            </a>
-          </div>
-
-          <a href="https://dingloft.com" target="_blank" rel="noopener" class="digital-ecosystem reveal" aria-label="Abrir Evolution Digital Ecosystem en Dingloft">
-            <canvas class="digital-rain" id="digitalRain" aria-hidden="true"></canvas>
-            <span class="digital-scan" aria-hidden="true"></span>
-            <div class="digital-content">
-              <div class="digital-topline">
-                <span class="digital-label"><span class="digital-dot"></span>Evolution Digital Ecosystem</span>
-                <span class="digital-status">SYSTEM ONLINE</span>
-              </div>
-              <div class="digital-main">
-                <div class="digital-command">root@evolution:~$ launch dingloft --secure<span class="cursor">&nbsp;</span></div>
-                <strong>Software profesional para Mac.</strong>
-                <small>DMG · herramientas creativas · recursos digitales</small>
-              </div>
-              <div class="digital-bottom">
-                <span>ENCRYPTED ROUTE / 256</span>
-                <span class="digital-launch"><span>Abrir Dingloft</span><span>↗</span></span>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-      <div class="hero-status" style="justify-content:flex-end;"><span>Architecture · Brand · Digital</span></div>
-    </section>
-
-    <section class="studio-section" id="estudio">
-      <div class="section-inner">
-        <div class="section-head reveal">
-          <div><span class="eyebrow">Un estudio, tres especialidades</span><h2>Una identidad clara en cada escala.</h2></div>
-          <p>El proyecto cambia de formato, no de criterio. Arquitectura, comunicación visual y web bajo una misma dirección creativa.</p>
-        </div>
-
-        <div class="discipline-grid reveal">
-          <a href="arquitectura.html" class="discipline-card">
-            <div class="discipline-top"><span>01 / Arquitectura</span><span class="discipline-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></span></div>
-            <div class="discipline-bottom"><h3>Espacios que se entienden antes de construirse.</h3><p>Visualización, planos, fachadas e interiores con una presentación precisa y profesional.</p><span class="discipline-more">Explorar Arquitectura <span>→</span></span></div>
-          </a>
-          <a href="diseno-grafico.html" class="discipline-card">
-            <div class="discipline-top"><span>02 / Diseño Gráfico</span><span class="discipline-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13 16.5 5.5 2 2l3.5 14.5L13 18"/></svg></span></div>
-            <div class="discipline-bottom"><h3>Marcas con estructura, no solo apariencia.</h3><p>Identidad visual, logos, publicidad y piezas de comunicación pensadas como sistema.</p><span class="discipline-more">Explorar Diseño Gráfico <span>→</span></span></div>
-          </a>
-          <a href="diseno-web.html" class="discipline-card">
-            <div class="discipline-top"><span>03 / Diseño Web</span><span class="discipline-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 8h20M7 13h4M7 17h8"/></svg></span></div>
-            <div class="discipline-bottom"><h3>Interfaces que se sienten simples porque están bien pensadas.</h3><p>Sitios, landing pages, ecommerce y UI/UX con foco en claridad, velocidad y conversión.</p><span class="discipline-more">Explorar Diseño Web <span>→</span></span></div>
-          </a>
-        </div>
-      </div>
-    </section>
+<!-- MODAL INSTALACIÓN EVOLUTION -->
+<div aria-hidden="true" class="evolution-install-modal" id="evolutionInstallModal">
+<div aria-labelledby="evolutionInstallModalTitle" aria-modal="true" class="evolution-install-card" role="dialog">
+<button aria-label="Cerrar" class="evolution-install-close" id="evolutionInstallClose" type="button">×</button>
+<div aria-hidden="true" class="evolution-install-modal-icon" id="evolutionInstallModalIcon"></div>
+<h3 id="evolutionInstallModalTitle">Instalar Evolution</h3>
+<p id="evolutionInstallModalText">Añade Evolution a tu dispositivo para abrirla como una app independiente.</p>
+<div class="evolution-install-steps" id="evolutionInstallSteps"></div>
+<p class="evolution-install-note" id="evolutionInstallNote"></p>
+</div>
+</div>
+<main>
+<section class="hero" id="inicio">
+<div class="hero-inner">
+<div class="hero-copy-col">
+<span class="hero-kicker">Evolution Design · Creative Studio</span>
+<h1>Diseñamos<br/>lo que <em>evoluciona.</em></h1>
+<p class="hero-copy">Un solo estudio para transformar ideas en espacios, identidades y experiencias digitales con una dirección visual coherente.</p>
+<div class="hero-actions evolution-platform-actions">
+<button class="hero-primary evolution-platform-btn evolution-platform-apple" id="installAppleBtn" type="button">
+<svg aria-hidden="true" class="platform-logo" fill="currentColor" viewbox="0 0 24 24">
+<path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.2-.07 2.04.66 2.75.72 1.06-.21 2.08-.81 3.21-.73 1.35.11 2.36.64 3.03 1.6-2.79 1.67-2.13 5.34.43 6.37-.51 1.36-1.17 2.72-2.42 4.01ZM12.03 7.25C11.88 5.23 13.53 3.56 15.42 3.4c.26 2.34-2.12 4.09-3.39 3.85Z"></path>
+</svg>
+<span class="platform-btn-copy">
+<small>macOS / iPhone</small>
+<strong>Instalar Evolution</strong>
+</span>
+</button>
+<button class="hero-secondary evolution-platform-btn evolution-platform-universal" id="installUniversalBtn" type="button">
+<span aria-hidden="true" class="platform-logo-wrap" id="installUniversalIcon">
+<svg class="platform-logo windows-logo" fill="currentColor" viewbox="0 0 24 24">
+<path d="M3 4.6 10.5 3.5v7.6H3V4.6Zm8.5-1.25L21 2v9.1h-9.5V3.35ZM3 12.1h7.5v7.6L3 18.6v-6.5Zm8.5 0H21V22l-9.5-1.35V12.1Z"></path>
+</svg>
+</span>
+<span class="platform-btn-copy">
+<small id="installUniversalPlatform">Android / Windows</small>
+<strong id="installUniversalLabel">Instalar Evolution</strong>
+</span>
+</button>
+</div>
+</div>
+<div class="hero-side-stack">
+<div class="hero-index reveal">
+<div class="hero-index-head"><span>Studio Index</span><span>03 disciplinas</span></div>
+<a class="studio-row" href="arquitectura.html">
+<span class="studio-number">01</span><div><strong>Arquitectura</strong><small>Planos · Renders · Fachadas · Interiores</small></div><span class="studio-arrow">→</span>
+</a>
+<a class="studio-row" href="diseno-grafico.html">
+<span class="studio-number">02</span><div><strong>Diseño Gráfico</strong><small>Branding · Identidad · Publicidad · Contenido</small></div><span class="studio-arrow">→</span>
+</a>
+<a class="studio-row" href="diseno-web.html">
+<span class="studio-number">03</span><div><strong>Diseño Web</strong><small>Sitios · Landing pages · Ecommerce · UI/UX</small></div><span class="studio-arrow">→</span>
+</a>
+</div>
+<a aria-label="Abrir Evolution Digital Ecosystem en Dingloft" class="digital-ecosystem reveal" href="https://dingloft.com" rel="noopener" target="_blank">
+<canvas aria-hidden="true" class="digital-rain" id="digitalRain"></canvas>
+<span aria-hidden="true" class="digital-scan"></span>
+<div class="digital-content">
+<div class="digital-topline">
+<span class="digital-label"><span class="digital-dot"></span>Evolution Digital Ecosystem</span>
+<span class="digital-status">SYSTEM ONLINE</span>
+</div>
+<div class="digital-main">
+<div class="digital-command">root@evolution:~$ launch dingloft --secure<span class="cursor"> </span></div>
+<strong>Software profesional para Mac.</strong>
+<small>DMG · herramientas creativas · recursos digitales</small>
+</div>
+<div class="digital-bottom">
+<span>ENCRYPTED ROUTE / 256</span>
+<span class="digital-launch"><span>Abrir Dingloft</span><span>↗</span></span>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="hero-status" style="justify-content:flex-end;"><span>Architecture · Brand · Digital</span></div>
+</section>
+<section class="studio-section" id="estudio">
+<div class="section-inner">
+<div class="section-head reveal">
+<div><span class="eyebrow">Un estudio, tres especialidades</span><h2>Una identidad clara en cada escala.</h2></div>
+<p>El proyecto cambia de formato, no de criterio. Arquitectura, comunicación visual y web bajo una misma dirección creativa.</p>
+</div>
+<div class="discipline-grid reveal">
+<a class="discipline-card" href="arquitectura.html">
+<div class="discipline-top"><span>01 / Arquitectura</span><span class="discipline-icon"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24" width="22"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg></span></div>
+<div class="discipline-bottom"><h3>Espacios que se entienden antes de construirse.</h3><p>Visualización, planos, fachadas e interiores con una presentación precisa y profesional.</p><span class="discipline-more">Explorar Arquitectura <span>→</span></span></div>
+</a>
+<a class="discipline-card" href="diseno-grafico.html">
+<div class="discipline-top"><span>02 / Diseño Gráfico</span><span class="discipline-icon"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24" width="22"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13 16.5 5.5 2 2l3.5 14.5L13 18"></path></svg></span></div>
+<div class="discipline-bottom"><h3>Marcas con estructura, no solo apariencia.</h3><p>Identidad visual, logos, publicidad y piezas de comunicación pensadas como sistema.</p><span class="discipline-more">Explorar Diseño Gráfico <span>→</span></span></div>
+</a>
+<a class="discipline-card" href="diseno-web.html">
+<div class="discipline-top"><span>03 / Diseño Web</span><span class="discipline-icon"><svg fill="none" height="22" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24" width="22"><rect height="18" rx="2" width="20" x="2" y="3"></rect><path d="M2 8h20M7 13h4M7 17h8"></path></svg></span></div>
+<div class="discipline-bottom"><h3>Interfaces que se sienten simples porque están bien pensadas.</h3><p>Sitios, landing pages, ecommerce y UI/UX con foco en claridad, velocidad y conversión.</p><span class="discipline-more">Explorar Diseño Web <span>→</span></span></div>
+</a>
+</div>
+</div>
+</section>
 </main>
-
-  <section class="payment-strip" aria-label="Métodos de pago disponibles en nuestros servicios">
-    <div class="payment-inner">
-      <div class="payment-copy reveal">
-        <span class="eyebrow">Pagos flexibles</span>
-        <h3>Elige cómo pagar tu proyecto.</h3>
-        <p>Los métodos disponibles se muestran al contratar cada servicio. El Home solo presenta las opciones aceptadas; el checkout ocurre dentro de la sección correspondiente.</p>
-        <span class="payment-security">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+<section aria-label="Métodos de pago disponibles en nuestros servicios" class="payment-strip">
+<div class="payment-inner">
+<div class="payment-copy reveal">
+<span class="eyebrow">Pagos flexibles</span>
+<h3>Elige cómo pagar tu proyecto.</h3>
+<p>Los métodos disponibles se muestran al contratar cada servicio. El Home solo presenta las opciones aceptadas; el checkout ocurre dentro de la sección correspondiente.</p>
+<span class="payment-security">
+<svg aria-hidden="true" fill="none" height="14" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24" width="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-4"></path></svg>
           Checkout protegido · confirmación dentro de cada servicio
         </span>
-      </div>
-
-      <div class="payment-grid reveal">
-        <article class="payment-card cards" aria-label="Tarjetas Visa y Mastercard">
-          <div class="payment-card-head"><span class="payment-card-label">Tarjetas</span><span class="payment-card-index">01</span></div>
-          <div class="payment-brand">
-            <svg viewBox="0 0 92 32" role="img" aria-label="Visa"><text x="4" y="24" fill="currentColor" font-size="25" font-style="italic" font-family="Inter,Arial,sans-serif" font-weight="800">VISA</text></svg>
-            <svg viewBox="0 0 62 32" role="img" aria-label="Mastercard"><circle cx="24" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2.1"/><circle cx="38" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".52"/></svg>
-          </div>
-        </article>
-
-        <article class="payment-card paypal" aria-label="PayPal">
-          <div class="payment-card-head"><span class="payment-card-label">Pago online</span><span class="payment-card-index">02</span></div>
-          <div class="payment-brand">
-            <svg viewBox="0 0 34 34" role="img" aria-label="PayPal"><path d="M10 5h9c5 0 8 2.4 7.3 7.2-.8 5.4-4.1 7.2-9 7.2h-3l-1.3 8H8.2L10 5Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14.1 10h7c3.2 0 4.9 1.2 4.4 4.1-.5 3.2-2.4 4.3-5.9 4.3h-4" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".55"/></svg>
-            <div><strong>PayPal</strong><small>Pago internacional</small></div>
-          </div>
-        </article>
-
-        <article class="payment-card binance" aria-label="Binance Pay">
-          <div class="payment-card-head"><span class="payment-card-label">Cripto</span><span class="payment-card-index">03</span></div>
-          <div class="payment-brand">
-            <svg viewBox="0 0 34 34" role="img" aria-label="Binance Pay"><path d="M17 3 23 9 17 15 11 9 17 3Zm-8 8 6 6-6 6-6-6 6-6Zm16 0 6 6-6 6-6-6 6-6Zm-8 8 6 6-6 6-6-6 6-6Z" fill="none" stroke="currentColor" stroke-width="1.65"/></svg>
-            <div><strong>Binance Pay</strong><small>Pago digital rápido</small></div>
-          </div>
-        </article>
-
-        <article class="payment-card bank" aria-label="Transferencias bancarias en Guatemala">
-          <div class="payment-card-head"><span class="payment-card-label">Transferencia GT</span><span class="payment-card-index">04</span></div>
-          <div class="payment-brand">
-            <div class="payment-bank-list">
-              <span class="payment-bank-chip">BAC</span>
-              <span class="payment-bank-chip">PROMERICA</span>
-              <span class="payment-bank-chip">BANRURAL</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site-footer" id="contacto">
-    <div class="footer-inner">
-      <div class="footer-grid">
-        <div class="footer-brand"><a href="index.html"><img src="img/logo.png" alt="Evolution Design"></a><p>Espacios, marcas y experiencias digitales que comparten una misma dirección creativa.</p></div>
-        <div class="footer-col"><span>Estudio</span><a href="arquitectura.html">Arquitectura</a><a href="diseno-grafico.html">Diseño Gráfico</a><a href="diseno-web.html">Diseño Web</a></div>
-        <div class="footer-col"><span>Contacto</span><p>support@evolutiondesing.com</p><a href="https://dingloft.com" target="_blank" rel="noopener">Dingloft ↗</a></div>
-      </div>
-      <div class="footer-bottom"><span>© 2026 Evolution Design. Todos los derechos reservados.</span><div class="socials"><a href="https://www.facebook.com/evolutiondesing.gt" target="_blank" aria-label="Facebook"><svg width="19" height="19" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg></a><a href="https://www.instagram.com/evolutiondesign.gt" target="_blank" aria-label="Instagram"><svg width="19" height="19" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.012 3.584-.069 4.849c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.849-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849s.013-3.583.07-4.849c.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.795 2.163 12 2.163ZM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98C23.986 15.668 24 15.259 24 12s-.014-3.667-.072-4.947C23.732 2.699 21.311.273 16.949.073 15.668.014 15.259 0 12 0Z"/><path d="M12 5.838A6.162 6.162 0 1 0 12 18.162 6.162 6.162 0 0 0 12 5.838Zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88Z"/></svg></a></div></div>
-    </div>
-  </footer>
-
-  <script>
+</div>
+<div class="payment-grid reveal">
+<article aria-label="Tarjetas Visa y Mastercard" class="payment-card cards">
+<div class="payment-card-head"><span class="payment-card-label">Tarjetas</span><span class="payment-card-index">01</span></div>
+<div class="payment-brand">
+<svg aria-label="Visa" role="img" viewbox="0 0 92 32"><text fill="currentColor" font-family="Inter,Arial,sans-serif" font-size="25" font-style="italic" font-weight="800" x="4" y="24">VISA</text></svg>
+<svg aria-label="Mastercard" role="img" viewbox="0 0 62 32"><circle cx="24" cy="16" fill="none" r="11" stroke="currentColor" stroke-width="2.1"></circle><circle cx="38" cy="16" fill="none" opacity=".52" r="11" stroke="currentColor" stroke-width="2.1"></circle></svg>
+</div>
+</article>
+<article aria-label="PayPal" class="payment-card paypal">
+<div class="payment-card-head"><span class="payment-card-label">Pago online</span><span class="payment-card-index">02</span></div>
+<div class="payment-brand">
+<svg aria-label="PayPal" role="img" viewbox="0 0 34 34"><path d="M10 5h9c5 0 8 2.4 7.3 7.2-.8 5.4-4.1 7.2-9 7.2h-3l-1.3 8H8.2L10 5Z" fill="none" stroke="currentColor" stroke-width="2"></path><path d="M14.1 10h7c3.2 0 4.9 1.2 4.4 4.1-.5 3.2-2.4 4.3-5.9 4.3h-4" fill="none" opacity=".55" stroke="currentColor" stroke-width="1.5"></path></svg>
+<div><strong>PayPal</strong><small>Pago internacional</small></div>
+</div>
+</article>
+<article aria-label="Binance Pay" class="payment-card binance">
+<div class="payment-card-head"><span class="payment-card-label">Cripto</span><span class="payment-card-index">03</span></div>
+<div class="payment-brand">
+<svg aria-label="Binance Pay" role="img" viewbox="0 0 34 34"><path d="M17 3 23 9 17 15 11 9 17 3Zm-8 8 6 6-6 6-6-6 6-6Zm16 0 6 6-6 6-6-6 6-6Zm-8 8 6 6-6 6-6-6 6-6Z" fill="none" stroke="currentColor" stroke-width="1.65"></path></svg>
+<div><strong>Binance Pay</strong><small>Pago digital rápido</small></div>
+</div>
+</article>
+<article aria-label="Transferencias bancarias en Guatemala" class="payment-card bank">
+<div class="payment-card-head"><span class="payment-card-label">Transferencia GT</span><span class="payment-card-index">04</span></div>
+<div class="payment-brand">
+<div class="payment-bank-list">
+<span class="payment-bank-chip">BAC</span>
+<span class="payment-bank-chip">PROMERICA</span>
+<span class="payment-bank-chip">BANRURAL</span>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+<footer class="site-footer" id="contacto">
+<div class="footer-inner">
+<div class="footer-grid">
+<div class="footer-brand"><a href="index.html"><img alt="Evolution Design" decoding="async" fetchpriority="low" loading="lazy" src="img/logo.png"/></a><p>Espacios, marcas y experiencias digitales que comparten una misma dirección creativa.</p></div>
+<div class="footer-col"><span>Estudio</span><a href="arquitectura.html">Arquitectura</a><a href="diseno-grafico.html">Diseño Gráfico</a><a href="diseno-web.html">Diseño Web</a></div>
+<div class="footer-col"><span>Contacto</span><p>support@evolutiondesing.com</p><a href="https://dingloft.com" rel="noopener" target="_blank">Dingloft ↗</a></div>
+</div>
+<div class="footer-bottom"><span>© 2026 Evolution Design. Todos los derechos reservados.</span><div class="socials"><a aria-label="Facebook" href="https://www.facebook.com/evolutiondesing.gt" target="_blank"><svg fill="currentColor" height="19" viewbox="0 0 24 24" width="19"><path d="M22.675 0h-21.35C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"></path></svg></a><a aria-label="Instagram" href="https://www.instagram.com/evolutiondesign.gt" target="_blank"><svg fill="currentColor" height="19" viewbox="0 0 24 24" width="19"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.012 3.584-.069 4.849c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.849-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849s.013-3.583.07-4.849c.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.795 2.163 12 2.163ZM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98C23.986 15.668 24 15.259 24 12s-.014-3.667-.072-4.947C23.732 2.699 21.311.273 16.949.073 15.668.014 15.259 0 12 0Z"></path><path d="M12 5.838A6.162 6.162 0 1 0 12 18.162 6.162 6.162 0 0 0 12 5.838Zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88Z"></path></svg></a></div></div>
+</div>
+</footer>
+<script>
     // FUNCIONES UI BÁSICAS Y LLUVIA DIGITAL DEL HOME
     (() => {
       const bindMenu = (buttonId, menuId) => {
@@ -1506,8 +1695,7 @@
       }
     })();
   </script>
-
-  <script type="module">
+<script type="module">
     // INTEGRACIÓN FIREBASE DEL HOME Y ESTADO DE BOTONES NAV
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
@@ -1666,8 +1854,7 @@
       }
     });
   </script>
-
-  <script>
+<script>
     /* Efecto de reflejo óptico sutil en la barra solo para escritorio */
     (() => {
       const glass = document.querySelector('.nav-pill');
@@ -1684,9 +1871,7 @@
       glass.addEventListener('pointerleave', reset, {passive:true});
     })();
   </script>
-
-
-  <script>
+<script>
     /* =========================================================
        EVOLUTION INSTALL · Apple / Android / Windows
        ========================================================= */
@@ -1853,10 +2038,8 @@
       });
     })();
   </script>
-
-
-  <!-- Evolution App Speed · Service Worker -->
-  <script>
+<!-- Evolution App Speed · Service Worker -->
+<script>
     (() => {
       if (!('serviceWorker' in navigator)) return;
 
@@ -1884,8 +2067,6 @@
       }
     })();
   </script>
-
-
 <script id="evolution-offline-controller">
 (() => {
   const pill=document.getElementById('evoOfflinePill');
@@ -1936,8 +2117,6 @@
   window.evolutionOffline={isOffline:offline,showNoConnection:warn};
 })();
 </script>
-
-
 <script id="evolution-launch-controller">
 (() => {
   const splash = document.getElementById('evolutionLaunchScreen');
@@ -1976,6 +2155,175 @@
   setTimeout(() => splash.classList.add('is-hidden'), maximum);
 })();
 </script>
+<script id="evolution-mobile-performance-controller">
+(() => {
+  const mobile = matchMedia('(max-width:991.98px)');
+  if (!mobile.matches) return;
 
+  /* ---------------------------------------------------------
+     1) Lazy loading automático
+     --------------------------------------------------------- */
+  document.querySelectorAll('img:not([loading])').forEach((img,index) => {
+    // Logo / primeras imágenes del hero deben cargar inmediatamente.
+    const critical =
+      img.closest('.mobile-app-nav,.desktop-nav,#evolutionLaunchScreen,.hero') ||
+      index < 2;
+
+    img.loading = critical ? 'eager' : 'lazy';
+    img.decoding = 'async';
+
+    if (!critical) {
+      img.fetchPriority = 'low';
+    }
+  });
+
+  document.querySelectorAll('iframe:not([loading])').forEach(frame => {
+    frame.loading = 'lazy';
+  });
+
+  /* ---------------------------------------------------------
+     2) Reveal ligero con IntersectionObserver
+     --------------------------------------------------------- */
+  const candidates = [
+    '.studio-section .section-head',
+    '.discipline-card',
+    '.payment-card',
+    '.service-card',
+    '.portfolio-card',
+    '.project-card',
+    '.digital-ecosystem',
+    'footer .footer-grid'
+  ];
+
+  const nodes = [...document.querySelectorAll(candidates.join(','))]
+    .filter(el => !el.closest('.hero'));
+
+  nodes.forEach(el => el.classList.add('evo-mobile-enter'));
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('evo-in');
+        io.unobserve(entry.target);
+      });
+    }, {
+      rootMargin:'0px 0px -6% 0px',
+      threshold:.06
+    });
+
+    nodes.forEach(el => io.observe(el));
+  } else {
+    nodes.forEach(el => el.classList.add('evo-in'));
+  }
+
+  /* ---------------------------------------------------------
+     3) Pausar videos cuando salen de pantalla
+     --------------------------------------------------------- */
+  const videos = [...document.querySelectorAll('video')];
+  if (videos.length && 'IntersectionObserver' in window) {
+    const vio = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (!entry.isIntersecting && !video.paused) {
+          video.dataset.evolutionWasPlaying = '1';
+          video.pause();
+        } else if (
+          entry.isIntersecting &&
+          video.dataset.evolutionWasPlaying === '1' &&
+          video.autoplay
+        ) {
+          video.play().catch(() => {});
+          delete video.dataset.evolutionWasPlaying;
+        }
+      });
+    }, { threshold:.08 });
+
+    videos.forEach(video => vio.observe(video));
+  }
+
+  /* ---------------------------------------------------------
+     4) Pausar animaciones decorativas cuando la pestaña no está visible
+     --------------------------------------------------------- */
+  const syncVisibility = () => {
+    document.documentElement.classList.toggle(
+      'evolution-page-hidden',
+      document.hidden
+    );
+  };
+  document.addEventListener('visibilitychange',syncVisibility,{passive:true});
+  syncVisibility();
+
+  /* ---------------------------------------------------------
+     5) Toque anticipado: precargar destino al poner el dedo
+     --------------------------------------------------------- */
+  const prefetched = new Set();
+
+  document.addEventListener('pointerdown',event => {
+    const link = event.target instanceof Element
+      ? event.target.closest('a[href]')
+      : null;
+
+    if (!link) return;
+
+    try {
+      const url = new URL(link.href,location.href);
+      if (
+        url.origin !== location.origin ||
+        url.pathname === location.pathname ||
+        prefetched.has(url.href)
+      ) return;
+
+      if (/proyectos|admin|perfil|checkout|payment|pago/i.test(url.pathname)) {
+        return;
+      }
+
+      const preload = document.createElement('link');
+      preload.rel = 'prefetch';
+      preload.href = url.href;
+      document.head.appendChild(preload);
+      prefetched.add(url.href);
+    } catch (_) {}
+  },{passive:true});
+
+  /* ---------------------------------------------------------
+     6) Navegación visual: micro fade al tocar otra página
+     No bloquea la navegación.
+     --------------------------------------------------------- */
+  document.addEventListener('click',event => {
+    const link = event.target instanceof Element
+      ? event.target.closest('a[href]')
+      : null;
+
+    if (!link || link.target === '_blank') return;
+
+    try {
+      const url = new URL(link.href,location.href);
+      if (
+        url.origin === location.origin &&
+        url.pathname !== location.pathname &&
+        !url.pathname.includes('proyectos') &&
+        !url.pathname.includes('admin')
+      ) {
+        document.documentElement.classList.add('evolution-navigating');
+      }
+    } catch (_) {}
+  },true);
+})();
+</script>
+<style id="evolution-mobile-navigation-transition">
+  @media(max-width:991.98px){
+    body{
+      transition:opacity .14s ease,transform .14s ease;
+    }
+    html.evolution-navigating body{
+      opacity:.94;
+      transform:translate3d(0,-2px,0);
+    }
+    html.evolution-page-hidden *{
+      animation-play-state:paused !important;
+    }
+  }
+</style>
 </body>
 </html>
