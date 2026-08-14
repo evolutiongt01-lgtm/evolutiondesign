@@ -5,7 +5,7 @@
    - Deletes all older Evolution caches.
    - Keeps private/auth/payment routes network-only.
 */
-const VERSION = 'evolution-app-2026-08-14-v8-ios-auth-autofill-fix';
+const VERSION = 'evolution-app-2026-08-14-v11-shared-navigation';
 const PAGE_CACHE = `${VERSION}-pages`;
 const ASSET_CACHE = `${VERSION}-assets`;
 
@@ -40,8 +40,8 @@ const PREASSETS = [
   '/manifest.webmanifest',
   '/img/evolution-app-icon.png',
   '/img/evolution-app-icon-desktop-v2-192.png',
-  '/img/evolution-app-icon-desktop-v2-512.png'
-];
+  '/img/evolution-app-icon-desktop-v2-512.png',
+  '/evolution-nav.js'];
 
 const PRIVATE = [
   '/proyectos',
