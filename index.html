@@ -14,7 +14,7 @@
   <meta name="description" content="Evolution Design — estudio creativo de arquitectura, diseño gráfico y diseño web.">
   <meta name="author" content="Evolution Design">
   <meta name="google-site-verification" content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA">
-  <meta name="evolution-build" content="2026-08-14-home-pwa-apple-macos-iphone">
+  <meta name="evolution-build" content="2026-08-14-home-no-chat-app-installed-clean">
 
   <title>Evolution Design — Arquitectura, Diseño Gráfico y Diseño Web</title>
 
@@ -27,18 +27,25 @@
   <link rel="stylesheet" href="css/theme.min.css">
   <link rel="prefetch" href="arquitectura.html">
 
-  <!-- Chat: se conserva porque sí pertenece al Home -->
   <script>
-    window.ORKA_APP_ID = "6a6e1491fcaf85963eaf05d6";
-    (function () {
-      const s = document.createElement("script");
-      s.src = "//widget.orka.chat/app.js";
-      s.async = true;
-      document.head.appendChild(s);
+    /* Oculta CTA de instalación cuando Evolution ya corre como app */
+    (() => {
+      const installedMode =
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.matchMedia('(display-mode: window-controls-overlay)').matches ||
+        window.navigator.standalone === true;
+
+      let rememberedInstall = false;
+      try {
+        rememberedInstall = localStorage.getItem('evolution_app_installed') === '1';
+      } catch (_) {}
+
+      if (installedMode || rememberedInstall) {
+        document.documentElement.classList.add('evolution-installed');
+      }
     })();
   </script>
-
-  <style>
+<style>
     @font-face { font-family:'Inter'; font-style:normal; font-weight:300; font-display:swap; src:url('fonts/inter-v12-latin-300.woff2') format('woff2'); }
     @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('fonts/inter-v12-latin-regular.woff2') format('woff2'); }
     @font-face { font-family:'Inter'; font-style:normal; font-weight:500; font-display:swap; src:url('fonts/inter-v12-latin-500.woff2') format('woff2'); }
@@ -848,6 +855,12 @@
       }
     }
 
+
+    /* ---------- APP INSTALADA ---------- */
+    html.evolution-installed .evolution-platform-actions {
+      display:none !important;
+    }
+
   </style>
 </head>
 <body>
@@ -1074,8 +1087,7 @@
         </div>
       </div>
     </section>
-
-  </main>
+</main>
 
   <section class="payment-strip" aria-label="Métodos de pago disponibles en nuestros servicios">
     <div class="payment-inner">
@@ -1479,10 +1491,8 @@
       }
 
       if (isStandalone) {
-        appleBtn.disabled = true;
-        universalBtn.disabled = true;
-        appleBtn.style.opacity = '.42';
-        universalBtn.style.opacity = '.42';
+        document.documentElement.classList.add('evolution-installed');
+        try { localStorage.setItem('evolution_app_installed', '1'); } catch (_) {}
       }
 
       function openModal(kind) {
@@ -1543,12 +1553,20 @@
         deferredInstallPrompt = event;
       });
 
+      const standaloneMedia = window.matchMedia('(display-mode: standalone)');
+      const syncInstalledState = () => {
+        if (standaloneMedia.matches || window.navigator.standalone === true) {
+          document.documentElement.classList.add('evolution-installed');
+          try { localStorage.setItem('evolution_app_installed', '1'); } catch (_) {}
+        }
+      };
+      standaloneMedia.addEventListener?.('change', syncInstalledState);
+      syncInstalledState();
+
       window.addEventListener('appinstalled', () => {
         deferredInstallPrompt = null;
-        appleBtn.disabled = true;
-        universalBtn.disabled = true;
-        appleBtn.style.opacity = '.42';
-        universalBtn.style.opacity = '.42';
+        document.documentElement.classList.add('evolution-installed');
+        try { localStorage.setItem('evolution_app_installed', '1'); } catch (_) {}
       });
 
       appleBtn.addEventListener('click', () => {
