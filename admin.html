@@ -638,6 +638,231 @@ html.admin-page-hidden *{
   }
 }
 </style>
+
+<style id="evolution-smart-save">
+  /* =========================================================
+     GUARDAR CAMBIOS · CTA INTELIGENTE
+     ========================================================= */
+
+  /* El aviso grande inferior ya no es necesario:
+     arriba queda "Cambios sin guardar" y abajo aparece el CTA. */
+  #unsavedGuard {
+    display:none !important;
+  }
+
+  .save-project-btn {
+    position:relative;
+    min-width:190px;
+    min-height:44px;
+    padding:0 18px !important;
+    border-radius:12px !important;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    isolation:isolate;
+    overflow:hidden;
+    transition:
+      transform .22s cubic-bezier(.16,1,.3,1),
+      opacity .18s ease,
+      background .2s ease,
+      border-color .2s ease,
+      box-shadow .2s ease !important;
+  }
+
+  .save-project-btn::before {
+    content:"";
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    flex:0 0 8px;
+    background:rgba(20,16,12,.38);
+    box-shadow:0 0 0 4px rgba(20,16,12,.07);
+    transition:.2s ease;
+  }
+
+  /* Cuando se modifica cualquier dato:
+     el botón sale de su posición y aparece en pantalla. */
+  .save-project-btn.attention {
+    position:fixed !important;
+    z-index:285 !important;
+    right:24px;
+    bottom:calc(22px + env(safe-area-inset-bottom,0px));
+    width:min(360px,calc(100vw - 32px));
+    min-height:58px;
+    padding:0 22px !important;
+    border-radius:18px !important;
+    border:1px solid rgba(255,211,123,.78) !important;
+    background:
+      linear-gradient(180deg,#f0cc94 0%,#d7b482 100%) !important;
+    color:#17110b !important;
+    font-size:12px !important;
+    font-weight:900 !important;
+    letter-spacing:.01em;
+    box-shadow:
+      0 24px 64px rgba(0,0,0,.50),
+      0 10px 32px rgba(212,184,149,.22),
+      inset 0 1px 0 rgba(255,255,255,.45) !important;
+    animation:saveButtonJump .38s cubic-bezier(.16,1,.3,1) both !important;
+  }
+
+  .save-project-btn.attention::before {
+    background:#17110b;
+    box-shadow:0 0 0 5px rgba(23,17,11,.09);
+    animation:saveDotPulse 1.45s ease-in-out infinite;
+  }
+
+  .save-project-btn.attention::after {
+    content:"Toca para aplicar";
+    display:block;
+    margin-left:auto;
+    padding-left:12px;
+    color:rgba(23,17,11,.60);
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+
+  .save-project-btn.attention:hover {
+    transform:translateY(-2px) !important;
+    filter:brightness(1.035);
+  }
+
+  .save-project-btn.attention:active {
+    transform:scale(.975) !important;
+  }
+
+  /* Después de guardar permanece visible un instante
+     para confirmar visualmente que sí se guardó. */
+  .save-project-btn.saved {
+    position:fixed !important;
+    z-index:285 !important;
+    right:24px;
+    bottom:calc(22px + env(safe-area-inset-bottom,0px));
+    width:min(300px,calc(100vw - 32px));
+    min-height:56px;
+    border-radius:18px !important;
+    background:linear-gradient(180deg,#75e5a0,#48c97a) !important;
+    border-color:#75e5a0 !important;
+    color:#07140c !important;
+    box-shadow:
+      0 22px 60px rgba(0,0,0,.42),
+      0 10px 30px rgba(72,201,122,.20) !important;
+    animation:saveSuccessIn .28s cubic-bezier(.16,1,.3,1) both !important;
+  }
+
+  .save-project-btn.saved::before {
+    background:#07140c;
+    box-shadow:0 0 0 4px rgba(7,20,12,.08);
+  }
+
+  .save-project-btn.saved::after {
+    content:"Actualizado";
+    margin-left:auto;
+    color:rgba(7,20,12,.62);
+    font-size:8px;
+    font-weight:850;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+
+  .save-project-btn:disabled {
+    cursor:wait;
+    opacity:.84;
+  }
+
+  .save-project-btn.attention:disabled {
+    filter:saturate(.75);
+  }
+
+  /* La barra sticky original queda visualmente limpia
+     mientras el botón está flotando. */
+  .form-actions.sticky-actions.dirty {
+    border-top-color:rgba(212,184,149,.20) !important;
+    background:rgba(9,9,10,.84) !important;
+    box-shadow:none !important;
+  }
+
+  @keyframes saveButtonJump {
+    0% {
+      opacity:0;
+      transform:translate3d(0,24px,0) scale(.90);
+    }
+    58% {
+      opacity:1;
+      transform:translate3d(0,-4px,0) scale(1.025);
+    }
+    100% {
+      opacity:1;
+      transform:none;
+    }
+  }
+
+  @keyframes saveSuccessIn {
+    from {
+      opacity:.3;
+      transform:translate3d(0,10px,0) scale(.95);
+    }
+    to {
+      opacity:1;
+      transform:none;
+    }
+  }
+
+  @keyframes saveDotPulse {
+    0%,100% { box-shadow:0 0 0 4px rgba(23,17,11,.08); }
+    50% { box-shadow:0 0 0 9px rgba(23,17,11,.02); }
+  }
+
+  /* Móvil: CTA ancho, centrado y por encima del safe-area. */
+  @media(max-width:700px) {
+    .save-project-btn.attention,
+    .save-project-btn.saved {
+      left:12px !important;
+      right:12px !important;
+      bottom:calc(12px + env(safe-area-inset-bottom,0px)) !important;
+      width:auto !important;
+      min-height:60px;
+      border-radius:18px !important;
+    }
+
+    .save-project-btn.attention {
+      font-size:13px !important;
+      box-shadow:
+        0 18px 48px rgba(0,0,0,.56),
+        0 7px 25px rgba(212,184,149,.25),
+        inset 0 1px 0 rgba(255,255,255,.42) !important;
+    }
+
+    .save-project-btn.attention::after,
+    .save-project-btn.saved::after {
+      font-size:7px;
+    }
+
+    /* deja espacio para que el CTA no tape el último campo */
+    .drawer {
+      padding-bottom:100px !important;
+    }
+  }
+
+  @media(max-width:390px) {
+    .save-project-btn.attention::after,
+    .save-project-btn.saved::after {
+      display:none;
+    }
+  }
+
+  @media(prefers-reduced-motion:reduce) {
+    .save-project-btn.attention,
+    .save-project-btn.saved,
+    .save-project-btn.attention::before {
+      animation:none !important;
+    }
+  }
+</style>
+
 </head>
 <body>
 <div class="admin-shell" id="adminShell" style="visibility:hidden">
@@ -1217,11 +1442,35 @@ function syncProjectAmounts(sourceId){
   updateFinancialPreview(true);
 }
 function setProjectDirty(dirty=true){
+  const wasDirty=projectDirty;
   projectDirty=!!dirty;
-  const pill=$('unsavedPill'),guard=$('unsavedGuard'),btn=$('saveProjectBtn'),sticky=btn?.closest('.sticky-actions');
+
+  const pill=$('unsavedPill');
+  const btn=$('saveProjectBtn');
+  const sticky=btn?.closest('.sticky-actions');
+
   if(pill)pill.classList.toggle('show',projectDirty);
-  if(guard)guard.classList.toggle('show',projectDirty);
-  if(btn){btn.classList.toggle('attention',projectDirty);if(projectDirty&&!btn.disabled)btn.textContent='Guardar cambios ahora';else if(!projectDirty&&!btn.classList.contains('saved')&&!btn.disabled)btn.textContent='Guardar cambios';}
+
+  if(btn){
+    btn.classList.toggle('attention',projectDirty);
+
+    if(projectDirty&&!btn.disabled){
+      btn.textContent='Guardar cambios';
+      btn.setAttribute('aria-label','Guardar cambios pendientes');
+    }else if(!btn.classList.contains('saved')&&!btn.disabled){
+      btn.textContent='Guardar cambios';
+      btn.setAttribute('aria-label','Guardar cambios');
+    }
+
+    /* Si ya estaba dirty no reiniciamos la animación por cada tecla.
+       Solo "salta" la primera vez que se modifica algo. */
+    if(projectDirty&&!wasDirty){
+      btn.classList.remove('save-retrigger');
+      void btn.offsetWidth;
+      btn.classList.add('save-retrigger');
+    }
+  }
+
   if(sticky)sticky.classList.toggle('dirty',projectDirty);
 }
 document.addEventListener('input',e=>{
@@ -2641,7 +2890,7 @@ window.saveProject=async function(){
   }catch(e){
     console.error(e);
     toast(e?.message||'No se pudo guardar.');
-    if(btn)btn.textContent='Error · Reintentar';
+    if(btn){btn.textContent='Error · Reintentar';btn.classList.add('attention');}
   }finally{
     if(btn){
       btn.disabled=false;
@@ -3041,4 +3290,34 @@ let authResolved=false;onAuthStateChanged(auth,async u=>{if(authResolved&&!u)ret
     },{passive:true}));
 })();
 </script>
+
+<script id="evolution-smart-save-controller">
+(() => {
+  const modal=document.getElementById('projectModal');
+  if(!modal)return;
+
+  const markDirtyFromControl=(event)=>{
+    if(!modal.classList.contains('show'))return;
+
+    const control=event.target instanceof Element
+      ? event.target.closest(
+          '.status-quick-btn,'+
+          '#professionalRoleToggle button,'+
+          '[data-role],'+
+          '[data-status]'
+        )
+      : null;
+
+    if(!control)return;
+
+    /* dejamos que la lógica original actualice el campo primero */
+    requestAnimationFrame(()=>{
+      if(typeof setProjectDirty==='function')setProjectDirty(true);
+    });
+  };
+
+  modal.addEventListener('click',markDirtyFromControl,{passive:true});
+})();
+</script>
+
 </body></html>
