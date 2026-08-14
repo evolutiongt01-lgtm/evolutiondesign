@@ -9,9 +9,9 @@
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="yes" name="mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="Evolution Design — Diseño web premium, e-commerce, UI/UX, panel administrativo, seguridad reforzada y experiencias interactivas con planes profesionales desde $500 USD." name="description"/>
+<meta content="Evolution Design — Diseño web premium, plataformas empresariales, e-commerce, UI/UX, panel administrativo y app empresarial instalable incluida en planes Pro y Avanzada cuando el proyecto la requiere." name="description"/>
 <meta content="Evolution Design" name="author"/>
-<meta name="evolution-build" content="2026-08-14-diseno-web-ios-autofill-fix-v8">
+<meta name="evolution-build" content="2026-08-14-diseno-web-business-app-plans-v9">
 <title>Diseño Web Profesional | Evolution Design</title>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -1621,6 +1621,108 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
     }
   }
 </style>
+
+<style id="evolution-plan-business-app">
+  .plan-app-benefit{
+    position:relative;
+    overflow:hidden;
+    margin:0 0 16px;
+    padding:15px 15px 14px;
+    border:1px solid rgba(112,231,255,.16);
+    border-radius:16px;
+    background:
+      radial-gradient(circle at 92% 8%,rgba(174,140,255,.14),transparent 38%),
+      linear-gradient(145deg,rgba(112,231,255,.055),rgba(255,255,255,.018));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.045);
+  }
+  .plan-app-benefit::after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    right:-55px;
+    bottom:-72px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(112,231,255,.12),transparent 70%);
+    pointer-events:none;
+  }
+  .plan-app-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:9px;
+  }
+  .plan-app-label{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    color:#8ceaff;
+    font-size:.52rem;
+    font-weight:900;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .plan-app-label::before{
+    content:"";
+    width:7px;
+    height:7px;
+    border-radius:2px;
+    background:linear-gradient(135deg,#70e7ff,#ae8cff);
+    box-shadow:0 0 14px rgba(112,231,255,.34);
+  }
+  .plan-app-included{
+    color:#8eeeb0;
+    font-size:.49rem;
+    font-weight:900;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+  }
+  .plan-app-benefit strong{
+    display:block;
+    max-width:420px;
+    color:#f4f4f4;
+    font-size:.72rem;
+    line-height:1.34;
+    letter-spacing:-.015em;
+  }
+  .plan-app-benefit p{
+    margin:7px 0 0;
+    color:#73737c;
+    font-size:.56rem;
+    line-height:1.55;
+  }
+  .plan-app-platforms{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-top:11px;
+  }
+  .plan-app-platforms span{
+    padding:5px 8px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:999px;
+    background:rgba(255,255,255,.025);
+    color:#94949b;
+    font-size:.48rem;
+    font-weight:700;
+  }
+  .price-card.popular .plan-app-benefit{
+    border-color:rgba(112,231,255,.22);
+    background:
+      radial-gradient(circle at 90% 4%,rgba(174,140,255,.16),transparent 38%),
+      linear-gradient(145deg,rgba(112,231,255,.07),rgba(255,255,255,.022));
+  }
+  @media(max-width:575.98px){
+    .plan-app-benefit{
+      padding:14px;
+      border-radius:15px;
+    }
+    .plan-app-benefit strong{font-size:.75rem}
+    .plan-app-benefit p{font-size:.58rem}
+  }
+</style>
+
 </head>
 <body>
 <div aria-hidden="true" id="evolutionLaunchScreen">
@@ -1818,16 +1920,29 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 </article>
 <article class="price-card popular">
 <span class="popular-badge">Más popular</span>
-<span class="price-card-kicker">02 · Plataforma empresarial</span><span class="plan-value-badge">Portal administrable</span>
+<span class="price-card-kicker">02 · Plataforma empresarial</span><span class="plan-value-badge">Portal + App empresarial</span>
 <h3>Sitio Web Pro</h3>
-<p class="price-card-copy">Para empresas que quieren una web propia y administrable: tu equipo puede publicar contenido, actualizar secciones y operar desde un portal privado sin depender de un constructor visual.</p>
+<p class="price-card-copy">Para empresas que quieren una plataforma propia y administrable: tu equipo puede publicar contenido, actualizar secciones y operar desde un portal privado. Si el proyecto lo necesita, el mismo sistema puede entregarse también como una app empresarial instalable con identidad propia.</p>
 <div class="price-big"><strong data-plan-id="pro" data-usd-price="2800">$2,800</strong><span data-price-currency="">USD</span></div>
 <div class="plan-price-caption">Creación completa del sitio · pago único</div>
 <div class="plan-renewal-chip" data-renewal-plan="pro" data-renewal-usd="100"><span>Renovación anual · desde 2.º año</span><strong>$100 USD/año</strong><small>Primer año incluido · servicios esenciales de publicación</small></div>
 <div class="plan-divider"></div>
+<div class="plan-app-benefit">
+  <div class="plan-app-top">
+    <span class="plan-app-label">App empresarial</span>
+    <span class="plan-app-included">Incluida si aplica</span>
+  </div>
+  <strong>Tu plataforma también puede vivir como una app instalada.</strong>
+  <p>Entregamos una experiencia tipo app conectada al mismo sistema: icono propio, pantalla de apertura, navegación optimizada y acceso offline al contenido compatible, sin duplicar tu operación en dos plataformas separadas.</p>
+  <div class="plan-app-platforms">
+    <span>iPhone</span><span>Android</span><span>Mac</span><span>Windows</span>
+  </div>
+</div>
+
 <ul class="plan-features">
 <li>Hasta 5 páginas base + contenido dinámico administrable</li>
 <li>Portal privado para publicar y editar contenido</li>
+<li>App empresarial instalable incluida cuando el proyecto la requiere</li>
 <li>UI/UX premium + animaciones avanzadas</li>
 <li>Formularios, automatizaciones e integraciones según alcance</li>
 <li>Roles de acceso y control administrativo</li>
@@ -1839,15 +1954,28 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 <div class="plan-login-note"><svg fill="none" height="12" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="12"><rect height="10" rx="2" width="14" x="5" y="10"></rect><path d="M8 10V7a4 4 0 018 0v3"></path></svg>Tu solicitud queda ligada a tu cuenta</div>
 </article>
 <article class="price-card">
-<span class="price-card-kicker">03 · Sistemas web avanzados</span><span class="plan-value-badge">Sistema completo</span>
+<span class="price-card-kicker">03 · Sistemas web avanzados</span><span class="plan-value-badge">Sistema + App empresarial</span>
 <h3>Plataforma Web Avanzada</h3>
-<p class="price-card-copy">Para proyectos que necesitan mucho más que una web informativa: e-commerce, marketplaces, membresías, reservas, academias, directorios, portales de clientes o sistemas web personalizados con administración propia.</p>
+<p class="price-card-copy">Para proyectos que necesitan mucho más que una web informativa: e-commerce, marketplaces, membresías, reservas, academias, directorios, portales de clientes o sistemas personalizados. Cuando la operación lo requiere, incluimos también una experiencia de app empresarial instalada sobre el mismo ecosistema.</p>
 <div class="price-big"><strong data-plan-id="ecommerce" data-usd-price="5890">$5,890</strong><span data-price-currency="">USD</span></div>
 <div class="plan-price-caption">Creación completa del sistema web · pago único</div>
 <div class="plan-renewal-chip" data-renewal-plan="ecommerce" data-renewal-usd="200"><span>Renovación anual · desde 2.º año</span><strong>$200 USD/año</strong><small>Primer año incluido · servicios esenciales de publicación</small></div>
 <div class="plan-divider"></div>
+<div class="plan-app-benefit">
+  <div class="plan-app-top">
+    <span class="plan-app-label">App empresarial integrada</span>
+    <span class="plan-app-included">Incluida si aplica</span>
+  </div>
+  <strong>Web, portal y app trabajando como un solo ecosistema.</strong>
+  <p>Cuando el proyecto lo requiere, la plataforma se entrega también como app instalable con branding propio, splash de apertura, navegación tipo app y modo offline para contenido compatible, compartiendo usuarios, datos y administración con el sistema principal.</p>
+  <div class="plan-app-platforms">
+    <span>iPhone</span><span>Android</span><span>Mac</span><span>Windows</span>
+  </div>
+</div>
+
 <ul class="plan-features">
 <li>Portal administrativo personalizado según el proyecto</li>
+<li>App empresarial integrada al mismo sistema cuando aplica</li>
 <li>E-commerce: catálogo administrable de hasta 10,000 productos</li>
 <li>Productos, contenido, usuarios o registros administrables</li>
 <li>Marketplaces, membresías, reservas, academias o directorios</li>
@@ -1866,7 +1994,7 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 <div class="client-ownership-copy">
 <span class="eyebrow">Tu plataforma, bajo tu control</span>
 <h3>Nosotros construimos el sistema. Tú administras el negocio.</h3>
-<p>En Sitio Web Pro y Plataforma Web Avanzada no tienes que pedirnos que creemos una página nueva por cada publicación, producto o registro. Dejamos un portal privado para que puedas agregar, editar, publicar y administrar la operación directamente.</p>
+<p>En Sitio Web Pro y Plataforma Web Avanzada no tienes que pedirnos que creemos una página nueva por cada publicación, producto o registro. Dejamos un portal privado para administrar la operación directamente y, cuando tiene sentido para el negocio, la misma plataforma puede instalarse como app empresarial sin crear un ecosistema separado.</p>
 </div>
 <div class="client-ownership-grid">
 <div><i>01</i><strong>Publica sin depender de nosotros</strong><small>Contenido y productos desde tu panel.</small></div>
