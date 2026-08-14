@@ -11,7 +11,7 @@
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="Evolution Design — Diseño web premium, e-commerce, UI/UX, panel administrativo, seguridad reforzada y experiencias interactivas con planes profesionales desde $500 USD." name="description"/>
 <meta content="Evolution Design" name="author"/>
-<meta name="evolution-build" content="2026-08-14-diseno-web-safari-sw-redirect-fix-v6">
+<meta name="evolution-build" content="2026-08-14-diseno-web-splash-freeze-fix-v7">
 <title>Diseño Web Profesional | Evolution Design</title>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -1631,6 +1631,30 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 <div aria-hidden="true" class="evolution-launch-line"></div>
 </div>
 </div>
+
+<script id="evolution-splash-early-failsafe">
+(() => {
+  const dismiss=()=>{
+    const splash=document.getElementById('evolutionLaunchScreen');
+    if(splash)splash.classList.add('is-hidden');
+  };
+
+  // Browser tab: never show app splash.
+  const standalone=
+    matchMedia('(display-mode:standalone)').matches ||
+    matchMedia('(display-mode:window-controls-overlay)').matches ||
+    navigator.standalone===true;
+
+  if(!standalone){
+    requestAnimationFrame(dismiss);
+    return;
+  }
+
+  // Hard safety ceiling for installed app.
+  setTimeout(dismiss,1800);
+})();
+</script>
+
 <div aria-live="polite" class="evo-offline-pill" id="evoOfflinePill" role="status"><i></i><span>Modo sin conexión · navegación disponible</span></div>
 <div aria-live="assertive" class="evo-offline-toast" id="evoOfflineToast" role="alert">
 <span class="ico"><svg fill="none" height="19" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24" width="19"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.6 2.8 17a2 2 0 0 0 1.74 3h14.92a2 2 0 0 0 1.74-3L13.7 3.6a2 2 0 0 0-3.4 0Z"></path></svg></span>
@@ -1707,7 +1731,7 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 <a class="nav-pill-link" data-evolution-nav="" href="diseno-grafico.html">Diseño Gráfico</a>
 <a aria-current="page" class="nav-pill-link current-area active" data-evolution-nav="" href="diseno-web.html">Diseño Web</a>
 <!-- ENLACE A MIS PROYECTOS (SE MOSTRARÁ AL INICIAR SESIÓN) -->
-<a class="nav-pill-link" data-evolution-nav="" href="proyectos.html" id="linkProyectosDesktop" style="white-space: nowrap; color: #fff;">Mis Proyectos</a>
+<a class="nav-pill-link" data-evolution-nav="" href="proyectos.html" id="linkProyectosDesktop" style="white-space: nowrap; color: #fff">Mis Proyectos</a>
 <!-- CONTENEDOR LOGIN Y LOGOUT DENTRO DE LA BARRA ESCRITORIO -->
 <div class="d-flex align-items-center" id="auth-desktop-wrapper">
 <!-- Por defecto Login -->
@@ -3656,42 +3680,6 @@ window.addEventListener('evolution-auth-ready',()=>{
     }
   }
 </style>
-
-<script id="evolution-projects-nav-always-visible">
-(() => {
-  const projectLinkIds = [
-    'linkProyectosDesktop',
-    'linkProyectosMenuDesktop',
-    'linkProyectosMobile',
-    'linkProyectosTabMobile'
-  ];
-
-  const keepProjectsVisible = () => {
-    projectLinkIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.classList.remove('hidden', 'd-none');
-      el.removeAttribute('hidden');
-      if (el.style.display === 'none') el.style.removeProperty('display');
-    });
-  };
-
-  keepProjectsVisible();
-
-  // Firebase/auth scripts can rerender the nav after load.
-  const observer = new MutationObserver(keepProjectsVisible);
-  const navRoot = document.querySelector('.desktop-nav')?.parentElement || document.body;
-  observer.observe(navRoot, {
-    subtree: true,
-    attributes: true,
-    attributeFilter: ['class', 'style', 'hidden']
-  });
-
-  window.addEventListener('pageshow', keepProjectsVisible, { passive:true });
-})();
-</script>
-
-
 <script id="evolution-safari-sw-rescue">
 (() => {
   if (!('serviceWorker' in navigator)) return;
@@ -3715,6 +3703,31 @@ window.addEventListener('evolution-auth-ready',()=>{
       localStorage.setItem('evolution_sw_redirect_fix_v6','1');
     } catch (_) {}
   }).catch(() => {});
+})();
+</script>
+
+<script id="evolution-projects-nav-visible-safe">
+(() => {
+  const ids=[
+    'linkProyectosDesktop',
+    'linkProyectosMenuDesktop',
+    'linkProyectosMobile',
+    'linkProyectosTabMobile'
+  ];
+
+  const show=()=>{
+    ids.forEach(id=>{
+      const el=document.getElementById(id);
+      if(!el)return;
+      if(el.classList.contains('hidden'))el.classList.remove('hidden');
+      if(el.classList.contains('d-none'))el.classList.remove('d-none');
+      if(el.hasAttribute('hidden'))el.removeAttribute('hidden');
+    });
+  };
+
+  show();
+  window.addEventListener('pageshow',show,{passive:true});
+  window.addEventListener('evolution-auth-ready',show,{passive:true});
 })();
 </script>
 
