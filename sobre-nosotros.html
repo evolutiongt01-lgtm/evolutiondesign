@@ -902,18 +902,27 @@
     }
 
     .founder-logo{
-      padding:24px;
+      padding:18px;
+      background:
+        radial-gradient(circle at 50% 45%,rgba(255,255,255,.035),transparent 55%),
+        #050505;
     }
     .founder-logo img{
       position:relative;
-      z-index:2;
+      z-index:5;
       display:block;
       width:100%;
       height:100%;
       object-fit:contain;
-      filter:drop-shadow(0 10px 26px rgba(0,0,0,.34));
+      object-position:center;
+      opacity:1!important;
+      visibility:visible!important;
+      filter:
+        drop-shadow(0 10px 26px rgba(0,0,0,.34))
+        drop-shadow(0 0 18px rgba(255,255,255,.05));
       user-select:none;
       -webkit-user-drag:none;
+      pointer-events:none;
     }
     @media(max-width:575.98px){
       .founder-logo{
@@ -1779,18 +1788,24 @@
             <div class="founder-scan"></div>
             <div class="founder-rings" aria-hidden="true"><i></i><i></i><i></i></div>
             <div class="founder-monogram founder-logo" aria-label="Evolution Group">
-              <img src="img/evolution-group-logo.webp" alt="Evolution Group">
+              <img
+                src="img/evolution-group-logo.webp"
+                alt="Evolution Group"
+                loading="eager"
+                decoding="async"
+                onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='img/evolution-group-logo..webp';}"
+              >
             </div>
 
             <div class="founder-portrait-meta">
               <small>Founder · Evolution Group</small>
-              <strong>Fundador de Evolution Group</strong>
+              <strong>César Mátzar</strong>
             </div>
           </div>
 
           <div class="founder-copy reveal">
             <span>Visión y dirección del ecosistema</span>
-            <h2>Una visión construida para competir globalmente.<em>Diseñar es decidir qué dejar fuera.</em></h2>
+            <h2>Fundador de Evolution Group.<em>Una visión construida para competir globalmente.</em></h2>
 
             <div class="founder-motto">
               <strong>“Menos ruido. Más intención.”</strong>
