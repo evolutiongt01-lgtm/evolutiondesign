@@ -693,3 +693,341 @@
     get network(){return networkMode}
   };
 })();
+/* =========================================================
+   EVOLUTION · PERFIL + ADMIN PERSISTENTES · V19
+   Evita que foto/admin desaparezcan al cambiar de sección.
+   ========================================================= */
+(() => {
+  const nav = window.EvolutionNav;
+
+  if (!nav || nav.__persistentAuthV19) return;
+
+  nav.__persistentAuthV19 = true;
+
+  const originalSetAuth =
+    nav.setAuth.bind(nav);
+
+  const KEY =
+    'evolution_auth_ui_v19';
+
+  let stableAuth = null;
+  let clearTimer = 0;
+  let logoutPending = false;
+
+
+  const readMemory = () => {
+    try {
+      const data =
+        JSON.parse(
+          sessionStorage.getItem(KEY) ||
+          'null'
+        );
+
+      if (data?.user?.uid) {
+        stableAuth = data;
+      }
+
+    } catch (_) {}
+  };
+
+
+  const saveMemory = () => {
+    try {
+
+      if (stableAuth?.user?.uid) {
+
+        sessionStorage.setItem(
+          KEY,
+          JSON.stringify(stableAuth)
+        );
+
+      } else {
+
+        sessionStorage.removeItem(KEY);
+
+      }
+
+    } catch (_) {}
+  };
+
+
+  const paintStable = () => {
+
+    if (stableAuth?.user?.uid) {
+
+      originalSetAuth(
+        stableAuth
+      );
+
+    }
+
+  };
+
+
+  readMemory();
+
+
+  /* Si ya conocemos al usuario,
+     pinta perfil/admin inmediatamente. */
+  if (stableAuth?.user?.uid) {
+
+    requestAnimationFrame(
+      paintStable
+    );
+
+  }
+
+
+  /* Interceptamos actualizaciones
+     visuales de autenticación. */
+  nav.setAuth = (payload = {}) => {
+
+    const incoming =
+      payload.user || null;
+
+
+    /* ==========================
+       USUARIO CONFIRMADO
+       ========================== */
+    if (incoming?.uid) {
+
+      clearTimeout(
+        clearTimer
+      );
+
+
+      const sameUser =
+
+        stableAuth?.user?.uid &&
+
+        String(
+          stableAuth.user.uid
+        ) ===
+
+        String(
+          incoming.uid
+        );
+
+
+      stableAuth = {
+
+        user: {
+
+          uid:
+            String(
+              incoming.uid ||
+              ''
+            ),
+
+          email:
+            String(
+              incoming.email ||
+
+              (
+                sameUser
+                  ? stableAuth.user.email
+                  : ''
+              ) ||
+
+              ''
+            ),
+
+          displayName:
+            String(
+              incoming.displayName ||
+
+              (
+                sameUser
+                  ? stableAuth.user.displayName
+                  : ''
+              ) ||
+
+              ''
+            ),
+
+          photoURL:
+            String(
+              incoming.photoURL ||
+
+              (
+                sameUser
+                  ? stableAuth.user.photoURL
+                  : ''
+              ) ||
+
+              ''
+            )
+
+        },
+
+
+        /* Si la nueva vista todavía
+           no reconstruyó el badge Admin,
+           conservamos el estado anterior. */
+        isAdmin:
+
+          Boolean(
+            payload.isAdmin
+          ) ||
+
+          Boolean(
+            sameUser &&
+            stableAuth?.isAdmin
+          )
+
+      };
+
+
+      logoutPending = false;
+
+      saveMemory();
+
+      originalSetAuth(
+        stableAuth
+      );
+
+      return;
+    }
+
+
+    /* ==========================
+       LOGOUT REAL
+       ========================== */
+    if (logoutPending) {
+
+      clearTimeout(
+        clearTimer
+      );
+
+      stableAuth = null;
+
+      logoutPending = false;
+
+      saveMemory();
+
+
+      originalSetAuth({
+
+        user: null,
+
+        isAdmin: false
+
+      });
+
+
+      return;
+    }
+
+
+    /* ==========================
+       NULL TEMPORAL
+       ==========================
+
+       Esto pasa cuando una vista
+       nueva todavía está arrancando
+       Firebase.
+
+       NO quitamos foto ni Admin.
+       ========================== */
+    if (stableAuth?.user?.uid) {
+
+      originalSetAuth(
+        stableAuth
+      );
+
+
+      clearTimeout(
+        clearTimer
+      );
+
+
+      /* Si realmente la sesión murió
+         por otra razón y seguimos online,
+         damos margen a Firebase para
+         confirmarlo.
+
+         En navegación normal llegará
+         nuevamente el usuario antes. */
+      if (navigator.onLine) {
+
+        clearTimer =
+          setTimeout(
+            () => {
+
+              stableAuth = null;
+
+              saveMemory();
+
+
+              originalSetAuth({
+
+                user: null,
+
+                isAdmin: false
+
+              });
+
+            },
+            8000
+          );
+
+      }
+
+
+      return;
+    }
+
+
+    originalSetAuth(
+      payload
+    );
+
+  };
+
+
+  /* Cuando TÚ presionas Salir,
+     ahora sí permitimos limpiar
+     perfil/admin. */
+  document.addEventListener(
+
+    'evolution:logout-request',
+
+    () => {
+
+      logoutPending = true;
+
+      clearTimeout(
+        clearTimer
+      );
+
+    },
+
+    true
+
+  );
+
+
+  /* Al cambiar de sección,
+     reafirmamos inmediatamente
+     foto y Admin conocidos. */
+  addEventListener(
+
+    'evolution:route-changed',
+
+    () => {
+
+      if (
+        stableAuth?.user?.uid
+      ) {
+
+        requestAnimationFrame(
+          paintStable
+        );
+
+      }
+
+    }
+
+  );
+
+})();
