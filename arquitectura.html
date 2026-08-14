@@ -19,7 +19,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png">
   <meta name="author" content="Evolution Design">
-  <meta name="evolution-build" content="2026-08-14-recaptcha-enterprise-worker">
+  <meta name="evolution-build" content="2026-08-14-recaptcha-enterprise-regional-currency">
   <title>Evolution Design - Arquitectura, Renders y Planos</title>
 
   <!-- PRELOAD DE RECURSOS CLAVE PARA VELOCIDAD -->
@@ -1128,7 +1128,33 @@
       .lock-icon-container { width: 30px !important; height: 30px !important; }
     }
 
-  </style>
+  
+
+/* =========================================================
+   PRECIOS REGIONALES POR IP · GTQ Guatemala / USD global
+   ========================================================= */
+.geo-currency-badge{
+  display:flex;align-items:center;gap:9px;min-height:48px;padding:8px 12px;
+  border:1px solid rgba(212,184,149,.30);border-radius:999px;
+  background:rgba(12,12,13,.88);backdrop-filter:blur(16px) saturate(150%);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);
+  box-shadow:0 10px 28px rgba(0,0,0,.34);color:#fff;user-select:none
+}
+.geo-currency-dot{
+  width:8px;height:8px;border-radius:50%;flex:0 0 8px;background:#d4b895;
+  box-shadow:0 0 0 4px rgba(212,184,149,.10)
+}
+.geo-currency-copy{display:flex;flex-direction:column;line-height:1.05}
+.geo-currency-copy strong{font-size:.72rem;letter-spacing:.045em;color:#f0e5d8}
+.geo-currency-copy small{margin-top:4px;font-size:.55rem;color:#777;white-space:nowrap}
+html[data-pricing-region="GT"] .geo-currency-dot{background:#68d391;box-shadow:0 0 0 4px rgba(104,211,145,.10)}
+html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shadow:0 0 0 4px rgba(125,182,255,.10)}
+@media(max-width:575.98px){
+  .geo-currency-badge{min-height:44px;padding:7px 10px}
+  .geo-currency-copy small{display:none}
+}
+
+</style>
   <script>
     (function () {
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -1327,8 +1353,8 @@
                 <span class="accent-text text-uppercase fw-medium d-block mb-2" style="font-size: 0.75rem; letter-spacing: 1.5px;">PAQUETE ESENCIAL</span>
                 <h3 class="fw-bold text-white mb-3">Básico 2D</h3>
                 <div class="my-4">
-                  <h2 class="display-4 fw-bold text-white mb-1"><span class="price-val" data-usd="390">390</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2>
-                  <p class="text-secondary small mb-0">Área total construida de hasta 400 m²<br><span style="font-size: 0.75rem;">(Excedente: +$1.10 USD por m² extra)</span></p>
+                  <h2 class="display-4 fw-bold text-white mb-1"><span class="price-val" data-usd="390">$390.00</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2>
+                  <p class="text-secondary small mb-0">Área total construida de hasta 400 m²<br><span style="font-size: 0.75rem;">(Excedente: +<span class="price-val" data-usd="1.10">$1.10</span> <span class="curr-symbol">USD</span> por m² extra)</span></p>
                 </div>
                 <ul class="list-unstyled no-bullets text-secondary mb-4 small" style="line-height: 1.8;">
                   <li class="mb-2 text-white">✓ Estilo minimalista contemporáneo</li>
@@ -1353,8 +1379,8 @@
                 <span class="accent-text text-uppercase fw-medium d-block mb-2 mt-2" style="font-size: 0.75rem; letter-spacing: 1.5px;">PAQUETE INTEGRAL</span>
                 <h3 class="fw-bold text-white mb-3">Premium 2D</h3>
                 <div class="my-4">
-                  <h2 class="display-4 fw-bold text-white mb-1"><span class="price-val" data-usd="800">800</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2>
-                  <p class="text-secondary small mb-0">Área total construida de hasta 400 m²<br><span style="font-size: 0.75rem;">(Excedente: +$2.00 USD por m² extra)</span></p>
+                  <h2 class="display-4 fw-bold text-white mb-1"><span class="price-val" data-usd="800">$800.00</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2>
+                  <p class="text-secondary small mb-0">Área total construida de hasta 400 m²<br><span style="font-size: 0.75rem;">(Excedente: +<span class="price-val" data-usd="2.00">$2.00</span> <span class="curr-symbol">USD</span> por m² extra)</span></p>
                 </div>
                 <ul class="list-unstyled no-bullets text-secondary mb-4 small" style="line-height: 1.8;">
                   <li class="mb-2 text-white">✓ Arquitectura minimalista contemporánea de alta gama</li>
@@ -1577,7 +1603,7 @@
             <div class="glass-panel p-5 rounded-5 text-center">
               <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">OPCIÓN HIPERREALISTA</span>
               <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
-                <h2 class="display-5 fw-bold text-white mb-0">+<span class="price-val" data-usd="40.00">40.00</span></h2>
+                <h2 class="display-5 fw-bold text-white mb-0">+<span class="price-val" data-usd="40.00">$40.00</span></h2>
                 <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span></span>
               </div>
               <p class="text-secondary mb-0" style="font-size: 0.9rem;">Mejora tu presentación agregando <strong>3 Renders hiperrealistas</strong> de tu fachada elegida para visualizar la iluminación y materiales a la perfección.</p>
@@ -1691,7 +1717,7 @@
                     </div>
                   </div>
                   <div class="d-flex align-items-center gap-3">
-                    <span class="text-white fw-bold" style="font-size: 0.85rem; white-space: nowrap;">+ $<span class="price-val" data-usd="40.00">40.00</span></span>
+                    <span class="text-white fw-bold" style="font-size: 0.85rem; white-space: nowrap;">+ <span class="price-val" data-usd="40.00">$40.00</span> <span class="curr-symbol">USD</span></span>
                     <label class="facade-switch">
                       <input type="checkbox" id="f-render" checked>
                       <span class="f-slider-toggle"></span>
@@ -1713,7 +1739,7 @@
                     <span class="text-white text-end fw-medium" id="f-area-text" style="font-size: 0.9rem;">0.00 m²</span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                    <span class="text-secondary" style="font-size: 0.85rem;">Precio base (<span class="price-val" data-usd="1.50">1.50</span> <span class="curr-symbol">USD</span>/m²)</span>
+                    <span class="text-secondary" style="font-size: 0.85rem;">Precio base (<span class="price-val" data-usd="1.50">$1.50</span> <span class="curr-symbol">USD</span>/m²)</span>
                     <span class="text-white text-end fw-medium" id="f-base-text" style="font-size: 0.9rem;">$--.--</span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mb-4 w-100">
@@ -1838,7 +1864,7 @@
             <div class="glass-panel p-5 rounded-5 text-center">
               <span class="small text-secondary fw-lighter text-uppercase d-block mb-2" style="letter-spacing: 2px;">TARIFA DE CUANTIFICACIÓN</span>
               <div class="d-flex align-items-baseline justify-content-center gap-2 mb-3">
-                <h1 class="display-3 fw-bold text-white mb-0"><span class="price-val" data-usd="1.75">1.75</span></h1>
+                <h1 class="display-3 fw-bold text-white mb-0"><span class="price-val" data-usd="1.75">$1.75</span></h1>
                 <span class="accent-text fs-5 fw-medium"><span class="curr-symbol">USD</span>/m²</span>
               </div>
               <p class="tariff-note mb-0"><strong>Información de tarifa.</strong> La tarifa aplica al listado exacto de materiales de tu obra. Puedes calcular el valor estimado en el cotizador antes de continuar.</p>
@@ -1867,7 +1893,7 @@
               <div>
                 <h3 class="fw-lighter text-center">BÁSICO</h3>
                 <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 400 m²</span><h2 class="display-5 fw-bold"><span class="price-val" data-usd="300">300</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 400 m²</span><h2 class="display-5 fw-bold"><span class="price-val" data-usd="300">$300.00</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
                   <li class="mb-2">✓ Modelado 3D profesional</li>
                   <li class="mb-2">✓ 8 Renders realistas</li>
@@ -1889,7 +1915,7 @@
                 <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">MÁS POPULAR</span>
                 <h3 class="fw-lighter text-center mt-3">PROFESIONAL</h3>
                 <p class="text-center text-secondary small">PAQUETE</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 400 m²</span><h2 class="display-5 fw-bold text-white"><span class="price-val" data-usd="499">499</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 400 m²</span><h2 class="display-5 fw-bold text-white"><span class="price-val" data-usd="499">$499.00</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-secondary mb-5">
                   <li class="mb-2">✓ Modelado 3D completo</li>
                   <li class="mb-2">✓ 16 Renders realistas</li>
@@ -1911,7 +1937,7 @@
                 <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold shadow-lg" style="background: linear-gradient(135deg, #d4b895 0%, #aa8c65 100%); color: #000; z-index: 10; letter-spacing: 1px;">MÁXIMO NIVEL / VIP</span>
                 <h3 class="fw-lighter text-center mt-3 text-white">PREMIUM</h3>
                 <p class="text-center accent-text small fw-medium">EL PAQUETE DEFINITIVO</p>
-                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 400 m²</span><h2 class="display-5 fw-bold accent-text"><span class="price-val" data-usd="949">949</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
+                <div class="text-center my-4"><span class="fs-6 text-secondary">HASTA 400 m²</span><h2 class="display-5 fw-bold accent-text"><span class="price-val" data-usd="949">$949.00</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2></div>
                 <ul class="list-unstyled no-bullets text-light mb-5" style="opacity: 0.9;">
                   <li class="mb-2">✓ Modelado 3D completo</li>
                   <li class="mb-2">✓ 26 Renders realistas</li>
@@ -2122,20 +2148,14 @@
     </div>
   </footer>
 
-  <!-- BOTÓN FLOTANTE DE MONEDA -->
-  <div class="currency-float-container" id="currencyContainer">
-    <div class="currency-wrapper">
-      <ul class="currency-float-menu" id="currencyMenu">
-        <li><a class="currency-item active" href="#" data-curr="USD"><span class="badge bg-secondary me-2">$</span> USD</a></li>
-        <li><a class="currency-item" href="#" data-curr="EUR"><span class="badge bg-secondary me-2">€</span> EUR</a></li>
-        <li><a class="currency-item" href="#" data-curr="GTQ"><span class="badge bg-secondary me-2">Q</span> GTQ</a></li>
-        <li><a class="currency-item" href="#" data-curr="MXN"><span class="badge bg-secondary me-2">$</span> MXN</a></li>
-        <li><a class="currency-item" href="#" data-curr="CNY"><span class="badge bg-secondary me-2">¥</span> CNY</a></li>
-        <li><a class="currency-item" href="#" data-curr="AED"><span class="badge bg-secondary me-2">د.إ</span> AED</a></li>
-        <li><a class="currency-item" href="#" data-curr="BRL"><span class="badge bg-secondary me-2">R$</span> BRL</a></li>
-        <li><a class="currency-item" href="#" data-curr="JPY"><span class="badge bg-secondary me-2">¥</span> JPY</a></li>
-      </ul>
-      <button class="currency-float-btn" id="currencyBtn" aria-label="Cambiar Moneda"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></button>
+  <!-- MONEDA AUTOMÁTICA POR IP · GT = GTQ / RESTO = USD -->
+  <div class="currency-float-container" id="currencyContainer" aria-live="polite">
+    <div class="geo-currency-badge" id="geoCurrencyBadge" title="La moneda se asigna automáticamente según tu IP">
+      <span class="geo-currency-dot"></span>
+      <span class="geo-currency-copy">
+        <strong id="geoCurrencyCode">USD</strong>
+        <small id="geoCurrencyLabel">Detectando ubicación…</small>
+      </span>
     </div>
   </div>
 
@@ -2144,31 +2164,24 @@
     window.usuarioAutenticado = false;
     let currentCurrency = 'USD';
     const exchangeRates = {
-      USD:{rate:1,symbol:'USD'}, EUR:{rate:.92,symbol:'EUR'}, GTQ:{rate:7.85,symbol:'GTQ'}, MXN:{rate:18.5,symbol:'MXN'},
-      CNY:{rate:7.25,symbol:'CNY'}, AED:{rate:3.67,symbol:'AED'}, BRL:{rate:5.40,symbol:'BRL'}, JPY:{rate:155,symbol:'JPY'},
-      GBP:{rate:.79,symbol:'GBP'}, CAD:{rate:1.37,symbol:'CAD'}, AUD:{rate:1.52,symbol:'AUD'}, CHF:{rate:.81,symbol:'CHF'},
-      HKD:{rate:7.80,symbol:'HKD'}, SGD:{rate:1.29,symbol:'SGD'}, NZD:{rate:1.67,symbol:'NZD'}, SEK:{rate:9.55,symbol:'SEK'},
-      NOK:{rate:10.1,symbol:'NOK'}, DKK:{rate:6.86,symbol:'DKK'}, PLN:{rate:3.67,symbol:'PLN'}, CZK:{rate:21.1,symbol:'CZK'},
-      HUF:{rate:322,symbol:'HUF'}, ILS:{rate:3.28,symbol:'ILS'}, PHP:{rate:57.2,symbol:'PHP'}, THB:{rate:32.4,symbol:'THB'},
-      TWD:{rate:29.8,symbol:'TWD'}, MYR:{rate:4.18,symbol:'MYR'}
+      USD:{rate:1,symbol:'$',code:'USD'},
+      GTQ:{rate:7.65,symbol:'Q',code:'GTQ'}
     };
     window.currentCurrency = currentCurrency;
     window.exchangeRates = exchangeRates;
+    window.evolutionPricingRegion = 'GLOBAL';
     window.montoPago3D = "0.00"; window.montoPago2D = "0.00"; window.montoPagoFachada = "0.00";
 
     // NAVEGACIÓN Y MENÚS
     const mobileMenuBtn = document.getElementById('mobileMenuBtn'); const mobileDropdownMenu = document.getElementById('mobileDropdownMenu');
     const desktopMenuBtn = document.getElementById('desktopMenuBtn'); const desktopDropdownMenu = document.getElementById('desktopDropdownMenu');
-    const currencyBtn = document.getElementById('currencyBtn'); const currencyMenu = document.getElementById('currencyMenu');
     const currencyContainer = document.getElementById('currencyContainer');
     
     if(mobileMenuBtn) mobileMenuBtn.addEventListener('click', e => { e.preventDefault(); mobileDropdownMenu.classList.toggle('show'); e.stopPropagation(); });
     if(desktopMenuBtn) desktopMenuBtn.addEventListener('click', e => { e.preventDefault(); desktopDropdownMenu.classList.toggle('show'); e.stopPropagation(); });
-    if(currencyBtn) currencyBtn.addEventListener('click', e => { e.preventDefault(); currencyMenu.classList.toggle('show'); e.stopPropagation(); });
     document.addEventListener('click', (e) => { 
       if(mobileDropdownMenu && !mobileMenuBtn.contains(e.target) && !mobileDropdownMenu.contains(e.target)) mobileDropdownMenu.classList.remove('show'); 
       if(desktopDropdownMenu && !desktopMenuBtn.contains(e.target) && !desktopDropdownMenu.contains(e.target)) desktopDropdownMenu.classList.remove('show'); 
-      if(currencyMenu && !currencyContainer.contains(e.target)) currencyMenu.classList.remove('show'); 
     });
 
 
@@ -2216,86 +2229,104 @@
       actualizarNavMovil();
     })();
 
-    function updateAllCurrencies() {
-      const config = exchangeRates[currentCurrency];
-      document.querySelectorAll('.price-val').forEach(el => {
-        const usdVal = parseFloat(el.getAttribute('data-usd'));
-        const converted = usdVal * config.rate;
-        const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
-        el.textContent = converted.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
-      });
-      document.querySelectorAll('.curr-symbol').forEach(el => { el.textContent = config.symbol; });
+    function regionalCurrencyConfig() {
+      return exchangeRates[currentCurrency] || exchangeRates.USD;
     }
 
-    function ensureCurrencyMenuItem(code) {
-      const menu = document.getElementById('currencyMenu');
-      if (!menu || !code || menu.querySelector(`[data-curr="${code}"]`)) return;
-      const li = document.createElement('li');
-      li.innerHTML = `<a class="currency-item" href="#" data-curr="${code}"><span class="badge bg-secondary me-2">¤</span> ${code}</a>`;
-      menu.appendChild(li);
-      bindCurrencyItem(li.querySelector('.currency-item'));
+    function regionalMoneyFromUsd(usd, { code = false, sign = true } = {}) {
+      const cfg = regionalCurrencyConfig();
+      const amount = (Number(usd || 0) * Number(cfg.rate || 1));
+      const number = amount.toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+      if (code) return `${cfg.symbol}${number} ${cfg.code}`;
+      if (sign) return `${cfg.symbol}${number}`;
+      return `${number} ${cfg.code}`;
+    }
+    window.regionalMoneyFromUsd = regionalMoneyFromUsd;
+
+    function regionalPlaceholder() {
+      return currentCurrency === 'GTQ' ? 'Q --.--' : '$--.--';
+    }
+
+    function updateGeoCurrencyBadge() {
+      const cfg = regionalCurrencyConfig();
+      const code = document.getElementById('geoCurrencyCode');
+      const label = document.getElementById('geoCurrencyLabel');
+      if (code) code.textContent = cfg.code;
+      if (label) label.textContent = currentCurrency === 'GTQ' ? 'Guatemala · precios en quetzales' : 'Precios internacionales · dólares';
+    }
+
+    function updateAllCurrencies() {
+      const config = regionalCurrencyConfig();
+      document.querySelectorAll('.price-val').forEach(el => {
+        const usdVal = parseFloat(el.getAttribute('data-usd'));
+        if (!Number.isFinite(usdVal)) return;
+        const converted = usdVal * config.rate;
+        const number = converted.toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+        el.textContent = currentCurrency === 'GTQ' ? `Q ${number}` : `$${number}`;
+      });
+      document.querySelectorAll('.curr-symbol').forEach(el => { el.textContent = config.code; });
+      updateGeoCurrencyBadge();
     }
 
     function applyCurrency(code, { auto = false } = {}) {
-      code = String(code || 'USD').toUpperCase();
-      if (!exchangeRates[code]) code = 'USD';
-      currentCurrency = code;
-      window.currentCurrency = code;
-      ensureCurrencyMenuItem(code);
-      document.querySelectorAll('.currency-item').forEach(i => i.classList.toggle('active', i.getAttribute('data-curr') === code));
+      currentCurrency = String(code || '').toUpperCase() === 'GTQ' ? 'GTQ' : 'USD';
+      window.currentCurrency = currentCurrency;
+      window.evolutionPricingRegion = currentCurrency === 'GTQ' ? 'GT' : 'GLOBAL';
+      document.documentElement.dataset.pricingRegion = window.evolutionPricingRegion;
+      document.documentElement.dataset.detectedCurrency = currentCurrency;
       updateAllCurrencies();
       if (typeof window.actualizarCotizacionTerrenoGlobal === 'function') window.actualizarCotizacionTerrenoGlobal();
       if (typeof window.actualizarCalculadoraPlanosGlobal === 'function') window.actualizarCalculadoraPlanosGlobal();
       if (typeof window.actualizarCalculadoraFachadaGlobal === 'function') window.actualizarCalculadoraFachadaGlobal();
-      try { localStorage.setItem('evolution_currency', code); } catch(e) {}
-      if (auto) document.documentElement.dataset.detectedCurrency = code;
     }
     window.applyCurrency = applyCurrency;
 
-    function bindCurrencyItem(item) {
-      if (!item || item.dataset.currencyBound === '1') return;
-      item.dataset.currencyBound = '1';
-      item.addEventListener('click', function(e) {
-        e.preventDefault();
-        applyCurrency(this.getAttribute('data-curr'));
-        const currMenu = document.getElementById('currencyMenu');
-        if (currMenu) currMenu.classList.remove('show');
-      });
-    }
-
-    // Moneda automática: IP pública -> moneda local. Las tasas se refrescan una vez por sesión.
+    // IP pública: Guatemala => GTQ. Cualquier otro país => USD.
+    // Si el servicio geográfico falla, se usa USD por seguridad.
     window.currencyReadyPromise = (async function() {
-      try {
-        const rateResponse = await fetch('https://open.er-api.com/v6/latest/USD', { cache: 'force-cache' });
-        if (rateResponse.ok) {
-          const rateData = await rateResponse.json();
-          if (rateData && rateData.result === 'success' && rateData.rates) {
-            Object.keys(rateData.rates).forEach(code => {
-              if (!exchangeRates[code]) exchangeRates[code] = { rate: rateData.rates[code], symbol: code };
-              else exchangeRates[code].rate = rateData.rates[code];
-            });
-          }
-        }
-      } catch(e) { console.info('Se usarán tasas de respaldo.', e); }
-
-      let detectedCurrency = '';
+      let geo = null;
       try {
         const geoResponse = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
-        if (geoResponse.ok) {
-          const geo = await geoResponse.json();
-          detectedCurrency = String(geo.currency || '').toUpperCase();
-          window.evolutionGeo = {
-            ip: geo.ip || '', city: geo.city || '', region: geo.region || '',
-            country: geo.country_name || '', countryCode: geo.country_code || '', currency: detectedCurrency
-          };
-        }
-      } catch(e) { console.info('No se pudo detectar la moneda por IP.', e); }
+        if (geoResponse.ok) geo = await geoResponse.json();
+      } catch(e) {
+        console.info('No se pudo detectar la ubicación por IP; se usarán precios internacionales en USD.', e);
+      }
 
-      let stored = '';
-      try { stored = localStorage.getItem('evolution_currency') || ''; } catch(e) {}
-      const target = stored || detectedCurrency || 'USD';
-      if (target && exchangeRates[target]) applyCurrency(target, { auto: !stored });
-      else applyCurrency('USD', { auto: !stored });
+      const countryCode = String(geo?.country_code || '').toUpperCase();
+      const isGuatemala = countryCode === 'GT';
+      const targetCurrency = isGuatemala ? 'GTQ' : 'USD';
+
+      window.evolutionGeo = {
+        ip: geo?.ip || '',
+        city: geo?.city || '',
+        region: geo?.region || '',
+        country: geo?.country_name || '',
+        countryCode,
+        currency: targetCurrency,
+        pricingRegion: isGuatemala ? 'GT' : 'GLOBAL'
+      };
+
+      // Solo necesitamos la tasa USD -> GTQ y únicamente cuando la IP es Guatemala.
+      if (isGuatemala) {
+        try {
+          const rateResponse = await fetch('https://open.er-api.com/v6/latest/USD', { cache: 'force-cache' });
+          if (rateResponse.ok) {
+            const rateData = await rateResponse.json();
+            const gtq = Number(rateData?.rates?.GTQ || 0);
+            if (Number.isFinite(gtq) && gtq > 0) exchangeRates.GTQ.rate = gtq;
+          }
+        } catch(e) {
+          console.info('Se usará la tasa GTQ de respaldo.', e);
+        }
+      }
+
+      applyCurrency(targetCurrency, { auto: true });
       return window.currentCurrency;
     })();
 
@@ -2404,20 +2435,20 @@
         else if (servicioVal === 'cuantificacion') { baseUSD = areaTotal * 1.75; }
 
         window.montoPago3D = baseUSD.toFixed(2);
-        const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
-        const convertedFinal = baseUSD * exchangeRates[currentCurrency].rate;
+        const decimals = 2;
+        const convertedFinal = baseUSD * regionalCurrencyConfig().rate;
 
         if(!window.usuarioAutenticado) {
-          if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">$--.--</span>`;
+          if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">${regionalPlaceholder()}</span>`;
           if(msj3D) msj3D.style.display = 'none';
           if(instrucciones3D) instrucciones3D.style.display = 'none';
         } else {
-          if(precioFinalDisplay) precioFinalDisplay.innerHTML = `${convertedFinal.toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })} <span class="ms-1 accent-text small">${exchangeRates[currentCurrency].symbol}</span>`;
+          if(precioFinalDisplay) precioFinalDisplay.innerHTML = `${regionalCurrencyConfig().symbol}${convertedFinal.toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })} <span class="ms-1 accent-text small">${regionalCurrencyConfig().code}</span>`;
           
           if (areaTotal > 400) {
             if(msj3D) {
               msj3D.style.display = 'block';
-              msj3D.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de $${baseUSD.toFixed(2)} USD listo para pago.</span>`;
+              msj3D.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de ${regionalMoneyFromUsd(baseUSD,{code:true})} listo para pago.</span>`;
               msj3D.style.background = 'rgba(255, 193, 7, 0.1)';
               msj3D.style.borderColor = 'rgba(255, 193, 7, 0.2)';
             }
@@ -2444,7 +2475,7 @@
         }
       } else {
         if(totalDisplay) totalDisplay.textContent = "0.00"; 
-        if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">$--.--</span>`;
+        if(precioFinalDisplay) precioFinalDisplay.innerHTML = `<span style="font-size: 1.2rem; opacity: 0.6;">${regionalPlaceholder()}</span>`;
         if(msj3D) msj3D.style.display = 'none';
         if(instrucciones3D) instrucciones3D.style.display = 'none';
         window.montoPago3D = "0.00";
@@ -2512,9 +2543,9 @@
       let excedente = areaTotal > 400 ? (areaTotal - 400) * costoExtra : 0;
       
       window.montoPago2D = (basePrecioUSD + excedente).toFixed(2);
-      const rate = exchangeRates[currentCurrency].rate;
-      const symbol = exchangeRates[currentCurrency].symbol;
-      const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
+      const rate = regionalCurrencyConfig().rate;
+      const symbol = regionalCurrencyConfig().symbol;
+      const decimals = 2;
 
       const pAreaText = document.getElementById('p-area-text');
       if(pAreaText) pAreaText.textContent = areaTotal.toFixed(2) + ' m²';
@@ -2526,28 +2557,28 @@
       const pExcedenteLabel = document.getElementById('p-excedente-label');
 
       if(!window.usuarioAutenticado) {
-        if(pBaseText) pBaseText.textContent = `$--.--`;
-        if(pTotal) pTotal.innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">$--.--</span>`;
+        if(pBaseText) pBaseText.textContent = regionalPlaceholder();
+        if(pTotal) pTotal.innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">${regionalPlaceholder()}</span>`;
         if(excedente > 0) {
           if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'flex', 'important');
-          if(pExcedenteText) pExcedenteText.textContent = `$--.--`;
+          if(pExcedenteText) pExcedenteText.textContent = regionalPlaceholder();
         } else {
            if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'none', 'important');
         }
         if(msjPlanos) msjPlanos.style.display = 'none';
         if(instrucciones2D) instrucciones2D.style.display = 'none';
       } else {
-        if(pBaseText) pBaseText.textContent = `${symbol} ${(basePrecioUSD * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
-        if(pTotal) pTotal.textContent = `${symbol} ${((basePrecioUSD + excedente) * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        if(pBaseText) pBaseText.textContent = `${symbol}${(basePrecioUSD * rate).toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        if(pTotal) pTotal.textContent = `${symbol}${((basePrecioUSD + excedente) * rate).toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
         
         if(excedente > 0) {
           if(rowPlanosExcedente) rowPlanosExcedente.style.setProperty('display', 'flex', 'important');
           if(pExcedenteLabel) pExcedenteLabel.textContent = `Metros excedentes (${(areaTotal - 400).toFixed(2)} m²)`;
-          if(pExcedenteText) pExcedenteText.textContent = `+${symbol} ${(excedente * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+          if(pExcedenteText) pExcedenteText.textContent = `+${symbol}${(excedente * rate).toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
           
           if(msjPlanos && areaTotal > 0) {
             msjPlanos.style.display = 'block';
-            msjPlanos.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de $${(basePrecioUSD + excedente).toFixed(2)} USD listo para pago.</span>`;
+            msjPlanos.innerHTML = `<span class="text-warning fw-medium small d-flex align-items-center justify-content-center gap-2"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>¡Área excedente superada! Total calculado de ${regionalMoneyFromUsd(basePrecioUSD + excedente,{code:true})} listo para pago.</span>`;
             msjPlanos.style.background = 'rgba(255, 193, 7, 0.1)';
             msjPlanos.style.borderColor = 'rgba(255, 193, 7, 0.2)';
           }
@@ -2642,9 +2673,9 @@
       let totalUSD = subtotal + extraNivel + costoRender;
 
       window.montoPagoFachada = totalUSD.toFixed(2);
-      const rate = exchangeRates[currentCurrency].rate;
-      const symbol = exchangeRates[currentCurrency].symbol;
-      const decimals = ['JPY','HUF','TWD'].includes(currentCurrency) ? 0 : 2;
+      const rate = regionalCurrencyConfig().rate;
+      const symbol = regionalCurrencyConfig().symbol;
+      const decimals = 2;
 
       const fAreaText = document.getElementById('f-area-text');
       if(fAreaText) fAreaText.textContent = area.toFixed(2) + ' m²';
@@ -2660,33 +2691,33 @@
       const instruccionesFachada = document.getElementById('instrucciones-subida-fachada');
 
       if(!window.usuarioAutenticado) {
-        if(fBaseText) fBaseText.textContent = `$--.--`;
-        if(fSubtotalText) fSubtotalText.textContent = `$--.--`;
-        if(fTotal) fTotal.innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">$--.--</span>`;
+        if(fBaseText) fBaseText.textContent = regionalPlaceholder();
+        if(fSubtotalText) fSubtotalText.textContent = regionalPlaceholder();
+        if(fTotal) fTotal.innerHTML = `<span style="font-size: 1.5rem; opacity: 0.6;">${regionalPlaceholder()}</span>`;
         if(fComplexLabel) fComplexLabel.textContent = `Nivel de complejidad (${compText} ${compVal.toFixed(2)}x)`;
 
         if (extraNivel > 0) {
           if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'flex', 'important');
-          if(fNivelesCostoUI) fNivelesCostoUI.textContent = `$--.--`;
+          if(fNivelesCostoUI) fNivelesCostoUI.textContent = regionalPlaceholder();
         } else {
           if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
         }
-        if(fRenderText) fRenderText.textContent = `$--.--`;
+        if(fRenderText) fRenderText.textContent = regionalPlaceholder();
         if(instruccionesFachada) instruccionesFachada.style.display = 'none';
       } else {
-        if(fBaseText) fBaseText.textContent = `${symbol} ${((area*1.5)*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
-        if(fSubtotalText) fSubtotalText.textContent = `${symbol} ${(subtotal*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
-        if(fTotal) fTotal.textContent = `${symbol} ${(totalUSD*rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        if(fBaseText) fBaseText.textContent = `${symbol}${((area*1.5)*rate).toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        if(fSubtotalText) fSubtotalText.textContent = `${symbol}${(subtotal*rate).toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        if(fTotal) fTotal.textContent = `${symbol}${(totalUSD*rate).toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
         if(fComplexLabel) fComplexLabel.textContent = `Nivel de complejidad (${compText} ${compVal.toFixed(2)}x)`;
 
         if (extraNivel > 0) {
           if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'flex', 'important');
           if(fNivelesLabelUI) fNivelesLabelUI.textContent = labelNiveles;
-          if(fNivelesCostoUI) fNivelesCostoUI.textContent = `+${symbol} ${(extraNivel * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+          if(fNivelesCostoUI) fNivelesCostoUI.textContent = `+${symbol}${(extraNivel * rate).toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
         } else {
           if(rowNivelesExtra) rowNivelesExtra.style.setProperty('display', 'none', 'important');
         }
-        if(fRenderText) fRenderText.textContent = `${symbol} ${(costoRender * rate).toLocaleString('es-GT', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+        if(fRenderText) fRenderText.textContent = `${symbol}${(costoRender * rate).toLocaleString(currentCurrency === 'GTQ' ? 'es-GT' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
 
         if(instruccionesFachada && area > 0) {
             instruccionesFachada.style.display = 'block';
@@ -2753,8 +2784,7 @@
     }
 
     
-    // Cambio de moneda global
-    document.querySelectorAll('.currency-item').forEach(bindCurrencyItem);
+    // La moneda se asigna automáticamente por IP; no existe selector manual.
     
   </script>
 
@@ -3428,7 +3458,9 @@
         mode: 'architecture_purchase',
         projectType: tipoProyecto,
         pricingInput: limpiarConfiguracionFirestore(cfg.pricingInput),
-        clientGeo: limpiarConfiguracionFirestore(window.evolutionGeo || {})
+        clientGeo: limpiarConfiguracionFirestore(window.evolutionGeo || {}),
+        pricingRegion: window.evolutionPricingRegion || 'GLOBAL',
+        displayCurrency: window.currentCurrency || 'USD'
       };
     }
 
@@ -3527,7 +3559,7 @@
         deliveryFileCount:0,
         clientComments:'',
         deliveryNote:'',
-        lastGeo:{city:geo.city||'',region:geo.region||'',country:geo.country||'',countryCode:geo.countryCode||'',currency:geo.currency||window.currentCurrency||''},
+        lastGeo:{city:geo.city||'',region:geo.region||'',country:geo.country||'',countryCode:geo.countryCode||'',currency:geo.currency||window.currentCurrency||'',pricingRegion:geo.pricingRegion||window.evolutionPricingRegion||'GLOBAL'},
         createdAt:serverTimestamp(),
         updatedAt:serverTimestamp(),
         paymentSubmittedAt:serverTimestamp()
@@ -3625,9 +3657,10 @@
         card.appendChild(note);
       }
       if (displayCurrency === checkoutCurrency) {
-        note.innerHTML = `Cobro procesado en <strong>${checkoutCurrency}</strong>.`;
+        note.innerHTML = `Precios internacionales en <strong>USD</strong> · cobro procesado en <strong>USD</strong>.`;
       } else {
-        note.innerHTML = `Tus precios se muestran en <strong>${displayCurrency}</strong>. El pago seguro se procesa en <strong>${checkoutCurrency}</strong> mediante PayPal.`;
+        const rate = Number(window.exchangeRates?.GTQ?.rate || 7.65);
+        note.innerHTML = `Tu IP fue detectada en <strong>Guatemala</strong>. Los precios se muestran en <strong>quetzales (GTQ)</strong> usando la tasa USD→GTQ disponible. PayPal procesa el cobro canónico en <strong>USD</strong>.`;
       }
     }
 
