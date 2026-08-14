@@ -157,6 +157,104 @@
       .package-flag-copy small { font-size: 0.54rem; }
     }
 
+    /* AJUSTES DE TARJETAS Y BADGES PARA MÓVIL */
+    @media (max-width: 991.98px) {
+      #servicios-tecnicos .glass-panel,
+      #servicios-tecnicos .glass-panel-accent,
+      #visualizacion .glass-panel,
+      #visualizacion .glass-panel-accent,
+      #visualizacion .glass-panel-vip {
+        padding: 1.45rem !important;
+        border-radius: 24px !important;
+      }
+      #servicios-tecnicos .glass-panel h3,
+      #servicios-tecnicos .glass-panel-accent h3,
+      #visualizacion .glass-panel h3,
+      #visualizacion .glass-panel-accent h3,
+      #visualizacion .glass-panel-vip h3 {
+        font-size: clamp(2rem, 5vw, 2.4rem);
+        line-height: 1.02;
+      }
+      #servicios-tecnicos .display-4,
+      #visualizacion .display-5 {
+        font-size: clamp(2.1rem, 7vw, 3rem) !important;
+        line-height: 1.02;
+      }
+      #servicios-tecnicos ul,
+      #visualizacion ul {
+        margin-bottom: 1.75rem !important;
+      }
+      #servicios-tecnicos li,
+      #visualizacion li {
+        font-size: 0.96rem;
+        line-height: 1.5;
+      }
+      #servicios-tecnicos .btn,
+      #visualizacion .btn {
+        min-height: 48px;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .package-card-featured {
+        padding-top: 7rem !important;
+      }
+      .package-flag {
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        gap: 10px;
+        padding: 10px 12px;
+        min-height: 52px;
+      }
+      .package-card-featured > div > h3 {
+        margin-top: 0.55rem !important;
+        position: relative;
+        z-index: 2;
+      }
+      .package-flag-copy strong {
+        font-size: 0.70rem;
+        line-height: 1.15;
+      }
+      .package-flag-copy small {
+        display: none;
+      }
+      #servicios-tecnicos .glass-panel,
+      #servicios-tecnicos .glass-panel-accent,
+      #visualizacion .glass-panel,
+      #visualizacion .glass-panel-accent,
+      #visualizacion .glass-panel-vip {
+        padding: 1.2rem !important;
+      }
+      #servicios-tecnicos .glass-panel h3,
+      #servicios-tecnicos .glass-panel-accent h3,
+      #visualizacion .glass-panel h3,
+      #visualizacion .glass-panel-accent h3,
+      #visualizacion .glass-panel-vip h3 {
+        font-size: 1.8rem !important;
+      }
+      #servicios-tecnicos .display-4,
+      #visualizacion .display-5 {
+        font-size: 2rem !important;
+      }
+      #servicios-tecnicos p.small,
+      #visualizacion p.small {
+        font-size: 0.84rem !important;
+        line-height: 1.45;
+      }
+      #servicios-tecnicos li,
+      #visualizacion li {
+        font-size: 0.90rem;
+        line-height: 1.45;
+      }
+      #servicios-tecnicos .btn,
+      #visualizacion .btn {
+        font-size: 0.92rem;
+        padding-top: 0.82rem !important;
+        padding-bottom: 0.82rem !important;
+      }
+    }
+
     /* CALCULADORAS Y ESTILOS COMUNES */
     .calc-pro-container { position: relative; border-radius: 24px; background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.8) 100%); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px); width: 100%; }
     @media (min-width: 992px) { .calc-divider-vertical { border-left: 1px solid rgba(255, 255, 255, 0.1); padding-left: 3rem; } }
@@ -1175,6 +1273,51 @@ html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shad
   .geo-currency-copy small{display:none}
 }
 
+
+
+    /* =========================================================
+       FIX DEFINITIVO MÓVIL — BADGES EN FLUJO, SIN SOLAPAMIENTOS
+       En teléfono las insignias dejan de ser absolutas y pasan
+       a ocupar su propio espacio dentro de cada tarjeta.
+       ========================================================= */
+    @media (max-width: 575.98px) {
+      #visualizacion .package-card-featured,
+      #servicios-tecnicos .package-card-featured {
+        padding-top: 1.2rem !important;
+      }
+
+      #visualizacion .package-card-featured .package-flag,
+      #servicios-tecnicos .package-card-featured .package-flag {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        width: 100% !important;
+        margin: 0 0 1.35rem 0 !important;
+        min-height: 52px;
+        transform: none !important;
+      }
+
+      #visualizacion .package-card-featured > div > h3,
+      #servicios-tecnicos .package-card-featured > div > h3 {
+        margin-top: 0 !important;
+        margin-bottom: .75rem !important;
+        position: relative;
+        z-index: 2;
+      }
+
+      #visualizacion .package-card-featured .package-flag-copy strong,
+      #servicios-tecnicos .package-card-featured .package-flag-copy strong {
+        font-size: .72rem !important;
+        line-height: 1.15 !important;
+        letter-spacing: .12em !important;
+      }
+
+      #visualizacion .package-card-featured .package-flag-copy small,
+      #servicios-tecnicos .package-card-featured .package-flag-copy small {
+        display: none !important;
+      }
+    }
 </style>
   <script>
     (function () {
@@ -1394,10 +1537,16 @@ html[data-pricing-region="GLOBAL"] .geo-currency-dot{background:#7db6ff;box-shad
 
           <!-- PAQUETE PREMIUM / INTEGRAL -->
           <div class="col-12 col-lg-6" data-aos="zoom-in-up" data-aos-duration="1200">
-            <div class="glass-panel-accent p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
+            <div class="glass-panel-accent package-card-featured p-5 rounded-5 h-100 d-flex flex-column justify-content-between">
               <div>
-                <span class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 rounded-pill fw-bold" style="background-color: #d4b895; color: #000; z-index: 10;">SOLUCIÓN DEFINITIVA</span>
-                <span class="accent-text text-uppercase fw-medium d-block mb-2 mt-2" style="font-size: 0.75rem; letter-spacing: 1.5px;">PAQUETE INTEGRAL</span>
+                <div class="package-flag package-flag-popular" aria-label="Solución integral">
+                  <span class="package-flag-icon">◆</span>
+                  <span class="package-flag-copy">
+                    <strong>SOLUCIÓN INTEGRAL</strong>
+                    <small>La versión más completa para planos listos para obra y trámites</small>
+                  </span>
+                </div>
+                <span class="accent-text text-uppercase fw-medium d-block mb-2" style="font-size: 0.75rem; letter-spacing: 1.5px;">PAQUETE INTEGRAL</span>
                 <h3 class="fw-bold text-white mb-3">Premium 2D</h3>
                 <div class="my-4">
                   <h2 class="display-4 fw-bold text-white mb-1"><span class="price-val" data-usd="800">$800.00</span> <span class="fs-6 text-secondary curr-symbol">USD</span></h2>
