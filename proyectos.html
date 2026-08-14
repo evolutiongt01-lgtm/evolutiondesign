@@ -1620,6 +1620,127 @@
       const firebaseConfig={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
       const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app);
       const EVOLUTION_WORKER_URL="https://evolution-design-backend.evolutiongt01.workers.dev".replace(/\/$/,"");
+
+      /* reCAPTCHA Enterprise · Mis Proyectos */
+      const RECAPTCHA_PROJECT_PAYMENT_ACTION='PROJECT_PAYMENT';
+      const RECAPTCHA_MANUAL_PAYMENT_ACTION='MANUAL_PAYMENT';
+
+      let evolutionRecaptchaConfigPromise=null;
+      let evolutionRecaptchaScriptPromise=null;
+
+      async function evolutionWorkerGet(path){
+        const response=await fetch(`${EVOLUTION_WORKER_URL}${path}`,{
+          method:'GET',
+          headers:{'accept':'application/json'},
+          cache:'no-store'
+        });
+        const body=await response.json().catch(()=>({}));
+        if(!response.ok||body?.ok===false){
+          const error=new Error(body?.error||'No se pudo consultar Evolution Backend.');
+          error.code=body?.code||'';
+          throw error;
+        }
+        return body;
+      }
+
+      function evolutionRecaptchaConfig(){
+        if(!evolutionRecaptchaConfigPromise){
+          evolutionRecaptchaConfigPromise=evolutionWorkerGet('/recaptcha/config')
+            .then(cfg=>{
+              if(!cfg?.siteKey)throw new Error('El Worker no devolvió una clave reCAPTCHA válida.');
+              return cfg;
+            })
+            .catch(error=>{
+              evolutionRecaptchaConfigPromise=null;
+              throw error;
+            });
+        }
+        return evolutionRecaptchaConfigPromise;
+      }
+
+      function loadEvolutionRecaptchaEnterprise(siteKey){
+        if(window.grecaptcha?.enterprise)return Promise.resolve();
+        if(evolutionRecaptchaScriptPromise)return evolutionRecaptchaScriptPromise;
+
+        evolutionRecaptchaScriptPromise=new Promise((resolve,reject)=>{
+          const existing=document.querySelector('script[data-evolution-recaptcha-enterprise]');
+          if(existing){
+            if(window.grecaptcha?.enterprise)return resolve();
+            existing.addEventListener('load',()=>resolve(),{once:true});
+            existing.addEventListener('error',()=>reject(new Error('No se pudo cargar reCAPTCHA Enterprise.')),{once:true});
+            return;
+          }
+
+          const script=document.createElement('script');
+          script.src=`https://www.google.com/recaptcha/enterprise.js?render=${encodeURIComponent(siteKey)}`;
+          script.async=true;
+          script.defer=true;
+          script.dataset.evolutionRecaptchaEnterprise='true';
+          script.onload=()=>resolve();
+          script.onerror=()=>reject(new Error('No se pudo cargar reCAPTCHA Enterprise.'));
+          document.head.appendChild(script);
+        }).catch(error=>{
+          evolutionRecaptchaScriptPromise=null;
+          throw error;
+        });
+
+        return evolutionRecaptchaScriptPromise;
+      }
+
+      async function evolutionRecaptchaToken(action){
+        const normalizedAction=String(action||'').trim().toUpperCase();
+        const cfg=await evolutionRecaptchaConfig();
+
+        if(Array.isArray(cfg.actions)&&!cfg.actions.includes(normalizedAction)){
+          throw new Error('La acción de seguridad no está habilitada en Evolution Backend.');
+        }
+
+        await loadEvolutionRecaptchaEnterprise(cfg.siteKey);
+        if(!window.grecaptcha?.enterprise)throw new Error('reCAPTCHA Enterprise no está disponible.');
+
+        return new Promise((resolve,reject)=>{
+          window.grecaptcha.enterprise.ready(async()=>{
+            try{
+              const token=await window.grecaptcha.enterprise.execute(cfg.siteKey,{action:normalizedAction});
+              if(!token)throw new Error('reCAPTCHA no devolvió un token válido.');
+              resolve(token);
+            }catch(error){
+              reject(error);
+            }
+          });
+        });
+      }
+
+      async function verifyEvolutionRecaptcha(action){
+        const normalizedAction=String(action||'').trim().toUpperCase();
+        const token=await evolutionRecaptchaToken(normalizedAction);
+
+        const response=await fetch(`${EVOLUTION_WORKER_URL}/recaptcha/verify`,{
+          method:'POST',
+          headers:{'content-type':'application/json'},
+          body:JSON.stringify({
+            token,
+            action:normalizedAction,
+            requestedUri:window.location.href
+          })
+        });
+
+        const body=await response.json().catch(()=>({}));
+        if(!response.ok||body?.ok!==true){
+          const error=new Error('No pudimos validar la seguridad de esta operación. Inténtalo nuevamente.');
+          error.code=body?.invalidReason||body?.code||'RECAPTCHA_REJECTED';
+          error.recaptcha=body;
+          throw error;
+        }
+
+        return body;
+      }
+
+      /* Precarga silenciosa: no bloquea Mis Proyectos. */
+      evolutionRecaptchaConfig()
+        .then(cfg=>loadEvolutionRecaptchaEnterprise(cfg.siteKey))
+        .catch(error=>console.info('reCAPTCHA Enterprise se cargará cuando sea necesario:',error?.message||error));
+
       async function evolutionWorkerPost(path,payload={}){
         const user=auth.currentUser;
         if(!user?.uid)throw new Error('Tu sesión ya no está activa.');
@@ -2476,7 +2597,13 @@
         const project=snap.data(),amountUsd=customProjectAmountUsd(project);if(amountUsd<=0)throw new Error('El monto solicitado no es válido.');
         if(method==='bank_transfer'){await detectGeo();if(String(currentGeo?.countryCode||'').toUpperCase()!=='GT')throw new Error('Transferencia bancaria está disponible únicamente en Guatemala.');}
         const cleanRef=String(reference||'').trim().slice(0,140);if(!cleanRef)throw new Error('Ingresa el ID o referencia de la transacción.');
+
+        paymentStatusInline(panel,'Validando seguridad con reCAPTCHA Enterprise…');
+        if(button)button.textContent='Verificando seguridad…';
+        await verifyEvolutionRecaptcha(RECAPTCHA_MANUAL_PAYMENT_ACTION);
+
         paymentStatusInline(panel,'Subiendo comprobante…');
+        if(button)button.textContent='Procesando comprobante…';
         const receiptInfo=await uploadCustomPaymentReceipt(user,projectId,receipt,p=>paymentStatusInline(panel,`Subiendo comprobante… ${p}%`));
         const isBank=method==='bank_transfer',rate=isBank?await getGtqRate():1,bank=BANK_TRANSFER_ACCOUNTS[bankKey]||null;
         if(isBank&&!bankConfigured(bank))throw new Error('La cuenta bancaria seleccionada no está configurada.');
@@ -2564,13 +2691,22 @@
           await sdk.Buttons({
             style:{layout:'vertical',color:'gold',shape:'rect',height:44},
             createOrder:async()=>{
-              const result=await evolutionWorkerPost('/paypal/create-order',{
-                mode:'project_balance',
-                projectId,
-                clientGeo:currentGeo||{}
-              });
-              if(!result?.orderId)throw new Error('El servidor no devolvió una orden PayPal válida.');
-              return result.orderId;
+              setProjectPayPalProcessing(box,true,'Validando seguridad con reCAPTCHA Enterprise…');
+              try{
+                await verifyEvolutionRecaptcha(RECAPTCHA_PROJECT_PAYMENT_ACTION);
+                setProjectPayPalProcessing(box,true,'Preparando pago seguro…');
+
+                const result=await evolutionWorkerPost('/paypal/create-order',{
+                  mode:'project_balance',
+                  projectId,
+                  clientGeo:currentGeo||{}
+                });
+
+                if(!result?.orderId)throw new Error('El servidor no devolvió una orden PayPal válida.');
+                return result.orderId;
+              }finally{
+                setProjectPayPalProcessing(box,false);
+              }
             },
             onApprove:async d=>{
               try{
