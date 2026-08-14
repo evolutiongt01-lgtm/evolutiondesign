@@ -14,7 +14,7 @@
   <meta name="description" content="Evolution Design — estudio creativo de arquitectura, diseño gráfico y diseño web.">
   <meta name="author" content="Evolution Design">
   <meta name="google-site-verification" content="GxTeNaF2ZQiP3t1Zh_R_zsYvg4_6r9ozzRQWoLi8wCA">
-  <meta name="evolution-build" content="2026-08-14-home-pwa-smart-install">
+  <meta name="evolution-build" content="2026-08-14-home-pwa-apple-macos-iphone">
 
   <title>Evolution Design — Arquitectura, Diseño Gráfico y Diseño Web</title>
 
@@ -712,6 +712,142 @@
       }
     }
 
+
+    /* Instalador colocado debajo de Dingloft */
+    .hero-side-stack > .evolution-install-wrap {
+      width:100%;
+      max-width:none;
+      margin-top:0;
+    }
+
+
+    /* ---------- BOTONES DE INSTALACIÓN EN HERO ---------- */
+    .evolution-platform-actions {
+      align-items:stretch;
+    }
+
+    .evolution-platform-btn {
+      min-width:220px;
+      min-height:58px;
+      padding:8px 17px !important;
+      border:0;
+      cursor:pointer;
+      text-align:left;
+      display:inline-flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:12px;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .evolution-platform-apple {
+      background:#f3f3f2 !important;
+      color:#080808 !important;
+    }
+
+    .evolution-platform-universal {
+      border:1px solid rgba(255,255,255,.13) !important;
+      background:rgba(255,255,255,.035) !important;
+      color:#fff !important;
+    }
+
+    .evolution-platform-universal:hover {
+      border-color:rgba(212,184,149,.52) !important;
+      background:rgba(212,184,149,.07) !important;
+    }
+
+    .platform-logo,
+    .platform-logo-wrap {
+      width:25px;
+      height:25px;
+      flex:0 0 25px;
+      display:block;
+    }
+
+    .platform-logo-wrap {
+      display:grid;
+      place-items:center;
+    }
+
+    .platform-logo-wrap .platform-logo {
+      width:24px;
+      height:24px;
+    }
+
+    .android-logo {
+      color:#a4d65e;
+    }
+
+    .windows-logo {
+      color:#f3f3f3;
+    }
+
+    .platform-btn-copy {
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+
+    .platform-btn-copy small {
+      display:block;
+      margin-bottom:4px;
+      color:inherit;
+      opacity:.56;
+      font-size:.52rem;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .platform-btn-copy strong {
+      display:block;
+      color:inherit;
+      font-size:.75rem;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    @media(max-width:575.98px) {
+      .evolution-platform-actions {
+        grid-template-columns:1fr 1fr !important;
+      }
+
+      .evolution-platform-btn {
+        min-width:0;
+        width:100%;
+        min-height:58px;
+        padding:8px 10px !important;
+        gap:9px;
+      }
+
+      .platform-logo,
+      .platform-logo-wrap {
+        width:22px;
+        height:22px;
+        flex-basis:22px;
+      }
+
+      .platform-logo-wrap .platform-logo {
+        width:21px;
+        height:21px;
+      }
+
+      .platform-btn-copy small {
+        font-size:.47rem;
+      }
+
+      .platform-btn-copy strong {
+        font-size:.64rem;
+      }
+    }
+
+    @media(max-width:389.98px) {
+      .evolution-platform-actions {
+        grid-template-columns:1fr !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -848,30 +984,32 @@
           <span class="hero-kicker">Evolution Design · Creative Studio</span>
           <h1>Diseñamos<br>lo que <em>evoluciona.</em></h1>
           <p class="hero-copy">Un solo estudio para transformar ideas en espacios, identidades y experiencias digitales con una dirección visual coherente.</p>
-          <div class="hero-actions">
-            <a href="#estudio" class="hero-primary">Explorar el estudio <span>↓</span></a>
-            <a href="arquitectura.html" class="hero-secondary">Ver Arquitectura <span>→</span></a>
-          </div>
+          
+          <div class="hero-actions evolution-platform-actions">
+            <button id="installAppleBtn" class="hero-primary evolution-platform-btn evolution-platform-apple" type="button">
+              <svg class="platform-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.2-.07 2.04.66 2.75.72 1.06-.21 2.08-.81 3.21-.73 1.35.11 2.36.64 3.03 1.6-2.79 1.67-2.13 5.34.43 6.37-.51 1.36-1.17 2.72-2.42 4.01ZM12.03 7.25C11.88 5.23 13.53 3.56 15.42 3.4c.26 2.34-2.12 4.09-3.39 3.85Z"/>
+              </svg>
+              <span class="platform-btn-copy">
+                <small>macOS / iPhone</small>
+                <strong>Instalar Evolution</strong>
+              </span>
+            </button>
 
-          <!-- INSTALAR EVOLUTION · aparece solo en Mac/Safari o Android -->
-          <div id="evolutionInstallWrap" class="evolution-install-wrap" aria-live="polite">
-            <button id="evolutionInstallBtn" class="evolution-install-btn" type="button">
-              <span id="evolutionInstallLogo" class="evolution-install-logo" aria-hidden="true">
-                <!-- Logo se reemplaza dinámicamente según plataforma -->
-              </span>
-              <span class="evolution-install-copy">
-                <strong id="evolutionInstallTitle">Instalar Evolution</strong>
-                <small id="evolutionInstallSubtitle">Acceso rápido como una app.</small>
-              </span>
-              <span class="evolution-install-arrow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3v12"></path>
-                  <path d="m7 10 5 5 5-5"></path>
-                  <path d="M5 21h14"></path>
+            <button id="installUniversalBtn" class="hero-secondary evolution-platform-btn evolution-platform-universal" type="button">
+              <span id="installUniversalIcon" class="platform-logo-wrap" aria-hidden="true">
+                <svg class="platform-logo windows-logo" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 4.6 10.5 3.5v7.6H3V4.6Zm8.5-1.25L21 2v9.1h-9.5V3.35ZM3 12.1h7.5v7.6L3 18.6v-6.5Zm8.5 0H21V22l-9.5-1.35V12.1Z"/>
                 </svg>
+              </span>
+              <span class="platform-btn-copy">
+                <small id="installUniversalPlatform">Android / Windows</small>
+                <strong id="installUniversalLabel">Instalar Evolution</strong>
               </span>
             </button>
           </div>
+
+
 
         </div>
 
@@ -1274,14 +1412,13 @@
 
   <script>
     /* =========================================================
-       EVOLUTION INSTALL · macOS Safari / Android PWA
+       EVOLUTION INSTALL · Apple / Android / Windows
        ========================================================= */
     (() => {
-      const wrap = document.getElementById('evolutionInstallWrap');
-      const button = document.getElementById('evolutionInstallBtn');
-      const logo = document.getElementById('evolutionInstallLogo');
-      const title = document.getElementById('evolutionInstallTitle');
-      const subtitle = document.getElementById('evolutionInstallSubtitle');
+      const appleBtn = document.getElementById('installAppleBtn');
+      const universalBtn = document.getElementById('installUniversalBtn');
+      const universalIcon = document.getElementById('installUniversalIcon');
+      const universalPlatform = document.getElementById('installUniversalPlatform');
 
       const modal = document.getElementById('evolutionInstallModal');
       const modalClose = document.getElementById('evolutionInstallClose');
@@ -1291,12 +1428,13 @@
       const modalSteps = document.getElementById('evolutionInstallSteps');
       const modalNote = document.getElementById('evolutionInstallNote');
 
-      if (!wrap || !button || !logo || !modal) return;
+      if (!appleBtn || !universalBtn || !modal) return;
 
       const ua = navigator.userAgent || '';
       const platform = navigator.platform || '';
 
       const isAndroid = /Android/i.test(ua);
+      const isWindows = /Windows/i.test(ua) || /^Win/.test(platform);
       const isMac = /Macintosh|Mac OS X/i.test(ua) || /^Mac/.test(platform);
       const isSafari = /Safari/i.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Android/i.test(ua);
 
@@ -1304,15 +1442,13 @@
         window.matchMedia('(display-mode: standalone)').matches ||
         window.navigator.standalone === true;
 
-      if (isStandalone) return;
-
       const appleLogo = `
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.2-.07 2.04.66 2.75.72 1.06-.21 2.08-.81 3.21-.73 1.35.11 2.36.64 3.03 1.6-2.79 1.67-2.13 5.34.43 6.37-.51 1.36-1.17 2.72-2.42 4.01ZM12.03 7.25C11.88 5.23 13.53 3.56 15.42 3.4c.26 2.34-2.12 4.09-3.39 3.85Z"/>
         </svg>`;
 
       const androidLogo = `
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <svg class="platform-logo android-logo" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M7.4 7.4 5.9 4.9M16.6 7.4l1.5-2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
           <path d="M6.1 9.6c.45-2.45 2.7-4.3 5.9-4.3s5.45 1.85 5.9 4.3H6.1Z" fill="currentColor"/>
           <circle cx="9.2" cy="7.7" r=".72" fill="#050505"/>
@@ -1324,12 +1460,32 @@
           <rect x="14.25" y="17.15" width="1.75" height="3.45" rx=".8" fill="currentColor"/>
         </svg>`;
 
+      const windowsLogo = `
+        <svg class="platform-logo windows-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M3 4.6 10.5 3.5v7.6H3V4.6Zm8.5-1.25L21 2v9.1h-9.5V3.35ZM3 12.1h7.5v7.6L3 18.6v-6.5Zm8.5 0H21V22l-9.5-1.35V12.1Z"/>
+        </svg>`;
+
       let deferredInstallPrompt = null;
-      let currentPlatform = null;
+
+      if (isAndroid) {
+        universalIcon.innerHTML = androidLogo;
+        universalPlatform.textContent = 'Android';
+      } else if (isWindows) {
+        universalIcon.innerHTML = windowsLogo;
+        universalPlatform.textContent = 'Windows';
+      } else {
+        universalIcon.innerHTML = androidLogo;
+        universalPlatform.textContent = 'Android / Windows';
+      }
+
+      if (isStandalone) {
+        appleBtn.disabled = true;
+        universalBtn.disabled = true;
+        appleBtn.style.opacity = '.42';
+        universalBtn.style.opacity = '.42';
+      }
 
       function openModal(kind) {
-        currentPlatform = kind;
-
         if (kind === 'mac') {
           modalIcon.style.color = '#fff';
           modalIcon.innerHTML = appleLogo;
@@ -1340,16 +1496,26 @@
             <div class="evolution-install-step"><span>02</span><div>En la barra superior selecciona <strong>Archivo</strong>.</div></div>
             <div class="evolution-install-step"><span>03</span><div>Selecciona <strong>Agregar al Dock</strong> y confirma.</div></div>`;
           modalNote.textContent = 'Disponible en macOS Sonoma 14 o posterior.';
+        } else if (kind === 'windows') {
+          modalIcon.style.color = '#fff';
+          modalIcon.innerHTML = windowsLogo;
+          modalTitle.textContent = 'Instalar Evolution en Windows';
+          modalText.textContent = 'Chrome o Microsoft Edge pueden instalar Evolution como una aplicación independiente.';
+          modalSteps.innerHTML = `
+            <div class="evolution-install-step"><span>01</span><div>Abre Evolution en <strong>Chrome</strong> o <strong>Microsoft Edge</strong>.</div></div>
+            <div class="evolution-install-step"><span>02</span><div>Busca la opción <strong>Instalar aplicación</strong> en el menú del navegador.</div></div>
+            <div class="evolution-install-step"><span>03</span><div>Confirma para añadir Evolution al menú Inicio y al escritorio.</div></div>`;
+          modalNote.textContent = 'Cuando el navegador expone el instalador PWA, este botón lo abre directamente.';
         } else {
           modalIcon.style.color = '#a4d65e';
           modalIcon.innerHTML = androidLogo;
           modalTitle.textContent = 'Instalar Evolution en Android';
-          modalText.textContent = 'Tu navegador puede agregar Evolution a la pantalla de inicio y abrirla como una app.';
+          modalText.textContent = 'Chrome puede agregar Evolution a tu pantalla de inicio y abrirla como una app.';
           modalSteps.innerHTML = `
             <div class="evolution-install-step"><span>01</span><div>Abre el menú <strong>⋮</strong> del navegador.</div></div>
-            <div class="evolution-install-step"><span>02</span><div>Busca <strong>Instalar app</strong> o <strong>Agregar a pantalla de inicio</strong>.</div></div>
+            <div class="evolution-install-step"><span>02</span><div>Selecciona <strong>Instalar app</strong> o <strong>Agregar a pantalla de inicio</strong>.</div></div>
             <div class="evolution-install-step"><span>03</span><div>Confirma la instalación de <strong>Evolution</strong>.</div></div>`;
-          modalNote.textContent = 'En Chrome compatible, el botón de Evolution abre directamente el instalador del sistema.';
+          modalNote.textContent = 'Cuando Chrome expone el instalador PWA, este botón lo abre directamente.';
         }
 
         modal.classList.add('is-open');
@@ -1367,77 +1533,41 @@
       modal.addEventListener('click', e => {
         if (e.target === modal) closeModal();
       });
+
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
       });
 
-      function showMacInstall() {
-        currentPlatform = 'mac';
-        logo.classList.remove('android');
-        logo.style.color = '#fff';
-        logo.innerHTML = appleLogo;
-        title.textContent = 'Instalar Evolution';
-        subtitle.textContent = 'Añádela al Dock como una app para Mac.';
-        wrap.classList.add('is-visible');
-      }
-
-      function showAndroidInstall() {
-        currentPlatform = 'android';
-        logo.classList.add('android');
-        logo.innerHTML = androidLogo;
-        title.textContent = 'Instalar Evolution';
-        subtitle.textContent = 'Añádela a Android como una app.';
-        wrap.classList.add('is-visible');
-      }
-
-      /* Android Chromium: guardar prompt real cuando el navegador lo permita. */
       window.addEventListener('beforeinstallprompt', event => {
-        if (!isAndroid) return;
         event.preventDefault();
         deferredInstallPrompt = event;
-        showAndroidInstall();
       });
 
       window.addEventListener('appinstalled', () => {
         deferredInstallPrompt = null;
-        wrap.classList.remove('is-visible');
+        appleBtn.disabled = true;
+        universalBtn.disabled = true;
+        appleBtn.style.opacity = '.42';
+        universalBtn.style.opacity = '.42';
       });
 
-      /* Mac Safari no expone un prompt JS: mostramos instrucciones oficiales. */
-      if (isMac && isSafari) {
-        showMacInstall();
-      } else if (isAndroid) {
-        /* Mostramos CTA aunque el navegador tarde en emitir beforeinstallprompt.
-           Si no llega, al pulsar se muestran instrucciones manuales. */
-        showAndroidInstall();
-      }
+      appleBtn.addEventListener('click', () => {
+        openModal('mac');
+      });
 
-      button.addEventListener('click', async () => {
-        if (currentPlatform === 'android' && deferredInstallPrompt) {
+      universalBtn.addEventListener('click', async () => {
+        if (deferredInstallPrompt) {
           try {
             const result = await deferredInstallPrompt.prompt();
             deferredInstallPrompt = null;
-
-            if (result && result.outcome === 'accepted') {
-              wrap.classList.remove('is-visible');
-              return;
-            }
+            if (result?.outcome === 'accepted') return;
           } catch (error) {
             console.warn('Evolution install prompt:', error);
           }
-
-          openModal('android');
-          return;
         }
 
-        if (currentPlatform === 'mac') {
-          openModal('mac');
-          return;
-        }
-
-        if (currentPlatform === 'android') {
-          openModal('android');
-        }
+        if (isWindows) openModal('windows');
+        else openModal('android');
       });
     })();
   </script>
