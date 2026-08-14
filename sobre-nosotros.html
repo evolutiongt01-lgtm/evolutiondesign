@@ -728,8 +728,8 @@
         radial-gradient(circle at 20% 42%,rgba(212,184,149,.16),transparent 25%),
         radial-gradient(circle at 72% 26%,rgba(112,231,255,.095),transparent 23%),
         radial-gradient(circle at 82% 74%,rgba(142,115,255,.10),transparent 24%);
-      filter:blur(55px) saturate(1.35);
-      opacity:.52;
+      filter:blur(36px) saturate(1.20);
+      opacity:.38;
       animation:founderAmbientDrift 13s ease-in-out infinite alternate;
       pointer-events:none;
     }
@@ -773,7 +773,7 @@
         radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.10),transparent 15%),
         radial-gradient(circle at 18% 48%,rgba(212,184,149,.12),transparent 27%),
         radial-gradient(circle at 78% 62%,rgba(112,231,255,.075),transparent 28%);
-      filter:blur(34px);
+      filter:blur(22px);
       opacity:.66;
       pointer-events:none;
       transition:opacity .3s ease;
@@ -793,11 +793,11 @@
       bottom:-8%;
       border-radius:38px;
       background:url('img/hero-pc.jpg') center/cover no-repeat;
-      filter:blur(52px) saturate(1.50) brightness(.66);
+      filter:blur(34px) saturate(1.32) brightness(.68);
       opacity:.42;
       transform:scale(1.06);
       pointer-events:none;
-      animation:founderYoutubeGlow 8s ease-in-out infinite alternate;
+      animation:founderYoutubeGlow 12s ease-in-out infinite alternate;
     }
     @keyframes founderYoutubeGlow{
       0%{opacity:.34;transform:scale(1.035) translateY(0)}
@@ -900,6 +900,26 @@
       box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset 0 -20px 42px rgba(0,0,0,.12);
       pointer-events:none;
     }
+
+    .founder-logo{
+      padding:24px;
+    }
+    .founder-logo img{
+      position:relative;
+      z-index:2;
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      filter:drop-shadow(0 10px 26px rgba(0,0,0,.34));
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+    @media(max-width:575.98px){
+      .founder-logo{
+        padding:18px;
+      }
+    }
     @keyframes founderMonogramFloat{
       50%{transform:translateY(-8px) rotate(.8deg)}
     }
@@ -999,6 +1019,198 @@
       .founder-rings i:nth-child(2){width:285px;height:285px}
       .founder-rings i:nth-child(3){width:345px;height:345px}
       .founder-motto:hover{transform:none}
+    }
+
+
+    /* Founder manifesto */
+    .founder-manifesto{
+      position:relative;
+      margin-top:22px;
+      padding:24px 24px 23px;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.075);
+      background:
+        linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.012)),
+        rgba(8,8,11,.68);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+      isolation:isolate;
+    }
+    .founder-manifesto::before{
+      content:"";
+      position:absolute;
+      width:280px;height:280px;
+      right:-150px;top:-155px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(212,184,149,.15),rgba(112,231,255,.035),transparent 70%);
+      filter:blur(6px);
+      z-index:-1;
+      animation:manifestoGlow 7s ease-in-out infinite alternate;
+    }
+    @keyframes manifestoGlow{
+      to{transform:scale(1.18) translate(-12px,12px);opacity:.72}
+    }
+    .founder-manifesto .manifesto-label{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      color:var(--gold);
+      font-size:.54rem;
+      font-weight:800;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+    .founder-manifesto .manifesto-label::before{
+      content:"";
+      width:24px;height:1px;background:var(--gold);
+    }
+    .founder-manifesto blockquote{
+      margin:17px 0 0;
+      color:#eeeef0;
+      font-size:clamp(1.02rem,1.45vw,1.28rem);
+      line-height:1.72;
+      letter-spacing:-.022em;
+      font-weight:400;
+    }
+    .founder-manifesto blockquote strong{
+      color:#fff;
+      font-weight:650;
+    }
+    .founder-manifesto .manifesto-sign{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      margin-top:20px;
+      padding-top:15px;
+      border-top:1px solid rgba(255,255,255,.065);
+    }
+    .founder-manifesto .manifesto-sign div{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+    }
+    .founder-manifesto .manifesto-sign b{
+      font-size:.68rem;
+      color:#d7d7db;
+    }
+    .founder-manifesto .manifesto-sign span{
+      color:#64666f;
+      font-size:.52rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .founder-manifesto .manifesto-mark{
+      font:800 .72rem ui-monospace,SFMono-Regular,Menlo,monospace;
+      color:#8f919a;
+      letter-spacing:.12em;
+    }
+    @media(max-width:575.98px){
+      .founder-manifesto{padding:19px 18px;border-radius:17px}
+      .founder-manifesto blockquote{font-size:.94rem;line-height:1.68}
+      .founder-manifesto .manifesto-sign{align-items:flex-end}
+    }
+
+
+    /* =========================================================
+       PERFORMANCE OPTIMIZATION
+       ========================================================= */
+    .founder-section,
+    .founder-shell,
+    .founder-portrait,
+    .founder-motto,
+    .founder-principle{
+      contain:paint;
+    }
+
+    .founder-portrait,
+    .founder-monogram,
+    .founder-motto{
+      transform:translateZ(0);
+      backface-visibility:hidden;
+    }
+
+    /* Evitamos demasiadas animaciones simultáneas fuera del viewport */
+    .founder-section:not(.is-in-view) *,
+    .founder-section:not(.is-in-view)::before,
+    .founder-section:not(.is-in-view)::after{
+      animation-play-state:paused!important;
+    }
+
+    /* Menos trabajo de GPU en pantallas medianas */
+    @media(max-width:991.98px){
+      .founder-section::before{
+        filter:blur(28px) saturate(1.12);
+        opacity:.30;
+      }
+      .founder-shell::before{
+        filter:blur(18px);
+        opacity:.46;
+      }
+      .founder-portrait::after{
+        filter:blur(26px) saturate(1.20) brightness(.68);
+        opacity:.28;
+      }
+      .founder-rings i:nth-child(3){
+        display:none;
+      }
+      .founder-scan::before{
+        opacity:.34;
+      }
+    }
+
+    /* Móvil: conservamos el concepto, reducimos animación y filtros pesados */
+    @media(max-width:575.98px){
+      .founder-section::before{
+        filter:blur(20px) saturate(1.08);
+        opacity:.24;
+        animation-duration:20s;
+      }
+      .founder-shell::before{
+        display:none;
+      }
+      .founder-portrait::after{
+        filter:blur(20px) saturate(1.12) brightness(.66);
+        opacity:.20;
+        animation-duration:18s;
+      }
+      .founder-rings i:nth-child(2),
+      .founder-rings i:nth-child(3){
+        display:none;
+      }
+      .founder-scan::before{
+        opacity:.22;
+        animation-duration:12s;
+      }
+      .founder-monogram{
+        animation-duration:7.5s;
+      }
+      .founder-monogram::before{
+        animation-duration:9s;
+      }
+      .founder-motto strong{
+        animation-duration:10s;
+      }
+      .discipline-chip{
+        animation:none!important;
+      }
+      .orbit{
+        animation-duration:35s!important;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      .founder-section::before,
+      .founder-section::after,
+      .founder-portrait::after,
+      .founder-scan::before,
+      .founder-rings i,
+      .founder-monogram,
+      .founder-monogram::before,
+      .founder-motto strong,
+      .manifestoGlow{
+        animation:none!important;
+      }
     }
 
     /* =========================================================
@@ -1566,17 +1778,19 @@
           <div class="founder-portrait reveal">
             <div class="founder-scan"></div>
             <div class="founder-rings" aria-hidden="true"><i></i><i></i><i></i></div>
-            <div class="founder-monogram" aria-label="César Mátzar"><span>CM</span></div>
+            <div class="founder-monogram founder-logo" aria-label="Evolution Group">
+              <img src="img/evolution-group-logo.webp" alt="Evolution Group">
+            </div>
 
             <div class="founder-portrait-meta">
               <small>Founder · Evolution Group</small>
-              <strong>César Mátzar</strong>
+              <strong>Fundador de Evolution Group</strong>
             </div>
           </div>
 
           <div class="founder-copy reveal">
-            <span>Fundador · Evolution Group</span>
-            <h2>César Mátzar.<em>Diseñar es decidir qué dejar fuera.</em></h2>
+            <span>Visión y dirección del ecosistema</span>
+            <h2>Una visión construida para competir globalmente.<em>Diseñar es decidir qué dejar fuera.</em></h2>
 
             <div class="founder-motto">
               <strong>“Menos ruido. Más intención.”</strong>
@@ -1584,8 +1798,28 @@
             </div>
 
             <p>
-              Como fundador de Evolution Group, César impulsa una visión donde arquitectura, diseño, tecnología y productos digitales funcionan como partes de un mismo ecosistema. Evolution Design nace dentro de esa visión: resolver con claridad, intención y una ejecución visualmente sólida.
+              La visión detrás de Evolution Group conecta arquitectura, diseño, tecnología y productos digitales dentro de un mismo ecosistema. Evolution Design nace de esa idea: resolver con claridad, intención y una ejecución visualmente sólida.
             </p>
+
+            <div class="founder-manifesto">
+              <div class="manifesto-label">Una idea personal detrás de Evolution Group</div>
+
+              <blockquote>
+                “Decidí crear <strong>Evolution Group</strong> porque quería demostrar que desde nuestra región también podemos competir con empresas y estudios de nivel internacional. Pero competir globalmente no significa volvernos inaccesibles. Para mí, una buena empresa también debe saber escuchar, entender la realidad de cada cliente y encontrar la mejor solución posible dentro de su presupuesto.
+                <br><br>
+                No todos los proyectos tienen el mismo tamaño, el mismo alcance ni los mismos recursos, y eso está bien. Nuestro trabajo es adaptarnos sin perder el criterio, la calidad ni la intención detrás de lo que hacemos. Quiero que una persona, una familia, un emprendedor o una empresa pueda acercarse a Evolution y sentir que su idea se toma en serio.
+                <br><br>
+                Mi objetivo siempre ha sido construir una compañía capaz de mirar hacia el mercado global, trabajar con estándares internacionales y, al mismo tiempo, mantener algo muy simple: <strong>ser cercanos, claros y buena onda con la gente que confía en nosotros.</strong>”
+              </blockquote>
+
+              <div class="manifesto-sign">
+                <div>
+                  <b>César Mátzar</b>
+                  <span>Fundador · Evolution Group</span>
+                </div>
+                <div class="manifesto-mark">EST. 2021</div>
+              </div>
+            </div>
 
             <div class="founder-principles">
               <div class="founder-principle">
@@ -1737,7 +1971,7 @@
 
       <div class="footer-bottom">
         <span>© 2026 Evolution Design · Todos los derechos reservados.</span>
-        <span>EVOLUTION GROUP · FOUNDED BY CÉSAR MÁTZAR</span>
+        <span>EVOLUTION GROUP</span>
       </div>
     </div>
   </footer>
@@ -1816,13 +2050,17 @@
       update();
     })();
 
-    /* Founder interactive cinematic light */
+    /* Founder interactive cinematic light · throttled */
     (function(){
+      const section=document.querySelector('.founder-section');
       const shell=document.querySelector('.founder-shell');
       const portrait=document.querySelector('.founder-portrait');
       const motto=document.querySelector('.founder-motto');
 
-      if(!shell || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+      if(!section || !shell || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+      let raf=0;
+      let lastEvent=null;
 
       function setLight(e,el){
         const r=el.getBoundingClientRect();
@@ -1833,9 +2071,16 @@
       }
 
       shell.addEventListener('pointermove',e=>{
-        setLight(e,shell);
-        if(portrait && portrait.contains(e.target)) setLight(e,portrait);
-        if(motto && motto.contains(e.target)) setLight(e,motto);
+        lastEvent=e;
+        if(raf) return;
+        raf=requestAnimationFrame(()=>{
+          raf=0;
+          const ev=lastEvent;
+          if(!ev) return;
+          setLight(ev,shell);
+          if(portrait && portrait.contains(ev.target)) setLight(ev,portrait);
+          if(motto && motto.contains(ev.target)) setLight(ev,motto);
+        });
       },{passive:true});
 
       shell.addEventListener('pointerleave',()=>{
@@ -1844,6 +2089,14 @@
           el.style.setProperty('--my','50%');
         });
       },{passive:true});
+
+      const visibilityObserver=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          section.classList.toggle('is-in-view',entry.isIntersecting);
+        });
+      },{rootMargin:'180px 0px 180px 0px',threshold:0});
+
+      visibilityObserver.observe(section);
     })();
 
     /* Reveal */
@@ -1862,7 +2115,7 @@
       const host=document.getElementById('heroCode');
       if(!host||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
       const tokens=['01','10','{ }','</>','UI','UX','3D','CAD','API','AI','const','render','grid','px','RGB'];
-      const count=window.innerWidth<700?9:18;
+      const count=window.innerWidth<700?6:12;
       for(let i=0;i<count;i++){
         const s=document.createElement('span');
         s.textContent=Array.from({length:6+Math.floor(Math.random()*6)},()=>tokens[Math.floor(Math.random()*tokens.length)]).join('   ');
