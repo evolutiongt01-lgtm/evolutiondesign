@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v23 · Internal Controls Fix */
+/* Evolution Design · Smart App Shell · v24 · CTA Definitive Fix */
 (() => {
   'use strict';
 
-  const VERSION='23';
+  const VERSION='24';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -728,15 +728,40 @@
         if(!(a instanceof frame.contentWindow.HTMLAnchorElement))return;
         if(a.getAttribute('href')!=='#')return;
 
-        const isUiControl=
-          Boolean(a.getAttribute('onclick')) ||
-          Boolean(a.id) ||
-          a.getAttribute('role')==='button';
+        /*
+         * Solo quitamos href en controles que YA poseen una acción JS.
+         * Ejemplos reales:
+         *   dgCustomCta -> abrirPedidoDiseno()
+         *   dgLogoCta   -> abrirPedidoLogo()
+         *   dgVideoCta  -> abrirPedidoVideo()
+         *
+         * Al no tener atributo href, el bridge antiguo de la view
+         * (closest('a[href]')) no puede confundirlos con navegación.
+         */
+        const inlineAction=Boolean(a.getAttribute('onclick'));
+        const knownGraphicCTA=[
+          'dgCustomCta',
+          'dgLogoCta',
+          'dgVideoCta'
+        ].includes(a.id);
 
-        if(!isUiControl)return;
+        if(!inlineAction&&!knownGraphicCTA)return;
 
-        a.setAttribute('href','#evolution-ui-control');
+        a.removeAttribute('href');
+        a.setAttribute('role','button');
+        if(!a.hasAttribute('tabindex'))a.setAttribute('tabindex','0');
         a.dataset.evolutionLocalControl='1';
+
+        /* Accesibilidad: Enter/Espacio ejecutan el click normal del CTA. */
+        if(!a.dataset.evolutionKeyboardBound){
+          a.dataset.evolutionKeyboardBound='1';
+          a.addEventListener('keydown',event=>{
+            if(event.key==='Enter'||event.key===' '){
+              event.preventDefault();
+              a.click();
+            }
+          });
+        }
       };
 
       doc.querySelectorAll('a[href="#"]').forEach(patchAnchor);
@@ -747,7 +772,15 @@
         if(Observer){
           const observer=new Observer(records=>{
             for(const record of records){
-              for(const node of record.addedNodes){
+              if(
+                record.type==='attributes' &&
+                record.target instanceof frame.contentWindow.HTMLAnchorElement &&
+                record.target.getAttribute('href')==='#'
+              ){
+                patchAnchor(record.target);
+              }
+
+              for(const node of record.addedNodes||[]){
                 if(!(node instanceof frame.contentWindow.Element))continue;
                 if(node.matches?.('a[href="#"]'))patchAnchor(node);
                 node.querySelectorAll?.('a[href="#"]').forEach(patchAnchor);
@@ -757,7 +790,9 @@
 
           observer.observe(doc.documentElement,{
             childList:true,
-            subtree:true
+            subtree:true,
+            attributes:true,
+            attributeFilter:['href']
           });
 
           frame.__evolutionLocalControlsObserver=observer;
@@ -883,6 +918,13 @@
       /* Repara CTAs internos como Solicitar diseño / logo / video antes
          de mostrar la nueva vista. No modifica el archivo HTML original. */
       repairViewLocalControls(frame,route);
+
+      /* Algunos scripts de Diseño Gráfico terminan de configurar sus CTA
+         unas décimas después del load. Revalidamos sin tocar la view. */
+      if(route.key==='grafico'){
+        setTimeout(()=>repairViewLocalControls(frame,route),250);
+        setTimeout(()=>repairViewLocalControls(frame,route),900);
+      }
 
       /* Payment logic is global now; views no longer need another PayPal
          patch when the SDK loading strategy changes. */
