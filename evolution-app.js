@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v20 · Firebase LOCAL Session */
+/* Evolution Design · Smart App Shell · v21 · Firebase LOCAL + Central Payments */
 (() => {
   'use strict';
 
-  const VERSION='20';
+  const VERSION='21';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -12,6 +12,8 @@
   };
 
   const ROUTE_LIST=Object.values(ROUTES);
+  const PAYMENT_ROUTES=new Set(['arquitectura','grafico','web']);
+  const PAYMENT_BRIDGE='/evolution-payments.js?v=21';
   const PRIVATE_HINTS=['/proyectos','/perfil','/admin','/portal','/account','/checkout','/payment','/pago','/login','/api/'];
   const prefetchedViews=new Set();
   const prefetchedAssets=new Set();
@@ -612,6 +614,39 @@
     }catch(_){}
   };
 
+  const injectPaymentsBridge=(frame,route)=>{
+    if(!frame||!route||!PAYMENT_ROUTES.has(route.key))return;
+
+    try{
+      const doc=frame.contentDocument;
+      if(!doc?.head)return;
+
+      if(
+        frame.contentWindow?.EvolutionPayments?.version ||
+        doc.querySelector('script[data-evolution-payments-bridge]')
+      ){
+        return;
+      }
+
+      const script=doc.createElement('script');
+      script.src=PAYMENT_BRIDGE;
+      script.async=true;
+      script.dataset.evolutionPaymentsBridge='21';
+      script.dataset.evolutionPaymentsRoute=route.key;
+
+      script.onerror=()=>{
+        console.error(
+          '[Evolution App] No se pudo cargar evolution-payments.js en',
+          route.key
+        );
+      };
+
+      doc.head.appendChild(script);
+    }catch(error){
+      console.warn('[Evolution App] Payments bridge:',error);
+    }
+  };
+
   const handleFrameLoad=frame=>{
     try{
       const childURL=new URL(frame.contentWindow.location.href);
@@ -723,6 +758,10 @@
     frame.addEventListener('load',()=>{
       if(token!==navigationToken){frame.remove();return}
       if(!handleFrameLoad(frame))return;
+
+      /* Payment logic is global now; views no longer need another PayPal
+         patch when the SDK loading strategy changes. */
+      injectPaymentsBridge(frame,route);
 
       clearTimeout(fail);
 
