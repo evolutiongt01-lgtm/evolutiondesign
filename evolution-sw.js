@@ -1,5 +1,5 @@
-/* Evolution Design · Advanced App Shell Service Worker · v18 */
-const VERSION='evolution-smart-app-v18';
+/* Evolution Design · Advanced App Shell Service Worker · v20 · LOCAL Auth Refresh */
+const VERSION='evolution-smart-app-v20-local-auth';
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
