@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v21 · Firebase LOCAL + Central Payments */
+/* Evolution Design · Smart App Shell · v22 · Internal Anchors Fix */
 (() => {
   'use strict';
 
-  const VERSION='21';
+  const VERSION='22';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -375,10 +375,68 @@
     try{
       const u=new URL(value,location.href);
       if(u.origin!==location.origin)return null;
-      const p=u.pathname.toLowerCase();
+
+      const p=u.pathname
+        .replace(/\/{2,}/g,'/')
+        .replace(/\/$/,'')
+        .toLowerCase() || '/';
+
       if(PRIVATE_HINTS.some(x=>p.includes(x)))return null;
-      return routeFromURL(u.href);
+
+      /* IMPORTANTE:
+         Solo estas cuatro rutas pertenecen al router público.
+         Un enlace interno, feedback, sobre-nosotros, archivo, etc.
+         jamás debe convertirse accidentalmente en Home. */
+      if(p==='/'||p==='/index.html')return ROUTES.home;
+      if(p==='/arquitectura'||p==='/arquitectura.html')return ROUTES.arquitectura;
+      if(p==='/diseno-grafico'||p==='/diseno-grafico.html')return ROUTES.grafico;
+      if(p==='/diseno-web'||p==='/diseno-web.html')return ROUTES.web;
+
+      return null;
     }catch(_){return null}
+  };
+
+  const scrollActiveViewToHash=href=>{
+    if(!activeFrame)return false;
+
+    try{
+      const raw=String(href||'').trim();
+      const frameURL=new URL(activeFrame.contentWindow.location.href);
+      const targetURL=new URL(raw,frameURL);
+
+      if(targetURL.origin!==location.origin||!targetURL.hash)return false;
+
+      const id=decodeURIComponent(targetURL.hash.slice(1));
+      if(!id){
+        activeFrame.contentWindow.scrollTo({top:0,behavior:'smooth'});
+        return true;
+      }
+
+      const doc=activeFrame.contentDocument;
+      const target=
+        doc?.getElementById(id) ||
+        doc?.querySelector?.(`[name="${CSS.escape(id)}"]`);
+
+      if(!target)return false;
+
+      target.scrollIntoView({
+        behavior:'smooth',
+        block:'start'
+      });
+
+      /* Conserva el hash en la URL visible sin recargar ni destruir la vista. */
+      const route=ROUTES[activeKey]||routeFromURL(location.href);
+      history.replaceState(
+        {evolutionRoute:route.key},
+        '',
+        `${route.path}${targetURL.hash}`
+      );
+
+      return true;
+    }catch(error){
+      console.warn('[Evolution App] Internal anchor:',error);
+      return false;
+    }
   };
 
   const stage=()=>document.getElementById('evolution-view-stage');
@@ -826,9 +884,17 @@
     const data=e.data;
 
     if(data.type==='evolution:navigate'&&data.href){
+      /* Los #calculadora-planos, #cotizador-general, etc. viven dentro
+         del iframe/vista actual. Nunca pasan por el router principal. */
+      if(scrollActiveViewToHash(data.href))return;
+
       const route=routeFromHref(data.href);
       if(route){loadRoute(route,{push:true,restore:false});return}
-      location.href=data.href;return;
+
+      /* Si no es una de las cuatro rutas públicas, respeta el enlace real
+         en lugar de mandarlo a Home. */
+      location.href=data.href;
+      return;
     }
 
     if(data.type==='evolution:external-nav'&&data.href){location.href=data.href;return}
@@ -841,7 +907,15 @@
     if(data.type==='evolution:view-title'&&data.title){document.title=data.title}
   });
 
-  addEventListener('popstate',()=>loadRoute(routeFromURL(location.href),{push:false,restore:true}));
+  addEventListener('popstate',()=>{
+    const route=routeFromURL(location.href);
+
+    if(activeFrame&&activeKey===route.key&&location.hash){
+      if(scrollActiveViewToHash(location.href))return;
+    }
+
+    loadRoute(route,{push:false,restore:true});
+  });
 
   /* ---------- PWA INSTALL ---------- */
   const standalone=()=>matchMedia('(display-mode:standalone)').matches||navigator.standalone===true;
