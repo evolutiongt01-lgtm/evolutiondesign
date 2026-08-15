@@ -8,7 +8,7 @@ const IMAGES=`${VERSION}-images`;
 const SHELL_FILES=[
   '/',
   '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html',
-  '/evolution-nav.js','/evolution-app.js','/evolution-sw.js',
+  '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-sw.js',
   '/img/logo.png','/manifest.webmanifest'
 ];
 
@@ -33,6 +33,7 @@ const isImage=p=>/\.(png|jpe?g|webp|avif|gif|svg)$/i.test(p)||p.startsWith('/img
 const isStatic=p=>
   p==='/evolution-nav.js'||
   p==='/evolution-app.js'||
+  p==='/evolution-payments.js'||
   p==='/manifest.webmanifest'||
   p.startsWith('/css/')||
   p.startsWith('/js/')||
