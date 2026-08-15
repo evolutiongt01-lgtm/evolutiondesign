@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v18 */
+/* Evolution Design · Smart App Shell · v20 · Firebase LOCAL Session */
 (() => {
   'use strict';
 
-  const VERSION='18';
+  const VERSION='20';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -23,6 +23,240 @@
   let networkMode=navigator.onLine?'normal':'offline';
   let deferredInstall=null;
   let lastSWUpdateCheck=0;
+
+  /* ---------- PERSISTENT AUTH UI STATE ----------
+     La sesión real sigue perteneciendo a Firebase dentro de las vistas.
+     El Shell solo conserva el estado VISUAL para evitar parpadeos al
+     cambiar de sección.
+  */
+  let stableAuth={user:null,isAdmin:false};
+  let logoutPending=false;
+  let authNullTimer=0;
+
+  const AUTH_MEMORY_KEY='evolution_shell_auth_v20';
+
+  const readAuthMemory=()=>{
+    try{
+      const raw=sessionStorage.getItem(AUTH_MEMORY_KEY);
+      if(!raw)return;
+      const parsed=JSON.parse(raw);
+      if(parsed?.user?.uid){
+        stableAuth={
+          user:{
+            uid:String(parsed.user.uid||''),
+            email:String(parsed.user.email||''),
+            displayName:String(parsed.user.displayName||''),
+            photoURL:String(parsed.user.photoURL||'')
+          },
+          isAdmin:Boolean(parsed.isAdmin)
+        };
+      }
+    }catch(_){}
+  };
+
+  const writeAuthMemory=()=>{
+    try{
+      if(stableAuth.user?.uid){
+        sessionStorage.setItem(AUTH_MEMORY_KEY,JSON.stringify(stableAuth));
+      }else{
+        sessionStorage.removeItem(AUTH_MEMORY_KEY);
+      }
+    }catch(_){}
+  };
+
+  const applyStableAuth=()=>{
+    if(!window.EvolutionNav)return;
+    window.EvolutionNav.setAuth({
+      user:stableAuth.user,
+      isAdmin:Boolean(stableAuth.isAdmin)
+    });
+  };
+
+  const mergeAuthUser=(incoming,previous)=>{
+    if(!incoming?.uid)return null;
+
+    const same=previous?.uid&&String(previous.uid)===String(incoming.uid);
+
+    return {
+      uid:String(incoming.uid||previous?.uid||''),
+      email:String(incoming.email||(same?previous?.email:'')||''),
+      displayName:String(incoming.displayName||(same?previous?.displayName:'')||''),
+      photoURL:String(incoming.photoURL||(same?previous?.photoURL:'')||'')
+    };
+  };
+
+  const acceptAuthState=data=>{
+    const incoming=data?.user||null;
+    const authoritative=data?.source==='shell';
+
+    if(incoming?.uid){
+      clearTimeout(authNullTimer);
+      authNullTimer=0;
+      logoutPending=false;
+
+      const previous=stableAuth.user;
+      const same=previous?.uid&&String(previous.uid)===String(incoming.uid);
+
+      stableAuth={
+        user:mergeAuthUser(incoming,previous),
+        /* Si una vista tarda en reconstruir el badge Admin, no lo apagues. */
+        isAdmin:Boolean(data.isAdmin)||(same&&Boolean(stableAuth.isAdmin))
+      };
+
+      writeAuthMemory();
+      applyStableAuth();
+      return;
+    }
+
+    /* El Auth del Shell es la fuente real. Si Firebase central confirma
+       user:null, limpiamos el estado aunque no haya sido un logout manual. */
+    if(authoritative){
+      clearTimeout(authNullTimer);
+      authNullTimer=0;
+      stableAuth={user:null,isAdmin:false};
+      logoutPending=false;
+      writeAuthMemory();
+      applyStableAuth();
+      return;
+    }
+
+    /* Logout explícito: aquí sí se limpia de inmediato cuando Firebase
+       reporta null desde una vista. */
+    if(logoutPending){
+      clearTimeout(authNullTimer);
+      authNullTimer=0;
+      stableAuth={user:null,isAdmin:false};
+      logoutPending=false;
+      writeAuthMemory();
+      applyStableAuth();
+      return;
+    }
+
+    /* Si ya conocemos una sesión, un null recién cargando otra vista es
+       transitorio. Mantenemos foto/Admin y esperamos confirmación estable. */
+    if(stableAuth.user?.uid){
+      clearTimeout(authNullTimer);
+
+      if(networkMode==='offline'){
+        applyStableAuth();
+        return;
+      }
+
+      authNullTimer=setTimeout(()=>{
+        /*
+         * No borramos la UI por un null aislado de una vista nueva.
+         * Una sesión que realmente terminó se limpia mediante el flujo
+         * explícito de logout. Esto evita el flash Login → Perfil.
+         */
+        applyStableAuth();
+      },7000);
+
+      return;
+    }
+
+    stableAuth={user:null,isAdmin:false};
+    writeAuthMemory();
+    applyStableAuth();
+  };
+
+  readAuthMemory();
+
+  /* ---------- CENTRAL FIREBASE AUTH · LOCAL ONLY ----------
+     Este Auth vive en el App Shell y sobrevive al cierre de la PWA.
+     No guarda contraseñas ni tokens manualmente: Firebase administra
+     su propia sesión persistente en IndexedDB/localStorage.
+  */
+  const FIREBASE_CONFIG={
+    apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",
+    authDomain:"evolution-design-9b63b.firebaseapp.com",
+    projectId:"evolution-design-9b63b",
+    storageBucket:"evolution-design-9b63b.firebasestorage.app",
+    messagingSenderId:"433474708581",
+    appId:"1:433474708581:web:cff7830077fb7d0e8a128c"
+  };
+
+  const ADMIN_EMAILS=new Set([
+    'evolutiongt01@gmail.com',
+    'tepaz2025@gmail.com'
+  ]);
+
+  let shellAuth=null;
+  let shellAuthModule=null;
+  let shellAuthReady=null;
+
+  const publicUser=user=>user?{
+    uid:user.uid||'',
+    email:user.email||'',
+    displayName:user.displayName||'',
+    photoURL:user.photoURL||''
+  }:null;
+
+  const initShellAuth=()=>{
+    if(shellAuthReady)return shellAuthReady;
+
+    shellAuthReady=(async()=>{
+      try{
+        const [appModule,authModule]=await Promise.all([
+          import('https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js'),
+          import('https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js')
+        ]);
+
+        shellAuthModule=authModule;
+
+        const firebaseApp=appModule.getApps().length
+          ? appModule.getApp()
+          : appModule.initializeApp(FIREBASE_CONFIG);
+
+        try{
+          shellAuth=authModule.initializeAuth(firebaseApp,{
+            persistence:[
+              authModule.indexedDBLocalPersistence,
+              authModule.browserLocalPersistence
+            ]
+          });
+        }catch(error){
+          /* Si otra integración del Shell ya inicializó Auth, reutilízala
+             y fuerza una persistencia LOCAL. Nunca SESSION. */
+          shellAuth=authModule.getAuth(firebaseApp);
+
+          try{
+            await authModule.setPersistence(shellAuth,authModule.indexedDBLocalPersistence);
+          }catch(indexedDBError){
+            await authModule.setPersistence(shellAuth,authModule.browserLocalPersistence);
+          }
+        }
+
+        authModule.onAuthStateChanged(shellAuth,user=>{
+          const email=String(user?.email||'').toLowerCase();
+
+          acceptAuthState({
+            source:'shell',
+            user:publicUser(user),
+            isAdmin:Boolean(user&&ADMIN_EMAILS.has(email))
+          });
+        });
+
+        window.EvolutionShellAuth={
+          get currentUser(){return shellAuth?.currentUser||null},
+          async signOut(){
+            if(!shellAuth||!shellAuthModule)return;
+            await shellAuthModule.signOut(shellAuth);
+          },
+          async getIdToken(forceRefresh=false){
+            const user=shellAuth?.currentUser;
+            return user?await user.getIdToken(Boolean(forceRefresh)):'';
+          }
+        };
+
+        return shellAuth;
+      }catch(error){
+        console.warn('Evolution Shell Auth:',error?.code||error);
+        return null;
+      }
+    })();
+
+    return shellAuthReady;
+  };
 
   /* ---------- SMART APP CSS ---------- */
   const smartStyle=document.createElement('style');
@@ -418,6 +652,11 @@
     activeKey=route.key;
     document.title=route.title;
     window.EvolutionNav?.setActive(route.key);
+
+    /* La navbar es persistente; reafirmamos el usuario conocido sin esperar
+       a que la nueva vista vuelva a inicializar Firebase. */
+    if(stableAuth.user?.uid)applyStableAuth();
+
     window.dispatchEvent(new CustomEvent('evolution:route-changed',{detail:{key:route.key,path:route.path}}));
   };
 
@@ -528,7 +767,19 @@
   });
 
   document.addEventListener('evolution:logout-request',()=>{
+    logoutPending=true;
+
+    /* Cierra la sesión REAL del Shell. La vista también recibe el mensaje
+       para mantener sincronizada cualquier lógica local de checkout/perfil. */
+    initShellAuth()
+      .then(()=>window.EvolutionShellAuth?.signOut())
+      .catch(error=>console.warn('Evolution logout:',error?.code||error));
+
     activeFrame?.contentWindow?.postMessage({type:'evolution:logout'},location.origin);
+
+    setTimeout(()=>{
+      if(logoutPending)logoutPending=false;
+    },12000);
   });
 
   addEventListener('message',e=>{
@@ -544,7 +795,7 @@
     if(data.type==='evolution:external-nav'&&data.href){location.href=data.href;return}
 
     if(data.type==='evolution:auth-state'){
-      window.EvolutionNav?.setAuth({user:data.user||null,isAdmin:Boolean(data.isAdmin)});
+      acceptAuthState(data);
       return;
     }
 
@@ -662,6 +913,17 @@
   /* ---------- BOOT ---------- */
   const boot=async()=>{
     const initial=routeFromURL(location.href);
+
+    /* Inicia Firebase Auth en el Shell inmediatamente. Mientras se restaura
+       la sesión local, la UI recordada evita parpadeos en la misma apertura. */
+    initShellAuth();
+
+    /* Recupera inmediatamente foto/Admin del mismo tab antes de que la
+       primera vista termine de consultar Firebase. */
+    if(stableAuth.user?.uid){
+      requestAnimationFrame(()=>applyStableAuth());
+    }
+
     syncRoute(initial);
 
     const native=classifyConnection();
@@ -690,344 +952,8 @@
     routes:ROUTES,
     navigate:key=>ROUTES[key]&&loadRoute(ROUTES[key],{push:true}),
     prefetch:key=>ROUTES[key]&&prefetchRoute(ROUTES[key],{assets:networkMode==='fast',reason:'api'}),
-    get network(){return networkMode}
+    get network(){return networkMode},
+    get auth(){return {user:stableAuth.user?{...stableAuth.user}:null,isAdmin:stableAuth.isAdmin}},
+    get shellAuthReady(){return Boolean(shellAuth)}
   };
-})();
-/* =========================================================
-   EVOLUTION · PERFIL + ADMIN PERSISTENTES · V19
-   Evita que foto/admin desaparezcan al cambiar de sección.
-   ========================================================= */
-(() => {
-  const nav = window.EvolutionNav;
-
-  if (!nav || nav.__persistentAuthV19) return;
-
-  nav.__persistentAuthV19 = true;
-
-  const originalSetAuth =
-    nav.setAuth.bind(nav);
-
-  const KEY =
-    'evolution_auth_ui_v19';
-
-  let stableAuth = null;
-  let clearTimer = 0;
-  let logoutPending = false;
-
-
-  const readMemory = () => {
-    try {
-      const data =
-        JSON.parse(
-          sessionStorage.getItem(KEY) ||
-          'null'
-        );
-
-      if (data?.user?.uid) {
-        stableAuth = data;
-      }
-
-    } catch (_) {}
-  };
-
-
-  const saveMemory = () => {
-    try {
-
-      if (stableAuth?.user?.uid) {
-
-        sessionStorage.setItem(
-          KEY,
-          JSON.stringify(stableAuth)
-        );
-
-      } else {
-
-        sessionStorage.removeItem(KEY);
-
-      }
-
-    } catch (_) {}
-  };
-
-
-  const paintStable = () => {
-
-    if (stableAuth?.user?.uid) {
-
-      originalSetAuth(
-        stableAuth
-      );
-
-    }
-
-  };
-
-
-  readMemory();
-
-
-  /* Si ya conocemos al usuario,
-     pinta perfil/admin inmediatamente. */
-  if (stableAuth?.user?.uid) {
-
-    requestAnimationFrame(
-      paintStable
-    );
-
-  }
-
-
-  /* Interceptamos actualizaciones
-     visuales de autenticación. */
-  nav.setAuth = (payload = {}) => {
-
-    const incoming =
-      payload.user || null;
-
-
-    /* ==========================
-       USUARIO CONFIRMADO
-       ========================== */
-    if (incoming?.uid) {
-
-      clearTimeout(
-        clearTimer
-      );
-
-
-      const sameUser =
-
-        stableAuth?.user?.uid &&
-
-        String(
-          stableAuth.user.uid
-        ) ===
-
-        String(
-          incoming.uid
-        );
-
-
-      stableAuth = {
-
-        user: {
-
-          uid:
-            String(
-              incoming.uid ||
-              ''
-            ),
-
-          email:
-            String(
-              incoming.email ||
-
-              (
-                sameUser
-                  ? stableAuth.user.email
-                  : ''
-              ) ||
-
-              ''
-            ),
-
-          displayName:
-            String(
-              incoming.displayName ||
-
-              (
-                sameUser
-                  ? stableAuth.user.displayName
-                  : ''
-              ) ||
-
-              ''
-            ),
-
-          photoURL:
-            String(
-              incoming.photoURL ||
-
-              (
-                sameUser
-                  ? stableAuth.user.photoURL
-                  : ''
-              ) ||
-
-              ''
-            )
-
-        },
-
-
-        /* Si la nueva vista todavía
-           no reconstruyó el badge Admin,
-           conservamos el estado anterior. */
-        isAdmin:
-
-          Boolean(
-            payload.isAdmin
-          ) ||
-
-          Boolean(
-            sameUser &&
-            stableAuth?.isAdmin
-          )
-
-      };
-
-
-      logoutPending = false;
-
-      saveMemory();
-
-      originalSetAuth(
-        stableAuth
-      );
-
-      return;
-    }
-
-
-    /* ==========================
-       LOGOUT REAL
-       ========================== */
-    if (logoutPending) {
-
-      clearTimeout(
-        clearTimer
-      );
-
-      stableAuth = null;
-
-      logoutPending = false;
-
-      saveMemory();
-
-
-      originalSetAuth({
-
-        user: null,
-
-        isAdmin: false
-
-      });
-
-
-      return;
-    }
-
-
-    /* ==========================
-       NULL TEMPORAL
-       ==========================
-
-       Esto pasa cuando una vista
-       nueva todavía está arrancando
-       Firebase.
-
-       NO quitamos foto ni Admin.
-       ========================== */
-    if (stableAuth?.user?.uid) {
-
-      originalSetAuth(
-        stableAuth
-      );
-
-
-      clearTimeout(
-        clearTimer
-      );
-
-
-      /* Si realmente la sesión murió
-         por otra razón y seguimos online,
-         damos margen a Firebase para
-         confirmarlo.
-
-         En navegación normal llegará
-         nuevamente el usuario antes. */
-      if (navigator.onLine) {
-
-        clearTimer =
-          setTimeout(
-            () => {
-
-              stableAuth = null;
-
-              saveMemory();
-
-
-              originalSetAuth({
-
-                user: null,
-
-                isAdmin: false
-
-              });
-
-            },
-            8000
-          );
-
-      }
-
-
-      return;
-    }
-
-
-    originalSetAuth(
-      payload
-    );
-
-  };
-
-
-  /* Cuando TÚ presionas Salir,
-     ahora sí permitimos limpiar
-     perfil/admin. */
-  document.addEventListener(
-
-    'evolution:logout-request',
-
-    () => {
-
-      logoutPending = true;
-
-      clearTimeout(
-        clearTimer
-      );
-
-    },
-
-    true
-
-  );
-
-
-  /* Al cambiar de sección,
-     reafirmamos inmediatamente
-     foto y Admin conocidos. */
-  addEventListener(
-
-    'evolution:route-changed',
-
-    () => {
-
-      if (
-        stableAuth?.user?.uid
-      ) {
-
-        requestAnimationFrame(
-          paintStable
-        );
-
-      }
-
-    }
-
-  );
-
 })();
