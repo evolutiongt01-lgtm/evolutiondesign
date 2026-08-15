@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v22 · Internal Anchors Fix */
+/* Evolution Design · Smart App Shell · v23 · Internal Controls Fix */
 (() => {
   'use strict';
 
-  const VERSION='22';
+  const VERSION='23';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -705,6 +705,69 @@
     }
   };
 
+  const repairViewLocalControls=(frame,route)=>{
+    if(!frame)return;
+
+    try{
+      const doc=frame.contentDocument;
+      if(!doc)return;
+
+      /*
+       * Las views antiguas tienen controles con:
+       *   <a href="#" onclick="abrirPedido...();return false">
+       *
+       * El bridge del App Shell escucha clicks en CAPTURE y, para "#",
+       * puede interpretarlos como navegación principal antes de que el
+       * onclick del control alcance a ejecutarse.
+       *
+       * Convertimos SOLO los anchors de control (href="#" + id/onclick)
+       * a un hash local inofensivo. El bridge los reconoce como internos
+       * y deja que su JS original haga el trabajo.
+       */
+      const patchAnchor=a=>{
+        if(!(a instanceof frame.contentWindow.HTMLAnchorElement))return;
+        if(a.getAttribute('href')!=='#')return;
+
+        const isUiControl=
+          Boolean(a.getAttribute('onclick')) ||
+          Boolean(a.id) ||
+          a.getAttribute('role')==='button';
+
+        if(!isUiControl)return;
+
+        a.setAttribute('href','#evolution-ui-control');
+        a.dataset.evolutionLocalControl='1';
+      };
+
+      doc.querySelectorAll('a[href="#"]').forEach(patchAnchor);
+
+      /* También cubre controles que Firebase/JS agregue dinámicamente. */
+      if(!frame.__evolutionLocalControlsObserver){
+        const Observer=frame.contentWindow.MutationObserver;
+        if(Observer){
+          const observer=new Observer(records=>{
+            for(const record of records){
+              for(const node of record.addedNodes){
+                if(!(node instanceof frame.contentWindow.Element))continue;
+                if(node.matches?.('a[href="#"]'))patchAnchor(node);
+                node.querySelectorAll?.('a[href="#"]').forEach(patchAnchor);
+              }
+            }
+          });
+
+          observer.observe(doc.documentElement,{
+            childList:true,
+            subtree:true
+          });
+
+          frame.__evolutionLocalControlsObserver=observer;
+        }
+      }
+    }catch(error){
+      console.warn('[Evolution App] Local controls repair:',error);
+    }
+  };
+
   const handleFrameLoad=frame=>{
     try{
       const childURL=new URL(frame.contentWindow.location.href);
@@ -817,6 +880,10 @@
       if(token!==navigationToken){frame.remove();return}
       if(!handleFrameLoad(frame))return;
 
+      /* Repara CTAs internos como Solicitar diseño / logo / video antes
+         de mostrar la nueva vista. No modifica el archivo HTML original. */
+      repairViewLocalControls(frame,route);
+
       /* Payment logic is global now; views no longer need another PayPal
          patch when the SDK loading strategy changes. */
       injectPaymentsBridge(frame,route);
@@ -884,6 +951,22 @@
     const data=e.data;
 
     if(data.type==='evolution:navigate'&&data.href){
+      /* Un control href="#" jamás debe convertirse en navegación del Shell. */
+      try{
+        const raw=String(data.href||'');
+        const u=new URL(raw,location.href);
+        const frameURL=activeFrame?new URL(activeFrame.contentWindow.location.href):null;
+
+        if(
+          frameURL &&
+          u.origin===frameURL.origin &&
+          u.pathname===frameURL.pathname &&
+          (!u.hash || u.hash==='#evolution-ui-control')
+        ){
+          return;
+        }
+      }catch(_){}
+
       /* Los #calculadora-planos, #cotizador-general, etc. viven dentro
          del iframe/vista actual. Nunca pasan por el router principal. */
       if(scrollActiveViewToHash(data.href))return;
