@@ -1705,6 +1705,108 @@ box-shadow:0 28px 75px rgba(0,0,0,.24);overflow:hidden}
 <style id="evolution-internal-view-style">
 html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile-app-nav{display:none!important}
 </style>
+
+<style id="evolution-recaptcha-badge-ui-fix-v25">
+  .grecaptcha-badge{
+    visibility:hidden !important;
+  }
+  .evolution-recaptcha-disclosure{
+    margin:18px auto 8px;
+    padding:0 14px;
+    max-width:760px;
+    color:rgba(255,255,255,.34);
+    font:500 10px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    text-align:center;
+  }
+  .evolution-recaptcha-disclosure a{
+    color:inherit;
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+</style>
+
+
+<style id="evolution-survey-mobile-safearea-v25">
+  @media (max-width: 991.98px){
+    .survey-overlay{
+      inset:
+        calc(118px + env(safe-area-inset-top, 0px))
+        0
+        0
+        0 !important;
+      place-items:start center !important;
+      padding:
+        10px
+        max(10px, env(safe-area-inset-right, 0px))
+        max(10px, env(safe-area-inset-bottom, 0px))
+        max(10px, env(safe-area-inset-left, 0px)) !important;
+      overflow:hidden !important;
+    }
+
+    .survey-card{
+      width:min(900px,100%) !important;
+      max-height:
+        calc(
+          100dvh
+          - 138px
+          - env(safe-area-inset-top, 0px)
+          - env(safe-area-inset-bottom, 0px)
+        ) !important;
+      overflow:auto !important;
+      overscroll-behavior:contain;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .survey-top{
+      top:0 !important;
+      z-index:30 !important;
+      min-height:60px;
+    }
+
+    .survey-close{
+      position:relative !important;
+      z-index:40 !important;
+      flex:0 0 42px !important;
+      width:42px !important;
+      height:42px !important;
+      display:grid !important;
+      place-items:center !important;
+      font-size:26px !important;
+      line-height:1 !important;
+    }
+  }
+
+  @media (max-width: 575.98px){
+    .survey-overlay{
+      inset:
+        calc(116px + env(safe-area-inset-top, 0px))
+        0
+        0
+        0 !important;
+      padding:
+        8px
+        max(8px, env(safe-area-inset-right, 0px))
+        max(8px, env(safe-area-inset-bottom, 0px))
+        max(8px, env(safe-area-inset-left, 0px)) !important;
+    }
+
+    .survey-card{
+      max-height:
+        calc(
+          100dvh
+          - 132px
+          - env(safe-area-inset-top, 0px)
+          - env(safe-area-inset-bottom, 0px)
+        ) !important;
+      border-radius:18px !important;
+    }
+
+    .survey-top{
+      padding:10px 11px 10px 14px !important;
+    }
+  }
+</style>
+
 </head>
 <body data-evolution-view="web">
 <div id="evolution-view-auth-mirror" hidden aria-hidden="true">
@@ -3899,5 +4001,14 @@ window.addEventListener('evolution-auth-ready',()=>{
   }, { once:true });
 })();
 </script>
+
+
+<div class="evolution-recaptcha-disclosure" data-evolution-recaptcha-disclosure>
+  Este sitio está protegido por reCAPTCHA y se aplican la
+  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad</a>
+  y los
+  <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Términos de Servicio</a>
+  de Google.
+</div>
 
 </body></html>
