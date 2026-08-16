@@ -1,21 +1,21 @@
 {
-  "build": 43,
-  "version": "43",
+  "build": 44,
+  "version": "44",
   "announce": true,
   "required": false,
-  "subtitle": "Se corrigió la gran placa de vidrio que podía aparecer al iniciar el swipe, especialmente en Android, manteniendo el efecto Liquid Glass de forma más limpia.",
+  "subtitle": "Liquid Glass ahora se dibuja únicamente en bordes y reflejos: el contenido de la página permanece completamente visible durante todo el swipe.",
   "notes": [
     {
-      "title": "Glass sin placa gigante",
-      "detail": "El efecto ahora vive principalmente en reflejos, bordes y profundidad; el centro de la página permanece visible."
+      "title": "Sin panel translúcido",
+      "detail": "Se eliminó definitivamente la capa de vidrio que cubría el centro completo de la tarjeta."
     },
     {
-      "title": "Android optimizado",
-      "detail": "Chrome y WebView usan Liquid Glass óptico sin backdrop-filter de pantalla completa para evitar rectángulos opacos."
+      "title": "Glass en los bordes",
+      "detail": "El efecto Premium ahora usa contorno, reflejo superior, profundidad y la unión entre páginas."
     },
     {
-      "title": "iPhone Premium refinado",
-      "detail": "Safari conserva blur real, limitado y progresivo, sin cubrir toda la página durante el primer swipe."
+      "title": "Compatible entre navegadores",
+      "detail": "iPhone y Android usan la misma técnica segura, sin backdrop-filter de pantalla completa."
     }
   ]
 }
