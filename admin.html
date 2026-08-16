@@ -2,7 +2,7 @@
 
 <html lang="es">
 <head>
-<!-- Evolution Admin · Boxful V3.9.15 · official quoter flow + delete/release -->
+<!-- Evolution Admin · Manual Shipping · Evolution Design -->
 <meta charset="utf-8"/>
 <meta content="2026-08-14-admin-optimized-home-v1" name="evolution-build"/>
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
@@ -498,47 +498,6 @@
 .store-order-delivery-box{display:grid;gap:9px}.store-order-delivery-row{padding:11px 12px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.015)}.store-order-delivery-row span{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.08em;color:#6d6d73;margin-bottom:5px}.store-order-delivery-row strong{display:block;font-size:11px;color:#e9e9eb;line-height:1.5;overflow-wrap:anywhere}
 
 
-.boxful-panel{
-  position:relative;
-  overflow:hidden;
-  border-color:rgba(255,98,54,.18)!important;
-  background:
-    radial-gradient(circle at 96% 0%,rgba(255,92,48,.075),transparent 28%),
-    rgba(255,255,255,.012);
-}
-.boxful-status-line{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:7px;
-}
-.boxful-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:#777;
-  box-shadow:0 0 0 4px rgba(255,255,255,.035);
-}
-.boxful-dot.ok{
-  background:#44d17a;
-  box-shadow:0 0 0 4px rgba(68,209,122,.08),0 0 16px rgba(68,209,122,.25);
-}
-.boxful-dot.error{
-  background:#ff6773;
-  box-shadow:0 0 0 4px rgba(255,103,115,.08);
-}
-.boxful-status-text{font-size:10px;color:#818188}
-.boxful-status-text strong{color:#dddde1}
-.boxful-address-preview{
-  margin-top:10px;
-  padding:10px 11px;
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:12px;
-  background:rgba(0,0,0,.16);
-  color:#85858c;
-  font-size:9px;
-  line-height:1.5;
-}
-.boxful-address-preview strong{color:#d8d8dc}
 
 </style>
 <style id="evolution-admin-performance">
@@ -970,50 +929,11 @@ html.admin-page-hidden *{
 </div>
 
 
-<div class="panel boxful-panel" style="margin:0 0 14px">
+<div class="panel" style="margin:0 0 14px">
   <div class="panel-head">
     <div>
-      <div class="panel-title">Boxful · Integración API</div>
-      <div class="panel-copy">Conecta Evolution Design con tu cuenta Boxful y selecciona desde dónde se recogerán los paquetes.</div>
-      <div class="boxful-status-line">
-        <span class="boxful-dot" id="boxfulStatusDot"></span>
-        <span class="boxful-status-text" id="boxfulStatusText"><strong>Comprobando…</strong></span>
-      </div>
-    </div>
-    <div style="display:flex;gap:7px;flex-wrap:wrap">
-      <button class="btn" id="boxfulTestBtn" type="button" onclick="testBoxfulConnection()">Probar conexión</button>
-      <button class="btn btn-accent" id="saveBoxfulConfigBtn" type="button" onclick="saveBoxfulConfig()">Guardar Boxful</button>
-    </div>
-  </div>
-  <div class="panel-body">
-    <div class="form-grid">
-      <div class="field full">
-        <label>Dirección de recolección Boxful</label>
-        <select class="input" id="boxfulPickupAddress">
-          <option value="">Primero conecta Boxful…</option>
-        </select>
-        <div class="hint">Boxful usa el ID de esta dirección como <code>recolectionAddressId</code> al crear el envío.</div>
-      </div>
-      <div class="field full">
-        <label>Courier · Cargo Expreso</label>
-        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px">
-          <input class="input" id="boxfulCourierId" maxlength="180" placeholder="Courier ID de Cargo Expreso">
-          <button class="btn" id="boxfulDetectCourierBtn" type="button" onclick="detectBoxfulCargoCourier()">Detectar Cargo Expreso</button>
-        </div>
-        <div class="hint" id="boxfulCourierHint">Este ID es requerido por Boxful para crear la guía. Intentaremos detectarlo automáticamente.</div>
-      </div>
-      <div class="field"><label>Peso predeterminado (kg)</label><input class="input" id="boxfulWeight" type="number" min="0.01" max="100" step="0.01" value="1"></div>
-      <div class="field"><label>Largo (cm)</label><input class="input" id="boxfulLength" type="number" min="1" max="300" step="1" value="20"></div>
-      <div class="field"><label>Ancho (cm)</label><input class="input" id="boxfulWidth" type="number" min="1" max="300" step="1" value="15"></div>
-      <div class="field"><label>Alto (cm)</label><input class="input" id="boxfulHeight" type="number" min="1" max="300" step="1" value="8"></div>
-      <div class="field full"><label class="check"><input type="checkbox" id="boxfulAutoCreate" checked> <span>Crear guía automáticamente para todos los métodos con envío excepto transferencia.</span></label></div>
-    </div>
-    <div class="boxful-address-preview" id="boxfulAddressPreview">
-      La dirección aparecerá aquí cuando la API esté conectada.
-    </div>
-    <div class="hint" style="margin-top:9px">
-      Las credenciales no se guardan en este HTML. Configúralas como Secrets del Worker:
-      <code>BOXFUL_EMAIL</code> y <code>BOXFUL_PASSWORD</code>.
+      <div class="panel-title">Envíos manuales</div>
+      <div class="panel-copy">Crea la guía directamente con la paquetería que prefieras. Luego abre el pedido y pega la empresa, número de guía y link de seguimiento; el cliente lo verá en Mis Proyectos.</div>
     </div>
   </div>
 </div>
@@ -1066,7 +986,7 @@ html.admin-page-hidden *{
     <div class="panel-head">
       <div>
         <div class="panel-title">Páginas temporales de venta</div>
-        <div class="panel-copy">Crea publicaciones reutilizables con checkout, pagos, Boxful, seguimiento y stock.</div>
+        <div class="panel-copy">Crea publicaciones reutilizables con checkout, pagos, seguimiento manual y stock.</div>
       </div>
       <button class="btn btn-accent" type="button" onclick="openTempSaleEditor()">+ Crear página</button>
     </div>
@@ -1569,26 +1489,7 @@ html.admin-page-hidden *{
     </div>
 
     <div class="section">
-      <div class="section-h">Boxful automático</div>
-      <div class="section-b">
-        <div class="store-order-delivery-box" id="storeOrderBoxfulInfo">
-          <div class="store-order-delivery-row"><span>Guía</span><strong id="storeOrderBoxfulGuide">Pendiente</strong></div>
-          <div class="store-order-delivery-row"><span>Entrega aproximada</span><strong id="storeOrderBoxfulEta">—</strong></div>
-          <div class="store-order-delivery-row"><span>Estado API</span><strong id="storeOrderBoxfulStatus">—</strong></div>
-          <div class="store-order-delivery-row hidden" id="storeOrderBoxfulErrorRow"><span>Último error</span><strong id="storeOrderBoxfulError" style="white-space:pre-wrap;overflow-wrap:anywhere;text-align:right">—</strong></div>
-        </div>
-        <div class="hidden" id="storeOrderBoxfulDiagnosticWrap" style="margin-top:9px">
-          <textarea class="textarea" id="storeOrderBoxfulDiagnostic" readonly style="min-height:120px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px"></textarea>
-          <button class="btn" type="button" style="margin-top:7px" onclick="copyStoreOrderBoxfulDiagnostic()">Copiar diagnóstico</button>
-        </div>
-        <div class="form-actions">
-          <button class="btn btn-accent" id="createBoxfulGuideBtn" type="button" onclick="createBoxfulGuideForSelectedOrder()">Crear / reintentar guía</button>
-        </div>
-        <div class="hint">Transferencia espera tu confirmación de pago; los demás métodos con envío intentan crear la guía automáticamente.</div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-h">Actualizar seguimiento</div>
+      <div class="section-h">Envío y seguimiento manual</div>
       <div class="section-b">
         <div class="form-grid">
           <div class="field"><label>Estado</label><select class="input" id="storeOrderEditStatus">
@@ -1601,7 +1502,7 @@ html.admin-page-hidden *{
           </select></div>
           <div class="field"><label>Paquetería / entrega</label><input class="input" id="storeOrderCarrier" placeholder="Forza, Cargo Expreso, entrega personal…"></div>
           <div class="field full"><label>Número de guía / tracking</label><input class="input" id="storeOrderTracking" maxlength="120" placeholder="Ej. 123456789"></div>
-          <div class="field full"><label>Link de guía / seguimiento</label><input class="input" id="storeOrderTrackingUrl" maxlength="900" inputmode="url" placeholder="https://..."><div class="hint">Pega aquí el enlace que te entregue Forza o Cargo Expreso. El cliente verá un botón para abrirlo desde Mis Proyectos.</div></div>
+          <div class="field full"><label>Link de guía / seguimiento</label><input class="input" id="storeOrderTrackingUrl" maxlength="900" inputmode="url" placeholder="https://..."><div class="hint">Pega aquí el enlace que te entregue la paquetería. El cliente verá un botón para abrirlo desde Mis Proyectos.</div></div>
           <div class="field full"><label>Nota administrativa</label><textarea class="textarea" id="storeOrderAdminNote" maxlength="600" placeholder="Nota interna del pedido…"></textarea></div>
         </div>
         <div class="form-actions"><button class="btn btn-accent" id="saveStoreOrderBtn" type="button" onclick="saveStoreOrder()">Guardar seguimiento</button></div>
@@ -1611,7 +1512,7 @@ html.admin-page-hidden *{
     <div class="section danger-zone">
       <div class="section-h">Zona de riesgo</div>
       <div class="section-b">
-        <div class="hint" style="margin-bottom:10px">Elimina este pedido del panel y libera inmediatamente el producto para que pueda volver a comprarse. Si ya existe una guía Boxful, el sistema bloqueará la eliminación para evitar inconsistencias con la paquetería.</div>
+        <div class="hint" style="margin-bottom:10px">Elimina este pedido del panel y libera inmediatamente el producto para que pueda volver a comprarse. Si ya existe una guía externa, el sistema bloqueará la eliminación para evitar inconsistencias con la paquetería.</div>
         <div class="form-actions">
           <button class="btn btn-danger" id="deleteStoreOrderBtn" type="button" onclick="deleteSelectedStoreOrder()">Eliminar pedido y liberar producto</button>
         </div>
@@ -1675,133 +1576,7 @@ async function storeAdminRequest(path,{method='GET',body=null}={}){
 }
 function gtq(n){return `Q${Number(n||0).toFixed(2)}`}
 
-function boxfulSetStatus({connected=false,configured=false,message=""}={}){
-  const dot=$('boxfulStatusDot'),text=$('boxfulStatusText');
-  if(dot){
-    dot.classList.toggle('ok',connected);
-    dot.classList.toggle('error',configured&&!connected);
-  }
-  if(text){
-    text.innerHTML=connected
-      ? `<strong>Conectado ✓</strong> · ${esc(message||'API de Boxful disponible')}`
-      : configured
-        ? `<strong>No conectado</strong> · ${esc(message||'Revisa las credenciales')}`
-        : `<strong>Sin configurar</strong> · agrega BOXFUL_EMAIL y BOXFUL_PASSWORD en Cloudflare`;
-  }
-}
-function boxfulAddressLabel(a){
-  return [a?.address,a?.referencePoint].filter(Boolean).join(' · ')||a?.id||'Dirección Boxful';
-}
-function renderBoxfulConfig(result){
-  data.boxful=result||{};
-  const addresses=Array.isArray(result?.addresses)?result.addresses:[];
-  const selected=result?.config?.recolectionAddressId||'';
-  const cfg=result?.config||{};
-  if($('boxfulCourierId'))$('boxfulCourierId').value=cfg.courierId||'';
-  if($('boxfulCourierHint'))$('boxfulCourierHint').textContent=cfg.courierId?`Cargo Expreso configurado · ${cfg.courierName||'Cargo Expreso'}`:'Este ID es requerido por Boxful para crear la guía. Puedes usar Detectar Cargo Expreso.';
-  if($('boxfulWeight'))$('boxfulWeight').value=cfg.packageWeightKg||1;
-  if($('boxfulLength'))$('boxfulLength').value=cfg.packageLengthCm||20;
-  if($('boxfulWidth'))$('boxfulWidth').value=cfg.packageWidthCm||15;
-  if($('boxfulHeight'))$('boxfulHeight').value=cfg.packageHeightCm||8;
-  if($('boxfulAutoCreate'))$('boxfulAutoCreate').checked=cfg.autoCreateShipment!==false;
-  const select=$('boxfulPickupAddress');
-  if(select){
-    select.innerHTML=addresses.length
-      ? `<option value="">Selecciona dirección de recolección</option>`+
-        addresses.map(a=>`<option value="${esc(a.id)}">${esc(boxfulAddressLabel(a))}</option>`).join('')
-      : `<option value="">${result?.configured?'No hay direcciones disponibles':'Configura Boxful primero'}</option>`;
-    if(selected&&addresses.some(a=>a.id===selected))select.value=selected;
-    select.disabled=!result?.connected||!addresses.length;
-  }
-  boxfulSetStatus({
-    connected:result?.connected===true,
-    configured:result?.configured===true,
-    message:result?.connected?`${addresses.length} dirección${addresses.length===1?'':'es'} disponible${addresses.length===1?'':'s'}`:(result?.error||'')
-  });
-  renderBoxfulAddressPreview();
-}
-function renderBoxfulAddressPreview(){
-  const result=data.boxful||{},addresses=Array.isArray(result.addresses)?result.addresses:[];
-  const id=$('boxfulPickupAddress')?.value||result?.config?.recolectionAddressId||'';
-  const a=addresses.find(x=>x.id===id);
-  const host=$('boxfulAddressPreview');if(!host)return;
-  if(!a){
-    host.innerHTML=result?.connected
-      ? 'Selecciona la dirección desde donde Boxful recogerá tus paquetes.'
-      : 'La dirección aparecerá aquí cuando la API esté conectada.';
-    return;
-  }
-  host.innerHTML=`<strong>${esc(a.address||'Dirección de recolección')}</strong>${a.referencePoint?`<br>${esc(a.referencePoint)}`:''}${a.addressPhone?`<br>Tel. +${esc(a.addressAreaCode||'502')} ${esc(a.addressPhone)}`:''}`;
-}
-async function loadBoxfulAdmin(){
-  return storeAdminRequest('/boxful/admin/status');
-}
-window.testBoxfulConnection=async function(){
-  const btn=$('boxfulTestBtn');if(!btn)return;
-  const old=btn.textContent;btn.disabled=true;btn.textContent='Conectando…';
-  boxfulSetStatus({configured:true,connected:false,message:'Probando autenticación…'});
-  try{
-    const result=await loadBoxfulAdmin();
-    renderBoxfulConfig(result);
-    if(result.connected)toast('Boxful conectado correctamente.');
-  }catch(e){
-    console.error(e);
-    renderBoxfulConfig({configured:true,connected:false,error:e.message||'No se pudo conectar con Boxful.',addresses:[],config:data.boxful?.config||{}});
-    toast(e.message||'No se pudo conectar con Boxful.');
-  }finally{
-    btn.disabled=false;btn.textContent=old;
-  }
-}
 
-window.detectBoxfulCargoCourier=async function(){
-  const btn=$('boxfulDetectCourierBtn');
-  const old=btn?.textContent||'Detectar Cargo Expreso';
-  if(btn){btn.disabled=true;btn.textContent='Buscando…'}
-  try{
-    const result=await storeAdminRequest('/boxful/admin/courier-discovery');
-    if(result.found&&result.courier?.id){
-      $('boxfulCourierId').value=result.courier.id;
-      $('boxfulCourierHint').textContent=`Detectado: ${result.courier.name||'Cargo Expreso'} · ${result.courier.id}`;
-      toast('Cargo Expreso detectado. Ahora pulsa Guardar Boxful.');
-    }else{
-      const diagnostic=JSON.stringify(result.attempts||[],null,2);
-      $('boxfulCourierHint').textContent='No se detectó automáticamente. El diagnóstico quedó copiado/visible en consola.';
-      console.warn('Boxful courier discovery',result);
-      try{await navigator.clipboard.writeText(diagnostic);toast('No se detectó. Diagnóstico copiado.');}
-      catch{toast('No se detectó Cargo Expreso. Revisa consola.');}
-    }
-  }catch(e){
-    console.error(e);toast(e.message||'No se pudo detectar Cargo Expreso.');
-  }finally{
-    if(btn){btn.disabled=false;btn.textContent=old}
-  }
-}
-window.saveBoxfulConfig=async function(){
-  const recolectionAddressId=$('boxfulPickupAddress')?.value||'';
-  if(!recolectionAddressId){toast('Selecciona una dirección de recolección.');return}
-  const btn=$('saveBoxfulConfigBtn');const old=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
-  try{
-    const saved=await storeAdminRequest('/boxful/admin/config',{method:'POST',body:{
-      recolectionAddressId,
-      courierId:$('boxfulCourierId')?.value.trim()||'',
-      courierName:'Cargo Expreso',
-      packageWeightKg:Number($('boxfulWeight')?.value||1),
-      packageLengthCm:Number($('boxfulLength')?.value||20),
-      packageWidthCm:Number($('boxfulWidth')?.value||15),
-      packageHeightCm:Number($('boxfulHeight')?.value||8),
-      autoCreateShipment:$('boxfulAutoCreate')?.checked!==false
-    }});
-    if(!data.boxful)data.boxful={};
-    data.boxful.config=saved.config||data.boxful.config||{};
-    renderBoxfulAddressPreview();
-    toast('Configuración Boxful guardada.');
-  }catch(e){
-    console.error(e);toast(e.message||'No se pudo guardar Boxful.');
-  }finally{
-    btn.disabled=false;btn.textContent=old;
-  }
-}
-$('boxfulPickupAddress')?.addEventListener('change',renderBoxfulAddressPreview);
 
 function storeOrderStatusLabel(order){
   const s=String(order?.status||'received');
@@ -1913,24 +1688,10 @@ window.openStoreOrder=function(orderId){
   $('storeOrderTracking').value=o.trackingNumber||'';
   $('storeOrderTrackingUrl').value=o.trackingUrl||'';
   $('storeOrderAdminNote').value=o.adminNote||'';
-  if($('storeOrderBoxfulGuide'))$('storeOrderBoxfulGuide').textContent=o.boxfulShipmentNumber||o.trackingNumber||'Pendiente';
-  if($('storeOrderBoxfulEta')){
-    const first=o.estimatedDeliveryDate||'';
-    const last=o.estimatedDeliveryLatestDate||'';
-    $('storeOrderBoxfulEta').textContent=first?(last&&last!==first?`${first} → ${last}`:first):'—';
-  }
-  if($('storeOrderBoxfulStatus'))$('storeOrderBoxfulStatus').textContent=o.boxfulStatus==='created'?'Guía creada ✓':o.boxfulStatus==='pending_retry'?(o.boxfulErrorServerSide?'Respuesta interna de la paquetería · diagnóstico disponible':`Pendiente de reintento${o.boxfulErrorCode?` · ${o.boxfulErrorCode}`:''}`):(o.paymentMethod==='transfer_shipping'?'Esperando validación de transferencia':'Pendiente');
-  const boxfulErr=[o.boxfulErrorStatus?`HTTP ${o.boxfulErrorStatus}`:'',o.boxfulErrorMessage||''].filter(Boolean).join(' · ');
-  $('storeOrderBoxfulErrorRow')?.classList.toggle('hidden',!boxfulErr);
-  if($('storeOrderBoxfulError'))$('storeOrderBoxfulError').textContent=boxfulErr||'—';
-  const boxfulDiagnostic=[o.boxfulErrorDetails?`Respuesta:\n${o.boxfulErrorDetails}`:'',o.boxfulErrorAttempts?`Intentos:\n${o.boxfulErrorAttempts}`:''].filter(Boolean).join('\n\n');
-  $('storeOrderBoxfulDiagnosticWrap')?.classList.toggle('hidden',!boxfulDiagnostic);
-  if($('storeOrderBoxfulDiagnostic'))$('storeOrderBoxfulDiagnostic').value=boxfulDiagnostic;
-  if($('createBoxfulGuideBtn'))$('createBoxfulGuideBtn').disabled=o.paymentMethod==='pickup_pana'||Boolean(o.boxfulShipmentNumber);
   if($('deleteStoreOrderBtn')){
-    const hasExternalGuide=Boolean(o.boxfulShipmentNumber||o.boxfulShipmentId);
+    const hasExternalGuide=Boolean(o.trackingNumber||o.boxfulShipmentNumber||o.boxfulShipmentId);
     $('deleteStoreOrderBtn').disabled=hasExternalGuide;
-    $('deleteStoreOrderBtn').title=hasExternalGuide?'Cancela primero la guía Boxful externa.':'Eliminar pedido y liberar disponibilidad';
+    $('deleteStoreOrderBtn').title=hasExternalGuide?'Cancela primero la guía externa con la paquetería.':'Eliminar pedido y liberar disponibilidad';
   }
   $('storeOrderModal').classList.add('show');
 }
@@ -1958,39 +1719,15 @@ window.openStoreOrderProof=async function(orderId){
 }
 
 
-window.copyStoreOrderBoxfulDiagnostic=async function(){
-  const text=$('storeOrderBoxfulDiagnostic')?.value||'';
-  if(!text){toast('No hay diagnóstico disponible.');return}
-  try{await navigator.clipboard.writeText(text);toast('Diagnóstico copiado.')}
-  catch{prompt('Copia el diagnóstico:',text)}
-}
-window.createBoxfulGuideForSelectedOrder=async function(){
-  if(!selectedStoreOrder)return;
-  const btn=$('createBoxfulGuideBtn'),old=btn?.textContent||'Crear guía';
-  if(btn){btn.disabled=true;btn.textContent='Creando guía…'}
-  try{
-    const result=await storeAdminRequest('/boxful/admin/order/create',{method:'POST',body:{orderId:selectedStoreOrder.orderId||selectedStoreOrder.id}});
-    toast(`Guía creada: ${result.order?.boxfulShipmentNumber||result.order?.trackingNumber||'lista'}`);
-    closeStoreOrder();
-    await refresh();
-  }catch(e){
-    console.error(e);toast(e.message||'No se pudo crear la guía.');
-    if(btn){btn.disabled=false;btn.textContent=old}
-    try{
-      await refresh();
-      const id=selectedStoreOrder?.orderId||selectedStoreOrder?.id;
-      const fresh=(data.orders||[]).find(x=>(x.orderId||x.id)===id);
-      if(fresh)openStoreOrder(fresh.orderId||fresh.id);
-    }catch(_){}
-  }
-}
+
+
 window.deleteSelectedStoreOrder=async function(){
   if(!selectedStoreOrder)return;
   const orderId=selectedStoreOrder.orderId||selectedStoreOrder.id;
   const title=selectedStoreOrder.productTitle||'este producto';
-  const hasGuide=Boolean(selectedStoreOrder.boxfulShipmentNumber||selectedStoreOrder.boxfulShipmentId);
+  const hasGuide=Boolean(selectedStoreOrder.trackingNumber||selectedStoreOrder.boxfulShipmentNumber||selectedStoreOrder.boxfulShipmentId);
   if(hasGuide){
-    toast('Este pedido ya tiene guía Boxful. Cancela primero la guía externa antes de liberar el producto.');
+    toast('Este pedido ya tiene una guía externa. Cancélala primero con la paquetería antes de liberar el producto.');
     return;
   }
   const ok=confirm(`¿Eliminar el pedido ${orderId}?\n\n${title} volverá a estar disponible inmediatamente. El registro se conservará internamente como eliminado para auditoría.`);
@@ -2846,13 +2583,6 @@ async function refresh(){
     try{data.orders=await loadStoreOrdersAdmin()}catch(orderError){console.warn('Pedidos no disponibles:',orderError?.message||orderError);data.orders=[]}
     try{data.tempSales=await loadTemporarySalesAdmin()}catch(saleError){console.warn('Ventas temporales no disponibles:',saleError?.message||saleError);data.tempSales=[]}
     try{data.storeGuide=await loadStoreGuideAdmin()}catch(guideError){console.warn('Guía pública no disponible:',guideError?.message||guideError);data.storeGuide={guide:{}}}
-    try{
-      const boxful=await loadBoxfulAdmin();
-      renderBoxfulConfig(boxful);
-    }catch(boxfulError){
-      console.warn('Boxful no disponible:',boxfulError?.message||boxfulError);
-      renderBoxfulConfig({configured:false,connected:false,error:boxfulError?.message||'',addresses:[],config:{}});
-    }
     renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();renderWebRequests();renderPaymentReceipts();renderSubscriptions();renderStoreOrders();renderStoreGuideAdmin();renderTemporarySales();
     clearSystemError();
     return true;
