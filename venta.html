@@ -1143,6 +1143,69 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   .sale-product-title{font-size:clamp(2.75rem,14vw,4.35rem);max-width:72%;line-height:.9}
 }
 
+
+/* ==========================================================
+   V3.9.4 · MOBILE PRODUCT CENTERING
+   ========================================================== */
+@media(max-width:767.98px){
+  .phone-stage{
+    position:relative!important;
+    display:block!important;
+    width:100%!important;
+    height:260px!important;
+    min-height:260px!important;
+    margin:18px 0 2px!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  .phone-stage-glass{
+    position:absolute!important;
+    left:50%!important;
+    top:50%!important;
+    bottom:auto!important;
+    transform:translate(-50%,-50%)!important;
+    width:min(88%,270px)!important;
+    height:222px!important;
+    border-radius:25px!important;
+  }
+  .product-phone-img{
+    position:absolute!important;
+    z-index:2!important;
+    left:50%!important;
+    top:50%!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:auto!important;
+    height:auto!important;
+    max-width:205px!important;
+    max-height:218px!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    transform:translate(-50%,-50%) scale(1.18)!important;
+    transform-origin:center center!important;
+    margin:0!important;
+  }
+  .phone-floating-card.battery{
+    right:max(8px,calc(50% - 148px))!important;
+    top:22px!important;
+  }
+  .phone-floating-card.verified{
+    left:max(8px,calc(50% - 148px))!important;
+    bottom:20px!important;
+  }
+}
+@media(max-width:390px){
+  .phone-stage{height:244px!important;min-height:244px!important}
+  .phone-stage-glass{width:min(90%,240px)!important;height:202px!important}
+  .product-phone-img{
+    max-width:180px!important;
+    max-height:195px!important;
+    transform:translate(-50%,-50%) scale(1.15)!important;
+  }
+  .phone-floating-card.battery{right:5px!important;top:20px!important}
+  .phone-floating-card.verified{left:5px!important;bottom:17px!important}
+}
+
 </style>
 </head>
 <body>
@@ -1209,7 +1272,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <div class="account-bar"><div><div class="account-name" id="accountName">Cliente</div><div class="account-mail" id="accountEmail">—</div></div><span class="chip">Cuenta verificada</span></div>
 
       <div class="section-label">1 · Elige cómo quieres pagar</div>
-      <div class="method-grid" id="methodGrid"></div><input type="hidden" id="paymentMethod" value="cod_forza">
+      <div class="method-grid" id="methodGrid"></div><input type="hidden" id="paymentMethod" value="cod_cargo">
       <div class="payment-live-panel" id="onlinePaymentPanel"><div class="payment-live-head"><strong id="onlinePaymentTitle">Pago seguro</strong><span id="onlinePaymentCopy">Completa tus datos de entrega y continúa aquí.</span></div><div class="paypal-white-card"><div id="paypalStoreButtons"></div></div><div class="paypal-status" id="paypalStoreStatus"></div></div>
       <div class="payment-extra" id="transferPanel"><div class="payment-extra-title">Cuentas para transferencia</div><p class="payment-extra-copy">Usamos las mismas cuentas configuradas en Arquitectura. Transfiere el total indicado; Q40 de envío nacional ya está incluido.</p><div class="bank-tabs" id="bankTabs"></div><div id="bankDetails"></div><div class="payment-reference"><label>Referencia / ID de la transferencia</label><input class="input" id="transferReference" maxlength="160" placeholder="Escribe la referencia del banco"></div><div class="receipt-upload"><label>Captura / foto del comprobante</label><p>Adjunta imagen o PDF. Máximo 12 MB. Se enviará a Administración para revisión.</p><input class="receipt-file" id="transferReceipt" type="file" accept="image/*,application/pdf"><div class="receipt-file-name" id="transferReceiptName">Ningún archivo seleccionado.</div></div></div>
       <div class="payment-extra" id="cryptoPanel"><div class="payment-extra-title">Cripto · Binance Pay</div><p class="payment-extra-copy">Envía el monto indicado en USDT al mismo Binance Pay que usamos en Arquitectura. El pedido queda en revisión hasta confirmar el ingreso.</p><div class="crypto-card"><img class="crypto-qr" id="cryptoQr" src="img/binance-pay.jpeg" alt="QR Binance Pay Evolution Design"><div class="crypto-meta"><div class="bank-row"><span>Alias</span><strong id="cryptoAlias">Evolution Desing</strong></div><div class="bank-row"><span>Activo</span><strong id="cryptoAsset">USDT</strong></div><div class="bank-row"><span>Monto aproximado</span><strong id="cryptoAmount">—</strong></div></div><div class="payment-reference"><label>Referencia / ID del pago cripto</label><input class="input" id="cryptoReference" maxlength="160" placeholder="ID o referencia de Binance Pay"></div><div class="receipt-upload"><label>Captura / foto del comprobante</label><p>Adjunta la captura de Binance Pay o un PDF. Máximo 12 MB.</p><input class="receipt-file" id="cryptoReceipt" type="file" accept="image/*,application/pdf"><div class="receipt-file-name" id="cryptoReceiptName">Ningún archivo seleccionado.</div></div></div></div>
@@ -1423,7 +1486,7 @@ function applyTemporarySale(){
   const hasVisa=Array.isArray(config?.methods)&&config.methods.some(x=>x.method==="visacuotas");
   $("visacuotasSeparate")?.classList.toggle("hidden",!hasVisa);
   if(!hasVisa&&$("paymentMethod").value==="visacuotas"){
-    $("paymentMethod").value=config?.methods?.[0]?.method||"cod_forza";
+    $("paymentMethod").value=config?.methods?.[0]?.method||"cod_cargo";
   }
 }
 function currentQuote(){return config?.methods?.find(x=>x.method===$("paymentMethod").value)||null}
