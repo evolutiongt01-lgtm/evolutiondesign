@@ -1523,7 +1523,27 @@
       @media(max-width:575.98px){.delivery-paywall{padding:1rem}.delivery-paywall-head{display:block}.delivery-lock-pill{margin-top:.65rem}.delivery-preview-stage{min-height:180px;border-radius:14px}.delivery-preview-stage img{max-height:390px}.locked-delivery-row{padding:.65rem}.locked-file-chip{font-size:.54rem}}
 
     </style>
-  </head>
+  
+<style id="evolution-recaptcha-badge-ui-fix-v25">
+  .grecaptcha-badge{
+    visibility:hidden !important;
+  }
+  .evolution-recaptcha-disclosure{
+    margin:18px auto 8px;
+    padding:0 14px;
+    max-width:760px;
+    color:rgba(255,255,255,.34);
+    font:500 10px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    text-align:center;
+  }
+  .evolution-recaptcha-disclosure a{
+    color:inherit;
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+</style>
+
+</head>
 
   <body>
 
@@ -2949,5 +2969,14 @@
     </script>
 
     <script src="js/bootstrap.bundle.min.js" defer></script>
-  </body>
+  
+<div class="evolution-recaptcha-disclosure" data-evolution-recaptcha-disclosure>
+  Este sitio está protegido por reCAPTCHA y se aplican la
+  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad</a>
+  y los
+  <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Términos de Servicio</a>
+  de Google.
+</div>
+
+</body>
 </html>
