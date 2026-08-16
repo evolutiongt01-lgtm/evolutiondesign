@@ -1391,7 +1391,8 @@ html.admin-page-hidden *{
             <option value="cancelled">Cancelado</option>
           </select></div>
           <div class="field"><label>Paquetería / entrega</label><input class="input" id="storeOrderCarrier" placeholder="Forza, Cargo Expreso, entrega personal…"></div>
-          <div class="field full"><label>Número de guía / tracking</label><input class="input" id="storeOrderTracking" maxlength="120" placeholder="Número de guía si aplica"></div>
+          <div class="field full"><label>Número de guía / tracking</label><input class="input" id="storeOrderTracking" maxlength="120" placeholder="Ej. 123456789"></div>
+          <div class="field full"><label>Link de guía / seguimiento</label><input class="input" id="storeOrderTrackingUrl" maxlength="900" inputmode="url" placeholder="https://..."><div class="hint">Pega aquí el enlace que te entregue Forza o Cargo Expreso. El cliente verá un botón para abrirlo desde Mis Proyectos.</div></div>
           <div class="field full"><label>Nota administrativa</label><textarea class="textarea" id="storeOrderAdminNote" maxlength="600" placeholder="Nota interna del pedido…"></textarea></div>
         </div>
         <div class="form-actions"><button class="btn btn-accent" id="saveStoreOrderBtn" type="button" onclick="saveStoreOrder()">Guardar seguimiento</button></div>
@@ -1514,7 +1515,7 @@ function renderStoreOrders(){
   const rows=Array.isArray(data.orders)?data.orders:[];
   const term=String($('storeOrderSearch')?.value||'').toLowerCase();
   const st=$('storeOrderStatusFilter')?.value||'';
-  const filtered=rows.filter(o=>(!st||o.status===st)&&(!term||[o.orderId,o.customerName,o.ownerEmail,o.phone,o.department,o.municipality,o.poblado,o.address,o.reference,o.paymentReference,o.trackingNumber,o.carrier].some(x=>String(x||'').toLowerCase().includes(term))));
+  const filtered=rows.filter(o=>(!st||o.status===st)&&(!term||[o.orderId,o.customerName,o.ownerEmail,o.phone,o.department,o.municipality,o.poblado,o.address,o.reference,o.paymentReference,o.trackingNumber,o.trackingUrl,o.carrier].some(x=>String(x||'').toLowerCase().includes(term))));
   if($('storeOrderCount'))$('storeOrderCount').textContent=String(rows.length);
   if($('storeReceivedMetric'))$('storeReceivedMetric').textContent=rows.filter(o=>o.status==='received').length;
   if($('storeActiveMetric'))$('storeActiveMetric').textContent=rows.filter(o=>['confirmed','preparing','shipped'].includes(o.status)).length;
@@ -1545,6 +1546,7 @@ window.openStoreOrder=function(orderId){
     ['Estado del pago',o.paymentStatus==='paid'?'Pagado':o.paymentStatus==='pending_review'?'En revisión':o.paymentStatus==='pending_external'?'Pendiente en Recurrente':'Pendiente'],
     ...(o.paymentReference ? [['Referencia de pago',o.paymentReference]] : []),
     ...(o.receiptStoragePath ? [['Comprobante','Recibido ✓']] : []),
+    ...(o.trackingUrl ? [['Link de seguimiento','Publicado ✓']] : []),
     ...(Number(o.paidUsd||0)>0 ? [['Cobrado por PayPal',`$${Number(o.paidUsd).toFixed(2)} USD`]] : []),
     ...(o.paymentMethod==='visacuotas' ? [['Recargo Visacuotas','Se confirma en Recurrente']] : [])
   ].map(([l,v])=>`<div class="detail"><span>${esc(l)}</span><strong>${esc(v)}</strong></div>`).join('');
@@ -1561,6 +1563,7 @@ window.openStoreOrder=function(orderId){
   $('storeOrderEditStatus').value=o.status||'received';
   $('storeOrderCarrier').value=o.carrier||'';
   $('storeOrderTracking').value=o.trackingNumber||'';
+  $('storeOrderTrackingUrl').value=o.trackingUrl||'';
   $('storeOrderAdminNote').value=o.adminNote||'';
   $('storeOrderModal').classList.add('show');
 }
@@ -1596,6 +1599,7 @@ window.saveStoreOrder=async function(){
       status:$('storeOrderEditStatus').value,
       carrier:$('storeOrderCarrier').value.trim(),
       trackingNumber:$('storeOrderTracking').value.trim(),
+      trackingUrl:$('storeOrderTrackingUrl').value.trim(),
       adminNote:$('storeOrderAdminNote').value.trim()
     }});
     toast('Pedido actualizado. El cliente verá el nuevo seguimiento.');
