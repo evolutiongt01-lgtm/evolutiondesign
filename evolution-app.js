@@ -1,9 +1,9 @@
-/* Evolution Design · Smart App Shell · v34.1 · Update Center Dedupe Fix */
+/* Evolution Design · Smart App Shell · v35 · Adaptive Liquid Glass */
 (() => {
   'use strict';
 
-  const VERSION='34';
-  const APP_BUILD=34;
+  const VERSION='35';
+  const APP_BUILD=35;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -43,6 +43,13 @@
   let swipeGlassEl=null;
   let swipeEdgeGuards=null;
   let swipeSettleToken=0;
+
+  /* V35 · Adaptive Liquid Glass */
+  let swipeVisualTier='standard';
+  let swipeTierReason='default';
+  let swipeFrameLast=0;
+  let swipeFrameBad=0;
+  let swipeLitePaintLast=0;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -514,6 +521,106 @@
     }
     #evolution-view-stage .evo-swipe-depth.is-visible{
       opacity:var(--evo-swipe-depth-opacity,.58);
+    }
+
+    /* =========================================================
+       V35 · ADAPTIVE LIQUID GLASS
+       Premium = más cristal.
+       Lite = misma estética, sin filtros GPU caros durante el dedo.
+       ========================================================= */
+
+    html[data-evo-swipe-tier="premium"]
+    #evolution-view-stage .evo-swipe-glass{
+      background:
+        radial-gradient(circle at 15% 8%,rgba(255,255,255,.25),rgba(255,255,255,0) 29%),
+        radial-gradient(circle at 88% 76%,rgba(212,184,149,.10),rgba(212,184,149,0) 34%),
+        linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.032) 40%,rgba(212,184,149,.078) 100%);
+    }
+
+    html[data-evo-swipe-tier="premium"]
+    #evolution-view-stage .evo-swipe-glass::before{
+      opacity:.92;
+      background:linear-gradient(116deg,rgba(255,255,255,.17),rgba(255,255,255,.04) 19%,rgba(255,255,255,0) 43%);
+    }
+
+    html[data-evo-swipe-tier="premium"]
+    #evolution-view-stage .evo-swipe-depth{
+      width:164px;
+      -webkit-backdrop-filter:blur(3.2px) saturate(1.07);
+      backdrop-filter:blur(3.2px) saturate(1.07);
+    }
+
+    /* LITE: pensado para iPhone 8 Plus y hardware equivalente. */
+    html[data-evo-swipe-tier="lite"]
+    body.evo-live-swipe-dragging .evo-view-frame.evo-view-active{
+      transform:none!important;
+      border-radius:0!important;
+      will-change:auto!important;
+    }
+
+    html[data-evo-swipe-tier="lite"]
+    body.evo-live-swipe-dragging .evo-view-frame.evo-swipe-neighbor{
+      transform:none!important;
+      border-radius:0!important;
+      will-change:clip-path!important;
+    }
+
+    html[data-evo-swipe-tier="lite"]
+    #evolution-view-stage .evo-swipe-glass{
+      inset:0!important;
+      border-radius:0!important;
+      border-color:transparent!important;
+      -webkit-backdrop-filter:none!important;
+      backdrop-filter:none!important;
+      box-shadow:none!important;
+      will-change:opacity!important;
+      background:linear-gradient(115deg,rgba(255,255,255,.072),rgba(255,255,255,.018) 36%,rgba(212,184,149,.038))!important;
+    }
+
+    html[data-evo-swipe-tier="lite"]
+    #evolution-view-stage .evo-swipe-glass::before{
+      opacity:.58;
+      background:linear-gradient(110deg,rgba(255,255,255,.09),rgba(255,255,255,.018) 30%,transparent 56%);
+    }
+
+    html[data-evo-swipe-tier="lite"]
+    #evolution-view-stage .evo-swipe-glass::after{
+      display:none!important;
+    }
+
+    html[data-evo-swipe-tier="lite"]
+    #evolution-view-stage .evo-swipe-depth{
+      width:76px!important;
+      background:transparent!important;
+      -webkit-backdrop-filter:none!important;
+      backdrop-filter:none!important;
+      -webkit-mask-image:linear-gradient(90deg,transparent,#000 32%,#000 68%,transparent)!important;
+      mask-image:linear-gradient(90deg,transparent,#000 32%,#000 68%,transparent)!important;
+      will-change:transform,opacity!important;
+    }
+
+    html[data-evo-swipe-tier="lite"]
+    #evolution-view-stage .evo-swipe-depth.from-next::before{
+      background:linear-gradient(90deg,transparent,rgba(0,0,0,.055) 48%,rgba(212,184,149,.025) 68%,transparent)!important;
+    }
+
+    html[data-evo-swipe-tier="lite"]
+    #evolution-view-stage .evo-swipe-depth.from-prev::before{
+      background:linear-gradient(90deg,transparent,rgba(212,184,149,.025) 32%,rgba(0,0,0,.055) 52%,transparent)!important;
+    }
+
+    html[data-evo-swipe-tier="lite"]
+    body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
+      transition:opacity .20s ease!important;
+      transform:none!important;
+      border-radius:0!important;
+    }
+
+    html[data-evo-swipe-tier="lite"]
+    body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
+      transition:clip-path .23s cubic-bezier(.2,.82,.2,1)!important;
+      transform:none!important;
+      border-radius:0!important;
     }
 
     /* V32: guard del borde FÍSICO de toda la pantalla, incluyendo navbar
@@ -1042,6 +1149,128 @@
     }
   };
 
+  const setSwipeVisualTier=(tier,reason='runtime')=>{
+    const next=['premium','standard','lite'].includes(tier)?tier:'standard';
+
+    swipeVisualTier=next;
+    swipeTierReason=reason;
+    document.documentElement.dataset.evoSwipeTier=next;
+    document.documentElement.dataset.evoSwipeTierReason=reason;
+
+    try{
+      sessionStorage.setItem('evolution_swipe_tier_runtime',next);
+      sessionStorage.setItem('evolution_swipe_tier_reason',reason);
+    }catch(_){}
+  };
+
+  const detectSwipeVisualTier=()=>{
+    try{
+      const forced=new URL(location.href).searchParams.get('evo_swipe');
+      if(['premium','standard','lite'].includes(forced)){
+        return {tier:forced,reason:'query-override'};
+      }
+    }catch(_){}
+
+    try{
+      const saved=sessionStorage.getItem('evolution_swipe_tier_runtime');
+      const reason=sessionStorage.getItem('evolution_swipe_tier_reason');
+      if(saved==='lite'&&reason==='fps-downgrade'){
+        return {tier:'lite',reason:'fps-downgrade'};
+      }
+    }catch(_){}
+
+    const ua=navigator.userAgent||'';
+    const ios=/iphone|ipad|ipod/i.test(ua) ||
+      (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+
+    const longSide=Math.max(
+      Number(screen.width||0),
+      Number(screen.height||0),
+      Number(innerWidth||0),
+      Number(innerHeight||0)
+    );
+
+    const cores=Number(navigator.hardwareConcurrency||0);
+    const memory=Number(navigator.deviceMemory||0);
+    const reduced=
+      typeof matchMedia==='function' &&
+      matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if(reduced)return {tier:'lite',reason:'reduced-motion'};
+
+    /* iPhone 8 Plus usa 414×736 CSS px. También cubre generaciones
+       anteriores y SE clásico. */
+    if(ios&&longSide>0&&longSide<=736){
+      return {tier:'lite',reason:'legacy-ios-viewport'};
+    }
+
+    if(memory>0&&memory<=3){
+      return {tier:'lite',reason:'low-memory'};
+    }
+
+    if(!ios&&cores>0&&cores<=4){
+      return {tier:'lite',reason:'low-core-count'};
+    }
+
+    /* iPhone X/XS/11 Pro en adelante entran mínimo aquí; Max modernos
+       como 14 Pro Max (430×932 CSS px) quedan Premium. */
+    if(
+      (ios&&longSide>=844) ||
+      (!ios&&(memory>=8||cores>=8))
+    ){
+      return {tier:'premium',reason:'high-capability'};
+    }
+
+    return {tier:'standard',reason:'balanced'};
+  };
+
+  const initializeSwipeVisualTier=()=>{
+    const result=detectSwipeVisualTier();
+    setSwipeVisualTier(result.tier,result.reason);
+  };
+
+  const beginSwipeFrameBudget=()=>{
+    swipeFrameLast=0;
+    swipeFrameBad=0;
+    swipeLitePaintLast=0;
+  };
+
+  const noteSwipeFrameBudget=now=>{
+    const t=Number(now)||performance.now();
+
+    if(swipeFrameLast){
+      const dt=t-swipeFrameLast;
+
+      if(dt>27){
+        swipeFrameBad++;
+      }else if(dt<22){
+        swipeFrameBad=Math.max(0,swipeFrameBad-1);
+      }
+
+      /* Si el equipo pierde varios frames reales, retiramos al instante
+         las capas caras y Lite queda activo por el resto de la sesión. */
+      if(swipeFrameBad>=4&&swipeVisualTier!=='lite'){
+        setSwipeVisualTier('lite','fps-downgrade');
+        swipeFrameBad=0;
+      }
+    }
+
+    swipeFrameLast=t;
+  };
+
+  const allowSwipePaint=now=>{
+    const t=Number(now)||performance.now();
+    if(swipeVisualTier!=='lite')return true;
+
+    /* Mejor ~40 FPS estables que intentar 60 y saturar una GPU antigua. */
+    if(swipeLitePaintLast&&t-swipeLitePaintLast<23){
+      return false;
+    }
+
+    swipeLitePaintLast=t;
+    return true;
+  };
+
   const mobileSwipeCapable=()=>{
     try{
       return matchMedia('(max-width: 991.98px)').matches &&
@@ -1061,22 +1290,31 @@
     if(!frame)return;
 
     const p=Math.max(0,Math.min(1,Number(progress)||0));
-    const hidden=((1-p)*100).toFixed(3);
-
     frame.dataset.swipeSide=side;
 
+    if(swipeVisualTier==='lite'){
+      const width=
+        frame.clientWidth ||
+        innerWidth ||
+        document.documentElement.clientWidth ||
+        375;
+
+      const hiddenPx=Math.max(0,Math.round((1-p)*width));
+
+      if(side==='next'){
+        frame.style.setProperty('clip-path',`inset(0 0 0 ${hiddenPx}px)`,'important');
+      }else{
+        frame.style.setProperty('clip-path',`inset(0 ${hiddenPx}px 0 0)`,'important');
+      }
+      return;
+    }
+
+    const hidden=((1-p)*100).toFixed(3);
+
     if(side==='next'){
-      frame.style.setProperty(
-        'clip-path',
-        `inset(0 0 0 ${hidden}%)`,
-        'important'
-      );
+      frame.style.setProperty('clip-path',`inset(0 0 0 ${hidden}%)`,'important');
     }else{
-      frame.style.setProperty(
-        'clip-path',
-        `inset(0 ${hidden}% 0 0)`,
-        'important'
-      );
+      frame.style.setProperty('clip-path',`inset(0 ${hidden}% 0 0)`,'important');
     }
   };
 
@@ -1142,59 +1380,84 @@
     if(!active||!neighbor||!depth||!veil||!glass)return;
 
     const p=Math.max(0,Math.min(1,Number(progress)||0));
+    const g=p*p*(3-(2*p));
+    const tier=swipeVisualTier;
 
-    /* V32: ahora SÍ se percibe como tarjeta.
-       Saliente: 100% -> 91.5%
-       Entrante: 88.5% -> 100% */
-    const activeScale=1-(p*.085);
-    const nextScale=.885+(p*.115);
-    const activeRadius=p*36;
-    const nextRadius=(1-p)*36;
+    if(tier==='lite'){
+      active.style.setProperty('--evo-active-card-scale','1');
+      active.style.setProperty('--evo-active-card-radius','0px');
+      neighbor.style.setProperty('--evo-next-card-scale','1');
+      neighbor.style.setProperty('--evo-next-card-radius','0px');
+
+      glass.style.inset='0';
+      glass.style.borderRadius='0';
+      glass.style.opacity=(g*.48).toFixed(3);
+      glass.style.borderColor='transparent';
+      glass.style.webkitBackdropFilter='none';
+      glass.style.backdropFilter='none';
+      glass.style.boxShadow='none';
+
+      veil.style.opacity=(g*.045).toFixed(3);
+
+      depth.classList.toggle('from-next',side==='next');
+      depth.classList.toggle('from-prev',side==='prev');
+      depth.style.setProperty('--evo-swipe-depth-opacity',(.38-(p*.10)).toFixed(3));
+
+      const blendWidth=76;
+      const offset=side==='next'?blendWidth*.68:blendWidth*.32;
+      depth.style.transform=`translate3d(${Math.round(boundaryX-offset)}px,0,0)`;
+      depth.classList.add('is-visible');
+      return;
+    }
+
+    const premium=tier==='premium';
+
+    const activeScale=1-(p*(premium?.092:.085));
+    const base=premium?.872:.885;
+    const nextScale=base+(p*(1-base));
+    const activeRadius=p*(premium?40:36);
+    const nextRadius=(1-p)*(premium?40:36);
 
     active.style.setProperty('--evo-active-card-scale',activeScale.toFixed(4));
     active.style.setProperty('--evo-active-card-radius',`${activeRadius.toFixed(2)}px`);
     neighbor.style.setProperty('--evo-next-card-scale',nextScale.toFixed(4));
     neighbor.style.setProperty('--evo-next-card-radius',`${nextRadius.toFixed(2)}px`);
 
-    /* V33: vidrio progresivo visible desde los primeros milímetros.
-       Smoothstep evita cambios bruscos cuando el dedo va muy lento. */
-    const g=p*p*(3-(2*p));
-    const cardInset=p*17;
-    const blur=Math.min(10.5,g*10.5);
-    const glassOpacity=Math.min(.96,g*.96);
+    const cardInset=p*(premium?20:17);
+    const maxBlur=premium?14:10.5;
+    const blur=Math.min(maxBlur,g*maxBlur);
+    const glassOpacity=Math.min(premium?.985:.96,g*(premium?.985:.96));
 
     glass.style.inset=`${cardInset.toFixed(2)}px`;
     glass.style.borderRadius=`${activeRadius.toFixed(2)}px`;
     glass.style.opacity=glassOpacity.toFixed(3);
     glass.style.borderColor=
-      `rgba(255,255,255,${(.018+g*.125).toFixed(3)})`;
+      `rgba(255,255,255,${(.018+g*(premium?.15:.125)).toFixed(3)})`;
 
-    const saturation=1+(g*.14);
+    const saturation=1+(g*(premium?.20:.14));
     glass.style.webkitBackdropFilter=
       `blur(${blur.toFixed(2)}px) saturate(${saturation.toFixed(3)})`;
     glass.style.backdropFilter=
       `blur(${blur.toFixed(2)}px) saturate(${saturation.toFixed(3)})`;
 
     glass.style.boxShadow=[
-      `0 ${(12+g*18).toFixed(1)}px ${(34+g*48).toFixed(1)}px rgba(0,0,0,${(.10+g*.40).toFixed(3)})`,
-      `inset 0 1px 0 rgba(255,255,255,${(.035+g*.12).toFixed(3)})`,
-      `inset 0 0 0 1px rgba(212,184,149,${(g*.045).toFixed(3)})`
+      `0 ${(12+g*(premium?23:18)).toFixed(1)}px ${(34+g*(premium?62:48)).toFixed(1)}px rgba(0,0,0,${(.10+g*(premium?.46:.40)).toFixed(3)})`,
+      `inset 0 1px 0 rgba(255,255,255,${(.035+g*(premium?.17:.12)).toFixed(3)})`,
+      `inset 0 0 0 1px rgba(212,184,149,${(g*(premium?.065:.045)).toFixed(3)})`
     ].join(',');
 
-    veil.style.opacity=(g*.10).toFixed(3);
+    veil.style.opacity=(g*(premium?.115:.10)).toFixed(3);
 
-    /* Zona de mezcla sin costura dura. */
     depth.classList.toggle('from-next',side==='next');
     depth.classList.toggle('from-prev',side==='prev');
     depth.style.setProperty(
       '--evo-swipe-depth-opacity',
-      (.66-(p*.16)).toFixed(3)
+      ((premium?.72:.66)-(p*(premium?.18:.16))).toFixed(3)
     );
 
-    const blendWidth=144;
-    const offset=side==='next' ? blendWidth*.72 : blendWidth*.28;
-    depth.style.transform=
-      `translate3d(${Math.round(boundaryX-offset)}px,0,0)`;
+    const blendWidth=premium?164:144;
+    const offset=side==='next'?blendWidth*.72:blendWidth*.28;
+    depth.style.transform=`translate3d(${Math.round(boundaryX-offset)}px,0,0)`;
     depth.classList.add('is-visible');
   };
 
@@ -1588,9 +1851,16 @@
         return t?{x:t.clientX,y:t.clientY}:null;
       };
 
-      const renderGestureFrame=()=>{
+      const renderGestureFrame=(rafNow)=>{
         renderRaf=0;
         if(!tracking||!lockedHorizontal||!gestureNeighbor||frame!==activeFrame)return;
+
+        noteSwipeFrameBudget(rafNow);
+        if(!allowSwipePaint(rafNow)){
+          renderRaf=win.requestAnimationFrame(renderGestureFrame);
+          return;
+        }
+
         setSwipeClip(gestureNeighbor,pendingSide,pendingProgress);
         updateLiquidGlassSwipe(
           frame,
@@ -1643,6 +1913,7 @@
         }
 
         hardResetSwipeVisuals();
+        beginSwipeFrameBudget();
         startX=lastX=previousX=p.x;
         startY=lastY=previousY=p.y;
         startTime=previousSampleTime=performance.now();
@@ -1901,9 +2172,16 @@
       }
     };
 
-    const render=()=>{
+    const render=(rafNow)=>{
       renderRaf=0;
       if(!tracking||!locked||!neighbor||!activeFrame)return;
+
+      noteSwipeFrameBudget(rafNow);
+      if(!allowSwipePaint(rafNow)){
+        renderRaf=requestAnimationFrame(render);
+        return;
+      }
+
       setSwipeClip(neighbor,pendingSide,pendingProgress);
       updateLiquidGlassSwipe(
         activeFrame,
@@ -1958,6 +2236,7 @@
       }
 
       hardResetSwipeVisuals();
+      beginSwipeFrameBudget();
 
       startX=lastX=previousX=p.x;
       startY=lastY=p.y;
@@ -3033,6 +3312,23 @@
     await checkEvolutionRelease({force:true,announceCurrent:true});
   });
 
+  window.EvolutionSwipePerformance={
+    get tier(){return swipeVisualTier},
+    get reason(){return swipeTierReason},
+    setPremium:()=>setSwipeVisualTier('premium','manual'),
+    setStandard:()=>setSwipeVisualTier('standard','manual'),
+    setLite:()=>setSwipeVisualTier('lite','manual'),
+    auto:()=>{
+      try{
+        sessionStorage.removeItem('evolution_swipe_tier_runtime');
+        sessionStorage.removeItem('evolution_swipe_tier_reason');
+      }catch(_){}
+      const result=detectSwipeVisualTier();
+      setSwipeVisualTier(result.tier,result.reason);
+      return result;
+    }
+  };
+
   window.EvolutionUpdate={
     build:APP_BUILD,
     check:()=>checkEvolutionRelease({force:true,announceCurrent:true}),
@@ -3185,6 +3481,8 @@
 
   /* ---------- BOOT ---------- */
   const boot=async()=>{
+    initializeSwipeVisualTier();
+
     const initial=routeFromURL(location.href);
 
     try{
