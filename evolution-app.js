@@ -1,4 +1,4 @@
-/* Evolution Design · Smart App Shell · v34 · Update Center */
+/* Evolution Design · Smart App Shell · v34.1 · Update Center Dedupe Fix */
 (() => {
   'use strict';
 
@@ -2749,6 +2749,13 @@
     if(evolutionUpdateBusy)return;
     evolutionUpdateBusy=true;
 
+    try{
+      sessionStorage.setItem(
+        'evolution_update_busy_build',
+        String(release?.build||APP_BUILD)
+      );
+    }catch(_){}
+
     const overlay=evolutionUpdateOverlay;
     const btn=overlay?.querySelector('[data-evo-update-btn]');
     const later=overlay?.querySelector('[data-evo-update-later]');
@@ -2822,6 +2829,7 @@
     }catch(error){
       console.warn('[Evolution Update]',error);
       evolutionUpdateBusy=false;
+      try{sessionStorage.removeItem('evolution_update_busy_build')}catch(_){}
       if(btn){
         btn.disabled=false;
         btn.classList.remove('is-loading');
@@ -2852,6 +2860,15 @@
   const showUpdateCenter=release=>{
     const data=normalizeRelease(release);
     if(!data.build)data.build=APP_BUILD;
+
+    /* Si esta misma build ya está abierta, no reconstruimos el modal.
+       Evita parpadeos o duplicados cuando llegan varios eventos juntos. */
+    if(
+      evolutionUpdateOverlay?.isConnected &&
+      evolutionRelease?.build===data.build
+    ){
+      return;
+    }
 
     evolutionRelease=data;
     ensureUpdateCenterStyle();
@@ -2964,19 +2981,33 @@
     force=false,
     announceCurrent=true
   }={})=>{
-    if(evolutionReleaseCheckPromise&&!force)return evolutionReleaseCheckPromise;
+    /* Una sola consulta a la vez. Dos mensajes del SW nunca pueden abrir
+       dos Update Centers de forma simultánea. */
+    if(evolutionReleaseCheckPromise)return evolutionReleaseCheckPromise;
+
+    /* Mientras se está aplicando una actualización ignoramos cualquier
+       aviso automático del Service Worker. */
+    if(evolutionUpdateBusy&&!force)return false;
 
     evolutionReleaseCheckPromise=(async()=>{
       try{
         const release=await fetchEvolutionRelease();
         evolutionRelease=release;
 
-        const newer=release.build>APP_BUILD;
+        const ack=releaseAck();
+
+        /* Una build nueva solo se anuncia si el usuario todavía NO la
+           reconoció. "Más tarde" también reconoce esa build, así no
+           vuelve a molestar en cada visibilitychange / SW check. */
+        const newer=
+          release.build>APP_BUILD &&
+          ack<release.build;
+
         const currentAnnouncement=
           announceCurrent &&
           release.announce &&
           release.build===APP_BUILD &&
-          releaseAck()<release.build;
+          ack<release.build;
 
         if(newer||currentAnnouncement||force){
           showUpdateCenter(release);
@@ -3098,13 +3129,13 @@
     if(data.type==='EVOLUTION_SW_ACTIVATED'){
       noteSWVersion(data.version);
       setTimeout(()=>{
-        checkEvolutionRelease({force:true,announceCurrent:true});
+        checkEvolutionRelease({force:false,announceCurrent:true});
       },300);
     }
 
     if(data.type==='EVOLUTION_UPDATE_READY'){
       setTimeout(()=>{
-        checkEvolutionRelease({force:true,announceCurrent:true});
+        checkEvolutionRelease({force:false,announceCurrent:true});
       },120);
     }
 
@@ -3155,6 +3186,10 @@
   /* ---------- BOOT ---------- */
   const boot=async()=>{
     const initial=routeFromURL(location.href);
+
+    try{
+      sessionStorage.removeItem('evolution_update_busy_build');
+    }catch(_){}
 
     try{
       const updateURL=new URL(location.href);
