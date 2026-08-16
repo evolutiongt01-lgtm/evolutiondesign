@@ -1522,7 +1522,38 @@
       .payment-not-requested{padding:.9rem;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);color:#999;font-size:.67rem;line-height:1.55}
       @media(max-width:575.98px){.delivery-paywall{padding:1rem}.delivery-paywall-head{display:block}.delivery-lock-pill{margin-top:.65rem}.delivery-preview-stage{min-height:180px;border-radius:14px}.delivery-preview-stage img{max-height:390px}.locked-delivery-row{padding:.65rem}.locked-file-chip{font-size:.54rem}}
 
-    </style>
+    
+/* PEDIDOS FÍSICOS · EVOLUTION STORE */
+.store-order-grid{display:grid;gap:14px}
+.store-order-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.085);border-radius:22px;background:linear-gradient(155deg,rgba(255,255,255,.035),rgba(255,255,255,.012));box-shadow:0 18px 55px rgba(0,0,0,.24)}
+.store-order-card::before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:-105px;top:-120px;background:radial-gradient(circle,rgba(212,184,149,.12),transparent 70%);pointer-events:none}
+.store-order-top{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:18px 19px;border-bottom:1px solid rgba(255,255,255,.055)}
+.store-order-kicker{font-size:.58rem;color:var(--accent);font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.38rem}
+.store-order-title{font-size:1.05rem;font-weight:750;letter-spacing:-.03em;color:#fff}
+.store-order-id{font-size:.62rem;color:#6f6f75;margin-top:.28rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.store-order-status{flex:0 0 auto;padding:.42rem .62rem;border-radius:999px;border:1px solid rgba(212,184,149,.22);background:rgba(212,184,149,.065);color:#ddc4a4;font-size:.58rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.store-order-status.delivered{border-color:rgba(43,200,102,.22);background:rgba(43,200,102,.06);color:#67df94}
+.store-order-status.cancelled{border-color:rgba(255,102,115,.2);background:rgba(255,102,115,.055);color:#ff929b}
+.store-order-body{position:relative;z-index:1;padding:18px 19px}
+.store-order-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:16px}
+.store-order-meta>div{min-width:0;padding:11px 12px;border:1px solid rgba(255,255,255,.055);border-radius:13px;background:rgba(0,0,0,.16)}
+.store-order-meta span{display:block;color:#6e6e74;font-size:.55rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.32rem}
+.store-order-meta strong{display:block;color:#e9e9eb;font-size:.68rem;line-height:1.45;overflow-wrap:anywhere}
+.store-order-meta .total strong{color:var(--accent);font-size:.86rem}
+.store-order-address{margin:0 0 16px;padding:12px 13px;border-radius:13px;border:1px solid rgba(212,184,149,.10);background:rgba(212,184,149,.028);color:#a7a7ac;font-size:.65rem;line-height:1.6}
+.store-order-address strong{color:#e7e7e9}
+.store-order-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;position:relative}
+.store-order-step{position:relative;padding:10px 8px;border-radius:12px;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.012);opacity:.38;min-width:0}
+.store-order-step.done,.store-order-step.active{opacity:1}.store-order-step.done{border-color:rgba(43,200,102,.14)}.store-order-step.active{border-color:rgba(212,184,149,.25);background:rgba(212,184,149,.045)}
+.store-order-dot{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.16);color:#777;font-size:.55rem;margin-bottom:.48rem}
+.store-order-step.done .store-order-dot{border-color:rgba(43,200,102,.5);color:#55d98a;background:rgba(43,200,102,.06)}
+.store-order-step.active .store-order-dot{border-color:rgba(212,184,149,.65);color:var(--accent);background:rgba(212,184,149,.07);box-shadow:0 0 0 4px rgba(212,184,149,.035)}
+.store-order-step strong{display:block;font-size:.58rem;color:#d8d8da;line-height:1.3}.store-order-step small{display:block;font-size:.5rem;color:#666;margin-top:.22rem;line-height:1.35}
+.store-order-tracking{margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.055);background:#09090a;font-size:.6rem;color:#777}.store-order-tracking strong{color:#d7d7da;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+@media(max-width:900px){.store-order-meta{grid-template-columns:1fr 1fr}.store-order-track{grid-template-columns:1fr}.store-order-step{display:grid;grid-template-columns:24px minmax(0,1fr);align-items:center}.store-order-dot{margin:0}.store-order-step small{margin-top:.12rem}}
+@media(max-width:560px){.store-order-top{padding:15px}.store-order-body{padding:15px}.store-order-meta{grid-template-columns:1fr}.store-order-status{font-size:.5rem}.store-order-tracking{align-items:flex-start;flex-direction:column}}
+
+</style>
   
 <style id="evolution-recaptcha-badge-ui-fix-v25">
   .grecaptcha-badge{
@@ -1573,7 +1604,7 @@
         <div>
           <span class="page-kicker">Panel de Cliente</span>
           <h1 class="page-title">Mis Proyectos</h1>
-          <p class="page-subtitle">Arquitectura, Diseño Web y Suscripciones organizados en un solo portal.</p>
+          <p class="page-subtitle">Arquitectura, Diseño Web, Suscripciones y Pedidos organizados en un solo portal.</p>
         </div>
       </div>
 
@@ -1582,6 +1613,7 @@
         <button type="button" class="portal-area-btn active" data-portal-area="architecture" onclick="switchPortalArea('architecture')"><span>Arquitectura</span><span class="portal-area-count" id="architecture-count">0</span></button>
         <button type="button" class="portal-area-btn" data-portal-area="web" onclick="switchPortalArea('web')"><span>Diseño Web</span><span class="portal-area-count" id="web-count">0</span></button>
         <button type="button" class="portal-area-btn" data-portal-area="subscriptions" onclick="switchPortalArea('subscriptions')"><span>Suscripciones</span><span class="portal-area-count" id="subscriptions-count">0</span></button>
+        <button type="button" class="portal-area-btn" data-portal-area="orders" onclick="switchPortalArea('orders')"><span>Pedidos</span><span class="portal-area-count" id="orders-count">0</span></button>
       </div>
 
       <div class="row justify-content-center">
@@ -1607,6 +1639,11 @@
           <section id="portal-area-subscriptions" class="portal-area">
             <div class="portal-area-head"><h2 class="portal-area-title">Suscripciones</h2><p class="portal-area-copy">Comprobante, método de pago, próxima renovación y control de membresía.</p></div>
             <div id="subscription-receipts-container" class="service-mini-grid"><div class="receipt-loading">Cargando comprobantes…</div></div>
+          </section>
+
+          <section id="portal-area-orders" class="portal-area">
+            <div class="portal-area-head"><h2 class="portal-area-title">Pedidos</h2><p class="portal-area-copy">Compras físicas, método de entrega, total y seguimiento desde tu cuenta.</p></div>
+            <div id="store-orders-container" class="store-order-grid"><div class="receipt-loading">Cargando pedidos…</div></div>
           </section>
         </div>
       </div>
@@ -1777,6 +1814,92 @@
           throw error;
         }
         return body;
+      }
+      async function evolutionWorkerAuthedGet(path){
+        const user=auth.currentUser;
+        if(!user?.uid)throw new Error('Tu sesión ya no está activa.');
+        const idToken=await user.getIdToken();
+        const response=await fetch(`${EVOLUTION_WORKER_URL}${path}`,{
+          method:'GET',
+          headers:{'accept':'application/json','authorization':`Bearer ${idToken}`},
+          cache:'no-store'
+        });
+        const body=await response.json().catch(()=>({}));
+        if(!response.ok||body?.ok===false){
+          const error=new Error(body?.error||'No se pudo completar la consulta segura.');
+          error.code=body?.code||'';
+          throw error;
+        }
+        return body;
+      }
+
+      let storeOrdersTimer=0;
+      const storeOrderMoney=n=>`Q${Number(n||0).toFixed(2)}`;
+      function storeOrderStatusLabel(order){
+        const s=String(order?.status||'received');
+        if(s==='shipped'&&order?.paymentMethod==='pickup_pana')return'Listo para entregar';
+        return({received:'Pedido recibido',confirmed:'Confirmado',preparing:'Preparando',shipped:'Enviado',delivered:'Entregado',cancelled:'Cancelado'})[s]||s;
+      }
+      function storeOrderMethodLabel(order){
+        return order?.paymentMethodLabel||({cod_forza:'Contra entrega · Forza',cod_cargo:'Contra entrega · Cargo Expreso',transfer_shipping:'Transferencia · Envío nacional',pickup_pana:'Entrega personal · Panajachel'})[order?.paymentMethod]||order?.paymentMethod||'—';
+      }
+      function storeOrderDate(v){
+        const d=dateValue(v);if(!d)return'—';
+        return new Intl.DateTimeFormat('es-GT',{day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}).format(d);
+      }
+      function renderStoreOrder(order){
+        const status=String(order.status||'received');
+        const steps=['received','confirmed','preparing','shipped','delivered'];
+        const idx=status==='cancelled'?-1:Math.max(0,steps.indexOf(status));
+        const pickup=order.paymentMethod==='pickup_pana';
+        const stepLabels=['Recibido','Confirmado','Preparando',pickup?'Listo para entrega':'Enviado','Entregado'];
+        const created=storeOrderDate(order.createdAt);
+        const address=pickup
+          ?'Entrega personal en Panajachel · Evolution se comunicará para coordinar.'
+          :[order.department,order.municipality,order.address,order.reference?`Ref: ${order.reference}`:''].filter(Boolean).join(' · ');
+        const statusClass=status==='delivered'?'delivered':status==='cancelled'?'cancelled':'';
+        return `<article class="store-order-card">
+          <div class="store-order-top"><div><div class="store-order-kicker">Evolution Store · Compra física</div><div class="store-order-title">${esc(order.productTitle||'iPhone 8 Plus')}</div><div class="store-order-id">${esc(order.orderId||order.id||'')}</div></div><span class="store-order-status ${statusClass}">${esc(storeOrderStatusLabel(order))}</span></div>
+          <div class="store-order-body">
+            <div class="store-order-meta">
+              <div><span>Método</span><strong>${esc(storeOrderMethodLabel(order))}</strong></div>
+              <div><span>Recibe</span><strong>${esc(order.recipientName||order.customerName||'—')}</strong></div>
+              <div><span>Fecha</span><strong>${esc(created)}</strong></div>
+              <div class="total"><span>Total</span><strong>${esc(storeOrderMoney(order.totalGtq))}</strong></div>
+            </div>
+            <div class="store-order-address"><strong>Entrega:</strong> ${esc(address||'—')}${order.phone?`<br><strong>Teléfono:</strong> ${esc(order.phone)}`:''}</div>
+            ${status==='cancelled'
+              ?'<div class="receipt-empty" style="margin:0">Este pedido fue cancelado. Si necesitas ayuda, comunícate con Evolution Design.</div>'
+              :`<div class="store-order-track">${steps.map((step,i)=>`<div class="store-order-step ${i<idx?'done':i===idx?'active':''}"><div class="store-order-dot">${i<idx?'✓':i===idx?'•':''}</div><div><strong>${esc(stepLabels[i])}</strong><small>${i===0?created:i===idx?esc(storeOrderStatusLabel(order)):'Seguimiento'}</small></div></div>`).join('')}</div>`}
+            ${(order.trackingNumber||status==='shipped')&&!pickup?`<div class="store-order-tracking"><span>${esc(order.carrier||'Paquetería')} · Guía</span><strong>${esc(order.trackingNumber||'Pendiente de publicación')}</strong></div>`:''}
+            ${pickup&&status==='shipped'?`<div class="store-order-tracking"><span>Entrega personal</span><strong>Listo para coordinar en Panajachel</strong></div>`:''}
+          </div>
+        </article>`;
+      }
+      async function loadStoreOrders(user){
+        clearTimeout(storeOrdersTimer);
+        const host=document.getElementById('store-orders-container');
+        const count=document.getElementById('orders-count');
+        if(!host||!count)return;
+        if(!user){
+          count.textContent='0';
+          host.innerHTML='<div class="receipt-empty">Inicia sesión para ver tus pedidos.</div>';
+          return;
+        }
+        try{
+          const result=await evolutionWorkerAuthedGet('/store/orders/mine');
+          const orders=Array.isArray(result.orders)?result.orders:[];
+          count.textContent=String(orders.length);
+          host.innerHTML=orders.length?orders.map(renderStoreOrder).join(''):'<div class="receipt-empty">Aún no tienes pedidos físicos.</div>';
+          if(orders.length){
+            const general=document.getElementById('sin-proyectos-msg');if(general)general.style.display='none';
+          }
+        }catch(error){
+          console.error('Pedidos Evolution:',error);
+          host.innerHTML='<div class="receipt-empty">No pudimos cargar tus pedidos en este momento.</div>';
+        }finally{
+          if(auth.currentUser?.uid===user.uid)storeOrdersTimer=setTimeout(()=>loadStoreOrders(user),45000);
+        }
       }
       let unsubscribeProjects=null, unsubscribeSubscriptions=null; const fileListeners=[]; let currentGeo={};
 
@@ -2238,7 +2361,7 @@
 
 
       window.switchPortalArea=function(area){
-        const value=['architecture','web','subscriptions'].includes(area)?area:'architecture';
+        const value=['architecture','web','subscriptions','orders'].includes(area)?area:'architecture';
         document.querySelectorAll('.portal-area').forEach(el=>el.classList.toggle('active',el.id===`portal-area-${value}`));
         document.querySelectorAll('.portal-area-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.portalArea===value));
         try{sessionStorage.setItem('evolutionPortalArea',value)}catch{}
@@ -2960,6 +3083,7 @@
           const saved=sessionStorage.getItem('evolutionPortalArea');
           if(saved)switchPortalArea(saved);
         }catch(e){console.info('Preferencia de portal omitida:',e?.message||e);}
+        Promise.resolve(loadStoreOrders(user)).catch(e=>console.error('Inicio de Pedidos:',e));
         // El listener principal siempre se inicia aunque falle cualquier mejora secundaria de UI/actividad.
         Promise.resolve(listen(user)).catch(e=>{
           console.error('Inicio de Mis Proyectos:',e);
