@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v32 · Full Surface Liquid Cards */
+/* Evolution Design · Smart App Shell · v33 · Liquid Glass Blend Swipe */
 (() => {
   'use strict';
 
-  const VERSION='32';
+  const VERSION='33';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -381,18 +381,57 @@
       z-index:3;
       pointer-events:none;
       opacity:0;
+      overflow:hidden;
       border:1px solid rgba(255,255,255,0);
       border-radius:0;
       background:
+        radial-gradient(circle at 18% 10%,
+          rgba(255,255,255,.18),
+          rgba(255,255,255,0) 31%),
         linear-gradient(145deg,
-          rgba(255,255,255,.105),
-          rgba(255,255,255,.025) 42%,
-          rgba(212,184,149,.055) 100%);
+          rgba(255,255,255,.115),
+          rgba(255,255,255,.028) 38%,
+          rgba(212,184,149,.065) 100%);
       -webkit-backdrop-filter:blur(0px) saturate(1);
       backdrop-filter:blur(0px) saturate(1);
-      box-shadow:0 18px 58px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.07);
+      box-shadow:none;
       contain:paint;
-      will-change:opacity,backdrop-filter,inset,border-radius;
+      will-change:
+        opacity,
+        backdrop-filter,
+        inset,
+        border-radius,
+        box-shadow;
+    }
+    #evolution-view-stage .evo-swipe-glass::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.78;
+      background:
+        linear-gradient(
+          115deg,
+          rgba(255,255,255,.12) 0%,
+          rgba(255,255,255,.025) 22%,
+          rgba(255,255,255,0) 43%
+        );
+    }
+    #evolution-view-stage .evo-swipe-glass::after{
+      content:"";
+      position:absolute;
+      left:9%;
+      right:9%;
+      top:0;
+      height:1px;
+      pointer-events:none;
+      background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.28),
+        transparent
+      );
+      opacity:.72;
     }
 
     /* Velo de profundidad debajo de la tarjeta entrante. */
@@ -406,17 +445,37 @@
       contain:paint;
     }
 
-    /* Borde óptico en la línea de revelado: más fino que V30. */
+    /* V33: unión LIQUID GLASS. Ya no existe línea vertical.
+       Es una franja ancha que mezcla ambas páginas con degradado,
+       un blur local muy pequeño y bordes totalmente desvanecidos. */
     #evolution-view-stage .evo-swipe-depth{
       position:absolute;
       top:0;
       bottom:0;
       left:0;
-      width:46px;
+      width:144px;
       z-index:6;
       pointer-events:none;
       opacity:0;
-      transform:translate3d(-200px,0,0);
+      transform:translate3d(-260px,0,0);
+      border:0!important;
+      background:rgba(6,6,8,.035);
+      -webkit-backdrop-filter:blur(2.2px) saturate(1.04);
+      backdrop-filter:blur(2.2px) saturate(1.04);
+      -webkit-mask-image:linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 18%,
+        #000 82%,
+        transparent 100%
+      );
+      mask-image:linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 18%,
+        #000 82%,
+        transparent 100%
+      );
       contain:paint;
       will-change:transform,opacity;
     }
@@ -424,28 +483,34 @@
       content:"";
       position:absolute;
       inset:0;
+      border:0!important;
     }
     #evolution-view-stage .evo-swipe-depth::after{
-      content:"";
-      position:absolute;
-      top:12px;
-      bottom:12px;
-      width:1px;
-      background:rgba(255,255,255,.14);
-      opacity:.72;
+      display:none!important;
+      content:none!important;
     }
     #evolution-view-stage .evo-swipe-depth.from-next::before{
-      background:linear-gradient(90deg,
-        rgba(0,0,0,0),rgba(0,0,0,.075) 52%,rgba(0,0,0,.21));
+      background:linear-gradient(
+        90deg,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,.028) 20%,
+        rgba(0,0,0,.14) 48%,
+        rgba(212,184,149,.035) 64%,
+        rgba(0,0,0,0) 100%
+      );
     }
-    #evolution-view-stage .evo-swipe-depth.from-next::after{right:0}
     #evolution-view-stage .evo-swipe-depth.from-prev::before{
-      background:linear-gradient(90deg,
-        rgba(0,0,0,.21),rgba(0,0,0,.075) 48%,rgba(0,0,0,0));
+      background:linear-gradient(
+        90deg,
+        rgba(0,0,0,0) 0%,
+        rgba(212,184,149,.035) 36%,
+        rgba(0,0,0,.14) 52%,
+        rgba(0,0,0,.028) 80%,
+        rgba(0,0,0,0) 100%
+      );
     }
-    #evolution-view-stage .evo-swipe-depth.from-prev::after{left:0}
     #evolution-view-stage .evo-swipe-depth.is-visible{
-      opacity:var(--evo-swipe-depth-opacity,.48);
+      opacity:var(--evo-swipe-depth-opacity,.58);
     }
 
     /* V32: guard del borde FÍSICO de toda la pantalla, incluyendo navbar
@@ -1088,24 +1153,45 @@
     neighbor.style.setProperty('--evo-next-card-scale',nextScale.toFixed(4));
     neighbor.style.setProperty('--evo-next-card-radius',`${nextRadius.toFixed(2)}px`);
 
-    /* Capa de vidrio: da desenfoque progresivo sin filtrar el iframe. */
+    /* V33: vidrio progresivo visible desde los primeros milímetros.
+       Smoothstep evita cambios bruscos cuando el dedo va muy lento. */
+    const g=p*p*(3-(2*p));
     const cardInset=p*17;
-    const blur=Math.min(6.2,p*6.2);
-    const glassOpacity=Math.min(.88,p*.88);
+    const blur=Math.min(10.5,g*10.5);
+    const glassOpacity=Math.min(.96,g*.96);
+
     glass.style.inset=`${cardInset.toFixed(2)}px`;
     glass.style.borderRadius=`${activeRadius.toFixed(2)}px`;
     glass.style.opacity=glassOpacity.toFixed(3);
-    glass.style.borderColor=`rgba(255,255,255,${(.025+p*.075).toFixed(3)})`;
-    glass.style.webkitBackdropFilter=`blur(${blur.toFixed(2)}px) saturate(${(1+p*.08).toFixed(3)})`;
-    glass.style.backdropFilter=`blur(${blur.toFixed(2)}px) saturate(${(1+p*.08).toFixed(3)})`;
+    glass.style.borderColor=
+      `rgba(255,255,255,${(.018+g*.125).toFixed(3)})`;
 
-    veil.style.opacity=(p*.065).toFixed(3);
+    const saturation=1+(g*.14);
+    glass.style.webkitBackdropFilter=
+      `blur(${blur.toFixed(2)}px) saturate(${saturation.toFixed(3)})`;
+    glass.style.backdropFilter=
+      `blur(${blur.toFixed(2)}px) saturate(${saturation.toFixed(3)})`;
 
+    glass.style.boxShadow=[
+      `0 ${(12+g*18).toFixed(1)}px ${(34+g*48).toFixed(1)}px rgba(0,0,0,${(.10+g*.40).toFixed(3)})`,
+      `inset 0 1px 0 rgba(255,255,255,${(.035+g*.12).toFixed(3)})`,
+      `inset 0 0 0 1px rgba(212,184,149,${(g*.045).toFixed(3)})`
+    ].join(',');
+
+    veil.style.opacity=(g*.10).toFixed(3);
+
+    /* Zona de mezcla sin costura dura. */
     depth.classList.toggle('from-next',side==='next');
     depth.classList.toggle('from-prev',side==='prev');
-    depth.style.setProperty('--evo-swipe-depth-opacity',(.54-p*.12).toFixed(3));
-    const offset=side==='next'?46:0;
-    depth.style.transform=`translate3d(${Math.round(boundaryX-offset)}px,0,0)`;
+    depth.style.setProperty(
+      '--evo-swipe-depth-opacity',
+      (.66-(p*.16)).toFixed(3)
+    );
+
+    const blendWidth=144;
+    const offset=side==='next' ? blendWidth*.72 : blendWidth*.28;
+    depth.style.transform=
+      `translate3d(${Math.round(boundaryX-offset)}px,0,0)`;
     depth.classList.add('is-visible');
   };
 
@@ -1121,6 +1207,7 @@
       swipeGlassEl.style.borderColor='rgba(255,255,255,0)';
       swipeGlassEl.style.webkitBackdropFilter='blur(0px) saturate(1)';
       swipeGlassEl.style.backdropFilter='blur(0px) saturate(1)';
+      swipeGlassEl.style.boxShadow='none';
     }
   };
 
@@ -1737,9 +1824,9 @@
 
       if(
         mobileMQ.matches &&
-        !sessionStorage.getItem('evolution_live_swipe_hint_v32')
+        !sessionStorage.getItem('evolution_live_swipe_hint_v33')
       ){
-        sessionStorage.setItem('evolution_live_swipe_hint_v32','1');
+        sessionStorage.setItem('evolution_live_swipe_hint_v33','1');
         const hint=doc.createElement('div');
         hint.textContent='Desliza · Liquid Glass';
         Object.assign(hint.style,{
