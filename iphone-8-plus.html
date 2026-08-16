@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<meta name="color-scheme" content="dark">
+<title>iPhone 8 Plus · Evolution Design</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
+<style>
+@font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-v12-latin-regular.woff2') format('woff2')}
+@font-face{font-family:Inter;font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-v12-latin-500.woff2') format('woff2')}
+@font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-v12-latin-700.woff2') format('woff2')}
+:root{--bg:#050505;--panel:#0e0e10;--panel2:#151518;--line:rgba(255,255,255,.09);--line2:rgba(212,184,149,.22);--text:#f5f5f3;--muted:#8e8e95;--accent:#d4b895;--green:#55d98a;--red:#ff7d87;--radius:24px}
+*{box-sizing:border-box}html{background:#050505;scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 74% 4%,rgba(212,184,149,.10),transparent 30%),radial-gradient(circle at 18% 74%,rgba(255,255,255,.025),transparent 30%),#050505;color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}.hidden{display:none!important}.grecaptcha-badge{visibility:hidden!important}
+.top{position:sticky;top:0;z-index:20;padding:calc(12px + env(safe-area-inset-top,0px)) 14px 12px;background:linear-gradient(180deg,rgba(5,5,5,.88),rgba(5,5,5,.54),transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nav{max-width:1160px;margin:auto;min-height:58px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.09);background:rgba(14,14,15,.72);display:flex;align-items:center;justify-content:space-between;gap:15px;box-shadow:0 18px 55px rgba(0,0,0,.30)}
+.nav img{height:25px;width:auto}.nav-actions{display:flex;align-items:center;gap:8px}.nav-user{font-size:11px;color:#aaa;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nav-btn{border:1px solid var(--line);background:rgba(255,255,255,.035);color:#ddd;border-radius:999px;padding:9px 13px;font-size:11px;font-weight:700;cursor:pointer}.nav-btn.accent{background:var(--accent);border-color:var(--accent);color:#17120d}
+.wrap{max-width:1160px;margin:auto;padding:44px 20px 80px}.hero{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(360px,.72fr);gap:26px;align-items:stretch}.hero-card,.purchase-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:34px;background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.012));box-shadow:0 35px 100px rgba(0,0,0,.42)}
+.hero-card{min-height:610px;padding:46px;display:flex;flex-direction:column;justify-content:space-between}.hero-card:before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;right:-190px;bottom:-190px;background:radial-gradient(circle,rgba(212,184,149,.16),rgba(212,184,149,0) 70%);pointer-events:none}
+.kicker{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(212,184,149,.08)}
+h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;margin:24px 0 16px;max-width:700px}h1 span{color:var(--accent)}.hero-copy{color:#9b9ba1;max-width:620px;line-height:1.7;font-size:14px}.price-big{margin-top:26px;font-size:48px;font-weight:800;letter-spacing:-.055em}.price-big small{font-size:12px;color:var(--accent);letter-spacing:.03em;margin-left:5px}
+.phone-stage{position:relative;height:245px;margin-top:30px;display:flex;align-items:flex-end;justify-content:center;perspective:900px}.phone{position:relative;width:126px;height:245px;border-radius:24px;background:linear-gradient(145deg,#232326,#080809);border:3px solid #303034;box-shadow:0 28px 65px rgba(0,0,0,.62),inset 0 0 0 1px rgba(255,255,255,.08);transform:rotateY(-13deg) rotateX(4deg) rotateZ(-3deg)}.phone:before{content:"";position:absolute;inset:15px 8px 16px;border-radius:15px;background:radial-gradient(circle at 32% 22%,rgba(212,184,149,.26),transparent 28%),linear-gradient(150deg,#111217,#050506);border:1px solid rgba(255,255,255,.055)}.phone:after{content:"";position:absolute;width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.22);bottom:7px;left:50%;transform:translateX(-50%);background:#0a0a0b;box-shadow:inset 0 0 0 2px rgba(255,255,255,.025)}.ear{position:absolute;z-index:2;top:8px;left:50%;width:29px;height:3px;border-radius:9px;background:#37373b;transform:translateX(-50%)}.camera{position:absolute;z-index:2;top:7px;left:34px;width:4px;height:4px;border-radius:50%;background:#252a33}.screen-copy{position:absolute;z-index:3;inset:62px 20px auto;text-align:center}.screen-copy strong{display:block;font-size:18px;letter-spacing:-.04em}.screen-copy span{display:block;color:var(--accent);font-size:8px;margin-top:5px;letter-spacing:.12em;text-transform:uppercase}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.chip{padding:9px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(0,0,0,.18);font-size:10px;color:#b8b8bc}
+.purchase-card{padding:26px;min-height:610px}.purchase-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;padding-bottom:19px;border-bottom:1px solid var(--line)}.purchase-head h2{font-size:24px;letter-spacing:-.04em;margin:5px 0 4px}.purchase-head p{font-size:11px;color:var(--muted);margin:0;line-height:1.55}.availability{padding:7px 10px;border-radius:999px;border:1px solid rgba(85,217,138,.2);background:rgba(85,217,138,.055);color:#78e8a3;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}.availability.sold{color:#ff9ba2;border-color:rgba(255,125,135,.2);background:rgba(255,125,135,.05)}
+.auth-gate{min-height:465px;display:flex;align-items:center;justify-content:center;text-align:center;padding:28px}.auth-lock{width:56px;height:56px;border-radius:18px;margin:0 auto 16px;display:grid;place-items:center;border:1px solid rgba(212,184,149,.24);background:rgba(212,184,149,.075);color:var(--accent);font-size:23px}.auth-gate h3{margin:0 0 8px;font-size:22px;letter-spacing:-.035em}.auth-gate p{margin:0 auto 18px;max-width:320px;color:var(--muted);font-size:12px;line-height:1.65}.primary{border:0;background:linear-gradient(180deg,#dfc6a6,#caa77d);color:#17120d;border-radius:14px;padding:13px 17px;font-weight:850;font-size:12px;cursor:pointer;box-shadow:0 12px 30px rgba(212,184,149,.13)}.primary:disabled{opacity:.5;cursor:not-allowed}.secondary{border:1px solid var(--line);background:rgba(255,255,255,.03);color:#ddd;border-radius:13px;padding:12px 14px;font-size:11px;font-weight:700;cursor:pointer}
+.form{padding-top:18px}.account-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px;border-radius:14px;border:1px solid rgba(212,184,149,.16);background:rgba(212,184,149,.045);margin-bottom:16px}.account-name{font-size:11px;font-weight:700}.account-mail{font-size:9px;color:#81776d;margin-top:3px}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0 17px}.method{position:relative;text-align:left;border:1px solid var(--line);background:#0c0c0e;color:#ddd;border-radius:15px;padding:13px;cursor:pointer;min-height:88px;transition:.2s}.method:hover{border-color:rgba(212,184,149,.28)}.method.active{border-color:rgba(212,184,149,.48);background:linear-gradient(145deg,rgba(212,184,149,.10),rgba(255,255,255,.025));box-shadow:0 8px 28px rgba(0,0,0,.22)}.method strong{display:block;font-size:11px;color:#fff;margin-bottom:6px}.method span{display:block;color:#828288;font-size:9px;line-height:1.45}.method b{display:block;color:var(--accent);font-size:12px;margin-top:7px}.section-label{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:#81766a;font-weight:800;margin:18px 0 9px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field.full{grid-column:1/-1}.field label{display:block;font-size:9px;color:#777;margin:0 0 6px}.input{width:100%;border:1px solid var(--line);background:#09090b;color:#f5f5f3;border-radius:12px;padding:11px 12px;outline:none;font-size:11px;transition:.2s}.input:focus{border-color:rgba(212,184,149,.45);box-shadow:0 0 0 4px rgba(212,184,149,.05)}textarea.input{min-height:78px;resize:vertical}.delivery-fields.hidden{display:none}
+.summary{margin:17px 0 13px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.015)}.summary-row{display:flex;justify-content:space-between;gap:12px;padding:10px 13px;font-size:10px;color:#a8a8ad;border-bottom:1px solid rgba(255,255,255,.05)}.summary-row:last-child{border-bottom:0}.summary-row.total{padding:14px 13px;color:#fff;font-size:12px;font-weight:800}.summary-row.total strong{font-size:19px;letter-spacing:-.035em;color:var(--accent)}
+.check{display:flex;gap:9px;align-items:flex-start;color:#999;font-size:9px;line-height:1.55;margin:12px 0}.check input{margin-top:2px;accent-color:#d4b895}.submit{width:100%;min-height:48px}.feedback{display:none;margin-top:10px;padding:11px 12px;border-radius:12px;font-size:10px;line-height:1.5}.feedback.show{display:block}.feedback.error{color:#ff9ca4;border:1px solid rgba(255,125,135,.18);background:rgba(255,125,135,.05)}.feedback.ok{color:#7de6a4;border:1px solid rgba(85,217,138,.18);background:rgba(85,217,138,.05)}
+.success{padding:28px 4px;text-align:center}.success-icon{width:68px;height:68px;border-radius:22px;display:grid;place-items:center;margin:0 auto 18px;background:rgba(85,217,138,.075);border:1px solid rgba(85,217,138,.22);color:#6fe19d;font-size:31px}.success h3{font-size:27px;letter-spacing:-.04em;margin:0 0 8px}.success p{font-size:11px;color:#8b8b91;line-height:1.65;margin:0 auto 19px;max-width:380px}.order-code{display:inline-block;margin-bottom:18px;padding:9px 12px;border-radius:10px;border:1px solid rgba(212,184,149,.18);background:rgba(212,184,149,.05);color:#dec5a4;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}
+.disclaimer{max-width:760px;margin:22px auto 0;text-align:center;color:#666;font-size:8px;line-height:1.6}.disclaimer a{color:#8b8176}
+.modal-back{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:18px}.modal-back.show{display:flex}.login{width:min(420px,100%);border:1px solid var(--line);border-radius:25px;background:linear-gradient(160deg,#161619,#09090a);padding:24px;box-shadow:0 30px 90px rgba(0,0,0,.62)}.login-top{display:flex;justify-content:space-between;gap:15px}.login h3{margin:0;font-size:23px;letter-spacing:-.04em}.login p{color:#7f7f86;font-size:10px;line-height:1.55}.x{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#aaa;cursor:pointer}.google{width:100%;margin:12px 0 8px;background:#f1f1ef;color:#151515;border:0;border-radius:12px;padding:12px;font-size:11px;font-weight:800;cursor:pointer}.divider{display:flex;align-items:center;gap:8px;color:#606067;font-size:9px;margin:12px 0}.divider:before,.divider:after{content:"";height:1px;background:#252528;flex:1}.login .input{margin-bottom:8px}.login-error{display:none;color:#ff9aa2;font-size:9px;line-height:1.5;margin-top:9px}.login-error.show{display:block}.toggle{border:0;background:none;color:#9c8d7c;width:100%;margin-top:12px;font-size:9px;cursor:pointer}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-card{min-height:520px}.purchase-card{min-height:auto}}
+@media(max-width:600px){.wrap{padding:24px 12px 60px}.nav{min-height:52px;padding:8px 10px}.nav img{height:21px}.nav-user{display:none}.hero-card,.purchase-card{border-radius:24px}.hero-card{padding:27px;min-height:480px}h1{font-size:clamp(3.1rem,17vw,5rem)}.price-big{font-size:39px}.phone-stage{height:190px}.phone{width:101px;height:195px;border-radius:20px}.screen-copy{inset:49px 12px auto}.screen-copy strong{font-size:14px}.method-grid,.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.purchase-card{padding:18px}.purchase-head h2{font-size:21px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="nav"><a href="index.html" aria-label="Evolution Design"><img src="img/logo.png" alt="Evolution Design"></a><div class="nav-actions"><span class="nav-user" id="navUser">Venta temporal · iPhone 8 Plus</span><button class="nav-btn hidden" id="logoutBtn" type="button">Cerrar sesión</button><button class="nav-btn accent" id="loginTopBtn" type="button">Iniciar sesión</button></div></div></header>
+
+<main class="wrap">
+<section class="hero">
+  <article class="hero-card">
+    <div>
+      <div class="kicker">Evolution Design · Venta temporal</div>
+      <h1>iPhone<br><span>8 Plus.</span></h1>
+      <p class="hero-copy">Compra vinculada a tu cuenta Evolution. Elige entrega contra entrega, transferencia con envío nacional o entrega personal en Panajachel.</p>
+      <div class="price-big">Q950<small>precio base</small></div>
+      <div class="hero-meta">
+        <span class="chip">Cuenta Evolution requerida</span>
+        <span class="chip">Seguimiento en Mis Proyectos</span>
+        <span class="chip">Pedido protegido por reCAPTCHA</span>
+      </div>
+    </div>
+    <div class="phone-stage" aria-hidden="true">
+      <div class="phone"><i class="ear"></i><i class="camera"></i><div class="screen-copy"><strong>iPhone 8 Plus</strong><span>Evolution</span></div></div>
+    </div>
+  </article>
+
+  <aside class="purchase-card">
+    <div class="purchase-head"><div><div class="kicker">Pedido seguro</div><h2>Comprar ahora</h2><p>Tu pedido queda anclado a tu UID de Firebase.</p></div><span class="availability" id="availability">Consultando…</span></div>
+
+    <div class="auth-gate" id="authGate">
+      <div>
+        <div class="auth-lock">⌁</div>
+        <h3>Inicia sesión primero</h3>
+        <p>Necesitamos tu cuenta Evolution para guardar el pedido, mostrarte el seguimiento y proteger tus datos de entrega.</p>
+        <button class="primary" id="gateLoginBtn" type="button">Iniciar sesión para comprar</button>
+      </div>
+    </div>
+
+    <form class="form hidden" id="orderForm">
+      <div class="account-bar"><div><div class="account-name" id="accountName">Cliente</div><div class="account-mail" id="accountEmail">—</div></div><span class="chip">Cuenta verificada</span></div>
+
+      <div class="section-label">1 · Elige pago y entrega</div>
+      <div class="method-grid" id="methodGrid"></div>
+      <input type="hidden" id="paymentMethod" value="cod_forza">
+
+      <div class="section-label">2 · Datos de quien recibe</div>
+      <div class="fields">
+        <div class="field"><label>Nombre completo</label><input class="input" id="customerName" maxlength="120" required></div>
+        <div class="field"><label>Nombre de quien recibe</label><input class="input" id="recipientName" maxlength="120" required></div>
+        <div class="field"><label>Teléfono / WhatsApp</label><input class="input" id="phone" inputmode="tel" maxlength="40" placeholder="+502 5555 5555" required></div>
+        <div class="field"><label>NIT / DPI</label><input class="input" id="nitDpi" maxlength="40" inputmode="text"></div>
+      </div>
+
+      <div class="delivery-fields" id="deliveryFields">
+        <div class="section-label">3 · Dirección de entrega</div>
+        <div class="fields">
+          <div class="field"><label>Departamento</label><input class="input" id="department" maxlength="80"></div>
+          <div class="field"><label>Municipio</label><input class="input" id="municipality" maxlength="100"></div>
+          <div class="field full"><label>Dirección exacta</label><textarea class="input" id="address" maxlength="240" placeholder="Zona, calle, colonia, número de casa…"></textarea></div>
+          <div class="field full"><label>Referencia para encontrar la dirección</label><textarea class="input" id="reference" maxlength="240" placeholder="Ej. Frente a…, portón color…, llamar al llegar…"></textarea></div>
+          <div class="field full"><label>Notas del pedido</label><textarea class="input" id="notes" maxlength="500" placeholder="Alguna indicación adicional para Evolution…"></textarea></div>
+        </div>
+      </div>
+
+      <div class="summary" id="summary"></div>
+      <label class="check"><input type="checkbox" id="terms" required><span>Confirmo que mis datos de entrega son correctos y que realizaré el pago según el método seleccionado. La disponibilidad se confirma por Evolution Design.</span></label>
+      <button class="primary submit" id="submitBtn" type="submit">Confirmar pedido</button>
+      <div class="feedback" id="feedback"></div>
+    </form>
+
+    <div class="success hidden" id="successBox">
+      <div class="success-icon">✓</div>
+      <h3>Pedido recibido</h3>
+      <p id="successCopy">Tu solicitud quedó guardada y vinculada a tu cuenta Evolution.</p>
+      <div class="order-code" id="successOrder">—</div><br>
+      <button class="primary" id="openOrdersBtn" type="button">Ver seguimiento en Mis Proyectos</button>
+    </div>
+  </aside>
+</section>
+
+<p class="disclaimer">Protegido por reCAPTCHA Enterprise. Aplican la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad</a> y los <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Términos de Google</a>.</p>
+</main>
+
+<div class="modal-back" id="loginModal" aria-hidden="true">
+  <div class="login" role="dialog" aria-modal="true">
+    <div class="login-top"><div><div class="kicker">Cuenta Evolution</div><h3 id="loginTitle">Iniciar sesión</h3><p>Usa la misma cuenta con la que entrarás a Mis Proyectos.</p></div><button class="x" id="closeLogin" type="button">×</button></div>
+    <button class="google" id="googleBtn" type="button">Continuar con Google</button>
+    <div class="divider">o con correo</div>
+    <form id="emailAuthForm">
+      <input class="input" id="authEmail" type="email" autocomplete="email" placeholder="Correo electrónico" required>
+      <input class="input" id="authPassword" type="password" minlength="6" autocomplete="current-password" placeholder="Contraseña" required>
+      <button class="primary" id="emailAuthBtn" style="width:100%" type="submit">Ingresar</button>
+    </form>
+    <button class="toggle" id="toggleMode" type="button">¿No tienes cuenta? Crear cuenta</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+setPersistence(auth,browserLocalPersistence).catch(()=>{});
+
+const BACKEND="https://evolution-design-backend.evolutiongt01.workers.dev";
+const $=id=>document.getElementById(id);
+const money=n=>`Q${Number(n||0).toFixed(2)}`;
+let config=null,authMode="login",recaptchaConfigPromise=null,recaptchaScriptPromise=null;
+
+function showFeedback(message,type="error"){
+  const box=$("feedback");box.textContent=message;box.className=`feedback show ${type}`;
+}
+function clearFeedback(){$("feedback").className="feedback";$("feedback").textContent=""}
+function setLogin(open){$("loginModal").classList.toggle("show",open);$("loginModal").setAttribute("aria-hidden",String(!open));if(open)setTimeout(()=>$("authEmail")?.focus(),80)}
+function methodLabel(m){return config?.methods?.find(x=>x.method===m)?.methodLabel||m}
+function currentQuote(){return config?.methods?.find(x=>x.method===$("paymentMethod").value)||null}
+
+async function publicGet(path){
+  const r=await fetch(BACKEND+path,{cache:"no-store",headers:{accept:"application/json"}});
+  const b=await r.json().catch(()=>({}));
+  if(!r.ok||b.ok===false)throw new Error(b.error||"No pudimos consultar Evolution.");
+  return b;
+}
+async function authedFetch(path,{method="GET",body=null}={}){
+  const user=auth.currentUser;if(!user)throw new Error("Debes iniciar sesión.");
+  const token=await user.getIdToken();
+  const r=await fetch(BACKEND+path,{method,cache:"no-store",headers:{accept:"application/json",authorization:`Bearer ${token}`,...(body?{"content-type":"application/json"}:{})},body:body?JSON.stringify(body):undefined});
+  const b=await r.json().catch(()=>({}));
+  if(!r.ok||b.ok===false){const e=new Error(b.error||"No se pudo completar la operación.");e.code=b.code||"";throw e}
+  return b;
+}
+
+async function loadRecaptcha(){
+  if(recaptchaConfigPromise)return recaptchaConfigPromise;
+  recaptchaConfigPromise=publicGet("/recaptcha/config").then(async cfg=>{
+    if(!cfg.siteKey)throw new Error("Seguridad no disponible.");
+    if(!recaptchaScriptPromise){
+      recaptchaScriptPromise=new Promise((resolve,reject)=>{
+        if(window.grecaptcha?.enterprise)return resolve();
+        const s=document.createElement("script");
+        s.src=`https://www.google.com/recaptcha/enterprise.js?render=${encodeURIComponent(cfg.siteKey)}`;
+        s.async=true;s.defer=true;s.onload=resolve;s.onerror=()=>reject(new Error("No se pudo cargar reCAPTCHA."));
+        document.head.appendChild(s);
+      });
+    }
+    await recaptchaScriptPromise;
+    return cfg;
+  }).catch(e=>{recaptchaConfigPromise=null;throw e});
+  return recaptchaConfigPromise;
+}
+async function recaptchaToken(){
+  const cfg=await loadRecaptcha();
+  if(Array.isArray(cfg.actions)&&!cfg.actions.includes("STORE_ORDER"))throw new Error("Actualiza el Worker: falta STORE_ORDER en reCAPTCHA.");
+  return new Promise((resolve,reject)=>window.grecaptcha.enterprise.ready(async()=>{try{resolve(await window.grecaptcha.enterprise.execute(cfg.siteKey,{action:"STORE_ORDER"}))}catch(e){reject(e)}}));
+}
+
+function renderMethods(){
+  const host=$("methodGrid");
+  if(!config?.methods?.length){host.innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos cargar los métodos disponibles.</div>';return}
+  host.innerHTML=config.methods.map(q=>{
+    const detail=q.method==="cod_forza"||q.method==="cod_cargo"
+      ? `7% de recargo incluido · ${money(q.surchargeGtq)}`
+      : q.method==="transfer_shipping"
+        ? `Envío nacional fijo · ${money(q.shippingGtq)}`
+        : "Sin recargo ni costo de entrega";
+    return `<button type="button" class="method ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}</span><b>${money(q.totalGtq)}</b></button>`;
+  }).join("");
+  host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderSummary()}));
+}
+function syncDelivery(){
+  const pickup=$("paymentMethod").value==="pickup_pana";
+  $("deliveryFields").classList.toggle("hidden",pickup);
+  ["department","municipality","address","reference"].forEach(id=>{$(id).required=!pickup});
+}
+function renderSummary(){
+  const q=currentQuote();if(!q)return;
+  const rows=[["iPhone 8 Plus",q.basePriceGtq]];
+  if(q.surchargeGtq)rows.push(["Recargo contra entrega 7%",q.surchargeGtq]);
+  if(q.shippingGtq)rows.push(["Envío nacional",q.shippingGtq]);
+  if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",0]);
+  $("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${money(v)}</strong></div>`).join("")+`<div class="summary-row total"><span>Total</span><strong>${money(q.totalGtq)}</strong></div>`;
+  $("submitBtn").textContent=`Confirmar pedido · ${money(q.totalGtq)}`;
+}
+
+async function loadConfig(){
+  try{
+    config=await publicGet("/store/iphone-8-plus/config");
+    $("availability").textContent=config.available?"Unidad disponible":"Unidad confirmada";
+    $("availability").classList.toggle("sold",!config.available);
+    renderMethods();syncDelivery();renderSummary();
+    $("submitBtn").disabled=!config.available;
+  }catch(e){
+    $("availability").textContent="Verificación pendiente";
+    $("availability").classList.add("sold");
+    showFeedback(e.message);
+  }
+}
+
+onAuthStateChanged(auth,user=>{
+  const logged=!!user;
+  $("authGate").classList.toggle("hidden",logged);
+  $("orderForm").classList.toggle("hidden",!logged);
+  $("loginTopBtn").classList.toggle("hidden",logged);
+  $("logoutBtn").classList.toggle("hidden",!logged);
+  if(logged){
+    $("accountName").textContent=user.displayName||"Cliente Evolution";
+    $("accountEmail").textContent=user.email||"";
+    $("navUser").textContent=user.email||"Cuenta Evolution";
+    $("customerName").value=$("customerName").value||user.displayName||"";
+    $("recipientName").value=$("recipientName").value||user.displayName||"";
+    setLogin(false);
+  }else{
+    $("navUser").textContent="Venta temporal · iPhone 8 Plus";
+  }
+});
+
+$("loginTopBtn").onclick=$("gateLoginBtn").onclick=()=>setLogin(true);
+$("closeLogin").onclick=()=>setLogin(false);
+$("loginModal").addEventListener("click",e=>{if(e.target.id==="loginModal")setLogin(false)});
+$("logoutBtn").onclick=()=>signOut(auth);
+$("googleBtn").onclick=async()=>{try{$("loginError").classList.remove("show");await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){$("loginError").textContent=e.message||"No pudimos iniciar sesión."; $("loginError").classList.add("show")}};
+$("toggleMode").onclick=()=>{authMode=authMode==="login"?"signup":"login";$("loginTitle").textContent=authMode==="login"?"Iniciar sesión":"Crear cuenta";$("emailAuthBtn").textContent=authMode==="login"?"Ingresar":"Crear cuenta";$("toggleMode").textContent=authMode==="login"?"¿No tienes cuenta? Crear cuenta":"¿Ya tienes cuenta? Iniciar sesión";$("authPassword").autocomplete=authMode==="login"?"current-password":"new-password"};
+$("emailAuthForm").addEventListener("submit",async e=>{e.preventDefault();const btn=$("emailAuthBtn");btn.disabled=true;$("loginError").classList.remove("show");try{const email=$("authEmail").value.trim(),password=$("authPassword").value;authMode==="login"?await signInWithEmailAndPassword(auth,email,password):await createUserWithEmailAndPassword(auth,email,password)}catch(err){$("loginError").textContent=err.message||"No pudimos completar el acceso."; $("loginError").classList.add("show")}finally{btn.disabled=false}});
+
+$("orderForm").addEventListener("submit",async e=>{
+  e.preventDefault();clearFeedback();
+  if(!config?.available){showFeedback("Esta unidad ya fue confirmada.");return}
+  const q=currentQuote();if(!q)return;
+  const btn=$("submitBtn");btn.disabled=true;btn.textContent="Validando pedido…";
+  try{
+    const token=await recaptchaToken();
+    btn.textContent="Guardando pedido…";
+    const body={
+      customerName:$("customerName").value.trim(),
+      recipientName:$("recipientName").value.trim(),
+      phone:$("phone").value.trim(),
+      nitDpi:$("nitDpi").value.trim(),
+      paymentMethod:$("paymentMethod").value,
+      department:$("department").value.trim(),
+      municipality:$("municipality").value.trim(),
+      address:$("address").value.trim(),
+      reference:$("reference").value.trim(),
+      notes:$("notes").value.trim(),
+      termsAccepted:$("terms").checked,
+      recaptchaToken:token,
+      requestedUri:location.href
+    };
+    const result=await authedFetch("/store/orders/create",{method:"POST",body});
+    const order=result.order;
+    $("orderForm").classList.add("hidden");$("successBox").classList.remove("hidden");
+    $("successOrder").textContent=order.orderId;
+    $("successCopy").textContent=`${methodLabel(order.paymentMethod)} · Total ${money(order.totalGtq)}. Tu pedido ya aparece en tu cuenta.`;
+    config.available=false;$("availability").textContent="Pedido registrado";$("availability").classList.add("sold");
+  }catch(err){showFeedback(err.message||"No se pudo registrar el pedido.");btn.disabled=false;renderSummary()}
+});
+
+$("openOrdersBtn").onclick=()=>{try{sessionStorage.setItem("evolutionPortalArea","orders")}catch{} location.href="proyectos.html"};
+loadConfig();
+loadRecaptcha().catch(()=>{});
+</script>
+</body>
+</html>
