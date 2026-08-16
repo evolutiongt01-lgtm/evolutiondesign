@@ -1,9 +1,9 @@
-/* Evolution Design · Smart App Shell · v40 · Gesture-Level Performance Budget */
+/* Evolution Design · Smart App Shell · v41 · 60% Magnetic Liquid Finish */
 (() => {
   'use strict';
 
-  const VERSION='40';
-  const APP_BUILD=40;
+  const VERSION='41';
+  const APP_BUILD=41;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -21,7 +21,7 @@
   /* Orden de navegación táctil móvil. Mis Proyectos queda fuera porque
      es una zona privada y no pertenece al App Shell público. */
   const MOBILE_SWIPE_ORDER=['home','arquitectura','grafico','web'];
-  const MOBILE_SWIPE_COMMIT_PROGRESS=.35;
+  const MOBILE_SWIPE_COMMIT_PROGRESS=.60;
   const PRIVATE_HINTS=['/proyectos','/perfil','/admin','/portal','/account','/checkout','/payment','/pago','/login','/api/'];
   const prefetchedViews=new Set();
   const prefetchedAssets=new Set();
@@ -60,7 +60,7 @@
   let swipeLitePaintLast=0;
   let swipePremiumLocked=false;
 
-  const SWIPE_TIER_STATE_BUILD=40;
+  const SWIPE_TIER_STATE_BUILD=41;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -378,20 +378,62 @@
 
     body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
       transition:
-        transform .245s cubic-bezier(.18,.88,.22,1),
-        border-radius .245s cubic-bezier(.18,.88,.22,1)!important;
+        transform .34s cubic-bezier(.16,1,.30,1),
+        border-radius .34s cubic-bezier(.16,1,.30,1)!important;
       transform:translateZ(0) scale(var(--evo-active-card-scale,1))!important;
       border-radius:var(--evo-active-card-radius,0px)!important;
       will-change:transform,border-radius;
     }
     body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
       transition:
-        clip-path .245s cubic-bezier(.18,.88,.22,1),
-        transform .245s cubic-bezier(.18,.88,.22,1),
-        border-radius .245s cubic-bezier(.18,.88,.22,1)!important;
+        clip-path .34s cubic-bezier(.16,1,.30,1),
+        transform .34s cubic-bezier(.16,1,.30,1),
+        border-radius .34s cubic-bezier(.16,1,.30,1)!important;
       transform:translateZ(0) scale(var(--evo-next-card-scale,.885))!important;
       border-radius:var(--evo-next-card-radius,36px)!important;
       will-change:transform,clip-path,border-radius;
+    }
+
+    /* V41 · Magnetic Liquid Finish
+       El remate no se siente como corte: la tarjeta anterior "respira"
+       hacia atrás y el vidrio se intensifica mientras la nueva ocupa
+       suavemente el 100% de la pantalla. */
+    body.evo-live-swipe-settling
+    #evolution-view-stage .evo-swipe-glass{
+      transition:
+        opacity .34s cubic-bezier(.16,1,.30,1),
+        inset .34s cubic-bezier(.16,1,.30,1),
+        border-radius .34s cubic-bezier(.16,1,.30,1),
+        box-shadow .34s cubic-bezier(.16,1,.30,1),
+        backdrop-filter .34s cubic-bezier(.16,1,.30,1),
+        -webkit-backdrop-filter .34s cubic-bezier(.16,1,.30,1)!important;
+    }
+
+    body.evo-live-swipe-settling
+    #evolution-view-stage .evo-swipe-veil{
+      transition:opacity .34s cubic-bezier(.16,1,.30,1)!important;
+    }
+
+    body.evo-live-swipe-settling
+    #evolution-view-stage .evo-swipe-depth{
+      transition:
+        transform .34s cubic-bezier(.16,1,.30,1),
+        opacity .24s ease!important;
+    }
+
+    html[data-evo-swipe-tier="premium"]
+    body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
+      transition:
+        transform .34s cubic-bezier(.16,1,.30,1),
+        border-radius .34s cubic-bezier(.16,1,.30,1),
+        box-shadow .34s cubic-bezier(.16,1,.30,1)!important;
+    }
+
+    html[data-evo-swipe-tier="standard"]
+    body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
+      transition:
+        transform .32s cubic-bezier(.16,1,.30,1),
+        border-radius .32s cubic-bezier(.16,1,.30,1)!important;
     }
 
     /* Vidrio sobre la tarjeta que queda atrás. Es una sola superficie;
@@ -679,7 +721,7 @@
 
     html[data-evo-swipe-tier="lite"]
     body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
-      transition:clip-path .205s cubic-bezier(.18,.88,.22,1)!important;
+      transition:clip-path .24s cubic-bezier(.16,1,.30,1)!important;
       transform:none!important;
       border-radius:0!important;
     }
@@ -1973,10 +2015,32 @@
     document.body.classList.remove('evo-live-swipe-dragging');
     document.body.classList.add('evo-live-swipe-settling');
 
-    hideSwipeDepth();
+    /* V41: al cruzar 60% no apagamos el glass.
+       Lo llevamos al estado final para que la página anterior se
+       hunda suavemente mientras la nueva termina de crecer. */
+    const viewportWidth=
+      innerWidth ||
+      document.documentElement.clientWidth ||
+      375;
 
-    active.style.setProperty('--evo-active-card-scale',swipeVisualTier==='premium'?'.82':(swipeVisualTier==='standard'?'.89':'1'));
-    active.style.setProperty('--evo-active-card-radius',swipeVisualTier==='premium'?'52px':(swipeVisualTier==='standard'?'40px':'0px'));
+    const finishBoundary=side==='next'?0:viewportWidth;
+
+    updateLiquidGlassSwipe(
+      active,
+      neighbor,
+      finishBoundary,
+      1,
+      side
+    );
+
+    /* La costura desaparece durante el remate, pero el glass de la
+       tarjeta anterior permanece hasta la promoción final. */
+    if(swipeDepthEl){
+      swipeDepthEl.style.setProperty('--evo-swipe-depth-opacity','0');
+    }
+
+    active.style.setProperty('--evo-active-card-scale',swipeVisualTier==='premium'?'.80':(swipeVisualTier==='standard'?'.875':'1'));
+    active.style.setProperty('--evo-active-card-radius',swipeVisualTier==='premium'?'56px':(swipeVisualTier==='standard'?'44px':'0px'));
 
     showSwipeNeighbor(neighbor);
     neighbor.style.visibility='visible';
@@ -2043,7 +2107,7 @@
       });
 
       prewarmAccordingToNetwork();
-    },260);
+    },355);
   };
 
   const installMobileSwipe=(frame,route)=>{
