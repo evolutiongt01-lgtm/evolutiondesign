@@ -1566,6 +1566,11 @@ html.admin-page-hidden *{
           <div class="store-order-delivery-row"><span>Guía</span><strong id="storeOrderBoxfulGuide">Pendiente</strong></div>
           <div class="store-order-delivery-row"><span>Entrega aproximada</span><strong id="storeOrderBoxfulEta">—</strong></div>
           <div class="store-order-delivery-row"><span>Estado API</span><strong id="storeOrderBoxfulStatus">—</strong></div>
+          <div class="store-order-delivery-row hidden" id="storeOrderBoxfulErrorRow"><span>Último error</span><strong id="storeOrderBoxfulError" style="white-space:pre-wrap;overflow-wrap:anywhere;text-align:right">—</strong></div>
+        </div>
+        <div class="hidden" id="storeOrderBoxfulDiagnosticWrap" style="margin-top:9px">
+          <textarea class="textarea" id="storeOrderBoxfulDiagnostic" readonly style="min-height:120px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px"></textarea>
+          <button class="btn" type="button" style="margin-top:7px" onclick="copyStoreOrderBoxfulDiagnostic()">Copiar diagnóstico</button>
         </div>
         <div class="form-actions">
           <button class="btn btn-accent" id="createBoxfulGuideBtn" type="button" onclick="createBoxfulGuideForSelectedOrder()">Crear / reintentar guía</button>
@@ -1868,6 +1873,12 @@ window.openStoreOrder=function(orderId){
     $('storeOrderBoxfulEta').textContent=first?(last&&last!==first?`${first} → ${last}`:first):'—';
   }
   if($('storeOrderBoxfulStatus'))$('storeOrderBoxfulStatus').textContent=o.boxfulStatus==='created'?'Guía creada ✓':o.boxfulStatus==='pending_retry'?`Pendiente de reintento${o.boxfulErrorCode?` · ${o.boxfulErrorCode}`:''}`:(o.paymentMethod==='transfer_shipping'?'Esperando validación de transferencia':'Pendiente');
+  const boxfulErr=[o.boxfulErrorStatus?`HTTP ${o.boxfulErrorStatus}`:'',o.boxfulErrorMessage||''].filter(Boolean).join(' · ');
+  $('storeOrderBoxfulErrorRow')?.classList.toggle('hidden',!boxfulErr);
+  if($('storeOrderBoxfulError'))$('storeOrderBoxfulError').textContent=boxfulErr||'—';
+  const boxfulDiagnostic=[o.boxfulErrorDetails?`Respuesta:\n${o.boxfulErrorDetails}`:'',o.boxfulErrorAttempts?`Intentos:\n${o.boxfulErrorAttempts}`:''].filter(Boolean).join('\n\n');
+  $('storeOrderBoxfulDiagnosticWrap')?.classList.toggle('hidden',!boxfulDiagnostic);
+  if($('storeOrderBoxfulDiagnostic'))$('storeOrderBoxfulDiagnostic').value=boxfulDiagnostic;
   if($('createBoxfulGuideBtn'))$('createBoxfulGuideBtn').disabled=o.paymentMethod==='pickup_pana'||Boolean(o.boxfulShipmentNumber);
   $('storeOrderModal').classList.add('show');
 }
@@ -1894,6 +1905,13 @@ window.openStoreOrderProof=async function(orderId){
   }
 }
 
+
+window.copyStoreOrderBoxfulDiagnostic=async function(){
+  const text=$('storeOrderBoxfulDiagnostic')?.value||'';
+  if(!text){toast('No hay diagnóstico disponible.');return}
+  try{await navigator.clipboard.writeText(text);toast('Diagnóstico copiado.')}
+  catch{prompt('Copia el diagnóstico:',text)}
+}
 window.createBoxfulGuideForSelectedOrder=async function(){
   if(!selectedStoreOrder)return;
   const btn=$('createBoxfulGuideBtn'),old=btn?.textContent||'Crear guía';
@@ -1906,6 +1924,12 @@ window.createBoxfulGuideForSelectedOrder=async function(){
   }catch(e){
     console.error(e);toast(e.message||'No se pudo crear la guía.');
     if(btn){btn.disabled=false;btn.textContent=old}
+    try{
+      await refresh();
+      const id=selectedStoreOrder?.orderId||selectedStoreOrder?.id;
+      const fresh=(data.orders||[]).find(x=>(x.orderId||x.id)===id);
+      if(fresh)openStoreOrder(fresh.orderId||fresh.id);
+    }catch(_){}
   }
 }
 window.closeStoreOrder=function(){$('storeOrderModal')?.classList.remove('show');selectedStoreOrder=null}
