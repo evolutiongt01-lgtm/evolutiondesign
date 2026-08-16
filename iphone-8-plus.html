@@ -791,6 +791,305 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   .tech-spec b{font-size:6.2px}
 }
 
+
+/* ==========================================================
+   V3.7 · PREMIUM HERO LOOK
+   ========================================================== */
+.hero-card{
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(255,255,255,.07), rgba(255,255,255,0) 28%),
+    radial-gradient(circle at 78% 22%, rgba(212,184,149,.12), rgba(212,184,149,0) 34%),
+    linear-gradient(140deg, rgba(255,255,255,.05), rgba(255,255,255,.015) 42%, rgba(255,255,255,.01) 100%);
+}
+.hero-card:before{
+  width:640px;
+  height:640px;
+  right:-230px;
+  bottom:-260px;
+  background:radial-gradient(circle, rgba(212,184,149,.19), rgba(212,184,149,.03) 45%, rgba(212,184,149,0) 72%);
+  filter:blur(6px);
+}
+.hero-card:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 18%),
+    linear-gradient(90deg, rgba(255,255,255,.02), rgba(255,255,255,0) 16%);
+  z-index:0;
+}
+.hero-premium-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+.hero-grid{
+  position:absolute;
+  inset:-2px;
+  opacity:.18;
+  background:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size:78px 78px;
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.1) 45%, transparent 95%);
+  -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.1) 45%, transparent 95%);
+}
+.hero-orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(4px);
+}
+.hero-orb-a{
+  width:290px;height:290px;right:80px;top:88px;
+  background:radial-gradient(circle, rgba(212,184,149,.18), rgba(212,184,149,0) 70%);
+}
+.hero-orb-b{
+  width:240px;height:240px;left:-90px;top:40px;
+  background:radial-gradient(circle, rgba(108,127,170,.18), rgba(108,127,170,0) 72%);
+}
+.hero-light-beam{
+  position:absolute;
+  right:12%;
+  top:11%;
+  width:360px;
+  height:160px;
+  transform:rotate(-14deg);
+  background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.12), rgba(212,184,149,.12), rgba(255,255,255,0));
+  filter:blur(24px);
+  opacity:.55;
+}
+.hero-watermark{
+  position:absolute;
+  right:30px;
+  bottom:42px;
+  font-size:82px;
+  font-weight:900;
+  letter-spacing:-.07em;
+  line-height:.82;
+  color:rgba(255,255,255,.045);
+  text-shadow:0 0 32px rgba(255,255,255,.02);
+  user-select:none;
+}
+.hero-watermark.sub{
+  right:188px;
+  bottom:210px;
+  font-size:58px;
+  color:rgba(212,184,149,.06);
+}
+.hero-card > div:not(.hero-premium-bg){
+  position:relative;
+  z-index:2;
+}
+.phone-stage{
+  z-index:2;
+}
+.phone-stage-glass{
+  position:absolute;
+  left:50%;
+  top:16px;
+  transform:translateX(-50%);
+  width:min(94%,320px);
+  height:calc(100% - 12px);
+  border-radius:34px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.035) 16%, rgba(255,255,255,.022) 68%, rgba(255,255,255,.05)),
+    linear-gradient(130deg, rgba(255,255,255,.06), rgba(255,255,255,.01));
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    inset 0 -10px 30px rgba(255,255,255,.02),
+    0 30px 70px rgba(0,0,0,.24);
+  backdrop-filter:blur(18px) saturate(1.15);
+  -webkit-backdrop-filter:blur(18px) saturate(1.15);
+}
+.phone-stage-glass:before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border-radius:26px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,0));
+}
+.phone-stage-glass:after{
+  content:"";
+  position:absolute;
+  left:10%;
+  right:10%;
+  top:14px;
+  height:48px;
+  border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
+  filter:blur(8px);
+  opacity:.65;
+}
+.product-phone-img{
+  position:relative;
+  z-index:2;
+  width:min(86%,380px);
+  max-height:388px;
+  transform:translateY(2px) rotate(-2.6deg);
+  filter:drop-shadow(0 34px 44px rgba(0,0,0,.5));
+}
+.phone-floating-card{
+  position:absolute;
+  z-index:3;
+  min-width:118px;
+  padding:10px 12px;
+  border-radius:16px;
+  background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:0 18px 35px rgba(0,0,0,.22);
+  backdrop-filter:blur(18px) saturate(1.12);
+  -webkit-backdrop-filter:blur(18px) saturate(1.12);
+}
+.phone-floating-card span{
+  display:block;
+  font-size:8px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#8f8f96;
+  margin-bottom:4px;
+}
+.phone-floating-card strong{
+  display:block;
+  font-size:11px;
+  line-height:1.3;
+  color:#f3f3f4;
+}
+.phone-floating-card.battery{
+  right:-8px;
+  top:34px;
+}
+.phone-floating-card.battery strong{
+  color:#7de1a1;
+}
+.phone-floating-card.verified{
+  left:-12px;
+  bottom:58px;
+}
+.hero-copy{
+  color:#b7b7bc;
+  max-width:560px;
+}
+.unit-spec,
+.tech-specs,
+.tech-spec{
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.018));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+.tech-specs{
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-color:rgba(255,255,255,.08);
+}
+.unit-spec{
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+@media (max-width: 900px){
+  .hero-watermark{
+    right:18px;
+    bottom:36px;
+    font-size:66px;
+  }
+  .hero-watermark.sub{
+    right:135px;
+    bottom:166px;
+    font-size:44px;
+  }
+}
+@media (max-width: 767.98px){
+  .hero-card{
+    background:
+      radial-gradient(circle at 12% 10%, rgba(255,255,255,.05), rgba(255,255,255,0) 24%),
+      radial-gradient(circle at 88% 18%, rgba(212,184,149,.10), rgba(212,184,149,0) 34%),
+      linear-gradient(145deg, rgba(255,255,255,.042), rgba(255,255,255,.014) 48%, rgba(255,255,255,.01) 100%);
+  }
+  .hero-grid{
+    background-size:44px 44px;
+    opacity:.15;
+  }
+  .hero-orb-a{
+    width:170px;height:170px;right:6px;top:112px;
+  }
+  .hero-orb-b{
+    width:130px;height:130px;left:-36px;top:18px;
+  }
+  .hero-light-beam{
+    right:-6px;
+    top:132px;
+    width:180px;
+    height:90px;
+    filter:blur(18px);
+    opacity:.42;
+  }
+  .hero-watermark{
+    display:none;
+  }
+  .phone-stage{
+    right:8px!important;
+    bottom:18px!important;
+    width:138px!important;
+    height:236px!important;
+  }
+  .phone-stage-glass{
+    width:132px;
+    height:224px;
+    top:6px;
+    border-radius:24px;
+  }
+  .phone-stage-glass:before{
+    inset:8px;
+    border-radius:18px;
+  }
+  .product-phone-img{
+    width:134px;
+    max-height:226px;
+    transform:translateY(0) rotate(-1.8deg);
+  }
+  .phone-floating-card{
+    padding:7px 8px;
+    border-radius:11px;
+    min-width:86px;
+  }
+  .phone-floating-card span{
+    font-size:5.6px;
+    margin-bottom:2px;
+  }
+  .phone-floating-card strong{
+    font-size:7.5px;
+  }
+  .phone-floating-card.battery{
+    right:-2px;
+    top:10px;
+  }
+  .phone-floating-card.verified{
+    left:-3px;
+    bottom:18px;
+    min-width:78px;
+  }
+}
+@media (max-width: 420px){
+  .phone-stage{
+    right:0!important;
+    width:130px!important;
+    height:228px!important;
+  }
+  .phone-stage-glass{
+    width:126px;
+    height:216px;
+  }
+  .product-phone-img{
+    width:128px;
+    max-height:214px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -799,6 +1098,14 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 <main class="wrap">
 <section class="hero">
   <article class="hero-card">
+    <div class="hero-premium-bg" aria-hidden="true">
+      <i class="hero-grid"></i>
+      <i class="hero-orb hero-orb-a"></i>
+      <i class="hero-orb hero-orb-b"></i>
+      <i class="hero-light-beam"></i>
+      <div class="hero-watermark">SPACE&nbsp;GRAY</div>
+      <div class="hero-watermark hero-watermark.sub">64&nbsp;GB</div>
+    </div>
     <div>
       <div class="kicker">Evolution Design · Venta temporal</div>
       <h1>iPhone<br><span>8 Plus.</span></h1>
@@ -838,6 +1145,9 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       </div>
     </div>
     <div class="phone-stage">
+      <div class="phone-stage-glass" aria-hidden="true"></div>
+      <div class="phone-floating-card battery"><span>Batería</span><strong>95%</strong></div>
+      <div class="phone-floating-card verified"><span>Estado</span><strong>Unidad verificada</strong></div>
       <img class="product-phone-img" src="img/iphone.png" alt="iPhone 8 Plus gris espacial de la publicación" loading="eager" decoding="async">
     </div>
   </article>
