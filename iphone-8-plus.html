@@ -32,6 +32,29 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 .success{padding:28px 4px;text-align:center}.success-icon{width:68px;height:68px;border-radius:22px;display:grid;place-items:center;margin:0 auto 18px;background:rgba(85,217,138,.075);border:1px solid rgba(85,217,138,.22);color:#6fe19d;font-size:31px}.success h3{font-size:27px;letter-spacing:-.04em;margin:0 0 8px}.success p{font-size:11px;color:#8b8b91;line-height:1.65;margin:0 auto 19px;max-width:380px}.order-code{display:inline-block;margin-bottom:18px;padding:9px 12px;border-radius:10px;border:1px solid rgba(212,184,149,.18);background:rgba(212,184,149,.05);color:#dec5a4;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}
 .disclaimer{max-width:760px;margin:22px auto 0;text-align:center;color:#666;font-size:8px;line-height:1.6}.disclaimer a{color:#8b8176}
 .modal-back{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:18px}.modal-back.show{display:flex}.login{width:min(420px,100%);border:1px solid var(--line);border-radius:25px;background:linear-gradient(160deg,#161619,#09090a);padding:24px;box-shadow:0 30px 90px rgba(0,0,0,.62)}.login-top{display:flex;justify-content:space-between;gap:15px}.login h3{margin:0;font-size:23px;letter-spacing:-.04em}.login p{color:#7f7f86;font-size:10px;line-height:1.55}.x{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#aaa;cursor:pointer}.google{width:100%;margin:12px 0 8px;background:#f1f1ef;color:#151515;border:0;border-radius:12px;padding:12px;font-size:11px;font-weight:800;cursor:pointer}.divider{display:flex;align-items:center;gap:8px;color:#606067;font-size:9px;margin:12px 0}.divider:before,.divider:after{content:"";height:1px;background:#252528;flex:1}.login .input{margin-bottom:8px}.login-error{display:none;color:#ff9aa2;font-size:9px;line-height:1.5;margin-top:9px}.login-error.show{display:block}.toggle{border:0;background:none;color:#9c8d7c;width:100%;margin-top:12px;font-size:9px;cursor:pointer}
+
+.payment-extra{display:none;margin:-6px 0 16px;padding:14px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(212,184,149,.025))}
+.payment-extra.show{display:block}
+.payment-extra-title{font-size:11px;font-weight:800;color:#fff;margin:0 0 5px}
+.payment-extra-copy{font-size:9px;line-height:1.6;color:#8d8d94;margin:0 0 12px}
+.bank-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.bank-tab{border:1px solid var(--line);background:#0a0a0b;color:#9d9da3;border-radius:999px;padding:7px 10px;font-size:9px;font-weight:750;cursor:pointer}
+.bank-tab.active{border-color:rgba(212,184,149,.42);background:rgba(212,184,149,.09);color:#e2c7a5}
+.bank-card{border:1px solid rgba(212,184,149,.15);border-radius:14px;background:rgba(0,0,0,.22);overflow:hidden}
+.bank-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 11px;border-bottom:1px solid rgba(255,255,255,.055);font-size:9px}.bank-row:last-child{border-bottom:0}.bank-row span{color:#777}.bank-row strong{color:#eee;text-align:right;overflow-wrap:anywhere}
+.copy-bank{border:1px solid rgba(212,184,149,.22);background:rgba(212,184,149,.06);color:#d4b895;border-radius:9px;padding:6px 8px;font-size:8px;font-weight:800;cursor:pointer}
+.visa-btn,.guide-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid rgba(212,184,149,.34);background:linear-gradient(180deg,rgba(212,184,149,.13),rgba(212,184,149,.055));color:#e0c5a2;border-radius:12px;padding:10px 12px;font-size:10px;font-weight:800;cursor:pointer}
+.visa-warning{padding:10px 11px;border:1px solid rgba(233,188,101,.18);background:rgba(233,188,101,.05);border-radius:12px;color:#d7b879;font-size:9px;line-height:1.55;margin-bottom:10px}
+.shipping-notice{margin:4px 0 17px;padding:12px 13px;border-radius:14px;border:1px solid rgba(212,184,149,.16);background:rgba(212,184,149,.035);color:#a99b8b;font-size:9px;line-height:1.65}
+.shipping-notice strong{display:block;color:#dfc4a1;font-size:10px;margin-bottom:4px}
+.hero-guide{border:1px solid rgba(212,184,149,.22);background:rgba(212,184,149,.055);color:#d7bc9a;border-radius:999px;padding:9px 11px;font-size:10px;font-weight:750;cursor:pointer}
+.guide-card{width:min(620px,100%);max-height:min(82vh,760px);overflow:auto;border:1px solid rgba(212,184,149,.22);border-radius:28px;background:radial-gradient(circle at 86% 0%,rgba(212,184,149,.10),transparent 25%),linear-gradient(160deg,#161619,#09090a);box-shadow:0 35px 110px rgba(0,0,0,.68);padding:25px}
+.guide-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding-bottom:17px;border-bottom:1px solid var(--line)}
+.guide-head h3{font-size:27px;letter-spacing:-.045em;margin:4px 0 6px}.guide-head p{font-size:10px;line-height:1.6;color:#818188;margin:0;max-width:460px}
+.guide-section{padding:17px 0;border-bottom:1px solid rgba(255,255,255,.06)}.guide-section:last-child{border-bottom:0}.guide-section span{display:block;color:var(--accent);font-size:8px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}.guide-section p{white-space:pre-wrap;margin:0;color:#c6c6ca;font-size:11px;line-height:1.75}
+.guide-highlight{border:1px solid rgba(212,184,149,.16);background:rgba(212,184,149,.045);border-radius:15px;padding:13px!important;margin-top:15px}
+.success-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.success-actions .primary,.success-actions .secondary{min-width:170px}
+
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-card{min-height:520px}.purchase-card{min-height:auto}}
 @media(max-width:600px){.wrap{padding:24px 12px 60px}.nav{min-height:52px;padding:8px 10px}.nav img{height:21px}.nav-user{display:none}.hero-card,.purchase-card{border-radius:24px}.hero-card{padding:27px;min-height:480px}h1{font-size:clamp(3.1rem,17vw,5rem)}.price-big{font-size:39px}.phone-stage{height:190px}.phone{width:101px;height:195px;border-radius:20px}.screen-copy{inset:49px 12px auto}.screen-copy strong{font-size:14px}.method-grid,.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.purchase-card{padding:18px}.purchase-head h2{font-size:21px}}
 </style>
@@ -51,6 +74,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
         <span class="chip">Cuenta Evolution requerida</span>
         <span class="chip">Seguimiento en Mis Proyectos</span>
         <span class="chip">Pedido protegido por reCAPTCHA</span>
+        <button class="hero-guide" id="openGuideHero" type="button">Guía de compra y envíos</button>
       </div>
     </div>
     <div class="phone-stage" aria-hidden="true">
@@ -59,7 +83,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   </article>
 
   <aside class="purchase-card">
-    <div class="purchase-head"><div><div class="kicker">Pedido seguro</div><h2>Comprar ahora</h2><p>Tu pedido queda anclado a tu UID de Firebase.</p></div><span class="availability" id="availability">Consultando…</span></div>
+    <div class="purchase-head"><div><div class="kicker">Pedido seguro</div><h2>Comprar ahora</h2><p>Inicia sesión y completa tus datos para continuar con el pedido.</p></div><span class="availability" id="availability">Consultando…</span></div>
 
     <div class="auth-gate" id="authGate">
       <div>
@@ -76,6 +100,22 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <div class="section-label">1 · Elige pago y entrega</div>
       <div class="method-grid" id="methodGrid"></div>
       <input type="hidden" id="paymentMethod" value="cod_forza">
+
+      <div class="payment-extra" id="transferPanel">
+        <div class="payment-extra-title">Cuentas para transferencia</div>
+        <p class="payment-extra-copy">Transfiere el monto indicado y conserva tu comprobante. El envío nacional ya se refleja como Q40 en el total.</p>
+        <div class="bank-tabs" id="bankTabs"></div>
+        <div id="bankDetails"></div>
+      </div>
+
+      <div class="payment-extra" id="visacuotasPanel">
+        <div class="payment-extra-title">Pago con Visacuotas</div>
+        <div class="visa-warning"><strong>Importante:</strong> Visacuotas aplica un recargo adicional. Recurrente mostrará el monto final y las cuotas antes de que confirmes el pago.</div>
+        <p class="payment-extra-copy">Primero registra tu pedido aquí para que quede identificado. Después podrás abrir el enlace seguro de Recurrente para completar el pago.</p>
+        <a class="visa-btn" id="visacuotasPreviewLink" href="https://app.recurrente.com/s/evolutiondesing/o/iphone-8-plus" target="_blank" rel="noopener">Ver Visacuotas en Recurrente ↗</a>
+      </div>
+
+      <div class="shipping-notice"><strong>Envíos · lunes a viernes</strong><span id="shippingNoticeText">Los pedidos realizados sábado o domingo se despachan el lunes a las 10:00 a. m.</span><br><button class="guide-btn" id="openGuideForm" type="button" style="margin-top:9px">Ver guía completa</button></div>
 
       <div class="section-label">2 · Datos de quien recibe</div>
       <div class="fields">
@@ -97,7 +137,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       </div>
 
       <div class="summary" id="summary"></div>
-      <label class="check"><input type="checkbox" id="terms" required><span>Confirmo que mis datos de entrega son correctos y que realizaré el pago según el método seleccionado. La disponibilidad se confirma por Evolution Design.</span></label>
+      <label class="check"><input type="checkbox" id="terms" required><span>Confirmo que mis datos son correctos, que realizaré el pago según el método seleccionado y que leí la guía de compra y envíos. La disponibilidad se confirma por Evolution Design.</span></label>
       <button class="primary submit" id="submitBtn" type="submit">Confirmar pedido</button>
       <div class="feedback" id="feedback"></div>
     </form>
@@ -107,13 +147,34 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <h3>Pedido recibido</h3>
       <p id="successCopy">Tu solicitud quedó guardada y vinculada a tu cuenta Evolution.</p>
       <div class="order-code" id="successOrder">—</div><br>
-      <button class="primary" id="openOrdersBtn" type="button">Ver seguimiento en Mis Proyectos</button>
+      <div class="success-actions">
+        <button class="primary" id="openOrdersBtn" type="button">Ver seguimiento en Mis Proyectos</button>
+        <a class="secondary hidden" id="payVisacuotasBtn" href="https://app.recurrente.com/s/evolutiondesing/o/iphone-8-plus" target="_blank" rel="noopener" style="text-decoration:none">Continuar a Visacuotas ↗</a>
+      </div>
     </div>
   </aside>
 </section>
 
 <p class="disclaimer">Protegido por reCAPTCHA Enterprise. Aplican la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad</a> y los <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Términos de Google</a>.</p>
 </main>
+
+
+<div class="modal-back" id="guideModal" aria-hidden="true">
+  <div class="guide-card" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+    <div class="guide-head">
+      <div><div class="kicker">Evolution Design · Información de compra</div><h3 id="guideTitle">Guía de compra y envío</h3><p id="guideIntro">Revisa esta información antes de confirmar tu pedido.</p></div>
+      <button class="x" id="closeGuide" type="button">×</button>
+    </div>
+    <div class="guide-section">
+      <span>Pagos y entrega</span>
+      <p id="guidePaymentText"></p>
+    </div>
+    <div class="guide-section guide-highlight">
+      <span>Política de envíos</span>
+      <p id="guideShippingText"></p>
+    </div>
+  </div>
+</div>
 
 <div class="modal-back" id="loginModal" aria-hidden="true">
   <div class="login" role="dialog" aria-modal="true">
@@ -199,11 +260,79 @@ function renderMethods(){
       ? `7% de recargo incluido · ${money(q.surchargeGtq)}`
       : q.method==="transfer_shipping"
         ? `Envío nacional fijo · ${money(q.shippingGtq)}`
-        : "Sin recargo ni costo de entrega";
-    return `<button type="button" class="method ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}</span><b>${money(q.totalGtq)}</b></button>`;
+        : q.method==="visacuotas"
+          ? "Recargo adicional aplicado por Visacuotas / Recurrente"
+          : "Sin recargo ni costo de entrega";
+    const price=q.method==="visacuotas"
+      ? `${money(q.basePriceGtq)} + recargo`
+      : money(q.totalGtq);
+    return `<button type="button" class="method ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}</span><b>${price}</b></button>`;
   }).join("");
-  host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderSummary()}));
+  host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{
+    $("paymentMethod").value=btn.dataset.method;
+    renderMethods();
+    syncDelivery();
+    renderPaymentExtra();
+    renderSummary();
+  }));
 }
+
+let selectedBankKey="bac";
+
+function renderGuide(){
+  const guide=config?.guide||{};
+  $("guideTitle").textContent=guide.title||"Guía de compra y envío";
+  $("guideIntro").textContent=guide.intro||"Revisa esta información antes de confirmar tu pedido.";
+  $("guidePaymentText").textContent=guide.paymentText||"";
+  $("guideShippingText").textContent=guide.shippingText||"";
+  $("shippingNoticeText").textContent=guide.shippingText||"Los envíos se realizan de lunes a viernes.";
+}
+
+function openGuide(){
+  $("guideModal").classList.add("show");
+  $("guideModal").setAttribute("aria-hidden","false");
+}
+function closeGuide(){
+  $("guideModal").classList.remove("show");
+  $("guideModal").setAttribute("aria-hidden","true");
+}
+
+function copyBankAccount(value,button){
+  const done=()=>{const old=button.textContent;button.textContent="Copiado ✓";setTimeout(()=>button.textContent=old,1200)};
+  if(navigator.clipboard?.writeText)navigator.clipboard.writeText(value).then(done).catch(()=>{});
+  else{
+    const ta=document.createElement("textarea");ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();done();
+  }
+}
+
+function renderBankDetails(){
+  const banks=Array.isArray(config?.bankAccounts)?config.bankAccounts:[];
+  const bank=banks.find(x=>x.key===selectedBankKey)||banks[0];
+  if(!bank){$("bankTabs").innerHTML="";$("bankDetails").innerHTML='<div class="feedback show error">Las cuentas bancarias no están disponibles.</div>';return}
+  selectedBankKey=bank.key;
+  $("bankTabs").innerHTML=banks.map(b=>`<button type="button" class="bank-tab ${b.key===selectedBankKey?"active":""}" data-bank="${b.key}">${b.bank}</button>`).join("");
+  $("bankDetails").innerHTML=`<div class="bank-card">
+    <div class="bank-row"><span>Banco</span><strong>${bank.bank}</strong></div>
+    <div class="bank-row"><span>Titular</span><strong>${bank.accountHolder}</strong></div>
+    <div class="bank-row"><span>Tipo</span><strong>${bank.accountType}</strong></div>
+    <div class="bank-row"><span>Número de cuenta</span><strong>${bank.accountNumber} <button type="button" class="copy-bank" id="copyBankBtn">Copiar</button></strong></div>
+    <div class="bank-row"><span>Moneda</span><strong>${bank.currency||"GTQ"}</strong></div>
+  </div>`;
+  $("bankTabs").querySelectorAll("[data-bank]").forEach(btn=>btn.addEventListener("click",()=>{selectedBankKey=btn.dataset.bank;renderBankDetails()}));
+  $("copyBankBtn")?.addEventListener("click",e=>copyBankAccount(bank.accountNumber,e.currentTarget));
+}
+
+function renderPaymentExtra(){
+  const method=$("paymentMethod").value;
+  $("transferPanel").classList.toggle("show",method==="transfer_shipping");
+  $("visacuotasPanel").classList.toggle("show",method==="visacuotas");
+  if(method==="transfer_shipping")renderBankDetails();
+
+  const url=config?.visacuotasUrl||"https://app.recurrente.com/s/evolutiondesing/o/iphone-8-plus";
+  $("visacuotasPreviewLink").href=url;
+  $("payVisacuotasBtn").href=url;
+}
+
 function syncDelivery(){
   const pickup=$("paymentMethod").value==="pickup_pana";
   $("deliveryFields").classList.toggle("hidden",pickup);
@@ -211,12 +340,16 @@ function syncDelivery(){
 }
 function renderSummary(){
   const q=currentQuote();if(!q)return;
-  const rows=[["iPhone 8 Plus",q.basePriceGtq]];
-  if(q.surchargeGtq)rows.push(["Recargo contra entrega 7%",q.surchargeGtq]);
-  if(q.shippingGtq)rows.push(["Envío nacional",q.shippingGtq]);
-  if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",0]);
-  $("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${money(v)}</strong></div>`).join("")+`<div class="summary-row total"><span>Total</span><strong>${money(q.totalGtq)}</strong></div>`;
-  $("submitBtn").textContent=`Confirmar pedido · ${money(q.totalGtq)}`;
+  const rows=[["iPhone 8 Plus",money(q.basePriceGtq)]];
+  if(q.surchargeGtq)rows.push(["Recargo contra entrega 7%",money(q.surchargeGtq)]);
+  if(q.shippingGtq)rows.push(["Envío nacional",money(q.shippingGtq)]);
+  if(q.method==="visacuotas")rows.push(["Recargo Visacuotas","Se calcula en Recurrente"]);
+  else if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",money(0)]);
+  $("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${v}</strong></div>`).join("")+
+    `<div class="summary-row total"><span>${q.method==="visacuotas"?"Base antes del recargo":"Total"}</span><strong>${money(q.totalGtq)}</strong></div>`;
+  $("submitBtn").textContent=q.method==="visacuotas"
+    ? `Registrar pedido · ${money(q.totalGtq)} + recargo`
+    : `Confirmar pedido · ${money(q.totalGtq)}`;
 }
 
 async function loadConfig(){
@@ -224,7 +357,7 @@ async function loadConfig(){
     config=await publicGet("/store/iphone-8-plus/config");
     $("availability").textContent=config.available?"Unidad disponible":"Unidad confirmada";
     $("availability").classList.toggle("sold",!config.available);
-    renderMethods();syncDelivery();renderSummary();
+    renderMethods();syncDelivery();renderPaymentExtra();renderSummary();renderGuide();
     $("submitBtn").disabled=!config.available;
   }catch(e){
     $("availability").textContent="Verificación pendiente";
@@ -286,10 +419,19 @@ $("orderForm").addEventListener("submit",async e=>{
     const order=result.order;
     $("orderForm").classList.add("hidden");$("successBox").classList.remove("hidden");
     $("successOrder").textContent=order.orderId;
-    $("successCopy").textContent=`${methodLabel(order.paymentMethod)} · Total ${money(order.totalGtq)}. Tu pedido ya aparece en tu cuenta.`;
+    $("successCopy").textContent=order.paymentMethod==="visacuotas"
+      ? `${methodLabel(order.paymentMethod)} · Base ${money(order.totalGtq)} más el recargo mostrado por Recurrente. Tu pedido ya aparece en tu cuenta.`
+      : `${methodLabel(order.paymentMethod)} · Total ${money(order.totalGtq)}. Tu pedido ya aparece en tu cuenta.`;
+    $("payVisacuotasBtn").classList.toggle("hidden",order.paymentMethod!=="visacuotas");
     config.available=false;$("availability").textContent="Pedido registrado";$("availability").classList.add("sold");
   }catch(err){showFeedback(err.message||"No se pudo registrar el pedido.");btn.disabled=false;renderSummary()}
 });
+
+$("openGuideHero").onclick=openGuide;
+$("openGuideForm").onclick=openGuide;
+$("closeGuide").onclick=closeGuide;
+$("guideModal").addEventListener("click",e=>{if(e.target.id==="guideModal")closeGuide()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("guideModal").classList.contains("show"))closeGuide()});
 
 $("openOrdersBtn").onclick=()=>{try{sessionStorage.setItem("evolutionPortalArea","orders")}catch{} location.href="proyectos.html"};
 loadConfig();
