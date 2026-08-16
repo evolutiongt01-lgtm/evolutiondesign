@@ -927,6 +927,8 @@ html.admin-page-hidden *{
       <div class="field"><label>Introducción</label><input class="input" id="storeGuideIntro" maxlength="500"></div>
       <div class="field full"><label>Pagos y entrega</label><textarea class="textarea" id="storeGuidePayment" maxlength="1800"></textarea></div>
       <div class="field full"><label>Política de envíos</label><textarea class="textarea" id="storeGuideShipping" maxlength="2200"></textarea><div class="hint">Deja aquí visible el horario lunes a viernes, despacho del lunes a las 10:00 a. m. para pedidos del fin de semana y posibles atrasos por paros/bloqueos.</div></div>
+      <div class="field full"><label>Recepción y daños de transporte</label><textarea class="textarea" id="storeGuideDamage" maxlength="2600"></textarea><div class="hint">Aquí puedes modificar la política de revisión al recibir y el plazo de 10 horas para reportar daños de transporte.</div></div>
+      <div class="field full"><label>Uso posterior y daños causados por el comprador</label><textarea class="textarea" id="storeGuideCustomerDamage" maxlength="3200"></textarea><div class="hint">Define qué ocurre con golpes, agua, caídas, manipulación, reparaciones de terceros, jailbreak, modificaciones y otros daños producidos después de la entrega.</div></div>
     </div>
     <div class="hint" id="storeGuideAdminStatus" style="margin-top:10px">Cargando configuración pública…</div>
   </div>
@@ -1475,6 +1477,8 @@ function renderStoreGuideAdmin(){
   if($('storeGuideIntro'))$('storeGuideIntro').value=g.intro||'';
   if($('storeGuidePayment'))$('storeGuidePayment').value=g.paymentText||'';
   if($('storeGuideShipping'))$('storeGuideShipping').value=g.shippingText||'';
+  if($('storeGuideDamage'))$('storeGuideDamage').value=g.damageText||'';
+  if($('storeGuideCustomerDamage'))$('storeGuideCustomerDamage').value=g.customerDamageText||'';
   if($('storeGuideAdminStatus')){
     const when=g.updatedAt?niceDateTime(g.updatedAt):'configuración predeterminada';
     $('storeGuideAdminStatus').textContent=`Publicación actual: ${when}${g.updatedByAdminEmail?` · ${g.updatedByAdminEmail}`:''}`;
@@ -1490,7 +1494,9 @@ window.saveStoreGuide=async function(){
         title:$('storeGuideTitle').value.trim(),
         intro:$('storeGuideIntro').value.trim(),
         paymentText:$('storeGuidePayment').value.trim(),
-        shippingText:$('storeGuideShipping').value.trim()
+        shippingText:$('storeGuideShipping').value.trim(),
+        damageText:$('storeGuideDamage').value.trim(),
+        customerDamageText:$('storeGuideCustomerDamage').value.trim()
       }
     }});
     data.storeGuide=result;
@@ -1538,6 +1544,7 @@ window.openStoreOrder=function(orderId){
     ['NIT / DPI',o.nitDpi||'No indicado'],
     ['Estado del pago',o.paymentStatus==='paid'?'Pagado':o.paymentStatus==='pending_review'?'En revisión':o.paymentStatus==='pending_external'?'Pendiente en Recurrente':'Pendiente'],
     ...(o.paymentReference ? [['Referencia de pago',o.paymentReference]] : []),
+    ...(o.receiptStoragePath ? [['Comprobante','Recibido ✓']] : []),
     ...(Number(o.paidUsd||0)>0 ? [['Cobrado por PayPal',`$${Number(o.paidUsd).toFixed(2)} USD`]] : []),
     ...(o.paymentMethod==='visacuotas' ? [['Recargo Visacuotas','Se confirma en Recurrente']] : [])
   ].map(([l,v])=>`<div class="detail"><span>${esc(l)}</span><strong>${esc(v)}</strong></div>`).join('');
@@ -1549,12 +1556,35 @@ window.openStoreOrder=function(orderId){
     <div class="store-order-delivery-row"><span>Teléfono</span><strong>${esc(o.phone||'—')}</strong></div>
     <div class="store-order-delivery-row"><span>Dirección</span><strong>${esc(address||'—')}</strong></div>
     ${o.notes?`<div class="store-order-delivery-row"><span>Notas del cliente</span><strong>${esc(o.notes)}</strong></div>`:''}
+    ${o.receiptStoragePath?`<div class="store-order-delivery-row"><span>Comprobante</span><strong><button class="btn btn-accent" type="button" onclick="openStoreOrderProof('${esc(o.orderId||o.id)}')">Ver comprobante</button></strong></div>`:''}
   </div>`;
   $('storeOrderEditStatus').value=o.status||'received';
   $('storeOrderCarrier').value=o.carrier||'';
   $('storeOrderTracking').value=o.trackingNumber||'';
   $('storeOrderAdminNote').value=o.adminNote||'';
   $('storeOrderModal').classList.add('show');
+}
+window.openStoreOrderProof=async function(orderId){
+  const popup=window.open("","_blank");
+  try{
+    const user=auth.currentUser;if(!user)throw new Error("Tu sesión administrativa no está activa.");
+    const token=await user.getIdToken();
+    const response=await fetch(`${EVOLUTION_BACKEND_URL}/store/orders/admin/proof?orderId=${encodeURIComponent(orderId)}`,{
+      cache:"no-store",
+      headers:{authorization:`Bearer ${token}`}
+    });
+    if(!response.ok){
+      const result=await response.json().catch(()=>({}));
+      throw new Error(result?.error||"No se pudo abrir el comprobante.");
+    }
+    const blob=await response.blob();
+    const url=URL.createObjectURL(blob);
+    if(popup)popup.location.href=url;else window.open(url,"_blank");
+    setTimeout(()=>URL.revokeObjectURL(url),120000);
+  }catch(e){
+    if(popup)popup.close();
+    toast(e.message||"No se pudo abrir el comprobante.");
+  }
 }
 window.closeStoreOrder=function(){$('storeOrderModal')?.classList.remove('show');selectedStoreOrder=null}
 window.saveStoreOrder=async function(){
