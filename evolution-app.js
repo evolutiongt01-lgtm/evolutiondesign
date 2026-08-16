@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v29 · Stable Mask Swipe */
+/* Evolution Design · Smart App Shell · v30 · Pro Stable Swipe */
 (() => {
   'use strict';
 
-  const VERSION='29';
+  const VERSION='30';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -36,6 +36,8 @@
   let swipeSettling=false;
   let swipePreviewGeneration=0;
   let swipeDepthEl=null;
+  let swipeVeilEl=null;
+  let swipeEdgeGuards=null;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -305,9 +307,9 @@
       pointer-events:none!important;
     }
 
-    /* V29 · Stable Mask Swipe
-       No desplazamos iframes durante el gesto. Safari mantiene el texto
-       en su raster original y solo cambia la máscara de revelado. */
+    /* V30 · Pro Stable Swipe
+       Texto completamente inmóvil durante el gesto.
+       La sensación de profundidad viene de máscara + edge light + veil. */
     .evo-view-frame.evo-swipe-neighbor{
       opacity:1!important;
       filter:none!important;
@@ -337,36 +339,95 @@
       transform:none!important;
     }
     body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
-      transition:clip-path .21s cubic-bezier(.22,.72,.2,1)!important;
+      transition:clip-path .26s cubic-bezier(.32,.72,0,1)!important;
       will-change:clip-path;
     }
 
+    /* Velo muy leve sobre la página saliente.
+       Se mantiene debajo de la página entrante, por eso nunca ensucia
+       ni modifica el texto de la nueva view. */
+    #evolution-view-stage .evo-swipe-veil{
+      position:absolute;
+      inset:0;
+      z-index:3;
+      pointer-events:none;
+      background:#000;
+      opacity:0;
+      transition:opacity .12s linear;
+      contain:paint;
+    }
+
+    /* Unión entre páginas: sombra direccional + línea especular de 1px.
+       No usa blur ni box-shadow sobre iframes. */
     #evolution-view-stage .evo-swipe-depth{
       position:absolute;
       top:0;
       bottom:0;
       left:0;
-      width:54px;
+      width:68px;
       z-index:6;
       pointer-events:none;
       opacity:0;
       transform:translate3d(-200px,0,0);
-      background:
-        linear-gradient(
-          90deg,
-          rgba(0,0,0,0) 0%,
-          rgba(0,0,0,.035) 28%,
-          rgba(0,0,0,.20) 50%,
-          rgba(0,0,0,.07) 68%,
-          rgba(0,0,0,0) 100%
-        );
       transition:opacity .10s linear;
       contain:paint;
       will-change:transform,opacity;
     }
-    #evolution-view-stage .evo-swipe-depth.is-visible{
-      opacity:var(--evo-swipe-depth-opacity,.68);
+    #evolution-view-stage .evo-swipe-depth::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.92;
     }
+    #evolution-view-stage .evo-swipe-depth::after{
+      content:"";
+      position:absolute;
+      top:0;
+      bottom:0;
+      width:1px;
+      background:rgba(255,255,255,.11);
+      opacity:.72;
+    }
+    #evolution-view-stage .evo-swipe-depth.from-next::before{
+      background:linear-gradient(
+        90deg,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,.035) 28%,
+        rgba(0,0,0,.19) 72%,
+        rgba(0,0,0,.30) 100%
+      );
+    }
+    #evolution-view-stage .evo-swipe-depth.from-next::after{right:0}
+    #evolution-view-stage .evo-swipe-depth.from-prev::before{
+      background:linear-gradient(
+        90deg,
+        rgba(0,0,0,.30) 0%,
+        rgba(0,0,0,.19) 28%,
+        rgba(0,0,0,.035) 72%,
+        rgba(0,0,0,0) 100%
+      );
+    }
+    #evolution-view-stage .evo-swipe-depth.from-prev::after{left:0}
+    #evolution-view-stage .evo-swipe-depth.is-visible{
+      opacity:var(--evo-swipe-depth-opacity,.66);
+    }
+
+    /* Captura únicamente la zona extrema del contenido para que Safari
+       no convierta la esquina en Back/Forward ni el pager reciba saltos. */
+    #evolution-view-stage .evo-swipe-edge-guard{
+      position:absolute;
+      top:0;
+      bottom:0;
+      width:34px;
+      z-index:12;
+      background:transparent;
+      pointer-events:auto;
+      touch-action:none;
+      -webkit-user-select:none;
+      user-select:none;
+    }
+    #evolution-view-stage .evo-swipe-edge-guard.left{left:0}
+    #evolution-view-stage .evo-swipe-edge-guard.right{right:0}
 
     html[data-evo-network="slow"] .evo-view-frame{
       --evo-duration:.20s;
@@ -939,24 +1000,86 @@
     return el;
   };
 
-  const updateSwipeDepth=(boundaryX,progress=0)=>{
-    const el=ensureSwipeDepth();
-    if(!el)return;
+  const ensureSwipeVeil=()=>{
+    const host=stage();
+    if(!host)return null;
+
+    if(swipeVeilEl?.isConnected)return swipeVeilEl;
+
+    const el=document.createElement('div');
+    el.className='evo-swipe-veil';
+    el.setAttribute('aria-hidden','true');
+    host.appendChild(el);
+    swipeVeilEl=el;
+    return el;
+  };
+
+  const updateSwipeAtmosphere=(boundaryX,progress=0,side='next')=>{
+    const depth=ensureSwipeDepth();
+    const veil=ensureSwipeVeil();
+    if(!depth||!veil)return;
 
     const p=Math.max(0,Math.min(1,Number(progress)||0));
-    const opacity=.72-(p*.22);
 
-    el.style.setProperty(
+    depth.classList.toggle('from-next',side==='next');
+    depth.classList.toggle('from-prev',side==='prev');
+
+    const depthOpacity=.70-(p*.18);
+    depth.style.setProperty(
       '--evo-swipe-depth-opacity',
-      opacity.toFixed(3)
+      depthOpacity.toFixed(3)
     );
-    el.style.transform=`translate3d(${Math.round(boundaryX-27)}px,0,0)`;
-    el.classList.add('is-visible');
+
+    const offset=side==='next'?68:0;
+    depth.style.transform=`translate3d(${Math.round(boundaryX-offset)}px,0,0)`;
+    depth.classList.add('is-visible');
+
+    /* Máximo 8.5% de oscurecimiento: suficiente para separar planos,
+       demasiado poco para que parezca una transición "de plantilla". */
+    veil.style.opacity=(Math.min(.085,p*.085)).toFixed(3);
   };
 
   const hideSwipeDepth=()=>{
-    if(!swipeDepthEl)return;
-    swipeDepthEl.classList.remove('is-visible');
+    if(swipeDepthEl){
+      swipeDepthEl.classList.remove('is-visible','from-next','from-prev');
+    }
+    if(swipeVeilEl)swipeVeilEl.style.opacity='0';
+  };
+
+  const ensureSwipeEdgeGuards=()=>{
+    const host=stage();
+    if(!host||!mobileSwipeCapable())return;
+
+    if(
+      swipeEdgeGuards?.left?.isConnected &&
+      swipeEdgeGuards?.right?.isConnected
+    )return;
+
+    const make=side=>{
+      const guard=document.createElement('div');
+      guard.className=`evo-swipe-edge-guard ${side}`;
+      guard.setAttribute('aria-hidden','true');
+
+      const block=e=>{
+        /* La zona extrema no navega, no hace swipe y no se entrega
+           al historial lateral de Safari. */
+        if(e.cancelable)e.preventDefault();
+        e.stopPropagation();
+      };
+
+      guard.addEventListener('touchstart',block,{passive:false,capture:true});
+      guard.addEventListener('touchmove',block,{passive:false,capture:true});
+      guard.addEventListener('touchend',e=>e.stopPropagation(),{passive:true,capture:true});
+      guard.addEventListener('touchcancel',e=>e.stopPropagation(),{passive:true,capture:true});
+
+      host.appendChild(guard);
+      return guard;
+    };
+
+    swipeEdgeGuards={
+      left:make('left'),
+      right:make('right')
+    };
   };
 
   const resetSwipeTransition=frame=>{
@@ -1061,6 +1184,8 @@
   };
 
   const refreshSwipeNeighbors=({preferredPrev=null,preferredNext=null}={})=>{
+    ensureSwipeEdgeGuards();
+
     if(!mobileSwipeCapable()||!activeFrame||!activeKey){
       clearSwipeNeighbors();
       return;
@@ -1115,7 +1240,7 @@
         neighbor.style.visibility='hidden';
       }
       swipeSettling=false;
-    },225);
+    },275);
   };
 
   const commitLiveSwipe=(active,neighbor,side,route)=>{
@@ -1194,7 +1319,7 @@
       });
 
       prewarmAccordingToNetwork();
-    },225);
+    },275);
   };
 
   const installMobileSwipe=(frame,route)=>{
@@ -1209,8 +1334,10 @@
 
       const mobileMQ=win.matchMedia('(max-width: 991.98px)');
       let startX=0,startY=0,lastX=0,lastY=0,startTime=0;
+      let previousX=0,previousY=0,previousSampleTime=0;
       let tracking=false,lockedHorizontal=false,currentSide=null;
       let gestureNeighbor=null;
+      let anomalousGesture=false;
 
       const interactiveSelector=[
         'input','textarea','select','button',
@@ -1264,18 +1391,21 @@
         const p=touchPoint(e);
         if(!p||shouldIgnoreTarget(e.target))return;
 
-        /* Leave the outermost 22px to Safari's native back/forward edge gesture. */
+        /* V30: zona muerta generosa. El guard visual cubre 34px y aquí
+           dejamos margen adicional por diferencias de coordenadas en iOS. */
         const width=win.innerWidth||doc.documentElement.clientWidth||0;
-        if(p.x<22||(width&&p.x>width-22))return;
+        const safeEdge=Math.max(42,Math.min(54,width*.12));
+        if(p.x<=safeEdge||(width&&p.x>=width-safeEdge))return;
 
         hideSwipeDepth();
-        startX=lastX=p.x;
-        startY=lastY=p.y;
-        startTime=performance.now();
+        startX=lastX=previousX=p.x;
+        startY=lastY=previousY=p.y;
+        startTime=previousSampleTime=performance.now();
         tracking=true;
         lockedHorizontal=false;
         currentSide=null;
         gestureNeighbor=null;
+        anomalousGesture=false;
       };
 
       const onMove=e=>{
@@ -1283,6 +1413,25 @@
         const p=touchPoint(e);
         if(!p)return;
 
+        const now=performance.now();
+        const sampleDt=Math.max(1,now-previousSampleTime);
+        const sampleDx=Math.abs(p.x-previousX);
+        const viewportWidth=win.innerWidth||doc.documentElement.clientWidth||375;
+
+        /* Safari puede entregar un changedTouches extremo al pelear con su
+           gesto de historial. Un salto >38% del viewport en <28ms no es
+           un arrastre humano normal: cancelamos, jamás completamos. */
+        if(sampleDt<28&&sampleDx>viewportWidth*.38){
+          anomalousGesture=true;
+          tracking=false;
+          document.body.classList.remove('evo-live-swipe-dragging');
+          resetNeighborFromGesture();
+          return;
+        }
+
+        previousX=p.x;
+        previousY=p.y;
+        previousSampleTime=now;
         lastX=p.x;
         lastY=p.y;
 
@@ -1345,7 +1494,7 @@
             ? width-revealPx
             : revealPx;
 
-        updateSwipeDepth(boundaryX,progress);
+        updateSwipeAtmosphere(boundaryX,progress,side);
       };
 
       const finish=(cancelled=false)=>{
@@ -1357,13 +1506,21 @@
 
         tracking=false;
 
-        const dx=lastX-startX;
+        const rawDx=lastX-startX;
         const dy=lastY-startY;
         const elapsed=Math.max(1,performance.now()-startTime);
-        const velocity=Math.abs(dx)/elapsed;
         const width=win.innerWidth||doc.documentElement.clientWidth||375;
+        const dx=Math.max(-width,Math.min(width,rawDx));
+        const velocity=Math.abs(dx)/elapsed;
 
-        if(!lockedHorizontal||cancelled||!currentSide||!gestureNeighbor){
+        if(
+          anomalousGesture ||
+          Math.abs(rawDx)>width*1.04 ||
+          !lockedHorizontal ||
+          cancelled ||
+          !currentSide ||
+          !gestureNeighbor
+        ){
           hideSwipeDepth();
           document.body.classList.remove('evo-live-swipe-dragging');
           if(gestureNeighbor&&currentSide){
@@ -1376,8 +1533,11 @@
 
         const distanceRatio=Math.abs(dx)/Math.max(1,width);
         const qualifies=
-          Math.abs(dy)<105 &&
-          (distanceRatio>=.23 || (Math.abs(dx)>=42&&velocity>=.40));
+          Math.abs(dy)<96 &&
+          (
+            distanceRatio>=.285 ||
+            (Math.abs(dx)>=56&&velocity>=.52)
+          );
 
         const targetRoute=routeBeside(activeKey,currentSide);
         const ready=Boolean(gestureNeighbor.__evolutionSwipeReady);
@@ -1406,11 +1566,11 @@
 
       if(
         mobileMQ.matches &&
-        !sessionStorage.getItem('evolution_live_swipe_hint_v27')
+        !sessionStorage.getItem('evolution_live_swipe_hint_v30')
       ){
-        sessionStorage.setItem('evolution_live_swipe_hint_v27','1');
+        sessionStorage.setItem('evolution_live_swipe_hint_v30','1');
         const hint=doc.createElement('div');
-        hint.textContent='Desliza y mantén para explorar';
+        hint.textContent='Desliza entre secciones';
         Object.assign(hint.style,{
           position:'fixed',left:'50%',
           bottom:'calc(92px + env(safe-area-inset-bottom, 0px))',
