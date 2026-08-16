@@ -1908,7 +1908,7 @@ window.openStoreOrder=function(orderId){
     const last=o.estimatedDeliveryLatestDate||'';
     $('storeOrderBoxfulEta').textContent=first?(last&&last!==first?`${first} → ${last}`:first):'—';
   }
-  if($('storeOrderBoxfulStatus'))$('storeOrderBoxfulStatus').textContent=o.boxfulStatus==='created'?'Guía creada ✓':o.boxfulStatus==='pending_retry'?`Pendiente de reintento${o.boxfulErrorCode?` · ${o.boxfulErrorCode}`:''}`:(o.paymentMethod==='transfer_shipping'?'Esperando validación de transferencia':'Pendiente');
+  if($('storeOrderBoxfulStatus'))$('storeOrderBoxfulStatus').textContent=o.boxfulStatus==='created'?'Guía creada ✓':o.boxfulStatus==='pending_retry'?(o.boxfulErrorServerSide?'Respuesta interna de la paquetería · diagnóstico disponible':`Pendiente de reintento${o.boxfulErrorCode?` · ${o.boxfulErrorCode}`:''}`):(o.paymentMethod==='transfer_shipping'?'Esperando validación de transferencia':'Pendiente');
   const boxfulErr=[o.boxfulErrorStatus?`HTTP ${o.boxfulErrorStatus}`:'',o.boxfulErrorMessage||''].filter(Boolean).join(' · ');
   $('storeOrderBoxfulErrorRow')?.classList.toggle('hidden',!boxfulErr);
   if($('storeOrderBoxfulError'))$('storeOrderBoxfulError').textContent=boxfulErr||'—';
