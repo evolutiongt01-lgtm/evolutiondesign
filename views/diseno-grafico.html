@@ -2146,6 +2146,26 @@ body.gd-modal-open{overflow:hidden}
 <style id="evolution-internal-view-style">
 html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile-app-nav{display:none!important}
 </style>
+
+<style id="evolution-recaptcha-badge-ui-fix-v25">
+  .grecaptcha-badge{
+    visibility:hidden !important;
+  }
+  .evolution-recaptcha-disclosure{
+    margin:18px auto 8px;
+    padding:0 14px;
+    max-width:760px;
+    color:rgba(255,255,255,.34);
+    font:500 10px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    text-align:center;
+  }
+  .evolution-recaptcha-disclosure a{
+    color:inherit;
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+</style>
+
 </head>
 <body data-evolution-view="grafico" class="graphic-page">
 <div id="evolution-view-auth-mirror" hidden aria-hidden="true">
@@ -2171,6 +2191,12 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
     if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
     const a=e.target instanceof Element?e.target.closest('a[href]'):null;
     if(!a||a.target==='_blank'||a.hasAttribute('download'))return;
+
+    /* V25: href="#" y hashes locales son controles internos de esta view.
+       No deben convertirse en navegación del App Shell. */
+    const rawHref=(a.getAttribute('href')||'').trim();
+    if(!rawHref||rawHref==='#'||rawHref.startsWith('#'))return;
+
     let u;try{u=new URL(a.href,location.href)}catch(_){return}
     if(u.origin!==location.origin)return;
     if(u.hash&&u.pathname===location.pathname)return;
@@ -4216,6 +4242,15 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
   }, { once:true });
 })();
 </script>
+
+
+<div class="evolution-recaptcha-disclosure" data-evolution-recaptcha-disclosure>
+  Este sitio está protegido por reCAPTCHA y se aplican la
+  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad</a>
+  y los
+  <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Términos de Servicio</a>
+  de Google.
+</div>
 
 </body>
 </html>
