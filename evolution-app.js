@@ -1,9 +1,9 @@
-/* Evolution Design · Smart App Shell · v35 · Adaptive Liquid Glass */
+/* Evolution Design · Smart App Shell · v37 · Two-File Update Architecture */
 (() => {
   'use strict';
 
-  const VERSION='35';
-  const APP_BUILD=35;
+  const VERSION='37';
+  const APP_BUILD=37;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -532,22 +532,72 @@
     html[data-evo-swipe-tier="premium"]
     #evolution-view-stage .evo-swipe-glass{
       background:
-        radial-gradient(circle at 15% 8%,rgba(255,255,255,.25),rgba(255,255,255,0) 29%),
-        radial-gradient(circle at 88% 76%,rgba(212,184,149,.10),rgba(212,184,149,0) 34%),
-        linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.032) 40%,rgba(212,184,149,.078) 100%);
+        radial-gradient(circle at 13% 7%,rgba(255,255,255,.34),rgba(255,255,255,0) 27%),
+        radial-gradient(circle at 82% 82%,rgba(212,184,149,.15),rgba(212,184,149,0) 38%),
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.185),
+          rgba(255,255,255,.045) 38%,
+          rgba(212,184,149,.105) 100%
+        );
     }
 
     html[data-evo-swipe-tier="premium"]
     #evolution-view-stage .evo-swipe-glass::before{
-      opacity:.92;
-      background:linear-gradient(116deg,rgba(255,255,255,.17),rgba(255,255,255,.04) 19%,rgba(255,255,255,0) 43%);
+      opacity:1;
+      background:
+        linear-gradient(
+          116deg,
+          rgba(255,255,255,.245) 0%,
+          rgba(255,255,255,.065) 18%,
+          rgba(255,255,255,.014) 34%,
+          rgba(255,255,255,0) 48%
+        );
+    }
+
+    html[data-evo-swipe-tier="premium"]
+    #evolution-view-stage .evo-swipe-glass::after{
+      left:6%;
+      right:6%;
+      top:0;
+      height:1px;
+      display:block;
+      opacity:.95;
+      background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.44) 22%,
+        rgba(212,184,149,.32) 52%,
+        rgba(255,255,255,.24) 76%,
+        transparent
+      );
     }
 
     html[data-evo-swipe-tier="premium"]
     #evolution-view-stage .evo-swipe-depth{
-      width:164px;
-      -webkit-backdrop-filter:blur(3.2px) saturate(1.07);
-      backdrop-filter:blur(3.2px) saturate(1.07);
+      width:184px;
+      -webkit-backdrop-filter:blur(4.4px) saturate(1.10);
+      backdrop-filter:blur(4.4px) saturate(1.10);
+    }
+
+    /* En Premium la tarjeta anterior realmente se separa del fondo.
+       No afecta Standard/Lite. */
+    html[data-evo-swipe-tier="premium"]
+    body.evo-live-swipe-dragging .evo-view-frame.evo-view-active{
+      transform:
+        translateZ(0)
+        scale(var(--evo-active-card-scale,1))!important;
+      border-radius:var(--evo-active-card-radius,0px)!important;
+      box-shadow:
+        0 30px 95px rgba(0,0,0,.34),
+        0 0 0 1px rgba(255,255,255,.025)!important;
+    }
+
+    html[data-evo-swipe-tier="premium"]
+    body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
+      box-shadow:
+        0 30px 95px rgba(0,0,0,.34),
+        0 0 0 1px rgba(255,255,255,.025)!important;
     }
 
     /* LITE: pensado para iPhone 8 Plus y hardware equivalente. */
@@ -1412,50 +1462,55 @@
 
     const premium=tier==='premium';
 
-    const activeScale=1-(p*(premium?.092:.085));
-    const base=premium?.872:.885;
+    /* V36 PREMIUM:
+       anterior 100% -> 86%
+       entrante 84.5% -> 100%
+       Standard conserva exactamente los valores de V35. */
+    const activeScale=1-(p*(premium?.14:.085));
+    const base=premium?.845:.885;
     const nextScale=base+(p*(1-base));
-    const activeRadius=p*(premium?40:36);
-    const nextRadius=(1-p)*(premium?40:36);
+    const activeRadius=p*(premium?48:36);
+    const nextRadius=(1-p)*(premium?48:36);
 
     active.style.setProperty('--evo-active-card-scale',activeScale.toFixed(4));
     active.style.setProperty('--evo-active-card-radius',`${activeRadius.toFixed(2)}px`);
     neighbor.style.setProperty('--evo-next-card-scale',nextScale.toFixed(4));
     neighbor.style.setProperty('--evo-next-card-radius',`${nextRadius.toFixed(2)}px`);
 
-    const cardInset=p*(premium?20:17);
-    const maxBlur=premium?14:10.5;
+    const cardInset=p*(premium?28:17);
+    const maxBlur=premium?19:10.5;
     const blur=Math.min(maxBlur,g*maxBlur);
-    const glassOpacity=Math.min(premium?.985:.96,g*(premium?.985:.96));
+    const glassOpacity=Math.min(premium?.995:.96,g*(premium?.995:.96));
 
     glass.style.inset=`${cardInset.toFixed(2)}px`;
     glass.style.borderRadius=`${activeRadius.toFixed(2)}px`;
     glass.style.opacity=glassOpacity.toFixed(3);
     glass.style.borderColor=
-      `rgba(255,255,255,${(.018+g*(premium?.15:.125)).toFixed(3)})`;
+      `rgba(255,255,255,${(.018+g*(premium?.205:.125)).toFixed(3)})`;
 
-    const saturation=1+(g*(premium?.20:.14));
+    const saturation=1+(g*(premium?.28:.14));
     glass.style.webkitBackdropFilter=
       `blur(${blur.toFixed(2)}px) saturate(${saturation.toFixed(3)})`;
     glass.style.backdropFilter=
       `blur(${blur.toFixed(2)}px) saturate(${saturation.toFixed(3)})`;
 
     glass.style.boxShadow=[
-      `0 ${(12+g*(premium?23:18)).toFixed(1)}px ${(34+g*(premium?62:48)).toFixed(1)}px rgba(0,0,0,${(.10+g*(premium?.46:.40)).toFixed(3)})`,
-      `inset 0 1px 0 rgba(255,255,255,${(.035+g*(premium?.17:.12)).toFixed(3)})`,
-      `inset 0 0 0 1px rgba(212,184,149,${(g*(premium?.065:.045)).toFixed(3)})`
+      `0 ${(12+g*(premium?34:18)).toFixed(1)}px ${(34+g*(premium?92:48)).toFixed(1)}px rgba(0,0,0,${(.10+g*(premium?.54:.40)).toFixed(3)})`,
+      `0 0 ${(premium?46:0)*g}px rgba(212,184,149,${(premium?g*.075:0).toFixed(3)})`,
+      `inset 0 1px 0 rgba(255,255,255,${(.035+g*(premium?.23:.12)).toFixed(3)})`,
+      `inset 0 0 0 1px rgba(212,184,149,${(g*(premium?.085:.045)).toFixed(3)})`
     ].join(',');
 
-    veil.style.opacity=(g*(premium?.115:.10)).toFixed(3);
+    veil.style.opacity=(g*(premium?.145:.10)).toFixed(3);
 
     depth.classList.toggle('from-next',side==='next');
     depth.classList.toggle('from-prev',side==='prev');
     depth.style.setProperty(
       '--evo-swipe-depth-opacity',
-      ((premium?.72:.66)-(p*(premium?.18:.16))).toFixed(3)
+      ((premium?.80:.66)-(p*(premium?.20:.16))).toFixed(3)
     );
 
-    const blendWidth=premium?164:144;
+    const blendWidth=premium?184:144;
     const offset=side==='next'?blendWidth*.72:blendWidth*.28;
     depth.style.transform=`translate3d(${Math.round(boundaryX-offset)}px,0,0)`;
     depth.classList.add('is-visible');
@@ -1691,8 +1746,8 @@
     if(neighbor){
       showSwipeNeighbor(neighbor);
       neighbor.style.visibility='visible';
-      neighbor.style.setProperty('--evo-next-card-scale','.885');
-      neighbor.style.setProperty('--evo-next-card-radius','36px');
+      neighbor.style.setProperty('--evo-next-card-scale',swipeVisualTier==='premium'?'.845':'.885');
+      neighbor.style.setProperty('--evo-next-card-radius',swipeVisualTier==='premium'?'48px':'36px');
       setSwipeClip(neighbor,side,0);
     }
 
@@ -1721,8 +1776,8 @@
 
     hideSwipeDepth();
 
-    active.style.setProperty('--evo-active-card-scale','.915');
-    active.style.setProperty('--evo-active-card-radius','36px');
+    active.style.setProperty('--evo-active-card-scale',swipeVisualTier==='premium'?'.86':'.915');
+    active.style.setProperty('--evo-active-card-radius',swipeVisualTier==='premium'?'48px':'36px');
 
     showSwipeNeighbor(neighbor);
     neighbor.style.visibility='visible';
@@ -3024,6 +3079,55 @@
     navigator.serviceWorker.addEventListener('controllerchange',handler,{once:true});
   });
 
+  const deleteCachedEvolutionApp=async()=>{
+    if(!('caches'in window))return;
+
+    const keys=await caches.keys().catch(()=>[]);
+
+    await Promise.all(
+      keys
+        .filter(key=>String(key).startsWith('evolution'))
+        .map(async key=>{
+          try{
+            const cache=await caches.open(key);
+            const requests=await cache.keys();
+
+            await Promise.all(
+              requests.map(request=>{
+                try{
+                  const url=new URL(request.url);
+                  if(url.origin===location.origin&&url.pathname==='/evolution-app.js'){
+                    return cache.delete(request);
+                  }
+                }catch(_){}
+                return Promise.resolve(false);
+              })
+            );
+          }catch(_){}
+        })
+    );
+  };
+
+  const primeLatestEvolutionApp=async release=>{
+    const stamp=Date.now();
+    const requestURL=`/evolution-app.js?evo-build=${release?.build||APP_BUILD}&t=${stamp}`;
+
+    /* Después de borrar la copia cacheada, el SW V36 puede seguir
+       funcionando normalmente: staleWhileRevalidate no encontrará
+       evolution-app.js y tendrá que obtener esta copia desde red. */
+    const response=await fetch(requestURL,{
+      cache:'reload',
+      credentials:'same-origin',
+      headers:{accept:'application/javascript,text/javascript,*/*;q=0.1'}
+    });
+
+    if(!response.ok){
+      throw new Error(`APP_REFRESH_HTTP_${response.status}`);
+    }
+
+    return true;
+  };
+
   const applyEvolutionUpdate=async release=>{
     if(evolutionUpdateBusy)return;
     evolutionUpdateBusy=true;
@@ -3044,71 +3148,60 @@
     if(later)later.disabled=true;
 
     try{
-      setUpdateProgress(10,'Buscando la versión más reciente…');
+      setUpdateProgress(12,'Verificando la nueva versión…');
 
-      let reg=null;
-      if('serviceWorker'in navigator){
-        reg=await navigator.serviceWorker.getRegistration('/').catch(()=>null);
-        if(reg){
-          setUpdateProgress(24,'Verificando actualización…');
-          await reg.update().catch(()=>{});
+      /* Confirmamos una vez más el JSON directamente desde red. */
+      const latest=await fetchEvolutionRelease();
+      const targetBuild=latest.build||release?.build||APP_BUILD;
 
-          if(reg.waiting){
-            const changed=waitControllerChange();
-            reg.waiting.postMessage({type:'SKIP_WAITING'});
-            await changed;
-          }
-        }
+      if(targetBuild<=APP_BUILD&&release?.build>APP_BUILD){
+        throw new Error('RELEASE_NOT_READY');
       }
 
-      setUpdateProgress(46,'Limpiando caché anterior…');
+      setUpdateProgress(34,'Preparando actualización…');
 
-      if(navigator.serviceWorker?.controller){
-        const cleared=waitSWMessage('EVOLUTION_CACHES_CLEARED',2500);
-        navigator.serviceWorker.controller.postMessage({type:'CLEAR_EVOLUTION_CACHES'});
-        await cleared;
-      }else if('caches'in window){
-        const keys=await caches.keys().catch(()=>[]);
-        await Promise.all(
-          keys.filter(key=>String(key).startsWith('evolution')).map(key=>caches.delete(key))
+      /* V37+: NO actualizamos Service Worker y NO vaciamos views,
+         imágenes, navbar ni payments. Solo quitamos app.js. */
+      await deleteCachedEvolutionApp();
+
+      setUpdateProgress(58,'Descargando Evolution…');
+      await primeLatestEvolutionApp(latest.build?latest:release);
+
+      setUpdateProgress(82,'Aplicando mejoras…');
+      acknowledgeRelease(targetBuild);
+
+      try{
+        sessionStorage.setItem(
+          'evolution_update_completed',
+          JSON.stringify({
+            build:targetBuild,
+            at:Date.now(),
+            mode:'app-json'
+          })
         );
-      }
+      }catch(_){}
 
-      setUpdateProgress(68,'Descargando archivos nuevos…');
+      await new Promise(resolve=>setTimeout(resolve,380));
 
-      const stamp=Date.now();
-      const core=[
-        '/evolution-app.js',
-        '/evolution-nav.js',
-        '/evolution-payments.js',
-        '/evolution-sw.js',
-        '/views/home.html',
-        '/views/arquitectura.html',
-        '/views/diseno-grafico.html',
-        '/views/diseno-web.html'
-      ];
-
-      await Promise.allSettled(
-        core.map(url=>fetch(`${url}?evo-refresh=${stamp}`,{
-          cache:'reload',
-          credentials:'same-origin'
-        }))
-      );
-
-      setUpdateProgress(91,'Aplicando mejoras…');
-      acknowledgeRelease(release?.build||APP_BUILD);
-
-      await new Promise(resolve=>setTimeout(resolve,430));
       setUpdateProgress(100,'Listo · Reiniciando Evolution…');
-      await new Promise(resolve=>setTimeout(resolve,560));
+      await new Promise(resolve=>setTimeout(resolve,520));
 
       const url=new URL(location.href);
-      url.searchParams.set('evo_update',`${release?.build||APP_BUILD}-${Date.now()}`);
+      url.searchParams.set(
+        'evo_update',
+        `${targetBuild}-${Date.now()}`
+      );
+
       location.replace(url.href);
     }catch(error){
       console.warn('[Evolution Update]',error);
+
       evolutionUpdateBusy=false;
-      try{sessionStorage.removeItem('evolution_update_busy_build')}catch(_){}
+
+      try{
+        sessionStorage.removeItem('evolution_update_busy_build');
+      }catch(_){}
+
       if(btn){
         btn.disabled=false;
         btn.classList.remove('is-loading');
@@ -3116,9 +3209,11 @@
       if(later)later.disabled=false;
 
       setUpdateProgress(0,'Intentar nuevamente');
+
       const status=overlay?.querySelector('[data-evo-update-status]');
       if(status){
-        status.textContent='No se pudo completar la actualización. Revisa tu conexión e inténtalo nuevamente.';
+        status.textContent=
+          'No se pudo descargar la nueva versión. Revisa tu conexión e inténtalo nuevamente.';
       }
     }
   };
@@ -3312,6 +3407,13 @@
     await checkEvolutionRelease({force:true,announceCurrent:true});
   });
 
+  window.EvolutionUpdateArchitecture={
+    mode:'app+json',
+    app:'/evolution-app.js',
+    manifest:'/evolution-version.json',
+    serviceWorkerPolicy:'change-only-when-cache-strategy-changes'
+  };
+
   window.EvolutionSwipePerformance={
     get tier(){return swipeVisualTier},
     get reason(){return swipeTierReason},
@@ -3451,7 +3553,6 @@
       if(!reg)return;
       await reg.update();
       reg.active?.postMessage({type:'GET_VERSION'});
-      await checkEvolutionRelease({force:false,announceCurrent:false});
     }catch(_){}
   }
 
