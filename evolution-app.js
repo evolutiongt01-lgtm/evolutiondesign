@@ -1,8 +1,11 @@
-/* Evolution Design · Smart App Shell · v33 · Liquid Glass Blend Swipe */
+/* Evolution Design · Smart App Shell · v34 · Update Center */
 (() => {
   'use strict';
 
-  const VERSION='33';
+  const VERSION='34';
+  const APP_BUILD=34;
+  const RELEASE_ENDPOINT='/evolution-version.json';
+  const RELEASE_ACK_KEY='evolution_release_ack_build';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -2345,6 +2348,672 @@
     loadRoute(route,{push:false,restore:true});
   });
 
+
+  /* ============================================================
+     EVOLUTION UPDATE CENTER · V34
+     ============================================================ */
+  let evolutionRelease=null;
+  let evolutionUpdateOverlay=null;
+  let evolutionUpdateBusy=false;
+  let evolutionReleaseCheckPromise=null;
+
+  const releaseBuild=value=>{
+    const n=Number.parseInt(String(value??''),10);
+    return Number.isFinite(n)&&n>0?n:0;
+  };
+
+  const normalizeRelease=value=>{
+    const data=value&&typeof value==='object'?value:{};
+    const notes=Array.isArray(data.notes)
+      ? data.notes.map(item=>{
+          if(typeof item==='string')return {title:item,detail:''};
+          return {
+            title:String(item?.title||'').trim(),
+            detail:String(item?.detail||'').trim()
+          };
+        }).filter(x=>x.title).slice(0,3)
+      :[];
+
+    return {
+      build:releaseBuild(data.build),
+      version:String(data.version||data.build||'').trim(),
+      announce:data.announce===true,
+      required:data.required===true,
+      subtitle:String(
+        data.subtitle||
+        'Actualiza para aplicar correcciones de errores, mejoras de estabilidad y la experiencia más reciente de Evolution.'
+      ).trim(),
+      notes
+    };
+  };
+
+  const releaseAck=()=>{
+    try{return releaseBuild(localStorage.getItem(RELEASE_ACK_KEY))}
+    catch(_){return 0}
+  };
+
+  const acknowledgeRelease=build=>{
+    const safe=releaseBuild(build);
+    if(!safe)return;
+    try{localStorage.setItem(RELEASE_ACK_KEY,String(safe))}catch(_){}
+  };
+
+  const ensureUpdateCenterStyle=()=>{
+    if(document.getElementById('evolution-update-center-style'))return;
+
+    const style=document.createElement('style');
+    style.id='evolution-update-center-style';
+    style.textContent=`
+      #evolution-update-center{
+        position:fixed;
+        inset:0;
+        z-index:2147483600;
+        display:grid;
+        place-items:center;
+        padding:
+          max(14px,env(safe-area-inset-top))
+          max(10px,env(safe-area-inset-right))
+          max(14px,env(safe-area-inset-bottom))
+          max(10px,env(safe-area-inset-left));
+        overflow:auto;
+        overscroll-behavior:contain;
+        color:#fff;
+        font-family:-apple-system,BlinkMacSystemFont,"Inter","SF Pro Display","Segoe UI",sans-serif;
+        background:
+          radial-gradient(circle at 50% 13%,rgba(212,184,149,.18),transparent 32%),
+          radial-gradient(circle at 8% 85%,rgba(84,113,255,.08),transparent 28%),
+          rgba(0,0,0,.91);
+        -webkit-backdrop-filter:blur(32px) saturate(1.10);
+        backdrop-filter:blur(32px) saturate(1.10);
+        opacity:0;
+        visibility:hidden;
+        transition:opacity .36s cubic-bezier(.2,.8,.2,1),visibility 0s linear .36s;
+      }
+      #evolution-update-center.is-visible{
+        opacity:1;
+        visibility:visible;
+        transition:opacity .36s cubic-bezier(.2,.8,.2,1);
+      }
+      #evolution-update-center *{box-sizing:border-box}
+      .evo-up-card{
+        position:relative;
+        width:min(720px,100%);
+        min-height:min(790px,calc(100dvh - 28px));
+        padding:clamp(24px,5vw,48px);
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+        gap:26px;
+        overflow:hidden;
+        border-radius:clamp(30px,6vw,50px);
+        border:1px solid rgba(255,255,255,.11);
+        background:
+          linear-gradient(145deg,rgba(255,255,255,.095),rgba(255,255,255,.022) 44%,rgba(212,184,149,.055)),
+          rgba(10,10,12,.74);
+        -webkit-backdrop-filter:blur(36px) saturate(1.14);
+        backdrop-filter:blur(36px) saturate(1.14);
+        box-shadow:0 38px 120px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);
+        transform:translateY(18px) scale(.98);
+        transition:transform .48s cubic-bezier(.2,.82,.2,1);
+      }
+      #evolution-update-center.is-visible .evo-up-card{
+        transform:translateY(0) scale(1);
+      }
+      .evo-up-card::before{
+        content:"";
+        position:absolute;
+        width:460px;
+        height:460px;
+        left:50%;
+        top:-340px;
+        transform:translateX(-50%);
+        border-radius:50%;
+        background:radial-gradient(circle,rgba(212,184,149,.26),transparent 68%);
+        pointer-events:none;
+      }
+      .evo-up-head{
+        position:relative;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:14px;
+      }
+      .evo-up-logo{
+        width:clamp(94px,22vw,132px);
+        max-height:42px;
+        object-fit:contain;
+      }
+      .evo-up-build{
+        display:flex;
+        align-items:center;
+        gap:7px;
+        min-height:30px;
+        padding:0 11px;
+        border-radius:999px;
+        border:1px solid rgba(212,184,149,.25);
+        background:rgba(212,184,149,.07);
+        color:#e0c5a3;
+        font-size:10px;
+        font-weight:800;
+        letter-spacing:.12em;
+      }
+      .evo-up-build::before{
+        content:"";
+        width:7px;
+        height:7px;
+        border-radius:50%;
+        background:#d4b895;
+        box-shadow:0 0 15px rgba(212,184,149,.62);
+      }
+      .evo-up-orb{
+        position:relative;
+        width:clamp(92px,24vw,128px);
+        aspect-ratio:1;
+        margin:clamp(15px,4vh,36px) auto 0;
+        display:grid;
+        place-items:center;
+        border-radius:50%;
+        border:1px solid rgba(255,255,255,.14);
+        background:
+          radial-gradient(circle at 30% 20%,rgba(255,255,255,.23),transparent 25%),
+          linear-gradient(145deg,rgba(255,255,255,.10),rgba(212,184,149,.075));
+        -webkit-backdrop-filter:blur(18px);
+        backdrop-filter:blur(18px);
+        box-shadow:0 20px 50px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.16);
+      }
+      .evo-up-orb::before,.evo-up-orb::after{
+        content:"";
+        position:absolute;
+        border-radius:50%;
+        border:1px solid rgba(212,184,149,.13);
+      }
+      .evo-up-orb::before{inset:-13px}
+      .evo-up-orb::after{inset:-27px;border-color:rgba(255,255,255,.05)}
+      .evo-up-orb svg{width:42%;height:42%;stroke:#fff}
+      .evo-up-copy{
+        position:relative;
+        margin-top:28px;
+        text-align:center;
+      }
+      .evo-up-kicker{
+        margin:0 0 13px;
+        color:#d4b895;
+        font-size:10px;
+        font-weight:850;
+        letter-spacing:.19em;
+        text-transform:uppercase;
+      }
+      .evo-up-title{
+        margin:0 auto;
+        max-width:620px;
+        color:#fff;
+        font-size:clamp(38px,8vw,64px);
+        line-height:.94;
+        font-weight:790;
+        letter-spacing:-.05em;
+      }
+      .evo-up-title em{
+        color:#d4b895;
+        font-style:normal;
+        font-weight:620;
+      }
+      .evo-up-sub{
+        max-width:585px;
+        margin:20px auto 0;
+        color:rgba(255,255,255,.58);
+        font-size:clamp(14px,3.7vw,17px);
+        line-height:1.58;
+      }
+      .evo-up-grid{
+        display:grid;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:9px;
+        margin-top:27px;
+      }
+      .evo-up-item{
+        min-height:112px;
+        padding:15px;
+        border-radius:21px;
+        border:1px solid rgba(255,255,255,.075);
+        background:rgba(255,255,255,.032);
+        text-align:left;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+      }
+      .evo-up-icon{
+        width:31px;
+        height:31px;
+        margin-bottom:12px;
+        display:grid;
+        place-items:center;
+        border-radius:10px;
+        color:#d4b895;
+        border:1px solid rgba(212,184,149,.15);
+        background:rgba(212,184,149,.085);
+      }
+      .evo-up-icon svg{width:16px;height:16px;stroke:currentColor}
+      .evo-up-item strong{
+        display:block;
+        color:rgba(255,255,255,.92);
+        font-size:12px;
+        font-weight:760;
+      }
+      .evo-up-item p{
+        margin:6px 0 0;
+        color:rgba(255,255,255,.40);
+        font-size:10.5px;
+        line-height:1.45;
+      }
+      .evo-up-actions{
+        position:relative;
+        display:grid;
+        gap:10px;
+      }
+      .evo-up-btn{
+        position:relative;
+        width:100%;
+        min-height:62px;
+        border:0;
+        border-radius:21px;
+        overflow:hidden;
+        cursor:pointer;
+        color:#070707;
+        background:#f4f2ee;
+        font:790 15px/1 -apple-system,BlinkMacSystemFont,"Inter",sans-serif;
+        box-shadow:0 18px 38px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.9);
+        transition:transform .17s ease,opacity .17s ease;
+        -webkit-tap-highlight-color:transparent;
+      }
+      .evo-up-btn:active{transform:scale(.985)}
+      .evo-up-btn:disabled{cursor:wait}
+      .evo-up-progress{
+        position:absolute;
+        inset:0 auto 0 0;
+        width:var(--evo-up-progress,0%);
+        background:linear-gradient(90deg,#d4b895,#eadac7);
+        transition:width .4s cubic-bezier(.2,.8,.2,1);
+      }
+      .evo-up-label{
+        position:relative;
+        z-index:2;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:9px;
+      }
+      .evo-up-label svg{width:18px;height:18px;stroke:currentColor}
+      .evo-up-btn.is-loading .evo-up-label svg{animation:evoUpSpin .82s linear infinite}
+      @keyframes evoUpSpin{to{transform:rotate(360deg)}}
+      .evo-up-later{
+        min-height:36px;
+        border:0;
+        background:transparent;
+        color:rgba(255,255,255,.37);
+        font:650 12px/1 -apple-system,BlinkMacSystemFont,"Inter",sans-serif;
+        cursor:pointer;
+      }
+      .evo-up-safe{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:7px;
+        color:rgba(255,255,255,.29);
+        font-size:10px;
+        line-height:1.35;
+        text-align:center;
+      }
+      .evo-up-safe svg{width:14px;height:14px;stroke:#d4b895;opacity:.72}
+      @media(max-width:640px){
+        .evo-up-card{
+          min-height:calc(100dvh - 20px);
+          padding:24px 19px 18px;
+          border-radius:30px;
+          gap:18px;
+        }
+        .evo-up-orb{width:88px;margin-top:10px}
+        .evo-up-copy{margin-top:21px}
+        .evo-up-title{font-size:clamp(40px,12.5vw,55px)}
+        .evo-up-sub{margin-top:15px;font-size:14px}
+        .evo-up-grid{grid-template-columns:1fr;gap:7px;margin-top:19px}
+        .evo-up-item{
+          min-height:0;
+          padding:11px 12px;
+          display:grid;
+          grid-template-columns:36px 1fr;
+          column-gap:10px;
+          border-radius:17px;
+        }
+        .evo-up-icon{grid-row:1/3;margin:0;align-self:center}
+        .evo-up-item p{margin-top:3px;font-size:10px}
+        .evo-up-btn{min-height:58px;border-radius:19px}
+      }
+      @media(prefers-reduced-motion:reduce){
+        #evolution-update-center,.evo-up-card,.evo-up-btn,.evo-up-progress{transition:none!important}
+        .evo-up-btn.is-loading .evo-up-label svg{animation:none!important}
+      }
+    `;
+    document.head.appendChild(style);
+  };
+
+  const updateIcon=index=>[
+    '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M20 7 9 18l-5-5"/><path d="M21 12a9 9 0 1 1-4-7.5"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>'
+  ][index%3];
+
+  const fallbackNotes=[
+    {title:'Errores corregidos',detail:'Ajustes de navegación, gestos y comportamientos inconsistentes.'},
+    {title:'Más estabilidad',detail:'Carga más limpia y una experiencia más fluida en la app.'},
+    {title:'Últimas mejoras',detail:'Aplica la versión reciente sin perder tu sesión ni proyectos.'}
+  ];
+
+  const setUpdateProgress=(percent,label)=>{
+    const overlay=evolutionUpdateOverlay;
+    if(!overlay)return;
+    overlay.querySelector('[data-evo-update-btn]')
+      ?.style.setProperty('--evo-up-progress',`${Math.max(0,Math.min(100,Number(percent)||0))}%`);
+    const text=overlay.querySelector('[data-evo-update-label]');
+    if(text&&label)text.textContent=label;
+  };
+
+  const waitSWMessage=(type,timeout=2300)=>new Promise(resolve=>{
+    if(!navigator.serviceWorker){resolve(null);return}
+    let done=false;
+    const finish=value=>{
+      if(done)return;
+      done=true;
+      clearTimeout(timer);
+      navigator.serviceWorker.removeEventListener('message',handler);
+      resolve(value);
+    };
+    const handler=e=>{if(e.data?.type===type)finish(e.data)};
+    const timer=setTimeout(()=>finish(null),timeout);
+    navigator.serviceWorker.addEventListener('message',handler);
+  });
+
+  const waitControllerChange=(timeout=2300)=>new Promise(resolve=>{
+    if(!navigator.serviceWorker){resolve(false);return}
+    let done=false;
+    const finish=value=>{
+      if(done)return;
+      done=true;
+      clearTimeout(timer);
+      navigator.serviceWorker.removeEventListener('controllerchange',handler);
+      resolve(value);
+    };
+    const handler=()=>finish(true);
+    const timer=setTimeout(()=>finish(false),timeout);
+    navigator.serviceWorker.addEventListener('controllerchange',handler,{once:true});
+  });
+
+  const applyEvolutionUpdate=async release=>{
+    if(evolutionUpdateBusy)return;
+    evolutionUpdateBusy=true;
+
+    const overlay=evolutionUpdateOverlay;
+    const btn=overlay?.querySelector('[data-evo-update-btn]');
+    const later=overlay?.querySelector('[data-evo-update-later]');
+
+    btn?.classList.add('is-loading');
+    if(btn)btn.disabled=true;
+    if(later)later.disabled=true;
+
+    try{
+      setUpdateProgress(10,'Buscando la versión más reciente…');
+
+      let reg=null;
+      if('serviceWorker'in navigator){
+        reg=await navigator.serviceWorker.getRegistration('/').catch(()=>null);
+        if(reg){
+          setUpdateProgress(24,'Verificando actualización…');
+          await reg.update().catch(()=>{});
+
+          if(reg.waiting){
+            const changed=waitControllerChange();
+            reg.waiting.postMessage({type:'SKIP_WAITING'});
+            await changed;
+          }
+        }
+      }
+
+      setUpdateProgress(46,'Limpiando caché anterior…');
+
+      if(navigator.serviceWorker?.controller){
+        const cleared=waitSWMessage('EVOLUTION_CACHES_CLEARED',2500);
+        navigator.serviceWorker.controller.postMessage({type:'CLEAR_EVOLUTION_CACHES'});
+        await cleared;
+      }else if('caches'in window){
+        const keys=await caches.keys().catch(()=>[]);
+        await Promise.all(
+          keys.filter(key=>String(key).startsWith('evolution')).map(key=>caches.delete(key))
+        );
+      }
+
+      setUpdateProgress(68,'Descargando archivos nuevos…');
+
+      const stamp=Date.now();
+      const core=[
+        '/evolution-app.js',
+        '/evolution-nav.js',
+        '/evolution-payments.js',
+        '/evolution-sw.js',
+        '/views/home.html',
+        '/views/arquitectura.html',
+        '/views/diseno-grafico.html',
+        '/views/diseno-web.html'
+      ];
+
+      await Promise.allSettled(
+        core.map(url=>fetch(`${url}?evo-refresh=${stamp}`,{
+          cache:'reload',
+          credentials:'same-origin'
+        }))
+      );
+
+      setUpdateProgress(91,'Aplicando mejoras…');
+      acknowledgeRelease(release?.build||APP_BUILD);
+
+      await new Promise(resolve=>setTimeout(resolve,430));
+      setUpdateProgress(100,'Listo · Reiniciando Evolution…');
+      await new Promise(resolve=>setTimeout(resolve,560));
+
+      const url=new URL(location.href);
+      url.searchParams.set('evo_update',`${release?.build||APP_BUILD}-${Date.now()}`);
+      location.replace(url.href);
+    }catch(error){
+      console.warn('[Evolution Update]',error);
+      evolutionUpdateBusy=false;
+      if(btn){
+        btn.disabled=false;
+        btn.classList.remove('is-loading');
+      }
+      if(later)later.disabled=false;
+
+      setUpdateProgress(0,'Intentar nuevamente');
+      const status=overlay?.querySelector('[data-evo-update-status]');
+      if(status){
+        status.textContent='No se pudo completar la actualización. Revisa tu conexión e inténtalo nuevamente.';
+      }
+    }
+  };
+
+  const closeUpdateCenter=()=>{
+    if(evolutionUpdateBusy||!evolutionUpdateOverlay)return;
+    acknowledgeRelease(evolutionRelease?.build);
+    const overlay=evolutionUpdateOverlay;
+    overlay.classList.remove('is-visible');
+    setTimeout(()=>{
+      if(!overlay.classList.contains('is-visible')){
+        overlay.remove();
+        if(evolutionUpdateOverlay===overlay)evolutionUpdateOverlay=null;
+      }
+    },420);
+  };
+
+  const showUpdateCenter=release=>{
+    const data=normalizeRelease(release);
+    if(!data.build)data.build=APP_BUILD;
+
+    evolutionRelease=data;
+    ensureUpdateCenterStyle();
+
+    evolutionUpdateOverlay?.remove();
+
+    const newer=data.build>APP_BUILD;
+    const notes=(data.notes.length?data.notes:fallbackNotes).slice(0,3);
+
+    const overlay=document.createElement('div');
+    overlay.id='evolution-update-center';
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.setAttribute('aria-labelledby','evo-up-title');
+
+    overlay.innerHTML=`
+      <section class="evo-up-card">
+        <div>
+          <header class="evo-up-head">
+            <img class="evo-up-logo" src="/img/logo.png" alt="Evolution Design" decoding="async">
+            <span class="evo-up-build">BUILD ${data.build}</span>
+          </header>
+
+          <div class="evo-up-orb" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.55">
+              <path d="M20 7h-5V2"/>
+              <path d="M20 7a9 9 0 1 0 1 8"/>
+              <path d="m20 7-5-5"/>
+            </svg>
+          </div>
+
+          <div class="evo-up-copy">
+            <p class="evo-up-kicker">Evolution · Update Center</p>
+            <h1 class="evo-up-title" id="evo-up-title">
+              ${newer?'Hay una nueva':'Evolution acaba de'}<br>
+              <em>${newer?'versión.':'mejorar.'}</em>
+            </h1>
+            <p class="evo-up-sub" data-evo-update-status>${data.subtitle}</p>
+
+            <div class="evo-up-grid">
+              ${notes.map((note,index)=>`
+                <article class="evo-up-item">
+                  <span class="evo-up-icon" aria-hidden="true">${updateIcon(index)}</span>
+                  <strong>${note.title}</strong>
+                  <p>${note.detail||''}</p>
+                </article>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <div class="evo-up-actions">
+          <button type="button" class="evo-up-btn" data-evo-update-btn>
+            <span class="evo-up-progress" aria-hidden="true"></span>
+            <span class="evo-up-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                <path d="M20 7h-5V2"/>
+                <path d="M20 7a9 9 0 1 0 1 8"/>
+                <path d="m20 7-5-5"/>
+              </svg>
+              <span data-evo-update-label>${newer?'Actualizar ahora':'Aplicar actualización'}</span>
+            </span>
+          </button>
+
+          ${data.required?'':`
+            <button type="button" class="evo-up-later" data-evo-update-later>
+              Más tarde
+            </button>
+          `}
+
+          <div class="evo-up-safe">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            Tu sesión, proyectos y pagos no se modifican.
+          </div>
+        </div>
+      </section>
+    `;
+
+    document.body.appendChild(overlay);
+    evolutionUpdateOverlay=overlay;
+
+    overlay.querySelector('[data-evo-update-btn]')
+      ?.addEventListener('click',()=>applyEvolutionUpdate(data));
+
+    overlay.querySelector('[data-evo-update-later]')
+      ?.addEventListener('click',closeUpdateCenter);
+
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>overlay.classList.add('is-visible'));
+    });
+  };
+
+  const fetchEvolutionRelease=async()=>{
+    const response=await fetch(
+      `${RELEASE_ENDPOINT}?current=${APP_BUILD}&t=${Date.now()}`,
+      {
+        cache:'no-store',
+        credentials:'same-origin',
+        headers:{accept:'application/json'}
+      }
+    );
+    if(!response.ok)throw new Error(`RELEASE_HTTP_${response.status}`);
+    return normalizeRelease(await response.json());
+  };
+
+  const checkEvolutionRelease=async({
+    force=false,
+    announceCurrent=true
+  }={})=>{
+    if(evolutionReleaseCheckPromise&&!force)return evolutionReleaseCheckPromise;
+
+    evolutionReleaseCheckPromise=(async()=>{
+      try{
+        const release=await fetchEvolutionRelease();
+        evolutionRelease=release;
+
+        const newer=release.build>APP_BUILD;
+        const currentAnnouncement=
+          announceCurrent &&
+          release.announce &&
+          release.build===APP_BUILD &&
+          releaseAck()<release.build;
+
+        if(newer||currentAnnouncement||force){
+          showUpdateCenter(release);
+          return true;
+        }
+        return false;
+      }catch(error){
+        if(force)console.warn('[Evolution Update] Release check',error);
+        return false;
+      }finally{
+        evolutionReleaseCheckPromise=null;
+      }
+    })();
+
+    return evolutionReleaseCheckPromise;
+  };
+
+  document.addEventListener('evolution:update-center',async event=>{
+    if(event.detail?.release){
+      showUpdateCenter(event.detail.release);
+      return;
+    }
+    await checkEvolutionRelease({force:true,announceCurrent:true});
+  });
+
+  window.EvolutionUpdate={
+    build:APP_BUILD,
+    check:()=>checkEvolutionRelease({force:true,announceCurrent:true}),
+    show:()=>showUpdateCenter(
+      evolutionRelease||{
+        build:APP_BUILD,
+        announce:true,
+        subtitle:'Actualiza para aplicar correcciones de errores, mejoras de estabilidad y los últimos cambios de Evolution.'
+      }
+    )
+  };
+
   /* ---------- PWA INSTALL ---------- */
   const standalone=()=>matchMedia('(display-mode:standalone)').matches||navigator.standalone===true;
   const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
@@ -2425,7 +3094,20 @@
 
   navigator.serviceWorker?.addEventListener('message',e=>{
     const data=e.data||{};
-    if(data.type==='EVOLUTION_SW_ACTIVATED')noteSWVersion(data.version);
+
+    if(data.type==='EVOLUTION_SW_ACTIVATED'){
+      noteSWVersion(data.version);
+      setTimeout(()=>{
+        checkEvolutionRelease({force:true,announceCurrent:true});
+      },300);
+    }
+
+    if(data.type==='EVOLUTION_UPDATE_READY'){
+      setTimeout(()=>{
+        checkEvolutionRelease({force:true,announceCurrent:true});
+      },120);
+    }
+
     if(data.type==='EVOLUTION_CACHE_READY'&&data.url){
       window.dispatchEvent(new CustomEvent('evolution:cache-ready',{detail:data}));
     }
@@ -2442,6 +3124,7 @@
       if(!reg)return;
       await reg.update();
       reg.active?.postMessage({type:'GET_VERSION'});
+      await checkEvolutionRelease({force:false,announceCurrent:false});
     }catch(_){}
   }
 
@@ -2473,6 +3156,18 @@
   const boot=async()=>{
     const initial=routeFromURL(location.href);
 
+    try{
+      const updateURL=new URL(location.href);
+      if(updateURL.searchParams.has('evo_update')){
+        updateURL.searchParams.delete('evo_update');
+        history.replaceState(
+          history.state,
+          '',
+          `${updateURL.pathname}${updateURL.search}${updateURL.hash}`
+        );
+      }
+    }catch(_){}
+
     /* Inicia Firebase Auth en el Shell inmediatamente. Mientras se restaura
        la sesión local, la UI recordada evita parpadeos en la misma apertura. */
     initShellAuth();
@@ -2497,6 +3192,21 @@
     },650);
 
     setTimeout(()=>checkForSWUpdate(true),2200);
+
+    /* La V34 se anuncia una sola vez. En V35+ solo aparece si
+       evolution-version.json reporta una build superior. */
+    setTimeout(()=>{
+      const appLike=
+        standalone() ||
+        matchMedia('(max-width:991.98px)').matches;
+
+      if(appLike){
+        checkEvolutionRelease({
+          force:false,
+          announceCurrent:true
+        });
+      }
+    },1450);
 
     if(isIOS()&&!standalone()){
       window.EvolutionNav?.setInstallAvailable(true);
