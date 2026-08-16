@@ -1,21 +1,21 @@
 {
-  "build": 42,
-  "version": "42",
+  "build": 43,
+  "version": "43",
   "announce": true,
   "required": false,
-  "subtitle": "El swipe fue refinado con una geometría y desaceleración más natural tipo iOS, y se corrigió la apertura de Diseño Web.",
+  "subtitle": "Se corrigió la gran placa de vidrio que podía aparecer al iniciar el swipe, especialmente en Android, manteniendo el efecto Liquid Glass de forma más limpia.",
   "notes": [
     {
-      "title": "Swipe más fluido",
-      "detail": "El tamaño de las tarjetas ahora usa aceleración progresiva; desaparece el salto brusco al confirmar en 60%."
+      "title": "Glass sin placa gigante",
+      "detail": "El efecto ahora vive principalmente en reflejos, bordes y profundidad; el centro de la página permanece visible."
     },
     {
-      "title": "Remate tipo iOS",
-      "detail": "La transición final usa una desaceleración más natural y cambios de escala mucho más cortos."
+      "title": "Android optimizado",
+      "detail": "Chrome y WebView usan Liquid Glass óptico sin backdrop-filter de pantalla completa para evitar rectángulos opacos."
     },
     {
-      "title": "Diseño Web corregido",
-      "detail": "Si la vista aún no terminó de precargarse, Evolution respeta el swipe y la abre mediante el router normal."
+      "title": "iPhone Premium refinado",
+      "detail": "Safari conserva blur real, limitado y progresivo, sin cubrir toda la página durante el primer swipe."
     }
   ]
 }
