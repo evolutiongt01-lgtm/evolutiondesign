@@ -1,21 +1,21 @@
 {
-  "build": 40,
-  "version": "40",
+  "build": 41,
+  "version": "41",
   "announce": true,
   "required": false,
-  "subtitle": "Se corrigió definitivamente la degradación del Liquid Glass: los dispositivos Premium ya no cambian de calidad durante el primer swipe.",
+  "subtitle": "El swipe ahora se confirma al 60% y termina con una animación magnética Liquid Glass más suave y elegante.",
   "notes": [
     {
-      "title": "Premium estable",
-      "detail": "Los iPhone modernos clasificados como Premium mantienen el efecto completo durante toda la sesión."
+      "title": "Confirmación al 60%",
+      "detail": "La página solo cambia automáticamente cuando el usuario cruza el 60% del recorrido."
     },
     {
-      "title": "Rendimiento por gesto",
-      "detail": "La app ya no toma decisiones por frames aislados; analiza swipes completos y nunca cambia de modo en medio de la transición."
+      "title": "Remate magnético",
+      "detail": "Al confirmar, la página anterior se hunde y reduce más mientras la nueva crece suavemente hasta 100%."
     },
     {
-      "title": "Fallback más seguro",
-      "detail": "Android y PCs Premium solo bajan tras varios gestos lentos completos; los equipos antiguos conservan Lite."
+      "title": "Liquid Glass continuo",
+      "detail": "El vidrio ya no desaparece al iniciar el remate; aumenta durante la transición y se limpia al terminar."
     }
   ]
 }
