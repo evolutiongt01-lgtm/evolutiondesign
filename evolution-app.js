@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v27 · Live Interactive Swipe */
+/* Evolution Design · Smart App Shell · v28 · Live Swipe + Lightweight Gradient */
 (() => {
   'use strict';
 
-  const VERSION='27';
+  const VERSION='28';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -35,6 +35,7 @@
   let swipeNeighbors={prev:null,next:null};
   let swipeSettling=false;
   let swipePreviewGeneration=0;
+  let swipeDepthEl=null;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -309,18 +310,51 @@
       filter:none!important;
       pointer-events:none!important;
       z-index:2!important;
-      will-change:transform;
+      will-change:auto;
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
     }
     body.evo-live-swipe-dragging .evo-view-frame.evo-view-active,
     body.evo-live-swipe-dragging .evo-view-frame.evo-swipe-neighbor{
       transition:none!important;
+      will-change:transform;
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
     }
     body.evo-live-swipe-settling .evo-view-frame.evo-view-active,
     body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
-      transition:transform .29s cubic-bezier(.2,.82,.24,1)!important;
+      transition:transform .27s cubic-bezier(.2,.82,.24,1)!important;
+      will-change:transform;
     }
-    .evo-view-frame.evo-live-swipe-shadow{
-      box-shadow:0 0 42px rgba(0,0,0,.34)!important;
+
+    /* V28: profundidad tipo iOS con una sola capa de gradiente.
+       Mucho más barata para la GPU que recalcular un box-shadow enorme
+       sobre un iframe completo mientras sigue el dedo. */
+    #evolution-view-stage .evo-swipe-depth{
+      position:absolute;
+      top:0;
+      bottom:0;
+      left:0;
+      width:72px;
+      z-index:6;
+      pointer-events:none;
+      opacity:0;
+      transform:translate3d(-200px,0,0);
+      background:
+        linear-gradient(
+          90deg,
+          rgba(0,0,0,0) 0%,
+          rgba(0,0,0,.055) 24%,
+          rgba(0,0,0,.30) 49%,
+          rgba(0,0,0,.13) 63%,
+          rgba(0,0,0,0) 100%
+        );
+      transition:opacity .12s ease;
+      contain:paint;
+      will-change:transform,opacity;
+    }
+    #evolution-view-stage .evo-swipe-depth.is-visible{
+      opacity:var(--evo-swipe-depth-opacity,.84);
     }
 
     html[data-evo-network="slow"] .evo-view-frame{
@@ -857,6 +891,40 @@
     frame.style.setProperty('transform',value,'important');
   };
 
+  const ensureSwipeDepth=()=>{
+    const host=stage();
+    if(!host)return null;
+
+    if(swipeDepthEl?.isConnected)return swipeDepthEl;
+
+    const el=document.createElement('div');
+    el.className='evo-swipe-depth';
+    el.setAttribute('aria-hidden','true');
+    host.appendChild(el);
+    swipeDepthEl=el;
+    return el;
+  };
+
+  const updateSwipeDepth=(boundaryX,progress=0)=>{
+    const el=ensureSwipeDepth();
+    if(!el)return;
+
+    const p=Math.max(0,Math.min(1,Number(progress)||0));
+    const opacity=.88-(p*.30);
+
+    el.style.setProperty(
+      '--evo-swipe-depth-opacity',
+      opacity.toFixed(3)
+    );
+    el.style.transform=`translate3d(${Math.round(boundaryX-36)}px,0,0)`;
+    el.classList.add('is-visible');
+  };
+
+  const hideSwipeDepth=()=>{
+    if(!swipeDepthEl)return;
+    swipeDepthEl.classList.remove('is-visible');
+  };
+
   const resetSwipeTransition=frame=>{
     if(!frame)return;
     frame.style.removeProperty('transition');
@@ -875,6 +943,7 @@
   };
 
   const clearSwipeNeighbors=()=>{
+    hideSwipeDepth();
     const prev=swipeNeighbors.prev;
     const next=swipeNeighbors.next;
     swipeNeighbors={prev:null,next:null};
@@ -990,6 +1059,7 @@
 
   const settleSwipeBack=(active,neighbor,side)=>{
     if(!active)return;
+    hideSwipeDepth();
     swipeSettling=true;
     document.body.classList.remove('evo-live-swipe-dragging');
     document.body.classList.add('evo-live-swipe-settling');
@@ -1011,6 +1081,7 @@
   const commitLiveSwipe=(active,neighbor,side,route)=>{
     if(!active||!neighbor||!route||swipeSettling)return;
 
+    hideSwipeDepth();
     swipeSettling=true;
     saveScroll();
 
@@ -1134,6 +1205,7 @@
       };
 
       const resetNeighborFromGesture=()=>{
+        hideSwipeDepth();
         if(gestureNeighbor&&currentSide)positionSwipeNeighbor(gestureNeighbor,currentSide);
         gestureNeighbor=null;
         currentSide=null;
@@ -1150,6 +1222,7 @@
         const width=win.innerWidth||doc.documentElement.clientWidth||0;
         if(p.x<22||(width&&p.x>width-22))return;
 
+        hideSwipeDepth();
         startX=lastX=p.x;
         startY=lastY=p.y;
         startTime=performance.now();
@@ -1199,9 +1272,9 @@
 
         if(!gestureNeighbor){
           /* Elastic resistance on Inicio's left edge / Web's right edge. */
+          hideSwipeDepth();
           dx*=.20;
           setSwipeTransform(frame,`translate3d(${dx}px,0,0)`);
-          frame.classList.add('evo-live-swipe-shadow');
           return;
         }
 
@@ -1209,7 +1282,12 @@
 
         const neighborX=side==='next' ? width+dx : -width+dx;
         setSwipeTransform(gestureNeighbor,`translate3d(${neighborX}px,0,0)`);
-        frame.classList.add('evo-live-swipe-shadow');
+
+        /* La línea entre páginas acompaña exactamente el dedo:
+           siguiente = borde derecho de la actual;
+           anterior  = borde izquierdo de la actual. */
+        const boundaryX=side==='next' ? width+dx : dx;
+        updateSwipeDepth(boundaryX,Math.abs(dx)/Math.max(1,width));
       };
 
       const finish=(cancelled=false)=>{
