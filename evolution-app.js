@@ -1,9 +1,9 @@
-/* Evolution Design · Smart App Shell · v42 · iOS Fluid Swipe + Web Route Fix */
+/* Evolution Design · Smart App Shell · v43 · Compositor-Safe Liquid Glass */
 (() => {
   'use strict';
 
-  const VERSION='42';
-  const APP_BUILD=42;
+  const VERSION='43';
+  const APP_BUILD=43;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -59,8 +59,9 @@
   let swipeGoodGestureStreak=0;
   let swipeLitePaintLast=0;
   let swipePremiumLocked=false;
+  let swipePlatform='other';
 
-  const SWIPE_TIER_STATE_BUILD=42;
+  const SWIPE_TIER_STATE_BUILD=43;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -400,45 +401,6 @@
        suavemente el 100% de la pantalla. */
     body.evo-live-swipe-settling
     #evolution-view-stage .evo-swipe-glass{
-      transition:
-        opacity .36s cubic-bezier(.32,.72,0,1),
-        inset .36s cubic-bezier(.32,.72,0,1),
-        border-radius .36s cubic-bezier(.32,.72,0,1),
-        box-shadow .36s cubic-bezier(.32,.72,0,1),
-        backdrop-filter .36s cubic-bezier(.32,.72,0,1),
-        -webkit-backdrop-filter .36s cubic-bezier(.32,.72,0,1)!important;
-    }
-
-    body.evo-live-swipe-settling
-    #evolution-view-stage .evo-swipe-veil{
-      transition:opacity .36s cubic-bezier(.32,.72,0,1)!important;
-    }
-
-    body.evo-live-swipe-settling
-    #evolution-view-stage .evo-swipe-depth{
-      transition:
-        transform .36s cubic-bezier(.32,.72,0,1),
-        opacity .24s ease!important;
-    }
-
-    html[data-evo-swipe-tier="premium"]
-    body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
-      transition:
-        transform .36s cubic-bezier(.32,.72,0,1),
-        border-radius .36s cubic-bezier(.32,.72,0,1),
-        box-shadow .36s cubic-bezier(.32,.72,0,1)!important;
-    }
-
-    html[data-evo-swipe-tier="standard"]
-    body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
-      transition:
-        transform .32s cubic-bezier(.32,.72,0,1),
-        border-radius .32s cubic-bezier(.32,.72,0,1)!important;
-    }
-
-    /* Vidrio sobre la tarjeta que queda atrás. Es una sola superficie;
-       no aplicamos filter:blur() al iframe ni movemos sus glifos. */
-    #evolution-view-stage .evo-swipe-glass{
       position:absolute;
       inset:0;
       z-index:3;
@@ -447,54 +409,85 @@
       overflow:hidden;
       border:1px solid rgba(255,255,255,0);
       border-radius:0;
+
+      /* V43: el centro queda prácticamente transparente.
+         El efecto vive en reflejos de borde, no como panel gris. */
       background:
-        radial-gradient(circle at 18% 10%,
-          rgba(255,255,255,.18),
-          rgba(255,255,255,0) 31%),
-        linear-gradient(145deg,
-          rgba(255,255,255,.115),
-          rgba(255,255,255,.028) 38%,
-          rgba(212,184,149,.065) 100%);
-      -webkit-backdrop-filter:blur(0px) saturate(1);
-      backdrop-filter:blur(0px) saturate(1);
+        radial-gradient(
+          circle at 18% 7%,
+          rgba(255,255,255,.11),
+          rgba(255,255,255,0) 28%
+        ),
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.028),
+          rgba(255,255,255,.008) 38%,
+          rgba(212,184,149,.018) 100%
+        );
+
+      -webkit-backdrop-filter:none;
+      backdrop-filter:none;
       box-shadow:none;
       contain:paint;
-      will-change:
-        opacity,
-        backdrop-filter,
-        inset,
-        border-radius,
-        box-shadow;
+      will-change:opacity,inset,border-radius;
     }
+
     #evolution-view-stage .evo-swipe-glass::before{
       content:"";
       position:absolute;
       inset:0;
       pointer-events:none;
-      opacity:.78;
+      opacity:.72;
       background:
         linear-gradient(
-          115deg,
-          rgba(255,255,255,.12) 0%,
-          rgba(255,255,255,.025) 22%,
-          rgba(255,255,255,0) 43%
+          116deg,
+          rgba(255,255,255,.16) 0%,
+          rgba(255,255,255,.032) 14%,
+          rgba(255,255,255,0) 33%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,.045),
+          transparent 16%,
+          transparent 82%,
+          rgba(212,184,149,.018)
         );
     }
+
     #evolution-view-stage .evo-swipe-glass::after{
       content:"";
       position:absolute;
-      left:9%;
-      right:9%;
+      left:7%;
+      right:7%;
       top:0;
       height:1px;
       pointer-events:none;
       background:linear-gradient(
         90deg,
         transparent,
-        rgba(255,255,255,.28),
+        rgba(255,255,255,.30),
+        rgba(212,184,149,.18),
         transparent
       );
       opacity:.72;
+    }
+
+    /* Solo Safari/iOS Premium recibe blur real y aun así limitado.
+       Android usa glass óptico para evitar el rectángulo opaco del
+       compositor de Chrome/WebView. */
+    html[data-evo-swipe-platform="ios"][data-evo-swipe-tier="premium"]
+    #evolution-view-stage .evo-swipe-glass{
+      -webkit-backdrop-filter:blur(var(--evo-glass-blur,0px)) saturate(var(--evo-glass-sat,1));
+      backdrop-filter:blur(var(--evo-glass-blur,0px)) saturate(var(--evo-glass-sat,1));
+    }
+
+    html[data-evo-swipe-platform="android"]
+    #evolution-view-stage .evo-swipe-glass{
+      -webkit-backdrop-filter:none!important;
+      backdrop-filter:none!important;
+      background:
+        radial-gradient(circle at 16% 8%,rgba(255,255,255,.10),transparent 26%),
+        linear-gradient(145deg,rgba(255,255,255,.026),rgba(255,255,255,.006) 42%,rgba(212,184,149,.018))!important;
     }
 
     /* Velo de profundidad debajo de la tarjeta entrante. */
@@ -585,25 +578,20 @@
     html[data-evo-swipe-tier="premium"]
     #evolution-view-stage .evo-swipe-glass{
       background:
-        radial-gradient(circle at 13% 7%,rgba(255,255,255,.34),rgba(255,255,255,0) 27%),
-        radial-gradient(circle at 82% 82%,rgba(212,184,149,.15),rgba(212,184,149,0) 38%),
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,.185),
-          rgba(255,255,255,.045) 38%,
-          rgba(212,184,149,.105) 100%
-        );
+        radial-gradient(circle at 13% 7%,rgba(255,255,255,.14),rgba(255,255,255,0) 25%),
+        radial-gradient(circle at 86% 82%,rgba(212,184,149,.045),rgba(212,184,149,0) 34%),
+        linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008) 40%,rgba(212,184,149,.024) 100%);
     }
 
     html[data-evo-swipe-tier="premium"]
     #evolution-view-stage .evo-swipe-glass::before{
-      opacity:1;
+      opacity:.82;
       background:
         linear-gradient(
           116deg,
-          rgba(255,255,255,.245) 0%,
-          rgba(255,255,255,.065) 18%,
-          rgba(255,255,255,.014) 34%,
+          rgba(255,255,255,.17) 0%,
+          rgba(255,255,255,.036) 18%,
+          rgba(255,255,255,.008) 34%,
           rgba(255,255,255,0) 48%
         );
     }
@@ -1275,6 +1263,7 @@
 
   const baseSwipeHardwareTier=()=>{
     const ua=navigator.userAgent||'';
+    const android=/android/i.test(ua);
     const ios=/iphone|ipad|ipod/i.test(ua) ||
       (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 
@@ -1305,7 +1294,7 @@
         tier:'lite',
         reason:'reduced-motion',
         premiumLocked:false,
-        ios,longSide,shortSide,cores,memory
+        ios,android,longSide,shortSide,cores,memory
       };
     }
 
@@ -1316,7 +1305,7 @@
         tier:'lite',
         reason:'legacy-ios-viewport',
         premiumLocked:false,
-        ios,longSide,shortSide,cores,memory
+        ios,android,longSide,shortSide,cores,memory
       };
     }
 
@@ -1325,7 +1314,7 @@
         tier:'lite',
         reason:'low-memory',
         premiumLocked:false,
-        ios,longSide,shortSide,cores,memory
+        ios,android,longSide,shortSide,cores,memory
       };
     }
 
@@ -1334,7 +1323,7 @@
         tier:'lite',
         reason:'low-core-count',
         premiumLocked:false,
-        ios,longSide,shortSide,cores,memory
+        ios,android,longSide,shortSide,cores,memory
       };
     }
 
@@ -1351,7 +1340,7 @@
         /* iOS moderno como 14 Pro Max queda Premium fijo.
            Android/desktop Premium conserva fallback por gestos completos. */
         premiumLocked:Boolean(ios&&longSide>=844),
-        ios,longSide,shortSide,cores,memory
+        ios,android,longSide,shortSide,cores,memory
       };
     }
 
@@ -1359,7 +1348,7 @@
       tier:'standard',
       reason:'balanced',
       premiumLocked:false,
-      ios,longSide,shortSide,cores,memory
+      ios,android,longSide,shortSide,cores,memory
     };
   };
 
@@ -1437,6 +1426,17 @@
     const result=detectSwipeVisualTier();
     swipeNativeTier=result.nativeTier||result.tier;
     swipePremiumLocked=result.premiumLocked===true;
+
+    try{
+      const ua=navigator.userAgent||'';
+      swipePlatform=/android/i.test(ua)
+        ? 'android'
+        : (/iphone|ipad|ipod/i.test(ua) ? 'ios' : 'other');
+    }catch(_){
+      swipePlatform='other';
+    }
+
+    document.documentElement.dataset.evoSwipePlatform=swipePlatform;
     setSwipeVisualTier(result.tier,result.reason);
   };
 
@@ -1715,27 +1715,43 @@
     neighbor.style.setProperty('--evo-next-card-radius',`${nextRadius.toFixed(2)}px`);
 
     const cardInset=g*(premium?22:14);
-    const maxBlur=premium?19:10.5;
-    const blur=Math.min(maxBlur,g*maxBlur);
-    const glassOpacity=Math.min(premium?.995:.96,g*(premium?.995:.96));
+
+    /* V43: dead-zone visual. Durante los primeros 12% no aparece
+       ninguna placa de vidrio; luego entra progresivamente. */
+    const glassStart=.12;
+    const glassP=Math.max(0,Math.min(1,(p-glassStart)/(1-glassStart)));
+    const glassG=glassP*glassP*(3-(2*glassP));
+
+    const maxBlur=premium?7:4.5;
+    const blur=Math.min(maxBlur,glassG*maxBlur);
+
+    /* Opacidad máxima mucho menor: el contenido siempre sigue visible. */
+    const glassOpacity=
+      glassG*(premium?.44:.34);
 
     glass.style.inset=`${cardInset.toFixed(2)}px`;
     glass.style.borderRadius=`${activeRadius.toFixed(2)}px`;
     glass.style.opacity=glassOpacity.toFixed(3);
     glass.style.borderColor=
-      `rgba(255,255,255,${(.018+g*(premium?.205:.125)).toFixed(3)})`;
+      `rgba(255,255,255,${(.012+glassG*(premium?.10:.075)).toFixed(3)})`;
 
-    const saturation=1+(g*(premium?.28:.14));
-    glass.style.webkitBackdropFilter=
-      `blur(${blur.toFixed(2)}px) saturate(${saturation.toFixed(3)})`;
-    glass.style.backdropFilter=
-      `blur(${blur.toFixed(2)}px) saturate(${saturation.toFixed(3)})`;
+    const saturation=1+(glassG*(premium?.12:.08));
 
+    if(swipePlatform==='ios'&&premium){
+      glass.style.setProperty('--evo-glass-blur',`${blur.toFixed(2)}px`);
+      glass.style.setProperty('--evo-glass-sat',saturation.toFixed(3));
+      glass.style.webkitBackdropFilter='';
+      glass.style.backdropFilter='';
+    }else{
+      glass.style.webkitBackdropFilter='none';
+      glass.style.backdropFilter='none';
+    }
+
+    /* Sombra ligera y estable. Nada de glow gigante sobre toda la vista. */
     glass.style.boxShadow=[
-      `0 ${(12+g*(premium?34:18)).toFixed(1)}px ${(34+g*(premium?92:48)).toFixed(1)}px rgba(0,0,0,${(.10+g*(premium?.54:.40)).toFixed(3)})`,
-      `0 0 ${(premium?46:0)*g}px rgba(212,184,149,${(premium?g*.075:0).toFixed(3)})`,
-      `inset 0 1px 0 rgba(255,255,255,${(.035+g*(premium?.23:.12)).toFixed(3)})`,
-      `inset 0 0 0 1px rgba(212,184,149,${(g*(premium?.085:.045)).toFixed(3)})`
+      `0 ${(8+glassG*10).toFixed(1)}px ${(24+glassG*24).toFixed(1)}px rgba(0,0,0,${(.06+glassG*.16).toFixed(3)})`,
+      `inset 0 1px 0 rgba(255,255,255,${(.025+glassG*.09).toFixed(3)})`,
+      `inset 0 0 0 1px rgba(212,184,149,${(glassG*.035).toFixed(3)})`
     ].join(',');
 
     veil.style.opacity=(g*(premium?.145:.10)).toFixed(3);
@@ -1763,8 +1779,10 @@
       swipeGlassEl.style.inset='0';
       swipeGlassEl.style.borderRadius='0';
       swipeGlassEl.style.borderColor='rgba(255,255,255,0)';
-      swipeGlassEl.style.webkitBackdropFilter='blur(0px) saturate(1)';
-      swipeGlassEl.style.backdropFilter='blur(0px) saturate(1)';
+      swipeGlassEl.style.webkitBackdropFilter='none';
+      swipeGlassEl.style.backdropFilter='none';
+      swipeGlassEl.style.removeProperty('--evo-glass-blur');
+      swipeGlassEl.style.removeProperty('--evo-glass-sat');
       swipeGlassEl.style.boxShadow='none';
     }
   };
@@ -3862,6 +3880,7 @@
     get tier(){return swipeVisualTier},
     get nativeTier(){return swipeNativeTier},
     get premiumLocked(){return swipePremiumLocked},
+    get platform(){return swipePlatform},
     get reason(){return swipeTierReason},
     setPremium:()=>setSwipeVisualTier('premium','manual'),
     setStandard:()=>setSwipeVisualTier('standard','manual'),
