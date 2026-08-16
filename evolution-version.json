@@ -1,21 +1,21 @@
 {
-  "build": 34,
-  "version": "34",
+  "build": 35,
+  "version": "35",
   "announce": true,
   "required": false,
-  "subtitle": "Actualiza para aplicar correcciones de errores, mejoras de estabilidad y la experiencia más reciente de Evolution.",
+  "subtitle": "Esta versión adapta automáticamente el Liquid Glass a la potencia de tu dispositivo para mantener el swipe fluido.",
   "notes": [
     {
-      "title": "Errores corregidos",
-      "detail": "Ajustes de navegación, gestos y comportamientos inconsistentes."
+      "title": "Liquid Glass adaptativo",
+      "detail": "Más profundidad en equipos potentes y una versión ligera automática en hardware antiguo."
     },
     {
-      "title": "Más estabilidad",
-      "detail": "Carga más limpia y una experiencia más fluida en la app."
+      "title": "Swipe más fluido",
+      "detail": "La app mide el rendimiento durante el gesto y reduce efectos si detecta pérdida de cuadros."
     },
     {
-      "title": "Últimas mejoras",
-      "detail": "Aplica la versión reciente sin perder tu sesión ni proyectos."
+      "title": "Compatibilidad mejorada",
+      "detail": "Optimización especial para iPhone antiguos sin modificar navegación, sesión ni pagos."
     }
   ]
 }
