@@ -1,21 +1,21 @@
 {
-  "build": 37,
-  "version": "37",
+  "build": 39,
+  "version": "39",
   "announce": true,
   "required": false,
-  "subtitle": "Evolution ahora usa un sistema de actualización más ligero: las versiones normales actualizan solo la aplicación y su información de versión.",
+  "subtitle": "Se corrigió la selección automática del modo Premium para que los dispositivos de alto rendimiento conserven las transiciones Liquid Glass completas.",
   "notes": [
     {
-      "title": "Actualizaciones más ligeras",
-      "detail": "Las versiones normales ya no reemplazan ni reinician el Service Worker."
+      "title": "Premium restaurado",
+      "detail": "Los iPhone modernos de alto rendimiento vuelven a iniciar siempre en modo Premium."
     },
     {
-      "title": "Caché inteligente",
-      "detail": "Al actualizar se invalida únicamente evolution-app.js; views, imágenes y otros recursos permanecen intactos."
+      "title": "Fallback más inteligente",
+      "detail": "Premium ya no cae directamente a Lite por unos pocos frames lentos; primero baja a Standard solo ante una caída sostenida."
     },
     {
-      "title": "Arquitectura estable",
-      "detail": "Desde ahora las releases normales usan solo evolution-app.js + evolution-version.json."
+      "title": "Sin estados viejos",
+      "detail": "Los downgrades guardados por builds anteriores se limpian automáticamente al actualizar."
     }
   ]
 }
