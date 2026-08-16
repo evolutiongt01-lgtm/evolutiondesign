@@ -1090,6 +1090,51 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   }
 }
 
+
+.delivery-estimate{
+  margin:14px 0 12px;
+  padding:12px 13px;
+  border:1px solid rgba(212,184,149,.18);
+  border-radius:15px;
+  background:linear-gradient(145deg,rgba(212,184,149,.07),rgba(255,255,255,.018));
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.delivery-estimate.hidden{display:none}
+.delivery-estimate-icon{
+  width:38px;height:38px;flex:0 0 38px;border-radius:12px;
+  display:grid;place-items:center;
+  border:1px solid rgba(212,184,149,.23);
+  background:rgba(212,184,149,.08);
+  color:#d8bd99;font-weight:900;
+}
+.delivery-estimate-copy{min-width:0}
+.delivery-estimate-copy span{display:block;color:#81715f;font-size:8px;text-transform:uppercase;letter-spacing:.08em}
+.delivery-estimate-copy strong{display:block;color:#f0d2ad;font-size:11px;margin-top:3px}
+.delivery-estimate-copy small{display:block;color:#74747b;font-size:8px;line-height:1.45;margin-top:3px}
+.success-shipping{
+  width:min(100%,430px);
+  margin:0 auto 15px;
+  padding:12px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  border:1px solid rgba(212,184,149,.16);
+  border-radius:14px;
+  background:rgba(212,184,149,.035);
+  text-align:left;
+}
+.success-shipping.hidden{display:none}
+.success-shipping>div{padding:8px;border:1px solid rgba(255,255,255,.05);border-radius:10px;background:rgba(0,0,0,.14)}
+.success-shipping span{display:block;color:#77777e;font-size:7px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.success-shipping strong{display:block;color:#e4c9a7;font-size:9px;line-height:1.35;overflow-wrap:anywhere}
+@media(max-width:767.98px){
+  .delivery-estimate{padding:11px}
+  .delivery-estimate-copy strong{font-size:12px}
+  .success-shipping{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1221,6 +1266,15 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
         </div>
       </div>
 
+      <div class="delivery-estimate hidden" id="deliveryEstimateCard">
+        <div class="delivery-estimate-icon">⌁</div>
+        <div class="delivery-estimate-copy">
+          <span>Entrega aproximada</span>
+          <strong id="deliveryEstimateDate">Calculando…</strong>
+          <small id="deliveryEstimateDetail">Boxful + política de despacho Evolution Design</small>
+        </div>
+      </div>
+
       <div class="summary" id="summary"></div>
       <label class="check"><input type="checkbox" id="terms" required><span>Confirmo que mis datos son correctos, que realizaré el pago según el método seleccionado, que leí la guía de compra y envíos y que <strong>acepto las políticas de envío, recepción, reporte de daños y responsabilidad por daños posteriores a la entrega de Evolution Design</strong>. La disponibilidad se confirma por Evolution Design.</span></label>
       <button class="primary submit" id="submitBtn" type="submit">Confirmar pedido</button>
@@ -1232,6 +1286,10 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <h3>Pedido recibido</h3>
       <p id="successCopy">Tu solicitud quedó guardada y vinculada a tu cuenta Evolution.</p>
       <div class="order-code" id="successOrder">—</div><br>
+      <div class="success-shipping hidden" id="successShippingInfo">
+        <div><span>Guía / seguimiento</span><strong id="successShippingGuide">—</strong></div>
+        <div><span>Entrega aproximada</span><strong id="successShippingEta">—</strong></div>
+      </div>
       <div class="success-actions">
         <button class="primary" id="openOrdersBtn" type="button">Ver seguimiento en Mis Proyectos</button>
         <a class="secondary hidden" id="payVisacuotasBtn" href="https://app.recurrente.com/s/evolutiondesing/o/iphone-8-plus" target="_blank" rel="noopener" style="text-decoration:none">Continuar a Visacuotas ↗</a>
@@ -1305,7 +1363,7 @@ const $=id=>document.getElementById(id);
 const money=n=>`Q${Number(n||0).toFixed(2)}`;
 let config=null,authMode="login",recaptchaConfigPromise=null,recaptchaScriptPromise=null;let paypalSdkPromise=null,paypalRenderSeq=0,lastStoreOrder=null;
 const GT_LOCATIONS_URL="https://raw.githubusercontent.com/dervinluna/guatemala-lugares-json/main/centroides-de-lugares-poblados-de-la-republica-de-guatemala.-censo-2018.json";
-let gtLocations=null,gtCurrentPoblados=[],gtLocationsPromise=null;
+let gtLocations=null,gtCurrentPoblados=[],gtPobladoRecords=[],gtSelectedPobladoMeta=null,gtLocationsPromise=null;
 
 
 function showFeedback(message,type="error"){
@@ -1355,7 +1413,7 @@ async function recaptchaToken(){
   return new Promise((resolve,reject)=>window.grecaptcha.enterprise.ready(async()=>{try{resolve(await window.grecaptcha.enterprise.execute(cfg.siteKey,{action:"STORE_ORDER"}))}catch(e){reject(e)}}));
 }
 
-function renderMethods(){const host=$("methodGrid");if(!config?.methods?.length){host.innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos cargar los métodos disponibles.</div>';return}const regular=config.methods.filter(q=>q.method!=="visacuotas");host.innerHTML=regular.map(q=>{const detail=q.method==="cod_forza"||q.method==="cod_cargo"?`7% de recargo incluido · ${money(q.surchargeGtq)}`:["transfer_shipping","paypal_shipping","card_shipping","crypto_binance"].includes(q.method)?`Envío nacional incluido · ${money(q.shippingGtq)}`:"Sin recargo ni costo de entrega",extra=q.method==="crypto_binance"&&q.usdtAmount?` · aprox. ${Number(q.usdtAmount).toFixed(2)} USDT`:"",cls=q.method==="paypal_shipping"?"paypal":q.method==="card_shipping"?"card":q.method==="crypto_binance"?"crypto":"";return `<button type="button" class="method ${cls} ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}${extra}</span><b>${money(q.totalGtq)}</b></button>`}).join("");host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderPaymentExtra();renderSummary()}));$("selectVisacuotasBtn")?.classList.toggle("active",$("paymentMethod").value==="visacuotas")}
+function renderMethods(){const host=$("methodGrid");if(!config?.methods?.length){host.innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos cargar los métodos disponibles.</div>';return}const regular=config.methods.filter(q=>q.method!=="visacuotas");host.innerHTML=regular.map(q=>{const detail=q.method==="cod_forza"||q.method==="cod_cargo"?`7% de recargo incluido · ${money(q.surchargeGtq)}`:["transfer_shipping","paypal_shipping","card_shipping","crypto_binance"].includes(q.method)?`Envío nacional incluido · ${money(q.shippingGtq)}`:"Sin recargo ni costo de entrega",extra=q.method==="crypto_binance"&&q.usdtAmount?` · aprox. ${Number(q.usdtAmount).toFixed(2)} USDT`:"",cls=q.method==="paypal_shipping"?"paypal":q.method==="card_shipping"?"card":q.method==="crypto_binance"?"crypto":"";return `<button type="button" class="method ${cls} ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}${extra}</span><b>${money(q.totalGtq)}</b></button>`}).join("");host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate()}));$("selectVisacuotasBtn")?.classList.toggle("active",$("paymentMethod").value==="visacuotas")}
 
 let selectedBankKey="bac";
 function renderGuide(){const guide=config?.guide||{};$("guideTitle").textContent=guide.title||"Guía de compra y envío";$("guideIntro").textContent=guide.intro||"Revisa esta información antes de confirmar tu pedido.";$("guidePaymentText").textContent=guide.paymentText||"";$("guideShippingText").textContent=guide.shippingText||"";$("guideDamageText").textContent=guide.damageText||"Al recibir el producto, revisa su estado. Si detectas daño atribuible al transporte, repórtalo dentro de 10 horas con fotografías o video y evidencia de entrega.";$("guideCustomerDamageText").textContent=guide.customerDamageText||"Evolution Design no responde por daños causados después de la entrega por golpes, líquidos, manipulación, reparaciones de terceros, modificaciones o uso indebido. Todo reclamo queda sujeto a revisión para determinar su origen.";$("shippingNoticeText").textContent=guide.shippingText||"Los envíos se realizan de lunes a viernes."}
@@ -1378,7 +1436,7 @@ function selectedDepartmentRecord(){const value=$("department").value;return gtL
 function selectedMunicipalityRecord(){const dep=selectedDepartmentRecord(),value=$("municipality").value;return dep?.municipios?.find(m=>String(m.nombre||"")===value)||null}
 
 function resetPoblado(message="Primero selecciona municipio"){
-  gtCurrentPoblados=[];
+  gtCurrentPoblados=[];gtPobladoRecords=[];gtSelectedPobladoMeta=null;
   $("poblado").value="";
   $("poblado").disabled=true;
   $("poblado").placeholder=message;
@@ -1396,12 +1454,44 @@ function populateMunicipalities(){
   select.insertAdjacentHTML("beforeend",list.map(m=>`<option value="${escapeLocationHtml(m.nombre||"")}">${escapeLocationHtml(m.nombre||"")}</option>`).join(""));
   setGeoStatus(`${list.length} municipios disponibles en ${dep.nombre}.`);
 }
+
+function extractGeoNumber(obj,keys,depth=0){
+  if(!obj||depth>5)return null;
+  const wanted=new Set(keys.map(k=>k.toLowerCase()));
+  if(typeof obj==="object"){
+    for(const [k,v] of Object.entries(obj)){
+      if(wanted.has(String(k).toLowerCase())){
+        const n=Number(v);
+        if(Number.isFinite(n))return n;
+      }
+    }
+    for(const v of Object.values(obj)){
+      if(v&&typeof v==="object"){
+        const n=extractGeoNumber(v,keys,depth+1);
+        if(Number.isFinite(n))return n;
+      }
+    }
+  }
+  return null;
+}
+function selectedPobladoCoordinates(){
+  const p=gtSelectedPobladoMeta||{};
+  const lat=extractGeoNumber(p,["lat","latitude","latitud","y"]);
+  const lng=extractGeoNumber(p,["lng","lon","long","longitude","longitud","x"]);
+  return {
+    destinationLat:Number.isFinite(lat)&&lat>=-90&&lat<=90?lat:null,
+    destinationLng:Number.isFinite(lng)&&lng>=-180&&lng<=180?lng:null
+  };
+}
+
 function populatePoblados(){
   const mun=selectedMunicipalityRecord(),input=$("poblado");
   input.value="";$("pobladoSuggestions").classList.remove("show");
   if(!mun){resetPoblado();return}
   const seen=new Set();
-  gtCurrentPoblados=(Array.isArray(mun.poblados)?mun.poblados:[]).map(p=>String(p?.nombre||"").trim()).filter(Boolean).filter(name=>{const key=normalizeLocation(name);if(seen.has(key))return false;seen.add(key);return true}).sort((a,b)=>a.localeCompare(b,"es"));
+  gtPobladoRecords=(Array.isArray(mun.poblados)?mun.poblados:[]).filter(p=>String(p?.nombre||"").trim()).filter(p=>{const key=normalizeLocation(p.nombre);if(seen.has(key))return false;seen.add(key);return true});
+  gtCurrentPoblados=gtPobladoRecords.map(p=>String(p.nombre).trim()).sort((a,b)=>a.localeCompare(b,"es"));
+  gtSelectedPobladoMeta=null;
   input.disabled=false;input.placeholder="Busca tu poblado";$("pobladoTrigger").disabled=false;
   setGeoStatus(`${gtCurrentPoblados.length.toLocaleString("es-GT")} poblados disponibles en ${mun.nombre}.`);
   renderPobladoSuggestions("");
@@ -1414,18 +1504,20 @@ function renderPobladoSuggestions(query=""){
   if(!q&&mun)matches.sort((a,b)=>{const am=normalizeLocation(a)===normalizeLocation(mun)?-1:0,bm=normalizeLocation(b)===normalizeLocation(mun)?-1:0;return am!==bm?am-bm:a.localeCompare(b,"es")});
   matches=matches.slice(0,18);
   host.innerHTML=matches.length?matches.map(name=>`<button type="button" class="poblado-option" role="option" data-poblado="${escapeLocationHtml(name)}"><strong>${escapeLocationHtml(name)}</strong></button>`).join(""):'<div class="poblado-empty">No encontramos coincidencias. Escribe parte del nombre del poblado.</div>';
-  host.querySelectorAll("[data-poblado]").forEach(btn=>btn.addEventListener("click",()=>{$("poblado").value=btn.dataset.poblado||"";$("poblado").classList.remove("geo-invalid");host.classList.remove("show")}));
+  host.querySelectorAll("[data-poblado]").forEach(btn=>btn.addEventListener("click",()=>{const name=btn.dataset.poblado||"";$("poblado").value=name;gtSelectedPobladoMeta=gtPobladoRecords.find(p=>normalizeLocation(p.nombre)===normalizeLocation(name))||null;$("poblado").classList.remove("geo-invalid");host.classList.remove("show");scheduleDeliveryEstimate()}));
   host.classList.add("show");
 }
 function validateSelectedPoblado(){
   const value=$("poblado").value.trim(),normalized=normalizeLocation(value);
   const match=gtCurrentPoblados.find(name=>normalizeLocation(name)===normalized);
   if(!match)return false;
-  $("poblado").value=match;return true;
+  $("poblado").value=match;
+  gtSelectedPobladoMeta=gtPobladoRecords.find(p=>normalizeLocation(p.nombre)===normalized)||gtSelectedPobladoMeta;
+  return true;
 }
 function initGeoSelectors(){
-  $("department").addEventListener("change",()=>{$("department").classList.remove("geo-invalid");populateMunicipalities()});
-  $("municipality").addEventListener("change",()=>{$("municipality").classList.remove("geo-invalid");populatePoblados()});
+  $("department").addEventListener("change",()=>{$("department").classList.remove("geo-invalid");populateMunicipalities();scheduleDeliveryEstimate()});
+  $("municipality").addEventListener("change",()=>{$("municipality").classList.remove("geo-invalid");populatePoblados();scheduleDeliveryEstimate()});
   $("poblado").addEventListener("focus",()=>renderPobladoSuggestions($("poblado").value));
   $("poblado").addEventListener("input",()=>{$("poblado").classList.remove("geo-invalid");renderPobladoSuggestions($("poblado").value)});
   $("poblado").addEventListener("keydown",e=>{if(e.key==="Escape")$("pobladoSuggestions").classList.remove("show");if(e.key==="ArrowDown"){e.preventDefault();$("pobladoSuggestions").querySelector(".poblado-option")?.focus()}});
@@ -1446,6 +1538,7 @@ async function loadGuatemalaLocations(){
   return gtLocationsPromise;
 }
 initGeoSelectors();
+["address","reference","phone"].forEach(id=>$(id)?.addEventListener("input",scheduleDeliveryEstimate));
 loadGuatemalaLocations().catch(()=>{});
 
 
@@ -1490,7 +1583,7 @@ async function uploadStorePaymentProof(inputId){
   $(id)?.addEventListener("change",()=>receiptFileLabel(id,id==="transferReceipt"?"transferReceiptName":id==="cryptoReceipt"?"cryptoReceiptName":"successReceiptName"));
 });
 
-function buildStoreDraft(){return{customerName:$("customerName").value.trim(),recipientName:$("recipientName").value.trim(),phone:$("phone").value.trim(),nitDpi:$("nitDpi").value.trim(),department:$("department").value.trim(),municipality:$("municipality").value.trim(),poblado:$("poblado").value.trim(),address:$("address").value.trim(),reference:$("reference").value.trim(),notes:$("notes").value.trim(),termsAccepted:$("terms").checked}}
+function buildStoreDraft(){const coords=selectedPobladoCoordinates();return{customerName:$("customerName").value.trim(),recipientName:$("recipientName").value.trim(),phone:$("phone").value.trim(),nitDpi:$("nitDpi").value.trim(),department:$("department").value.trim(),municipality:$("municipality").value.trim(),poblado:$("poblado").value.trim(),address:$("address").value.trim(),reference:$("reference").value.trim(),notes:$("notes").value.trim(),termsAccepted:$("terms").checked,...coords}}
 function validateStoreDraft(){
   if(!$("orderForm").reportValidity())throw new Error("Completa los datos de entrega antes de continuar.");
   const method=$("paymentMethod").value;
@@ -1504,7 +1597,77 @@ function validateStoreDraft(){
   if(!$("terms").checked)throw new Error("Debes aceptar la guía y condiciones de compra.");
   return buildStoreDraft();
 }
-function finishStoreSuccess(order){if(!order)return;lastStoreOrder=order;$("orderForm").classList.add("hidden");$("successBox").classList.remove("hidden");$("successOrder").textContent=order.orderId||"—";const paid=order.paymentStatus==="paid";$("successCopy").textContent=order.paymentMethod==="visacuotas"?`${methodLabel(order.paymentMethod)} · Base ${money(order.totalGtq)} más el recargo mostrado por Recurrente. Tu pedido ya aparece en tu cuenta.`:`${methodLabel(order.paymentMethod)} · ${paid?"Pago confirmado · ":""}Total ${money(order.totalGtq)}. Tu pedido ya aparece en tu cuenta.`;$("payVisacuotasBtn").classList.toggle("hidden",order.paymentMethod!=="visacuotas");$("successReceiptPanel").classList.toggle("hidden",order.paymentMethod!=="visacuotas"||Boolean(order.receiptStoragePath));config.available=false;$("availability").textContent=paid?"Pago confirmado":"Pedido registrado";$("availability").classList.add("sold")}
+
+let deliveryEstimateTimer=null;
+function formatEstimateDate(value){
+  if(!value)return"—";
+  const d=new Date(`${value}T12:00:00-06:00`);
+  if(Number.isNaN(d.getTime()))return value;
+  return new Intl.DateTimeFormat("es-GT",{weekday:"short",day:"numeric",month:"short"}).format(d);
+}
+function renderDeliveryEstimate(estimate){
+  const card=$("deliveryEstimateCard");
+  const method=$("paymentMethod").value;
+  if(method==="pickup_pana"||!estimate){card.classList.add("hidden");return}
+  card.classList.remove("hidden");
+  const first=formatEstimateDate(estimate.earliestDeliveryDate);
+  const last=formatEstimateDate(estimate.latestDeliveryDate);
+  $("deliveryEstimateDate").textContent=first&&last&&first!==last?`${first} – ${last}`:first||last||"Por confirmar";
+  $("deliveryEstimateDetail").textContent=estimate.quoteAvailable
+    ?"Estimación consultada con Boxful; puede variar por cobertura, bloqueos o incidencias."
+    :"Estimación basada en nuestra política de despacho; la guía se confirmará al registrar el pedido.";
+}
+async function refreshDeliveryEstimate(){
+  const user=auth.currentUser,q=currentQuote();
+  if(!user||!q||q.method==="pickup_pana"){renderDeliveryEstimate(null);return}
+  const department=$("department").value,municipality=$("municipality").value,poblado=$("poblado").value;
+  if(!department||!municipality||!poblado){renderDeliveryEstimate(null);return}
+  try{
+    const draft=buildStoreDraft();
+    const result=await authedFetch("/boxful/store/estimate",{method:"POST",body:{
+      ...draft,
+      paymentMethod:q.method,
+      productTitle:"iPhone 8 Plus",
+      totalGtq:q.totalGtq
+    }});
+    renderDeliveryEstimate(result.estimate);
+  }catch(e){
+    console.info("Estimación Boxful:",e?.message||e);
+  }
+}
+function scheduleDeliveryEstimate(){
+  clearTimeout(deliveryEstimateTimer);
+  deliveryEstimateTimer=setTimeout(refreshDeliveryEstimate,420);
+}
+
+function finishStoreSuccess(order){
+  if(!order)return;
+  lastStoreOrder=order;
+  $("orderForm").classList.add("hidden");
+  $("successBox").classList.remove("hidden");
+  $("successOrder").textContent=order.orderId||"—";
+  const paid=order.paymentStatus==="paid";
+  $("successCopy").textContent=order.paymentMethod==="visacuotas"
+    ? `${methodLabel(order.paymentMethod)} · Base ${money(order.totalGtq)} más el recargo mostrado por Recurrente. Tu pedido ya aparece en tu cuenta.`
+    : `${methodLabel(order.paymentMethod)} · ${paid?"Pago confirmado · ":""}Total ${money(order.totalGtq)}. Tu pedido ya aparece en tu cuenta.`;
+
+  const shipping=order.paymentMethod!=="pickup_pana";
+  $("successShippingInfo").classList.toggle("hidden",!shipping);
+  if(shipping){
+    $("successShippingGuide").textContent=order.boxfulShipmentNumber||order.trackingNumber||
+      (order.paymentMethod==="transfer_shipping"?"Se genera al validar tu transferencia":
+       order.boxfulStatus==="pending_retry"?"En proceso / reintento automático":"Generando guía");
+    const first=formatEstimateDate(order.estimatedDeliveryDate);
+    const last=formatEstimateDate(order.estimatedDeliveryLatestDate);
+    $("successShippingEta").textContent=first&&last&&first!==last?`${first} – ${last}`:first||last||"Por confirmar";
+  }
+
+  $("payVisacuotasBtn").classList.toggle("hidden",order.paymentMethod!=="visacuotas");
+  $("successReceiptPanel").classList.toggle("hidden",order.paymentMethod!=="visacuotas"||Boolean(order.receiptStoragePath));
+  config.available=false;
+  $("availability").textContent=paid?"Pago confirmado":"Pedido registrado";
+  $("availability").classList.add("sold");
+}
 async function renderOnlinePayment(method){const panel=$("onlinePaymentPanel"),host=$("paypalStoreButtons");if(!["paypal_shipping","card_shipping"].includes(method)){panel.classList.remove("show");host.innerHTML="";setPaypalStatus("");return}panel.classList.add("show");$("onlinePaymentTitle").textContent=method==="card_shipping"?"Tarjeta débito/crédito":"PayPal";$("onlinePaymentCopy").textContent=`Pago seguro · ${money(currentQuote()?.totalGtq||990)}. El Worker convierte el total a USD para el checkout.`;host.innerHTML='<div style="padding:8px;color:#333;font-size:11px;text-align:center">Preparando pago seguro…</div>';const seq=++paypalRenderSeq;try{const paypal=await loadPayPalSdk();if(seq!==paypalRenderSeq)return;host.innerHTML="";const fundingSource=method==="card_shipping"?paypal.FUNDING.CARD:paypal.FUNDING.PAYPAL,buttons=paypal.Buttons({fundingSource,style:{layout:"vertical",shape:"rect",color:method==="card_shipping"?"black":"gold",label:method==="card_shipping"?"pay":"paypal",height:45},createOrder:async()=>{clearFeedback();setPaypalStatus("Validando datos y preparando el pago…");if(!config?.available)throw new Error("Esta unidad ya fue confirmada.");const draft=validateStoreDraft(),token=await recaptchaToken(),result=await authedFetch("/paypal/create-order",{method:"POST",body:{mode:"store_iphone_purchase",fundingSource:method==="card_shipping"?"card":"paypal",storeDraft:draft,recaptchaToken:token,requestedUri:location.href}});setPaypalStatus("Orden preparada. Continúa en el checkout seguro.");return result.orderId},onApprove:async data=>{setPaypalStatus("Confirmando pago…");try{const result=await authedFetch("/paypal/capture-order",{method:"POST",body:{orderId:data.orderID}});if(!result?.storeOrder)throw new Error("El pago fue confirmado, pero no recibimos el pedido final.");setPaypalStatus("Pago confirmado ✓");finishStoreSuccess(result.storeOrder)}catch(e){setPaypalStatus(e.message||"No pudimos confirmar el pago.","error");throw e}},onCancel:()=>setPaypalStatus("Pago cancelado. Puedes intentarlo nuevamente."),onError:e=>{console.error(e);setPaypalStatus(e?.message||"No se pudo abrir el pago seguro.","error")}});if(!buttons.isEligible()){host.innerHTML='<div style="padding:12px;color:#8a1c1c;font-size:11px;text-align:center">Este método no está disponible en este dispositivo. Prueba otro método.</div>';return}await buttons.render("#paypalStoreButtons")}catch(e){console.error(e);host.innerHTML="";setPaypalStatus(e.message||"No se pudo preparar PayPal.","error")}}
 function renderCrypto(){const q=config?.methods?.find(x=>x.method==="crypto_binance"),b=config?.binancePayment||{};$("cryptoQr").src=b.qrImage||"img/binance-pay.jpeg";$("cryptoAlias").textContent=b.alias||"Evolution Desing";$("cryptoAsset").textContent=b.asset||"USDT";$("cryptoAmount").textContent=q?.usdtAmount?`${Number(q.usdtAmount).toFixed(2)} USDT`:"Se calcula al cargar"}
 function renderPaymentExtra(){const method=$("paymentMethod").value;$("transferPanel").classList.toggle("show",method==="transfer_shipping");$("cryptoPanel").classList.toggle("show",method==="crypto_binance");$("visacuotasPanel").classList.toggle("show",method==="visacuotas");$("selectVisacuotasBtn")?.classList.toggle("active",method==="visacuotas");if(method==="transfer_shipping")renderBankDetails();if(method==="crypto_binance")renderCrypto();renderOnlinePayment(method);const url=config?.visacuotasUrl||"https://app.recurrente.com/s/evolutiondesing/o/iphone-8-plus";$("visacuotasPreviewLink").href=url;$("payVisacuotasBtn").href=url}
@@ -1525,7 +1688,7 @@ async function loadConfig(){
     config=await publicGet("/store/iphone-8-plus/config");
     $("availability").textContent=config.available?"Unidad disponible":"Unidad confirmada";
     $("availability").classList.toggle("sold",!config.available);
-    renderMethods();syncDelivery();renderPaymentExtra();renderSummary();renderGuide();
+    renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate();renderGuide();
     $("submitBtn").disabled=!config.available;
   }catch(e){
     $("availability").textContent="Verificación pendiente";
@@ -1560,7 +1723,7 @@ $("googleBtn").onclick=async()=>{try{$("loginError").classList.remove("show");aw
 $("toggleMode").onclick=()=>{authMode=authMode==="login"?"signup":"login";$("loginTitle").textContent=authMode==="login"?"Iniciar sesión":"Crear cuenta";$("emailAuthBtn").textContent=authMode==="login"?"Ingresar":"Crear cuenta";$("toggleMode").textContent=authMode==="login"?"¿No tienes cuenta? Crear cuenta":"¿Ya tienes cuenta? Iniciar sesión";$("authPassword").autocomplete=authMode==="login"?"current-password":"new-password"};
 $("emailAuthForm").addEventListener("submit",async e=>{e.preventDefault();const btn=$("emailAuthBtn");btn.disabled=true;$("loginError").classList.remove("show");try{const email=$("authEmail").value.trim(),password=$("authPassword").value;authMode==="login"?await signInWithEmailAndPassword(auth,email,password):await createUserWithEmailAndPassword(auth,email,password)}catch(err){$("loginError").textContent=err.message||"No pudimos completar el acceso."; $("loginError").classList.add("show")}finally{btn.disabled=false}});
 
-$("selectVisacuotasBtn").onclick=()=>{$("paymentMethod").value="visacuotas";renderMethods();syncDelivery();renderPaymentExtra();renderSummary();$("visacuotasPanel").scrollIntoView({behavior:"smooth",block:"nearest"})};
+$("selectVisacuotasBtn").onclick=()=>{$("paymentMethod").value="visacuotas";renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate();$("visacuotasPanel").scrollIntoView({behavior:"smooth",block:"nearest"})};
 
 $("orderForm").addEventListener("submit",async e=>{e.preventDefault();clearFeedback();if(!config?.available){showFeedback("Esta unidad ya fue confirmada.");return}const q=currentQuote();if(!q)return;if(["paypal_shipping","card_shipping"].includes(q.method)){showFeedback("Completa el pago con el botón seguro que aparece arriba.");return}const btn=$("submitBtn");btn.disabled=true;btn.textContent="Validando pedido…";try{const draft=validateStoreDraft();let paymentReference="",paymentProofId="";if(q.method==="transfer_shipping"){paymentReference=$("transferReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia de la transferencia.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("transferReceipt")}if(q.method==="crypto_binance"){paymentReference=$("cryptoReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia del pago cripto.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("cryptoReceipt")}btn.textContent="Validando seguridad…";const token=await recaptchaToken();btn.textContent="Guardando pedido…";const result=await authedFetch("/store/orders/create",{method:"POST",body:{...draft,paymentMethod:q.method,paymentReference,paymentProofId,recaptchaToken:token,requestedUri:location.href}});finishStoreSuccess(result.order)}catch(err){showFeedback(err.message||"No se pudo registrar el pedido.");btn.disabled=false;renderSummary()}});
 
