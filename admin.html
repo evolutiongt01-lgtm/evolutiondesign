@@ -482,6 +482,49 @@
 .store-order-customer{min-width:220px}.store-order-method{font-size:9px;color:#777;margin-top:4px;line-height:1.45}.store-order-total{font-size:13px;font-weight:800;color:var(--accent)}
 .store-order-delivery-box{display:grid;gap:9px}.store-order-delivery-row{padding:11px 12px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.015)}.store-order-delivery-row span{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.08em;color:#6d6d73;margin-bottom:5px}.store-order-delivery-row strong{display:block;font-size:11px;color:#e9e9eb;line-height:1.5;overflow-wrap:anywhere}
 
+
+.boxful-panel{
+  position:relative;
+  overflow:hidden;
+  border-color:rgba(255,98,54,.18)!important;
+  background:
+    radial-gradient(circle at 96% 0%,rgba(255,92,48,.075),transparent 28%),
+    rgba(255,255,255,.012);
+}
+.boxful-status-line{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:7px;
+}
+.boxful-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#777;
+  box-shadow:0 0 0 4px rgba(255,255,255,.035);
+}
+.boxful-dot.ok{
+  background:#44d17a;
+  box-shadow:0 0 0 4px rgba(68,209,122,.08),0 0 16px rgba(68,209,122,.25);
+}
+.boxful-dot.error{
+  background:#ff6773;
+  box-shadow:0 0 0 4px rgba(255,103,115,.08);
+}
+.boxful-status-text{font-size:10px;color:#818188}
+.boxful-status-text strong{color:#dddde1}
+.boxful-address-preview{
+  margin-top:10px;
+  padding:10px 11px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  background:rgba(0,0,0,.16);
+  color:#85858c;
+  font-size:9px;
+  line-height:1.5;
+}
+.boxful-address-preview strong{color:#d8d8dc}
+
 </style>
 <style id="evolution-admin-performance">
 /* =========================================================
@@ -908,6 +951,42 @@ html.admin-page-hidden *{
 <div class="webreq-stat"><span>Recibidos</span><strong id="storeReceivedMetric">0</strong></div>
 <div class="webreq-stat"><span>En proceso</span><strong id="storeActiveMetric">0</strong></div>
 <div class="webreq-stat"><span>Entregados</span><strong id="storeDeliveredMetric">0</strong></div>
+</div>
+
+
+<div class="panel boxful-panel" style="margin:0 0 14px">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Boxful · Integración API</div>
+      <div class="panel-copy">Conecta Evolution Design con tu cuenta Boxful y selecciona desde dónde se recogerán los paquetes.</div>
+      <div class="boxful-status-line">
+        <span class="boxful-dot" id="boxfulStatusDot"></span>
+        <span class="boxful-status-text" id="boxfulStatusText"><strong>Comprobando…</strong></span>
+      </div>
+    </div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      <button class="btn" id="boxfulTestBtn" type="button" onclick="testBoxfulConnection()">Probar conexión</button>
+      <button class="btn btn-accent" id="saveBoxfulConfigBtn" type="button" onclick="saveBoxfulConfig()">Guardar dirección</button>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="form-grid">
+      <div class="field full">
+        <label>Dirección de recolección Boxful</label>
+        <select class="input" id="boxfulPickupAddress">
+          <option value="">Primero conecta Boxful…</option>
+        </select>
+        <div class="hint">Boxful usa el ID de esta dirección como <code>recolectionAddressId</code> cuando creemos el envío.</div>
+      </div>
+    </div>
+    <div class="boxful-address-preview" id="boxfulAddressPreview">
+      La dirección aparecerá aquí cuando la API esté conectada.
+    </div>
+    <div class="hint" style="margin-top:9px">
+      Las credenciales no se guardan en este HTML. Configúralas como Secrets del Worker:
+      <code>BOXFUL_EMAIL</code> y <code>BOXFUL_PASSWORD</code>.
+    </div>
+  </div>
 </div>
 
 <div class="panel" style="margin:0 0 14px">
@@ -1455,6 +1534,94 @@ async function storeAdminRequest(path,{method='GET',body=null}={}){
   return result;
 }
 function gtq(n){return `Q${Number(n||0).toFixed(2)}`}
+
+function boxfulSetStatus({connected=false,configured=false,message=""}={}){
+  const dot=$('boxfulStatusDot'),text=$('boxfulStatusText');
+  if(dot){
+    dot.classList.toggle('ok',connected);
+    dot.classList.toggle('error',configured&&!connected);
+  }
+  if(text){
+    text.innerHTML=connected
+      ? `<strong>Conectado ✓</strong> · ${esc(message||'API de Boxful disponible')}`
+      : configured
+        ? `<strong>No conectado</strong> · ${esc(message||'Revisa las credenciales')}`
+        : `<strong>Sin configurar</strong> · agrega BOXFUL_EMAIL y BOXFUL_PASSWORD en Cloudflare`;
+  }
+}
+function boxfulAddressLabel(a){
+  return [a?.address,a?.referencePoint].filter(Boolean).join(' · ')||a?.id||'Dirección Boxful';
+}
+function renderBoxfulConfig(result){
+  data.boxful=result||{};
+  const addresses=Array.isArray(result?.addresses)?result.addresses:[];
+  const selected=result?.config?.recolectionAddressId||'';
+  const select=$('boxfulPickupAddress');
+  if(select){
+    select.innerHTML=addresses.length
+      ? `<option value="">Selecciona dirección de recolección</option>`+
+        addresses.map(a=>`<option value="${esc(a.id)}">${esc(boxfulAddressLabel(a))}</option>`).join('')
+      : `<option value="">${result?.configured?'No hay direcciones disponibles':'Configura Boxful primero'}</option>`;
+    if(selected&&addresses.some(a=>a.id===selected))select.value=selected;
+    select.disabled=!result?.connected||!addresses.length;
+  }
+  boxfulSetStatus({
+    connected:result?.connected===true,
+    configured:result?.configured===true,
+    message:result?.connected?`${addresses.length} dirección${addresses.length===1?'':'es'} disponible${addresses.length===1?'':'s'}`:(result?.error||'')
+  });
+  renderBoxfulAddressPreview();
+}
+function renderBoxfulAddressPreview(){
+  const result=data.boxful||{},addresses=Array.isArray(result.addresses)?result.addresses:[];
+  const id=$('boxfulPickupAddress')?.value||result?.config?.recolectionAddressId||'';
+  const a=addresses.find(x=>x.id===id);
+  const host=$('boxfulAddressPreview');if(!host)return;
+  if(!a){
+    host.innerHTML=result?.connected
+      ? 'Selecciona la dirección desde donde Boxful recogerá tus paquetes.'
+      : 'La dirección aparecerá aquí cuando la API esté conectada.';
+    return;
+  }
+  host.innerHTML=`<strong>${esc(a.address||'Dirección de recolección')}</strong>${a.referencePoint?`<br>${esc(a.referencePoint)}`:''}${a.addressPhone?`<br>Tel. +${esc(a.addressAreaCode||'502')} ${esc(a.addressPhone)}`:''}`;
+}
+async function loadBoxfulAdmin(){
+  return storeAdminRequest('/boxful/admin/status');
+}
+window.testBoxfulConnection=async function(){
+  const btn=$('boxfulTestBtn');if(!btn)return;
+  const old=btn.textContent;btn.disabled=true;btn.textContent='Conectando…';
+  boxfulSetStatus({configured:true,connected:false,message:'Probando autenticación…'});
+  try{
+    const result=await loadBoxfulAdmin();
+    renderBoxfulConfig(result);
+    if(result.connected)toast('Boxful conectado correctamente.');
+  }catch(e){
+    console.error(e);
+    renderBoxfulConfig({configured:true,connected:false,error:e.message||'No se pudo conectar con Boxful.',addresses:[],config:data.boxful?.config||{}});
+    toast(e.message||'No se pudo conectar con Boxful.');
+  }finally{
+    btn.disabled=false;btn.textContent=old;
+  }
+}
+window.saveBoxfulConfig=async function(){
+  const recolectionAddressId=$('boxfulPickupAddress')?.value||'';
+  if(!recolectionAddressId){toast('Selecciona una dirección de recolección.');return}
+  const btn=$('saveBoxfulConfigBtn');const old=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
+  try{
+    const saved=await storeAdminRequest('/boxful/admin/config',{method:'POST',body:{recolectionAddressId}});
+    if(!data.boxful)data.boxful={};
+    data.boxful.config=saved.config||data.boxful.config||{};
+    renderBoxfulAddressPreview();
+    toast('Dirección Boxful guardada.');
+  }catch(e){
+    console.error(e);toast(e.message||'No se pudo guardar Boxful.');
+  }finally{
+    btn.disabled=false;btn.textContent=old;
+  }
+}
+$('boxfulPickupAddress')?.addEventListener('change',renderBoxfulAddressPreview);
+
 function storeOrderStatusLabel(order){
   const s=String(order?.status||'received');
   if(s==='shipped'&&order?.paymentMethod==='pickup_pana')return'Listo para entregar';
@@ -2283,6 +2450,13 @@ async function refresh(){
     data=await loadDashboardDirect();
     try{data.orders=await loadStoreOrdersAdmin()}catch(orderError){console.warn('Pedidos no disponibles:',orderError?.message||orderError);data.orders=[]}
     try{data.storeGuide=await loadStoreGuideAdmin()}catch(guideError){console.warn('Guía pública no disponible:',guideError?.message||guideError);data.storeGuide={guide:{}}}
+    try{
+      const boxful=await loadBoxfulAdmin();
+      renderBoxfulConfig(boxful);
+    }catch(boxfulError){
+      console.warn('Boxful no disponible:',boxfulError?.message||boxfulError);
+      renderBoxfulConfig({configured:false,connected:false,error:boxfulError?.message||'',addresses:[],config:{}});
+    }
     renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();renderWebRequests();renderPaymentReceipts();renderSubscriptions();renderStoreOrders();renderStoreGuideAdmin();
     clearSystemError();
     return true;
