@@ -574,6 +574,16 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   .receipt-file{font-size:11px}
 }
 
+
+.customer-damage-guide{
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.022);
+  border-radius:15px;
+  padding:13px!important;
+  margin-top:12px;
+}
+.customer-damage-guide span{color:#d4b895!important}
+
 </style>
 </head>
 <body>
@@ -669,7 +679,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       </div>
 
       <div class="summary" id="summary"></div>
-      <label class="check"><input type="checkbox" id="terms" required><span>Confirmo que mis datos son correctos, que realizaré el pago según el método seleccionado, que leí la guía de compra y envíos y que <strong>acepto las políticas de envío, recepción y reporte de daños de Evolution Design</strong>. La disponibilidad se confirma por Evolution Design.</span></label>
+      <label class="check"><input type="checkbox" id="terms" required><span>Confirmo que mis datos son correctos, que realizaré el pago según el método seleccionado, que leí la guía de compra y envíos y que <strong>acepto las políticas de envío, recepción, reporte de daños y responsabilidad por daños posteriores a la entrega de Evolution Design</strong>. La disponibilidad se confirma por Evolution Design.</span></label>
       <button class="primary submit" id="submitBtn" type="submit">Confirmar pedido</button>
       <div class="feedback" id="feedback"></div>
     </form>
@@ -715,6 +725,10 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
     <div class="guide-section damage-guide">
       <span>Recepción y daños de transporte · 10 horas</span>
       <p id="guideDamageText"></p>
+    </div>
+    <div class="guide-section customer-damage-guide">
+      <span>Uso posterior y daños causados después de la entrega</span>
+      <p id="guideCustomerDamageText"></p>
     </div>
   </div>
 </div>
@@ -801,7 +815,7 @@ async function recaptchaToken(){
 function renderMethods(){const host=$("methodGrid");if(!config?.methods?.length){host.innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos cargar los métodos disponibles.</div>';return}const regular=config.methods.filter(q=>q.method!=="visacuotas");host.innerHTML=regular.map(q=>{const detail=q.method==="cod_forza"||q.method==="cod_cargo"?`7% de recargo incluido · ${money(q.surchargeGtq)}`:["transfer_shipping","paypal_shipping","card_shipping","crypto_binance"].includes(q.method)?`Envío nacional incluido · ${money(q.shippingGtq)}`:"Sin recargo ni costo de entrega",extra=q.method==="crypto_binance"&&q.usdtAmount?` · aprox. ${Number(q.usdtAmount).toFixed(2)} USDT`:"",cls=q.method==="paypal_shipping"?"paypal":q.method==="card_shipping"?"card":q.method==="crypto_binance"?"crypto":"";return `<button type="button" class="method ${cls} ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}${extra}</span><b>${money(q.totalGtq)}</b></button>`}).join("");host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderPaymentExtra();renderSummary()}));$("selectVisacuotasBtn")?.classList.toggle("active",$("paymentMethod").value==="visacuotas")}
 
 let selectedBankKey="bac";
-function renderGuide(){const guide=config?.guide||{};$("guideTitle").textContent=guide.title||"Guía de compra y envío";$("guideIntro").textContent=guide.intro||"Revisa esta información antes de confirmar tu pedido.";$("guidePaymentText").textContent=guide.paymentText||"";$("guideShippingText").textContent=guide.shippingText||"";$("guideDamageText").textContent=guide.damageText||"Al recibir el producto, revisa su estado. Si detectas daño atribuible al transporte, repórtalo dentro de 10 horas con fotografías o video y evidencia de entrega.";$("shippingNoticeText").textContent=guide.shippingText||"Los envíos se realizan de lunes a viernes."}
+function renderGuide(){const guide=config?.guide||{};$("guideTitle").textContent=guide.title||"Guía de compra y envío";$("guideIntro").textContent=guide.intro||"Revisa esta información antes de confirmar tu pedido.";$("guidePaymentText").textContent=guide.paymentText||"";$("guideShippingText").textContent=guide.shippingText||"";$("guideDamageText").textContent=guide.damageText||"Al recibir el producto, revisa su estado. Si detectas daño atribuible al transporte, repórtalo dentro de 10 horas con fotografías o video y evidencia de entrega.";$("guideCustomerDamageText").textContent=guide.customerDamageText||"Evolution Design no responde por daños causados después de la entrega por golpes, líquidos, manipulación, reparaciones de terceros, modificaciones o uso indebido. Todo reclamo queda sujeto a revisión para determinar su origen.";$("shippingNoticeText").textContent=guide.shippingText||"Los envíos se realizan de lunes a viernes."}
 function openGuide(){$("guideModal").classList.add("show");$("guideModal").setAttribute("aria-hidden","false")}function closeGuide(){$("guideModal").classList.remove("show");$("guideModal").setAttribute("aria-hidden","true")}
 function copyBankAccount(value,button){const done=()=>{const old=button.textContent;button.textContent="Copiado ✓";setTimeout(()=>button.textContent=old,1200)};if(navigator.clipboard?.writeText)navigator.clipboard.writeText(value).then(done).catch(()=>{});else{const ta=document.createElement("textarea");ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();done()}}
 function renderBankDetails(){const banks=Array.isArray(config?.bankAccounts)?config.bankAccounts:[],bank=banks.find(x=>x.key===selectedBankKey)||banks[0];if(!bank){$("bankTabs").innerHTML="";$("bankDetails").innerHTML='<div class="feedback show error">Las cuentas bancarias no están disponibles.</div>';return}selectedBankKey=bank.key;const q=config?.methods?.find(x=>x.method==="transfer_shipping");$("bankTabs").innerHTML=banks.map(b=>`<button type="button" class="bank-tab ${b.key===selectedBankKey?"active":""}" data-bank="${b.key}">${b.bank}</button>`).join("");$("bankDetails").innerHTML=`<div class="bank-card"><div class="bank-row"><span>Banco</span><strong>${bank.bank}</strong></div><div class="bank-row"><span>Titular</span><strong>${bank.accountHolder}</strong></div><div class="bank-row"><span>Tipo</span><strong>${bank.accountType}</strong></div><div class="bank-row"><span>Número de cuenta</span><strong>${bank.accountNumber} <button type="button" class="copy-bank" id="copyBankBtn">Copiar</button></strong></div><div class="bank-row"><span>Monto exacto</span><strong>${money(q?.totalGtq||990)}</strong></div><div class="bank-row"><span>Moneda</span><strong>${bank.currency||"GTQ"}</strong></div></div>`;$("bankTabs").querySelectorAll("[data-bank]").forEach(btn=>btn.addEventListener("click",()=>{selectedBankKey=btn.dataset.bank;renderBankDetails()}));$("copyBankBtn")?.addEventListener("click",e=>copyBankAccount(bank.accountNumber,e.currentTarget))}
