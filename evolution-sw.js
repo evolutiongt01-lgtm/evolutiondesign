@@ -1,5 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v20 · LOCAL Auth Refresh */
-const VERSION='evolution-smart-app-v20-local-auth';
+/* Evolution Design · Advanced App Shell Service Worker · v34 · Update Center */
+const VERSION='evolution-smart-app-v34-update-center';
+const APP_BUILD=34;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
@@ -207,7 +208,16 @@ self.addEventListener('activate',event=>{
     );
 
     await self.clients.claim();
-    await broadcast({type:'EVOLUTION_SW_ACTIVATED',version:VERSION});
+    await broadcast({
+      type:'EVOLUTION_SW_ACTIVATED',
+      version:VERSION,
+      build:APP_BUILD
+    });
+    await broadcast({
+      type:'EVOLUTION_UPDATE_READY',
+      version:VERSION,
+      build:APP_BUILD
+    });
   })());
 });
 
@@ -217,6 +227,12 @@ self.addEventListener('fetch',event=>{
 
   const url=new URL(req.url);
   if(url.origin!==self.location.origin)return;
+
+  /* Release metadata: siempre desde red real. */
+  if(url.pathname==='/evolution-version.json'){
+    event.respondWith(fetch(req,{cache:'no-store'}));
+    return;
+  }
 
   /* Speed probe: siempre mide red real, nunca caché. */
   if(url.searchParams.has('evo-probe')){
@@ -265,7 +281,7 @@ self.addEventListener('message',event=>{
   }
 
   if(data.type==='GET_VERSION'){
-    event.source?.postMessage({type:'EVOLUTION_SW_ACTIVATED',version:VERSION});
+    event.source?.postMessage({type:'EVOLUTION_SW_ACTIVATED',version:VERSION,build:APP_BUILD});
     return;
   }
 
