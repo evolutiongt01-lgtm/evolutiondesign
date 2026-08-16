@@ -914,7 +914,7 @@ html.admin-page-hidden *{
 </head>
 <body>
 <div class="admin-shell" id="adminShell" style="visibility:hidden">
-<aside class="sidebar"><div class="brand"><img alt="Evolution Design" src="img/logo.png"/><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div><a aria-label="Volver al Home" class="admin-home-mobile" href="index.html" title="Volver al Home"><svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="18"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg></a></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="subscriptions"><span class="dot"></span>Suscripciones <span class="sub-count" id="subscriptionCount">0</span></button><button data-view="orders"><span class="dot"></span>Pedidos <span class="sub-count" id="storeOrderCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div class="admin-user" id="adminEmail">—</div><a class="admin-home-side" href="index.html"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="15"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Volver al Home</span></a><button class="logout" id="logoutBtn">Cerrar sesión</button></div></aside>
+<aside class="sidebar"><div class="brand"><img alt="Evolution Design" src="img/logo.png"/><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div><a aria-label="Volver al Home" class="admin-home-mobile" href="index.html" title="Volver al Home"><svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="18"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg></a></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="subscriptions"><span class="dot"></span>Suscripciones <span class="sub-count" id="subscriptionCount">0</span></button><button data-view="orders"><span class="dot"></span>Pedidos <span class="sub-count" id="storeOrderCount">0</span></button><button data-view="tempsales"><span class="dot"></span>Ventas temporales <span class="sub-count" id="tempSaleCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div class="admin-user" id="adminEmail">—</div><a class="admin-home-side" href="index.html"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="15"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Volver al Home</span></a><button class="logout" id="logoutBtn">Cerrar sesión</button></div></aside>
 <main class="main"><div class="system-alert" id="systemAlert"></div>
 <div class="topbar"><div><div class="kicker">Evolution Design · Administración</div><h1 class="title" id="pageTitle">Dashboard</h1></div><div class="top-actions"><button class="btn" id="refreshBtn">Actualizar datos</button><a aria-label="Volver al Home" class="btn admin-home-btn" href="index.html"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="14"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Volver al Home</span></a></div></div>
 <section class="view active" id="view-dashboard"><div class="metrics" id="metrics"></div><div class="grid-2"><div class="panel"><div class="panel-head"><div><div class="panel-title">Proyectos recientes</div><div class="panel-copy">Compras, órdenes personalizadas y estado operativo.</div></div><button class="btn" onclick="switchView('projects')">Ver todos</button></div><div class="panel-body" id="recentProjects"></div></div><div class="panel"><div class="panel-head"><div><div class="panel-title">Clientes por país</div><div class="panel-copy">País reportado por PayPal o última ubicación.</div></div></div><div class="panel-body country-list" id="countryList"></div></div></div></section>
@@ -947,6 +947,7 @@ html.admin-page-hidden *{
 </div>
 </section>
 <section class="view" id="view-orders">
+<div style="display:flex;justify-content:flex-end;margin:0 0 12px"><button class="btn btn-accent" type="button" onclick="openTempSaleEditor()">+ Crear página temporal</button></div>
 <div class="webreq-card-grid">
 <div class="webreq-stat"><span>Recibidos</span><strong id="storeReceivedMetric">0</strong></div>
 <div class="webreq-stat"><span>En proceso</span><strong id="storeActiveMetric">0</strong></div>
@@ -966,7 +967,7 @@ html.admin-page-hidden *{
     </div>
     <div style="display:flex;gap:7px;flex-wrap:wrap">
       <button class="btn" id="boxfulTestBtn" type="button" onclick="testBoxfulConnection()">Probar conexión</button>
-      <button class="btn btn-accent" id="saveBoxfulConfigBtn" type="button" onclick="saveBoxfulConfig()">Guardar dirección</button>
+      <button class="btn btn-accent" id="saveBoxfulConfigBtn" type="button" onclick="saveBoxfulConfig()">Guardar Boxful</button>
     </div>
   </div>
   <div class="panel-body">
@@ -976,8 +977,13 @@ html.admin-page-hidden *{
         <select class="input" id="boxfulPickupAddress">
           <option value="">Primero conecta Boxful…</option>
         </select>
-        <div class="hint">Boxful usa el ID de esta dirección como <code>recolectionAddressId</code> cuando creemos el envío.</div>
+        <div class="hint">Boxful usa el ID de esta dirección como <code>recolectionAddressId</code> al crear el envío.</div>
       </div>
+      <div class="field"><label>Peso predeterminado (kg)</label><input class="input" id="boxfulWeight" type="number" min="0.01" max="100" step="0.01" value="1"></div>
+      <div class="field"><label>Largo (cm)</label><input class="input" id="boxfulLength" type="number" min="1" max="300" step="1" value="20"></div>
+      <div class="field"><label>Ancho (cm)</label><input class="input" id="boxfulWidth" type="number" min="1" max="300" step="1" value="15"></div>
+      <div class="field"><label>Alto (cm)</label><input class="input" id="boxfulHeight" type="number" min="1" max="300" step="1" value="8"></div>
+      <div class="field full"><label class="check"><input type="checkbox" id="boxfulAutoCreate" checked> <span>Crear guía automáticamente para todos los métodos con envío excepto transferencia.</span></label></div>
     </div>
     <div class="boxful-address-preview" id="boxfulAddressPreview">
       La dirección aparecerá aquí cuando la API esté conectada.
@@ -1026,6 +1032,27 @@ html.admin-page-hidden *{
 </select>
 </div>
 <div class="table-wrap"><table><thead><tr><th>Pedido</th><th>Cliente</th><th>Entrega</th><th>Total</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody id="storeOrdersBody"></tbody></table></div>
+</section>
+
+<section class="view" id="view-tempsales">
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Páginas temporales de venta</div>
+        <div class="panel-copy">Crea publicaciones reutilizables con checkout, pagos, Boxful, seguimiento y stock.</div>
+      </div>
+      <button class="btn btn-accent" type="button" onclick="openTempSaleEditor()">+ Crear página</button>
+    </div>
+    <div class="panel-body">
+      <div class="hint" style="margin-bottom:12px">Todas usan una sola plantilla: <code>venta.html?s=slug</code>. No necesitas crear un HTML nuevo por producto.</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Estado</th><th>URL</th><th></th></tr></thead>
+          <tbody id="tempSalesBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </section>
 <section class="view" id="view-projects"><div class="toolbar"><input class="search" id="projectSearch" placeholder="Buscar proyecto, cliente, orden o transacción"/><select class="select" id="statusFilter"><option value="">Todos los estados</option><option value="awaiting_payment">Pago pendiente</option><option value="payment_pending_review">Comprobante por revisar</option><option value="payment_failed">Fallo de pago</option><option value="waiting_files">Esperando archivos</option><option value="files_received">Archivos recibidos</option><option value="assigned">Asignado</option><option value="in_progress">En proceso</option><option value="review">Revisión</option><option disabled="" value="delivered">Entregado · automático al publicar entrega final</option><option value="cancelled">Cancelado</option></select></div><div class="table-wrap"><table><thead><tr><th>Orden / Proyecto</th><th>Cliente</th><th>País</th><th>Venta</th><th>Ganancia</th><th>Estado</th><th>Archivos</th><th></th></tr></thead><tbody id="projectsBody"></tbody></table></div></section>
 <section class="view" id="view-clients"><div class="toolbar"><input class="search" id="clientSearch" placeholder="Buscar nombre, correo o país"/></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Ubicación</th><th>Última conexión / actividad</th><th>Órdenes</th><th>Total comprado</th><th></th></tr></thead><tbody id="clientsBody"></tbody></table></div></section>
@@ -1444,6 +1471,63 @@ html.admin-page-hidden *{
 </div>
 </div>
 </div>
+
+<div class="modal-back" id="tempSaleModal">
+  <div class="drawer" style="max-width:760px">
+    <div class="drawer-head">
+      <div><div class="kicker">Evolution Store</div><div class="drawer-title" id="tempSaleModalTitle">Nueva venta temporal</div><div class="sub">La página usa venta.html y se controla desde Firestore.</div></div>
+      <button aria-label="Cerrar" class="drawer-close" onclick="closeTempSaleEditor()">×</button>
+    </div>
+    <div class="section">
+      <div class="section-h">Producto</div>
+      <div class="section-b">
+        <div class="form-grid">
+          <div class="field"><label>Nombre</label><input class="input" id="tempSaleTitle" maxlength="120" placeholder="Ej. MacBook Pro 2019"></div>
+          <div class="field"><label>Slug / URL</label><input class="input" id="tempSaleSlug" maxlength="60" placeholder="macbook-pro-2019"></div>
+          <div class="field full"><label>Descripción corta</label><textarea class="textarea" id="tempSaleSubtitle" maxlength="500" placeholder="Descripción del producto…"></textarea></div>
+          <div class="field full"><label>Imagen principal</label><input class="input" id="tempSaleImage" maxlength="500" value="img/product.png" placeholder="img/product.png"><div class="hint">Puedes pegar una ruta existente o subir una imagen directamente aquí.</div><input class="input" id="tempSaleImageFile" type="file" accept="image/png,image/jpeg,image/webp" style="margin-top:8px"></div>
+          <div class="field"><label>Precio base Q</label><input class="input" id="tempSalePrice" type="number" min="1" step="0.01"></div>
+          <div class="field"><label>Stock</label><input class="input" id="tempSaleStock" type="number" min="1" max="999" step="1" value="1"></div>
+          <div class="field"><label>Color</label><input class="input" id="tempSaleColor" maxlength="80"></div>
+          <div class="field"><label>Almacenamiento / capacidad</label><input class="input" id="tempSaleStorage" maxlength="80"></div>
+          <div class="field"><label>Batería / estado</label><input class="input" id="tempSaleBattery" maxlength="80"></div>
+          <div class="field"><label>Etiqueta superior</label><input class="input" id="tempSaleBadge" maxlength="80" value="Venta temporal"></div>
+          <div class="field full"><label>Especificaciones</label><textarea class="textarea" id="tempSaleSpecs" placeholder="Pantalla: Retina 13 pulgadas&#10;Procesador: Intel Core i5&#10;RAM: 16 GB"></textarea><div class="hint">Una especificación por línea en formato <code>Nombre: Valor</code>.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-h">Pagos y envío</div>
+      <div class="section-b">
+        <div class="form-grid">
+          <div class="field full">
+            <label>Métodos habilitados</label>
+            <div id="tempSaleMethods" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+              <label class="check"><input type="checkbox" value="cod_forza" checked> Contra entrega Forza</label>
+              <label class="check"><input type="checkbox" value="cod_cargo" checked> Contra entrega Cargo</label>
+              <label class="check"><input type="checkbox" value="transfer_shipping" checked> Transferencia</label>
+              <label class="check"><input type="checkbox" value="paypal_shipping" checked> PayPal</label>
+              <label class="check"><input type="checkbox" value="card_shipping" checked> Tarjeta</label>
+              <label class="check"><input type="checkbox" value="crypto_binance" checked> Binance / Cripto</label>
+              <label class="check"><input type="checkbox" value="pickup_pana" checked> Entrega Panajachel</label>
+              <label class="check"><input type="checkbox" value="visacuotas"> Visacuotas</label>
+            </div>
+          </div>
+          <div class="field full"><label>Link Visacuotas / Recurrente</label><input class="input" id="tempSaleVisacuotas" maxlength="900" placeholder="https://app.recurrente.com/..."></div>
+          <div class="field"><label>Peso kg</label><input class="input" id="tempSaleWeight" type="number" min="0.01" step="0.01" value="1"></div>
+          <div class="field"><label>Largo cm</label><input class="input" id="tempSaleLength" type="number" min="1" step="1" value="20"></div>
+          <div class="field"><label>Ancho cm</label><input class="input" id="tempSaleWidth" type="number" min="1" step="1" value="15"></div>
+          <div class="field"><label>Alto cm</label><input class="input" id="tempSaleHeight" type="number" min="1" step="1" value="8"></div>
+          <div class="field full"><label class="check"><input type="checkbox" id="tempSaleActive" checked> Página activa / disponible públicamente</label></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions" style="padding:18px">
+      <button class="btn" type="button" onclick="closeTempSaleEditor()">Cancelar</button>
+      <button class="btn btn-accent" id="saveTempSaleBtn" type="button" onclick="saveTempSale()">Guardar página temporal</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <div class="modal-back" id="storeOrderModal">
@@ -1456,6 +1540,21 @@ html.admin-page-hidden *{
     <div class="section">
       <div class="section-h">Entrega y contacto</div>
       <div class="section-b" id="storeOrderDelivery"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-h">Boxful automático</div>
+      <div class="section-b">
+        <div class="store-order-delivery-box" id="storeOrderBoxfulInfo">
+          <div class="store-order-delivery-row"><span>Guía</span><strong id="storeOrderBoxfulGuide">Pendiente</strong></div>
+          <div class="store-order-delivery-row"><span>Entrega aproximada</span><strong id="storeOrderBoxfulEta">—</strong></div>
+          <div class="store-order-delivery-row"><span>Estado API</span><strong id="storeOrderBoxfulStatus">—</strong></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-accent" id="createBoxfulGuideBtn" type="button" onclick="createBoxfulGuideForSelectedOrder()">Crear / reintentar guía</button>
+        </div>
+        <div class="hint">Transferencia espera tu confirmación de pago; los demás métodos con envío intentan crear la guía automáticamente.</div>
+      </div>
     </div>
     <div class="section">
       <div class="section-h">Actualizar seguimiento</div>
@@ -1556,6 +1655,12 @@ function renderBoxfulConfig(result){
   data.boxful=result||{};
   const addresses=Array.isArray(result?.addresses)?result.addresses:[];
   const selected=result?.config?.recolectionAddressId||'';
+  const cfg=result?.config||{};
+  if($('boxfulWeight'))$('boxfulWeight').value=cfg.packageWeightKg||1;
+  if($('boxfulLength'))$('boxfulLength').value=cfg.packageLengthCm||20;
+  if($('boxfulWidth'))$('boxfulWidth').value=cfg.packageWidthCm||15;
+  if($('boxfulHeight'))$('boxfulHeight').value=cfg.packageHeightCm||8;
+  if($('boxfulAutoCreate'))$('boxfulAutoCreate').checked=cfg.autoCreateShipment!==false;
   const select=$('boxfulPickupAddress');
   if(select){
     select.innerHTML=addresses.length
@@ -1609,11 +1714,18 @@ window.saveBoxfulConfig=async function(){
   if(!recolectionAddressId){toast('Selecciona una dirección de recolección.');return}
   const btn=$('saveBoxfulConfigBtn');const old=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
   try{
-    const saved=await storeAdminRequest('/boxful/admin/config',{method:'POST',body:{recolectionAddressId}});
+    const saved=await storeAdminRequest('/boxful/admin/config',{method:'POST',body:{
+      recolectionAddressId,
+      packageWeightKg:Number($('boxfulWeight')?.value||1),
+      packageLengthCm:Number($('boxfulLength')?.value||20),
+      packageWidthCm:Number($('boxfulWidth')?.value||15),
+      packageHeightCm:Number($('boxfulHeight')?.value||8),
+      autoCreateShipment:$('boxfulAutoCreate')?.checked!==false
+    }});
     if(!data.boxful)data.boxful={};
     data.boxful.config=saved.config||data.boxful.config||{};
     renderBoxfulAddressPreview();
-    toast('Dirección Boxful guardada.');
+    toast('Configuración Boxful guardada.');
   }catch(e){
     console.error(e);toast(e.message||'No se pudo guardar Boxful.');
   }finally{
@@ -1732,6 +1844,14 @@ window.openStoreOrder=function(orderId){
   $('storeOrderTracking').value=o.trackingNumber||'';
   $('storeOrderTrackingUrl').value=o.trackingUrl||'';
   $('storeOrderAdminNote').value=o.adminNote||'';
+  if($('storeOrderBoxfulGuide'))$('storeOrderBoxfulGuide').textContent=o.boxfulShipmentNumber||o.trackingNumber||'Pendiente';
+  if($('storeOrderBoxfulEta')){
+    const first=o.estimatedDeliveryDate||'';
+    const last=o.estimatedDeliveryLatestDate||'';
+    $('storeOrderBoxfulEta').textContent=first?(last&&last!==first?`${first} → ${last}`:first):'—';
+  }
+  if($('storeOrderBoxfulStatus'))$('storeOrderBoxfulStatus').textContent=o.boxfulStatus==='created'?'Guía creada ✓':o.boxfulStatus==='pending_retry'?`Pendiente de reintento${o.boxfulErrorCode?` · ${o.boxfulErrorCode}`:''}`:(o.paymentMethod==='transfer_shipping'?'Esperando validación de transferencia':'Pendiente');
+  if($('createBoxfulGuideBtn'))$('createBoxfulGuideBtn').disabled=o.paymentMethod==='pickup_pana'||Boolean(o.boxfulShipmentNumber);
   $('storeOrderModal').classList.add('show');
 }
 window.openStoreOrderProof=async function(orderId){
@@ -1754,6 +1874,21 @@ window.openStoreOrderProof=async function(orderId){
   }catch(e){
     if(popup)popup.close();
     toast(e.message||"No se pudo abrir el comprobante.");
+  }
+}
+
+window.createBoxfulGuideForSelectedOrder=async function(){
+  if(!selectedStoreOrder)return;
+  const btn=$('createBoxfulGuideBtn'),old=btn?.textContent||'Crear guía';
+  if(btn){btn.disabled=true;btn.textContent='Creando guía…'}
+  try{
+    const result=await storeAdminRequest('/boxful/admin/order/create',{method:'POST',body:{orderId:selectedStoreOrder.orderId||selectedStoreOrder.id}});
+    toast(`Guía creada: ${result.order?.boxfulShipmentNumber||result.order?.trackingNumber||'lista'}`);
+    closeStoreOrder();
+    await refresh();
+  }catch(e){
+    console.error(e);toast(e.message||'No se pudo crear la guía.');
+    if(btn){btn.disabled=false;btn.textContent=old}
   }
 }
 window.closeStoreOrder=function(){$('storeOrderModal')?.classList.remove('show');selectedStoreOrder=null}
@@ -1833,7 +1968,148 @@ function refreshStatusQuickUI(){
 window.setProjectStatusQuick=function(status){
   const select=$('editStatus');if(!select)return;select.value=status;refreshStatusQuickUI();setProjectDirty(true);
 };
-window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',orders:'Pedidos físicos',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
+
+let selectedTempSale=null;
+async function loadTemporarySalesAdmin(){
+  const result=await storeAdminRequest('/store/sales/admin');
+  return Array.isArray(result.sales)?result.sales:[];
+}
+function tempSaleUrl(slug){
+  return `${location.origin}/venta.html?s=${encodeURIComponent(slug)}`;
+}
+function renderTemporarySales(){
+  const rows=Array.isArray(data.tempSales)?data.tempSales:[];
+  if($('tempSaleCount'))$('tempSaleCount').textContent=String(rows.length);
+  if($('tempSalesBody'))$('tempSalesBody').innerHTML=rows.map(s=>`<tr>
+    <td><div class="strong">${esc(s.title||s.slug)}</div><div class="sub">${esc(s.slug||'')}</div></td>
+    <td>${gtq(s.priceGtq)}</td>
+    <td>${esc(String(s.stock||1))}</td>
+    <td><span class="pill ${s.active===false?'red':'green'}">${s.active===false?'Inactiva':'Activa'}</span></td>
+    <td><a class="mini" href="venta.html?s=${encodeURIComponent(s.slug)}" target="_blank" rel="noopener">Abrir</a> <button class="mini" onclick="copyTempSaleUrl('${esc(s.slug)}',this)">Copiar URL</button></td>
+    <td><button class="mini" onclick="openTempSaleEditor('${esc(s.slug)}')">Editar</button> <button class="mini danger" onclick="deactivateTempSale('${esc(s.slug)}')">Desactivar</button></td>
+  </tr>`).join('')||'<tr><td colspan="6">Todavía no has creado páginas temporales.</td></tr>';
+}
+function saleSpecsToText(specs){
+  return (Array.isArray(specs)?specs:[]).map(x=>`${x.label}: ${x.value}`).join('\n');
+}
+function saleTextToSpecs(text){
+  return String(text||'').split(/\n+/).map(line=>{
+    const i=line.indexOf(':');
+    if(i<1)return null;
+    return {label:line.slice(0,i).trim(),value:line.slice(i+1).trim()};
+  }).filter(x=>x?.label&&x?.value).slice(0,16);
+}
+window.openTempSaleEditor=function(slug=''){
+  selectedTempSale=(data.tempSales||[]).find(x=>x.slug===slug)||null;
+  const s=selectedTempSale||{};
+  $('tempSaleModalTitle').textContent=s.slug?'Editar venta temporal':'Nueva venta temporal';
+  $('tempSaleTitle').value=s.title||'';
+  $('tempSaleSlug').value=s.slug||'';
+  $('tempSaleSubtitle').value=s.subtitle||'';
+  $('tempSaleImage').value=s.imagePath||'img/product.png';
+  if($('tempSaleImageFile'))$('tempSaleImageFile').value='';
+  $('tempSalePrice').value=s.priceGtq||'';
+  $('tempSaleStock').value=s.stock||1;
+  $('tempSaleColor').value=s.color||'';
+  $('tempSaleStorage').value=s.storage||'';
+  $('tempSaleBattery').value=s.battery||'';
+  $('tempSaleBadge').value=s.badge||'Venta temporal';
+  $('tempSaleSpecs').value=saleSpecsToText(s.specs);
+  $('tempSaleVisacuotas').value=s.visacuotasUrl||'';
+  $('tempSaleWeight').value=s.package?.weight||1;
+  $('tempSaleLength').value=s.package?.length||20;
+  $('tempSaleWidth').value=s.package?.width||15;
+  $('tempSaleHeight').value=s.package?.height||8;
+  $('tempSaleActive').checked=s.active!==false;
+  const active=new Set(Array.isArray(s.methods)?s.methods:['cod_forza','cod_cargo','transfer_shipping','paypal_shipping','card_shipping','crypto_binance','pickup_pana']);
+  document.querySelectorAll('#tempSaleMethods input[type=checkbox]').forEach(cb=>cb.checked=active.has(cb.value));
+  $('tempSaleSlug').disabled=Boolean(s.slug);
+  $('tempSaleModal').classList.add('show');
+}
+window.closeTempSaleEditor=function(){
+  $('tempSaleModal')?.classList.remove('show');
+  selectedTempSale=null;
+  if($('tempSaleSlug'))$('tempSaleSlug').disabled=false;
+}
+
+window.copyTempSaleUrl=async function(slug,btn){
+  const url=tempSaleUrl(slug);
+  try{
+    await navigator.clipboard.writeText(url);
+    const old=btn?.textContent;
+    if(btn){btn.textContent='Copiada ✓';setTimeout(()=>btn.textContent=old,1200)}
+  }catch{prompt('Copia esta URL:',url)}
+}
+async function uploadTempSaleImage(slug,file){
+  if(!file)return null;
+  if(file.size>12*1024*1024)throw new Error('La imagen no puede superar 12 MB.');
+  if(!/^image\/(?:png|jpe?g|webp)$/i.test(file.type||''))throw new Error('Usa PNG, JPG o WEBP.');
+  const user=auth.currentUser;if(!user)throw new Error('Tu sesión administrativa no está activa.');
+  const token=await user.getIdToken();
+  const form=new FormData();
+  form.append('slug',slug);
+  form.append('file',file,file.name);
+  const response=await fetch(`${EVOLUTION_BACKEND_URL}/store/sales/admin/image/upload`,{
+    method:'POST',
+    headers:{authorization:`Bearer ${token}`},
+    body:form
+  });
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok||result?.ok===false)throw new Error(result?.error||'No se pudo subir la imagen.');
+  return result;
+}
+window.saveTempSale=async function(){
+  const btn=$('saveTempSaleBtn'),old=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
+  try{
+    const methods=[...document.querySelectorAll('#tempSaleMethods input[type=checkbox]:checked')].map(x=>x.value);
+    const payload={
+      slug:$('tempSaleSlug').value.trim()||$('tempSaleTitle').value.trim(),
+      title:$('tempSaleTitle').value.trim(),
+      subtitle:$('tempSaleSubtitle').value.trim(),
+      imagePath:$('tempSaleImage').value.trim(),
+      priceGtq:Number($('tempSalePrice').value),
+      stock:Number($('tempSaleStock').value||1),
+      color:$('tempSaleColor').value.trim(),
+      storage:$('tempSaleStorage').value.trim(),
+      battery:$('tempSaleBattery').value.trim(),
+      badge:$('tempSaleBadge').value.trim(),
+      specs:saleTextToSpecs($('tempSaleSpecs').value),
+      methods,
+      visacuotasUrl:$('tempSaleVisacuotas').value.trim(),
+      active:$('tempSaleActive').checked,
+      package:{
+        weight:Number($('tempSaleWeight').value||1),
+        length:Number($('tempSaleLength').value||20),
+        width:Number($('tempSaleWidth').value||15),
+        height:Number($('tempSaleHeight').value||8)
+      }
+    };
+    let result=await storeAdminRequest('/store/sales/admin',{method:'POST',body:payload});
+    const imageFile=$('tempSaleImageFile')?.files?.[0]||null;
+    if(imageFile){
+      btn.textContent='Subiendo imagen…';
+      const uploaded=await uploadTempSaleImage(result.sale.slug,imageFile);
+      if(uploaded?.imagePath)result.sale.imagePath=uploaded.imagePath;
+    }
+    const url=tempSaleUrl(result.sale.slug);
+    toast(`Página temporal guardada · ${url}`);
+    closeTempSaleEditor();
+    await refresh();
+    switchView('tempsales');
+  }catch(e){console.error(e);toast(e.message||'No se pudo crear la página temporal.')}
+  finally{btn.disabled=false;btn.textContent=old}
+}
+window.deactivateTempSale=async function(slug){
+  if(!confirm('¿Desactivar esta página temporal?'))return;
+  try{
+    await storeAdminRequest('/store/sales/admin/delete',{method:'POST',body:{slug}});
+    toast('Venta temporal desactivada.');
+    await refresh();
+  }catch(e){toast(e.message||'No se pudo desactivar.')}
+}
+$('tempSaleModal')?.addEventListener('click',e=>{if(e.target?.id==='tempSaleModal')closeTempSaleEditor()});
+
+window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',orders:'Pedidos físicos',tempsales:'Ventas temporales',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
 function currentEditPrice(){return Math.max(0,Number($('editPrice')?.value||0))}
 function currentEditCost(){return Math.max(0,Number($('editCost')?.value||0))}
@@ -2449,6 +2725,7 @@ async function refresh(){
     $('refreshBtn').textContent='Actualizando…';
     data=await loadDashboardDirect();
     try{data.orders=await loadStoreOrdersAdmin()}catch(orderError){console.warn('Pedidos no disponibles:',orderError?.message||orderError);data.orders=[]}
+    try{data.tempSales=await loadTemporarySalesAdmin()}catch(saleError){console.warn('Ventas temporales no disponibles:',saleError?.message||saleError);data.tempSales=[]}
     try{data.storeGuide=await loadStoreGuideAdmin()}catch(guideError){console.warn('Guía pública no disponible:',guideError?.message||guideError);data.storeGuide={guide:{}}}
     try{
       const boxful=await loadBoxfulAdmin();
@@ -2457,7 +2734,7 @@ async function refresh(){
       console.warn('Boxful no disponible:',boxfulError?.message||boxfulError);
       renderBoxfulConfig({configured:false,connected:false,error:boxfulError?.message||'',addresses:[],config:{}});
     }
-    renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();renderWebRequests();renderPaymentReceipts();renderSubscriptions();renderStoreOrders();renderStoreGuideAdmin();
+    renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();renderWebRequests();renderPaymentReceipts();renderSubscriptions();renderStoreOrders();renderStoreGuideAdmin();renderTemporarySales();
     clearSystemError();
     return true;
   }catch(e){
