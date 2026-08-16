@@ -1688,19 +1688,6 @@ window.openStoreOrder=function(orderId){
   $('storeOrderTracking').value=o.trackingNumber||'';
   $('storeOrderTrackingUrl').value=o.trackingUrl||'';
   $('storeOrderAdminNote').value=o.adminNote||'';
-  if($('storeOrderBoxfulGuide'))$('storeOrderBoxfulGuide').textContent=o.boxfulShipmentNumber||o.trackingNumber||'Pendiente';
-    const first=o.estimatedDeliveryDate||'';
-    const last=o.estimatedDeliveryLatestDate||'';
-    $('storeOrderBoxfulEta').textContent=first?(last&&last!==first?`${first} → ${last}`:first):'—';
-  }
-  if($('storeOrderBoxfulStatus'))$('storeOrderBoxfulStatus').textContent=o.boxfulStatus==='created'?'Guía creada ✓':o.boxfulStatus==='pending_retry'?(o.boxfulErrorServerSide?'Respuesta interna de la paquetería · diagnóstico disponible':`Pendiente de reintento${o.boxfulErrorCode?` · ${o.boxfulErrorCode}`:''}`):(o.paymentMethod==='transfer_shipping'?'Esperando validación de transferencia':'Pendiente');
-  const boxfulErr=[o.boxfulErrorStatus?`HTTP ${o.boxfulErrorStatus}`:'',o.boxfulErrorMessage||''].filter(Boolean).join(' · ');
-  $('storeOrderBoxfulErrorRow')?.classList.toggle('hidden',!boxfulErr);
-  if($('storeOrderBoxfulError'))$('storeOrderBoxfulError').textContent=boxfulErr||'—';
-  const boxfulDiagnostic=[o.boxfulErrorDetails?`Respuesta:\n${o.boxfulErrorDetails}`:'',o.boxfulErrorAttempts?`Intentos:\n${o.boxfulErrorAttempts}`:''].filter(Boolean).join('\n\n');
-  $('storeOrderBoxfulDiagnosticWrap')?.classList.toggle('hidden',!boxfulDiagnostic);
-  if($('storeOrderBoxfulDiagnostic'))$('storeOrderBoxfulDiagnostic').value=boxfulDiagnostic;
-  if($('createBoxfulGuideBtn'))$('createBoxfulGuideBtn').disabled=o.paymentMethod==='pickup_pana'||Boolean(o.boxfulShipmentNumber);
   if($('deleteStoreOrderBtn')){
     $('deleteStoreOrderBtn').disabled=false;
     $('deleteStoreOrderBtn').title='Eliminar pedido y liberar disponibilidad';
