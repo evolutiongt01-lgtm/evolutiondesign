@@ -1,9 +1,9 @@
-/* Evolution Design · Smart App Shell · v39 · Premium Tier Stability Fix */
+/* Evolution Design · Smart App Shell · v40 · Gesture-Level Performance Budget */
 (() => {
   'use strict';
 
-  const VERSION='39';
-  const APP_BUILD=39;
+  const VERSION='40';
+  const APP_BUILD=40;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -49,11 +49,18 @@
   let swipeVisualTier='standard';
   let swipeNativeTier='standard';
   let swipeTierReason='default';
+
+  /* V40: el rendimiento se evalúa por GESTO completo, nunca por un
+     puñado de frames dentro del mismo swipe. */
   let swipeFrameLast=0;
   let swipeFrameBad=0;
-  let swipeFrameGood=0;
+  let swipeFrameTotal=0;
+  let swipeBadGestureStreak=0;
+  let swipeGoodGestureStreak=0;
   let swipeLitePaintLast=0;
-  const SWIPE_TIER_STATE_BUILD=39;
+  let swipePremiumLocked=false;
+
+  const SWIPE_TIER_STATE_BUILD=40;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -1255,6 +1262,7 @@
       return {
         tier:'lite',
         reason:'reduced-motion',
+        premiumLocked:false,
         ios,longSide,shortSide,cores,memory
       };
     }
@@ -1265,6 +1273,7 @@
       return {
         tier:'lite',
         reason:'legacy-ios-viewport',
+        premiumLocked:false,
         ios,longSide,shortSide,cores,memory
       };
     }
@@ -1273,6 +1282,7 @@
       return {
         tier:'lite',
         reason:'low-memory',
+        premiumLocked:false,
         ios,longSide,shortSide,cores,memory
       };
     }
@@ -1281,6 +1291,7 @@
       return {
         tier:'lite',
         reason:'low-core-count',
+        premiumLocked:false,
         ios,longSide,shortSide,cores,memory
       };
     }
@@ -1295,6 +1306,9 @@
       return {
         tier:'premium',
         reason:'high-capability',
+        /* iOS moderno como 14 Pro Max queda Premium fijo.
+           Android/desktop Premium conserva fallback por gestos completos. */
+        premiumLocked:Boolean(ios&&longSide>=844),
         ios,longSide,shortSide,cores,memory
       };
     }
@@ -1302,6 +1316,7 @@
     return {
       tier:'standard',
       reason:'balanced',
+      premiumLocked:false,
       ios,longSide,shortSide,cores,memory
     };
   };
@@ -1313,6 +1328,7 @@
         return {
           tier:forced,
           nativeTier:forced,
+          premiumLocked:false,
           reason:'query-override'
         };
       }
@@ -1326,6 +1342,7 @@
       return {
         tier:'premium',
         nativeTier:'premium',
+        premiumLocked:hardware.premiumLocked===true,
         reason:hardware.reason
       };
     }
@@ -1347,6 +1364,7 @@
         return {
           tier:'lite',
           nativeTier:hardware.tier,
+          premiumLocked:false,
           reason:'fps-downgrade'
         };
       }
@@ -1355,6 +1373,7 @@
     return {
       tier:hardware.tier,
       nativeTier:hardware.tier,
+      premiumLocked:hardware.premiumLocked===true,
       reason:hardware.reason
     };
   };
@@ -1375,13 +1394,14 @@
 
     const result=detectSwipeVisualTier();
     swipeNativeTier=result.nativeTier||result.tier;
+    swipePremiumLocked=result.premiumLocked===true;
     setSwipeVisualTier(result.tier,result.reason);
   };
 
   const beginSwipeFrameBudget=()=>{
     swipeFrameLast=0;
     swipeFrameBad=0;
-    swipeFrameGood=0;
+    swipeFrameTotal=0;
     swipeLitePaintLast=0;
   };
 
@@ -1390,53 +1410,93 @@
 
     if(swipeFrameLast){
       const dt=t-swipeFrameLast;
+      swipeFrameTotal++;
 
-      /* PREMIUM:
-         Ya no cae a Lite por 4 frames lentos.
-         Requiere una degradación sostenida y solo baja a Standard. */
-      if(swipeVisualTier==='premium'){
-        if(dt>42){
-          swipeFrameBad++;
-          swipeFrameGood=0;
-        }else if(dt<25){
-          swipeFrameGood++;
-          if(swipeFrameGood>=3){
-            swipeFrameBad=Math.max(0,swipeFrameBad-1);
-            swipeFrameGood=0;
-          }
-        }
+      const badThreshold=
+        swipeVisualTier==='premium'
+          ? 42
+          : swipeVisualTier==='standard'
+            ? 36
+            : 50;
 
-        if(swipeFrameBad>=12){
-          setSwipeVisualTier('standard','fps-stepdown');
-          swipeFrameBad=0;
-          swipeFrameGood=0;
-        }
-      }
-
-      /* STANDARD:
-         Solo baja a Lite si la caída continúa de forma clara. */
-      else if(swipeVisualTier==='standard'){
-        if(dt>36){
-          swipeFrameBad++;
-          swipeFrameGood=0;
-        }else if(dt<25){
-          swipeFrameGood++;
-          if(swipeFrameGood>=2){
-            swipeFrameBad=Math.max(0,swipeFrameBad-1);
-            swipeFrameGood=0;
-          }
-        }
-
-        if(swipeFrameBad>=10){
-          setSwipeVisualTier('lite','fps-downgrade');
-          swipeFrameBad=0;
-          swipeFrameGood=0;
-        }
+      if(dt>badThreshold){
+        swipeFrameBad++;
       }
     }
 
     swipeFrameLast=t;
   };
+
+  const finishSwipeFrameBudget=()=>{
+    /* Nunca degradamos en medio del gesto. La decisión se toma aquí. */
+    if(swipeFrameTotal<6){
+      swipeFrameBad=0;
+      swipeFrameTotal=0;
+      return;
+    }
+
+    const badRatio=swipeFrameBad/Math.max(1,swipeFrameTotal);
+
+    /* iPhone moderno Premium explícito:
+       NO se degrada automáticamente. El usuario pidió máxima calidad y
+       estos equipos son nuestra clase de hardware establecida Premium. */
+    if(swipeVisualTier==='premium'&&swipePremiumLocked){
+      swipeBadGestureStreak=0;
+      swipeGoodGestureStreak++;
+      swipeFrameBad=0;
+      swipeFrameTotal=0;
+      return;
+    }
+
+    if(swipeVisualTier==='premium'){
+      const badGesture=badRatio>=.58;
+
+      if(badGesture){
+        swipeBadGestureStreak++;
+        swipeGoodGestureStreak=0;
+      }else{
+        swipeGoodGestureStreak++;
+        if(swipeGoodGestureStreak>=2){
+          swipeBadGestureStreak=Math.max(0,swipeBadGestureStreak-1);
+          swipeGoodGestureStreak=0;
+        }
+      }
+
+      /* Android/desktop Premium necesita TRES swipes malos completos,
+         consecutivos, antes de pasar a Standard. */
+      if(swipeBadGestureStreak>=3){
+        setSwipeVisualTier('standard','gesture-stepdown');
+        swipeBadGestureStreak=0;
+        swipeGoodGestureStreak=0;
+      }
+    }
+
+    else if(swipeVisualTier==='standard'){
+      const badGesture=badRatio>=.62;
+
+      if(badGesture){
+        swipeBadGestureStreak++;
+        swipeGoodGestureStreak=0;
+      }else{
+        swipeGoodGestureStreak++;
+        if(swipeGoodGestureStreak>=2){
+          swipeBadGestureStreak=Math.max(0,swipeBadGestureStreak-1);
+          swipeGoodGestureStreak=0;
+        }
+      }
+
+      /* Standard necesita DOS swipes realmente malos antes de Lite. */
+      if(swipeBadGestureStreak>=2){
+        setSwipeVisualTier('lite','gesture-downgrade');
+        swipeBadGestureStreak=0;
+        swipeGoodGestureStreak=0;
+      }
+    }
+
+    swipeFrameBad=0;
+    swipeFrameTotal=0;
+  };
+
 
   const allowSwipePaint=now=>{
     const t=Number(now)||performance.now();
@@ -1665,6 +1725,13 @@
   };
 
   const hardResetSwipeVisuals=()=>{
+    /* Un reset visual cancela también la muestra del gesto actual,
+       pero jamás modifica el tier. */
+    swipeFrameLast=0;
+    swipeFrameBad=0;
+    swipeFrameTotal=0;
+    swipeLitePaintLast=0;
+
     /* Invalida cualquier timeout pendiente de settle/commit. */
     swipeSettleToken++;
     swipeSettling=false;
@@ -2240,6 +2307,8 @@
               side
             );
 
+            finishSwipeFrameBudget();
+
             commitLiveSwipe(
               frame,
               gestureNeighbor,
@@ -2296,6 +2365,8 @@
           lockedHorizontal=false;
           return;
         }
+
+        finishSwipeFrameBudget();
 
         const distanceRatio=Math.abs(dx)/Math.max(1,width);
         const qualifies=
@@ -2607,6 +2678,8 @@
             side
           );
 
+          finishSwipeFrameBudget();
+
           commitLiveSwipe(
             activeFrame,
             neighbor,
@@ -2669,6 +2742,8 @@
       }
 
       suppressNextClick();
+
+      finishSwipeFrameBudget();
 
       const ratio=Math.abs(dx)/Math.max(1,width);
       const qualifies=
@@ -3665,6 +3740,7 @@
   window.EvolutionSwipePerformance={
     get tier(){return swipeVisualTier},
     get nativeTier(){return swipeNativeTier},
+    get premiumLocked(){return swipePremiumLocked},
     get reason(){return swipeTierReason},
     setPremium:()=>setSwipeVisualTier('premium','manual'),
     setStandard:()=>setSwipeVisualTier('standard','manual'),
@@ -3678,6 +3754,9 @@
 
       const result=detectSwipeVisualTier();
       swipeNativeTier=result.nativeTier||result.tier;
+      swipePremiumLocked=result.premiumLocked===true;
+      swipeBadGestureStreak=0;
+      swipeGoodGestureStreak=0;
       setSwipeVisualTier(result.tier,result.reason);
       return result;
     }
