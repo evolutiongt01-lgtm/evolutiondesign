@@ -1,21 +1,21 @@
 {
-  "build": 41,
-  "version": "41",
+  "build": 42,
+  "version": "42",
   "announce": true,
   "required": false,
-  "subtitle": "El swipe ahora se confirma al 60% y termina con una animación magnética Liquid Glass más suave y elegante.",
+  "subtitle": "El swipe fue refinado con una geometría y desaceleración más natural tipo iOS, y se corrigió la apertura de Diseño Web.",
   "notes": [
     {
-      "title": "Confirmación al 60%",
-      "detail": "La página solo cambia automáticamente cuando el usuario cruza el 60% del recorrido."
+      "title": "Swipe más fluido",
+      "detail": "El tamaño de las tarjetas ahora usa aceleración progresiva; desaparece el salto brusco al confirmar en 60%."
     },
     {
-      "title": "Remate magnético",
-      "detail": "Al confirmar, la página anterior se hunde y reduce más mientras la nueva crece suavemente hasta 100%."
+      "title": "Remate tipo iOS",
+      "detail": "La transición final usa una desaceleración más natural y cambios de escala mucho más cortos."
     },
     {
-      "title": "Liquid Glass continuo",
-      "detail": "El vidrio ya no desaparece al iniciar el remate; aumenta durante la transición y se limpia al terminar."
+      "title": "Diseño Web corregido",
+      "detail": "Si la vista aún no terminó de precargarse, Evolution respeta el swipe y la abre mediante el router normal."
     }
   ]
 }
