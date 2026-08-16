@@ -909,6 +909,29 @@ html.admin-page-hidden *{
 <div class="webreq-stat"><span>En proceso</span><strong id="storeActiveMetric">0</strong></div>
 <div class="webreq-stat"><span>Entregados</span><strong id="storeDeliveredMetric">0</strong></div>
 </div>
+
+<div class="panel" style="margin:0 0 14px">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Guía pública · iPhone 8 Plus</div>
+      <div class="panel-copy">Este contenido aparece dentro de la ventana “Guía de compra y envíos” de la página temporal.</div>
+    </div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      <a class="btn" href="iphone-8-plus.html" target="_blank" rel="noopener">Ver página</a>
+      <button class="btn btn-accent" id="saveStoreGuideBtn" type="button" onclick="saveStoreGuide()">Guardar guía</button>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="form-grid">
+      <div class="field"><label>Título de la guía</label><input class="input" id="storeGuideTitle" maxlength="120"></div>
+      <div class="field"><label>Introducción</label><input class="input" id="storeGuideIntro" maxlength="500"></div>
+      <div class="field full"><label>Pagos y entrega</label><textarea class="textarea" id="storeGuidePayment" maxlength="1800"></textarea></div>
+      <div class="field full"><label>Política de envíos</label><textarea class="textarea" id="storeGuideShipping" maxlength="2200"></textarea><div class="hint">Deja aquí visible el horario lunes a viernes, despacho del lunes a las 10:00 a. m. para pedidos del fin de semana y posibles atrasos por paros/bloqueos.</div></div>
+    </div>
+    <div class="hint" id="storeGuideAdminStatus" style="margin-top:10px">Cargando configuración pública…</div>
+  </div>
+</div>
+
 <div class="toolbar">
 <input class="search" id="storeOrderSearch" placeholder="Buscar pedido, cliente, teléfono, municipio o guía"/>
 <select class="select" id="storeOrderStatusFilter">
@@ -1434,7 +1457,7 @@ function storeOrderStatusLabel(order){
   if(s==='shipped'&&order?.paymentMethod==='pickup_pana')return'Listo para entregar';
   return({received:'Pedido recibido',confirmed:'Confirmado',preparing:'Preparando',shipped:'Enviado',delivered:'Entregado',cancelled:'Cancelado'})[s]||s;
 }
-function storeOrderMethodLabel(order){return order?.paymentMethodLabel||({cod_forza:'Contra entrega · Forza',cod_cargo:'Contra entrega · Cargo Expreso',transfer_shipping:'Transferencia · Envío nacional',pickup_pana:'Entrega personal · Panajachel'})[order?.paymentMethod]||order?.paymentMethod||'—'}
+function storeOrderMethodLabel(order){return order?.paymentMethodLabel||({cod_forza:'Contra entrega · Forza',cod_cargo:'Contra entrega · Cargo Expreso',transfer_shipping:'Transferencia bancaria · Envío nacional',paypal_shipping:'PayPal · Envío nacional',card_shipping:'Tarjeta débito/crédito · Envío nacional',crypto_binance:'Cripto · Binance Pay',visacuotas:'Visacuotas · Recurrente',pickup_pana:'Entrega personal · Panajachel'})[order?.paymentMethod]||order?.paymentMethod||'—'}
 function storeOrderPill(order){
   const s=String(order?.status||'received'),cls=s==='delivered'?'green':s==='cancelled'?'red':s==='received'?'gold':'';
   return `<span class="pill ${cls}">${esc(storeOrderStatusLabel(order))}</span>`;
@@ -1443,11 +1466,49 @@ async function loadStoreOrdersAdmin(){
   const result=await storeAdminRequest('/store/orders/admin');
   return Array.isArray(result.orders)?result.orders:[];
 }
+async function loadStoreGuideAdmin(){
+  return storeAdminRequest('/store/iphone-8-plus/admin/config');
+}
+function renderStoreGuideAdmin(){
+  const g=data.storeGuide?.guide||{};
+  if($('storeGuideTitle'))$('storeGuideTitle').value=g.title||'';
+  if($('storeGuideIntro'))$('storeGuideIntro').value=g.intro||'';
+  if($('storeGuidePayment'))$('storeGuidePayment').value=g.paymentText||'';
+  if($('storeGuideShipping'))$('storeGuideShipping').value=g.shippingText||'';
+  if($('storeGuideAdminStatus')){
+    const when=g.updatedAt?niceDateTime(g.updatedAt):'configuración predeterminada';
+    $('storeGuideAdminStatus').textContent=`Publicación actual: ${when}${g.updatedByAdminEmail?` · ${g.updatedByAdminEmail}`:''}`;
+  }
+}
+window.saveStoreGuide=async function(){
+  const btn=$('saveStoreGuideBtn');if(!btn)return;
+  const old=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
+  if($('storeGuideAdminStatus'))$('storeGuideAdminStatus').textContent='Publicando cambios…';
+  try{
+    const result=await storeAdminRequest('/store/iphone-8-plus/admin/config',{method:'POST',body:{
+      guide:{
+        title:$('storeGuideTitle').value.trim(),
+        intro:$('storeGuideIntro').value.trim(),
+        paymentText:$('storeGuidePayment').value.trim(),
+        shippingText:$('storeGuideShipping').value.trim()
+      }
+    }});
+    data.storeGuide=result;
+    renderStoreGuideAdmin();
+    toast('Guía pública actualizada.');
+  }catch(e){
+    console.error(e);
+    if($('storeGuideAdminStatus'))$('storeGuideAdminStatus').textContent=e.message||'No se pudo guardar la guía.';
+    toast(e.message||'No se pudo guardar la guía.');
+  }finally{
+    btn.disabled=false;btn.textContent=old;
+  }
+}
 function renderStoreOrders(){
   const rows=Array.isArray(data.orders)?data.orders:[];
   const term=String($('storeOrderSearch')?.value||'').toLowerCase();
   const st=$('storeOrderStatusFilter')?.value||'';
-  const filtered=rows.filter(o=>(!st||o.status===st)&&(!term||[o.orderId,o.customerName,o.ownerEmail,o.phone,o.department,o.municipality,o.address,o.reference,o.trackingNumber,o.carrier].some(x=>String(x||'').toLowerCase().includes(term))));
+  const filtered=rows.filter(o=>(!st||o.status===st)&&(!term||[o.orderId,o.customerName,o.ownerEmail,o.phone,o.department,o.municipality,o.poblado,o.address,o.reference,o.paymentReference,o.trackingNumber,o.carrier].some(x=>String(x||'').toLowerCase().includes(term))));
   if($('storeOrderCount'))$('storeOrderCount').textContent=String(rows.length);
   if($('storeReceivedMetric'))$('storeReceivedMetric').textContent=rows.filter(o=>o.status==='received').length;
   if($('storeActiveMetric'))$('storeActiveMetric').textContent=rows.filter(o=>['confirmed','preparing','shipped'].includes(o.status)).length;
@@ -1455,7 +1516,7 @@ function renderStoreOrders(){
   if($('storeOrdersBody'))$('storeOrdersBody').innerHTML=filtered.map(o=>`<tr>
     <td><div class="strong">${esc(o.productTitle||'iPhone 8 Plus')}</div><div class="sub">${esc(o.orderId||o.id||'')}</div></td>
     <td><div class="store-order-customer"><div class="strong">${esc(o.customerName||o.ownerEmail||'Cliente')}</div><div class="sub">${esc(o.ownerEmail||'')} · ${esc(o.phone||'')}</div></div></td>
-    <td><div class="strong">${esc(storeOrderMethodLabel(o))}</div><div class="store-order-method">${esc(o.municipality||'Panajachel')}${o.carrier?` · ${esc(o.carrier)}`:''}</div></td>
+    <td><div class="strong">${esc(storeOrderMethodLabel(o))}</div><div class="store-order-method">${esc(o.municipality||'Panajachel')}${o.poblado?` · ${esc(o.poblado)}`:''}${o.carrier?` · ${esc(o.carrier)}`:''}</div></td>
     <td><span class="store-order-total">${gtq(o.totalGtq)}</span></td>
     <td>${storeOrderPill(o)}</td>
     <td>${esc(niceDateTime(o.createdAt))}</td>
@@ -1474,11 +1535,15 @@ window.openStoreOrder=function(orderId){
     ['Método',storeOrderMethodLabel(o)],
     ['Creado',niceDateTime(o.createdAt)],
     ['UID',o.ownerUid||'—'],
-    ['NIT / DPI',o.nitDpi||'No indicado']
+    ['NIT / DPI',o.nitDpi||'No indicado'],
+    ['Estado del pago',o.paymentStatus==='paid'?'Pagado':o.paymentStatus==='pending_review'?'En revisión':o.paymentStatus==='pending_external'?'Pendiente en Recurrente':'Pendiente'],
+    ...(o.paymentReference ? [['Referencia de pago',o.paymentReference]] : []),
+    ...(Number(o.paidUsd||0)>0 ? [['Cobrado por PayPal',`$${Number(o.paidUsd).toFixed(2)} USD`]] : []),
+    ...(o.paymentMethod==='visacuotas' ? [['Recargo Visacuotas','Se confirma en Recurrente']] : [])
   ].map(([l,v])=>`<div class="detail"><span>${esc(l)}</span><strong>${esc(v)}</strong></div>`).join('');
   const address=o.paymentMethod==='pickup_pana'
     ?'Entrega personal en Panajachel'
-    :[o.department,o.municipality,o.address,o.reference?`Referencia: ${o.reference}`:''].filter(Boolean).join(' · ');
+    :[o.department,o.municipality,o.poblado,o.address,o.reference?`Referencia: ${o.reference}`:''].filter(Boolean).join(' · ');
   $('storeOrderDelivery').innerHTML=`<div class="store-order-delivery-box">
     <div class="store-order-delivery-row"><span>Cliente / receptor</span><strong>${esc(o.customerName||'—')} · recibe ${esc(o.recipientName||o.customerName||'—')}</strong></div>
     <div class="store-order-delivery-row"><span>Teléfono</span><strong>${esc(o.phone||'—')}</strong></div>
@@ -2183,7 +2248,8 @@ async function refresh(){
     $('refreshBtn').textContent='Actualizando…';
     data=await loadDashboardDirect();
     try{data.orders=await loadStoreOrdersAdmin()}catch(orderError){console.warn('Pedidos no disponibles:',orderError?.message||orderError);data.orders=[]}
-    renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();renderWebRequests();renderPaymentReceipts();renderSubscriptions();renderStoreOrders();
+    try{data.storeGuide=await loadStoreGuideAdmin()}catch(guideError){console.warn('Guía pública no disponible:',guideError?.message||guideError);data.storeGuide={guide:{}}}
+    renderMetrics();renderRecent();renderCountries();renderProjects();renderClients();renderWebRequests();renderPaymentReceipts();renderSubscriptions();renderStoreOrders();renderStoreGuideAdmin();
     clearSystemError();
     return true;
   }catch(e){
