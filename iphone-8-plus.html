@@ -520,7 +520,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 }
 
 
-/* V3.2 · Dirección Guatemala tipo Boxful */
+/* Dirección Guatemala */
 .select-shell{position:relative}
 .select-shell .geo-select{width:100%;appearance:none;-webkit-appearance:none;padding-right:42px;cursor:pointer}
 .select-shell .geo-select:disabled{cursor:not-allowed;opacity:.52}
@@ -1589,7 +1589,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
         <div class="delivery-estimate-copy">
           <span>Entrega aproximada</span>
           <strong id="deliveryEstimateDate">Calculando…</strong>
-          <small id="deliveryEstimateDetail">Boxful + política de despacho Evolution Design</small>
+          <small id="deliveryEstimateDetail">Política de despacho Evolution Design</small>
         </div>
       </div>
 
@@ -1931,9 +1931,7 @@ function renderDeliveryEstimate(estimate){
   const first=formatEstimateDate(estimate.earliestDeliveryDate);
   const last=formatEstimateDate(estimate.latestDeliveryDate);
   $("deliveryEstimateDate").textContent=first&&last&&first!==last?`${first} – ${last}`:first||last||"Por confirmar";
-  $("deliveryEstimateDetail").textContent=estimate.quoteAvailable
-    ?"Estimación consultada con Boxful; puede variar por cobertura, bloqueos o incidencias."
-    :"Estimación basada en nuestra política de despacho; la guía se confirmará al registrar el pedido.";
+  $("deliveryEstimateDetail").textContent="Estimación basada en nuestra política de despacho. Administración asignará manualmente la paquetería y la guía.";
 }
 async function refreshDeliveryEstimate(){
   const user=auth.currentUser,q=currentQuote();
@@ -1942,7 +1940,7 @@ async function refreshDeliveryEstimate(){
   if(!department||!municipality||!poblado){renderDeliveryEstimate(null);return}
   try{
     const draft=buildStoreDraft();
-    const result=await authedFetch("/boxful/store/estimate",{method:"POST",body:{
+    const result=await authedFetch("/store/shipping/estimate",{method:"POST",body:{
       ...draft,
       paymentMethod:q.method,
       productTitle:"iPhone 8 Plus",
@@ -1950,7 +1948,7 @@ async function refreshDeliveryEstimate(){
     }});
     renderDeliveryEstimate(result.estimate);
   }catch(e){
-    console.info("Estimación Boxful:",e?.message||e);
+    console.info("Estimación de envío:",e?.message||e);
   }
 }
 function scheduleDeliveryEstimate(){
@@ -1972,9 +1970,8 @@ function finishStoreSuccess(order){
   const shipping=order.paymentMethod!=="pickup_pana";
   $("successShippingInfo").classList.toggle("hidden",!shipping);
   if(shipping){
-    $("successShippingGuide").textContent=order.boxfulShipmentNumber||order.trackingNumber||
-      (order.paymentMethod==="transfer_shipping"?"Se genera al validar tu transferencia":
-       order.boxfulStatus==="pending_retry"?"En proceso / reintento automático":"Generando guía");
+    $("successShippingGuide").textContent=order.trackingNumber||order.boxfulShipmentNumber||
+      (order.paymentMethod==="transfer_shipping"?"Se asigna al validar tu transferencia":"Pendiente de asignación por Administración");
     const first=formatEstimateDate(order.estimatedDeliveryDate);
     const last=formatEstimateDate(order.estimatedDeliveryLatestDate);
     $("successShippingEta").textContent=first&&last&&first!==last?`${first} – ${last}`:first||last||"Por confirmar";
