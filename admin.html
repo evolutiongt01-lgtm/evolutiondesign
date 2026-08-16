@@ -2,7 +2,7 @@
 
 <html lang="es">
 <head>
-<!-- Evolution Admin · Manual Shipping · Evolution Design -->
+<!-- Evolution Admin · Boxful V3.9.15 · official quoter flow + delete/release -->
 <meta charset="utf-8"/>
 <meta content="2026-08-14-admin-optimized-home-v1" name="evolution-build"/>
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
@@ -986,7 +986,7 @@ html.admin-page-hidden *{
     <div class="panel-head">
       <div>
         <div class="panel-title">Páginas temporales de venta</div>
-        <div class="panel-copy">Crea publicaciones reutilizables con checkout, pagos, seguimiento manual y stock.</div>
+        <div class="panel-copy">Crea publicaciones reutilizables con checkout, pagos, Boxful, seguimiento y stock.</div>
       </div>
       <button class="btn btn-accent" type="button" onclick="openTempSaleEditor()">+ Crear página</button>
     </div>
@@ -1512,7 +1512,7 @@ html.admin-page-hidden *{
     <div class="section danger-zone">
       <div class="section-h">Zona de riesgo</div>
       <div class="section-b">
-        <div class="hint" style="margin-bottom:10px">Elimina este pedido del panel y libera inmediatamente el producto para que pueda volver a comprarse. Si ya existe una guía externa, el sistema bloqueará la eliminación para evitar inconsistencias con la paquetería.</div>
+        <div class="hint" style="margin-bottom:10px">Elimina este pedido del panel y libera inmediatamente el producto para que pueda volver a comprarse. Si ya existe una guía externa, Evolution no la cancela automáticamente: deberás cancelarla tú directamente con la paquetería si corresponde.</div>
         <div class="form-actions">
           <button class="btn btn-danger" id="deleteStoreOrderBtn" type="button" onclick="deleteSelectedStoreOrder()">Eliminar pedido y liberar producto</button>
         </div>
@@ -1688,10 +1688,22 @@ window.openStoreOrder=function(orderId){
   $('storeOrderTracking').value=o.trackingNumber||'';
   $('storeOrderTrackingUrl').value=o.trackingUrl||'';
   $('storeOrderAdminNote').value=o.adminNote||'';
+  if($('storeOrderBoxfulGuide'))$('storeOrderBoxfulGuide').textContent=o.boxfulShipmentNumber||o.trackingNumber||'Pendiente';
+    const first=o.estimatedDeliveryDate||'';
+    const last=o.estimatedDeliveryLatestDate||'';
+    $('storeOrderBoxfulEta').textContent=first?(last&&last!==first?`${first} → ${last}`:first):'—';
+  }
+  if($('storeOrderBoxfulStatus'))$('storeOrderBoxfulStatus').textContent=o.boxfulStatus==='created'?'Guía creada ✓':o.boxfulStatus==='pending_retry'?(o.boxfulErrorServerSide?'Respuesta interna de la paquetería · diagnóstico disponible':`Pendiente de reintento${o.boxfulErrorCode?` · ${o.boxfulErrorCode}`:''}`):(o.paymentMethod==='transfer_shipping'?'Esperando validación de transferencia':'Pendiente');
+  const boxfulErr=[o.boxfulErrorStatus?`HTTP ${o.boxfulErrorStatus}`:'',o.boxfulErrorMessage||''].filter(Boolean).join(' · ');
+  $('storeOrderBoxfulErrorRow')?.classList.toggle('hidden',!boxfulErr);
+  if($('storeOrderBoxfulError'))$('storeOrderBoxfulError').textContent=boxfulErr||'—';
+  const boxfulDiagnostic=[o.boxfulErrorDetails?`Respuesta:\n${o.boxfulErrorDetails}`:'',o.boxfulErrorAttempts?`Intentos:\n${o.boxfulErrorAttempts}`:''].filter(Boolean).join('\n\n');
+  $('storeOrderBoxfulDiagnosticWrap')?.classList.toggle('hidden',!boxfulDiagnostic);
+  if($('storeOrderBoxfulDiagnostic'))$('storeOrderBoxfulDiagnostic').value=boxfulDiagnostic;
+  if($('createBoxfulGuideBtn'))$('createBoxfulGuideBtn').disabled=o.paymentMethod==='pickup_pana'||Boolean(o.boxfulShipmentNumber);
   if($('deleteStoreOrderBtn')){
-    const hasExternalGuide=Boolean(o.trackingNumber||o.boxfulShipmentNumber||o.boxfulShipmentId);
-    $('deleteStoreOrderBtn').disabled=hasExternalGuide;
-    $('deleteStoreOrderBtn').title=hasExternalGuide?'Cancela primero la guía externa con la paquetería.':'Eliminar pedido y liberar disponibilidad';
+    $('deleteStoreOrderBtn').disabled=false;
+    $('deleteStoreOrderBtn').title='Eliminar pedido y liberar disponibilidad';
   }
   $('storeOrderModal').classList.add('show');
 }
@@ -1726,11 +1738,10 @@ window.deleteSelectedStoreOrder=async function(){
   const orderId=selectedStoreOrder.orderId||selectedStoreOrder.id;
   const title=selectedStoreOrder.productTitle||'este producto';
   const hasGuide=Boolean(selectedStoreOrder.trackingNumber||selectedStoreOrder.boxfulShipmentNumber||selectedStoreOrder.boxfulShipmentId);
-  if(hasGuide){
-    toast('Este pedido ya tiene una guía externa. Cancélala primero con la paquetería antes de liberar el producto.');
-    return;
-  }
-  const ok=confirm(`¿Eliminar el pedido ${orderId}?\n\n${title} volverá a estar disponible inmediatamente. El registro se conservará internamente como eliminado para auditoría.`);
+  const guideWarning=hasGuide
+    ? '\n\n⚠️ Este pedido tiene una guía/tracking registrado. Evolution eliminará el pedido y liberará el producto, pero NO cancelará la guía externa. Si corresponde, cancélala tú con la paquetería.'
+    : '';
+  const ok=confirm(`¿Eliminar el pedido ${orderId}?\n\n${title} volverá a estar disponible inmediatamente. El registro se conservará internamente como eliminado para auditoría.${guideWarning}`);
   if(!ok)return;
 
   const btn=$('deleteStoreOrderBtn');
