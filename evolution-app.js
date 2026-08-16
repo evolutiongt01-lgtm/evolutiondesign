@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v28 · Live Swipe + Lightweight Gradient */
+/* Evolution Design · Smart App Shell · v29 · Stable Mask Swipe */
 (() => {
   'use strict';
 
-  const VERSION='28';
+  const VERSION='29';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -305,37 +305,48 @@
       pointer-events:none!important;
     }
 
+    /* V29 · Stable Mask Swipe
+       No desplazamos iframes durante el gesto. Safari mantiene el texto
+       en su raster original y solo cambia la máscara de revelado. */
     .evo-view-frame.evo-swipe-neighbor{
       opacity:1!important;
       filter:none!important;
       pointer-events:none!important;
-      z-index:2!important;
+      z-index:4!important;
+      transform:none!important;
+      visibility:hidden;
       will-change:auto;
       backface-visibility:hidden;
       -webkit-backface-visibility:hidden;
+      contain:paint;
     }
-    body.evo-live-swipe-dragging .evo-view-frame.evo-view-active,
+    .evo-view-frame.evo-swipe-neighbor.evo-swipe-visible{
+      visibility:visible!important;
+    }
+    body.evo-live-swipe-dragging .evo-view-frame.evo-view-active{
+      transition:none!important;
+      transform:none!important;
+      will-change:auto!important;
+    }
     body.evo-live-swipe-dragging .evo-view-frame.evo-swipe-neighbor{
       transition:none!important;
-      will-change:transform;
-      backface-visibility:hidden;
-      -webkit-backface-visibility:hidden;
+      will-change:clip-path;
     }
-    body.evo-live-swipe-settling .evo-view-frame.evo-view-active,
+    body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
+      transition:none!important;
+      transform:none!important;
+    }
     body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
-      transition:transform .27s cubic-bezier(.2,.82,.24,1)!important;
-      will-change:transform;
+      transition:clip-path .21s cubic-bezier(.22,.72,.2,1)!important;
+      will-change:clip-path;
     }
 
-    /* V28: profundidad tipo iOS con una sola capa de gradiente.
-       Mucho más barata para la GPU que recalcular un box-shadow enorme
-       sobre un iframe completo mientras sigue el dedo. */
     #evolution-view-stage .evo-swipe-depth{
       position:absolute;
       top:0;
       bottom:0;
       left:0;
-      width:72px;
+      width:54px;
       z-index:6;
       pointer-events:none;
       opacity:0;
@@ -344,17 +355,17 @@
         linear-gradient(
           90deg,
           rgba(0,0,0,0) 0%,
-          rgba(0,0,0,.055) 24%,
-          rgba(0,0,0,.30) 49%,
-          rgba(0,0,0,.13) 63%,
+          rgba(0,0,0,.035) 28%,
+          rgba(0,0,0,.20) 50%,
+          rgba(0,0,0,.07) 68%,
           rgba(0,0,0,0) 100%
         );
-      transition:opacity .12s ease;
+      transition:opacity .10s linear;
       contain:paint;
       will-change:transform,opacity;
     }
     #evolution-view-stage .evo-swipe-depth.is-visible{
-      opacity:var(--evo-swipe-depth-opacity,.84);
+      opacity:var(--evo-swipe-depth-opacity,.68);
     }
 
     html[data-evo-network="slow"] .evo-view-frame{
@@ -881,14 +892,37 @@
     return ROUTES[MOBILE_SWIPE_ORDER[next]]||null;
   };
 
-  const swipeBaseTransform=side=>
-    side==='next'
-      ? 'translate3d(100%,0,0)'
-      : 'translate3d(-100%,0,0)';
-
-  const setSwipeTransform=(frame,value)=>{
+  const setSwipeClip=(frame,side,progress)=>{
     if(!frame)return;
-    frame.style.setProperty('transform',value,'important');
+
+    const p=Math.max(0,Math.min(1,Number(progress)||0));
+    const hidden=((1-p)*100).toFixed(3);
+
+    frame.dataset.swipeSide=side;
+
+    if(side==='next'){
+      frame.style.setProperty(
+        'clip-path',
+        `inset(0 0 0 ${hidden}%)`,
+        'important'
+      );
+    }else{
+      frame.style.setProperty(
+        'clip-path',
+        `inset(0 ${hidden}% 0 0)`,
+        'important'
+      );
+    }
+  };
+
+  const showSwipeNeighbor=frame=>{
+    if(!frame)return;
+    frame.classList.add('evo-swipe-visible');
+  };
+
+  const hideSwipeNeighbor=frame=>{
+    if(!frame)return;
+    frame.classList.remove('evo-swipe-visible');
   };
 
   const ensureSwipeDepth=()=>{
@@ -910,13 +944,13 @@
     if(!el)return;
 
     const p=Math.max(0,Math.min(1,Number(progress)||0));
-    const opacity=.88-(p*.30);
+    const opacity=.72-(p*.22);
 
     el.style.setProperty(
       '--evo-swipe-depth-opacity',
       opacity.toFixed(3)
     );
-    el.style.transform=`translate3d(${Math.round(boundaryX-36)}px,0,0)`;
+    el.style.transform=`translate3d(${Math.round(boundaryX-27)}px,0,0)`;
     el.classList.add('is-visible');
   };
 
@@ -932,8 +966,10 @@
 
   const positionSwipeNeighbor=(frame,side)=>{
     if(!frame)return;
-    frame.dataset.swipeSide=side;
-    setSwipeTransform(frame,swipeBaseTransform(side));
+    hideSwipeNeighbor(frame);
+    frame.style.visibility='hidden';
+    frame.style.removeProperty('transform');
+    setSwipeClip(frame,side,0);
   };
 
   const removeSwipeFrame=frame=>{
@@ -977,7 +1013,8 @@
          active-route listeners wait until the frame becomes active. */
       repairViewLocalControls(frame,route);
       frame.__evolutionSwipeReady=true;
-      frame.style.visibility='visible';
+      frame.style.visibility='hidden';
+      positionSwipeNeighbor(frame,side);
     },{once:true});
 
     return frame;
@@ -1001,7 +1038,7 @@
       preferred.classList.remove('evo-view-active','evo-view-incoming','evo-view-leaving');
       preferred.classList.add('evo-swipe-neighbor');
       preferred.setAttribute('aria-hidden','true');
-      preferred.style.visibility='visible';
+      preferred.style.visibility='hidden';
       preferred.__evolutionSwipeReady=true;
       positionSwipeNeighbor(preferred,side);
       swipeNeighbors[side]=preferred;
@@ -1059,23 +1096,26 @@
 
   const settleSwipeBack=(active,neighbor,side)=>{
     if(!active)return;
+
     hideSwipeDepth();
     swipeSettling=true;
     document.body.classList.remove('evo-live-swipe-dragging');
     document.body.classList.add('evo-live-swipe-settling');
 
-    setSwipeTransform(active,'translate3d(0,0,0)');
-    if(neighbor)positionSwipeNeighbor(neighbor,side);
+    if(neighbor){
+      showSwipeNeighbor(neighbor);
+      setSwipeClip(neighbor,side,0);
+    }
 
     setTimeout(()=>{
       document.body.classList.remove('evo-live-swipe-settling');
-      active.classList.remove('evo-live-swipe-shadow');
-      active.style.removeProperty('transform');
-      resetSwipeTransition(active);
       resetSwipeTransition(neighbor);
-      if(neighbor)positionSwipeNeighbor(neighbor,side);
+      if(neighbor){
+        positionSwipeNeighbor(neighbor,side);
+        neighbor.style.visibility='hidden';
+      }
       swipeSettling=false;
-    },310);
+    },225);
   };
 
   const commitLiveSwipe=(active,neighbor,side,route)=>{
@@ -1091,27 +1131,32 @@
     document.body.classList.remove('evo-live-swipe-dragging');
     document.body.classList.add('evo-live-swipe-settling');
 
-    setSwipeTransform(
-      active,
-      side==='next'
-        ? 'translate3d(-100%,0,0)'
-        : 'translate3d(100%,0,0)'
-    );
-    setSwipeTransform(neighbor,'translate3d(0,0,0)');
+    showSwipeNeighbor(neighbor);
+    neighbor.style.visibility='visible';
+    setSwipeClip(neighbor,side,1);
 
     setTimeout(()=>{
-      /* Promote the page that was already visible under the finger. */
       activeFrame=neighbor;
 
-      neighbor.classList.remove('evo-swipe-neighbor','evo-view-incoming','evo-view-leaving');
+      neighbor.classList.remove(
+        'evo-swipe-neighbor',
+        'evo-swipe-visible',
+        'evo-view-incoming',
+        'evo-view-leaving'
+      );
       neighbor.classList.add('evo-view-active');
       neighbor.removeAttribute('aria-hidden');
       neighbor.dataset.swipeSide='';
+      neighbor.style.removeProperty('clip-path');
       neighbor.style.removeProperty('transform');
       neighbor.style.removeProperty('transition');
-      neighbor.classList.remove('evo-live-swipe-shadow');
+      neighbor.style.visibility='visible';
 
-      active.classList.remove('evo-view-active','evo-view-incoming','evo-view-leaving','evo-live-swipe-shadow');
+      active.classList.remove(
+        'evo-view-active',
+        'evo-view-incoming',
+        'evo-view-leaving'
+      );
       active.classList.add('evo-swipe-neighbor');
       active.setAttribute('aria-hidden','true');
       active.dataset.evoRouteKey=activeKey||'';
@@ -1142,8 +1187,6 @@
       document.body.classList.remove('evo-live-swipe-settling');
       swipeSettling=false;
 
-      /* Keep only one live page on each side. This preserves the previous
-         page exactly as the user left it without loading all four forever. */
       swipePreviewGeneration++;
       refreshSwipeNeighbors({
         preferredPrev:side==='next'?active:null,
@@ -1151,7 +1194,7 @@
       });
 
       prewarmAccordingToNetwork();
-    },305);
+    },225);
   };
 
   const installMobileSwipe=(frame,route)=>{
@@ -1206,7 +1249,10 @@
 
       const resetNeighborFromGesture=()=>{
         hideSwipeDepth();
-        if(gestureNeighbor&&currentSide)positionSwipeNeighbor(gestureNeighbor,currentSide);
+        if(gestureNeighbor&&currentSide){
+          positionSwipeNeighbor(gestureNeighbor,currentSide);
+          gestureNeighbor.style.visibility='hidden';
+        }
         gestureNeighbor=null;
         currentSide=null;
       };
@@ -1266,28 +1312,40 @@
           resetNeighborFromGesture();
           currentSide=side;
           gestureNeighbor=swipeNeighbors[side];
+          if(gestureNeighbor?.__evolutionSwipeReady){
+            gestureNeighbor.style.visibility='visible';
+            showSwipeNeighbor(gestureNeighbor);
+          }
         }
 
         const width=win.innerWidth||doc.documentElement.clientWidth||375;
 
         if(!gestureNeighbor){
-          /* Elastic resistance on Inicio's left edge / Web's right edge. */
+          /* En los extremos no movemos la página: evitamos cualquier
+             rasterización innecesaria del texto. */
           hideSwipeDepth();
-          dx*=.20;
-          setSwipeTransform(frame,`translate3d(${dx}px,0,0)`);
           return;
         }
 
-        setSwipeTransform(frame,`translate3d(${dx}px,0,0)`);
+        gestureNeighbor.style.visibility='visible';
+        showSwipeNeighbor(gestureNeighbor);
 
-        const neighborX=side==='next' ? width+dx : -width+dx;
-        setSwipeTransform(gestureNeighbor,`translate3d(${neighborX}px,0,0)`);
+        const progress=Math.max(
+          0,
+          Math.min(1,Math.abs(dx)/Math.max(1,width))
+        );
 
-        /* La línea entre páginas acompaña exactamente el dedo:
-           siguiente = borde derecho de la actual;
-           anterior  = borde izquierdo de la actual. */
-        const boundaryX=side==='next' ? width+dx : dx;
-        updateSwipeDepth(boundaryX,Math.abs(dx)/Math.max(1,width));
+        /* La página vecina está fija en x=0. Solo abrimos una máscara.
+           Ningún glifo cambia de posición durante el arrastre. */
+        setSwipeClip(gestureNeighbor,side,progress);
+
+        const revealPx=progress*width;
+        const boundaryX=
+          side==='next'
+            ? width-revealPx
+            : revealPx;
+
+        updateSwipeDepth(boundaryX,progress);
       };
 
       const finish=(cancelled=false)=>{
@@ -1306,7 +1364,12 @@
         const width=win.innerWidth||doc.documentElement.clientWidth||375;
 
         if(!lockedHorizontal||cancelled||!currentSide||!gestureNeighbor){
-          settleSwipeBack(frame,gestureNeighbor,currentSide||'next');
+          hideSwipeDepth();
+          document.body.classList.remove('evo-live-swipe-dragging');
+          if(gestureNeighbor&&currentSide){
+            positionSwipeNeighbor(gestureNeighbor,currentSide);
+            gestureNeighbor.style.visibility='hidden';
+          }
           lockedHorizontal=false;
           return;
         }
@@ -1314,7 +1377,7 @@
         const distanceRatio=Math.abs(dx)/Math.max(1,width);
         const qualifies=
           Math.abs(dy)<105 &&
-          (distanceRatio>=.27 || (Math.abs(dx)>=44&&velocity>=.43));
+          (distanceRatio>=.23 || (Math.abs(dx)>=42&&velocity>=.40));
 
         const targetRoute=routeBeside(activeKey,currentSide);
         const ready=Boolean(gestureNeighbor.__evolutionSwipeReady);
