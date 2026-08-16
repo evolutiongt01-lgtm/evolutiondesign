@@ -1,21 +1,21 @@
 {
-  "build": 35,
-  "version": "35",
+  "build": 37,
+  "version": "37",
   "announce": true,
   "required": false,
-  "subtitle": "Esta versión adapta automáticamente el Liquid Glass a la potencia de tu dispositivo para mantener el swipe fluido.",
+  "subtitle": "Evolution ahora usa un sistema de actualización más ligero: las versiones normales actualizan solo la aplicación y su información de versión.",
   "notes": [
     {
-      "title": "Liquid Glass adaptativo",
-      "detail": "Más profundidad en equipos potentes y una versión ligera automática en hardware antiguo."
+      "title": "Actualizaciones más ligeras",
+      "detail": "Las versiones normales ya no reemplazan ni reinician el Service Worker."
     },
     {
-      "title": "Swipe más fluido",
-      "detail": "La app mide el rendimiento durante el gesto y reduce efectos si detecta pérdida de cuadros."
+      "title": "Caché inteligente",
+      "detail": "Al actualizar se invalida únicamente evolution-app.js; views, imágenes y otros recursos permanecen intactos."
     },
     {
-      "title": "Compatibilidad mejorada",
-      "detail": "Optimización especial para iPhone antiguos sin modificar navegación, sesión ni pagos."
+      "title": "Arquitectura estable",
+      "detail": "Desde ahora las releases normales usan solo evolution-app.js + evolution-version.json."
     }
   ]
 }
