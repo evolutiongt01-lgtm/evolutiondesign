@@ -780,6 +780,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   font-size:7px;
   line-height:1.45;
 }
+.purchase-head p b,.shipping-notice b{color:#ececef}
 @media(max-width:767.98px){
   .deal-card{margin-top:14px;padding:13px;border-radius:15px}
   .deal-top{align-items:flex-start}
@@ -1127,6 +1128,65 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   left:-12px;
   bottom:58px;
 }
+.phone-floating-card.global{
+  left:34%;
+  top:4px;
+  min-width:132px;
+}
+.phone-floating-card.global strong{
+  color:#d8bf9c;
+}
+
+.visa-highlight{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(212,184,149,.18);
+  background:linear-gradient(180deg,rgba(212,184,149,.09),rgba(255,255,255,.018));
+}
+.visa-highlight strong{
+  display:block;
+  color:#f3eadf;
+  font-size:11px;
+  margin-bottom:3px;
+}
+.visa-highlight span{
+  display:block;
+  color:#aaaab0;
+  font-size:9px;
+  line-height:1.5;
+}
+.visa-pill-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:10px;
+}
+.visa-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(212,184,149,.18);
+  background:rgba(212,184,149,.06);
+  color:#e4ccb0;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+@media(max-width:767.98px){
+  .phone-floating-card.global{
+    left:50%;
+    top:8px;
+    transform:translateX(-50%);
+    min-width:120px;
+  }
+  .visa-highlight strong{font-size:10px}
+  .visa-highlight span{font-size:8.5px}
+}
+
 .hero-copy{
   color:#b7b7bc;
   max-width:560px;
@@ -1647,10 +1707,15 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
           <div class="deal-detail"><span>Contenido</span><strong>Solo iPhone · sin cargador ni accesorios</strong></div>
           <div class="deal-detail"><span>Disponibilidad</span><strong>Solo existe 1 unidad</strong></div>
         </div>
-        <div class="deal-disclaimer">La referencia Q1,100+ es comparativa y puede variar según vendedor, condición y mercado. Se entrega únicamente el equipo descrito en esta publicación.</div>
+        <div class="deal-details" style="margin-top:8px">
+          <div class="deal-detail"><span>Precio</span><strong>No negociable · precio final publicado</strong></div>
+          <div class="deal-detail"><span>Operación</span><strong>Portal web operando solo en Guatemala</strong></div>
+          <div class="deal-detail"><span>Confianza</span><strong>Cuenta Evolution verificada · pedido trazable</strong></div>
+        </div>
+        <div class="deal-disclaimer">La referencia Q1,100+ es comparativa y puede variar según vendedor, condición y mercado. Se entrega únicamente el equipo descrito en esta publicación. Precio no negociable. Si prefieres financiarlo, también puedes gestionarlo con Visacuotas en bancos participantes.</div>
       </div>
       <div class="hero-meta">
-        <span class="chip">🔥 Última unidad</span><span class="chip">Cuenta Evolution requerida</span>
+        <span class="chip">🔥 Última unidad</span><span class="chip">Versión global · GSM</span><span class="chip">Cuenta Evolution requerida</span>
         <span class="chip">Seguimiento en Mis Proyectos</span>
         <span class="chip">Pedido protegido por reCAPTCHA</span>
         <button class="hero-guide" id="openGuideHero" type="button">Guía de compra y envíos</button>
@@ -1667,8 +1732,8 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
     <div class="phone-stage">
       <div class="phone-stage-glass" aria-hidden="true"></div>
       <div class="phone-floating-card battery"><span>Batería</span><strong>95%</strong></div>
-      <div class="phone-floating-card verified"><span>Estado</span><strong>Unidad verificada</strong></div>
-      <img class="product-phone-img" src="img/iphone.png" alt="iPhone 8 Plus gris espacial de la publicación" loading="eager" decoding="async">
+      <div class="phone-floating-card verified"><span>Estado</span><strong>Unidad verificada</strong></div><div class="phone-floating-card global"><span>Versión</span><strong>Global · GSM</strong></div>
+      <img class="product-phone-img" src="img/iphone.png" alt="iPhone 8 Plus gris espacial de la publicación · versión global americana GSM" loading="eager" decoding="async">
     </div>
     <div class="tech-specs" aria-label="Especificaciones principales del iPhone 8 Plus">
         <div class="tech-specs-head">
@@ -1684,7 +1749,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
           <div class="tech-spec"><small>Frontal</small><b>FaceTime HD · 7 MP</b></div>
           <div class="tech-spec"><small>Seguridad</small><b>Touch ID</b></div>
           <div class="tech-spec"><small>Carga</small><b>Lightning + inalámbrica Qi</b></div>
-          <div class="tech-spec"><small>Conectividad</small><b>Wi‑Fi 802.11ac · Bluetooth 5.0</b></div>
+          <div class="tech-spec"><small>Conectividad</small><b>Wi‑Fi 802.11ac · Bluetooth 5.0</b></div><div class="tech-spec"><small>Versión</small><b>Global / Americana · GSM</b></div>
           <div class="tech-spec"><small>Peso</small><b>202 g</b></div>
         </div>
         <div class="spec-note"><b>Sobre IP67:</b> esta clasificación corresponde al modelo cuando fue probado por Apple. Apple indica que la resistencia al agua y al polvo no es permanente y puede disminuir con el uso normal; Evolution Design no garantiza la resistencia actual al agua de esta unidad usada.</div>
@@ -1692,7 +1757,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   </article>
 
   <aside class="purchase-card">
-    <div class="purchase-head"><div><div class="kicker">Ganga · última unidad</div><h2>Hazla tuya</h2><p>Como nuevo · Q950 · solo iPhone, sin cargador ni accesorios. Si se reserva, deja de estar disponible.</p></div><span class="availability" id="availability">Consultando…</span></div>
+    <div class="purchase-head"><div><div class="kicker">Ganga · última unidad</div><h2>Hazla tuya</h2><p>Como nuevo · Q950 · solo iPhone, sin cargador ni accesorios. Precio no negociable. Operamos únicamente en Guatemala y todo pedido queda registrado desde tu cuenta Evolution.</p></div><span class="availability" id="availability">Consultando…</span></div>
 
     <div class="auth-gate" id="authGate">
       <div>
@@ -1711,18 +1776,8 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <div class="payment-live-panel" id="onlinePaymentPanel"><div class="payment-live-head"><strong id="onlinePaymentTitle">Pago seguro</strong><span id="onlinePaymentCopy">Completa tus datos de entrega y continúa aquí.</span></div><div class="paypal-white-card"><div id="paypalStoreButtons"></div></div><div class="paypal-status" id="paypalStoreStatus"></div></div>
       <div class="payment-extra" id="transferPanel"><div class="payment-extra-title">Cuentas para transferencia</div><p class="payment-extra-copy">Usamos las mismas cuentas configuradas en Arquitectura. Transfiere el total indicado; Q40 de envío nacional ya está incluido.</p><div class="bank-tabs" id="bankTabs"></div><div id="bankDetails"></div><div class="payment-reference"><label>Referencia / ID de la transferencia</label><input class="input" id="transferReference" maxlength="160" placeholder="Escribe la referencia del banco"></div><div class="receipt-upload"><label>Captura / foto del comprobante</label><p>Adjunta imagen o PDF. Máximo 12 MB. Se enviará a Administración para revisión.</p><input class="receipt-file" id="transferReceipt" type="file" accept="image/*,application/pdf"><div class="receipt-file-name" id="transferReceiptName">Ningún archivo seleccionado.</div></div></div>
       <div class="payment-extra" id="cryptoPanel"><div class="payment-extra-title">Cripto · Binance Pay</div><p class="payment-extra-copy">Envía el monto indicado en USDT al mismo Binance Pay que usamos en Arquitectura. El pedido queda en revisión hasta confirmar el ingreso.</p><div class="crypto-card"><img class="crypto-qr" id="cryptoQr" src="img/binance-pay.jpeg" alt="QR Binance Pay Evolution Design"><div class="crypto-meta"><div class="bank-row"><span>Alias</span><strong id="cryptoAlias">Evolution Desing</strong></div><div class="bank-row"><span>Activo</span><strong id="cryptoAsset">USDT</strong></div><div class="bank-row"><span>Monto aproximado</span><strong id="cryptoAmount">—</strong></div></div><div class="payment-reference"><label>Referencia / ID del pago cripto</label><input class="input" id="cryptoReference" maxlength="160" placeholder="ID o referencia de Binance Pay"></div><div class="receipt-upload"><label>Captura / foto del comprobante</label><p>Adjunta la captura de Binance Pay o un PDF. Máximo 12 MB.</p><input class="receipt-file" id="cryptoReceipt" type="file" accept="image/*,application/pdf"><div class="receipt-file-name" id="cryptoReceiptName">Ningún archivo seleccionado.</div></div></div></div>
-      <div class="visacuotas-separate"><div class="tag">Financiamiento aparte</div><strong>Visacuotas · Recurrente</strong><p>Esta opción es independiente de PayPal y tarjeta. Recurrente muestra el recargo y las cuotas antes de confirmar.</p><button class="visacuotas-select" id="selectVisacuotasBtn" type="button">Elegir Visacuotas</button></div>
-      <div class="payment-extra" id="visacuotasPanel"><div class="payment-extra-title">Pago con Visacuotas</div><div class="visa-warning"><strong>Importante:</strong> Visacuotas aplica un recargo adicional. Recurrente mostrará el monto final y las cuotas antes de que confirmes el pago.</div><p class="payment-extra-copy">Primero registra tu pedido aquí para que quede identificado. Después podrás abrir el enlace seguro de Recurrente para completar el financiamiento.</p><a class="visa-btn" id="visacuotasPreviewLink" href="https://app.recurrente.com/s/evolutiondesing/o/iphone-8-plus" target="_blank" rel="noopener">Ver Visacuotas en Recurrente ↗</a></div>
-
-      <div class="shipping-notice"><strong>Envíos · lunes a viernes</strong><span style="display:block;margin-bottom:5px;color:#c5aa87">Contra entrega: 10% de recargo para cubrir envío y comisión de cobro.</span><span id="shippingNoticeText">Los pedidos realizados sábado o domingo se despachan el lunes a las 10:00 a. m.</span><div class="damage-mini">Al recibir el producto, revísalo. Los daños atribuibles al transporte deben reportarse dentro de <b>10 horas</b> con evidencia.</div><br><button class="guide-btn" id="openGuideForm" type="button" style="margin-top:9px">Ver guía y políticas completas</button></div>
-
-      <div class="section-label">2 · Datos de quien recibe</div>
-      <div class="fields">
-        <div class="field"><label>Nombre completo</label><input class="input" id="customerName" maxlength="120" required></div>
-        <div class="field"><label>Nombre de quien recibe</label><input class="input" id="recipientName" maxlength="120" required></div>
-        <div class="field"><label>Teléfono / WhatsApp</label><input class="input" id="phone" inputmode="tel" maxlength="40" placeholder="+502 5555 5555" required></div>
-        <div class="field"><label>NIT / DPI</label><input class="input" id="nitDpi" maxlength="40" inputmode="text"></div>
-      </div>
+      <div class="visacuotas-separate"><div class="tag">Financiamiento destacado</div><strong>Visacuotas · 2 a 18 cuotas</strong><p>No tienes que pagarlo todo de una vez. Ideal si quieres asegurar la última unidad hoy y revisar tu mensualidad antes de pagar.</p><button class="visacuotas-select" id="selectVisacuotasBtn" type="button">Ver financiamiento</button></div>
+      <div class="payment-extra" id="visacuotasPanel"><div class="payment-extra-title">Financiamiento con Visacuotas</div><div class="visa-warning"><strong>Importante:</strong> Visacuotas aplica un recargo adicional. Recurrente te mostrará el monto final, el recargo y las cuotas antes de que confirmes el pago.</div><div class="visa-highlight"><strong>Hasta 18 cuotas con bancos participantes</strong><span>Primero reserva tu pedido aquí y luego entra al enlace seguro de Recurrente para ver la cuota por mes, el recargo y el total final antes de pagar.</span><div class="visa-pill-row"><span class="visa-pill">2 a 18 cuotas</span><span class="visa-pill">Monto final visible</span><span class="visa-pill">Compra segura</span></div></div><p class="payment-extra-copy">Esta opción es ideal si quieres financiar la compra sin pagar todo de una vez. Tu pedido queda registrado primero en Evolution y después completas el financiamiento desde Recurrente.</p><a class="visa-btn" id="visacuotasPreviewLink" href="https://app.recurrente.com/visacuotas" target="_blank" rel="noopener">Cotizar Visacuotas en Recurrente ↗</a></div>
 
       <div class="delivery-fields" id="deliveryFields">
         <div class="section-label">3 · Dirección de entrega</div>
@@ -1770,7 +1825,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       </div>
 
       <div class="summary" id="summary"></div>
-      <label class="check"><input type="checkbox" id="terms" required><span>Confirmo que mis datos son correctos, que realizaré el pago según el método seleccionado, que leí la guía de compra y envíos y que <strong>acepto las políticas de envío, recepción, reporte de daños y responsabilidad por daños posteriores a la entrega de Evolution Design</strong>. La disponibilidad se confirma por Evolution Design.</span></label>
+      <label class="check"><input type="checkbox" id="terms" required><span>Confirmo que mis datos son correctos, que realizaré el pago según el método seleccionado, que leí la guía de compra y envío y que acepto las <b>políticas de envío, recepción, reporte de daños y responsabilidad por daños posteriores a la entrega de Evolution Design.</b> Entiendo que esta publicación es de <b>precio final no negociable</b>, válida únicamente para <b>Guatemala</b>, y que la compra queda asociada a una <b>cuenta Evolution verificada</b>. La disponibilidad se confirma por Evolution Design.</span></label>
       <button class="primary submit" id="submitBtn" type="submit">Confirmar pedido</button>
       <div class="feedback" id="feedback"></div>
     </form>
@@ -1818,7 +1873,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <p id="guideShippingText"></p>
     </div>
     <div class="guide-section damage-guide">
-      <span>Recepción y daños de transporte · 10 horas</span>
+      <span>Recepción y daños de transporte · 5 horas</span>
       <p id="guideDamageText"></p>
     </div>
     <div class="guide-section customer-damage-guide">
@@ -1910,7 +1965,7 @@ async function recaptchaToken(){
 function renderMethods(){const host=$("methodGrid");if(!config?.methods?.length){host.innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos cargar los métodos disponibles.</div>';return}const regular=config.methods.filter(q=>q.method!=="visacuotas");host.innerHTML=regular.map(q=>{const detail=q.method==="cod_forza"||q.method==="cod_cargo"?`10% de recargo incluido · ${money(q.surchargeGtq)}`:["transfer_shipping","paypal_shipping","card_shipping","crypto_binance"].includes(q.method)?`Envío nacional incluido · ${money(q.shippingGtq)}`:"Sin recargo ni costo de entrega",extra=q.method==="crypto_binance"&&q.usdtAmount?` · aprox. ${Number(q.usdtAmount).toFixed(2)} USDT`:"",cls=q.method==="paypal_shipping"?"paypal":q.method==="card_shipping"?"card":q.method==="crypto_binance"?"crypto":"";return `<button type="button" class="method ${cls} ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}${extra}</span><b>${money(q.totalGtq)}</b></button>`}).join("");host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate()}));$("selectVisacuotasBtn")?.classList.toggle("active",$("paymentMethod").value==="visacuotas")}
 
 let selectedBankKey="bac";
-function renderGuide(){const guide=config?.guide||{};$("guideTitle").textContent=guide.title||"Guía de compra y envío";$("guideIntro").textContent=guide.intro||"Revisa esta información antes de confirmar tu pedido.";$("guidePaymentText").textContent=guide.paymentText||"";$("guideShippingText").textContent=guide.shippingText||"";$("guideDamageText").textContent=guide.damageText||"Al recibir el producto, revisa su estado. Si detectas daño atribuible al transporte, repórtalo dentro de 10 horas con fotografías o video y evidencia de entrega.";$("guideCustomerDamageText").textContent=guide.customerDamageText||"Evolution Design no responde por daños causados después de la entrega por golpes, líquidos, manipulación, reparaciones de terceros, modificaciones o uso indebido. Todo reclamo queda sujeto a revisión para determinar su origen.";$("shippingNoticeText").textContent=guide.shippingText||"Los envíos se realizan de lunes a viernes."}
+function renderGuide(){const guide=config?.guide||{};$("guideTitle").textContent=guide.title||"Guía de compra y envío";$("guideIntro").textContent=guide.intro||"Revisa esta información antes de confirmar tu pedido.";$("guidePaymentText").textContent=guide.paymentText||"";$("guideShippingText").textContent=guide.shippingText||"";$("guideDamageText").textContent=guide.damageText||"Al recibir el producto, revisa su estado. Si detectas daño atribuible al transporte, repórtalo dentro de 5 horas con fotografías o video y evidencia de entrega.";$("guideCustomerDamageText").textContent=guide.customerDamageText||"Evolution Design no responde por daños causados después de la entrega por golpes, líquidos, manipulación, reparaciones de terceros, modificaciones o uso indebido. Todo reclamo queda sujeto a revisión para determinar su origen.";$("shippingNoticeText").textContent=guide.shippingText||"Los envíos se realizan de lunes a viernes."}
 function openGuide(){$("guideModal").classList.add("show");$("guideModal").setAttribute("aria-hidden","false")}function closeGuide(){$("guideModal").classList.remove("show");$("guideModal").setAttribute("aria-hidden","true")}
 function copyBankAccount(value,button){const done=()=>{const old=button.textContent;button.textContent="Copiado ✓";setTimeout(()=>button.textContent=old,1200)};if(navigator.clipboard?.writeText)navigator.clipboard.writeText(value).then(done).catch(()=>{});else{const ta=document.createElement("textarea");ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();done()}}
 function renderBankDetails(){const banks=Array.isArray(config?.bankAccounts)?config.bankAccounts:[],bank=banks.find(x=>x.key===selectedBankKey)||banks[0];if(!bank){$("bankTabs").innerHTML="";$("bankDetails").innerHTML='<div class="feedback show error">Las cuentas bancarias no están disponibles.</div>';return}selectedBankKey=bank.key;const q=config?.methods?.find(x=>x.method==="transfer_shipping");$("bankTabs").innerHTML=banks.map(b=>`<button type="button" class="bank-tab ${b.key===selectedBankKey?"active":""}" data-bank="${b.key}">${b.bank}</button>`).join("");$("bankDetails").innerHTML=`<div class="bank-card"><div class="bank-row"><span>Banco</span><strong>${bank.bank}</strong></div><div class="bank-row"><span>Titular</span><strong>${bank.accountHolder}</strong></div><div class="bank-row"><span>Tipo</span><strong>${bank.accountType}</strong></div><div class="bank-row"><span>Número de cuenta</span><strong>${bank.accountNumber} <button type="button" class="copy-bank" id="copyBankBtn">Copiar</button></strong></div><div class="bank-row"><span>Monto exacto</span><strong>${money(q?.totalGtq||990)}</strong></div><div class="bank-row"><span>Moneda</span><strong>${bank.currency||"GTQ"}</strong></div></div>`;$("bankTabs").querySelectorAll("[data-bank]").forEach(btn=>btn.addEventListener("click",()=>{selectedBankKey=btn.dataset.bank;renderBankDetails()}));$("copyBankBtn")?.addEventListener("click",e=>copyBankAccount(bank.accountNumber,e.currentTarget))}
@@ -2179,7 +2234,7 @@ function syncDelivery(){
   if(pickup)$("pobladoSuggestions").classList.remove("show");
   $("submitBtn").disabled=["paypal_shipping","card_shipping"].includes(method)||!config?.available;
 }
-function renderSummary(){const q=currentQuote();if(!q)return;const rows=[["iPhone 8 Plus",money(q.basePriceGtq)]];if(q.surchargeGtq)rows.push(["Recargo contra entrega 7%",money(q.surchargeGtq)]);if(q.shippingGtq)rows.push(["Envío nacional",money(q.shippingGtq)]);if(q.method==="crypto_binance"&&q.usdtAmount)rows.push(["Pago cripto",`≈ ${Number(q.usdtAmount).toFixed(2)} USDT`]);if(q.method==="visacuotas")rows.push(["Recargo Visacuotas","Se calcula en Recurrente"]);else if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",money(0)]);$("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${v}</strong></div>`).join("")+`<div class="summary-row total"><span>${q.method==="visacuotas"?"Base antes del recargo":"Total"}</span><strong>${money(q.totalGtq)}</strong></div>`;if(["paypal_shipping","card_shipping"].includes(q.method)){$("submitBtn").textContent="Completa el pago seguro arriba";$("submitBtn").disabled=true}else{$("submitBtn").disabled=!config?.available;$("submitBtn").textContent=q.method==="visacuotas"?`Registrar pedido · ${money(q.totalGtq)} + recargo`:q.method==="transfer_shipping"?`Enviar referencia · ${money(q.totalGtq)}`:q.method==="crypto_binance"?`Registrar pago cripto · ${money(q.totalGtq)}`:`Confirmar pedido · ${money(q.totalGtq)}`}}
+function renderSummary(){const q=currentQuote();if(!q)return;const rows=[["iPhone 8 Plus",money(q.basePriceGtq)]];if(q.surchargeGtq)rows.push(["Recargo contra entrega 10%",money(q.surchargeGtq)]);if(q.shippingGtq)rows.push(["Envío nacional",money(q.shippingGtq)]);if(q.method==="crypto_binance"&&q.usdtAmount)rows.push(["Pago cripto",`≈ ${Number(q.usdtAmount).toFixed(2)} USDT`]);if(q.method==="visacuotas")rows.push(["Recargo Visacuotas","Se calcula en Recurrente"]);else if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",money(0)]);$("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${v}</strong></div>`).join("")+`<div class="summary-row total"><span>${q.method==="visacuotas"?"Base antes del recargo":"Total"}</span><strong>${money(q.totalGtq)}</strong></div>`;if(["paypal_shipping","card_shipping"].includes(q.method)){$("submitBtn").textContent="Completa el pago seguro arriba";$("submitBtn").disabled=true}else{$("submitBtn").disabled=!config?.available;$("submitBtn").textContent=q.method==="visacuotas"?`Registrar pedido · ${money(q.totalGtq)} + recargo`:q.method==="transfer_shipping"?`Enviar referencia · ${money(q.totalGtq)}`:q.method==="crypto_binance"?`Registrar pago cripto · ${money(q.totalGtq)}`:`Confirmar pedido · ${money(q.totalGtq)}`}}
 
 async function loadConfig(){
   try{
