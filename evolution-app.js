@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v26 · Mobile Swipe Navigation */
+/* Evolution Design · Smart App Shell · v27 · Live Interactive Swipe */
 (() => {
   'use strict';
 
-  const VERSION='26';
+  const VERSION='27';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -29,6 +29,12 @@
   let networkMode=navigator.onLine?'normal':'offline';
   let deferredInstall=null;
   let lastSWUpdateCheck=0;
+
+  /* Live mobile pager: keeps only the immediate previous/next public view
+     beside the active iframe, so the next page literally follows the finger. */
+  let swipeNeighbors={prev:null,next:null};
+  let swipeSettling=false;
+  let swipePreviewGeneration=0;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -296,6 +302,25 @@
       transform:translate3d(var(--evo-leave-x),var(--evo-leave-y),0) scale(.999)!important;
       filter:blur(1px)!important;
       pointer-events:none!important;
+    }
+
+    .evo-view-frame.evo-swipe-neighbor{
+      opacity:1!important;
+      filter:none!important;
+      pointer-events:none!important;
+      z-index:2!important;
+      will-change:transform;
+    }
+    body.evo-live-swipe-dragging .evo-view-frame.evo-view-active,
+    body.evo-live-swipe-dragging .evo-view-frame.evo-swipe-neighbor{
+      transition:none!important;
+    }
+    body.evo-live-swipe-settling .evo-view-frame.evo-view-active,
+    body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
+      transition:transform .29s cubic-bezier(.2,.82,.24,1)!important;
+    }
+    .evo-view-frame.evo-live-swipe-shadow{
+      box-shadow:0 0 42px rgba(0,0,0,.34)!important;
     }
 
     html[data-evo-network="slow"] .evo-view-frame{
@@ -807,37 +832,277 @@
     }
   };
 
-  const installMobileSwipe=(frame,route)=>{
+  const mobileSwipeCapable=()=>{
+    try{
+      return matchMedia('(max-width: 991.98px)').matches &&
+        (navigator.maxTouchPoints>0 || 'ontouchstart' in window);
+    }catch(_){return false}
+  };
+
+  const routeBeside=(key,side)=>{
+    const i=MOBILE_SWIPE_ORDER.indexOf(key);
+    if(i<0)return null;
+    const next=i+(side==='next'?1:-1);
+    if(next<0||next>=MOBILE_SWIPE_ORDER.length)return null;
+    return ROUTES[MOBILE_SWIPE_ORDER[next]]||null;
+  };
+
+  const swipeBaseTransform=side=>
+    side==='next'
+      ? 'translate3d(100%,0,0)'
+      : 'translate3d(-100%,0,0)';
+
+  const setSwipeTransform=(frame,value)=>{
+    if(!frame)return;
+    frame.style.setProperty('transform',value,'important');
+  };
+
+  const resetSwipeTransition=frame=>{
+    if(!frame)return;
+    frame.style.removeProperty('transition');
+  };
+
+  const positionSwipeNeighbor=(frame,side)=>{
+    if(!frame)return;
+    frame.dataset.swipeSide=side;
+    setSwipeTransform(frame,swipeBaseTransform(side));
+  };
+
+  const removeSwipeFrame=frame=>{
+    if(!frame||frame===activeFrame)return;
+    try{frame.__evolutionLocalControlsObserver?.disconnect?.()}catch(_){}
+    try{frame.remove()}catch(_){}
+  };
+
+  const clearSwipeNeighbors=()=>{
+    const prev=swipeNeighbors.prev;
+    const next=swipeNeighbors.next;
+    swipeNeighbors={prev:null,next:null};
+    if(prev&&prev!==activeFrame)removeSwipeFrame(prev);
+    if(next&&next!==activeFrame&&next!==prev)removeSwipeFrame(next);
+  };
+
+  const makeSwipeNeighbor=(route,side,generation)=>{
+    if(!route||!activeFrame)return null;
+
+    const frame=document.createElement('iframe');
+    frame.className='evo-view-frame evo-swipe-neighbor';
+    frame.src=`${route.view}?shell=${VERSION}&swipePreview=1`;
+    frame.title=route.title;
+    frame.loading='eager';
+    frame.setAttribute('aria-label',route.title);
+    frame.setAttribute('allow','clipboard-read; clipboard-write; payment');
+    frame.setAttribute('aria-hidden','true');
+    frame.dataset.evoRouteKey=route.key;
+    frame.dataset.swipeSide=side;
+    frame.style.visibility='hidden';
+    positionSwipeNeighbor(frame,side);
+
+    stage()?.appendChild(frame);
+
+    frame.addEventListener('load',()=>{
+      if(generation!==swipePreviewGeneration||!frame.isConnected)return;
+      if(!handleFrameLoad(frame))return;
+
+      /* Prepare only UI-local controls while hidden. Payment SDK and
+         active-route listeners wait until the frame becomes active. */
+      repairViewLocalControls(frame,route);
+      frame.__evolutionSwipeReady=true;
+      frame.style.visibility='visible';
+    },{once:true});
+
+    return frame;
+  };
+
+  const ensureSwipeNeighbor=(side,route,preferred=null)=>{
+    const current=swipeNeighbors[side];
+
+    if(!route){
+      if(current&&current!==activeFrame)removeSwipeFrame(current);
+      swipeNeighbors[side]=null;
+      return null;
+    }
+
+    if(
+      preferred &&
+      preferred.isConnected &&
+      preferred.dataset.evoRouteKey===route.key
+    ){
+      if(current&&current!==preferred&&current!==activeFrame)removeSwipeFrame(current);
+      preferred.classList.remove('evo-view-active','evo-view-incoming','evo-view-leaving');
+      preferred.classList.add('evo-swipe-neighbor');
+      preferred.setAttribute('aria-hidden','true');
+      preferred.style.visibility='visible';
+      preferred.__evolutionSwipeReady=true;
+      positionSwipeNeighbor(preferred,side);
+      swipeNeighbors[side]=preferred;
+      return preferred;
+    }
+
+    if(
+      current &&
+      current.isConnected &&
+      current.dataset.evoRouteKey===route.key
+    ){
+      positionSwipeNeighbor(current,side);
+      return current;
+    }
+
+    if(current&&current!==activeFrame)removeSwipeFrame(current);
+    const created=makeSwipeNeighbor(route,side,swipePreviewGeneration);
+    swipeNeighbors[side]=created;
+    return created;
+  };
+
+  const refreshSwipeNeighbors=({preferredPrev=null,preferredNext=null}={})=>{
+    if(!mobileSwipeCapable()||!activeFrame||!activeKey){
+      clearSwipeNeighbors();
+      return;
+    }
+
+    const prevRoute=routeBeside(activeKey,'prev');
+    const nextRoute=routeBeside(activeKey,'next');
+
+    ensureSwipeNeighbor('prev',prevRoute,preferredPrev);
+    ensureSwipeNeighbor('next',nextRoute,preferredNext);
+  };
+
+  const installActiveFrameFeatures=(frame,route)=>{
     if(!frame||!route)return;
-    if(!MOBILE_SWIPE_ORDER.includes(route.key))return;
+
+    repairViewLocalControls(frame,route);
+    installMobileSwipe(frame,route);
+
+    if(route.key==='grafico'){
+      setTimeout(()=>repairViewLocalControls(frame,route),250);
+      setTimeout(()=>repairViewLocalControls(frame,route),900);
+    }
+
+    injectPaymentsBridge(frame,route);
+  };
+
+  const installActiveFrameGuards=frame=>{
+    if(!frame||frame.__evolutionActiveGuards)return;
+    frame.__evolutionActiveGuards=true;
+    attachPersistentGuard(frame);
+    attachFrameTelemetry(frame);
+  };
+
+  const settleSwipeBack=(active,neighbor,side)=>{
+    if(!active)return;
+    swipeSettling=true;
+    document.body.classList.remove('evo-live-swipe-dragging');
+    document.body.classList.add('evo-live-swipe-settling');
+
+    setSwipeTransform(active,'translate3d(0,0,0)');
+    if(neighbor)positionSwipeNeighbor(neighbor,side);
+
+    setTimeout(()=>{
+      document.body.classList.remove('evo-live-swipe-settling');
+      active.classList.remove('evo-live-swipe-shadow');
+      active.style.removeProperty('transform');
+      resetSwipeTransition(active);
+      resetSwipeTransition(neighbor);
+      if(neighbor)positionSwipeNeighbor(neighbor,side);
+      swipeSettling=false;
+    },310);
+  };
+
+  const commitLiveSwipe=(active,neighbor,side,route)=>{
+    if(!active||!neighbor||!route||swipeSettling)return;
+
+    swipeSettling=true;
+    saveScroll();
+
+    const oldPrev=swipeNeighbors.prev;
+    const oldNext=swipeNeighbors.next;
+
+    document.body.classList.remove('evo-live-swipe-dragging');
+    document.body.classList.add('evo-live-swipe-settling');
+
+    setSwipeTransform(
+      active,
+      side==='next'
+        ? 'translate3d(-100%,0,0)'
+        : 'translate3d(100%,0,0)'
+    );
+    setSwipeTransform(neighbor,'translate3d(0,0,0)');
+
+    setTimeout(()=>{
+      /* Promote the page that was already visible under the finger. */
+      activeFrame=neighbor;
+
+      neighbor.classList.remove('evo-swipe-neighbor','evo-view-incoming','evo-view-leaving');
+      neighbor.classList.add('evo-view-active');
+      neighbor.removeAttribute('aria-hidden');
+      neighbor.dataset.swipeSide='';
+      neighbor.style.removeProperty('transform');
+      neighbor.style.removeProperty('transition');
+      neighbor.classList.remove('evo-live-swipe-shadow');
+
+      active.classList.remove('evo-view-active','evo-view-incoming','evo-view-leaving','evo-live-swipe-shadow');
+      active.classList.add('evo-swipe-neighbor');
+      active.setAttribute('aria-hidden','true');
+      active.dataset.evoRouteKey=activeKey||'';
+      active.__evolutionSwipeReady=true;
+
+      if(side==='next'){
+        if(oldPrev&&oldPrev!==active&&oldPrev!==neighbor)removeSwipeFrame(oldPrev);
+        swipeNeighbors.prev=active;
+        swipeNeighbors.next=null;
+        positionSwipeNeighbor(active,'prev');
+      }else{
+        if(oldNext&&oldNext!==active&&oldNext!==neighbor)removeSwipeFrame(oldNext);
+        swipeNeighbors.next=active;
+        swipeNeighbors.prev=null;
+        positionSwipeNeighbor(active,'next');
+      }
+
+      history.pushState({evolutionRoute:route.key},'',route.path);
+      syncRoute(route);
+
+      installActiveFrameFeatures(neighbor,route);
+      installActiveFrameGuards(neighbor);
+
+      try{
+        window.EvolutionNav?.setScroll(neighbor.contentWindow.scrollY||0);
+      }catch(_){}
+
+      document.body.classList.remove('evo-live-swipe-settling');
+      swipeSettling=false;
+
+      /* Keep only one live page on each side. This preserves the previous
+         page exactly as the user left it without loading all four forever. */
+      swipePreviewGeneration++;
+      refreshSwipeNeighbors({
+        preferredPrev:side==='next'?active:null,
+        preferredNext:side==='prev'?active:null
+      });
+
+      prewarmAccordingToNetwork();
+    },305);
+  };
+
+  const installMobileSwipe=(frame,route)=>{
+    if(!frame||!route||!MOBILE_SWIPE_ORDER.includes(route.key))return;
 
     try{
       const win=frame.contentWindow;
       const doc=frame.contentDocument;
-      if(!win||!doc||frame.__evolutionMobileSwipeInstalled)return;
+      if(!win||!doc||frame.__evolutionLiveSwipeInstalled)return;
 
-      frame.__evolutionMobileSwipeInstalled=true;
+      frame.__evolutionLiveSwipeInstalled=true;
 
       const mobileMQ=win.matchMedia('(max-width: 991.98px)');
-      const reducedMQ=win.matchMedia('(prefers-reduced-motion: reduce)');
-
       let startX=0,startY=0,lastX=0,lastY=0,startTime=0;
-      let tracking=false;
-      let lockedHorizontal=false;
-      let gestureTarget=null;
+      let tracking=false,lockedHorizontal=false,currentSide=null;
+      let gestureNeighbor=null;
 
       const interactiveSelector=[
         'input','textarea','select','button',
-        '[contenteditable="true"]',
-        '[role="slider"]',
-        '[data-no-swipe]',
-        '.survey-overlay',
-        '.gd-order-modal',
-        '.auth-modal',
-        '.modal',
-        '.swiper',
-        '.carousel',
-        '[data-carousel]'
+        '[contenteditable="true"]','[role="slider"]','[data-no-swipe]',
+        '.survey-overlay','.gd-order-modal','.auth-modal','.modal',
+        '.swiper','.carousel','[data-carousel]'
       ].join(',');
 
       const hasHorizontalScroll=el=>{
@@ -845,11 +1110,10 @@
         while(node&&node!==doc.body){
           try{
             const s=win.getComputedStyle(node);
-            const ox=s.overflowX;
             if(
-              (ox==='auto'||ox==='scroll') &&
+              (s.overflowX==='auto'||s.overflowX==='scroll') &&
               node.scrollWidth>node.clientWidth+8
-            ) return true;
+            )return true;
           }catch(_){}
           node=node.parentElement;
         }
@@ -859,20 +1123,9 @@
       const shouldIgnoreTarget=target=>{
         if(!(target instanceof win.Element))return false;
         if(target.closest(interactiveSelector))return true;
-
-        /* Links/buttons can still be tapped normally; a deliberate swipe
-           starting over ordinary content remains available. */
         const anchor=target.closest('a[href]');
         if(anchor&&anchor.getAttribute('href')?.startsWith('#'))return true;
-
-        if(hasHorizontalScroll(target))return true;
-        return false;
-      };
-
-      const edgeBlocked=x=>{
-        /* evita pelear con el gesto nativo de "Atrás" de Safari/iOS */
-        const w=win.innerWidth||doc.documentElement.clientWidth||0;
-        return x<24 || (w&&x>w-24);
+        return hasHorizontalScroll(target);
       };
 
       const touchPoint=e=>{
@@ -880,153 +1133,161 @@
         return t?{x:t.clientX,y:t.clientY}:null;
       };
 
+      const resetNeighborFromGesture=()=>{
+        if(gestureNeighbor&&currentSide)positionSwipeNeighbor(gestureNeighbor,currentSide);
+        gestureNeighbor=null;
+        currentSide=null;
+      };
+
       const onStart=e=>{
-        if(!mobileMQ.matches)return;
+        if(frame!==activeFrame||swipeSettling||!mobileMQ.matches)return;
         if(e.touches&&e.touches.length!==1)return;
 
         const p=touchPoint(e);
-        if(!p||edgeBlocked(p.x)||shouldIgnoreTarget(e.target))return;
+        if(!p||shouldIgnoreTarget(e.target))return;
+
+        /* Leave the outermost 22px to Safari's native back/forward edge gesture. */
+        const width=win.innerWidth||doc.documentElement.clientWidth||0;
+        if(p.x<22||(width&&p.x>width-22))return;
 
         startX=lastX=p.x;
         startY=lastY=p.y;
         startTime=performance.now();
         tracking=true;
         lockedHorizontal=false;
-        gestureTarget=e.target;
+        currentSide=null;
+        gestureNeighbor=null;
       };
 
       const onMove=e=>{
-        if(!tracking)return;
+        if(!tracking||frame!==activeFrame)return;
         const p=touchPoint(e);
         if(!p)return;
 
-        lastX=p.x; lastY=p.y;
+        lastX=p.x;
+        lastY=p.y;
 
-        const dx=lastX-startX;
+        let dx=lastX-startX;
         const dy=lastY-startY;
 
         if(!lockedHorizontal){
-          if(Math.abs(dx)<10&&Math.abs(dy)<10)return;
+          if(Math.abs(dx)<9&&Math.abs(dy)<9)return;
 
-          /* Si el usuario claramente quiso scroll vertical, abandonamos. */
-          if(Math.abs(dy)>Math.abs(dx)*1.15){
+          if(Math.abs(dy)>Math.abs(dx)*1.12){
             tracking=false;
+            resetNeighborFromGesture();
             return;
           }
 
-          if(Math.abs(dx)>Math.abs(dy)*1.35){
+          if(Math.abs(dx)>Math.abs(dy)*1.28){
             lockedHorizontal=true;
+            document.body.classList.add('evo-live-swipe-dragging');
           }
         }
 
-        if(lockedHorizontal&&Math.abs(dx)>18){
-          /* Una vez confirmado que es swipe horizontal, evitamos que el
-             navegador mueva accidentalmente la página. */
-          e.preventDefault();
+        if(!lockedHorizontal)return;
+        e.preventDefault();
+
+        const side=dx<0?'next':'prev';
+        if(side!==currentSide){
+          resetNeighborFromGesture();
+          currentSide=side;
+          gestureNeighbor=swipeNeighbors[side];
         }
+
+        const width=win.innerWidth||doc.documentElement.clientWidth||375;
+
+        if(!gestureNeighbor){
+          /* Elastic resistance on Inicio's left edge / Web's right edge. */
+          dx*=.20;
+          setSwipeTransform(frame,`translate3d(${dx}px,0,0)`);
+          frame.classList.add('evo-live-swipe-shadow');
+          return;
+        }
+
+        setSwipeTransform(frame,`translate3d(${dx}px,0,0)`);
+
+        const neighborX=side==='next' ? width+dx : -width+dx;
+        setSwipeTransform(gestureNeighbor,`translate3d(${neighborX}px,0,0)`);
+        frame.classList.add('evo-live-swipe-shadow');
       };
 
-      const finish=()=>{
+      const finish=(cancelled=false)=>{
         if(!tracking){
           tracking=false;
           lockedHorizontal=false;
           return;
         }
 
+        tracking=false;
+
         const dx=lastX-startX;
         const dy=lastY-startY;
         const elapsed=Math.max(1,performance.now()-startTime);
         const velocity=Math.abs(dx)/elapsed;
-        const width=win.innerWidth||375;
+        const width=win.innerWidth||doc.documentElement.clientWidth||375;
 
-        tracking=false;
+        if(!lockedHorizontal||cancelled||!currentSide||!gestureNeighbor){
+          settleSwipeBack(frame,gestureNeighbor,currentSide||'next');
+          lockedHorizontal=false;
+          return;
+        }
 
-        if(!lockedHorizontal)return;
-        if(Math.abs(dy)>95)return;
-
-        const distanceNeeded=Math.min(110,Math.max(64,width*.17));
+        const distanceRatio=Math.abs(dx)/Math.max(1,width);
         const qualifies=
-          Math.abs(dx)>=distanceNeeded ||
-          (Math.abs(dx)>=46&&velocity>=0.42);
+          Math.abs(dy)<105 &&
+          (distanceRatio>=.27 || (Math.abs(dx)>=44&&velocity>=.43));
 
-        if(!qualifies)return;
+        const targetRoute=routeBeside(activeKey,currentSide);
+        const ready=Boolean(gestureNeighbor.__evolutionSwipeReady);
 
-        const currentIndex=MOBILE_SWIPE_ORDER.indexOf(activeKey);
-        if(currentIndex<0)return;
+        if(qualifies&&targetRoute&&ready){
+          commitLiveSwipe(frame,gestureNeighbor,currentSide,targetRoute);
+        }else{
+          settleSwipeBack(frame,gestureNeighbor,currentSide);
+        }
 
-        const nextIndex=dx<0 ? currentIndex+1 : currentIndex-1;
-        if(nextIndex<0||nextIndex>=MOBILE_SWIPE_ORDER.length)return;
-
-        const nextKey=MOBILE_SWIPE_ORDER[nextIndex];
-        const nextRoute=ROUTES[nextKey];
-        if(!nextRoute)return;
-
-        /* Evita que el tap/click fantasma posterior al touch navegue
-           cualquier control bajo el dedo. */
-        try{
-          const suppressClick=event=>{
-            event.preventDefault();
-            event.stopImmediatePropagation();
-          };
-          doc.addEventListener('click',suppressClick,true);
-          setTimeout(()=>doc.removeEventListener('click',suppressClick,true),420);
-        }catch(_){}
-
-        loadRoute(nextRoute,{push:true,restore:false});
+        lockedHorizontal=false;
       };
 
       const onEnd=e=>{
         const p=touchPoint(e);
         if(p){lastX=p.x;lastY=p.y}
-        finish();
+        finish(false);
       };
 
-      const onCancel=()=>{
-        tracking=false;
-        lockedHorizontal=false;
-      };
+      const onCancel=()=>finish(true);
 
       doc.addEventListener('touchstart',onStart,{passive:true,capture:true});
       doc.addEventListener('touchmove',onMove,{passive:false,capture:true});
       doc.addEventListener('touchend',onEnd,{passive:true,capture:true});
       doc.addEventListener('touchcancel',onCancel,{passive:true,capture:true});
 
-      /* Pequeña pista visual solo la primera vez, sin invadir la UI. */
       if(
         mobileMQ.matches &&
-        !reducedMQ.matches &&
-        !sessionStorage.getItem('evolution_mobile_swipe_hint_v26')
+        !sessionStorage.getItem('evolution_live_swipe_hint_v27')
       ){
-        sessionStorage.setItem('evolution_mobile_swipe_hint_v26','1');
-
+        sessionStorage.setItem('evolution_live_swipe_hint_v27','1');
         const hint=doc.createElement('div');
-        hint.textContent='Desliza para cambiar de sección';
+        hint.textContent='Desliza y mantén para explorar';
         Object.assign(hint.style,{
-          position:'fixed',
-          left:'50%',
+          position:'fixed',left:'50%',
           bottom:'calc(92px + env(safe-area-inset-bottom, 0px))',
           transform:'translateX(-50%) translateY(8px)',
-          zIndex:'2147483000',
-          padding:'9px 13px',
-          borderRadius:'999px',
+          zIndex:'2147483000',padding:'9px 13px',borderRadius:'999px',
           border:'1px solid rgba(255,255,255,.12)',
           background:'rgba(12,12,13,.72)',
-          backdropFilter:'blur(18px)',
-          WebkitBackdropFilter:'blur(18px)',
+          backdropFilter:'blur(18px)',WebkitBackdropFilter:'blur(18px)',
           color:'rgba(255,255,255,.78)',
           font:'600 11px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
-          letterSpacing:'.01em',
-          pointerEvents:'none',
-          opacity:'0',
+          pointerEvents:'none',opacity:'0',
           transition:'opacity .28s ease,transform .28s ease'
         });
-
         doc.body.appendChild(hint);
         requestAnimationFrame(()=>{
           hint.style.opacity='1';
           hint.style.transform='translateX(-50%) translateY(0)';
         });
-
         setTimeout(()=>{
           hint.style.opacity='0';
           hint.style.transform='translateX(-50%) translateY(8px)';
@@ -1034,7 +1295,7 @@
         },2200);
       }
     }catch(error){
-      console.warn('[Evolution App] Mobile swipe:',error);
+      console.warn('[Evolution App] Live mobile swipe:',error);
     }
   };
 
@@ -1120,6 +1381,12 @@
     }
 
     saveScroll();
+
+    /* A navbar tap / popstate uses the normal router. Remove only hidden
+       swipe previews so duplicate iframes can never survive a direct route. */
+    swipePreviewGeneration++;
+    clearSwipeNeighbors();
+
     const token=++navigationToken;
     const from=activeKey?ROUTES[activeKey]:null;
     setLoading(true);
@@ -1150,24 +1417,8 @@
       if(token!==navigationToken){frame.remove();return}
       if(!handleFrameLoad(frame))return;
 
-      /* Repara CTAs internos como Solicitar diseño / logo / video antes
-         de mostrar la nueva vista. No modifica el archivo HTML original. */
-      repairViewLocalControls(frame,route);
-
-      /* Navegación tipo app nativa en móvil: swipe entre las cuatro
-         secciones públicas sin recargar la navbar. */
-      installMobileSwipe(frame,route);
-
-      /* Algunos scripts de Diseño Gráfico terminan de configurar sus CTA
-         unas décimas después del load. Revalidamos sin tocar la view. */
-      if(route.key==='grafico'){
-        setTimeout(()=>repairViewLocalControls(frame,route),250);
-        setTimeout(()=>repairViewLocalControls(frame,route),900);
-      }
-
-      /* Payment logic is global now; views no longer need another PayPal
-         patch when the SDK loading strategy changes. */
-      injectPaymentsBridge(frame,route);
+      /* Prepara los comportamientos activos de la view. */
+      installActiveFrameFeatures(frame,route);
 
       clearTimeout(fail);
 
@@ -1189,8 +1440,12 @@
       setTimeout(()=>{
         if(old&&old!==frame)old.remove();
         activeFrame=frame;
-        attachPersistentGuard(frame);
-        attachFrameTelemetry(frame);
+        frame.dataset.evoRouteKey=route.key;
+        frame.__evolutionSwipeReady=true;
+        installActiveFrameGuards(frame);
+
+        swipePreviewGeneration++;
+        refreshSwipeNeighbors();
         prewarmAccordingToNetwork();
       },340);
     },{once:true});
@@ -1386,6 +1641,12 @@
   });
 
   setInterval(()=>checkForSWUpdate(false),30*60*1000);
+
+  addEventListener('resize',()=>{
+    if(swipeSettling)return;
+    swipePreviewGeneration++;
+    refreshSwipeNeighbors();
+  },{passive:true});
 
   /* ---------- BOOT ---------- */
   const boot=async()=>{
