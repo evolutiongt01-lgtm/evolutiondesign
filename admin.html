@@ -1512,7 +1512,7 @@ html.admin-page-hidden *{
     <div class="section danger-zone">
       <div class="section-h">Zona de riesgo</div>
       <div class="section-b">
-        <div class="hint" style="margin-bottom:10px">Elimina este pedido del panel y libera inmediatamente el producto para que pueda volver a comprarse. Si ya existe una guía externa, Evolution no la cancela automáticamente: deberás cancelarla tú directamente con la paquetería si corresponde.</div>
+        <div class="hint" style="margin-bottom:10px">Elimina este pedido del panel y libera inmediatamente el producto para que pueda volver a comprarse. Si ya existe una guía Boxful, el sistema bloqueará la eliminación para evitar inconsistencias con la paquetería.</div>
         <div class="form-actions">
           <button class="btn btn-danger" id="deleteStoreOrderBtn" type="button" onclick="deleteSelectedStoreOrder()">Eliminar pedido y liberar producto</button>
         </div>
@@ -1737,11 +1737,7 @@ window.deleteSelectedStoreOrder=async function(){
   if(!selectedStoreOrder)return;
   const orderId=selectedStoreOrder.orderId||selectedStoreOrder.id;
   const title=selectedStoreOrder.productTitle||'este producto';
-  const hasGuide=Boolean(selectedStoreOrder.trackingNumber||selectedStoreOrder.boxfulShipmentNumber||selectedStoreOrder.boxfulShipmentId);
-  const guideWarning=hasGuide
-    ? '\n\n⚠️ Este pedido tiene una guía/tracking registrado. Evolution eliminará el pedido y liberará el producto, pero NO cancelará la guía externa. Si corresponde, cancélala tú con la paquetería.'
-    : '';
-  const ok=confirm(`¿Eliminar el pedido ${orderId}?\n\n${title} volverá a estar disponible inmediatamente. El registro se conservará internamente como eliminado para auditoría.${guideWarning}`);
+  const ok=confirm(`¿Eliminar el pedido ${orderId}?\n\n${title} volverá a estar disponible inmediatamente. Si existe una guía externa, Evolution NO la cancelará automáticamente. El registro se conservará internamente como eliminado para auditoría.`);
   if(!ok)return;
 
   const btn=$('deleteStoreOrderBtn');
