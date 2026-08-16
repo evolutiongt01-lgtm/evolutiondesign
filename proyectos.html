@@ -1553,6 +1553,45 @@
 @media(max-width:900px){.store-order-meta{grid-template-columns:1fr 1fr}.store-order-track{grid-template-columns:1fr}.store-order-step{display:grid;grid-template-columns:24px minmax(0,1fr);align-items:center}.store-order-dot{margin:0}.store-order-step small{margin-top:.12rem}}
 @media(max-width:560px){.store-order-top{padding:15px}.store-order-body{padding:15px}.store-order-meta{grid-template-columns:1fr}.store-order-status{font-size:.5rem}.store-order-tracking{align-items:flex-start;flex-direction:column}}
 
+
+.store-order-tracking-actions{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.store-order-track-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:42px;
+  padding:10px 14px;
+  border-radius:11px;
+  border:1px solid rgba(212,184,149,.28);
+  background:linear-gradient(180deg,rgba(212,184,149,.13),rgba(212,184,149,.06));
+  color:#e4caab;
+  text-decoration:none;
+  font-size:.64rem;
+  font-weight:800;
+  transition:.18s ease;
+}
+.store-order-track-btn:hover{
+  transform:translateY(-1px);
+  border-color:rgba(212,184,149,.48);
+  background:rgba(212,184,149,.13);
+  color:#fff;
+}
+.store-order-track-btn svg{
+  width:14px;
+  height:14px;
+  flex:0 0 14px;
+}
+@media(max-width:560px){
+  .store-order-tracking-actions{display:grid;grid-template-columns:1fr}
+  .store-order-track-btn{width:100%;min-height:46px;font-size:.69rem}
+}
+
 </style>
   
 <style id="evolution-recaptcha-badge-ui-fix-v25">
@@ -1843,6 +1882,12 @@
       function storeOrderMethodLabel(order){
         return order?.paymentMethodLabel||({cod_forza:'Contra entrega · Forza',cod_cargo:'Contra entrega · Cargo Expreso',transfer_shipping:'Transferencia bancaria · Envío nacional',paypal_shipping:'PayPal · Envío nacional',card_shipping:'Tarjeta débito/crédito · Envío nacional',crypto_binance:'Cripto · Binance Pay',visacuotas:'Visacuotas · Recurrente',pickup_pana:'Entrega personal · Panajachel'})[order?.paymentMethod]||order?.paymentMethod||'—';
       }
+      function safeStoreTrackingHref(value){
+        try{
+          const u=new URL(String(value||""));
+          return /^https?:$/.test(u.protocol)?u.href:"";
+        }catch{return ""}
+      }
       function storeOrderDate(v){
         const d=dateValue(v);if(!d)return'—';
         return new Intl.DateTimeFormat('es-GT',{day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}).format(d);
@@ -1871,7 +1916,8 @@
             ${status==='cancelled'
               ?'<div class="receipt-empty" style="margin:0">Este pedido fue cancelado. Si necesitas ayuda, comunícate con Evolution Design.</div>'
               :`<div class="store-order-track">${steps.map((step,i)=>`<div class="store-order-step ${i<idx?'done':i===idx?'active':''}"><div class="store-order-dot">${i<idx?'✓':i===idx?'•':''}</div><div><strong>${esc(stepLabels[i])}</strong><small>${i===0?created:i===idx?esc(storeOrderStatusLabel(order)):'Seguimiento'}</small></div></div>`).join('')}</div>`}
-            ${(order.trackingNumber||status==='shipped')&&!pickup?`<div class="store-order-tracking"><span>${esc(order.carrier||'Paquetería')} · Guía</span><strong>${esc(order.trackingNumber||'Pendiente de publicación')}</strong></div>`:''}
+            ${(order.trackingNumber||order.trackingUrl||status==='shipped')&&!pickup?`<div class="store-order-tracking"><span>${esc(order.carrier||'Paquetería')} · Guía</span><strong>${esc(order.trackingNumber||'Seguimiento disponible')}</strong></div>`:''}
+            ${!pickup&&safeStoreTrackingHref(order.trackingUrl)?`<div class="store-order-tracking-actions"><a class="store-order-track-btn" href="${esc(safeStoreTrackingHref(order.trackingUrl))}" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"></path><path d="M10 14 21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg>${status==='shipped'||status==='delivered'?'Seguir mi paquete':'Ver guía de envío'}</a></div>`:''}
             ${pickup&&status==='shipped'?`<div class="store-order-tracking"><span>Entrega personal</span><strong>Listo para coordinar en Panajachel</strong></div>`:''}
           </div>
         </article>`;
