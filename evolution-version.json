@@ -1,21 +1,21 @@
 {
-  "build": 39,
-  "version": "39",
+  "build": 40,
+  "version": "40",
   "announce": true,
   "required": false,
-  "subtitle": "Se corrigió la selección automática del modo Premium para que los dispositivos de alto rendimiento conserven las transiciones Liquid Glass completas.",
+  "subtitle": "Se corrigió definitivamente la degradación del Liquid Glass: los dispositivos Premium ya no cambian de calidad durante el primer swipe.",
   "notes": [
     {
-      "title": "Premium restaurado",
-      "detail": "Los iPhone modernos de alto rendimiento vuelven a iniciar siempre en modo Premium."
+      "title": "Premium estable",
+      "detail": "Los iPhone modernos clasificados como Premium mantienen el efecto completo durante toda la sesión."
     },
     {
-      "title": "Fallback más inteligente",
-      "detail": "Premium ya no cae directamente a Lite por unos pocos frames lentos; primero baja a Standard solo ante una caída sostenida."
+      "title": "Rendimiento por gesto",
+      "detail": "La app ya no toma decisiones por frames aislados; analiza swipes completos y nunca cambia de modo en medio de la transición."
     },
     {
-      "title": "Sin estados viejos",
-      "detail": "Los downgrades guardados por builds anteriores se limpian automáticamente al actualizar."
+      "title": "Fallback más seguro",
+      "detail": "Android y PCs Premium solo bajan tras varios gestos lentos completos; los equipos antiguos conservan Lite."
     }
   ]
 }
