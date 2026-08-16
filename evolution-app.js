@@ -1,9 +1,9 @@
-/* Evolution Design · Smart App Shell · v37 · Two-File Update Architecture */
+/* Evolution Design · Smart App Shell · v39 · Premium Tier Stability Fix */
 (() => {
   'use strict';
 
-  const VERSION='37';
-  const APP_BUILD=37;
+  const VERSION='39';
+  const APP_BUILD=39;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -21,6 +21,7 @@
   /* Orden de navegación táctil móvil. Mis Proyectos queda fuera porque
      es una zona privada y no pertenece al App Shell público. */
   const MOBILE_SWIPE_ORDER=['home','arquitectura','grafico','web'];
+  const MOBILE_SWIPE_COMMIT_PROGRESS=.35;
   const PRIVATE_HINTS=['/proyectos','/perfil','/admin','/portal','/account','/checkout','/payment','/pago','/login','/api/'];
   const prefetchedViews=new Set();
   const prefetchedAssets=new Set();
@@ -46,10 +47,13 @@
 
   /* V35 · Adaptive Liquid Glass */
   let swipeVisualTier='standard';
+  let swipeNativeTier='standard';
   let swipeTierReason='default';
   let swipeFrameLast=0;
   let swipeFrameBad=0;
+  let swipeFrameGood=0;
   let swipeLitePaintLast=0;
+  const SWIPE_TIER_STATE_BUILD=39;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -367,17 +371,17 @@
 
     body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
       transition:
-        transform .30s cubic-bezier(.2,.82,.2,1),
-        border-radius .30s cubic-bezier(.2,.82,.2,1)!important;
+        transform .245s cubic-bezier(.18,.88,.22,1),
+        border-radius .245s cubic-bezier(.18,.88,.22,1)!important;
       transform:translateZ(0) scale(var(--evo-active-card-scale,1))!important;
       border-radius:var(--evo-active-card-radius,0px)!important;
       will-change:transform,border-radius;
     }
     body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
       transition:
-        clip-path .30s cubic-bezier(.2,.82,.2,1),
-        transform .30s cubic-bezier(.2,.82,.2,1),
-        border-radius .30s cubic-bezier(.2,.82,.2,1)!important;
+        clip-path .245s cubic-bezier(.18,.88,.22,1),
+        transform .245s cubic-bezier(.18,.88,.22,1),
+        border-radius .245s cubic-bezier(.18,.88,.22,1)!important;
       transform:translateZ(0) scale(var(--evo-next-card-scale,.885))!important;
       border-radius:var(--evo-next-card-radius,36px)!important;
       will-change:transform,clip-path,border-radius;
@@ -668,7 +672,7 @@
 
     html[data-evo-swipe-tier="lite"]
     body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
-      transition:clip-path .23s cubic-bezier(.2,.82,.2,1)!important;
+      transition:clip-path .205s cubic-bezier(.18,.88,.22,1)!important;
       transform:none!important;
       border-radius:0!important;
     }
@@ -1204,31 +1208,23 @@
 
     swipeVisualTier=next;
     swipeTierReason=reason;
+
     document.documentElement.dataset.evoSwipeTier=next;
     document.documentElement.dataset.evoSwipeTierReason=reason;
 
+    /* V39: cualquier estado adaptativo queda ligado a ESTA build.
+       Una actualización nunca hereda un downgrade viejo. */
     try{
       sessionStorage.setItem('evolution_swipe_tier_runtime',next);
       sessionStorage.setItem('evolution_swipe_tier_reason',reason);
+      sessionStorage.setItem(
+        'evolution_swipe_tier_build',
+        String(SWIPE_TIER_STATE_BUILD)
+      );
     }catch(_){}
   };
 
-  const detectSwipeVisualTier=()=>{
-    try{
-      const forced=new URL(location.href).searchParams.get('evo_swipe');
-      if(['premium','standard','lite'].includes(forced)){
-        return {tier:forced,reason:'query-override'};
-      }
-    }catch(_){}
-
-    try{
-      const saved=sessionStorage.getItem('evolution_swipe_tier_runtime');
-      const reason=sessionStorage.getItem('evolution_swipe_tier_reason');
-      if(saved==='lite'&&reason==='fps-downgrade'){
-        return {tier:'lite',reason:'fps-downgrade'};
-      }
-    }catch(_){}
-
+  const baseSwipeHardwareTier=()=>{
     const ua=navigator.userAgent||'';
     const ios=/iphone|ipad|ipod/i.test(ua) ||
       (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
@@ -1240,48 +1236,152 @@
       Number(innerHeight||0)
     );
 
+    const shortSide=Math.min(
+      ...[
+        Number(screen.width||0),
+        Number(screen.height||0),
+        Number(innerWidth||0),
+        Number(innerHeight||0)
+      ].filter(Boolean)
+    );
+
     const cores=Number(navigator.hardwareConcurrency||0);
     const memory=Number(navigator.deviceMemory||0);
     const reduced=
       typeof matchMedia==='function' &&
       matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if(reduced)return {tier:'lite',reason:'reduced-motion'};
+    if(reduced){
+      return {
+        tier:'lite',
+        reason:'reduced-motion',
+        ios,longSide,shortSide,cores,memory
+      };
+    }
 
-    /* iPhone 8 Plus usa 414×736 CSS px. También cubre generaciones
-       anteriores y SE clásico. */
+    /* iPhone 8 Plus = 414×736 CSS px.
+       Equipos equivalentes o más antiguos arrancan en Lite. */
     if(ios&&longSide>0&&longSide<=736){
-      return {tier:'lite',reason:'legacy-ios-viewport'};
+      return {
+        tier:'lite',
+        reason:'legacy-ios-viewport',
+        ios,longSide,shortSide,cores,memory
+      };
     }
 
     if(memory>0&&memory<=3){
-      return {tier:'lite',reason:'low-memory'};
+      return {
+        tier:'lite',
+        reason:'low-memory',
+        ios,longSide,shortSide,cores,memory
+      };
     }
 
     if(!ios&&cores>0&&cores<=4){
-      return {tier:'lite',reason:'low-core-count'};
+      return {
+        tier:'lite',
+        reason:'low-core-count',
+        ios,longSide,shortSide,cores,memory
+      };
     }
 
-    /* iPhone X/XS/11 Pro en adelante entran mínimo aquí; Max modernos
-       como 14 Pro Max (430×932 CSS px) quedan Premium. */
+    /* 430×932 (14 Pro Max), 428×926, 414×896 y otros iPhone
+       modernos grandes son Premium explícito.
+       390×844 también es hardware suficientemente moderno. */
     if(
       (ios&&longSide>=844) ||
       (!ios&&(memory>=8||cores>=8))
     ){
-      return {tier:'premium',reason:'high-capability'};
+      return {
+        tier:'premium',
+        reason:'high-capability',
+        ios,longSide,shortSide,cores,memory
+      };
     }
 
-    return {tier:'standard',reason:'balanced'};
+    return {
+      tier:'standard',
+      reason:'balanced',
+      ios,longSide,shortSide,cores,memory
+    };
+  };
+
+  const detectSwipeVisualTier=()=>{
+    try{
+      const forced=new URL(location.href).searchParams.get('evo_swipe');
+      if(['premium','standard','lite'].includes(forced)){
+        return {
+          tier:forced,
+          nativeTier:forced,
+          reason:'query-override'
+        };
+      }
+    }catch(_){}
+
+    const hardware=baseSwipeHardwareTier();
+
+    /* Premium-capable devices ALWAYS start Premium after a reload/build.
+       We intentionally ignore old adaptive downgrades on these devices. */
+    if(hardware.tier==='premium'){
+      return {
+        tier:'premium',
+        nativeTier:'premium',
+        reason:hardware.reason
+      };
+    }
+
+    /* Only restore an adaptive downgrade when it belongs to the exact
+       same app build. No stale V35/V36/V37 state survives V39. */
+    try{
+      const saved=sessionStorage.getItem('evolution_swipe_tier_runtime');
+      const reason=sessionStorage.getItem('evolution_swipe_tier_reason');
+      const build=Number(
+        sessionStorage.getItem('evolution_swipe_tier_build')||0
+      );
+
+      if(
+        build===SWIPE_TIER_STATE_BUILD &&
+        saved==='lite' &&
+        reason==='fps-downgrade'
+      ){
+        return {
+          tier:'lite',
+          nativeTier:hardware.tier,
+          reason:'fps-downgrade'
+        };
+      }
+    }catch(_){}
+
+    return {
+      tier:hardware.tier,
+      nativeTier:hardware.tier,
+      reason:hardware.reason
+    };
   };
 
   const initializeSwipeVisualTier=()=>{
+    /* Elimina downgrade viejo de otra build. */
+    try{
+      const storedBuild=Number(
+        sessionStorage.getItem('evolution_swipe_tier_build')||0
+      );
+
+      if(storedBuild!==SWIPE_TIER_STATE_BUILD){
+        sessionStorage.removeItem('evolution_swipe_tier_runtime');
+        sessionStorage.removeItem('evolution_swipe_tier_reason');
+        sessionStorage.removeItem('evolution_swipe_tier_build');
+      }
+    }catch(_){}
+
     const result=detectSwipeVisualTier();
+    swipeNativeTier=result.nativeTier||result.tier;
     setSwipeVisualTier(result.tier,result.reason);
   };
 
   const beginSwipeFrameBudget=()=>{
     swipeFrameLast=0;
     swipeFrameBad=0;
+    swipeFrameGood=0;
     swipeLitePaintLast=0;
   };
 
@@ -1291,17 +1391,47 @@
     if(swipeFrameLast){
       const dt=t-swipeFrameLast;
 
-      if(dt>27){
-        swipeFrameBad++;
-      }else if(dt<22){
-        swipeFrameBad=Math.max(0,swipeFrameBad-1);
+      /* PREMIUM:
+         Ya no cae a Lite por 4 frames lentos.
+         Requiere una degradación sostenida y solo baja a Standard. */
+      if(swipeVisualTier==='premium'){
+        if(dt>42){
+          swipeFrameBad++;
+          swipeFrameGood=0;
+        }else if(dt<25){
+          swipeFrameGood++;
+          if(swipeFrameGood>=3){
+            swipeFrameBad=Math.max(0,swipeFrameBad-1);
+            swipeFrameGood=0;
+          }
+        }
+
+        if(swipeFrameBad>=12){
+          setSwipeVisualTier('standard','fps-stepdown');
+          swipeFrameBad=0;
+          swipeFrameGood=0;
+        }
       }
 
-      /* Si el equipo pierde varios frames reales, retiramos al instante
-         las capas caras y Lite queda activo por el resto de la sesión. */
-      if(swipeFrameBad>=4&&swipeVisualTier!=='lite'){
-        setSwipeVisualTier('lite','fps-downgrade');
-        swipeFrameBad=0;
+      /* STANDARD:
+         Solo baja a Lite si la caída continúa de forma clara. */
+      else if(swipeVisualTier==='standard'){
+        if(dt>36){
+          swipeFrameBad++;
+          swipeFrameGood=0;
+        }else if(dt<25){
+          swipeFrameGood++;
+          if(swipeFrameGood>=2){
+            swipeFrameBad=Math.max(0,swipeFrameBad-1);
+            swipeFrameGood=0;
+          }
+        }
+
+        if(swipeFrameBad>=10){
+          setSwipeVisualTier('lite','fps-downgrade');
+          swipeFrameBad=0;
+          swipeFrameGood=0;
+        }
       }
     }
 
@@ -1310,9 +1440,10 @@
 
   const allowSwipePaint=now=>{
     const t=Number(now)||performance.now();
+
     if(swipeVisualTier!=='lite')return true;
 
-    /* Mejor ~40 FPS estables que intentar 60 y saturar una GPU antigua. */
+    /* Lite prioriza estabilidad perceptual en GPU antiguas. */
     if(swipeLitePaintLast&&t-swipeLitePaintLast<23){
       return false;
     }
@@ -1320,6 +1451,7 @@
     swipeLitePaintLast=t;
     return true;
   };
+
 
   const mobileSwipeCapable=()=>{
     try{
@@ -1776,8 +1908,8 @@
 
     hideSwipeDepth();
 
-    active.style.setProperty('--evo-active-card-scale',swipeVisualTier==='premium'?'.86':'.915');
-    active.style.setProperty('--evo-active-card-radius',swipeVisualTier==='premium'?'48px':'36px');
+    active.style.setProperty('--evo-active-card-scale',swipeVisualTier==='premium'?'.82':(swipeVisualTier==='standard'?'.89':'1'));
+    active.style.setProperty('--evo-active-card-radius',swipeVisualTier==='premium'?'52px':(swipeVisualTier==='standard'?'40px':'0px'));
 
     showSwipeNeighbor(neighbor);
     neighbor.style.visibility='visible';
@@ -1844,7 +1976,7 @@
       });
 
       prewarmAccordingToNetwork();
-    },315);
+    },260);
   };
 
   const installMobileSwipe=(frame,route)=>{
@@ -1864,6 +1996,7 @@
       let gestureNeighbor=null;
       let anomalousGesture=false;
       let stableMoveSamples=0;
+      let autoCommitted=false;
       let renderRaf=0;
       let pendingProgress=0;
       let pendingBoundaryX=0;
@@ -1978,6 +2111,7 @@
         gestureNeighbor=null;
         anomalousGesture=false;
         stableMoveSamples=0;
+        autoCommitted=false;
       };
 
       const onMove=e=>{
@@ -2066,10 +2200,70 @@
             : revealPx;
 
         scheduleGestureRender(side,progress,boundaryX);
+
+        /* V38 · MAGNETIC SNAP
+           Al cruzar 35% no esperamos touchend. La ruta queda decidida
+           y la animación completa sola. */
+        if(
+          progress>=MOBILE_SWIPE_COMMIT_PROGRESS &&
+          stableMoveSamples>=2 &&
+          !anomalousGesture &&
+          gestureNeighbor.__evolutionSwipeReady
+        ){
+          const targetRoute=routeBeside(activeKey,side);
+
+          if(targetRoute){
+            autoCommitted=true;
+            tracking=false;
+            lockedHorizontal=false;
+            cancelGestureRender();
+
+            /* Congelamos visualmente el punto exacto de captura antes
+               de que el settle magnético tome control. */
+            setSwipeClip(
+              gestureNeighbor,
+              side,
+              MOBILE_SWIPE_COMMIT_PROGRESS
+            );
+
+            const snapReveal=MOBILE_SWIPE_COMMIT_PROGRESS*width;
+            const snapBoundary=
+              side==='next'
+                ? width-snapReveal
+                : snapReveal;
+
+            updateLiquidGlassSwipe(
+              frame,
+              gestureNeighbor,
+              snapBoundary,
+              MOBILE_SWIPE_COMMIT_PROGRESS,
+              side
+            );
+
+            commitLiveSwipe(
+              frame,
+              gestureNeighbor,
+              side,
+              targetRoute
+            );
+
+            currentSide=null;
+            gestureNeighbor=null;
+          }
+        }
       };
 
       const finish=(cancelled=false)=>{
         cancelGestureRender();
+
+        /* Después del snap al 35%, touchend pertenece al gesto viejo.
+           No debe resetear/cancelar el commit que ya está terminando. */
+        if(autoCommitted){
+          autoCommitted=false;
+          tracking=false;
+          lockedHorizontal=false;
+          return;
+        }
 
         if(!tracking){
           tracking=false;
@@ -2106,10 +2300,7 @@
         const distanceRatio=Math.abs(dx)/Math.max(1,width);
         const qualifies=
           Math.abs(dy)<88 &&
-          (
-            distanceRatio>=.30 ||
-            (Math.abs(dx)>=62&&velocity>=.56)
-          );
+          distanceRatio>=MOBILE_SWIPE_COMMIT_PROGRESS;
 
         const targetRoute=routeBeside(activeKey,currentSide);
         const ready=Boolean(gestureNeighbor.__evolutionSwipeReady);
@@ -2195,7 +2386,7 @@
     let startX=0,startY=0,lastX=0,lastY=0,startTime=0;
     let previousX=0,previousSampleTime=0;
     let tracking=false,locked=false,side=null,neighbor=null;
-    let stableSamples=0,anomalous=false;
+    let stableSamples=0,anomalous=false,autoCommitted=false;
     let renderRaf=0,pendingProgress=0,pendingBoundary=0,pendingSide='next';
 
     const point=e=>{
@@ -2254,7 +2445,7 @@
       if(!renderRaf)renderRaf=requestAnimationFrame(render);
     };
 
-    const resetLocal=()=>{
+    const resetLocal=({preserveCommit=false}={})=>{
       cancelRender();
       tracking=false;
       locked=false;
@@ -2262,6 +2453,7 @@
       neighbor=null;
       stableSamples=0;
       anomalous=false;
+      if(!preserveCommit)autoCommitted=false;
     };
 
     const suppressNextClick=()=>{
@@ -2302,6 +2494,7 @@
       neighbor=null;
       stableSamples=0;
       anomalous=false;
+      autoCommitted=false;
     };
 
     const onMove=e=>{
@@ -2376,10 +2569,65 @@
       const boundary=side==='next'?width-reveal:reveal;
 
       schedule(side,progress,boundary);
+
+      /* V38 · El contenedor padre usa exactamente el mismo punto
+         magnético del 35%. */
+      if(
+        progress>=MOBILE_SWIPE_COMMIT_PROGRESS &&
+        stableSamples>=2 &&
+        !anomalous &&
+        neighbor.__evolutionSwipeReady
+      ){
+        const route=routeBeside(activeKey,side);
+
+        if(route){
+          autoCommitted=true;
+          tracking=false;
+          locked=false;
+          cancelRender();
+          suppressNextClick();
+
+          setSwipeClip(
+            neighbor,
+            side,
+            MOBILE_SWIPE_COMMIT_PROGRESS
+          );
+
+          const snapReveal=MOBILE_SWIPE_COMMIT_PROGRESS*width;
+          const snapBoundary=
+            side==='next'
+              ? width-snapReveal
+              : snapReveal;
+
+          updateLiquidGlassSwipe(
+            activeFrame,
+            neighbor,
+            snapBoundary,
+            MOBILE_SWIPE_COMMIT_PROGRESS,
+            side
+          );
+
+          commitLiveSwipe(
+            activeFrame,
+            neighbor,
+            side,
+            route
+          );
+
+          resetLocal({preserveCommit:true});
+        }
+      }
     };
 
     const finish=(cancelled=false,endPoint=null)=>{
       cancelRender();
+
+      if(autoCommitted){
+        autoCommitted=false;
+        tracking=false;
+        locked=false;
+        return;
+      }
 
       if(!tracking){
         hardResetSwipeVisuals();
@@ -2425,7 +2673,7 @@
       const ratio=Math.abs(dx)/Math.max(1,width);
       const qualifies=
         Math.abs(dy)<88 &&
-        (ratio>=.30||(Math.abs(dx)>=62&&velocity>=.56));
+        ratio>=MOBILE_SWIPE_COMMIT_PROGRESS;
 
       const route=routeBeside(activeKey,side);
       const ready=Boolean(neighbor.__evolutionSwipeReady);
@@ -3416,6 +3664,7 @@
 
   window.EvolutionSwipePerformance={
     get tier(){return swipeVisualTier},
+    get nativeTier(){return swipeNativeTier},
     get reason(){return swipeTierReason},
     setPremium:()=>setSwipeVisualTier('premium','manual'),
     setStandard:()=>setSwipeVisualTier('standard','manual'),
@@ -3424,8 +3673,11 @@
       try{
         sessionStorage.removeItem('evolution_swipe_tier_runtime');
         sessionStorage.removeItem('evolution_swipe_tier_reason');
+        sessionStorage.removeItem('evolution_swipe_tier_build');
       }catch(_){}
+
       const result=detectSwipeVisualTier();
+      swipeNativeTier=result.nativeTier||result.tier;
       setSwipeVisualTier(result.tier,result.reason);
       return result;
     }
