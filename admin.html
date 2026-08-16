@@ -993,6 +993,14 @@ html.admin-page-hidden *{
         </select>
         <div class="hint">Boxful usa el ID de esta dirección como <code>recolectionAddressId</code> al crear el envío.</div>
       </div>
+      <div class="field full">
+        <label>Courier · Cargo Expreso</label>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px">
+          <input class="input" id="boxfulCourierId" maxlength="180" placeholder="Courier ID de Cargo Expreso">
+          <button class="btn" id="boxfulDetectCourierBtn" type="button" onclick="detectBoxfulCargoCourier()">Detectar Cargo Expreso</button>
+        </div>
+        <div class="hint" id="boxfulCourierHint">Este ID es requerido por Boxful para crear la guía. Intentaremos detectarlo automáticamente.</div>
+      </div>
       <div class="field"><label>Peso predeterminado (kg)</label><input class="input" id="boxfulWeight" type="number" min="0.01" max="100" step="0.01" value="1"></div>
       <div class="field"><label>Largo (cm)</label><input class="input" id="boxfulLength" type="number" min="1" max="300" step="1" value="20"></div>
       <div class="field"><label>Ancho (cm)</label><input class="input" id="boxfulWidth" type="number" min="1" max="300" step="1" value="15"></div>
@@ -1678,6 +1686,8 @@ function renderBoxfulConfig(result){
   const addresses=Array.isArray(result?.addresses)?result.addresses:[];
   const selected=result?.config?.recolectionAddressId||'';
   const cfg=result?.config||{};
+  if($('boxfulCourierId'))$('boxfulCourierId').value=cfg.courierId||'';
+  if($('boxfulCourierHint'))$('boxfulCourierHint').textContent=cfg.courierId?`Cargo Expreso configurado · ${cfg.courierName||'Cargo Expreso'}`:'Este ID es requerido por Boxful para crear la guía. Puedes usar Detectar Cargo Expreso.';
   if($('boxfulWeight'))$('boxfulWeight').value=cfg.packageWeightKg||1;
   if($('boxfulLength'))$('boxfulLength').value=cfg.packageLengthCm||20;
   if($('boxfulWidth'))$('boxfulWidth').value=cfg.packageWidthCm||15;
@@ -1731,6 +1741,30 @@ window.testBoxfulConnection=async function(){
     btn.disabled=false;btn.textContent=old;
   }
 }
+
+window.detectBoxfulCargoCourier=async function(){
+  const btn=$('boxfulDetectCourierBtn');
+  const old=btn?.textContent||'Detectar Cargo Expreso';
+  if(btn){btn.disabled=true;btn.textContent='Buscando…'}
+  try{
+    const result=await storeAdminRequest('/boxful/admin/courier-discovery');
+    if(result.found&&result.courier?.id){
+      $('boxfulCourierId').value=result.courier.id;
+      $('boxfulCourierHint').textContent=`Detectado: ${result.courier.name||'Cargo Expreso'} · ${result.courier.id}`;
+      toast('Cargo Expreso detectado. Ahora pulsa Guardar Boxful.');
+    }else{
+      const diagnostic=JSON.stringify(result.attempts||[],null,2);
+      $('boxfulCourierHint').textContent='No se detectó automáticamente. El diagnóstico quedó copiado/visible en consola.';
+      console.warn('Boxful courier discovery',result);
+      try{await navigator.clipboard.writeText(diagnostic);toast('No se detectó. Diagnóstico copiado.');}
+      catch{toast('No se detectó Cargo Expreso. Revisa consola.');}
+    }
+  }catch(e){
+    console.error(e);toast(e.message||'No se pudo detectar Cargo Expreso.');
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent=old}
+  }
+}
 window.saveBoxfulConfig=async function(){
   const recolectionAddressId=$('boxfulPickupAddress')?.value||'';
   if(!recolectionAddressId){toast('Selecciona una dirección de recolección.');return}
@@ -1738,6 +1772,8 @@ window.saveBoxfulConfig=async function(){
   try{
     const saved=await storeAdminRequest('/boxful/admin/config',{method:'POST',body:{
       recolectionAddressId,
+      courierId:$('boxfulCourierId')?.value.trim()||'',
+      courierName:'Cargo Expreso',
       packageWeightKg:Number($('boxfulWeight')?.value||1),
       packageLengthCm:Number($('boxfulLength')?.value||20),
       packageWidthCm:Number($('boxfulWidth')?.value||15),
