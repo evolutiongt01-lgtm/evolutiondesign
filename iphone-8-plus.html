@@ -520,7 +520,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 }
 
 
-/* Dirección Guatemala */
+/* V3.2 · Dirección Guatemala tipo Boxful */
 .select-shell{position:relative}
 .select-shell .geo-select{width:100%;appearance:none;-webkit-appearance:none;padding-right:42px;cursor:pointer}
 .select-shell .geo-select:disabled{cursor:not-allowed;opacity:.52}
@@ -1589,7 +1589,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
         <div class="delivery-estimate-copy">
           <span>Entrega aproximada</span>
           <strong id="deliveryEstimateDate">Calculando…</strong>
-          <small id="deliveryEstimateDetail">Política de despacho Evolution Design</small>
+          <small id="deliveryEstimateDetail">Boxful + política de despacho Evolution Design</small>
         </div>
       </div>
 
@@ -1931,7 +1931,9 @@ function renderDeliveryEstimate(estimate){
   const first=formatEstimateDate(estimate.earliestDeliveryDate);
   const last=formatEstimateDate(estimate.latestDeliveryDate);
   $("deliveryEstimateDate").textContent=first&&last&&first!==last?`${first} – ${last}`:first||last||"Por confirmar";
-  $("deliveryEstimateDetail").textContent="Estimación basada en nuestra política de despacho. Administración asignará manualmente la paquetería y la guía.";
+  $("deliveryEstimateDetail").textContent=estimate.quoteAvailable
+    ?"Estimación consultada con Boxful; puede variar por cobertura, bloqueos o incidencias."
+    :"Estimación basada en nuestra política de despacho; la guía se confirmará al registrar el pedido.";
 }
 async function refreshDeliveryEstimate(){
   const user=auth.currentUser,q=currentQuote();
@@ -1940,7 +1942,7 @@ async function refreshDeliveryEstimate(){
   if(!department||!municipality||!poblado){renderDeliveryEstimate(null);return}
   try{
     const draft=buildStoreDraft();
-    const result=await authedFetch("/store/shipping/estimate",{method:"POST",body:{
+    const result=await authedFetch("/boxful/store/estimate",{method:"POST",body:{
       ...draft,
       paymentMethod:q.method,
       productTitle:"iPhone 8 Plus",
@@ -1948,7 +1950,7 @@ async function refreshDeliveryEstimate(){
     }});
     renderDeliveryEstimate(result.estimate);
   }catch(e){
-    console.info("Estimación de envío:",e?.message||e);
+    console.info("Estimación Boxful:",e?.message||e);
   }
 }
 function scheduleDeliveryEstimate(){
@@ -1970,8 +1972,9 @@ function finishStoreSuccess(order){
   const shipping=order.paymentMethod!=="pickup_pana";
   $("successShippingInfo").classList.toggle("hidden",!shipping);
   if(shipping){
-    $("successShippingGuide").textContent=order.trackingNumber||order.boxfulShipmentNumber||
-      (order.paymentMethod==="transfer_shipping"?"Se asigna al validar tu transferencia":"Pendiente de asignación por Administración");
+    $("successShippingGuide").textContent=order.boxfulShipmentNumber||order.trackingNumber||
+      (order.paymentMethod==="transfer_shipping"?"Se genera al validar tu transferencia":
+       order.boxfulStatus==="pending_retry"?"En proceso / reintento automático":"Generando guía");
     const first=formatEstimateDate(order.estimatedDeliveryDate);
     const last=formatEstimateDate(order.estimatedDeliveryLatestDate);
     $("successShippingEta").textContent=first&&last&&first!==last?`${first} – ${last}`:first||last||"Por confirmar";
@@ -1980,7 +1983,7 @@ function finishStoreSuccess(order){
   $("payVisacuotasBtn").classList.toggle("hidden",order.paymentMethod!=="visacuotas");
   $("successReceiptPanel").classList.toggle("hidden",order.paymentMethod!=="visacuotas"||Boolean(order.receiptStoragePath));
   config.available=false;
-  $("availability").textContent=paid?"Pago confirmado":"Pedido registrado";
+  $("availability").textContent=paid?"Agotado":"Unidad reservada";
   $("availability").classList.add("sold");
 }
 async function renderOnlinePayment(method){const panel=$("onlinePaymentPanel"),host=$("paypalStoreButtons");if(!["paypal_shipping","card_shipping"].includes(method)){panel.classList.remove("show");host.innerHTML="";setPaypalStatus("");return}panel.classList.add("show");$("onlinePaymentTitle").textContent=method==="card_shipping"?"Tarjeta débito/crédito":"PayPal";$("onlinePaymentCopy").textContent=`Pago seguro · ${money(currentQuote()?.totalGtq||990)}. El Worker convierte el total a USD para el checkout.`;host.innerHTML='<div style="padding:8px;color:#333;font-size:11px;text-align:center">Preparando pago seguro…</div>';const seq=++paypalRenderSeq;try{const paypal=await loadPayPalSdk();if(seq!==paypalRenderSeq)return;host.innerHTML="";const fundingSource=method==="card_shipping"?paypal.FUNDING.CARD:paypal.FUNDING.PAYPAL,buttons=paypal.Buttons({fundingSource,style:{layout:"vertical",shape:"rect",color:method==="card_shipping"?"black":"gold",label:method==="card_shipping"?"pay":"paypal",height:45},createOrder:async()=>{clearFeedback();setPaypalStatus("Validando datos y preparando el pago…");if(!config?.available)throw new Error("Esta unidad ya fue confirmada.");const draft=validateStoreDraft(),token=await recaptchaToken(),result=await authedFetch("/paypal/create-order",{method:"POST",body:{mode:"store_iphone_purchase",fundingSource:method==="card_shipping"?"card":"paypal",storeDraft:draft,recaptchaToken:token,requestedUri:location.href}});setPaypalStatus("Orden preparada. Continúa en el checkout seguro.");return result.orderId},onApprove:async data=>{setPaypalStatus("Confirmando pago…");try{const result=await authedFetch("/paypal/capture-order",{method:"POST",body:{orderId:data.orderID}});if(!result?.storeOrder)throw new Error("El pago fue confirmado, pero no recibimos el pedido final.");setPaypalStatus("Pago confirmado ✓");finishStoreSuccess(result.storeOrder)}catch(e){setPaypalStatus(e.message||"No pudimos confirmar el pago.","error");throw e}},onCancel:()=>setPaypalStatus("Pago cancelado. Puedes intentarlo nuevamente."),onError:e=>{console.error(e);setPaypalStatus(e?.message||"No se pudo abrir el pago seguro.","error")}});if(!buttons.isEligible()){host.innerHTML='<div style="padding:12px;color:#8a1c1c;font-size:11px;text-align:center">Este método no está disponible en este dispositivo. Prueba otro método.</div>';return}await buttons.render("#paypalStoreButtons")}catch(e){console.error(e);host.innerHTML="";setPaypalStatus(e.message||"No se pudo preparar PayPal.","error")}}
@@ -2001,7 +2004,7 @@ function renderSummary(){const q=currentQuote();if(!q)return;const rows=[["iPhon
 async function loadConfig(){
   try{
     config=await publicGet("/store/iphone-8-plus/config");
-    $("availability").textContent=config.available?"Unidad disponible":"Unidad confirmada";
+    $("availability").textContent=config.available?"1 unidad disponible":"Agotado";
     $("availability").classList.toggle("sold",!config.available);
     renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate();renderGuide();
     $("submitBtn").disabled=!config.available;
@@ -2040,7 +2043,17 @@ $("emailAuthForm").addEventListener("submit",async e=>{e.preventDefault();const 
 
 $("selectVisacuotasBtn").onclick=()=>{$("paymentMethod").value="visacuotas";renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate();$("visacuotasPanel").scrollIntoView({behavior:"smooth",block:"nearest"})};
 
-$("orderForm").addEventListener("submit",async e=>{e.preventDefault();clearFeedback();if(!config?.available){showFeedback("Esta unidad ya fue confirmada.");return}const q=currentQuote();if(!q)return;if(["paypal_shipping","card_shipping"].includes(q.method)){showFeedback("Completa el pago con el botón seguro que aparece arriba.");return}const btn=$("submitBtn");btn.disabled=true;btn.textContent="Validando pedido…";try{const draft=validateStoreDraft();let paymentReference="",paymentProofId="";if(q.method==="transfer_shipping"){paymentReference=$("transferReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia de la transferencia.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("transferReceipt")}if(q.method==="crypto_binance"){paymentReference=$("cryptoReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia del pago cripto.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("cryptoReceipt")}btn.textContent="Validando seguridad…";const token=await recaptchaToken();btn.textContent="Guardando pedido…";const result=await authedFetch("/store/orders/create",{method:"POST",body:{...draft,paymentMethod:q.method,paymentReference,paymentProofId,recaptchaToken:token,requestedUri:location.href}});finishStoreSuccess(result.order)}catch(err){showFeedback(err.message||"No se pudo registrar el pedido.");btn.disabled=false;renderSummary()}});
+$("orderForm").addEventListener("submit",async e=>{e.preventDefault();clearFeedback();if(!config?.available){showFeedback("Esta unidad ya fue confirmada.");return}const q=currentQuote();if(!q)return;if(["paypal_shipping","card_shipping"].includes(q.method)){showFeedback("Completa el pago con el botón seguro que aparece arriba.");return}const btn=$("submitBtn");btn.disabled=true;btn.textContent="Validando pedido…";try{const draft=validateStoreDraft();let paymentReference="",paymentProofId="";if(q.method==="transfer_shipping"){paymentReference=$("transferReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia de la transferencia.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("transferReceipt")}if(q.method==="crypto_binance"){paymentReference=$("cryptoReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia del pago cripto.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("cryptoReceipt")}btn.textContent="Validando seguridad…";const token=await recaptchaToken();btn.textContent="Guardando pedido…";const result=await authedFetch("/store/orders/create",{method:"POST",body:{...draft,paymentMethod:q.method,paymentReference,paymentProofId,recaptchaToken:token,requestedUri:location.href}});finishStoreSuccess(result.order)}catch(err){
+  const message=err?.message||"No se pudo registrar el pedido.";
+  showFeedback(message);
+  if(/unidad|disponib|agotad|reservad/i.test(message)){
+    if(config)config.available=false;
+    $("availability").textContent="Agotado";
+    $("availability").classList.add("sold");
+  }
+  btn.disabled=false;
+  renderSummary();
+}});
 
 
 $("submitSuccessReceipt").onclick=async()=>{
