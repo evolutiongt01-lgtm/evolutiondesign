@@ -1841,7 +1841,7 @@
         return({received:'Pedido recibido',confirmed:'Confirmado',preparing:'Preparando',shipped:'Enviado',delivered:'Entregado',cancelled:'Cancelado'})[s]||s;
       }
       function storeOrderMethodLabel(order){
-        return order?.paymentMethodLabel||({cod_forza:'Contra entrega · Forza',cod_cargo:'Contra entrega · Cargo Expreso',transfer_shipping:'Transferencia · Envío nacional',pickup_pana:'Entrega personal · Panajachel'})[order?.paymentMethod]||order?.paymentMethod||'—';
+        return order?.paymentMethodLabel||({cod_forza:'Contra entrega · Forza',cod_cargo:'Contra entrega · Cargo Expreso',transfer_shipping:'Transferencia bancaria · Envío nacional',paypal_shipping:'PayPal · Envío nacional',card_shipping:'Tarjeta débito/crédito · Envío nacional',crypto_binance:'Cripto · Binance Pay',visacuotas:'Visacuotas · Recurrente',pickup_pana:'Entrega personal · Panajachel'})[order?.paymentMethod]||order?.paymentMethod||'—';
       }
       function storeOrderDate(v){
         const d=dateValue(v);if(!d)return'—';
@@ -1856,7 +1856,7 @@
         const created=storeOrderDate(order.createdAt);
         const address=pickup
           ?'Entrega personal en Panajachel · Evolution se comunicará para coordinar.'
-          :[order.department,order.municipality,order.address,order.reference?`Ref: ${order.reference}`:''].filter(Boolean).join(' · ');
+          :[order.department,order.municipality,order.poblado,order.address,order.reference?`Ref: ${order.reference}`:''].filter(Boolean).join(' · ');
         const statusClass=status==='delivered'?'delivered':status==='cancelled'?'cancelled':'';
         return `<article class="store-order-card">
           <div class="store-order-top"><div><div class="store-order-kicker">Evolution Store · Compra física</div><div class="store-order-title">${esc(order.productTitle||'iPhone 8 Plus')}</div><div class="store-order-id">${esc(order.orderId||order.id||'')}</div></div><span class="store-order-status ${statusClass}">${esc(storeOrderStatusLabel(order))}</span></div>
@@ -1865,9 +1865,9 @@
               <div><span>Método</span><strong>${esc(storeOrderMethodLabel(order))}</strong></div>
               <div><span>Recibe</span><strong>${esc(order.recipientName||order.customerName||'—')}</strong></div>
               <div><span>Fecha</span><strong>${esc(created)}</strong></div>
-              <div class="total"><span>Total</span><strong>${esc(storeOrderMoney(order.totalGtq))}</strong></div>
+              <div class="total"><span>${order.paymentMethod==='visacuotas'?'Base':'Total'}</span><strong>${esc(storeOrderMoney(order.totalGtq))}${order.paymentMethod==='visacuotas'?' + recargo':''}</strong></div>
             </div>
-            <div class="store-order-address"><strong>Entrega:</strong> ${esc(address||'—')}${order.phone?`<br><strong>Teléfono:</strong> ${esc(order.phone)}`:''}</div>
+            <div class="store-order-address"><strong>Entrega:</strong> ${esc(address||'—')}${order.phone?`<br><strong>Teléfono:</strong> ${esc(order.phone)}`:''}${order.paymentMethod==='visacuotas'?'<br><strong>Pago:</strong> Visacuotas aplica recargo adicional mostrado por Recurrente.':''}${order.paymentStatus==='paid'?'<br><strong>Pago:</strong> Confirmado ✓':order.paymentStatus==='pending_review'?`<br><strong>Pago:</strong> En revisión${order.paymentReference?` · Ref. ${esc(order.paymentReference)}`:''}`:''}</div>
             ${status==='cancelled'
               ?'<div class="receipt-empty" style="margin:0">Este pedido fue cancelado. Si necesitas ayuda, comunícate con Evolution Design.</div>'
               :`<div class="store-order-track">${steps.map((step,i)=>`<div class="store-order-step ${i<idx?'done':i===idx?'active':''}"><div class="store-order-dot">${i<idx?'✓':i===idx?'•':''}</div><div><strong>${esc(stepLabels[i])}</strong><small>${i===0?created:i===idx?esc(storeOrderStatusLabel(order)):'Seguimiento'}</small></div></div>`).join('')}</div>`}
