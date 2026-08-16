@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v24 · CTA Definitive Fix */
+/* Evolution Design · Smart App Shell · v26 · Mobile Swipe Navigation */
 (() => {
   'use strict';
 
-  const VERSION='24';
+  const VERSION='26';
 
   const ROUTES = {
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
@@ -14,6 +14,10 @@
   const ROUTE_LIST=Object.values(ROUTES);
   const PAYMENT_ROUTES=new Set(['arquitectura','grafico','web']);
   const PAYMENT_BRIDGE='/evolution-payments.js?v=21';
+
+  /* Orden de navegación táctil móvil. Mis Proyectos queda fuera porque
+     es una zona privada y no pertenece al App Shell público. */
+  const MOBILE_SWIPE_ORDER=['home','arquitectura','grafico','web'];
   const PRIVATE_HINTS=['/proyectos','/perfil','/admin','/portal','/account','/checkout','/payment','/pago','/login','/api/'];
   const prefetchedViews=new Set();
   const prefetchedAssets=new Set();
@@ -803,6 +807,237 @@
     }
   };
 
+  const installMobileSwipe=(frame,route)=>{
+    if(!frame||!route)return;
+    if(!MOBILE_SWIPE_ORDER.includes(route.key))return;
+
+    try{
+      const win=frame.contentWindow;
+      const doc=frame.contentDocument;
+      if(!win||!doc||frame.__evolutionMobileSwipeInstalled)return;
+
+      frame.__evolutionMobileSwipeInstalled=true;
+
+      const mobileMQ=win.matchMedia('(max-width: 991.98px)');
+      const reducedMQ=win.matchMedia('(prefers-reduced-motion: reduce)');
+
+      let startX=0,startY=0,lastX=0,lastY=0,startTime=0;
+      let tracking=false;
+      let lockedHorizontal=false;
+      let gestureTarget=null;
+
+      const interactiveSelector=[
+        'input','textarea','select','button',
+        '[contenteditable="true"]',
+        '[role="slider"]',
+        '[data-no-swipe]',
+        '.survey-overlay',
+        '.gd-order-modal',
+        '.auth-modal',
+        '.modal',
+        '.swiper',
+        '.carousel',
+        '[data-carousel]'
+      ].join(',');
+
+      const hasHorizontalScroll=el=>{
+        let node=el;
+        while(node&&node!==doc.body){
+          try{
+            const s=win.getComputedStyle(node);
+            const ox=s.overflowX;
+            if(
+              (ox==='auto'||ox==='scroll') &&
+              node.scrollWidth>node.clientWidth+8
+            ) return true;
+          }catch(_){}
+          node=node.parentElement;
+        }
+        return false;
+      };
+
+      const shouldIgnoreTarget=target=>{
+        if(!(target instanceof win.Element))return false;
+        if(target.closest(interactiveSelector))return true;
+
+        /* Links/buttons can still be tapped normally; a deliberate swipe
+           starting over ordinary content remains available. */
+        const anchor=target.closest('a[href]');
+        if(anchor&&anchor.getAttribute('href')?.startsWith('#'))return true;
+
+        if(hasHorizontalScroll(target))return true;
+        return false;
+      };
+
+      const edgeBlocked=x=>{
+        /* evita pelear con el gesto nativo de "Atrás" de Safari/iOS */
+        const w=win.innerWidth||doc.documentElement.clientWidth||0;
+        return x<24 || (w&&x>w-24);
+      };
+
+      const touchPoint=e=>{
+        const t=e.touches?.[0]||e.changedTouches?.[0];
+        return t?{x:t.clientX,y:t.clientY}:null;
+      };
+
+      const onStart=e=>{
+        if(!mobileMQ.matches)return;
+        if(e.touches&&e.touches.length!==1)return;
+
+        const p=touchPoint(e);
+        if(!p||edgeBlocked(p.x)||shouldIgnoreTarget(e.target))return;
+
+        startX=lastX=p.x;
+        startY=lastY=p.y;
+        startTime=performance.now();
+        tracking=true;
+        lockedHorizontal=false;
+        gestureTarget=e.target;
+      };
+
+      const onMove=e=>{
+        if(!tracking)return;
+        const p=touchPoint(e);
+        if(!p)return;
+
+        lastX=p.x; lastY=p.y;
+
+        const dx=lastX-startX;
+        const dy=lastY-startY;
+
+        if(!lockedHorizontal){
+          if(Math.abs(dx)<10&&Math.abs(dy)<10)return;
+
+          /* Si el usuario claramente quiso scroll vertical, abandonamos. */
+          if(Math.abs(dy)>Math.abs(dx)*1.15){
+            tracking=false;
+            return;
+          }
+
+          if(Math.abs(dx)>Math.abs(dy)*1.35){
+            lockedHorizontal=true;
+          }
+        }
+
+        if(lockedHorizontal&&Math.abs(dx)>18){
+          /* Una vez confirmado que es swipe horizontal, evitamos que el
+             navegador mueva accidentalmente la página. */
+          e.preventDefault();
+        }
+      };
+
+      const finish=()=>{
+        if(!tracking){
+          tracking=false;
+          lockedHorizontal=false;
+          return;
+        }
+
+        const dx=lastX-startX;
+        const dy=lastY-startY;
+        const elapsed=Math.max(1,performance.now()-startTime);
+        const velocity=Math.abs(dx)/elapsed;
+        const width=win.innerWidth||375;
+
+        tracking=false;
+
+        if(!lockedHorizontal)return;
+        if(Math.abs(dy)>95)return;
+
+        const distanceNeeded=Math.min(110,Math.max(64,width*.17));
+        const qualifies=
+          Math.abs(dx)>=distanceNeeded ||
+          (Math.abs(dx)>=46&&velocity>=0.42);
+
+        if(!qualifies)return;
+
+        const currentIndex=MOBILE_SWIPE_ORDER.indexOf(activeKey);
+        if(currentIndex<0)return;
+
+        const nextIndex=dx<0 ? currentIndex+1 : currentIndex-1;
+        if(nextIndex<0||nextIndex>=MOBILE_SWIPE_ORDER.length)return;
+
+        const nextKey=MOBILE_SWIPE_ORDER[nextIndex];
+        const nextRoute=ROUTES[nextKey];
+        if(!nextRoute)return;
+
+        /* Evita que el tap/click fantasma posterior al touch navegue
+           cualquier control bajo el dedo. */
+        try{
+          const suppressClick=event=>{
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          };
+          doc.addEventListener('click',suppressClick,true);
+          setTimeout(()=>doc.removeEventListener('click',suppressClick,true),420);
+        }catch(_){}
+
+        loadRoute(nextRoute,{push:true,restore:false});
+      };
+
+      const onEnd=e=>{
+        const p=touchPoint(e);
+        if(p){lastX=p.x;lastY=p.y}
+        finish();
+      };
+
+      const onCancel=()=>{
+        tracking=false;
+        lockedHorizontal=false;
+      };
+
+      doc.addEventListener('touchstart',onStart,{passive:true,capture:true});
+      doc.addEventListener('touchmove',onMove,{passive:false,capture:true});
+      doc.addEventListener('touchend',onEnd,{passive:true,capture:true});
+      doc.addEventListener('touchcancel',onCancel,{passive:true,capture:true});
+
+      /* Pequeña pista visual solo la primera vez, sin invadir la UI. */
+      if(
+        mobileMQ.matches &&
+        !reducedMQ.matches &&
+        !sessionStorage.getItem('evolution_mobile_swipe_hint_v26')
+      ){
+        sessionStorage.setItem('evolution_mobile_swipe_hint_v26','1');
+
+        const hint=doc.createElement('div');
+        hint.textContent='Desliza para cambiar de sección';
+        Object.assign(hint.style,{
+          position:'fixed',
+          left:'50%',
+          bottom:'calc(92px + env(safe-area-inset-bottom, 0px))',
+          transform:'translateX(-50%) translateY(8px)',
+          zIndex:'2147483000',
+          padding:'9px 13px',
+          borderRadius:'999px',
+          border:'1px solid rgba(255,255,255,.12)',
+          background:'rgba(12,12,13,.72)',
+          backdropFilter:'blur(18px)',
+          WebkitBackdropFilter:'blur(18px)',
+          color:'rgba(255,255,255,.78)',
+          font:'600 11px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
+          letterSpacing:'.01em',
+          pointerEvents:'none',
+          opacity:'0',
+          transition:'opacity .28s ease,transform .28s ease'
+        });
+
+        doc.body.appendChild(hint);
+        requestAnimationFrame(()=>{
+          hint.style.opacity='1';
+          hint.style.transform='translateX(-50%) translateY(0)';
+        });
+
+        setTimeout(()=>{
+          hint.style.opacity='0';
+          hint.style.transform='translateX(-50%) translateY(8px)';
+          setTimeout(()=>hint.remove(),350);
+        },2200);
+      }
+    }catch(error){
+      console.warn('[Evolution App] Mobile swipe:',error);
+    }
+  };
+
   const handleFrameLoad=frame=>{
     try{
       const childURL=new URL(frame.contentWindow.location.href);
@@ -918,6 +1153,10 @@
       /* Repara CTAs internos como Solicitar diseño / logo / video antes
          de mostrar la nueva vista. No modifica el archivo HTML original. */
       repairViewLocalControls(frame,route);
+
+      /* Navegación tipo app nativa en móvil: swipe entre las cuatro
+         secciones públicas sin recargar la navbar. */
+      installMobileSwipe(frame,route);
 
       /* Algunos scripts de Diseño Gráfico terminan de configurar sus CTA
          unas décimas después del load. Revalidamos sin tocar la view. */
