@@ -1923,6 +1923,31 @@ const BACKEND="https://evolution-design-backend.evolutiongt01.workers.dev";
 const $=id=>document.getElementById(id);
 const money=n=>`Q${Number(n||0).toFixed(2)}`;
 let config=null,authMode="login",recaptchaConfigPromise=null,recaptchaScriptPromise=null;let paypalSdkPromise=null,paypalRenderSeq=0,lastStoreOrder=null;
+
+const LOCAL_STORE_METHODS=[
+  {method:"cod_cargo",methodLabel:"Contra entrega · Envío nacional",basePriceGtq:950,surchargeGtq:95,shippingGtq:0,totalGtq:1045},
+  {method:"transfer_shipping",methodLabel:"Transferencia bancaria · Envío nacional",basePriceGtq:950,surchargeGtq:0,shippingGtq:40,totalGtq:990},
+  {method:"paypal_shipping",methodLabel:"PayPal · Envío nacional",basePriceGtq:950,surchargeGtq:0,shippingGtq:40,totalGtq:990},
+  {method:"card_shipping",methodLabel:"Tarjeta débito/crédito · Envío nacional",basePriceGtq:950,surchargeGtq:0,shippingGtq:40,totalGtq:990},
+  {method:"crypto_binance",methodLabel:"Cripto · Binance Pay",basePriceGtq:950,surchargeGtq:0,shippingGtq:40,totalGtq:990,usdtAmount:129.41},
+  {method:"pickup_pana",methodLabel:"Entrega personal · Panajachel",basePriceGtq:950,surchargeGtq:0,shippingGtq:0,totalGtq:950},
+  {method:"visacuotas",methodLabel:"Visacuotas · Recurrente",basePriceGtq:950,surchargeGtq:0,shippingGtq:0,totalGtq:950,externalSurcharge:true}
+];
+
+const LOCAL_STORE_FALLBACK={
+  ok:true,
+  sku:"iphone-8-plus-64gb-space-gray",
+  title:"iPhone 8 Plus",
+  currency:"GTQ",
+  basePriceGtq:950,
+  available:false,
+  methods:LOCAL_STORE_METHODS,
+  bankAccounts:[],
+  guide:{},
+  visacuotasUrl:"https://app.recurrente.com/s/evolutiondesing/o/iphone-8-plus",
+  binancePayment:{alias:"Evolution Desing",asset:"USDT",qrImage:"img/binance-pay.jpeg"},
+  _localFallback:true
+};
 const GT_LOCATIONS_URL="https://raw.githubusercontent.com/dervinluna/guatemala-lugares-json/main/centroides-de-lugares-poblados-de-la-republica-de-guatemala.-censo-2018.json";
 let gtLocations=null,gtCurrentPoblados=[],gtPobladoRecords=[],gtSelectedPobladoMeta=null,gtLocationsPromise=null;
 
@@ -1933,7 +1958,7 @@ function showFeedback(message,type="error"){
 function clearFeedback(){$("feedback").className="feedback";$("feedback").textContent=""}
 function setLogin(open){$("loginModal").classList.toggle("show",open);$("loginModal").setAttribute("aria-hidden",String(!open));if(open)setTimeout(()=>$("authEmail")?.focus(),80)}
 function methodLabel(m){return config?.methods?.find(x=>x.method===m)?.methodLabel||m}
-function currentQuote(){return config?.methods?.find(x=>x.method===$("paymentMethod").value)||null}
+function currentQuote(){const methods=Array.isArray(config?.methods)&&config.methods.length?config.methods:LOCAL_STORE_METHODS;return methods.find(x=>x.method===$("paymentMethod").value)||methods[0]||null}
 
 async function publicGet(path){
   const controller=new AbortController();
@@ -1983,7 +2008,7 @@ async function recaptchaToken(){
   return new Promise((resolve,reject)=>window.grecaptcha.enterprise.ready(async()=>{try{resolve(await window.grecaptcha.enterprise.execute(cfg.siteKey,{action:"STORE_ORDER"}))}catch(e){reject(e)}}));
 }
 
-function renderMethods(){const host=$("methodGrid");if(!config){host.innerHTML='<div class="payment-loading">Cargando métodos de pago seguros…</div>';return}if(!Array.isArray(config.methods)||!config.methods.length){host.innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos cargar los métodos disponibles. Recarga la página.</div>';return}const regular=config.methods.filter(q=>q.method!=="visacuotas");host.innerHTML=regular.map(q=>{const detail=q.method==="cod_forza"||q.method==="cod_cargo"?`10% de recargo incluido · ${money(q.surchargeGtq)}`:["transfer_shipping","paypal_shipping","card_shipping","crypto_binance"].includes(q.method)?`Envío nacional incluido · ${money(q.shippingGtq)}`:"Sin recargo ni costo de entrega",extra=q.method==="crypto_binance"&&q.usdtAmount?` · aprox. ${Number(q.usdtAmount).toFixed(2)} USDT`:"",cls=q.method==="paypal_shipping"?"paypal":q.method==="card_shipping"?"card":q.method==="crypto_binance"?"crypto":"";return `<button type="button" class="method ${cls} ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}${extra}</span><b>${money(q.totalGtq)}</b></button>`}).join("");host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate()}));$("selectVisacuotasBtn")?.classList.toggle("active",$("paymentMethod").value==="visacuotas")}
+function renderMethods(){const host=$("methodGrid");const source=Array.isArray(config?.methods)&&config.methods.length?config.methods:LOCAL_STORE_METHODS;if(!source.length){host.innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos cargar los métodos disponibles.</div>';return}const regular=source.filter(q=>q.method!=="visacuotas");host.innerHTML=regular.map(q=>{const detail=q.method==="cod_forza"||q.method==="cod_cargo"?`10% de recargo incluido · ${money(q.surchargeGtq)}`:["transfer_shipping","paypal_shipping","card_shipping","crypto_binance"].includes(q.method)?`Envío nacional incluido · ${money(q.shippingGtq)}`:"Sin recargo ni costo de entrega",extra=q.method==="crypto_binance"&&q.usdtAmount?` · aprox. ${Number(q.usdtAmount).toFixed(2)} USDT`:"",cls=q.method==="paypal_shipping"?"paypal":q.method==="card_shipping"?"card":q.method==="crypto_binance"?"crypto":"";return `<button type="button" class="method ${cls} ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}${extra}</span><b>${money(q.totalGtq)}</b></button>`}).join("");host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate()}));$("selectVisacuotasBtn")?.classList.toggle("active",$("paymentMethod").value==="visacuotas")}
 
 let selectedBankKey="bac";
 function renderGuide(){const guide=config?.guide||{};$("guideTitle").textContent=guide.title||"Guía de compra y envío";$("guideIntro").textContent=guide.intro||"Revisa esta información antes de confirmar tu pedido.";$("guidePaymentText").textContent=guide.paymentText||"";$("guideShippingText").textContent=guide.shippingText||"";$("guideDamageText").textContent=guide.damageText||"Al recibir el producto, revisa su estado. Si detectas daño atribuible al transporte, repórtalo dentro de 5 horas con fotografías o video y evidencia de entrega.";$("guideCustomerDamageText").textContent=guide.customerDamageText||"Evolution Design no responde por daños causados después de la entrega por golpes, líquidos, manipulación, reparaciones de terceros, modificaciones o uso indebido. Todo reclamo queda sujeto a revisión para determinar su origen.";$("shippingNoticeText").textContent=guide.shippingText||"Los envíos se realizan de lunes a viernes."}
@@ -2258,23 +2283,26 @@ function syncDelivery(){
 function renderSummary(){const q=currentQuote();if(!q)return;const rows=[["iPhone 8 Plus",money(q.basePriceGtq)]];if(q.surchargeGtq)rows.push(["Recargo contra entrega 10%",money(q.surchargeGtq)]);if(q.shippingGtq)rows.push(["Envío nacional",money(q.shippingGtq)]);if(q.method==="crypto_binance"&&q.usdtAmount)rows.push(["Pago cripto",`≈ ${Number(q.usdtAmount).toFixed(2)} USDT`]);if(q.method==="visacuotas")rows.push(["Recargo Visacuotas","Se calcula en Recurrente"]);else if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",money(0)]);$("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${v}</strong></div>`).join("")+`<div class="summary-row total"><span>${q.method==="visacuotas"?"Base antes del recargo":"Total"}</span><strong>${money(q.totalGtq)}</strong></div>`;if(["paypal_shipping","card_shipping"].includes(q.method)){$("submitBtn").textContent="Completa el pago seguro arriba";$("submitBtn").disabled=true}else{$("submitBtn").disabled=!config?.available;$("submitBtn").textContent=q.method==="visacuotas"?`Registrar pedido · ${money(q.totalGtq)} + recargo`:q.method==="transfer_shipping"?`Enviar referencia · ${money(q.totalGtq)}`:q.method==="crypto_binance"?`Registrar pago cripto · ${money(q.totalGtq)}`:`Confirmar pedido · ${money(q.totalGtq)}`}}
 
 async function loadConfig(){
-  const financeBtn=$("selectVisacuotasBtn");
-  if(financeBtn){financeBtn.disabled=true;financeBtn.textContent="Cargando financiamiento…"}
-  $("methodGrid").innerHTML='<div class="payment-loading">Cargando métodos de pago seguros…</div>';
+  // Mostrar métodos inmediatamente; el backend solo confirma stock/config final.
+  if(!config)config={...LOCAL_STORE_FALLBACK,methods:[...LOCAL_STORE_METHODS]};
+  renderMethods();
+  renderPaymentExtra();
+  renderSummary();
+
+  $("availability").textContent="Verificando stock…";
+  $("availability").classList.remove("sold");
+
   try{
-    try{
-      config=await publicGet("/store/iphone-8-plus/config");
-    }catch(firstError){
-      await new Promise(resolve=>setTimeout(resolve,450));
-      config=await publicGet("/store/iphone-8-plus/config");
+    const live=await publicGet("/store/iphone-8-plus/config");
+    if(!Array.isArray(live?.methods)||!live.methods.length){
+      throw new Error("Evolution no devolvió métodos de pago.");
     }
 
-    if(!Array.isArray(config?.methods)||!config.methods.length){
-      throw new Error("Evolution no devolvió los métodos de pago.");
-    }
+    config=live;
 
     $("availability").textContent=config.available?"1 unidad disponible":"Agotado";
     $("availability").classList.toggle("sold",!config.available);
+
     if($("dealStockText")){
       $("dealStockText").textContent=config.available?"Última unidad disponible":"Agotado";
       $("dealStockText").classList.toggle("sold",!config.available);
@@ -2286,16 +2314,20 @@ async function loadConfig(){
     renderSummary();
     scheduleDeliveryEstimate();
     renderGuide();
-
     $("submitBtn").disabled=!config.available;
-    if(financeBtn){financeBtn.disabled=false;financeBtn.textContent="Ver financiamiento"}
   }catch(e){
-    config=null;
-    $("availability").textContent="Verificación pendiente";
+    config={...LOCAL_STORE_FALLBACK,methods:[...LOCAL_STORE_METHODS]};
+    $("availability").textContent="No se pudo verificar stock";
     $("availability").classList.add("sold");
-    $("methodGrid").innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos conectar con los métodos de pago. Recarga la página.</div>';
-    if(financeBtn){financeBtn.disabled=false;financeBtn.textContent="Reintentar carga"}
-    showFeedback(e.message);
+    if($("dealStockText")){
+      $("dealStockText").textContent="Verificación pendiente";
+      $("dealStockText").classList.add("sold");
+    }
+    renderMethods();
+    renderPaymentExtra();
+    renderSummary();
+    $("submitBtn").disabled=true;
+    console.error("store/config",e);
   }
 }
 
@@ -2325,11 +2357,7 @@ $("googleBtn").onclick=async()=>{try{$("loginError").classList.remove("show");aw
 $("toggleMode").onclick=()=>{authMode=authMode==="login"?"signup":"login";$("loginTitle").textContent=authMode==="login"?"Iniciar sesión":"Crear cuenta";$("emailAuthBtn").textContent=authMode==="login"?"Ingresar":"Crear cuenta";$("toggleMode").textContent=authMode==="login"?"¿No tienes cuenta? Crear cuenta":"¿Ya tienes cuenta? Iniciar sesión";$("authPassword").autocomplete=authMode==="login"?"current-password":"new-password"};
 $("emailAuthForm").addEventListener("submit",async e=>{e.preventDefault();const btn=$("emailAuthBtn");btn.disabled=true;$("loginError").classList.remove("show");try{const email=$("authEmail").value.trim(),password=$("authPassword").value;authMode==="login"?await signInWithEmailAndPassword(auth,email,password):await createUserWithEmailAndPassword(auth,email,password)}catch(err){$("loginError").textContent=err.message||"No pudimos completar el acceso."; $("loginError").classList.add("show")}finally{btn.disabled=false}});
 
-$("selectVisacuotasBtn").onclick=async()=>{
-  if(!config?.methods?.length){
-    await loadConfig();
-    if(!config?.methods?.length)return;
-  }
+$("selectVisacuotasBtn").onclick=()=>{
   $("paymentMethod").value="visacuotas";
   renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate();
   $("visacuotasPanel").scrollIntoView({behavior:"smooth",block:"nearest"});
@@ -2375,6 +2403,10 @@ $("guideModal").addEventListener("click",e=>{if(e.target.id==="guideModal")close
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("guideModal").classList.contains("show"))closeGuide()});
 
 $("openOrdersBtn").onclick=()=>{try{sessionStorage.setItem("evolutionPortalArea","orders")}catch{} location.href="proyectos.html"};
+config={...LOCAL_STORE_FALLBACK,methods:[...LOCAL_STORE_METHODS]};
+renderMethods();
+renderPaymentExtra();
+renderSummary();
 loadConfig();
 loadRecaptcha().catch(()=>{});
 </script>
