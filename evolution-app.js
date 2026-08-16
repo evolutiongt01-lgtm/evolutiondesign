@@ -1,9 +1,9 @@
-/* Evolution Design · Smart App Shell · v41 · 60% Magnetic Liquid Finish */
+/* Evolution Design · Smart App Shell · v42 · iOS Fluid Swipe + Web Route Fix */
 (() => {
   'use strict';
 
-  const VERSION='41';
-  const APP_BUILD=41;
+  const VERSION='42';
+  const APP_BUILD=42;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -60,7 +60,7 @@
   let swipeLitePaintLast=0;
   let swipePremiumLocked=false;
 
-  const SWIPE_TIER_STATE_BUILD=41;
+  const SWIPE_TIER_STATE_BUILD=42;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -378,62 +378,62 @@
 
     body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
       transition:
-        transform .34s cubic-bezier(.16,1,.30,1),
-        border-radius .34s cubic-bezier(.16,1,.30,1)!important;
+        transform .36s cubic-bezier(.32,.72,0,1),
+        border-radius .36s cubic-bezier(.32,.72,0,1)!important;
       transform:translateZ(0) scale(var(--evo-active-card-scale,1))!important;
       border-radius:var(--evo-active-card-radius,0px)!important;
       will-change:transform,border-radius;
     }
     body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
       transition:
-        clip-path .34s cubic-bezier(.16,1,.30,1),
-        transform .34s cubic-bezier(.16,1,.30,1),
-        border-radius .34s cubic-bezier(.16,1,.30,1)!important;
+        clip-path .36s cubic-bezier(.32,.72,0,1),
+        transform .36s cubic-bezier(.32,.72,0,1),
+        border-radius .36s cubic-bezier(.32,.72,0,1)!important;
       transform:translateZ(0) scale(var(--evo-next-card-scale,.885))!important;
       border-radius:var(--evo-next-card-radius,36px)!important;
       will-change:transform,clip-path,border-radius;
     }
 
-    /* V41 · Magnetic Liquid Finish
+    /* V42 · iOS Fluid Liquid Finish
        El remate no se siente como corte: la tarjeta anterior "respira"
        hacia atrás y el vidrio se intensifica mientras la nueva ocupa
        suavemente el 100% de la pantalla. */
     body.evo-live-swipe-settling
     #evolution-view-stage .evo-swipe-glass{
       transition:
-        opacity .34s cubic-bezier(.16,1,.30,1),
-        inset .34s cubic-bezier(.16,1,.30,1),
-        border-radius .34s cubic-bezier(.16,1,.30,1),
-        box-shadow .34s cubic-bezier(.16,1,.30,1),
-        backdrop-filter .34s cubic-bezier(.16,1,.30,1),
-        -webkit-backdrop-filter .34s cubic-bezier(.16,1,.30,1)!important;
+        opacity .36s cubic-bezier(.32,.72,0,1),
+        inset .36s cubic-bezier(.32,.72,0,1),
+        border-radius .36s cubic-bezier(.32,.72,0,1),
+        box-shadow .36s cubic-bezier(.32,.72,0,1),
+        backdrop-filter .36s cubic-bezier(.32,.72,0,1),
+        -webkit-backdrop-filter .36s cubic-bezier(.32,.72,0,1)!important;
     }
 
     body.evo-live-swipe-settling
     #evolution-view-stage .evo-swipe-veil{
-      transition:opacity .34s cubic-bezier(.16,1,.30,1)!important;
+      transition:opacity .36s cubic-bezier(.32,.72,0,1)!important;
     }
 
     body.evo-live-swipe-settling
     #evolution-view-stage .evo-swipe-depth{
       transition:
-        transform .34s cubic-bezier(.16,1,.30,1),
+        transform .36s cubic-bezier(.32,.72,0,1),
         opacity .24s ease!important;
     }
 
     html[data-evo-swipe-tier="premium"]
     body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
       transition:
-        transform .34s cubic-bezier(.16,1,.30,1),
-        border-radius .34s cubic-bezier(.16,1,.30,1),
-        box-shadow .34s cubic-bezier(.16,1,.30,1)!important;
+        transform .36s cubic-bezier(.32,.72,0,1),
+        border-radius .36s cubic-bezier(.32,.72,0,1),
+        box-shadow .36s cubic-bezier(.32,.72,0,1)!important;
     }
 
     html[data-evo-swipe-tier="standard"]
     body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
       transition:
-        transform .32s cubic-bezier(.16,1,.30,1),
-        border-radius .32s cubic-bezier(.16,1,.30,1)!important;
+        transform .32s cubic-bezier(.32,.72,0,1),
+        border-radius .32s cubic-bezier(.32,.72,0,1)!important;
     }
 
     /* Vidrio sobre la tarjeta que queda atrás. Es una sola superficie;
@@ -642,15 +642,15 @@
         scale(var(--evo-active-card-scale,1))!important;
       border-radius:var(--evo-active-card-radius,0px)!important;
       box-shadow:
-        0 30px 95px rgba(0,0,0,.34),
-        0 0 0 1px rgba(255,255,255,.025)!important;
+        0 18px 58px rgba(0,0,0,.28),
+        0 0 0 1px rgba(255,255,255,.035)!important;
     }
 
     html[data-evo-swipe-tier="premium"]
     body.evo-live-swipe-settling .evo-view-frame.evo-view-active{
       box-shadow:
-        0 30px 95px rgba(0,0,0,.34),
-        0 0 0 1px rgba(255,255,255,.025)!important;
+        0 18px 58px rgba(0,0,0,.28),
+        0 0 0 1px rgba(255,255,255,.035)!important;
     }
 
     /* LITE: pensado para iPhone 8 Plus y hardware equivalente. */
@@ -721,7 +721,7 @@
 
     html[data-evo-swipe-tier="lite"]
     body.evo-live-swipe-settling .evo-view-frame.evo-swipe-neighbor{
-      transition:clip-path .24s cubic-bezier(.16,1,.30,1)!important;
+      transition:clip-path .24s cubic-bezier(.32,.72,0,1)!important;
       transform:none!important;
       border-radius:0!important;
     }
@@ -1696,22 +1696,25 @@
 
     const premium=tier==='premium';
 
-    /* V36 PREMIUM:
-       anterior 100% -> 86%
-       entrante 84.5% -> 100%
-       Standard conserva exactamente los valores de V35. */
-    const activeScale=1-(p*(premium?.14:.085));
-    const base=premium?.845:.885;
-    const nextScale=base+(p*(1-base));
-    const activeRadius=p*(premium?48:36);
-    const nextRadius=(1-p)*(premium?48:36);
+    /* V42 · geometría tipo iOS:
+       usamos smoothstep (g) también para el tamaño, de modo que los
+       primeros milímetros casi no escalan la página. No hay "tirón".
+       Al 60% Premium queda ~93.5%, no ~91.6%, y el remate es corto. */
+    const activeShrink=premium?.10:.07;
+    const base=premium?.90:.92;
+
+    const activeScale=1-(g*activeShrink);
+    const nextScale=base+(g*(1-base));
+    const radiusMax=premium?42:34;
+    const activeRadius=g*radiusMax;
+    const nextRadius=(1-g)*radiusMax;
 
     active.style.setProperty('--evo-active-card-scale',activeScale.toFixed(4));
     active.style.setProperty('--evo-active-card-radius',`${activeRadius.toFixed(2)}px`);
     neighbor.style.setProperty('--evo-next-card-scale',nextScale.toFixed(4));
     neighbor.style.setProperty('--evo-next-card-radius',`${nextRadius.toFixed(2)}px`);
 
-    const cardInset=p*(premium?28:17);
+    const cardInset=g*(premium?22:14);
     const maxBlur=premium?19:10.5;
     const blur=Math.min(maxBlur,g*maxBlur);
     const glassOpacity=Math.min(premium?.995:.96,g*(premium?.995:.96));
@@ -1744,7 +1747,7 @@
       ((premium?.80:.66)-(p*(premium?.20:.16))).toFixed(3)
     );
 
-    const blendWidth=premium?184:144;
+    const blendWidth=premium?156:132;
     const offset=side==='next'?blendWidth*.72:blendWidth*.28;
     depth.style.transform=`translate3d(${Math.round(boundaryX-offset)}px,0,0)`;
     depth.classList.add('is-visible');
@@ -2025,22 +2028,42 @@
 
     const finishBoundary=side==='next'?0:viewportWidth;
 
+    /* V42: el remate NO salta el glass del 60% al 100% de intensidad.
+       Solo avanza hasta 78%; la página nueva cubre el resto. */
+    const finishGlassProgress=
+      swipeVisualTier==='lite'
+        ? MOBILE_SWIPE_COMMIT_PROGRESS
+        : .78;
+
+    /* Forzamos un frame calculado antes de cambiar a los valores finales.
+       Esto evita que Safari agrupe el estado 60% y el final en el mismo
+       repaint y produzca un salto visual. */
+    void neighbor.offsetWidth;
+
     updateLiquidGlassSwipe(
       active,
       neighbor,
       finishBoundary,
-      1,
+      finishGlassProgress,
       side
     );
 
-    /* La costura desaparece durante el remate, pero el glass de la
-       tarjeta anterior permanece hasta la promoción final. */
     if(swipeDepthEl){
       swipeDepthEl.style.setProperty('--evo-swipe-depth-opacity','0');
     }
 
-    active.style.setProperty('--evo-active-card-scale',swipeVisualTier==='premium'?'.80':(swipeVisualTier==='standard'?'.875':'1'));
-    active.style.setProperty('--evo-active-card-radius',swipeVisualTier==='premium'?'56px':(swipeVisualTier==='standard'?'44px':'0px'));
+    active.style.setProperty(
+      '--evo-active-card-scale',
+      swipeVisualTier==='premium'
+        ? '.91'
+        : (swipeVisualTier==='standard'?'.935':'1')
+    );
+    active.style.setProperty(
+      '--evo-active-card-radius',
+      swipeVisualTier==='premium'
+        ? '38px'
+        : (swipeVisualTier==='standard'?'32px':'0px')
+    );
 
     showSwipeNeighbor(neighbor);
     neighbor.style.visibility='visible';
@@ -2107,7 +2130,7 @@
       });
 
       prewarmAccordingToNetwork();
-    },355);
+    },375);
   };
 
   const installMobileSwipe=(frame,route)=>{
@@ -2333,13 +2356,12 @@
         scheduleGestureRender(side,progress,boundaryX);
 
         /* V38 · MAGNETIC SNAP
-           Al cruzar 35% no esperamos touchend. La ruta queda decidida
+           Al cruzar 60% no esperamos touchend. La ruta queda decidida
            y la animación completa sola. */
         if(
           progress>=MOBILE_SWIPE_COMMIT_PROGRESS &&
           stableMoveSamples>=2 &&
-          !anomalousGesture &&
-          gestureNeighbor.__evolutionSwipeReady
+          !anomalousGesture
         ){
           const targetRoute=routeBeside(activeKey,side);
 
@@ -2373,12 +2395,20 @@
 
             finishSwipeFrameBudget();
 
-            commitLiveSwipe(
-              frame,
-              gestureNeighbor,
-              side,
-              targetRoute
-            );
+            if(gestureNeighbor.__evolutionSwipeReady){
+              commitLiveSwipe(
+                frame,
+                gestureNeighbor,
+                side,
+                targetRoute
+              );
+            }else{
+              /* Diseño Web puede tardar más en precargar. El 60% expresa
+                 intención inequívoca: abrimos por router normal en lugar
+                 de devolver al usuario a Diseño Gráfico. */
+              hardResetSwipeVisuals();
+              loadRoute(targetRoute,{push:true,restore:false});
+            }
 
             currentSide=null;
             gestureNeighbor=null;
@@ -2389,7 +2419,7 @@
       const finish=(cancelled=false)=>{
         cancelGestureRender();
 
-        /* Después del snap al 35%, touchend pertenece al gesto viejo.
+        /* Después del snap al 60%, touchend pertenece al gesto viejo.
            No debe resetear/cancelar el commit que ya está terminando. */
         if(autoCommitted){
           autoCommitted=false;
@@ -2440,8 +2470,13 @@
         const targetRoute=routeBeside(activeKey,currentSide);
         const ready=Boolean(gestureNeighbor.__evolutionSwipeReady);
 
-        if(qualifies&&targetRoute&&ready){
-          commitLiveSwipe(frame,gestureNeighbor,currentSide,targetRoute);
+        if(qualifies&&targetRoute){
+          if(ready){
+            commitLiveSwipe(frame,gestureNeighbor,currentSide,targetRoute);
+          }else{
+            hardResetSwipeVisuals();
+            loadRoute(targetRoute,{push:true,restore:false});
+          }
         }else{
           settleSwipeBack(frame,gestureNeighbor,currentSide);
         }
@@ -2706,12 +2741,11 @@
       schedule(side,progress,boundary);
 
       /* V38 · El contenedor padre usa exactamente el mismo punto
-         magnético del 35%. */
+         magnético del 60%. */
       if(
         progress>=MOBILE_SWIPE_COMMIT_PROGRESS &&
         stableSamples>=2 &&
-        !anomalous &&
-        neighbor.__evolutionSwipeReady
+        !anomalous
       ){
         const route=routeBeside(activeKey,side);
 
@@ -2744,12 +2778,17 @@
 
           finishSwipeFrameBudget();
 
-          commitLiveSwipe(
-            activeFrame,
-            neighbor,
-            side,
-            route
-          );
+          if(neighbor.__evolutionSwipeReady){
+            commitLiveSwipe(
+              activeFrame,
+              neighbor,
+              side,
+              route
+            );
+          }else{
+            hardResetSwipeVisuals();
+            loadRoute(route,{push:true,restore:false});
+          }
 
           resetLocal({preserveCommit:true});
         }
@@ -2817,8 +2856,13 @@
       const route=routeBeside(activeKey,side);
       const ready=Boolean(neighbor.__evolutionSwipeReady);
 
-      if(qualifies&&route&&ready){
-        commitLiveSwipe(activeFrame,neighbor,side,route);
+      if(qualifies&&route){
+        if(ready){
+          commitLiveSwipe(activeFrame,neighbor,side,route);
+        }else{
+          hardResetSwipeVisuals();
+          loadRoute(route,{push:true,restore:false});
+        }
       }else{
         settleSwipeBack(activeFrame,neighbor,side);
       }
@@ -2906,7 +2950,16 @@
   const loadRoute=(route,{push=true,restore=false,replace=false}={})=>{
     if(!route)return;
 
-    if(activeKey===route.key&&activeFrame){
+    const activeFrameKey=activeFrame?.dataset?.evoRouteKey||null;
+
+    /* V42: activeKey puede cambiar unos milisegundos antes que activeFrame
+       durante una navegación. Solo hacemos early-return si AMBOS confirman
+       que realmente estamos ya en esa sección. */
+    if(
+      activeKey===route.key &&
+      activeFrame &&
+      activeFrameKey===route.key
+    ){
       if(!restore){
         try{activeFrame.contentWindow.scrollTo({top:0,behavior:'smooth'})}catch(_){}
       }
@@ -2950,8 +3003,16 @@
       if(token!==navigationToken){frame.remove();return}
       if(!handleFrameLoad(frame))return;
 
+      /* V42: activeFrame y activeKey se actualizan como una sola unidad.
+         Antes había una ventana de ~340ms donde la navbar podía creer que
+         Diseño Web estaba activo mientras activeFrame seguía siendo Gráfico. */
+      activeFrame=frame;
+      frame.dataset.evoRouteKey=route.key;
+      frame.__evolutionSwipeReady=true;
+
       /* Prepara los comportamientos activos de la view. */
       installActiveFrameFeatures(frame,route);
+      installActiveFrameGuards(frame);
 
       clearTimeout(fail);
 
@@ -2972,10 +3033,6 @@
 
       setTimeout(()=>{
         if(old&&old!==frame)old.remove();
-        activeFrame=frame;
-        frame.dataset.evoRouteKey=route.key;
-        frame.__evolutionSwipeReady=true;
-        installActiveFrameGuards(frame);
 
         swipePreviewGeneration++;
         refreshSwipeNeighbors();
