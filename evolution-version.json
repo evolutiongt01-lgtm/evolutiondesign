@@ -1,0 +1,21 @@
+{
+  "build": 34,
+  "version": "34",
+  "announce": true,
+  "required": false,
+  "subtitle": "Actualiza para aplicar correcciones de errores, mejoras de estabilidad y la experiencia más reciente de Evolution.",
+  "notes": [
+    {
+      "title": "Errores corregidos",
+      "detail": "Ajustes de navegación, gestos y comportamientos inconsistentes."
+    },
+    {
+      "title": "Más estabilidad",
+      "detail": "Carga más limpia y una experiencia más fluida en la app."
+    },
+    {
+      "title": "Últimas mejoras",
+      "detail": "Aplica la versión reciente sin perder tu sesión ni proyectos."
+    }
+  ]
+}
