@@ -1206,6 +1206,197 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   .phone-floating-card.verified{left:5px!important;bottom:17px!important}
 }
 
+
+/* ==========================================================
+   V3.9.5 · DESKTOP / MAC COMPOSITION
+   Mobile rules remain independent.
+   ========================================================== */
+@media(min-width:768px){
+  .hero{
+    grid-template-columns:minmax(0,1.12fr) minmax(400px,.78fr);
+    gap:18px;
+    align-items:start;
+  }
+
+  .hero-card{
+    display:grid!important;
+    grid-template-columns:minmax(0,1.08fr) minmax(280px,.92fr)!important;
+    grid-template-rows:auto auto!important;
+    grid-template-areas:
+      "heroInfo heroPhone"
+      "heroSpecs heroSpecs";
+    column-gap:30px!important;
+    row-gap:22px!important;
+    align-items:center!important;
+    min-height:0!important;
+    padding:42px 42px 34px!important;
+    overflow:hidden!important;
+  }
+
+  .hero-card > div:not(.hero-premium-bg):not(.phone-stage):not(.tech-specs){
+    grid-area:heroInfo;
+    min-width:0;
+    align-self:center;
+  }
+
+  .hero-card > .phone-stage{
+    grid-area:heroPhone!important;
+    position:relative!important;
+    width:100%!important;
+    min-width:0!important;
+    height:430px!important;
+    min-height:430px!important;
+    margin:0!important;
+    align-self:center!important;
+    justify-self:stretch!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+
+  .hero-card > .tech-specs{
+    grid-area:heroSpecs!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:15px!important;
+    border-radius:18px!important;
+  }
+
+  .hero-card > .tech-specs .tech-spec-grid{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+
+  .hero-card > .tech-specs .tech-spec{
+    min-height:66px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:10px 11px!important;
+    border-radius:12px!important;
+  }
+
+  .hero-card > .tech-specs .tech-spec small{
+    font-size:7px!important;
+  }
+
+  .hero-card > .tech-specs .tech-spec b{
+    font-size:8.7px!important;
+    line-height:1.35!important;
+  }
+
+  .hero-card > .tech-specs .spec-note{
+    margin-top:10px!important;
+    font-size:7.5px!important;
+  }
+
+  .hero-card h1{
+    font-size:clamp(4.8rem,7vw,7.3rem)!important;
+    line-height:.82!important;
+    margin:22px 0 18px!important;
+  }
+
+  .hero-card .hero-copy{
+    max-width:560px!important;
+    font-size:12.5px!important;
+    line-height:1.65!important;
+  }
+
+  .hero-card .price-big{
+    margin-top:22px!important;
+    font-size:48px!important;
+  }
+
+  .hero-card .hero-meta{
+    margin-top:20px!important;
+  }
+
+  .hero-card .unit-specs{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:8px!important;
+    margin-top:18px!important;
+  }
+
+  .hero-card .unit-spec{
+    padding:10px 11px!important;
+    border-radius:13px!important;
+  }
+
+  .phone-stage-glass{
+    position:absolute!important;
+    left:50%!important;
+    top:50%!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:min(94%,330px)!important;
+    height:365px!important;
+    transform:translate(-50%,-50%)!important;
+    border-radius:34px!important;
+  }
+
+  .product-phone-img{
+    position:absolute!important;
+    z-index:2!important;
+    left:50%!important;
+    top:50%!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:auto!important;
+    height:auto!important;
+    max-width:275px!important;
+    max-height:330px!important;
+    transform:translate(-50%,-50%) scale(1.06)!important;
+    object-fit:contain!important;
+    object-position:center!important;
+    margin:0!important;
+  }
+
+  .phone-floating-card.battery{
+    right:2px!important;
+    top:48px!important;
+  }
+
+  .phone-floating-card.verified{
+    left:0!important;
+    bottom:54px!important;
+  }
+
+  .purchase-card{
+    align-self:start!important;
+    min-height:0!important;
+  }
+}
+
+@media(min-width:768px) and (max-width:1180px){
+  .hero{
+    grid-template-columns:minmax(0,1fr) minmax(360px,.74fr);
+  }
+  .hero-card{
+    grid-template-columns:minmax(0,1fr) minmax(235px,.8fr)!important;
+    padding:32px 28px 28px!important;
+    column-gap:20px!important;
+  }
+  .hero-card h1{
+    font-size:clamp(4rem,6vw,5.7rem)!important;
+  }
+  .hero-card > .phone-stage{
+    height:360px!important;
+    min-height:360px!important;
+  }
+  .phone-stage-glass{
+    width:min(94%,275px)!important;
+    height:310px!important;
+  }
+  .product-phone-img{
+    max-width:225px!important;
+    max-height:275px!important;
+  }
+  .hero-card > .tech-specs .tech-spec-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1240,13 +1431,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
         <div class="unit-spec battery hidden" id="saleBatterySpec"><span>Batería / estado</span><strong id="saleBattery">—</strong></div>
       </div>
 
-      <div class="tech-specs hidden" id="saleSpecsBox" aria-label="Especificaciones principales">
-        <div class="tech-specs-head">
-          <strong>Características del producto</strong>
-          <span>Información de esta publicación</span>
-        </div>
-        <div class="tech-spec-grid" id="saleSpecsGrid"></div>
-      </div>
+      
     </div>
     <div class="phone-stage">
       <div class="phone-stage-glass" aria-hidden="true"></div>
@@ -1254,6 +1439,13 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <div class="phone-floating-card verified"><span>Evolution</span><strong>Venta verificada</strong></div>
       <img class="product-phone-img" id="saleProductImage" src="img/product.png" alt="Producto de venta temporal" loading="eager" decoding="async">
     </div>
+    <div class="tech-specs hidden" id="saleSpecsBox" aria-label="Especificaciones principales">
+        <div class="tech-specs-head">
+          <strong>Características del producto</strong>
+          <span>Información de esta publicación</span>
+        </div>
+        <div class="tech-spec-grid" id="saleSpecsGrid"></div>
+      </div>
   </article>
 
   <aside class="purchase-card">
