@@ -584,6 +584,213 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 }
 .customer-damage-guide span{color:#d4b895!important}
 
+
+/* ==========================================================
+   V3.6 · IMAGEN REAL + ESPECIFICACIONES DEL PRODUCTO
+   ========================================================== */
+.hero-card>div:first-child{position:relative;z-index:2;min-width:0}
+.phone-stage{
+  position:relative;
+  height:auto;
+  min-height:285px;
+  margin-top:24px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  perspective:none;
+}
+.product-phone-img{
+  display:block;
+  width:min(82%,360px);
+  max-height:360px;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 30px 38px rgba(0,0,0,.5));
+  transform:none;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.unit-specs{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-top:16px;
+}
+.unit-spec{
+  min-width:0;
+  padding:11px 12px;
+  border:1px solid rgba(255,255,255,.075);
+  border-radius:14px;
+  background:rgba(255,255,255,.025);
+}
+.unit-spec span{
+  display:block;
+  color:#77777e;
+  font-size:8px;
+  line-height:1.2;
+  text-transform:uppercase;
+  letter-spacing:.075em;
+  margin-bottom:5px;
+}
+.unit-spec strong{
+  display:block;
+  color:#f2f2f4;
+  font-size:11px;
+  line-height:1.25;
+}
+.unit-spec.battery strong{color:#72d993}
+
+.tech-specs{
+  margin-top:12px;
+  padding:13px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;
+  background:rgba(0,0,0,.17);
+}
+.tech-specs-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:9px;
+}
+.tech-specs-head strong{font-size:10.5px;color:#fff}
+.tech-specs-head span{font-size:7.5px;color:#66666d}
+.tech-spec-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px;
+}
+.tech-spec{
+  min-width:0;
+  padding:8px 9px;
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:10px;
+  background:rgba(255,255,255,.017);
+}
+.tech-spec small{
+  display:block;
+  color:#696970;
+  font-size:7px;
+  line-height:1.2;
+  margin-bottom:3px;
+}
+.tech-spec b{
+  display:block;
+  color:#d0d0d4;
+  font-size:8.6px;
+  line-height:1.35;
+}
+.spec-note{
+  margin-top:9px;
+  color:#68686f;
+  font-size:7.5px;
+  line-height:1.45;
+}
+.spec-note b{color:#a48e73}
+
+@media(min-width:768px){
+  .hero-card{
+    display:grid;
+    grid-template-columns:minmax(0,1.22fr) minmax(260px,.62fr);
+    column-gap:26px;
+    align-items:center;
+  }
+  .phone-stage{
+    grid-column:2;
+    grid-row:1;
+    margin:0;
+    min-height:360px;
+    align-self:center;
+  }
+  .product-phone-img{
+    width:min(100%,330px);
+    max-height:390px;
+  }
+}
+
+@media(max-width:767.98px){
+  .hero-card{
+    min-height:500px!important;
+  }
+  .phone-stage{
+    position:absolute!important;
+    right:6px!important;
+    bottom:16px!important;
+    width:136px!important;
+    height:230px!important;
+    min-height:0!important;
+    margin:0!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+  }
+  .product-phone-img{
+    width:130px;
+    max-height:224px;
+    object-fit:contain;
+    object-position:center bottom;
+    filter:drop-shadow(0 18px 24px rgba(0,0,0,.52));
+  }
+  .unit-specs{
+    max-width:70%;
+    gap:5px;
+    margin-top:13px;
+  }
+  .unit-spec{
+    padding:7px 6px;
+    border-radius:9px;
+  }
+  .unit-spec span{
+    font-size:6px;
+    margin-bottom:3px;
+  }
+  .unit-spec strong{
+    font-size:8px;
+  }
+  .tech-specs{
+    max-width:70%;
+    margin-top:7px;
+    padding:8px;
+    border-radius:11px;
+  }
+  .tech-specs-head{
+    display:block;
+    margin-bottom:6px;
+  }
+  .tech-specs-head strong{font-size:8.5px}
+  .tech-specs-head span{
+    display:block;
+    margin-top:2px;
+    font-size:6px;
+  }
+  .tech-spec-grid{
+    grid-template-columns:1fr 1fr;
+    gap:3px;
+  }
+  .tech-spec{
+    padding:5px 6px;
+    border-radius:7px;
+  }
+  .tech-spec small{font-size:5.3px}
+  .tech-spec b{font-size:6.5px}
+  .spec-note{display:none}
+}
+
+@media(max-width:370px){
+  .hero-card{min-height:510px!important}
+  .phone-stage{
+    right:-2px!important;
+    width:118px!important;
+  }
+  .product-phone-img{
+    width:110px;
+    max-height:210px;
+  }
+  .unit-specs,.tech-specs{max-width:72%}
+  .unit-spec strong{font-size:7.5px}
+  .tech-spec b{font-size:6.2px}
+}
+
 </style>
 </head>
 <body>
@@ -595,7 +802,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
     <div>
       <div class="kicker">Evolution Design · Venta temporal</div>
       <h1>iPhone<br><span>8 Plus.</span></h1>
-      <p class="hero-copy">Compra desde tu cuenta Evolution. Elige contra entrega, transferencia, PayPal, tarjeta, cripto, Visacuotas o entrega personal en Panajachel.</p>
+      <p class="hero-copy">iPhone 8 Plus · Gris espacial · 64 GB · salud de batería al 95%. Compra desde tu cuenta Evolution con pago y entrega seguros.</p>
       <div class="price-big">Q950<small>precio base</small></div>
       <div class="hero-meta">
         <span class="chip">Cuenta Evolution requerida</span>
@@ -603,9 +810,35 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
         <span class="chip">Pedido protegido por reCAPTCHA</span>
         <button class="hero-guide" id="openGuideHero" type="button">Guía de compra y envíos</button>
       </div>
+
+      <div class="unit-specs" aria-label="Características de esta unidad">
+        <div class="unit-spec"><span>Color</span><strong>Gris espacial</strong></div>
+        <div class="unit-spec"><span>Almacenamiento</span><strong>64 GB</strong></div>
+        <div class="unit-spec battery"><span>Salud de batería</span><strong>95%</strong></div>
+      </div>
+
+      <div class="tech-specs" aria-label="Especificaciones principales del iPhone 8 Plus">
+        <div class="tech-specs-head">
+          <strong>Especificaciones del modelo</strong>
+          <span>Ficha técnica oficial Apple</span>
+        </div>
+        <div class="tech-spec-grid">
+          <div class="tech-spec"><small>Pantalla</small><b>Retina HD · 5.5" IPS</b></div>
+          <div class="tech-spec"><small>Resolución</small><b>1920 × 1080 · 401 ppi</b></div>
+          <div class="tech-spec"><small>Chip</small><b>A11 Bionic + Neural Engine</b></div>
+          <div class="tech-spec"><small>Cámaras</small><b>Doble 12 MP · zoom óptico 2×</b></div>
+          <div class="tech-spec"><small>Video</small><b>4K hasta 60 fps</b></div>
+          <div class="tech-spec"><small>Frontal</small><b>FaceTime HD · 7 MP</b></div>
+          <div class="tech-spec"><small>Seguridad</small><b>Touch ID</b></div>
+          <div class="tech-spec"><small>Carga</small><b>Lightning + inalámbrica Qi</b></div>
+          <div class="tech-spec"><small>Conectividad</small><b>Wi‑Fi 802.11ac · Bluetooth 5.0</b></div>
+          <div class="tech-spec"><small>Peso</small><b>202 g</b></div>
+        </div>
+        <div class="spec-note"><b>Sobre IP67:</b> esta clasificación corresponde al modelo cuando fue probado por Apple. Apple indica que la resistencia al agua y al polvo no es permanente y puede disminuir con el uso normal; Evolution Design no garantiza la resistencia actual al agua de esta unidad usada.</div>
+      </div>
     </div>
-    <div class="phone-stage" aria-hidden="true">
-      <div class="phone"><i class="ear"></i><i class="camera"></i><div class="screen-copy"><strong>iPhone 8 Plus</strong><span>Evolution</span></div></div>
+    <div class="phone-stage">
+      <img class="product-phone-img" src="img/iphone.png" alt="iPhone 8 Plus gris espacial de la publicación" loading="eager" decoding="async">
     </div>
   </article>
 
