@@ -33,7 +33,7 @@ h1{font-size:clamp(4rem,8vw,7.4rem);letter-spacing:-.075em;line-height:.84;margi
 .product{position:relative;overflow:hidden;min-height:520px;border:1px solid var(--line);border-radius:30px;background:radial-gradient(circle at 85% 10%,rgba(212,184,149,.09),transparent 30%),linear-gradient(145deg,rgba(255,255,255,.042),rgba(255,255,255,.012));display:flex;flex-direction:column;transition:transform .25s cubic-bezier(.16,1,.3,1),border-color .2s ease,box-shadow .2s ease}
 .product:hover{transform:translateY(-3px);border-color:rgba(212,184,149,.25);box-shadow:0 28px 70px rgba(0,0,0,.34)}.product[hidden]{display:none!important}
 .product-media{height:315px;display:grid;place-items:center;position:relative;overflow:hidden;padding:28px}.product-media:after{content:"";position:absolute;width:280px;height:90px;border-radius:50%;bottom:12px;background:rgba(212,184,149,.06);filter:blur(20px)}.product-media img{position:relative;z-index:2;display:block;max-width:90%;max-height:260px;object-fit:contain;filter:drop-shadow(0 24px 32px rgba(0,0,0,.55))}.product.iphone .product-media img{max-height:255px}.product.mac .product-media img{max-width:95%;max-height:235px}
-.product-body{padding:0 27px 27px;display:flex;flex:1;flex-direction:column}.product-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.product-type{font-size:8px;font-weight:850;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}.country{font-size:8px;color:#777;padding:6px 8px;border:1px solid var(--line);border-radius:999px}
+.product-body{padding:0 27px 27px;display:flex;flex:1;flex-direction:column}.product-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.product-type{font-size:8px;font-weight:850;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}.country{font-size:8px;color:#777;padding:6px 8px;border:1px solid var(--line);border-radius:999px}.country.usa{color:#9cc9ff;border-color:rgba(123,178,255,.18);background:rgba(80,140,220,.045)}.customs-note{margin:0 0 15px;padding:9px 10px;border:1px solid rgba(212,184,149,.16);border-radius:11px;background:rgba(212,184,149,.045);color:#b7a38b;font-size:8px;line-height:1.5}
 .product h3{font-size:28px;letter-spacing:-.05em;margin:0 0 8px}.product p{color:#86868d;font-size:11px;line-height:1.65;margin:0 0 17px}.specs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}.spec{padding:7px 9px;border:1px solid rgba(255,255,255,.065);border-radius:9px;background:rgba(0,0,0,.15);font-size:8px;color:#a3a3a9}
 .buy-row{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:14px}.price span{display:block;color:#68686f;font-size:7px;text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:4px}.price strong{font-size:28px;letter-spacing:-.055em}.price del{display:block;margin-top:3px;color:#66666d;font-size:9px}.product-savings{display:inline-flex;margin-left:6px;padding:4px 6px;border-radius:7px;background:rgba(85,217,138,.055);border:1px solid rgba(85,217,138,.15);color:#78e8a3;font-size:7px;font-weight:800}.view-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border-radius:13px;background:#f3f3f1;color:#101010;font-size:10px;font-weight:850;white-space:nowrap}.view-btn b{font-size:15px;font-weight:500}
 .empty{display:none;grid-column:1/-1;min-height:280px;border:1px dashed rgba(255,255,255,.10);border-radius:28px;place-items:center;text-align:center;padding:38px;background:rgba(255,255,255,.014)}.empty.show{display:grid}.empty .icon{font-size:30px;color:var(--accent);margin-bottom:12px}.empty strong{display:block;font-size:22px;letter-spacing:-.04em;margin-bottom:7px}.empty p{margin:0;color:#777;font-size:11px;line-height:1.6}
@@ -41,9 +41,269 @@ h1{font-size:clamp(4rem,8vw,7.4rem);letter-spacing:-.075em;line-height:.84;margi
 @media(max-width:991.98px){main{padding:142px 12px 62px}.hero{grid-template-columns:1fr;min-height:0;padding:30px 24px;border-radius:27px;gap:18px}.hero-copy{font-size:12px}.device-stage{min-height:300px}.hero-mac{width:min(92%,350px);right:2%;bottom:18px}.hero-phone{height:205px;left:7%;top:23px}.store-head{margin-top:38px}}
 @media(max-width:680px){main{padding-left:10px;padding-right:10px}.hero{padding:26px 20px 22px}h1{font-size:clamp(3.5rem,17vw,5.1rem)}.device-stage{min-height:255px}.glass-orbit{inset:4px;border-radius:24px}.hero-mac{width:285px;right:-7px;bottom:17px}.hero-phone{height:165px;left:3px;top:32px}.stage-chip.one{right:2px;top:17px}.stage-chip.two{left:2px;bottom:4px}.store-head{display:block;margin-left:4px;margin-right:4px}.store-head p{text-align:left;margin-top:10px}.filters{overflow:auto;flex-wrap:nowrap;padding:0 2px 5px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}.filter{white-space:nowrap}.grid{grid-template-columns:1fr}.product{min-height:0;border-radius:24px}.product-media{height:270px}.product-body{padding:0 20px 22px}.product h3{font-size:25px}.buy-row{align-items:center}.price strong{font-size:25px}.guate{display:block;padding:19px}.guate-tag{display:inline-block;margin-top:14px}}
 @media(max-width:380px){.hero{padding-left:17px;padding-right:17px}.device-stage{min-height:235px}.hero-mac{width:255px}.hero-phone{height:150px}.product-media{height:245px}}
+
+/* ==========================================================
+   EVOLUTION STORE · MOBILE OPTIMIZATION v50.9
+   Solo afecta la vista pública /views/dispositivos.html
+   ========================================================== */
+html,body{max-width:100%;overflow-x:hidden}
+a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+
+@media(max-width:680px){
+  body{
+    background:
+      radial-gradient(circle at 90% 1%,rgba(212,184,149,.10),transparent 24%),
+      #050505;
+  }
+  main{
+    width:100%;
+    max-width:none;
+    padding:112px max(10px,env(safe-area-inset-right)) calc(58px + env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));
+  }
+
+  /* HERO: más compacto y respirable en teléfono */
+  .hero{
+    min-height:0;
+    padding:21px 16px 15px;
+    gap:13px;
+    border-radius:23px;
+    box-shadow:0 22px 55px rgba(0,0,0,.30);
+  }
+  .hero:after{width:330px;height:330px;right:-190px;bottom:-220px}
+  .eyebrow{gap:7px;font-size:8px;letter-spacing:.12em}
+  .eyebrow:before{width:6px;height:6px;box-shadow:0 0 0 4px rgba(212,184,149,.07)}
+  h1{
+    margin:16px 0 13px;
+    max-width:100%;
+    font-size:clamp(3rem,14vw,4.2rem);
+    line-height:.88;
+    letter-spacing:-.067em;
+  }
+  .hero-copy{font-size:10.5px;line-height:1.62;max-width:96%}
+  .hero-badges{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:6px;
+    margin-top:16px;
+  }
+  .badge{
+    min-width:0;
+    padding:8px 8px;
+    text-align:center;
+    font-size:7.5px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .device-stage{
+    min-height:185px;
+    margin-top:2px;
+  }
+  .glass-orbit{inset:0;border-radius:20px}
+  .hero-mac{width:min(82%,260px);right:-3px;bottom:8px}
+  .hero-phone{height:132px;left:7px;top:25px}
+  .stage-chip{
+    padding:6px 7px;
+    border-radius:9px;
+    font-size:6.5px;
+  }
+  .stage-chip strong{font-size:8px;margin-top:2px}
+  .stage-chip.one{right:3px;top:11px}
+  .stage-chip.two{left:3px;bottom:4px}
+
+  /* CABECERA CATÁLOGO */
+  .store-head{
+    display:block;
+    margin:31px 4px 15px;
+  }
+  .store-head small{font-size:7.5px;margin-bottom:5px}
+  .store-head h2{font-size:clamp(1.9rem,9.5vw,2.55rem);line-height:.96}
+  .store-head p{
+    max-width:none;
+    margin-top:8px;
+    text-align:left;
+    font-size:9px;
+    line-height:1.55;
+  }
+
+  /* FILTROS: barra deslizable, cómoda para pulgar */
+  .filters{
+    position:sticky;
+    top:6px;
+    z-index:20;
+    display:flex;
+    flex-wrap:nowrap;
+    gap:6px;
+    overflow-x:auto;
+    margin:0 -2px 13px;
+    padding:7px 2px 8px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    background:linear-gradient(180deg,rgba(5,5,5,.96),rgba(5,5,5,.88) 76%,transparent);
+    -webkit-backdrop-filter:blur(18px) saturate(145%);
+    backdrop-filter:blur(18px) saturate(145%);
+  }
+  .filters::-webkit-scrollbar{display:none}
+  .filter{
+    flex:0 0 auto;
+    min-height:40px;
+    padding:10px 13px;
+    border-radius:999px;
+    font-size:8.5px;
+    white-space:nowrap;
+  }
+
+  /* PRODUCTOS: una tarjeta limpia por fila */
+  .grid{grid-template-columns:minmax(0,1fr);gap:12px}
+  .product{
+    min-width:0;
+    min-height:0;
+    border-radius:22px;
+    box-shadow:0 14px 36px rgba(0,0,0,.18);
+    transform:none!important;
+  }
+  .product:active{border-color:rgba(212,184,149,.24)}
+  .product-media{
+    height:220px;
+    padding:17px 16px 12px;
+  }
+  .product-media:after{width:210px;height:62px;bottom:7px}
+  .product-media img{max-width:88%;max-height:190px}
+  .product.iphone .product-media img{max-height:185px}
+  .product.mac .product-media img{max-width:92%;max-height:170px}
+
+  .product-body{padding:0 15px 15px}
+  .product-top{
+    align-items:center;
+    gap:7px;
+    margin-bottom:9px;
+  }
+  .product-type{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:7px;
+  }
+  .country{
+    flex:0 1 auto;
+    max-width:52%;
+    padding:5px 7px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:7px;
+  }
+  .product h3{
+    margin-bottom:6px;
+    font-size:23px;
+    line-height:1;
+    letter-spacing:-.045em;
+  }
+  .product p{
+    margin-bottom:11px;
+    font-size:9px;
+    line-height:1.55;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .customs-note{
+    margin-bottom:10px;
+    padding:8px 9px;
+    border-radius:10px;
+    font-size:7.5px;
+    line-height:1.45;
+  }
+  .specs{
+    flex-wrap:nowrap;
+    gap:5px;
+    overflow-x:auto;
+    margin:0 -1px 14px;
+    padding:0 1px 2px;
+    scrollbar-width:none;
+  }
+  .specs::-webkit-scrollbar{display:none}
+  .spec{
+    flex:0 0 auto;
+    padding:6px 8px;
+    font-size:7px;
+    white-space:nowrap;
+  }
+
+  .buy-row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    gap:10px;
+    padding-top:11px;
+    border-top:1px solid rgba(255,255,255,.055);
+  }
+  .price{min-width:0}
+  .price span{font-size:6.5px;margin-bottom:3px}
+  .price strong{font-size:23px;line-height:1}
+  .price del{font-size:8px;margin-top:3px}
+  .view-btn{
+    min-height:42px;
+    justify-content:center;
+    padding:10px 12px;
+    border-radius:12px;
+    font-size:8.5px;
+    gap:6px;
+  }
+  .view-btn b{font-size:13px}
+  .product-savings{margin-left:2px;padding:3px 4px;font-size:6px}
+
+  .empty{
+    min-height:210px;
+    border-radius:21px;
+    padding:28px 18px;
+  }
+  .empty .icon{font-size:25px}
+  .empty strong{font-size:18px}
+  .empty p{font-size:9px}
+
+  .guate{
+    display:block;
+    margin-top:13px;
+    padding:16px;
+    border-radius:19px;
+  }
+  .guate strong{font-size:15px}
+  .guate p{margin-top:5px;font-size:8.5px;line-height:1.5}
+  .guate-tag{display:inline-flex;margin-top:11px;padding:7px 9px;font-size:7.5px}
+}
+
+@media(max-width:430px){
+  main{padding-top:104px}
+  .hero{padding:19px 14px 13px}
+  h1{font-size:clamp(2.75rem,14.4vw,3.7rem)}
+  .hero-copy{font-size:10px}
+  .device-stage{min-height:172px}
+  .hero-mac{width:235px}
+  .hero-phone{height:122px;top:24px}
+  .product-media{height:205px}
+  .product-media img{max-height:178px}
+  .product.mac .product-media img{max-height:160px}
+  .product h3{font-size:21px}
+  .price strong{font-size:21px}
+}
+
+@media(max-width:360px){
+  .hero-badges{grid-template-columns:1fr 1fr}
+  .badge{padding-left:6px;padding-right:6px;font-size:7px}
+  .device-stage{min-height:160px}
+  .hero-mac{width:218px;right:-8px}
+  .hero-phone{height:113px;left:1px}
+  .buy-row{grid-template-columns:1fr}
+  .view-btn{width:100%}
+}
+
 </style>
 </head>
-<body>
+<body class="store-mobile-ready">
 <main>
   <section class="hero">
     <div>
@@ -117,9 +377,10 @@ h1{font-size:clamp(4rem,8vw,7.4rem);letter-spacing:-.075em;line-height:.84;margi
     return `<a class="product ${esc(p.category||'other')}" href="/venta.html?s=${encodeURIComponent(p.slug)}" data-category="${esc(p.category||'other')}">
       <div class="product-media"><img src="${esc(p.imagePath||'/img/product.png')}" alt="${esc(p.title)}"></div>
       <div class="product-body">
-        <div class="product-top"><span class="product-type">${esc(categoryLabel(p.category))}${p.brand?` · ${esc(p.brand)}`:''}</span><span class="country">${sold?'Agotado':'Guatemala'}</span></div>
+        <div class="product-top"><span class="product-type">${esc(categoryLabel(p.category))}${p.brand?` · ${esc(p.brand)}`:''}</span><span class="country ${p.importInfo?.originMarket==='usa'?'usa':''}">${sold?'Agotado':esc(p.importInfo?.originMarket==='usa'?(p.importInfo?.locationLabel||'Estados Unidos'):'Guatemala')}</span></div>
         <h3>${esc(p.title)}${p.featured?` <span style="color:#d4b895;font-size:14px">★</span>`:''}</h3>
         <p>${esc(p.subtitle||'Producto disponible en Evolution Devices Guatemala.')}</p>
+        ${p.importInfo?.requiresCustoms?`<div class="customs-note"><strong>${esc(p.importInfo.statusLabel||'Importación USA')}</strong> · El precio publicado no incluye aduana. Los cargos de importación se pagan por separado.</div>`:''}
         <div class="specs">${specs.map(x=>`<span class="spec">${esc(x)}</span>`).join('')}</div>
         <div class="buy-row"><div class="price"><span>${sold?'Sin disponibilidad':'Precio publicado'}</span><strong>${money(price)}</strong>${ref>price?`<del>${money(ref)}</del>`:''}</div>
         ${sold?`<span class="view-btn" style="opacity:.55">Agotado</span>`:`<span class="view-btn">Ver producto ${save?`<em class="product-savings">-${save}%</em>`:''} <b>→</b></span>`}</div>
