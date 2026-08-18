@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+<base href="/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Proyectos seleccionados de Evolution Design en arquitectura, diseño gráfico y diseño web.">
+<meta name="evolution-build" content="2026-08-18-portafolio-v1">
+<title>Proyectos · Evolution Design</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
+<style>
+@font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-v12-latin-regular.woff2') format('woff2')}
+@font-face{font-family:Inter;font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-v12-latin-500.woff2') format('woff2')}
+@font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-v12-latin-700.woff2') format('woff2')}
+:root{--bg:#050505;--panel:#0c0c0e;--panel2:#121215;--line:rgba(255,255,255,.09);--text:#f5f5f3;--muted:#919198;--soft:#66666d;--accent:#d4b895;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 80% 4%,rgba(212,184,149,.10),transparent 28%),radial-gradient(circle at 8% 62%,rgba(255,255,255,.025),transparent 25%),var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+main{max-width:1320px;margin:auto;padding:138px 24px 90px}
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.55fr);gap:34px;align-items:end;padding:26px 4px 46px;border-bottom:1px solid var(--line)}
+.eyebrow{display:flex;align-items:center;gap:9px;color:var(--accent);font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(212,184,149,.07)}
+h1{font-size:clamp(4.2rem,9vw,8rem);line-height:.84;letter-spacing:-.07em;margin:23px 0 18px;max-width:850px}h1 span{color:var(--accent)}
+.hero-copy{max-width:690px;color:#97979d;font-size:13px;line-height:1.75;margin:0}
+.hero-side{padding:20px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(150deg,rgba(255,255,255,.045),rgba(255,255,255,.012));box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.hero-side strong{display:block;font-size:13px;margin-bottom:8px}.hero-side p{margin:0;color:#7f7f86;font-size:10px;line-height:1.65}.hero-side .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:16px}.hero-side .mini div{padding:10px 8px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(0,0,0,.15);text-align:center}.hero-side b{display:block;font-size:17px;letter-spacing:-.04em}.hero-side span{display:block;margin-top:3px;color:#707077;font-size:7px;text-transform:uppercase;letter-spacing:.08em}
+.toolbar{position:sticky;top:122px;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 0 16px;background:linear-gradient(180deg,#050505 55%,rgba(5,5,5,.88),rgba(5,5,5,0));backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:rgba(255,255,255,.025);color:#8d8d94;border-radius:999px;padding:9px 12px;font:700 9px/1 Inter,sans-serif;cursor:pointer;transition:.2s var(--ease)}.filter:hover{color:#fff;border-color:rgba(255,255,255,.18)}.filter.active{background:var(--accent);border-color:var(--accent);color:#18130e;box-shadow:0 10px 26px rgba(212,184,149,.12)}
+.project-count{color:#66666d;font-size:9px;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;padding-top:6px}
+.card{position:relative;grid-column:span 4;min-height:390px;border:1px solid var(--line);border-radius:27px;overflow:hidden;background:#0b0b0d;cursor:pointer;isolation:isolate;box-shadow:0 22px 55px rgba(0,0,0,.26);transition:transform .42s var(--ease),border-color .3s ease,box-shadow .42s var(--ease)}
+.card.wide{grid-column:span 8}.card.tall{min-height:520px}.card:hover{transform:translateY(-5px);border-color:rgba(212,184,149,.25);box-shadow:0 32px 80px rgba(0,0,0,.40)}
+.card-media{position:absolute;inset:0}.card-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .75s var(--ease),filter .45s ease}.card:hover .card-media img{transform:scale(1.035)}
+.card-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 25%,rgba(0,0,0,.12) 45%,rgba(0,0,0,.92) 100%)}
+.card.web .card-media{padding:18px;background:radial-gradient(circle at 80% 8%,rgba(212,184,149,.11),transparent 28%),#0b0b0d}.card.web .card-media img{object-fit:contain;border-radius:16px;filter:drop-shadow(0 24px 34px rgba(0,0,0,.45))}.card.web .card-media:after{background:linear-gradient(180deg,transparent 28%,rgba(5,5,5,.16) 58%,rgba(5,5,5,.94) 100%)}
+.card-body{position:absolute;z-index:3;left:0;right:0;bottom:0;padding:22px}.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.tag{display:inline-flex;padding:7px 9px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(8,8,9,.56);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:7px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:#d7d7da}.open{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:14px;transition:.25s var(--ease)}.card:hover .open{background:var(--accent);color:#15100c;transform:rotate(-12deg)}
+.card h2{font-size:clamp(1.25rem,2.2vw,2rem);letter-spacing:-.045em;line-height:1.03;margin:0 0 7px}.card p{margin:0;color:#96969d;font-size:9.5px;line-height:1.55;max-width:520px}.card-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.card-meta span{padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.055);color:#8d8d94;font-size:7.5px}
+.card[hidden]{display:none!important}
+.cta{margin-top:32px;padding:28px;border:1px solid rgba(212,184,149,.18);border-radius:28px;background:radial-gradient(circle at 92% 0%,rgba(212,184,149,.11),transparent 30%),linear-gradient(145deg,rgba(212,184,149,.05),rgba(255,255,255,.015));display:flex;align-items:center;justify-content:space-between;gap:24px}.cta span{display:block;color:var(--accent);font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.13em}.cta h2{margin:7px 0 0;font-size:clamp(1.8rem,4vw,3.3rem);letter-spacing:-.055em}.cta-actions{display:flex;gap:8px;flex-wrap:wrap}.cta a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 15px;border-radius:13px;border:1px solid var(--line);font-size:9px;font-weight:800;background:rgba(255,255,255,.025)}.cta a.primary{background:var(--accent);border-color:var(--accent);color:#17120d}
+.modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.84);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}.modal.show{display:flex}.modal-card{width:min(1050px,100%);max-height:min(88vh,820px);overflow:auto;border:1px solid rgba(255,255,255,.12);border-radius:28px;background:#0b0b0d;box-shadow:0 38px 120px rgba(0,0,0,.72)}.modal-image{position:relative;min-height:430px;background:#080809}.modal-image img{display:block;width:100%;height:100%;max-height:620px;object-fit:contain}.modal-close{position:absolute;z-index:2;right:14px;top:14px;width:40px;height:40px;border:1px solid rgba(255,255,255,.15);border-radius:50%;background:rgba(7,7,8,.72);color:#fff;font-size:18px;cursor:pointer}.modal-copy{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;padding:22px 24px 25px;border-top:1px solid var(--line)}.modal-copy small{display:block;color:var(--accent);font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.12em;margin-bottom:7px}.modal-copy h3{font-size:26px;letter-spacing:-.045em;margin:0 0 7px}.modal-copy p{max-width:680px;margin:0;color:#88888f;font-size:10px;line-height:1.6}.service-link{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:0 14px;border-radius:12px;background:var(--accent);color:#17120d;font-size:9px;font-weight:850;white-space:nowrap}
+@media(max-width:1000px){main{padding-top:132px}.hero{grid-template-columns:1fr}.hero-side{max-width:600px}.toolbar{top:113px}.card{grid-column:span 6}.card.wide{grid-column:span 12}}
+@media(max-width:767.98px){main{padding:128px 11px 55px}.hero{padding:12px 10px 30px;gap:22px}h1{font-size:clamp(3.75rem,18vw,5.5rem)}.hero-copy{font-size:11px;line-height:1.62}.hero-side{padding:15px;border-radius:20px}.toolbar{top:112px;margin:0 -1px;padding:13px 1px 14px;align-items:flex-start}.filters{gap:5px}.filter{padding:8px 9px;font-size:7.5px}.project-count{display:none}.grid{gap:10px}.card,.card.wide{grid-column:span 12;min-height:360px;border-radius:21px}.card.tall{min-height:410px}.card-body{padding:17px}.card h2{font-size:1.45rem}.card p{font-size:9px}.card.web .card-media{padding:11px}.cta{margin-top:22px;padding:21px;border-radius:22px;display:block}.cta-actions{margin-top:17px}.modal{padding:0;align-items:flex-end}.modal-card{width:100%;max-height:92dvh;border-radius:24px 24px 0 0;border-bottom:0}.modal-image{min-height:280px}.modal-copy{grid-template-columns:1fr;padding:18px}.service-link{width:100%}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Evolution Design · Selección</div>
+      <h1>Proyectos que<br><span>hablan solos.</span></h1>
+      <p class="hero-copy">Una selección visual de arquitectura, piezas gráficas y experiencias web desarrolladas dentro del ecosistema Evolution Design. Filtra por disciplina y abre cualquier proyecto para verlo con mayor detalle.</p>
+    </div>
+    <aside class="hero-side">
+      <strong>Tres disciplinas. Un mismo estándar visual.</strong>
+      <p>Este espacio funciona como portafolio público. La zona privada de clientes ahora se muestra como <b style="color:#d8d8dc">Órdenes</b> y continúa funcionando en su ruta original.</p>
+      <div class="mini"><div><b>3</b><span>Áreas</span></div><div><b>10</b><span>Muestras</span></div><div><b>1</b><span>Estudio</span></div></div>
+    </aside>
+  </header>
+
+  <div class="toolbar">
+    <div class="filters" role="tablist" aria-label="Filtrar proyectos">
+      <button class="filter active" type="button" data-filter="all">Todos</button>
+      <button class="filter" type="button" data-filter="arquitectura">Arquitectura</button>
+      <button class="filter" type="button" data-filter="grafico">Diseño Gráfico</button>
+      <button class="filter" type="button" data-filter="web">Diseño Web</button>
+    </div>
+    <div class="project-count" id="projectCount">10 proyectos seleccionados</div>
+  </div>
+
+  <section class="grid" id="projectGrid">
+    <article class="card wide tall" data-category="arquitectura" data-title="Visualización arquitectónica nocturna" data-image="img/hero-pc.jpg" data-service="/arquitectura.html" data-description="Composición arquitectónica de atmósfera nocturna, iluminación cálida integrada y lenguaje contemporáneo minimalista.">
+      <div class="card-media"><img src="img/hero-pc.jpg" alt="Visualización arquitectónica nocturna" loading="eager"></div><div class="card-body"><div class="card-top"><span class="tag">Arquitectura · Visualización</span><span class="open">↗</span></div><h2>Arquitectura nocturna.</h2><p>Iluminación, materiales y atmósfera para comunicar el carácter del proyecto antes de construir.</p><div class="card-meta"><span>Render</span><span>Exterior</span><span>Iluminación</span></div></div>
+    </article>
+
+    <article class="card tall" data-category="grafico" data-title="No Temas · Diseño editorial" data-image="img/diseno-grafico/psd-01.jpg" data-service="/diseno-grafico.html" data-description="Composición gráfica de alto impacto con tratamiento fotográfico, tipografía protagonista y dirección visual cinematográfica.">
+      <div class="card-media"><img src="img/diseno-grafico/psd-01.jpg" alt="Proyecto gráfico No Temas" loading="lazy"></div><div class="card-body"><div class="card-top"><span class="tag">Diseño Gráfico</span><span class="open">↗</span></div><h2>No Temas.</h2><p>Dirección visual cinematográfica y composición de alto impacto.</p><div class="card-meta"><span>PSD</span><span>Composición</span></div></div>
+    </article>
+
+    <article class="card web" data-category="web" data-title="Plataforma para bufete legal" data-image="img/showcase-bufetes.png" data-service="/diseno-web.html" data-description="Concepto de experiencia web para servicios legales, con jerarquía premium, navegación clara y enfoque en conversión.">
+      <div class="card-media"><img src="img/showcase-bufetes.png" alt="Diseño web para bufete" loading="lazy"></div><div class="card-body"><div class="card-top"><span class="tag">Diseño Web · Legal</span><span class="open">↗</span></div><h2>Presencia legal premium.</h2><p>Jerarquía editorial, credibilidad y una experiencia enfocada en convertir visitas en consultas.</p><div class="card-meta"><span>UI/UX</span><span>Responsive</span></div></div>
+    </article>
+
+    <article class="card web wide" data-category="web" data-title="E-commerce familiar" data-image="img/showcase-ecommerce.png" data-service="/diseno-web.html" data-description="Interfaz de comercio electrónico con navegación por categorías, promociones, productos y arquitectura orientada a compra.">
+      <div class="card-media"><img src="img/showcase-ecommerce.png" alt="Diseño e-commerce" loading="lazy"></div><div class="card-body"><div class="card-top"><span class="tag">Diseño Web · E-commerce</span><span class="open">↗</span></div><h2>Comprar debe sentirse simple.</h2><p>Catálogo, categorías y promociones dentro de una interfaz clara y pensada para móvil.</p><div class="card-meta"><span>E-commerce</span><span>UI/UX</span><span>Responsive</span></div></div>
+    </article>
+
+    <article class="card" data-category="grafico" data-title="La Cena del Señor" data-image="img/diseno-grafico/psd-02.jpg" data-service="/diseno-grafico.html" data-description="Pieza editorial con dirección cálida, fotografía gastronómica y jerarquía tipográfica para comunicación de evento.">
+      <div class="card-media"><img src="img/diseno-grafico/psd-02.jpg" alt="Proyecto gráfico La Cena del Señor" loading="lazy"></div><div class="card-body"><div class="card-top"><span class="tag">Diseño Gráfico</span><span class="open">↗</span></div><h2>La Cena del Señor.</h2><p>Dirección cálida y composición editorial enfocada en atmósfera.</p><div class="card-meta"><span>Evento</span><span>PSD</span></div></div>
+    </article>
+
+    <article class="card" data-category="grafico" data-title="Match Day" data-image="img/diseno-grafico/psd-03.jpg" data-service="/diseno-grafico.html" data-description="Arte deportivo de tono oscuro con narrativa visual, contraste y composición para contenido digital.">
+      <div class="card-media"><img src="img/diseno-grafico/psd-03.jpg" alt="Proyecto gráfico deportivo" loading="lazy"></div><div class="card-body"><div class="card-top"><span class="tag">Diseño Gráfico · Sports</span><span class="open">↗</span></div><h2>Match Day.</h2><p>Composición deportiva diseñada para impacto rápido en redes.</p><div class="card-meta"><span>Social</span><span>Sports</span></div></div>
+    </article>
+
+    <article class="card web" data-category="web" data-title="Plataforma educativa" data-image="img/showcase-escuelas.png" data-service="/diseno-web.html" data-description="Experiencia digital educativa con navegación accesible, bloques informativos y llamadas a la acción pensadas para familias.">
+      <div class="card-media"><img src="img/showcase-escuelas.png" alt="Diseño web educativo" loading="lazy"></div><div class="card-body"><div class="card-top"><span class="tag">Diseño Web · Educación</span><span class="open">↗</span></div><h2>Experiencia educativa.</h2><p>Información organizada, navegación amable y presencia institucional moderna.</p><div class="card-meta"><span>Educación</span><span>Responsive</span></div></div>
+    </article>
+
+    <article class="card web wide" data-category="web" data-title="Portafolio técnico" data-image="img/showcase-portafolio.png" data-service="/diseno-web.html" data-description="Portafolio profesional para servicios técnicos, con estructura de proyectos, credenciales y contacto comercial.">
+      <div class="card-media"><img src="img/showcase-portafolio.png" alt="Portafolio técnico profesional" loading="lazy"></div><div class="card-body"><div class="card-top"><span class="tag">Diseño Web · Portafolio</span><span class="open">↗</span></div><h2>Trabajo técnico, bien presentado.</h2><p>Una experiencia profesional que convierte planos, servicios y experiencia en una marca digital creíble.</p><div class="card-meta"><span>Portafolio</span><span>Servicios</span><span>UI/UX</span></div></div>
+    </article>
+
+    <article class="card" data-category="grafico" data-title="Diseño PSD 04" data-image="img/diseno-grafico/psd-04.jpg" data-service="/diseno-grafico.html" data-description="Muestra de composición gráfica editable perteneciente a la biblioteca visual de Evolution Design.">
+      <div class="card-media"><img src="img/diseno-grafico/psd-04.jpg" alt="Proyecto gráfico PSD 04" loading="lazy"></div><div class="card-body"><div class="card-top"><span class="tag">Diseño Gráfico</span><span class="open">↗</span></div><h2>Composición PSD 04.</h2><p>Exploración visual editable para contenido digital.</p><div class="card-meta"><span>PSD</span><span>Editable</span></div></div>
+    </article>
+
+    <article class="card web" data-category="web" data-title="Experiencia corporativa" data-image="img/showcase-bufetes.png" data-service="/diseno-web.html" data-description="Muestra de diseño corporativo enfocada en confianza, claridad visual y narrativa de servicio.">
+      <div class="card-media"><img src="img/showcase-bufetes.png" alt="Experiencia web corporativa" loading="lazy"></div><div class="card-body"><div class="card-top"><span class="tag">Diseño Web · Corporate</span><span class="open">↗</span></div><h2>Diseño que transmite confianza.</h2><p>Lenguaje corporativo con una ejecución visual cuidada.</p><div class="card-meta"><span>Corporate</span><span>Premium UI</span></div></div>
+    </article>
+  </section>
+
+  <section class="cta">
+    <div><span>¿Tienes una idea?</span><h2>Convirtámosla en el próximo proyecto.</h2></div>
+    <div class="cta-actions"><a href="/arquitectura.html">Arquitectura</a><a href="/diseno-grafico.html">Diseño gráfico</a><a href="/diseno-web.html" class="primary">Diseño web →</a></div>
+  </section>
+</main>
+
+<div class="modal" id="projectModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-image"><button class="modal-close" id="modalClose" type="button" aria-label="Cerrar">×</button><img id="modalImg" alt=""></div>
+    <div class="modal-copy"><div><small id="modalCategory">Proyecto</small><h3 id="modalTitle">Proyecto</h3><p id="modalDescription"></p></div><a class="service-link" id="modalService" href="/">Ver servicio →</a></div>
+  </div>
+</div>
+
+<script>
+(()=>{
+  const buttons=[...document.querySelectorAll('.filter')];
+  const cards=[...document.querySelectorAll('.card')];
+  const count=document.getElementById('projectCount');
+  const modal=document.getElementById('projectModal');
+  const modalImg=document.getElementById('modalImg');
+  const modalTitle=document.getElementById('modalTitle');
+  const modalDescription=document.getElementById('modalDescription');
+  const modalCategory=document.getElementById('modalCategory');
+  const modalService=document.getElementById('modalService');
+  const close=document.getElementById('modalClose');
+
+  const updateCount=()=>{
+    const n=cards.filter(card=>!card.hidden).length;
+    count.textContent=`${n} ${n===1?'proyecto':'proyectos'} seleccionados`;
+  };
+
+  buttons.forEach(btn=>btn.addEventListener('click',()=>{
+    const filter=btn.dataset.filter;
+    buttons.forEach(x=>x.classList.toggle('active',x===btn));
+    cards.forEach(card=>card.hidden=filter!=='all'&&card.dataset.category!==filter);
+    updateCount();
+  }));
+
+  const openModal=card=>{
+    modalImg.src=card.dataset.image||'';
+    modalImg.alt=card.dataset.title||'Proyecto';
+    modalTitle.textContent=card.dataset.title||'Proyecto';
+    modalDescription.textContent=card.dataset.description||'';
+    const labels={arquitectura:'Arquitectura',grafico:'Diseño Gráfico',web:'Diseño Web'};
+    modalCategory.textContent=labels[card.dataset.category]||'Proyecto';
+    modalService.href=card.dataset.service||'/';
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+    document.documentElement.style.overflow='hidden';
+  };
+  const closeModal=()=>{
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden','true');
+    document.documentElement.style.overflow='';
+  };
+  cards.forEach(card=>{
+    card.tabIndex=0;
+    card.setAttribute('role','button');
+    card.addEventListener('click',()=>openModal(card));
+    card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(card)}});
+  });
+  close.addEventListener('click',closeModal);
+  modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+})();
+</script>
+</body>
+</html>
