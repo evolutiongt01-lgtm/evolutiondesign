@@ -2166,6 +2166,196 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
   }
 </style>
 
+
+<style id="evolution-graphic-modal-mobile-safearea-v46">
+  /* ==========================================================
+     V46 · MODALES MÓVILES SEGUROS BAJO LA NAV PERSISTENTE
+     Replica el comportamiento correcto de Diseño Web:
+     la X nunca queda escondida detrás del App Shell.
+     ========================================================== */
+  @media (max-width: 991.98px){
+    .gd-order-modal,
+    .login-modal-overlay{
+      inset:
+        calc(118px + env(safe-area-inset-top, 0px))
+        0
+        0
+        0 !important;
+      align-items:flex-start !important;
+      justify-content:center !important;
+      padding:
+        10px
+        max(10px, env(safe-area-inset-right, 0px))
+        max(10px, env(safe-area-inset-bottom, 0px))
+        max(10px, env(safe-area-inset-left, 0px)) !important;
+      overflow:hidden !important;
+    }
+
+    .gd-order-dialog{
+      width:min(980px,100%) !important;
+      max-height:
+        calc(
+          100dvh
+          - 138px
+          - env(safe-area-inset-top, 0px)
+          - env(safe-area-inset-bottom, 0px)
+        ) !important;
+      overflow:auto !important;
+      overscroll-behavior:contain;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    /* X del brief / Crear mi logo / diseño personalizado */
+    .gd-order-close{
+      top:10px !important;
+      right:10px !important;
+      z-index:60 !important;
+      width:44px !important;
+      height:44px !important;
+      min-width:44px !important;
+      min-height:44px !important;
+      display:grid !important;
+      place-items:center !important;
+      border:1px solid rgba(255,255,255,.20) !important;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.055)),
+        rgba(10,10,12,.82) !important;
+      color:#fff !important;
+      box-shadow:
+        0 12px 30px rgba(0,0,0,.38),
+        inset 0 1px 0 rgba(255,255,255,.24) !important;
+      -webkit-backdrop-filter:blur(22px) saturate(170%) !important;
+      backdrop-filter:blur(22px) saturate(170%) !important;
+    }
+    .gd-order-close svg{
+      width:19px !important;
+      height:19px !important;
+      stroke-width:2 !important;
+    }
+
+    /* Login: también queda debajo de la navegación */
+    .login-card{
+      max-height:
+        calc(
+          100dvh
+          - 138px
+          - env(safe-area-inset-top, 0px)
+          - env(safe-area-inset-bottom, 0px)
+        ) !important;
+      overflow:auto !important;
+      overscroll-behavior:contain;
+      -webkit-overflow-scrolling:touch;
+    }
+    .close-modal{
+      z-index:50 !important;
+      width:42px !important;
+      height:42px !important;
+      display:grid !important;
+      place-items:center !important;
+      border-radius:50% !important;
+      border:1px solid rgba(255,255,255,.16) !important;
+      background:rgba(18,18,20,.86) !important;
+      color:#fff !important;
+      line-height:1 !important;
+      -webkit-backdrop-filter:blur(18px) saturate(160%) !important;
+      backdrop-filter:blur(18px) saturate(160%) !important;
+      box-shadow:0 10px 26px rgba(0,0,0,.34) !important;
+    }
+
+    /* Lightbox del portafolio: su X era fixed y también podía quedar bajo la nav */
+    .gd-portfolio-lightbox{
+      inset:
+        calc(118px + env(safe-area-inset-top, 0px))
+        0
+        0
+        0 !important;
+      padding:
+        10px
+        max(10px, env(safe-area-inset-right, 0px))
+        max(10px, env(safe-area-inset-bottom, 0px))
+        max(10px, env(safe-area-inset-left, 0px)) !important;
+    }
+    .gd-lightbox-stage{
+      max-height:
+        calc(
+          100dvh
+          - 142px
+          - env(safe-area-inset-top, 0px)
+          - env(safe-area-inset-bottom, 0px)
+        ) !important;
+    }
+    .gd-lightbox-stage img{
+      max-height:
+        calc(
+          100dvh
+          - 205px
+          - env(safe-area-inset-top, 0px)
+          - env(safe-area-inset-bottom, 0px)
+        ) !important;
+    }
+    .gd-lightbox-close{
+      top:
+        calc(128px + env(safe-area-inset-top, 0px)) !important;
+      right:max(12px,env(safe-area-inset-right,0px)) !important;
+      z-index:70 !important;
+      width:44px !important;
+      height:44px !important;
+      border-color:rgba(255,255,255,.20) !important;
+      background:rgba(15,15,18,.88) !important;
+      color:#fff !important;
+      box-shadow:0 12px 30px rgba(0,0,0,.38) !important;
+      -webkit-backdrop-filter:blur(22px) saturate(170%) !important;
+      backdrop-filter:blur(22px) saturate(170%) !important;
+    }
+  }
+
+  @media (max-width: 575.98px){
+    .gd-order-modal,
+    .login-modal-overlay{
+      inset:
+        calc(116px + env(safe-area-inset-top, 0px))
+        0
+        0
+        0 !important;
+      padding:
+        8px
+        max(8px, env(safe-area-inset-right, 0px))
+        max(8px, env(safe-area-inset-bottom, 0px))
+        max(8px, env(safe-area-inset-left, 0px)) !important;
+    }
+
+    .gd-order-dialog{
+      max-height:
+        calc(
+          100dvh
+          - 132px
+          - env(safe-area-inset-top, 0px)
+          - env(safe-area-inset-bottom, 0px)
+        ) !important;
+      border-radius:18px !important;
+    }
+
+    .gd-order-close{
+      top:8px !important;
+      right:8px !important;
+    }
+
+    .gd-portfolio-lightbox{
+      inset:
+        calc(116px + env(safe-area-inset-top, 0px))
+        0
+        0
+        0 !important;
+      padding:8px !important;
+    }
+    .gd-lightbox-close{
+      top:
+        calc(124px + env(safe-area-inset-top, 0px)) !important;
+      right:max(9px,env(safe-area-inset-right,0px)) !important;
+    }
+  }
+</style>
+
 </head>
 <body data-evolution-view="grafico" class="graphic-page">
 <div id="evolution-view-auth-mirror" hidden aria-hidden="true">
