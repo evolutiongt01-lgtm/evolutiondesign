@@ -1,21 +1,21 @@
 {
-  "build": 44,
-  "version": "44",
+  "build": 45,
+  "version": "45",
   "announce": true,
   "required": false,
-  "subtitle": "Liquid Glass ahora se dibuja únicamente en bordes y reflejos: el contenido de la página permanece completamente visible durante todo el swipe.",
+  "subtitle": "Nueva sección pública de Proyectos integrada al Smart App Shell sin tocar la lógica privada de Órdenes.",
   "notes": [
     {
-      "title": "Sin panel translúcido",
-      "detail": "Se eliminó definitivamente la capa de vidrio que cubría el centro completo de la tarjeta."
+      "title": "Proyectos públicos",
+      "detail": "Arquitectura, Diseño Gráfico y Diseño Web ahora tienen un portafolio unificado con filtros y vista ampliada."
     },
     {
-      "title": "Glass en los bordes",
-      "detail": "El efecto Premium ahora usa contorno, reflejo superior, profundidad y la unión entre páginas."
+      "title": "Órdenes sigue intacto",
+      "detail": "La antigua sección Mis Proyectos conserva /proyectos.html, IDs, Firebase y toda su lógica; solo cambió el nombre visible."
     },
     {
-      "title": "Compatible entre navegadores",
-      "detail": "iPhone y Android usan la misma técnica segura, sin backdrop-filter de pantalla completa."
+      "title": "Swipe de 5 secciones",
+      "detail": "En móvil ahora puedes deslizar Inicio → Arquitectura → Diseño Gráfico → Diseño Web → Proyectos."
     }
   ]
 }
