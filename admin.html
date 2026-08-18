@@ -529,6 +529,11 @@
 .sold-action{border-color:rgba(224,184,116,.25)!important;color:#e0bf8e!important;background:rgba(224,184,116,.055)!important;font-weight:900!important;letter-spacing:.045em}.sold-action:hover{background:rgba(224,184,116,.11)!important}.sold-action.is-sold,.sold-action:disabled{opacity:.48;cursor:default}.sold-main{border-color:rgba(224,184,116,.32)!important;color:#ead0a8!important;background:linear-gradient(180deg,rgba(224,184,116,.13),rgba(224,184,116,.045))!important;font-weight:900!important;letter-spacing:.08em}.sold-main:hover{border-color:rgba(224,184,116,.48)!important;transform:translateY(-1px)}
 
 #tempSaleSourceOpenBtn{width:100%;min-height:39px;justify-content:center;border-color:rgba(126,171,255,.22);color:#a8ceff;background:rgba(70,120,205,.055)}
+
+.import-admin-head{display:flex!important;align-items:center;justify-content:space-between;gap:12px}
+.import-lock-btn{border:1px solid rgba(212,184,149,.2);border-radius:999px;padding:7px 10px;background:rgba(212,184,149,.05);color:#d7bb97;font-size:8px;font-weight:850;cursor:pointer}.import-lock-btn.unlocked{border-color:rgba(111,224,154,.22);color:#78d99d;background:rgba(111,224,154,.05)}
+.import-total-readonly{color:#d9bd99!important;font-weight:900!important}.final-price-admin{color:#8ee6ad!important;font-weight:950!important;font-size:14px!important}
+.import-cost-field:disabled{opacity:.55;cursor:not-allowed}
 </style>
 <style id="evolution-admin-performance">
 /* =========================================================
@@ -1506,9 +1511,9 @@ html.admin-page-hidden *{
         <div class="form-grid" style="margin-top:12px">
           <div class="field"><label>Grupo de opciones</label><input class="input" id="tempSaleGroupKey" maxlength="60" placeholder="Ej. iphone-13-pro"><div class="hint">Déjalo vacío si este producto no tendrá alternativas.</div></div>
           <div class="field"><label>Nombre de esta opción</label><input class="input" id="tempSaleOptionLabel" maxlength="100" placeholder="Ej. 256 GB · Azul · Como nuevo"><div class="hint">Es el texto principal de su tarjeta de opción.</div></div>
-          <div class="field full"><label>Link de Swappa · solo Administración</label><input class="input" id="tempSaleSourceUrl" maxlength="900" placeholder="https://swappa.com/listing/view/..."><div class="hint">Este enlace nunca se envía al cliente ni aparece en la ficha pública.</div></div>
-          <div class="field"><label>Estado de la fuente</label><select class="input" id="tempSaleSourceStatus"><option value="unverified">Sin verificar</option><option value="available">Disponible</option><option value="unavailable">No disponible / vendido</option></select></div>
-          <div class="field"><label>Verificación manual</label><button class="btn" id="tempSaleSourceOpenBtn" type="button" onclick="openTempSaleSource()">Abrir y verificar ↗</button><div class="hint" id="tempSaleSourceChecked">La disponibilidad se confirma manualmente.</div></div>
+          <div class="field full"><label>Enlace de Facebook Marketplace · solo Administración</label><input class="input" id="tempSaleSourceUrl" maxlength="900" placeholder="https://www.facebook.com/marketplace/item/..."><div class="hint">Este enlace es solo para Administración. Nunca se muestra al cliente.</div></div>
+          <div class="field"><label>Estado de la fuente</label><select class="input" id="tempSaleSourceStatus"><option value="unverified">Sin revisar</option><option value="available">Disponible</option><option value="unavailable">Vendido / no disponible</option></select></div>
+          <div class="field"><label>Verificación manual</label><button class="btn" id="tempSaleSourceOpenBtn" type="button" onclick="openTempSaleSource()">Abrir publicación ↗</button><div class="hint" id="tempSaleSourceChecked">Abre la publicación y marca manualmente si sigue disponible o ya fue vendida.</div></div>
         </div>
       </div>
     </div>
@@ -1534,20 +1539,19 @@ html.admin-page-hidden *{
     </div>
 
     <div class="section hidden" id="tempSaleCustomsSection">
-      <div class="section-h">Importación y aduana</div><div class="section-b">
-        <div class="store-admin-note"><strong>Artículo importado</strong><span>El precio del producto no incluye aduana. Al cambiar el estado a <b>En aduana</b>, el Worker notificará a los compradores con pedidos activos.</span></div>
+      <div class="section-h import-admin-head"><span>Importación incluida</span><button class="import-lock-btn" id="tempSaleImportLockBtn" type="button" onclick="toggleTempSaleImportLock()">🔒 Costos bloqueados</button></div>
+      <div class="section-b">
+        <div class="store-admin-note"><strong>Precio final para el cliente</strong><span>Evolution suma estos costos al precio del producto. El cliente paga un solo total y <b>no recibe un cobro de aduana por separado</b>. Para modificar flete o combustible, desbloquea los costos con el candado.</span></div>
         <div class="form-grid">
-          <div class="field"><label>Total base de aduana / factura Q</label><input class="input" id="tempSaleCustomsTotal" type="number" min="0" step="0.01" value="0"><div class="hint">Escribe el monto real o estimado antes de la reserva operativa.</div></div>
+          <div class="field"><label>Base aduanera del artículo Q</label><input class="input import-cost-field" id="tempSaleDeclaredValueGtq" type="number" min="0" step="0.01" value="0"><div class="hint">Escribe el valor en quetzales que usarás como base para el cálculo interno.</div></div>
+          <div class="field"><label>IVA importación · fijo 12% 🔒</label><input class="input" id="tempSaleCustomsIvaFixed" readonly value="Q0.00"><div class="hint">El 12% queda fijo dentro del sistema.</div></div>
+          <div class="field"><label>Flete y gestión de importación Q</label><input class="input import-cost-field" id="tempSaleCustomsTotal" type="number" min="0" step="0.01" value="0"><div class="hint">Editable para actualizar tarifas logísticas.</div></div>
+          <div class="field"><label>Recargo por combustible Q</label><input class="input import-cost-field" id="tempSaleFuelSurcharge" type="number" min="0" step="0.01" value="0"><div class="hint">Modifícalo cuando cambien los costos por combustible.</div></div>
+          <div class="field"><label>Reserva operativa %</label><input class="input import-cost-field" id="tempSaleCustomsSafetyPct" type="number" min="0" max="25" step="0.01" value="5"></div>
+          <div class="field"><label>Recepción de importación</label><select class="input import-cost-field" id="tempSaleQuickboxDeliveryMode"><option value="delivery">Entrega de importación · +Q55</option><option value="branch">Retiro en sucursal · Q0</option></select></div>
           <div class="field"><label>Referencia / documento</label><input class="input" id="tempSaleCustomsReference" maxlength="120" placeholder="Opcional"></div>
-          <div class="field"><label>Reserva operativa</label><input class="input" id="tempSaleCustomsSafetyPct" type="number" min="0" max="25" step="0.01" value="5"><div class="hint">Por defecto 5% de reserva operativa. No se aplica al envío fijo de proveedor logístico.</div></div>
-          <div class="field"><label>Recepción de importación</label><select class="input" id="tempSaleQuickboxDeliveryMode"><option value="delivery">Entrega de importación · +Q55</option><option value="branch">Retiro en sucursal · Q0</option></select><div class="hint">Q55 si solicitamos entrega del paquete; Q0 si se retira en sucursal.</div></div>
-          <div class="field"><label>Total previsto de importación</label><input class="input" id="tempSaleCustomsProjected" readonly value="Q0.00"></div>
-          <div class="field full"><div class="quickbox-reference">
-            <strong>Perfil de importación de referencia</strong>
-            <span>La factura que compartiste era de 3 lb, pero tenía 2 lb promocionales gratis. Para no subestimar futuros paquetes, el perfil fue recalculado como si las 3 lb hubieran sido cobradas.</span>
-            <div class="qb-grid"><b>Flete estimado <em>58.01%</em></b><b>Gestión aeropuerto <em>38.68%</em></b><b>Administrativo <em>3.31%</em></b><b>RETTA <em>0% · eliminado</em></b></div>
-            <small>El antiguo cargo de entrega de la factura de referencia no se usa. El sistema aplica la tarifa actual de <b>Q55</b> cuando eliges entrega de importación. La entrega final al cliente por Cargo Expreso, Forza o Guatex sigue siendo un proceso separado.</small>
-          </div></div>
+          <div class="field"><label>Total importación incluido</label><input class="input import-total-readonly" id="tempSaleCustomsProjected" readonly value="Q0.00"></div>
+          <div class="field full"><label>Precio final al cliente</label><input class="input final-price-admin" id="tempSaleFinalPrice" readonly value="Q0.00"><div class="hint">Precio producto + importación incluida. Los recargos del método de pago y envío nacional se calculan después.</div></div>
         </div>
       </div>
     </div>
@@ -1791,14 +1795,14 @@ function evolutionInvoiceEscape(v){return String(v??"").replace(/[&<>"']/g,c=>({
 function evolutionInvoicePaymentLabel(order){const map={cod_cargo:"Contra entrega · Cargo Expreso",cod_forza:"Contra entrega · Forza",transfer_shipping:"Transferencia bancaria",paypal_shipping:"PayPal",card_shipping:"Tarjeta débito/crédito",crypto_binance:"Binance Pay / Cripto",pickup_pana:"Entrega personal · Callejón Las Armonías",visacuotas:"Visacuotas / Recurrente"};return map[order?.paymentMethod]||order?.paymentMethodLabel||order?.paymentMethod||"—"}
 function evolutionInvoiceHtml(order){
   const esc=evolutionInvoiceEscape,money=evolutionInvoiceMoney;
-  const base=Number(order.basePriceGtq??order.productPriceGtq??order.totalGtq??0),surcharge=Number(order.surchargeGtq||0),shipping=Number(order.shippingGtq||0),orderTotal=Number(order.totalGtq||base+surcharge+shipping);
+  const base=Number(order.basePriceGtq??order.productPriceGtq??order.totalGtq??0),importIncluded=Number(order.importIncludedGtq??order.customsTotalGtq??0),surcharge=Number(order.surchargeGtq||0),shipping=Number(order.shippingGtq||0),orderTotal=Number(order.totalGtq||base+importIncluded+surcharge+shipping);
   const imp=order.importInfo||{},customsRequired=order.customsRequired===true||imp.originMarket==="usa",customsBase=Number(imp.customsBaseTotalGtq??order.customsBaseTotalGtq??0),reservePct=Number(imp.safetyPct??order.safetyPct??5),reserve=Number(imp.safetyGtq??order.safetyGtq??(customsBase*reservePct/100)),customsTotal=Number(imp.customsTotalGtq??order.customsTotalGtq??(customsBase+reserve)),breakdown=imp.customsBreakdown||order.customsBreakdown||{};
   const address=order.paymentMethod==="pickup_pana"?`${order.pickupLocation||"Callejón Las Armonías, Panajachel"}${order.pickupAppointmentLabel?` · Cita: ${order.pickupAppointmentLabel}`:""}`:[order.department,order.municipality,order.poblado,order.address,order.reference?`Ref: ${order.reference}`:""].filter(Boolean).join(" · ");
   const paid=order.paymentStatus==="paid",invoiceNo=`EV-COM-${String(order.orderId||order.id||Date.now()).replace(/[^a-zA-Z0-9-]/g,"").toUpperCase()}`;
-  const rows=[["Producto",order.productTitle||"Producto Evolution",base],...(surcharge>0?[["Recargo de método",evolutionInvoicePaymentLabel(order),surcharge]]:[]),...(shipping>0?[["Envío nacional","",shipping]]:[])];
+  const rows=[["Producto",order.productTitle||"Producto Evolution",base],...(importIncluded>0?[["Importación incluida","Gestión integral Evolution",importIncluded]]:[]),...(surcharge>0?[["Recargo de método",evolutionInvoicePaymentLabel(order),surcharge]]:[]),...(shipping>0?[["Envío nacional","",shipping]]:[])];
   const itemRows=rows.map(([label,desc,amount])=>`<tr><td><strong>${esc(label)}</strong>${desc?`<small>${esc(desc)}</small>`:""}</td><td>${money(amount)}</td></tr>`).join("");
-  const customsRows=customsRequired&&customsTotal>0?`<section class="import"><div class="section-title"><span>Importación</span><b>Pago separado</b></div><div class="import-grid"><div><small>Flete internacional</small><strong>${money(breakdown.freight||0)}</strong></div><div><small>Gestión aeropuerto</small><strong>${money(breakdown.airport||0)}</strong></div><div><small>Administrativo</small><strong>${money(breakdown.admin||0)}</strong></div><div><small>Reserva operativa ${reservePct}%</small><strong>${money(reserve)}</strong></div><div><small>Entrega de importación</small><strong>${money(breakdown.quickboxDelivery||0)}</strong></div></div><div class="import-total"><span>Total previsto de importación</span><strong>${money(customsTotal)}</strong></div><p>La entrega de importación es Q55 cuando se solicita entrega del paquete; si se retira en sucursal es Q0. Este cargo no lleva reserva operativa. RETTA no se incluye. La entrega final al cliente por Cargo Expreso, Forza o Guatex se gestiona aparte.</p></section>`:"";
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(invoiceNo)} · Evolution Design</title><style>*{box-sizing:border-box}body{margin:0;background:#efefef;color:#161616;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.sheet{width:min(820px,calc(100% - 28px));margin:28px auto;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.12)}.head{padding:28px 34px;background:#0a0a0c;color:#fff;display:flex;justify-content:space-between;gap:20px;align-items:center}.head .logo-screen,.head .logo-print{width:145px}.head .logo-print{display:none}.doc{text-align:right}.doc small{display:block;color:#c2a783;font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px}.doc strong{display:block;font-size:19px}.doc em{display:inline-block;margin-top:7px;padding:5px 7px;border:1px solid #5a4c3d;border-radius:999px;color:#cdb08c;font-size:8px;font-style:normal}.body{padding:30px 34px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}.card{padding:14px;border:1px solid #e7e7e7;border-radius:14px;background:#fafafa}.card span,.section-title span,.import-grid small{display:block;color:#7b7b80;font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}.card strong{font-size:12px;line-height:1.45}.items{width:100%;border-collapse:collapse;margin:8px 0 20px}.items th{padding:10px 12px;border-bottom:1px solid #ddd;color:#777;text-align:left;font-size:8px;text-transform:uppercase;letter-spacing:.1em}.items th:last-child,.items td:last-child{text-align:right}.items td{padding:13px 12px;border-bottom:1px solid #eee;font-size:11px}.items td small{display:block;color:#777;margin-top:3px}.total{display:flex;justify-content:space-between;align-items:end;padding:16px 18px;border-radius:15px;background:#0c0c0f;color:#fff;margin-bottom:20px}.total span{font-size:9px;color:#aaa}.total strong{font-size:24px;color:#dfc19d}.import{padding:17px;border:1px solid #eadbc8;border-radius:17px;background:#fffaf4;margin-bottom:20px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-title b{color:#9b7953;font-size:9px}.import-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.import-grid div{padding:10px;border-radius:11px;background:#fff;border:1px solid #eee4d8}.import-grid strong{font-size:11px}.import-total{display:flex;justify-content:space-between;gap:12px;padding-top:12px;margin-top:12px;border-top:1px solid #e7d7c4}.import-total span{font-size:9px;color:#7c6a56}.import-total strong{color:#9b7953}.import p{margin:10px 0 0;color:#827566;font-size:8px;line-height:1.55}.legal{padding:15px 16px;border-radius:14px;background:#f5f5f6;color:#696970;font-size:8px;line-height:1.6}.footer{padding:18px 34px 24px;text-align:center;color:#777;font-size:8px}.actions{position:sticky;bottom:12px;display:flex;justify-content:center;gap:8px;margin:0 auto 25px}.actions button{border:0;border-radius:999px;padding:11px 16px;background:#111;color:#fff;font-weight:800;cursor:pointer}.actions button.secondary{background:#d9d9dc;color:#111}@media(max-width:600px){.head,.body{padding-left:20px;padding-right:20px}.head{align-items:flex-start}.head .logo-screen,.head .logo-print{width:110px}.doc strong{font-size:14px}.meta{grid-template-columns:1fr}.import-grid{grid-template-columns:1fr 1fr}.sheet{margin:12px auto;border-radius:17px}}@media print{body{background:#fff}.sheet{width:100%;margin:0;box-shadow:none;border-radius:0}.actions{display:none}.logo-screen{display:none!important}.logo-print{display:block!important}}</style></head><body><main class="sheet"><header class="head"><img class="logo-screen" src="https://www.evolutiondesing.com/img/logo.png" alt="Evolution Design"><img class="logo-print" src="https://www.evolutiondesing.com/img/logo-factura-negro.png" alt="Evolution Design"><div class="doc"><small>Factura comercial</small><strong>${esc(invoiceNo)}</strong><em>Documento no FEL / no DTE</em></div></header><div class="body"><div class="meta"><div class="card"><span>Cliente</span><strong>${esc(order.customerName||order.recipientName||"Consumidor final")}</strong><br><small>${esc(order.ownerEmail||"")}</small></div><div class="card"><span>NIT / DPI</span><strong>${esc(order.nitDpi||"CF")}</strong></div><div class="card"><span>Fecha</span><strong>${esc(evolutionInvoiceDate(order.createdAt))}</strong></div><div class="card"><span>Método de pago</span><strong>${esc(evolutionInvoicePaymentLabel(order))}</strong><br><small>${paid?"Pago confirmado":order.paymentStatus==="pending_review"?"Pago en revisión":"Pago pendiente"}</small></div></div><div class="card" style="margin-bottom:18px"><span>Entrega</span><strong>${esc(address||"Por confirmar")}</strong>${order.phone?`<br><small>${esc(order.phone)}</small>`:""}</div><table class="items"><thead><tr><th>Concepto</th><th>Total</th></tr></thead><tbody>${itemRows}</tbody></table><div class="total"><div><span>Total del pedido</span><small style="display:block;color:#696970;margin-top:4px">No incluye cargos aduanales cuando correspondan.</small></div><strong>${money(orderTotal)}</strong></div>${customsRows}<div class="legal"><strong>Documento comercial generado por Evolution Design.</strong><br>Este documento sirve como comprobante interno/comercial de la operación. No es un Documento Tributario Electrónico (DTE) certificado bajo el Régimen FEL y no sustituye una factura fiscal autorizada por SAT.</div></div><footer class="footer">EVOLUTION GROUP · Evolution Design · www.evolutiondesing.com · support@evolutiondesing.com</footer></main><div class="actions"><button onclick="window.print()">Imprimir / Guardar PDF</button><button class="secondary" onclick="window.close()">Cerrar</button></div></body></html>`;
+  const customsRows="";
+  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(invoiceNo)} · Evolution Design</title><style>*{box-sizing:border-box}body{margin:0;background:#efefef;color:#161616;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.sheet{width:min(820px,calc(100% - 28px));margin:28px auto;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.12)}.head{padding:28px 34px;background:#0a0a0c;color:#fff;display:flex;justify-content:space-between;gap:20px;align-items:center}.head .logo-screen,.head .logo-print{width:145px}.head .logo-print{display:none}.doc{text-align:right}.doc small{display:block;color:#c2a783;font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px}.doc strong{display:block;font-size:19px}.doc em{display:inline-block;margin-top:7px;padding:5px 7px;border:1px solid #5a4c3d;border-radius:999px;color:#cdb08c;font-size:8px;font-style:normal}.body{padding:30px 34px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}.card{padding:14px;border:1px solid #e7e7e7;border-radius:14px;background:#fafafa}.card span,.section-title span,.import-grid small{display:block;color:#7b7b80;font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}.card strong{font-size:12px;line-height:1.45}.items{width:100%;border-collapse:collapse;margin:8px 0 20px}.items th{padding:10px 12px;border-bottom:1px solid #ddd;color:#777;text-align:left;font-size:8px;text-transform:uppercase;letter-spacing:.1em}.items th:last-child,.items td:last-child{text-align:right}.items td{padding:13px 12px;border-bottom:1px solid #eee;font-size:11px}.items td small{display:block;color:#777;margin-top:3px}.total{display:flex;justify-content:space-between;align-items:end;padding:16px 18px;border-radius:15px;background:#0c0c0f;color:#fff;margin-bottom:20px}.total span{font-size:9px;color:#aaa}.total strong{font-size:24px;color:#dfc19d}.import{padding:17px;border:1px solid #eadbc8;border-radius:17px;background:#fffaf4;margin-bottom:20px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-title b{color:#9b7953;font-size:9px}.import-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.import-grid div{padding:10px;border-radius:11px;background:#fff;border:1px solid #eee4d8}.import-grid strong{font-size:11px}.import-total{display:flex;justify-content:space-between;gap:12px;padding-top:12px;margin-top:12px;border-top:1px solid #e7d7c4}.import-total span{font-size:9px;color:#7c6a56}.import-total strong{color:#9b7953}.import p{margin:10px 0 0;color:#827566;font-size:8px;line-height:1.55}.legal{padding:15px 16px;border-radius:14px;background:#f5f5f6;color:#696970;font-size:8px;line-height:1.6}.footer{padding:18px 34px 24px;text-align:center;color:#777;font-size:8px}.actions{position:sticky;bottom:12px;display:flex;justify-content:center;gap:8px;margin:0 auto 25px}.actions button{border:0;border-radius:999px;padding:11px 16px;background:#111;color:#fff;font-weight:800;cursor:pointer}.actions button.secondary{background:#d9d9dc;color:#111}@media(max-width:600px){.head,.body{padding-left:20px;padding-right:20px}.head{align-items:flex-start}.head .logo-screen,.head .logo-print{width:110px}.doc strong{font-size:14px}.meta{grid-template-columns:1fr}.import-grid{grid-template-columns:1fr 1fr}.sheet{margin:12px auto;border-radius:17px}}@media print{body{background:#fff}.sheet{width:100%;margin:0;box-shadow:none;border-radius:0}.actions{display:none}.logo-screen{display:none!important}.logo-print{display:block!important}}</style></head><body><main class="sheet"><header class="head"><img class="logo-screen" src="https://www.evolutiondesing.com/img/logo.png" alt="Evolution Design"><img class="logo-print" src="https://www.evolutiondesing.com/img/logo-factura-negro.png" alt="Evolution Design"><div class="doc"><small>Factura comercial</small><strong>${esc(invoiceNo)}</strong><em>Documento no FEL / no DTE</em></div></header><div class="body"><div class="meta"><div class="card"><span>Cliente</span><strong>${esc(order.customerName||order.recipientName||"Consumidor final")}</strong><br><small>${esc(order.ownerEmail||"")}</small></div><div class="card"><span>NIT / DPI</span><strong>${esc(order.nitDpi||"CF")}</strong></div><div class="card"><span>Fecha</span><strong>${esc(evolutionInvoiceDate(order.createdAt))}</strong></div><div class="card"><span>Método de pago</span><strong>${esc(evolutionInvoicePaymentLabel(order))}</strong><br><small>${paid?"Pago confirmado":order.paymentStatus==="pending_review"?"Pago en revisión":"Pago pendiente"}</small></div></div><div class="card" style="margin-bottom:18px"><span>Entrega</span><strong>${esc(address||"Por confirmar")}</strong>${order.phone?`<br><small>${esc(order.phone)}</small>`:""}</div><table class="items"><thead><tr><th>Concepto</th><th>Total</th></tr></thead><tbody>${itemRows}</tbody></table><div class="total"><div><span>Total del pedido</span><small style="display:block;color:#696970;margin-top:4px">La gestión de importación ya está incluida cuando corresponda.</small></div><strong>${money(orderTotal)}</strong></div>${customsRows}<div class="legal"><strong>Documento comercial generado por Evolution Design.</strong><br>Este documento sirve como comprobante interno/comercial de la operación. No es un Documento Tributario Electrónico (DTE) certificado bajo el Régimen FEL y no sustituye una factura fiscal autorizada por SAT.</div></div><footer class="footer">EVOLUTION GROUP · Evolution Design · www.evolutiondesing.com · support@evolutiondesing.com</footer></main><div class="actions"><button onclick="window.print()">Imprimir / Guardar PDF</button><button class="secondary" onclick="window.close()">Cerrar</button></div></body></html>`;
 }
 function openEvolutionCommercialInvoice(order){if(!order)return;const popup=window.open("","_blank");if(!popup){alert("Permite ventanas emergentes para generar la factura.");return}popup.document.open();popup.document.write(evolutionInvoiceHtml(order));popup.document.close()}
 
@@ -1821,7 +1825,7 @@ window.openStoreOrder=function(orderId){
     ...(o.receiptStoragePath ? [['Comprobante','Recibido ✓']] : []),
     ...(o.trackingUrl ? [['Link de seguimiento','Publicado ✓']] : []),
     ...(Number(o.paidUsd||0)>0 ? [['Cobrado por PayPal',`$${Number(o.paidUsd).toFixed(2)} USD`]] : []),
-    ...(o.customsRequired ? [['Importación',storeImportStatusLabel(o.customsStatus||o.importInfo?.status)],['Aduana',Number(o.customsTotalGtq||0)>0?gtq(o.customsTotalGtq):'Pendiente']] : []),
+    ...(o.customsRequired ? [['Importación',storeImportStatusLabel(o.customsStatus||o.importInfo?.status)],['Importación incluida',Number(o.importIncludedGtq||o.customsTotalGtq||0)>0?gtq(o.importIncludedGtq||o.customsTotalGtq):'Incluida']] : []),
     ...(o.paymentMethod==='pickup_pana' ? [['Punto de encuentro',o.pickupLocation||'Callejón Las Armonías, Panajachel'],['Cita asignada',o.pickupAppointmentLabel||'Lunes a sábado · 2:00–5:00 p. m.']] : []),
     ...(o.paymentMethod==='visacuotas' ? [['Recargo Visacuotas','Se confirma en Recurrente']] : [])
   ].map(([l,v])=>`<div class="detail"><span>${esc(l)}</span><strong>${esc(v)}</strong></div>`).join('');
@@ -2009,9 +2013,9 @@ function renderTemporarySales(){
   const rows=Array.isArray(data.tempSales)?data.tempSales:[];
   if($('tempSaleCount'))$('tempSaleCount').textContent=String(rows.length);
   if($('tempSalesBody'))$('tempSalesBody').innerHTML=rows.map(s=>`<tr>
-    <td><div class="strong">${esc(s.title||s.slug)}${s.featured===true?' · ★':''}</div><div class="sub">${esc(s.brand||'')} ${esc(s.condition||'')}</div>${s.groupKey?`<div class="sub">Grupo: ${esc(s.groupKey)}${s.optionLabel?` · ${esc(s.optionLabel)}`:''}</div>`:''}${s.sourceInfo?.url?`<div class="sub">Fuente: ${s.sourceInfo.status==='available'?'Disponible':s.sourceInfo.status==='unavailable'?'No disponible':'Sin verificar'}</div>`:''}</td>
+    <td><div class="strong">${esc(s.title||s.slug)}${s.featured===true?' · ★':''}</div><div class="sub">${esc(s.brand||'')} ${esc(s.condition||'')}</div>${s.groupKey?`<div class="sub">Grupo: ${esc(s.groupKey)}${s.optionLabel?` · ${esc(s.optionLabel)}`:''}</div>`:''}${s.sourceInfo?.url?`<div class="sub">Facebook Marketplace: ${s.sourceInfo.status==='available'?'Disponible':s.sourceInfo.status==='unavailable'?'No disponible':'Sin verificar'}</div>`:''}</td>
     <td>${esc(tempSaleCategoryLabel(s.category))}</td>
-    <td><div class="strong">${esc(s.importInfo?.locationLabel||'Guatemala')}</div><div class="sub">${esc(storeImportStatusLabel(s.importInfo?.status))}</div></td>
+    <td>${(()=>{const st=s.importInfo?.status||'available_gt',imp=s.importInfo?.originMarket==='usa'||['usa_stock','in_transit','customs','released'].includes(st);const loc=imp?(st==='usa_stock'?'Estados Unidos':st==='in_transit'?'En tránsito hacia Guatemala':st==='customs'?'Aduana · Guatemala':st==='released'?'Guatemala · liberado':'Estados Unidos'):'Panajachel, Guatemala';return `<div class="strong">${esc(loc)}</div><div class="sub">${esc(storeImportStatusLabel(st))}</div>`})()}</td>
     <td>${gtq(s.priceGtq)}${Number(s.referencePriceGtq||0)>0?`<span class="store-price-ref">${gtq(s.referencePriceGtq)}</span>`:''}</td>
     <td>${esc(String(s.stock??0))}</td>
     <td><span class="pill ${s.active===false?'red':'green'}">${s.active===false?'Oculto':'Publicado'}</span></td>
@@ -2047,15 +2051,21 @@ window.openTempSaleEditor=function(slug=''){
   $('tempSaleOptionLabel').value=s.optionLabel||'';
   $('tempSaleSourceUrl').value=s.sourceInfo?.url||'';
   $('tempSaleSourceStatus').value=s.sourceInfo?.status||'unverified';
-  if($('tempSaleSourceChecked'))$('tempSaleSourceChecked').textContent=s.sourceInfo?.checkedAt?`Última revisión guardada: ${new Date(s.sourceInfo.checkedAt).toLocaleString('es-GT')}`:'La disponibilidad se confirma manualmente.';
-  $('tempSaleOriginMarket').value=s.importInfo?.originMarket||'guatemala';
-  $('tempSaleLocation').value=s.importInfo?.locationLabel||($('tempSaleOriginMarket').value==='usa'?'Estados Unidos':'Panajachel, Guatemala');
-  if($('tempSaleOriginMarket').value!=='usa'&&['guatemala','guatemala, guatemala'].includes($('tempSaleLocation').value.trim().toLowerCase()))$('tempSaleLocation').value='Panajachel, Guatemala';
-  $('tempSaleImportStatus').value=s.importInfo?.status||($('tempSaleOriginMarket').value==='usa'?'usa_stock':'available_gt');
+  if($('tempSaleSourceChecked'))$('tempSaleSourceChecked').textContent=s.sourceInfo?.checkedAt?`Última revisión guardada: ${new Date(s.sourceInfo.checkedAt).toLocaleString('es-GT')}`:'Abre la publicación y marca manualmente si sigue disponible o ya fue vendida.';
+  const savedImportStatus=s.importInfo?.status||'available_gt';
+  const savedIsUsa=s.importInfo?.originMarket==='usa'||['usa_stock','in_transit','customs','released'].includes(savedImportStatus);
+  $('tempSaleOriginMarket').value=savedIsUsa?'usa':'guatemala';
+  $('tempSaleImportStatus').value=savedIsUsa?(savedImportStatus==='available_gt'?'usa_stock':savedImportStatus):'available_gt';
+  $('tempSaleLocation').value=savedIsUsa
+    ?($('tempSaleImportStatus').value==='usa_stock'?'Estados Unidos':s.importInfo?.locationLabel||'Estados Unidos')
+    :'Panajachel, Guatemala';
   $('tempSaleCustomsTotal').value=s.importInfo?.customsBaseTotalGtq??s.importInfo?.customsTotalGtq??0;
   $('tempSaleCustomsReference').value=s.importInfo?.customsReference||'';
   $('tempSaleCustomsSafetyPct').value=s.importInfo?.safetyPct??5;
   $('tempSaleQuickboxDeliveryMode').value=s.importInfo?.quickboxDeliveryMode||'delivery';
+  $('tempSaleDeclaredValueGtq').value=s.importInfo?.declaredValueGtq??s.importInfo?.customsValuationGtq??0;
+  $('tempSaleFuelSurcharge').value=s.importInfo?.fuelSurchargeGtq??0;
+  setTempSaleImportLock(s.slug?(s.importInfo?.importCostLocked!==false):false);
   updateCustomsProjection();
   $('tempSaleSubtitle').value=s.subtitle||'';
   $('tempSaleImage').value=s.imagePath||'img/product.png';
@@ -2089,22 +2099,57 @@ window.openTempSaleEditor=function(slug=''){
   syncStoreImportFields();
   $('tempSaleModal').classList.add('show');
 }
-function updateCustomsProjection(){
-  const base=Math.max(0,Number($('tempSaleCustomsTotal')?.value||0));
-  const pct=Math.max(0,Number($('tempSaleCustomsSafetyPct')?.value||5));
-  const quickboxDelivery=$('tempSaleQuickboxDeliveryMode')?.value==='branch'?0:55;
-  const total=base*(1+pct/100)+quickboxDelivery;
-  if($('tempSaleCustomsProjected'))$('tempSaleCustomsProjected').value=gtq(total);
+let tempSaleImportLocked=false;
+function setTempSaleImportLock(locked){
+  tempSaleImportLocked=Boolean(locked);
+  document.querySelectorAll('.import-cost-field').forEach(el=>el.disabled=tempSaleImportLocked);
+  const btn=$('tempSaleImportLockBtn');
+  if(btn){
+    btn.textContent=tempSaleImportLocked?'🔒 Costos bloqueados':'🔓 Editando costos';
+    btn.classList.toggle('unlocked',!tempSaleImportLocked);
+  }
 }
-$('tempSaleCustomsTotal')?.addEventListener('input',updateCustomsProjection);
-$('tempSaleCustomsSafetyPct')?.addEventListener('input',updateCustomsProjection);
+window.toggleTempSaleImportLock=function(){
+  setTempSaleImportLock(!tempSaleImportLocked);
+  toast(tempSaleImportLocked?'Costos de importación bloqueados.':'Costos desbloqueados para edición.');
+}
+function updateCustomsProjection(){
+  const logistics=Math.max(0,Number($('tempSaleCustomsTotal')?.value||0));
+  const declared=Math.max(0,Number($('tempSaleDeclaredValueGtq')?.value||0));
+  const fuel=Math.max(0,Number($('tempSaleFuelSurcharge')?.value||0));
+  const iva=declared*.12;
+  const pct=Math.max(0,Number($('tempSaleCustomsSafetyPct')?.value||5));
+  const reserve=(logistics+fuel+iva)*(pct/100);
+  const importDelivery=$('tempSaleQuickboxDeliveryMode')?.value==='branch'?0:55;
+  const importTotal=logistics+fuel+iva+reserve+importDelivery;
+  const productPrice=Math.max(0,Number($('tempSalePrice')?.value||0));
+  if($('tempSaleCustomsIvaFixed'))$('tempSaleCustomsIvaFixed').value=gtq(iva);
+  if($('tempSaleCustomsProjected'))$('tempSaleCustomsProjected').value=gtq(importTotal);
+  if($('tempSaleFinalPrice'))$('tempSaleFinalPrice').value=gtq(productPrice+importTotal);
+}
+['tempSaleCustomsTotal','tempSaleDeclaredValueGtq','tempSaleFuelSurcharge','tempSaleCustomsSafetyPct','tempSalePrice'].forEach(id=>$(id)?.addEventListener('input',updateCustomsProjection));
 $('tempSaleQuickboxDeliveryMode')?.addEventListener('change',updateCustomsProjection);
 
-function syncStoreImportFields(){
-  const usa=$('tempSaleOriginMarket')?.value==='usa';
+function syncStoreImportFields(source='origin'){
+  const status=$('tempSaleImportStatus')?.value||'available_gt';
+  const statusForcesUsa=['usa_stock','in_transit','customs','released'].includes(status);
+
+  if(source==='status'&&statusForcesUsa)$('tempSaleOriginMarket').value='usa';
+
+  const usa=$('tempSaleOriginMarket')?.value==='usa'||statusForcesUsa;
+  if(usa)$('tempSaleOriginMarket').value='usa';
+
   $('tempSaleCustomsSection')?.classList.toggle('hidden',!usa);
-  if(usa&&$('tempSaleImportStatus').value==='available_gt')$('tempSaleImportStatus').value='usa_stock';
-  if(!usa){$('tempSaleImportStatus').value='available_gt';if(!$('tempSaleLocation').value.trim()||['guatemala','guatemala, guatemala'].includes($('tempSaleLocation').value.trim().toLowerCase()))$('tempSaleLocation').value='Panajachel, Guatemala'}
+
+  if(usa){
+    if($('tempSaleImportStatus').value==='available_gt')$('tempSaleImportStatus').value='usa_stock';
+    const current=$('tempSaleLocation').value.trim();
+    if($('tempSaleImportStatus').value==='usa_stock'&&!current.toLowerCase().includes('estados unidos'))$('tempSaleLocation').value='Estados Unidos';
+    if(['panajachel, guatemala','panajachel','guatemala'].includes($('tempSaleLocation').value.trim().toLowerCase()))$('tempSaleLocation').value='Estados Unidos';
+  }else{
+    $('tempSaleImportStatus').value='available_gt';
+    $('tempSaleLocation').value='Panajachel, Guatemala';
+  }
 
   const blocked=new Set(['cod_cargo','cod_forza','pickup_pana']);
   document.querySelectorAll('#tempSaleMethods input[type=checkbox]').forEach(cb=>{
@@ -2134,15 +2179,16 @@ function syncStoreImportFields(){
     note.style.display=usa?'block':'none';
   }
 }
-$('tempSaleOriginMarket')?.addEventListener('change',syncStoreImportFields);
+$('tempSaleOriginMarket')?.addEventListener('change',()=>syncStoreImportFields('origin'));
+$('tempSaleImportStatus')?.addEventListener('change',()=>syncStoreImportFields('status'));
 window.openTempSaleSource=function(){
   const raw=$('tempSaleSourceUrl')?.value.trim()||'';
-  if(!raw){toast('Primero pega el enlace de Swappa.');return}
+  if(!raw){toast('Primero pega el enlace de Facebook Marketplace.');return}
   try{
     const u=new URL(raw),host=u.hostname.toLowerCase();
-    if(u.protocol!=='https:'||!(host==='swappa.com'||host.endsWith('.swappa.com')))throw new Error();
+    if(u.protocol!=='https:'||!(host==='facebook.com'||host.endsWith('.facebook.com'))||!u.pathname.toLowerCase().includes('/marketplace/'))throw new Error();
     window.open(u.href,'_blank','noopener,noreferrer');
-  }catch(_){toast('Pega un enlace https:// válido de Swappa.')}
+  }catch(_){toast('Pega un enlace válido de Facebook Marketplace.')}
 }
 $('tempSaleSourceStatus')?.addEventListener('change',()=>{
   if($('tempSaleSourceStatus').value==='unavailable'){
@@ -2211,8 +2257,8 @@ window.saveTempSale=async function(){
       brand:$('tempSaleBrand').value.trim(),
       groupKey:$('tempSaleGroupKey').value.trim(),
       optionLabel:$('tempSaleOptionLabel').value.trim(),
-      sourceInfo:{provider:'swappa',url:$('tempSaleSourceUrl').value.trim(),status:$('tempSaleSourceStatus').value},
-      importInfo:{originMarket:$('tempSaleOriginMarket').value,locationLabel:$('tempSaleLocation').value.trim(),status:$('tempSaleImportStatus').value,customsBaseTotalGtq:Number($('tempSaleCustomsTotal').value||0),customsReference:$('tempSaleCustomsReference').value.trim(),safetyPct:Number($('tempSaleCustomsSafetyPct').value||5),quickboxDeliveryMode:$('tempSaleQuickboxDeliveryMode').value},
+      sourceInfo:{provider:'facebook_marketplace',url:$('tempSaleSourceUrl').value.trim(),status:$('tempSaleSourceStatus').value},
+      importInfo:{originMarket:$('tempSaleOriginMarket').value,locationLabel:$('tempSaleLocation').value.trim(),status:$('tempSaleImportStatus').value,logisticsGtq:Number($('tempSaleCustomsTotal').value||0),customsBaseTotalGtq:Number($('tempSaleCustomsTotal').value||0),fuelSurchargeGtq:Number($('tempSaleFuelSurcharge').value||0),customsReference:$('tempSaleCustomsReference').value.trim(),safetyPct:Number($('tempSaleCustomsSafetyPct').value||5),quickboxDeliveryMode:$('tempSaleQuickboxDeliveryMode').value,declaredValueGtq:Number($('tempSaleDeclaredValueGtq').value||0),customsIvaRatePct:12,customsIvaEnabled:true,importCostLocked:tempSaleImportLocked},
       subtitle:$('tempSaleSubtitle').value.trim(),
       imagePath:$('tempSaleImage').value.trim(),
       priceGtq:Number($('tempSalePrice').value),
