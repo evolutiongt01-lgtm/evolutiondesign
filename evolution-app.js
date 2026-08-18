@@ -2,8 +2,8 @@
 (() => {
   'use strict';
 
-  const VERSION='48.1';
-  const APP_BUILD=48;
+  const VERSION='49.4';
+  const APP_BUILD=49;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -279,6 +279,20 @@
 
         window.EvolutionShellAuth={
           get currentUser(){return shellAuth?.currentUser||null},
+          async signInGoogle(){
+            if(!shellAuth||!shellAuthModule)throw new Error('AUTH_NOT_READY');
+            const provider=new shellAuthModule.GoogleAuthProvider();
+            provider.setCustomParameters({prompt:'select_account'});
+            return shellAuthModule.signInWithPopup(shellAuth,provider);
+          },
+          async signInEmail(email,password){
+            if(!shellAuth||!shellAuthModule)throw new Error('AUTH_NOT_READY');
+            return shellAuthModule.signInWithEmailAndPassword(shellAuth,String(email||'').trim(),String(password||''));
+          },
+          async signUpEmail(email,password){
+            if(!shellAuth||!shellAuthModule)throw new Error('AUTH_NOT_READY');
+            return shellAuthModule.createUserWithEmailAndPassword(shellAuth,String(email||'').trim(),String(password||''));
+          },
           async signOut(){
             if(!shellAuth||!shellAuthModule)return;
             await shellAuthModule.signOut(shellAuth);
@@ -297,6 +311,160 @@
     })();
 
     return shellAuthReady;
+  };
+
+
+  /* ---------- GLOBAL AUTH MODAL ----------
+     Un único login para todas las vistas públicas. El usuario inicia sesión
+     sin abandonar la ruta actual (Home, Dispositivos, Proyectos, etc.).
+  */
+  let globalAuthMode='login';
+
+  const authErrorMessage=error=>{
+    const code=String(error?.code||error?.message||'');
+    const map={
+      'auth/invalid-email':'Escribe un correo válido.',
+      'auth/invalid-credential':'Correo o contraseña incorrectos.',
+      'auth/wrong-password':'Correo o contraseña incorrectos.',
+      'auth/user-not-found':'No encontramos una cuenta con ese correo.',
+      'auth/email-already-in-use':'Ese correo ya tiene una cuenta Evolution.',
+      'auth/weak-password':'La contraseña debe tener al menos 6 caracteres.',
+      'auth/popup-closed-by-user':'Cerraste la ventana de Google antes de terminar.',
+      'auth/popup-blocked':'Chrome bloqueó la ventana de Google. Permite pop-ups e inténtalo otra vez.',
+      'auth/cancelled-popup-request':'Ya hay una ventana de acceso abierta.',
+      'AUTH_NOT_READY':'Firebase todavía está iniciando. Inténtalo nuevamente.'
+    };
+    return map[code]||'No pudimos iniciar sesión. Inténtalo nuevamente.';
+  };
+
+  const ensureGlobalAuthModal=()=>{
+    let modal=document.getElementById('evolution-global-auth');
+    if(modal)return modal;
+
+    const style=document.createElement('style');
+    style.id='evolution-global-auth-style';
+    style.textContent=`
+      #evolution-global-auth{position:fixed;inset:0;z-index:2147483640;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));background:rgba(0,0,0,.66);-webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility 0s linear .2s;font-family:-apple-system,BlinkMacSystemFont,"Inter","SF Pro Display","Segoe UI",sans-serif;color:#f6f3ef}
+      #evolution-global-auth.show{opacity:1;visibility:visible;transition:opacity .2s ease}
+      #evolution-global-auth *{box-sizing:border-box}
+      .evo-auth-card{position:relative;width:min(430px,100%);overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:30px;background:radial-gradient(circle at 88% 5%,rgba(212,184,149,.15),transparent 34%),linear-gradient(145deg,rgba(255,255,255,.085),rgba(10,10,12,.92) 42%,rgba(5,5,7,.96));box-shadow:0 38px 100px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.10);-webkit-backdrop-filter:blur(30px) saturate(145%);backdrop-filter:blur(30px) saturate(145%);transform:translateY(10px) scale(.985);transition:transform .24s cubic-bezier(.16,1,.3,1)}
+      #evolution-global-auth.show .evo-auth-card{transform:none}
+      .evo-auth-head{padding:26px 26px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+      .evo-auth-kicker{color:#d6ba95;font-size:9px;font-weight:850;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+      .evo-auth-head h2{margin:0;font-size:28px;letter-spacing:-.045em}.evo-auth-head p{margin:7px 42px 0 0;color:#85858c;font-size:11px;line-height:1.55}
+      .evo-auth-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);color:#fff;font-size:20px;cursor:pointer}
+      .evo-auth-body{padding:22px 26px 26px}.evo-auth-google{width:100%;height:48px;border:1px solid rgba(255,255,255,.12);border-radius:15px;background:#f3f2ef;color:#111;font-weight:800;cursor:pointer}.evo-auth-google:disabled,.evo-auth-submit:disabled{opacity:.55;cursor:wait}
+      .evo-auth-divider{display:flex;align-items:center;gap:10px;margin:17px 0;color:#64646b;font-size:9px;text-transform:uppercase;letter-spacing:.08em}.evo-auth-divider:before,.evo-auth-divider:after{content:"";height:1px;flex:1;background:rgba(255,255,255,.08)}
+      .evo-auth-field{display:block;margin-bottom:11px}.evo-auth-field span{display:block;color:#8d8d94;font-size:9px;font-weight:700;margin:0 0 6px 2px}.evo-auth-field input{width:100%;height:46px;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:rgba(0,0,0,.28);color:#fff;padding:0 13px;outline:none;font:500 13px inherit}.evo-auth-field input:focus{border-color:rgba(212,184,149,.42);box-shadow:0 0 0 3px rgba(212,184,149,.07)}
+      .evo-auth-submit{width:100%;height:48px;border:0;border-radius:15px;background:linear-gradient(180deg,#e4c59f,#cba87e);color:#17110c;font-weight:850;cursor:pointer;box-shadow:0 14px 34px rgba(212,184,149,.12)}
+      .evo-auth-error{display:none;margin-top:12px;padding:10px 11px;border:1px solid rgba(255,105,105,.16);border-radius:11px;background:rgba(255,70,70,.06);color:#ffaaaa;font-size:10px;line-height:1.5}.evo-auth-error.show{display:block}
+      .evo-auth-switch{display:block;width:100%;margin-top:16px;border:0;background:transparent;color:#cbb08e;font-size:10px;font-weight:750;cursor:pointer}
+      .evo-auth-note{text-align:center;margin-top:13px;color:#5f5f66;font-size:8px;line-height:1.5}
+      @media(max-width:520px){.evo-auth-card{border-radius:25px}.evo-auth-head{padding:23px 20px 16px}.evo-auth-body{padding:19px 20px 22px}.evo-auth-head h2{font-size:25px}}
+    `;
+    document.head.appendChild(style);
+
+    modal=document.createElement('div');
+    modal.id='evolution-global-auth';
+    modal.setAttribute('aria-hidden','true');
+    modal.innerHTML=`<div class="evo-auth-card" role="dialog" aria-modal="true" aria-labelledby="evo-auth-title">
+      <button class="evo-auth-close" type="button" aria-label="Cerrar">×</button>
+      <div class="evo-auth-head">
+        <div class="evo-auth-kicker">Cuenta Evolution</div>
+        <h2 id="evo-auth-title">Iniciar sesión</h2>
+        <p id="evo-auth-subtitle">Accede sin abandonar la página en la que estás.</p>
+      </div>
+      <div class="evo-auth-body">
+        <button class="evo-auth-google" type="button">Continuar con Google</button>
+        <div class="evo-auth-divider">o con correo</div>
+        <form class="evo-auth-form">
+          <label class="evo-auth-field"><span>Correo</span><input class="evo-auth-email" type="email" autocomplete="email" required placeholder="tu@correo.com"></label>
+          <label class="evo-auth-field"><span>Contraseña</span><input class="evo-auth-password" type="password" autocomplete="current-password" minlength="6" required placeholder="••••••••"></label>
+          <button class="evo-auth-submit" type="submit">Iniciar sesión</button>
+        </form>
+        <div class="evo-auth-error" role="alert"></div>
+        <button class="evo-auth-switch" type="button">¿No tienes cuenta? Crear cuenta</button>
+        <div class="evo-auth-note">Tu sesión se mantiene con Firebase Authentication. No te enviaremos a Órdenes ni a otra sección.</div>
+      </div>
+    </div>`;
+    document.body.appendChild(modal);
+
+    const close=()=>{
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+      document.documentElement.style.overflow='';
+    };
+    const errorBox=modal.querySelector('.evo-auth-error');
+    const title=modal.querySelector('#evo-auth-title');
+    const subtitle=modal.querySelector('#evo-auth-subtitle');
+    const submit=modal.querySelector('.evo-auth-submit');
+    const switcher=modal.querySelector('.evo-auth-switch');
+    const password=modal.querySelector('.evo-auth-password');
+
+    const setMode=mode=>{
+      globalAuthMode=mode==='signup'?'signup':'login';
+      const signup=globalAuthMode==='signup';
+      title.textContent=signup?'Crear cuenta':'Iniciar sesión';
+      subtitle.textContent=signup?'Crea tu cuenta Evolution sin salir de esta página.':'Accede sin abandonar la página en la que estás.';
+      submit.textContent=signup?'Crear cuenta':'Iniciar sesión';
+      switcher.textContent=signup?'¿Ya tienes cuenta? Iniciar sesión':'¿No tienes cuenta? Crear cuenta';
+      password.autocomplete=signup?'new-password':'current-password';
+      errorBox.classList.remove('show');
+      errorBox.textContent='';
+    };
+
+    modal.querySelector('.evo-auth-close').addEventListener('click',close);
+    modal.addEventListener('click',e=>{if(e.target===modal)close()});
+    switcher.addEventListener('click',()=>setMode(globalAuthMode==='login'?'signup':'login'));
+
+    modal.querySelector('.evo-auth-google').addEventListener('click',async e=>{
+      const btn=e.currentTarget;
+      errorBox.classList.remove('show');
+      btn.disabled=true;btn.textContent='Abriendo Google…';
+      try{
+        await initShellAuth();
+        await window.EvolutionShellAuth.signInGoogle();
+        close();
+      }catch(error){
+        console.warn('Evolution Google Login:',error?.code||error);
+        errorBox.textContent=authErrorMessage(error);errorBox.classList.add('show');
+      }finally{btn.disabled=false;btn.textContent='Continuar con Google'}
+    });
+
+    modal.querySelector('.evo-auth-form').addEventListener('submit',async e=>{
+      e.preventDefault();
+      errorBox.classList.remove('show');
+      const email=modal.querySelector('.evo-auth-email').value.trim();
+      const pass=password.value;
+      submit.disabled=true;submit.textContent=globalAuthMode==='signup'?'Creando…':'Ingresando…';
+      try{
+        await initShellAuth();
+        if(globalAuthMode==='signup')await window.EvolutionShellAuth.signUpEmail(email,pass);
+        else await window.EvolutionShellAuth.signInEmail(email,pass);
+        close();
+      }catch(error){
+        console.warn('Evolution Email Login:',error?.code||error);
+        errorBox.textContent=authErrorMessage(error);errorBox.classList.add('show');
+      }finally{
+        submit.disabled=false;submit.textContent=globalAuthMode==='signup'?'Crear cuenta':'Iniciar sesión';
+      }
+    });
+
+    modal._evoOpen=()=>{
+      setMode('login');
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+      document.documentElement.style.overflow='hidden';
+      setTimeout(()=>modal.querySelector('.evo-auth-email')?.focus(),140);
+    };
+    modal._evoClose=close;
+    return modal;
+  };
+
+  const openGlobalAuthModal=async()=>{
+    await initShellAuth();
+    if(window.EvolutionShellAuth?.currentUser)return;
+    ensureGlobalAuthModal()._evoOpen?.();
   };
 
   /* ---------- SMART APP CSS ---------- */
@@ -3075,8 +3243,11 @@
   },true);
 
   document.addEventListener('evolution:auth-request',()=>{
-    activeFrame?.contentWindow?.postMessage({type:'evolution:auth-open'},location.origin);
+    /* El login vive en el Shell: no cambia de ruta ni manda a /proyectos.html. */
+    openGlobalAuthModal().catch(error=>console.warn('Evolution auth modal:',error?.code||error));
   });
+
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('evolution-global-auth')?._evoClose?.()});
 
   document.addEventListener('evolution:logout-request',()=>{
     logoutPending=true;
