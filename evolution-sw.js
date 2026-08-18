@@ -1,5 +1,5 @@
-/* Evolution Design · Advanced App Shell Service Worker · v35 · Public Projects */
-const VERSION='evolution-smart-app-v35-public-projects';
+/* Evolution Design · Advanced App Shell Service Worker · v36 · Graphic Modal Safe Area */
+const VERSION='evolution-smart-app-v36-graphic-modal-safearea';
 const APP_BUILD=45;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
