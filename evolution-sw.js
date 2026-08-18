@@ -1,5 +1,5 @@
-/* Evolution Design · Advanced App Shell Service Worker · v36 · Graphic Modal Safe Area */
-const VERSION='evolution-smart-app-v36-graphic-modal-safearea';
+/* Evolution Design · Advanced App Shell Service Worker · v37 · Local Anchor Router Fix */
+const VERSION='evolution-smart-app-v37-local-anchor-router';
 const APP_BUILD=45;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
