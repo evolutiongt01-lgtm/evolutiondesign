@@ -1,9 +1,9 @@
-/* Evolution Design · Smart App Shell · v44 · Edge-Only Liquid Glass */
+/* Evolution Design · Smart App Shell · v45 · Public Projects */
 (() => {
   'use strict';
 
-  const VERSION='44';
-  const APP_BUILD=44;
+  const VERSION='45';
+  const APP_BUILD=45;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -11,16 +11,17 @@
     home:{key:'home',path:'/index.html',view:'/views/home.html',title:'Evolution Design',order:0,transition:{x:0,y:5,scale:.999,blur:0}},
     arquitectura:{key:'arquitectura',path:'/arquitectura.html',view:'/views/arquitectura.html',title:'Arquitectura · Evolution Design',order:1,transition:{x:0,y:8,scale:.997,blur:1}},
     grafico:{key:'grafico',path:'/diseno-grafico.html',view:'/views/diseno-grafico.html',title:'Diseño Gráfico · Evolution Design',order:2,transition:{x:10,y:0,scale:.999,blur:0}},
-    web:{key:'web',path:'/diseno-web.html',view:'/views/diseno-web.html',title:'Diseño Web · Evolution Design',order:3,transition:{x:0,y:7,scale:.998,blur:2}}
+    web:{key:'web',path:'/diseno-web.html',view:'/views/diseno-web.html',title:'Diseño Web · Evolution Design',order:3,transition:{x:0,y:7,scale:.998,blur:2}},
+    portfolio:{key:'portfolio',path:'/portafolio.html',view:'/views/portafolio.html',title:'Proyectos · Evolution Design',order:4,transition:{x:0,y:6,scale:.998,blur:1}}
   };
 
   const ROUTE_LIST=Object.values(ROUTES);
   const PAYMENT_ROUTES=new Set(['arquitectura','grafico','web']);
   const PAYMENT_BRIDGE='/evolution-payments.js?v=21';
 
-  /* Orden de navegación táctil móvil. Mis Proyectos queda fuera porque
+  /* Orden de navegación táctil móvil. Órdenes queda fuera porque
      es una zona privada y no pertenece al App Shell público. */
-  const MOBILE_SWIPE_ORDER=['home','arquitectura','grafico','web'];
+  const MOBILE_SWIPE_ORDER=['home','arquitectura','grafico','web','portfolio'];
   const MOBILE_SWIPE_COMMIT_PROGRESS=.60;
   const PRIVATE_HINTS=['/proyectos','/perfil','/admin','/portal','/account','/checkout','/payment','/pago','/login','/api/'];
   const prefetchedViews=new Set();
@@ -61,7 +62,7 @@
   let swipePremiumLocked=false;
   let swipePlatform='other';
 
-  const SWIPE_TIER_STATE_BUILD=44;
+  const SWIPE_TIER_STATE_BUILD=45;
 
   /* ---------- PERSISTENT AUTH UI STATE ----------
      La sesión real sigue perteneciendo a Firebase dentro de las vistas.
@@ -799,6 +800,7 @@
     if(p.includes('arquitectura'))return ROUTES.arquitectura;
     if(p.includes('diseno-grafico'))return ROUTES.grafico;
     if(p.includes('diseno-web'))return ROUTES.web;
+    if(p.includes('portafolio'))return ROUTES.portfolio;
     return ROUTES.home;
   };
 
@@ -815,13 +817,14 @@
       if(PRIVATE_HINTS.some(x=>p.includes(x)))return null;
 
       /* IMPORTANTE:
-         Solo estas cuatro rutas pertenecen al router público.
+         Solo estas cinco rutas pertenecen al router público.
          Un enlace interno, feedback, sobre-nosotros, archivo, etc.
          jamás debe convertirse accidentalmente en Home. */
       if(p==='/'||p==='/index.html')return ROUTES.home;
       if(p==='/arquitectura'||p==='/arquitectura.html')return ROUTES.arquitectura;
       if(p==='/diseno-grafico'||p==='/diseno-grafico.html')return ROUTES.grafico;
       if(p==='/diseno-web'||p==='/diseno-web.html')return ROUTES.web;
+      if(p==='/portafolio'||p==='/portafolio.html')return ROUTES.portfolio;
 
       return null;
     }catch(_){return null}
