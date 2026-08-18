@@ -1562,7 +1562,7 @@ html.admin-page-hidden *{
         <div class="form-grid">
           <div class="field"><label>Recargo contra entrega %</label><input class="input" id="tempSaleCodPct" type="number" min="0" max="30" step="0.01" value="7"></div>
           <div class="field"><label>Recargo PayPal / tarjeta %</label><input class="input" id="tempSalePaypalPct" type="number" min="0" max="30" step="0.01" value="0"></div>
-          <div class="field"><label>Envío nacional Q</label><input class="input" id="tempSaleShipping" type="number" min="0" max="5000" step="0.01" value="40"></div>
+          <div class="field"><label>Envío nacional Q</label><input class="input" id="tempSaleShipping" type="number" min="0" max="5000" step="0.01" value="40"><div class="hint">Guatemala: configurable. Estados Unidos: Q0 automático porque este cargo ya está contemplado dentro de la importación.</div></div>
           <div class="field"><label>Link Visacuotas / Recurrente</label><input class="input" id="tempSaleVisacuotas" maxlength="900" placeholder="https://app.recurrente.com/..."></div>
           <div class="field full">
             <label>Métodos habilitados</label>
@@ -2085,7 +2085,7 @@ window.openTempSaleEditor=function(slug=''){
   $('tempSaleVisacuotas').value=s.visacuotasUrl||'';
   $('tempSaleCodPct').value=s.pricing?.codSurchargePct??7;
   $('tempSalePaypalPct').value=s.pricing?.paypalSurchargePct??0;
-  $('tempSaleShipping').value=s.pricing?.shippingGtq??40;
+  $('tempSaleShipping').value=savedIsUsa?0:(s.pricing?.shippingGtq??40);
   $('tempSaleWeight').value=s.package?.weight||1;
   $('tempSaleLength').value=s.package?.length||20;
   $('tempSaleWidth').value=s.package?.width||15;
@@ -2138,6 +2138,20 @@ function syncStoreImportFields(source='origin'){
 
   const usa=$('tempSaleOriginMarket')?.value==='usa'||statusForcesUsa;
   if(usa)$('tempSaleOriginMarket').value='usa';
+
+  const shippingInput=$('tempSaleShipping');
+  if(shippingInput){
+    if(usa){
+      if(Number(shippingInput.value||0)>0)shippingInput.dataset.localShipping=shippingInput.value;
+      shippingInput.value=0;
+      shippingInput.disabled=true;
+      shippingInput.title='USA: este cargo ya está incluido dentro de la importación.';
+    }else{
+      shippingInput.disabled=false;
+      if(Number(shippingInput.value||0)===0)shippingInput.value=shippingInput.dataset.localShipping||40;
+      shippingInput.title='';
+    }
+  }
 
   $('tempSaleCustomsSection')?.classList.toggle('hidden',!usa);
 
@@ -2277,7 +2291,7 @@ window.saveTempSale=async function(){
       pricing:{
         codSurchargePct:Number($('tempSaleCodPct').value||0),
         paypalSurchargePct:Number($('tempSalePaypalPct').value||0),
-        shippingGtq:Number($('tempSaleShipping').value||0)
+        shippingGtq:$('tempSaleOriginMarket').value==='usa'?0:Number($('tempSaleShipping').value||0)
       },
       active:$('tempSaleActive').checked,
       package:{
