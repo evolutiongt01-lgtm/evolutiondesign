@@ -1599,6 +1599,153 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 .import-terms ul{margin:0;padding:0 0 0 14px;color:#7f7f86;font-size:7.5px;line-height:1.55}.import-terms li+li{margin-top:3px}
 
 .allin-import-message{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin:11px 0;padding:11px;border:1px solid rgba(111,224,154,.15);border-radius:13px;background:rgba(111,224,154,.035)}.allin-import-icon{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(111,224,154,.08);border:1px solid rgba(111,224,154,.17);color:#7ddd9f;font-weight:900}.allin-import-message strong{display:block;color:#d8f4e1;font-size:9px}.allin-import-message span{display:block;margin-top:3px;color:#7d8a81;font-size:7.5px;line-height:1.45}.import-eta{padding:10px 11px;border:1px solid rgba(255,255,255,.065);border-radius:12px;background:rgba(0,0,0,.14)}.import-eta span{display:block;color:#85858c;font-size:6.8px;text-transform:uppercase;letter-spacing:.1em}.import-eta strong{display:block;margin-top:3px;color:#f0d1a8;font-size:15px}.import-eta small{display:block;margin-top:4px;color:#727279;font-size:7px;line-height:1.45}
+
+
+/* ==========================================================
+   V50.27 · PRODUCT PAGE DESKTOP OPTIMIZATION + CURVED IMAGES
+   Visual-only overrides. Checkout/business logic untouched.
+   ========================================================== */
+
+/* Long temporary-sale titles: avoid Mac / Book / (Reti / na) breaks. */
+.sale-product-title{
+  max-width:100%;
+  font-size:clamp(3rem,4.75vw,4.9rem);
+  line-height:.89;
+  letter-spacing:-.062em;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  hyphens:none!important;
+  text-wrap:balance;
+}
+.sale-product-title.sale-title-long{
+  font-size:clamp(2.72rem,4.15vw,4.35rem);
+}
+.sale-product-title.sale-title-xlong{
+  font-size:clamp(2.5rem,3.72vw,4rem);
+  line-height:.92;
+}
+
+/* Prevent the left product card from stretching to the full checkout height. */
+.hero{align-items:start!important}
+.hero-card,.purchase-card{align-self:start}
+
+/* Desktop proportions: a little more room for product info + laptop image. */
+@media(min-width:1180px){
+  .wrap{max-width:1260px}
+  .hero{
+    grid-template-columns:minmax(0,1.12fr) minmax(430px,.78fr);
+    gap:22px;
+  }
+  .hero-card{padding:40px 38px 34px}
+  .purchase-card{padding:23px}
+}
+
+/* Product-aware layout for MacBook/laptop listings. */
+@media(min-width:901px){
+  body.sale-laptop .hero-card{
+    grid-template-columns:minmax(0,1.42fr) minmax(230px,.66fr)!important;
+    column-gap:22px!important;
+    align-items:center!important;
+  }
+  body.sale-laptop .phone-stage{
+    min-height:320px!important;
+  }
+  body.sale-laptop .product-phone-img{
+    width:min(100%,410px)!important;
+    max-width:410px!important;
+    max-height:310px!important;
+  }
+
+  /* Compact desktop checkout without removing any controls. */
+  .purchase-card .form{padding-top:14px}
+  .purchase-card .section-label{margin:14px 0 7px}
+  .purchase-card .fields{gap:7px}
+  .purchase-card .field label{margin-bottom:5px}
+  .purchase-card .input{padding:10px 11px}
+  .purchase-card textarea.input{min-height:68px}
+  .purchase-card .account-bar{margin-bottom:13px}
+  .purchase-card .summary{margin:14px 0 11px}
+}
+
+@media(min-width:901px) and (max-width:1179px){
+  .wrap{max-width:1120px;padding-inline:16px}
+  .hero{
+    grid-template-columns:minmax(0,1.08fr) minmax(395px,.82fr);
+    gap:18px;
+  }
+}
+
+/* Tablet/mobile title balance. */
+@media(max-width:900px){
+  .sale-product-title{
+    max-width:78%;
+    font-size:clamp(2.65rem,12.3vw,4.15rem);
+    line-height:.9;
+  }
+  .sale-product-title.sale-title-long{
+    font-size:clamp(2.42rem,11vw,3.7rem);
+  }
+  .sale-product-title.sale-title-xlong{
+    font-size:clamp(2.2rem,10vw,3.35rem);
+  }
+}
+
+/* ==========================================================
+   CURVED IMAGE FRAMES
+   Gives every product photo/gallery a softer Apple-like radius.
+   ========================================================== */
+
+/* Main product glass frame + actual image. */
+.phone-stage-glass{
+  border-radius:38px!important;
+  overflow:hidden!important;
+}
+.phone-stage-glass:before{
+  border-radius:30px!important;
+}
+.product-phone-img{
+  border-radius:26px!important;
+}
+
+/* Real-device gallery: big image + thumbnails. */
+.real-device-gallery{
+  border-radius:28px!important;
+}
+.real-gallery-stage{
+  border-radius:26px!important;
+  overflow:hidden!important;
+}
+.real-gallery-stage img{
+  border-radius:18px!important;
+}
+.real-gallery-thumb{
+  border-radius:15px!important;
+}
+.real-gallery-thumb img{
+  border-radius:13px!important;
+}
+
+/* Multi-unit / option cards. */
+.sale-option-photo{
+  border-radius:15px!important;
+  overflow:hidden!important;
+}
+.sale-option-photo img{
+  border-radius:11px!important;
+}
+
+/* Mobile: keep the curves but scale them naturally. */
+@media(max-width:767.98px){
+  .phone-stage-glass{border-radius:28px!important}
+  .phone-stage-glass:before{border-radius:21px!important}
+  .product-phone-img{border-radius:20px!important}
+  .real-device-gallery{border-radius:22px!important}
+  .real-gallery-stage{border-radius:20px!important}
+  .real-gallery-stage img{border-radius:14px!important}
+  .real-gallery-thumb{border-radius:13px!important}
+  .real-gallery-thumb img{border-radius:11px!important}
+}
+
 </style>
 
 <style id="evo-origin-delivery-v5017">
@@ -1916,9 +2063,22 @@ function saleEscape(value=""){
   return String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 }
 function saleTitleMarkup(title="Producto Evolution"){
-  const words=String(title).trim().split(/\s+/).filter(Boolean);
-  if(words.length<=1)return saleEscape(title);
-  const split=Math.max(1,Math.ceil(words.length*.55));
+  let raw=String(title||"Producto Evolution").trim();
+
+  // Presentation only: normalize a trailing "- 15\"" into "· 15″".
+  raw=raw
+    .replace(/\s*-\s*(?=\d{1,2}\s*(?:"|″|”)?\s*$)/, " · ")
+    .replace(/(\d{1,2})"/g, "$1″");
+
+  // Keep product family/model together; year/configuration goes on line 2.
+  const yearMatch=raw.match(/^(.*?)(\b(?:19|20)\d{2}\b.*)$/);
+  if(yearMatch&&yearMatch[1].trim()){
+    return `${saleEscape(yearMatch[1].trim())}<br><span>${saleEscape(yearMatch[2].trim())}</span>`;
+  }
+
+  const words=raw.split(/\s+/).filter(Boolean);
+  if(words.length<=1)return saleEscape(raw);
+  const split=Math.max(1,Math.min(words.length-1,Math.ceil(words.length*.5)));
   return `${saleEscape(words.slice(0,split).join(" "))}<br><span>${saleEscape(words.slice(split).join(" "))}</span>`;
 }
 
@@ -1983,6 +2143,9 @@ function applyTemporarySale(){
   document.title=`${title} · Evolution Design`;
   $("navUser").textContent=`Venta temporal · ${title}`;
   $("saleTitle").innerHTML=saleTitleMarkup(title);
+  $("saleTitle").classList.toggle("sale-title-long",title.length>23);
+  $("saleTitle").classList.toggle("sale-title-xlong",title.length>34);
+  document.body.classList.toggle("sale-laptop",/macbook|laptop|notebook/i.test(title));
   $("saleSubtitle").textContent=sale.subtitle||`${title} disponible por tiempo limitado en Evolution Design.`;
   $("salePrice").textContent=money(sale.finalPriceGtq??config?.finalPriceGtq??sale.priceGtq??config?.basePriceGtq??0);
   const ref=Number(sale.finalReferencePriceGtq||sale.referencePriceGtq||0),now=Number(sale.finalPriceGtq??config?.finalPriceGtq??sale.priceGtq??config?.basePriceGtq??0);
