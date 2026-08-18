@@ -1011,7 +1011,6 @@ html.admin-page-hidden *{
         <div class="panel-copy">Administra el catálogo público de Dispositivos sin editar HTML: productos, precios, stock, imágenes, pagos y publicación.</div>
       </div>
       <div class="form-actions" style="margin:0">
-        <button class="btn" type="button" onclick="seedStoreProducts()">Importar iPhone + Mac</button>
         <button class="btn" type="button" onclick="testStoreEmail()">Probar correo</button>
         <button class="btn btn-accent" type="button" onclick="openTempSaleEditor()">+ Nuevo producto</button>
       </div>
@@ -1023,7 +1022,7 @@ html.admin-page-hidden *{
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th>Publicación</th><th></th></tr></thead>
+          <thead><tr><th>Producto</th><th>Categoría</th><th>Ubicación</th><th>Precio</th><th>Stock</th><th>Estado</th><th>Publicación</th><th></th></tr></thead>
           <tbody id="tempSalesBody"></tbody>
         </table>
       </div>
@@ -1473,6 +1472,9 @@ html.admin-page-hidden *{
             <option value="other">Otro</option>
           </select></div>
           <div class="field"><label>Marca</label><input class="input" id="tempSaleBrand" maxlength="80" placeholder="Apple, Samsung, Lenovo…"></div>
+          <div class="field"><label>Mercado / procedencia</label><select class="input" id="tempSaleOriginMarket"><option value="guatemala">Guatemala</option><option value="usa">Estados Unidos</option></select></div>
+          <div class="field"><label>Ubicación actual</label><input class="input" id="tempSaleLocation" maxlength="120" placeholder="Ej. Houston, TX · Estados Unidos"></div>
+          <div class="field"><label>Estado logístico</label><select class="input" id="tempSaleImportStatus"><option value="available_gt">Disponible en Guatemala</option><option value="usa_stock">En Estados Unidos</option><option value="in_transit">En tránsito a Guatemala</option><option value="customs">En aduana</option><option value="released">Liberado de aduana</option></select></div>
           <div class="field full"><label>Descripción corta</label><textarea class="textarea" id="tempSaleSubtitle" maxlength="500" placeholder="Descripción del equipo, procedencia, estado y puntos fuertes…"></textarea></div>
           <div class="field"><label>Precio actual Q</label><input class="input" id="tempSalePrice" type="number" min="1" step="0.01"></div>
           <div class="field"><label>Precio de referencia Q</label><input class="input" id="tempSaleReferencePrice" type="number" min="0" step="0.01" placeholder="Opcional"></div>
@@ -1509,6 +1511,21 @@ html.admin-page-hidden *{
       </div>
     </div>
 
+    <div class="section hidden" id="tempSaleCustomsSection">
+      <div class="section-h">Importación y aduana</div><div class="section-b">
+        <div class="store-admin-note"><strong>Artículo importado</strong><span>El precio del producto no incluye aduana. Al cambiar el estado a <b>En aduana</b>, el Worker notificará a los compradores con pedidos activos.</span></div>
+        <div class="form-grid">
+          <div class="field"><label>Total de aduana Q</label><input class="input" id="tempSaleCustomsTotal" type="number" min="0" step="0.01" value="0"></div>
+          <div class="field"><label>Referencia / documento</label><input class="input" id="tempSaleCustomsReference" maxlength="120" placeholder="Opcional"></div>
+          <div class="field"><label>Tributos / impuestos %</label><input class="input" id="tempSaleCustomsPctTaxes" type="number" min="0" max="100" step="0.01" value="60"></div>
+          <div class="field"><label>Gestión aduanal %</label><input class="input" id="tempSaleCustomsPctBroker" type="number" min="0" max="100" step="0.01" value="20"></div>
+          <div class="field"><label>Manejo / almacenaje %</label><input class="input" id="tempSaleCustomsPctHandling" type="number" min="0" max="100" step="0.01" value="12"></div>
+          <div class="field"><label>Otros cargos %</label><input class="input" id="tempSaleCustomsPctOther" type="number" min="0" max="100" step="0.01" value="8"></div>
+          <div class="field full"><div class="hint">Desglose estimado e informativo. Siempre suma el total de aduana que ingreses. No sustituye una factura o documento oficial.</div></div>
+        </div>
+      </div>
+    </div>
+
     <div class="section">
       <div class="section-h">Precios, pagos y envío</div>
       <div class="section-b">
@@ -1520,12 +1537,12 @@ html.admin-page-hidden *{
           <div class="field full">
             <label>Métodos habilitados</label>
             <div id="tempSaleMethods" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
-              <label class="check"><input type="checkbox" value="cod_cargo" checked> Contra entrega Cargo</label>
+              <label class="check"><input type="checkbox" value="cod_cargo" checked> Contra entrega Cargo <span class="sub">(solo Guatemala)</span></label>
               <label class="check"><input type="checkbox" value="transfer_shipping" checked> Transferencia</label>
               <label class="check"><input type="checkbox" value="paypal_shipping" checked> PayPal</label>
               <label class="check"><input type="checkbox" value="card_shipping" checked> Tarjeta</label>
               <label class="check"><input type="checkbox" value="crypto_binance" checked> Binance / Cripto</label>
-              <label class="check"><input type="checkbox" value="pickup_pana" checked> Entrega Panajachel</label>
+              <label class="check"><input type="checkbox" value="pickup_pana" checked> Entrega Panajachel <span class="sub">(solo Guatemala)</span></label>
               <label class="check"><input type="checkbox" value="visacuotas"> Visacuotas</label>
             </div>
           </div>
@@ -1898,18 +1915,20 @@ function tempSaleUrl(slug){return `${location.origin}/venta.html?s=${encodeURICo
 function tempSaleCategoryLabel(v){
   return ({phone:'Teléfono',tablet:'Tablet',computer:'Computadora',accessory:'Accesorio',other:'Otro'})[v]||'Otro';
 }
+function storeImportStatusLabel(v){return ({available_gt:'Disponible en Guatemala',usa_stock:'En Estados Unidos',in_transit:'En tránsito a Guatemala',customs:'En aduana',released:'Liberado de aduana'})[v]||'Disponible en Guatemala'}
 function renderTemporarySales(){
   const rows=Array.isArray(data.tempSales)?data.tempSales:[];
   if($('tempSaleCount'))$('tempSaleCount').textContent=String(rows.length);
   if($('tempSalesBody'))$('tempSalesBody').innerHTML=rows.map(s=>`<tr>
     <td><div class="strong">${esc(s.title||s.slug)}${s.featured===true?' · ★':''}</div><div class="sub">${esc(s.brand||'')} ${esc(s.condition||'')}</div></td>
     <td>${esc(tempSaleCategoryLabel(s.category))}</td>
+    <td><div class="strong">${esc(s.importInfo?.locationLabel||'Guatemala')}</div><div class="sub">${esc(storeImportStatusLabel(s.importInfo?.status))}</div></td>
     <td>${gtq(s.priceGtq)}${Number(s.referencePriceGtq||0)>0?`<span class="store-price-ref">${gtq(s.referencePriceGtq)}</span>`:''}</td>
     <td>${esc(String(s.stock??0))}</td>
     <td><span class="pill ${s.active===false?'red':'green'}">${s.active===false?'Oculto':'Publicado'}</span></td>
     <td><a class="mini" href="venta.html?s=${encodeURIComponent(s.slug)}&return=admin-products">Abrir</a> <button class="mini" onclick="copyTempSaleUrl('${esc(s.slug)}',this)">Copiar URL</button></td>
     <td><button class="mini" onclick="openTempSaleEditor('${esc(s.slug)}')">Editar</button> <button class="mini danger" onclick="deactivateTempSale('${esc(s.slug)}')">Ocultar</button></td>
-  </tr>`).join('')||'<tr><td colspan="7">Todavía no hay productos. Usa “Importar iPhone + Mac” o crea uno nuevo.</td></tr>';
+  </tr>`).join('')||'<tr><td colspan="8">Todavía no hay productos. Crea uno nuevo desde este panel.</td></tr>';
 }
 function saleSpecsToText(specs){return (Array.isArray(specs)?specs:[]).map(x=>`${x.label}: ${x.value}`).join('\n');}
 function saleTextToSpecs(text){
@@ -1935,6 +1954,15 @@ window.openTempSaleEditor=function(slug=''){
   $('tempSaleSlug').value=s.slug||'';
   $('tempSaleCategory').value=s.category||'phone';
   $('tempSaleBrand').value=s.brand||'';
+  $('tempSaleOriginMarket').value=s.importInfo?.originMarket||'guatemala';
+  $('tempSaleLocation').value=s.importInfo?.locationLabel||($('tempSaleOriginMarket').value==='usa'?'Estados Unidos':'Guatemala');
+  $('tempSaleImportStatus').value=s.importInfo?.status||($('tempSaleOriginMarket').value==='usa'?'usa_stock':'available_gt');
+  $('tempSaleCustomsTotal').value=s.importInfo?.customsTotalGtq??0;
+  $('tempSaleCustomsReference').value=s.importInfo?.customsReference||'';
+  $('tempSaleCustomsPctTaxes').value=s.importInfo?.breakdownPct?.taxes??60;
+  $('tempSaleCustomsPctBroker').value=s.importInfo?.breakdownPct?.broker??20;
+  $('tempSaleCustomsPctHandling').value=s.importInfo?.breakdownPct?.handling??12;
+  $('tempSaleCustomsPctOther').value=s.importInfo?.breakdownPct?.other??8;
   $('tempSaleSubtitle').value=s.subtitle||'';
   $('tempSaleImage').value=s.imagePath||'img/product.png';
   if($('tempSaleImageFile'))$('tempSaleImageFile').value='';
@@ -1963,8 +1991,44 @@ window.openTempSaleEditor=function(slug=''){
   document.querySelectorAll('#tempSaleMethods input[type=checkbox]').forEach(cb=>cb.checked=active.has(cb.value));
   $('tempSaleSlug').disabled=Boolean(s.slug);
   renderTempSaleGalleryAdmin(s);
+  syncStoreImportFields();
   $('tempSaleModal').classList.add('show');
 }
+function syncStoreImportFields(){
+  const usa=$('tempSaleOriginMarket')?.value==='usa';
+  $('tempSaleCustomsSection')?.classList.toggle('hidden',!usa);
+  if(usa&&$('tempSaleImportStatus').value==='available_gt')$('tempSaleImportStatus').value='usa_stock';
+  if(!usa){$('tempSaleImportStatus').value='available_gt';if(!$('tempSaleLocation').value.trim())$('tempSaleLocation').value='Guatemala'}
+
+  const blocked=new Set(['cod_cargo','cod_forza','pickup_pana']);
+  document.querySelectorAll('#tempSaleMethods input[type=checkbox]').forEach(cb=>{
+    if(blocked.has(cb.value)){
+      cb.disabled=usa;
+      if(usa)cb.checked=false;
+      const label=cb.closest('label');
+      if(label){
+        label.style.opacity=usa?'.38':'';
+        label.title=usa?'No disponible para artículos importados desde Estados Unidos.':'';
+      }
+    }
+  });
+
+  let note=$('tempSaleUsaPaymentNote');
+  if(!note){
+    note=document.createElement('div');
+    note.id='tempSaleUsaPaymentNote';
+    note.className='hint';
+    note.style.marginTop='9px';
+    document.querySelector('#tempSaleMethods')?.after(note);
+  }
+  if(note){
+    note.textContent=usa
+      ?'Artículos USA: Contra Entrega y Entrega Personal están deshabilitadas. Usa transferencia, PayPal, tarjeta, cripto o Visacuotas.'
+      :'';
+    note.style.display=usa?'block':'none';
+  }
+}
+$('tempSaleOriginMarket')?.addEventListener('change',syncStoreImportFields);
 window.closeTempSaleEditor=function(){
   $('tempSaleModal')?.classList.remove('show');
   selectedTempSale=null;
@@ -2008,6 +2072,7 @@ window.saveTempSale=async function(){
       title:$('tempSaleTitle').value.trim(),
       category:$('tempSaleCategory').value,
       brand:$('tempSaleBrand').value.trim(),
+      importInfo:{originMarket:$('tempSaleOriginMarket').value,locationLabel:$('tempSaleLocation').value.trim(),status:$('tempSaleImportStatus').value,customsTotalGtq:Number($('tempSaleCustomsTotal').value||0),customsReference:$('tempSaleCustomsReference').value.trim(),breakdownPct:{taxes:Number($('tempSaleCustomsPctTaxes').value||0),broker:Number($('tempSaleCustomsPctBroker').value||0),handling:Number($('tempSaleCustomsPctHandling').value||0),other:Number($('tempSaleCustomsPctOther').value||0)}},
       subtitle:$('tempSaleSubtitle').value.trim(),
       imagePath:$('tempSaleImage').value.trim(),
       priceGtq:Number($('tempSalePrice').value),
@@ -2048,7 +2113,7 @@ window.saveTempSale=async function(){
       btn.textContent=`Subiendo galería ${i+1}/${galleryFiles.length}…`;
       await uploadTempSaleImage(result.sale.slug,galleryFiles[i],'gallery');
     }
-    toast('Producto guardado y publicado en Evolution Store.');
+    toast(result.customsNotifications>0?`Producto guardado · ${result.customsNotifications} aviso(s) de aduana enviado(s).`:'Producto guardado y publicado en Evolution Store.');
     closeTempSaleEditor();
     await refresh();
     switchView('tempsales');
@@ -2062,14 +2127,6 @@ window.deactivateTempSale=async function(slug){
     toast('Producto ocultado.');
     await refresh();
   }catch(e){toast(e.message||'No se pudo ocultar.')}
-}
-window.seedStoreProducts=async function(){
-  if(!confirm('¿Importar al catálogo administrable el iPhone 8 Plus y la MacBook Pro 2019 si todavía no existen?'))return;
-  try{
-    const r=await storeAdminRequest('/store/sales/admin/seed',{method:'POST',body:{}});
-    toast(`Importación lista · ${r.created?.length||0} creados, ${r.skipped?.length||0} existentes.`);
-    await refresh();switchView('tempsales');
-  }catch(e){toast(e.message||'No se pudieron importar los productos.')}
 }
 window.testStoreEmail=async function(){
   const email=auth.currentUser?.email||'';
