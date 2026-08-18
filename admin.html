@@ -527,6 +527,8 @@
 .quickbox-reference{padding:13px 14px;border:1px solid rgba(124,181,255,.14);border-radius:15px;background:rgba(90,145,220,.035)}.quickbox-reference strong{display:block;color:#a8ceff;font-size:10px;margin-bottom:5px}.quickbox-reference>span,.quickbox-reference>small{display:block;color:#85858c;font-size:8.5px;line-height:1.55}.qb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:10px 0}.qb-grid b{display:flex;justify-content:space-between;gap:8px;padding:8px 9px;border:1px solid rgba(255,255,255,.055);border-radius:10px;background:rgba(0,0,0,.12);color:#9999a1;font-size:8px}.qb-grid em{color:#d5ba97;font-style:normal}@media(max-width:600px){.qb-grid{grid-template-columns:1fr}}
 
 .sold-action{border-color:rgba(224,184,116,.25)!important;color:#e0bf8e!important;background:rgba(224,184,116,.055)!important;font-weight:900!important;letter-spacing:.045em}.sold-action:hover{background:rgba(224,184,116,.11)!important}.sold-action.is-sold,.sold-action:disabled{opacity:.48;cursor:default}.sold-main{border-color:rgba(224,184,116,.32)!important;color:#ead0a8!important;background:linear-gradient(180deg,rgba(224,184,116,.13),rgba(224,184,116,.045))!important;font-weight:900!important;letter-spacing:.08em}.sold-main:hover{border-color:rgba(224,184,116,.48)!important;transform:translateY(-1px)}
+
+#tempSaleSourceOpenBtn{width:100%;min-height:39px;justify-content:center;border-color:rgba(126,171,255,.22);color:#a8ceff;background:rgba(70,120,205,.055)}
 </style>
 <style id="evolution-admin-performance">
 /* =========================================================
@@ -1479,7 +1481,7 @@ html.admin-page-hidden *{
           </select></div>
           <div class="field"><label>Marca</label><input class="input" id="tempSaleBrand" maxlength="80" placeholder="Apple, Samsung, Lenovo…"></div>
           <div class="field"><label>Mercado / procedencia</label><select class="input" id="tempSaleOriginMarket"><option value="guatemala">Guatemala</option><option value="usa">Estados Unidos</option></select></div>
-          <div class="field"><label>Ubicación actual</label><input class="input" id="tempSaleLocation" maxlength="120" placeholder="Ej. Houston, TX · Estados Unidos"></div>
+          <div class="field"><label>Ubicación actual</label><input class="input" id="tempSaleLocation" maxlength="120" placeholder="Ej. Panajachel, Guatemala · o Estados Unidos"><div class="hint">En productos de Guatemala, la tienda mostrará “Disponible en Panajachel”. En importados mostrará “Disponible en Estados Unidos”.</div></div>
           <div class="field"><label>Estado logístico</label><select class="input" id="tempSaleImportStatus"><option value="available_gt">Disponible en Guatemala</option><option value="usa_stock">En Estados Unidos</option><option value="in_transit">En tránsito a Guatemala</option><option value="customs">En aduana</option><option value="released">Aduana pagada / liberado</option></select></div>
           <div class="field full"><label>Descripción corta</label><textarea class="textarea" id="tempSaleSubtitle" maxlength="500" placeholder="Descripción del equipo, procedencia, estado y puntos fuertes…"></textarea></div>
           <div class="field"><label>Precio actual Q</label><input class="input" id="tempSalePrice" type="number" min="1" step="0.01"></div>
@@ -1493,6 +1495,20 @@ html.admin-page-hidden *{
           <div class="field"><label>Batería / estado</label><input class="input" id="tempSaleBattery" maxlength="80"></div>
           <div class="field full"><label>Especificaciones</label><textarea class="textarea" id="tempSaleSpecs" placeholder="Pantalla: Retina 13 pulgadas&#10;Procesador: Intel Core i5&#10;RAM: 16 GB"></textarea><div class="hint">Una especificación por línea en formato <code>Nombre: Valor</code>.</div></div>
           <div class="field full"><label class="check"><input type="checkbox" id="tempSaleFeatured"> Destacar este producto en el catálogo</label></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-h">Opciones y fuente externa</div>
+      <div class="section-b">
+        <div class="store-admin-note"><strong>Opciones tipo marketplace</strong><span>Usa el mismo <b>Grupo de opciones</b> en varias unidades del mismo modelo. En venta.html aparecerán juntas con foto, precio, condición y disponibilidad. Cada unidad conserva su propio stock, fotos y precio.</span></div>
+        <div class="form-grid" style="margin-top:12px">
+          <div class="field"><label>Grupo de opciones</label><input class="input" id="tempSaleGroupKey" maxlength="60" placeholder="Ej. iphone-13-pro"><div class="hint">Déjalo vacío si este producto no tendrá alternativas.</div></div>
+          <div class="field"><label>Nombre de esta opción</label><input class="input" id="tempSaleOptionLabel" maxlength="100" placeholder="Ej. 256 GB · Azul · Como nuevo"><div class="hint">Es el texto principal de su tarjeta de opción.</div></div>
+          <div class="field full"><label>Link de Swappa · solo Administración</label><input class="input" id="tempSaleSourceUrl" maxlength="900" placeholder="https://swappa.com/listing/view/..."><div class="hint">Este enlace nunca se envía al cliente ni aparece en la ficha pública.</div></div>
+          <div class="field"><label>Estado de la fuente</label><select class="input" id="tempSaleSourceStatus"><option value="unverified">Sin verificar</option><option value="available">Disponible</option><option value="unavailable">No disponible / vendido</option></select></div>
+          <div class="field"><label>Verificación manual</label><button class="btn" id="tempSaleSourceOpenBtn" type="button" onclick="openTempSaleSource()">Abrir y verificar ↗</button><div class="hint" id="tempSaleSourceChecked">La disponibilidad se confirma manualmente.</div></div>
         </div>
       </div>
     </div>
@@ -1993,7 +2009,7 @@ function renderTemporarySales(){
   const rows=Array.isArray(data.tempSales)?data.tempSales:[];
   if($('tempSaleCount'))$('tempSaleCount').textContent=String(rows.length);
   if($('tempSalesBody'))$('tempSalesBody').innerHTML=rows.map(s=>`<tr>
-    <td><div class="strong">${esc(s.title||s.slug)}${s.featured===true?' · ★':''}</div><div class="sub">${esc(s.brand||'')} ${esc(s.condition||'')}</div></td>
+    <td><div class="strong">${esc(s.title||s.slug)}${s.featured===true?' · ★':''}</div><div class="sub">${esc(s.brand||'')} ${esc(s.condition||'')}</div>${s.groupKey?`<div class="sub">Grupo: ${esc(s.groupKey)}${s.optionLabel?` · ${esc(s.optionLabel)}`:''}</div>`:''}${s.sourceInfo?.url?`<div class="sub">Fuente: ${s.sourceInfo.status==='available'?'Disponible':s.sourceInfo.status==='unavailable'?'No disponible':'Sin verificar'}</div>`:''}</td>
     <td>${esc(tempSaleCategoryLabel(s.category))}</td>
     <td><div class="strong">${esc(s.importInfo?.locationLabel||'Guatemala')}</div><div class="sub">${esc(storeImportStatusLabel(s.importInfo?.status))}</div></td>
     <td>${gtq(s.priceGtq)}${Number(s.referencePriceGtq||0)>0?`<span class="store-price-ref">${gtq(s.referencePriceGtq)}</span>`:''}</td>
@@ -2027,8 +2043,14 @@ window.openTempSaleEditor=function(slug=''){
   $('tempSaleSlug').value=s.slug||'';
   $('tempSaleCategory').value=s.category||'phone';
   $('tempSaleBrand').value=s.brand||'';
+  $('tempSaleGroupKey').value=s.groupKey||'';
+  $('tempSaleOptionLabel').value=s.optionLabel||'';
+  $('tempSaleSourceUrl').value=s.sourceInfo?.url||'';
+  $('tempSaleSourceStatus').value=s.sourceInfo?.status||'unverified';
+  if($('tempSaleSourceChecked'))$('tempSaleSourceChecked').textContent=s.sourceInfo?.checkedAt?`Última revisión guardada: ${new Date(s.sourceInfo.checkedAt).toLocaleString('es-GT')}`:'La disponibilidad se confirma manualmente.';
   $('tempSaleOriginMarket').value=s.importInfo?.originMarket||'guatemala';
-  $('tempSaleLocation').value=s.importInfo?.locationLabel||($('tempSaleOriginMarket').value==='usa'?'Estados Unidos':'Guatemala');
+  $('tempSaleLocation').value=s.importInfo?.locationLabel||($('tempSaleOriginMarket').value==='usa'?'Estados Unidos':'Panajachel, Guatemala');
+  if($('tempSaleOriginMarket').value!=='usa'&&['guatemala','guatemala, guatemala'].includes($('tempSaleLocation').value.trim().toLowerCase()))$('tempSaleLocation').value='Panajachel, Guatemala';
   $('tempSaleImportStatus').value=s.importInfo?.status||($('tempSaleOriginMarket').value==='usa'?'usa_stock':'available_gt');
   $('tempSaleCustomsTotal').value=s.importInfo?.customsBaseTotalGtq??s.importInfo?.customsTotalGtq??0;
   $('tempSaleCustomsReference').value=s.importInfo?.customsReference||'';
@@ -2082,7 +2104,7 @@ function syncStoreImportFields(){
   const usa=$('tempSaleOriginMarket')?.value==='usa';
   $('tempSaleCustomsSection')?.classList.toggle('hidden',!usa);
   if(usa&&$('tempSaleImportStatus').value==='available_gt')$('tempSaleImportStatus').value='usa_stock';
-  if(!usa){$('tempSaleImportStatus').value='available_gt';if(!$('tempSaleLocation').value.trim())$('tempSaleLocation').value='Guatemala'}
+  if(!usa){$('tempSaleImportStatus').value='available_gt';if(!$('tempSaleLocation').value.trim()||['guatemala','guatemala, guatemala'].includes($('tempSaleLocation').value.trim().toLowerCase()))$('tempSaleLocation').value='Panajachel, Guatemala'}
 
   const blocked=new Set(['cod_cargo','cod_forza','pickup_pana']);
   document.querySelectorAll('#tempSaleMethods input[type=checkbox]').forEach(cb=>{
@@ -2113,6 +2135,23 @@ function syncStoreImportFields(){
   }
 }
 $('tempSaleOriginMarket')?.addEventListener('change',syncStoreImportFields);
+window.openTempSaleSource=function(){
+  const raw=$('tempSaleSourceUrl')?.value.trim()||'';
+  if(!raw){toast('Primero pega el enlace de Swappa.');return}
+  try{
+    const u=new URL(raw),host=u.hostname.toLowerCase();
+    if(u.protocol!=='https:'||!(host==='swappa.com'||host.endsWith('.swappa.com')))throw new Error();
+    window.open(u.href,'_blank','noopener,noreferrer');
+  }catch(_){toast('Pega un enlace https:// válido de Swappa.')}
+}
+$('tempSaleSourceStatus')?.addEventListener('change',()=>{
+  if($('tempSaleSourceStatus').value==='unavailable'){
+    $('tempSaleStock').value=0;
+    $('tempSaleBadge').value='Vendido';
+    $('tempSaleFeatured').checked=false;
+  }
+});
+
 window.closeTempSaleEditor=function(){
   $('tempSaleModal')?.classList.remove('show');
   selectedTempSale=null;
@@ -2170,6 +2209,9 @@ window.saveTempSale=async function(){
       title:$('tempSaleTitle').value.trim(),
       category:$('tempSaleCategory').value,
       brand:$('tempSaleBrand').value.trim(),
+      groupKey:$('tempSaleGroupKey').value.trim(),
+      optionLabel:$('tempSaleOptionLabel').value.trim(),
+      sourceInfo:{provider:'swappa',url:$('tempSaleSourceUrl').value.trim(),status:$('tempSaleSourceStatus').value},
       importInfo:{originMarket:$('tempSaleOriginMarket').value,locationLabel:$('tempSaleLocation').value.trim(),status:$('tempSaleImportStatus').value,customsBaseTotalGtq:Number($('tempSaleCustomsTotal').value||0),customsReference:$('tempSaleCustomsReference').value.trim(),safetyPct:Number($('tempSaleCustomsSafetyPct').value||5),quickboxDeliveryMode:$('tempSaleQuickboxDeliveryMode').value},
       subtitle:$('tempSaleSubtitle').value.trim(),
       imagePath:$('tempSaleImage').value.trim(),
