@@ -1587,6 +1587,20 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
     letter-spacing:-.035em;
   }
 }
+
+.sale-options-panel{position:relative;z-index:3;margin-top:18px;padding:17px;border:1px solid rgba(255,255,255,.075);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.03),rgba(255,255,255,.012));overflow:hidden}
+.sale-options-panel.hidden{display:none}
+.sale-options-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:12px}.sale-options-head span{display:block;color:#d6ba95;font-size:7px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}.sale-options-head h3{margin:0;color:#f5f3ef;font-size:18px;letter-spacing:-.035em}.sale-options-head p{margin:5px 0 0;color:#74747b;font-size:8.5px;line-height:1.5}.sale-options-head>b{flex:0 0 auto;color:#9b9ba2;font-size:8px;padding:7px 9px;border:1px solid rgba(255,255,255,.075);border-radius:999px;background:rgba(0,0,0,.18)}
+.sale-options-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sale-option-card{position:relative;display:grid;grid-template-columns:82px minmax(0,1fr);gap:11px;align-items:center;min-width:0;padding:9px;border:1px solid rgba(255,255,255,.07);border-radius:16px;background:rgba(8,8,10,.62);color:inherit;text-align:left;cursor:pointer;transition:border-color .18s ease,transform .18s ease,background .18s ease}.sale-option-card:hover{border-color:rgba(212,184,149,.24);background:rgba(22,20,18,.74);transform:translateY(-1px)}.sale-option-card.active{border-color:rgba(212,184,149,.58);box-shadow:0 0 0 2px rgba(212,184,149,.07);background:linear-gradient(145deg,rgba(212,184,149,.075),rgba(8,8,10,.65))}.sale-option-photo{height:76px;border-radius:11px;overflow:hidden;background:#09090b;border:1px solid rgba(255,255,255,.06);display:grid;place-items:center}.sale-option-photo img{width:100%;height:100%;object-fit:contain;padding:4px}.sale-option-main{min-width:0}.sale-option-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:5px}.sale-option-status{font-size:6.5px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:#6fe09a}.sale-option-status.sold{color:#ff9ba4}.sale-option-photo-count{color:#6e6e75;font-size:6.5px}.sale-option-label{display:block;color:#f3f1ee;font-size:10.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sale-option-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.sale-option-meta i{font-style:normal;color:#8b8b92;font-size:6.5px;padding:4px 5px;border:1px solid rgba(255,255,255,.055);border-radius:999px}.sale-option-price{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-top:7px}.sale-option-price strong{color:#d9bd99;font-size:12px}.sale-option-price small{color:#65656b;font-size:6.5px}.sale-option-card.sold{opacity:.62}
+@media(max-width:767.98px){.sale-options-panel{margin-top:13px;padding:12px;border-radius:18px}.sale-options-head{align-items:flex-start}.sale-options-head h3{font-size:16px}.sale-options-strip{display:flex;overflow-x:auto;gap:8px;margin:0 -2px;padding:2px 2px 5px;scrollbar-width:none;scroll-snap-type:x proximity}.sale-options-strip::-webkit-scrollbar{display:none}.sale-option-card{flex:0 0 min(86vw,315px);grid-template-columns:74px minmax(0,1fr);scroll-snap-align:start}.sale-option-photo{height:70px}}
+</style>
+
+<style id="evo-origin-delivery-v5017">
+.evo-fulfillment-card{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;margin:17px 0 8px;padding:14px 15px;border:1px solid rgba(111,224,154,.14);border-radius:18px;background:radial-gradient(circle at 95% 0,rgba(111,224,154,.08),transparent 32%),linear-gradient(145deg,rgba(255,255,255,.032),rgba(255,255,255,.012));box-shadow:inset 0 1px rgba(255,255,255,.035)}
+.evo-fulfillment-card.usa{border-color:rgba(124,181,255,.17);background:radial-gradient(circle at 95% 0,rgba(70,135,220,.11),transparent 34%),linear-gradient(145deg,rgba(255,255,255,.032),rgba(255,255,255,.012))}
+.evo-fulfillment-mark{display:grid;place-items:center;width:38px;height:38px;border:1px solid rgba(111,224,154,.17);border-radius:12px;background:rgba(111,224,154,.05);color:#75dba0}.evo-fulfillment-card.usa .evo-fulfillment-mark{border-color:rgba(124,181,255,.18);background:rgba(70,135,220,.055);color:#9cc9ff}.evo-fulfillment-mark svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.evo-fulfillment-copy{min-width:0}.evo-fulfillment-copy>span{display:block;color:#72ce96;font-size:6.8px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;margin-bottom:4px}.evo-fulfillment-card.usa .evo-fulfillment-copy>span{color:#92c2fb}.evo-fulfillment-copy>strong{display:block;color:#f2f1ef;font-size:13px;letter-spacing:-.025em}.evo-fulfillment-copy>p{margin:5px 0 0;color:#83838a;font-size:8.5px;line-height:1.55;max-width:600px}.evo-fulfillment-copy>p b{color:#d7d7dc;font-weight:800}.evo-fulfillment-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.evo-fulfillment-tags span{padding:4px 6px;border:1px solid rgba(255,255,255,.06);border-radius:999px;color:#7e7e85;background:rgba(0,0,0,.14);font-size:6.5px}.evo-fulfillment-state{align-self:start;padding:6px 8px;border:1px solid rgba(111,224,154,.15);border-radius:999px;color:#7edba3;background:rgba(111,224,154,.035);font-size:7px;font-weight:900;letter-spacing:.08em}.evo-fulfillment-card.usa .evo-fulfillment-state{border-color:rgba(124,181,255,.17);color:#9cc9ff;background:rgba(70,135,220,.045)}
+@media(max-width:600px){.evo-fulfillment-card{grid-template-columns:auto minmax(0,1fr);padding:12px;gap:10px}.evo-fulfillment-state{display:none}.evo-fulfillment-copy>strong{font-size:12px}.evo-fulfillment-copy>p{font-size:8px}}
 </style>
 </head>
 <body>
@@ -1629,6 +1643,19 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
         <button class="hero-guide" id="openGuideHero" type="button">Guía de compra y envíos</button>
       </div>
 
+      <section class="evo-fulfillment-card" id="saleFulfillmentCard" aria-label="Ubicación y entrega">
+        <div class="evo-fulfillment-mark" id="saleFulfillmentMark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg>
+        </div>
+        <div class="evo-fulfillment-copy">
+          <span id="saleFulfillmentKicker">Ubicación</span>
+          <strong id="saleFulfillmentTitle">Disponible en Panajachel</strong>
+          <p id="saleFulfillmentText">Entrega personal disponible y envíos a todo Guatemala.</p>
+          <div class="evo-fulfillment-tags" id="saleFulfillmentTags"></div>
+        </div>
+        <div class="evo-fulfillment-state" id="saleFulfillmentState">GT</div>
+      </section>
+
       <section class="import-status-card hidden" id="saleImportCard"><div class="import-status-head"><div><span class="import-kicker">Importación · Estados Unidos</span><strong id="saleImportStatus">En Estados Unidos</strong></div><span class="import-location" id="saleImportLocation">Estados Unidos</span></div><p id="saleImportCopy">Este producto se encuentra fuera de Guatemala.</p><div class="import-customs-total"><span>Aduana prevista</span><strong id="saleCustomsTotal">Pendiente de liquidación</strong><small id="saleCustomsNote">Se paga por separado y NO está incluida en el precio del producto.</small></div><div class="import-breakdown hidden" id="saleCustomsBreakdown"></div></section>
 
       <div class="unit-specs" id="saleQuickSpecs" aria-label="Características de esta unidad">
@@ -1652,6 +1679,13 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
         </div>
         <div class="tech-spec-grid" id="saleSpecsGrid"></div>
       </div>
+    <section class="sale-options-panel hidden" id="saleOptionsPanel" aria-label="Opciones disponibles">
+      <div class="sale-options-head">
+        <div><span>Más unidades</span><h3>Opciones disponibles</h3><p>Compara fotos, condición, capacidad y precio antes de elegir.</p></div>
+        <b id="saleOptionsCount">0 opciones</b>
+      </div>
+      <div class="sale-options-strip" id="saleOptionsStrip"></div>
+    </section>
     <section class="real-device-gallery" id="saleRealGallery" aria-label="Fotos reales del dispositivo">
       <div class="real-gallery-head">
         <div>
@@ -1909,6 +1943,29 @@ function renderRealDeviceGallery(items=[],productTitle="Producto"){
   show(0,false);
 }
 
+function renderSaleOptions(){
+  const panel=$("saleOptionsPanel"),strip=$("saleOptionsStrip"),counter=$("saleOptionsCount");
+  const options=Array.isArray(config?.options)?config.options.filter(x=>x?.slug):[];
+  if(!panel||!strip){return}
+  if(options.length<2){panel.classList.add("hidden");strip.innerHTML="";return}
+  const current=String(config?.sale?.slug||new URLSearchParams(location.search).get("s")||"");
+  panel.classList.remove("hidden");
+  if(counter)counter.textContent=`${options.length} opciones`;
+  strip.innerHTML=options.map(opt=>{
+    const active=opt.slug===current,available=opt.available===true&&Number(opt.remaining||0)>0;
+    const meta=[opt.storage,opt.color,opt.condition].filter(Boolean).slice(0,3);
+    return `<button class="sale-option-card ${active?"active":""} ${available?"":"sold"}" type="button" data-sale-option="${saleEscape(opt.slug)}" ${active?'aria-current="true"':''}>
+      <span class="sale-option-photo"><img src="${saleEscape(opt.imagePath||"img/product.png")}" alt="${saleEscape(opt.optionLabel||opt.title||"Opción")}" loading="lazy"></span>
+      <span class="sale-option-main"><span class="sale-option-top"><b class="sale-option-status ${available?"":"sold"}">${available?`${Number(opt.remaining||1)} disponible${Number(opt.remaining||1)===1?"":"s"}`:"Vendido"}</b><small class="sale-option-photo-count">${Number(opt.photoCount||1)} foto${Number(opt.photoCount||1)===1?"":"s"}</small></span><strong class="sale-option-label">${saleEscape(opt.optionLabel||opt.title||"Opción")}</strong><span class="sale-option-meta">${meta.map(v=>`<i>${saleEscape(v)}</i>`).join("")}</span><span class="sale-option-price"><strong>${money(Number(opt.priceGtq||0))}</strong><small>${active?"Opción actual":"Ver unidad →"}</small></span></span>
+    </button>`;
+  }).join("");
+  strip.querySelectorAll('[data-sale-option]').forEach(btn=>btn.addEventListener('click',()=>{
+    const slug=btn.dataset.saleOption;if(!slug||slug===current)return;
+    const params=new URLSearchParams(location.search);params.set('s',slug);
+    location.href=`venta.html?${params.toString()}`;
+  }));
+}
+
 function applyTemporarySale(){
   const sale=config?.sale||config||{};
   tempSale=sale;
@@ -1926,6 +1983,7 @@ function applyTemporarySale(){
   $("saleProductImage").src=sale.imagePath||"img/product.png";
   $("saleProductImage").alt=`${title} · Evolution Design`;
   renderRealDeviceGallery(Array.isArray(sale.gallery)?sale.gallery.filter(Boolean):[],title);
+  renderSaleOptions();
 
   const quick=[
     ["saleColorSpec","saleColor",sale.color],
@@ -1953,7 +2011,25 @@ function applyTemporarySale(){
   $("saleWatermark").textContent=watermark;
   $("saleWatermarkSub").textContent=watermarkSub;
 
-  const imp=sale.importInfo||{},usa=imp.originMarket==="usa"||imp.requiresCustoms===true;$("saleImportCard")?.classList.toggle("hidden",!usa);$("customsAckWrap")?.classList.toggle("hidden",!usa);if($("customsTerms"))$("customsTerms").required=usa;if(usa){$("saleImportStatus").textContent=imp.statusLabel||({usa_stock:"En Estados Unidos",in_transit:"En tránsito a Guatemala",customs:"En aduana",released:"Liberado de aduana",available_gt:"Disponible en Guatemala"}[imp.status]||"En Estados Unidos");$("saleImportLocation").textContent=imp.locationLabel||"Estados Unidos";$("saleImportCopy").textContent=imp.status==="customs"?"Tu equipo ya se encuentra en aduana en Guatemala.":imp.status==="in_transit"?"El equipo ya viene en camino hacia Guatemala.":imp.status==="released"||imp.status==="available_gt"?"La importación ya fue liberada; el equipo está listo para continuar con la entrega nacional.":"Este equipo se encuentra físicamente en Estados Unidos y será importado a Guatemala.";const ct=Number(imp.customsTotalGtq||0);$("saleCustomsTotal").textContent=ct>0?money(ct):"Pendiente de liquidación";const bd=imp.customsBreakdown||{},box=$("saleCustomsBreakdown");if(box&&ct>0){box.classList.remove("hidden");box.innerHTML=[["Flete internacional",bd.freight],["Gestión aeropuerto",bd.airport],["Administrativo",bd.admin],[`Reserva operativa ${Number(imp.safetyPct||5)}%`,bd.safety],["Entrega de importación",bd.quickboxDelivery]].map(([l,v])=>`<div><small>${saleEscape(l)}</small><b>${money(Number(v||0))}</b></div>`).join("");if($("saleCustomsNote"))$("saleCustomsNote").textContent=Number(imp.quickboxDeliveryGtq||bd.quickboxDelivery||0)>0?`Incluye ${Number(imp.safetyPct||5)}% de reserva operativa + Q55 de entrega de importación. El Q55 no lleva reserva. RETTA no se incluye y la entrega final al cliente se gestiona aparte.`:`Incluye ${Number(imp.safetyPct||5)}% de reserva operativa. Se recogerá en sucursal (Q0 de entrega de importación). RETTA no se incluye y la entrega final al cliente se gestiona aparte.`}else{box?.classList.add("hidden");if($("saleCustomsNote"))$("saleCustomsNote").textContent="Se paga por separado y NO está incluida en el precio del producto. El monto se mostrará cuando Administración lo registre."}}
+  const imp=sale.importInfo||{},usa=imp.originMarket==="usa"||imp.requiresCustoms===true;
+  const fulfillment=$('saleFulfillmentCard');
+  fulfillment?.classList.toggle('usa',usa);
+  if(usa){
+    const state=String(imp.status||'usa_stock');
+    const stillUsa=state==='usa_stock';
+    $('saleFulfillmentKicker').textContent=stillUsa?'Importación gestionada por Evolution':'Seguimiento de importación';
+    $('saleFulfillmentTitle').textContent=stillUsa?'Disponible en Estados Unidos':state==='in_transit'?'En tránsito hacia Guatemala':state==='customs'?'En proceso de importación en Guatemala':'Disponible para entrega nacional';
+    $('saleFulfillmentText').innerHTML=stillUsa?'Esta unidad debe ser importada. <b>Evolution coordina el proceso y la entrega hasta la puerta de tu casa en Guatemala.</b>':state==='in_transit'?'Tu unidad ya viene en camino. Evolution dará seguimiento hasta que esté lista para la entrega nacional.':state==='customs'?'La unidad ya se encuentra en Guatemala y está completando el proceso de importación.':'La importación ya fue liberada y podemos continuar con la entrega nacional.';
+    $('saleFulfillmentState').textContent=stillUsa?'USA':'GT';
+    $('saleFulfillmentTags').innerHTML=stillUsa?'<span>Importación bajo pedido</span><span>Seguimiento Evolution</span><span>Entrega en Guatemala</span>':'<span>Seguimiento Evolution</span><span>Entrega nacional</span>';
+  }else{
+    $('saleFulfillmentKicker').textContent='Disponibilidad local';
+    $('saleFulfillmentTitle').textContent='Disponible en Panajachel';
+    $('saleFulfillmentText').innerHTML='<b>Entrega personal en Panajachel</b> y opción de envío a otros departamentos de Guatemala.';
+    $('saleFulfillmentState').textContent='GT';
+    $('saleFulfillmentTags').innerHTML='<span>Panajachel</span><span>Entrega personal</span><span>Envíos nacionales</span>';
+  }
+  $("saleImportCard")?.classList.toggle("hidden",!usa);$("customsAckWrap")?.classList.toggle("hidden",!usa);if($("customsTerms"))$("customsTerms").required=usa;if(usa){$("saleImportStatus").textContent=imp.statusLabel||({usa_stock:"En Estados Unidos",in_transit:"En tránsito a Guatemala",customs:"En aduana",released:"Liberado de aduana",available_gt:"Disponible en Guatemala"}[imp.status]||"En Estados Unidos");$("saleImportLocation").textContent=imp.locationLabel||"Estados Unidos";$("saleImportCopy").textContent=imp.status==="customs"?"Tu equipo ya se encuentra en aduana en Guatemala.":imp.status==="in_transit"?"El equipo ya viene en camino hacia Guatemala.":imp.status==="released"||imp.status==="available_gt"?"La importación ya fue liberada; el equipo está listo para continuar con la entrega nacional.":"Esta unidad se encuentra en Estados Unidos. Evolution gestiona la importación y coordina la entrega final dentro de Guatemala.";const ct=Number(imp.customsTotalGtq||0);$("saleCustomsTotal").textContent=ct>0?money(ct):"Pendiente de liquidación";const bd=imp.customsBreakdown||{},box=$("saleCustomsBreakdown");if(box&&ct>0){box.classList.remove("hidden");box.innerHTML=[["Flete internacional",bd.freight],["Gestión aeropuerto",bd.airport],["Administrativo",bd.admin],[`Reserva operativa ${Number(imp.safetyPct||5)}%`,bd.safety],["Entrega de importación",bd.quickboxDelivery]].map(([l,v])=>`<div><small>${saleEscape(l)}</small><b>${money(Number(v||0))}</b></div>`).join("");if($("saleCustomsNote"))$("saleCustomsNote").textContent=Number(imp.quickboxDeliveryGtq||bd.quickboxDelivery||0)>0?`Incluye ${Number(imp.safetyPct||5)}% de reserva operativa + Q55 de entrega de importación. El Q55 no lleva reserva. RETTA no se incluye y la entrega final al cliente se gestiona aparte.`:`Incluye ${Number(imp.safetyPct||5)}% de reserva operativa. Se recogerá en sucursal (Q0 de entrega de importación). RETTA no se incluye y la entrega final al cliente se gestiona aparte.`}else{box?.classList.add("hidden");if($("saleCustomsNote"))$("saleCustomsNote").textContent="Se paga por separado y NO está incluida en el precio del producto. El monto se mostrará cuando Administración lo registre."}}
 
   const hasVisa=Array.isArray(config?.methods)&&config.methods.some(x=>x.method==="visacuotas");
   $("visacuotasSeparate")?.classList.toggle("hidden",!hasVisa);
