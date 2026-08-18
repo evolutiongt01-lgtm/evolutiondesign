@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v34 · Update Center */
-const VERSION='evolution-smart-app-v34-update-center';
-const APP_BUILD=34;
+/* Evolution Design · Advanced App Shell Service Worker · v35 · Public Projects */
+const VERSION='evolution-smart-app-v35-public-projects';
+const APP_BUILD=45;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
@@ -8,7 +8,7 @@ const IMAGES=`${VERSION}-images`;
 
 const SHELL_FILES=[
   '/',
-  '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html',
+  '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html','/portafolio.html',
   '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-sw.js',
   '/img/logo.png','/manifest.webmanifest'
 ];
@@ -17,7 +17,8 @@ const VIEW_FILES=[
   '/views/home.html',
   '/views/arquitectura.html',
   '/views/diseno-grafico.html',
-  '/views/diseno-web.html'
+  '/views/diseno-web.html',
+  '/views/portafolio.html'
 ];
 
 const PRIVATE=[
@@ -27,8 +28,8 @@ const PRIVATE=[
 ];
 
 const isPrivate=p=>PRIVATE.some(x=>p.toLowerCase().includes(x));
-const isShellPath=p=>['/','/index.html','/arquitectura','/arquitectura.html','/diseno-grafico','/diseno-grafico.html','/diseno-web','/diseno-web.html'].includes(p);
-const shellAlias=p=>p==='/arquitectura'?'/arquitectura.html':p==='/diseno-grafico'?'/diseno-grafico.html':p==='/diseno-web'?'/diseno-web.html':p;
+const isShellPath=p=>['/','/index.html','/arquitectura','/arquitectura.html','/diseno-grafico','/diseno-grafico.html','/diseno-web','/diseno-web.html','/portafolio','/portafolio.html'].includes(p);
+const shellAlias=p=>p==='/arquitectura'?'/arquitectura.html':p==='/diseno-grafico'?'/diseno-grafico.html':p==='/diseno-web'?'/diseno-web.html':p==='/portafolio'?'/portafolio.html':p;
 const isView=p=>p.startsWith('/views/')&&p.endsWith('.html');
 const isImage=p=>/\.(png|jpe?g|webp|avif|gif|svg)$/i.test(p)||p.startsWith('/img/');
 const isStatic=p=>
@@ -189,7 +190,7 @@ self.addEventListener('install',event=>{
       if(res)await shell.put(url,res.clone());
     }));
 
-    /* Las 4 vistas públicas quedan descargadas localmente desde la instalación. */
+    /* Las 5 vistas públicas quedan descargadas localmente desde la instalación. */
     await Promise.allSettled(VIEW_FILES.map(async url=>{
       const req=new Request(url,{cache:'reload'});
       const res=await network(req,{reload:true});
