@@ -1,8 +1,8 @@
-/* Evolution Design · Smart App Shell · v45 · Public Projects */
+/* Evolution Design · Smart App Shell · v45.1 · View Recovery */
 (() => {
   'use strict';
 
-  const VERSION='45';
+  const VERSION='45.1';
   const APP_BUILD=45;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
@@ -1888,7 +1888,7 @@
 
     const frame=document.createElement('iframe');
     frame.className='evo-view-frame evo-swipe-neighbor';
-    frame.src=`${route.view}?shell=${VERSION}&swipePreview=1`;
+    frame.src=route.view;
     frame.title=route.title;
     frame.loading='eager';
     frame.setAttribute('aria-label',route.title);
@@ -2998,7 +2998,7 @@
 
     const frame=document.createElement('iframe');
     frame.className='evo-view-frame evo-view-incoming';
-    frame.src=`${route.view}?shell=${VERSION}`;
+    frame.src=route.view;
     frame.title=route.title;
     frame.setAttribute('aria-label',route.title);
     frame.setAttribute('allow','clipboard-read; clipboard-write; payment');
