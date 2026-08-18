@@ -1,4 +1,4 @@
-/* Evolution Design · Smart Persistent Navigation · v18 */
+/* Evolution Design · Smart Persistent Navigation · v19 · Public Projects */
 (() => {
   'use strict';
 
@@ -19,7 +19,8 @@
     {key:'home',href:'/index.html',label:'Home',short:'Home',icon:'home'},
     {key:'arquitectura',href:'/arquitectura.html',label:'Arquitectura',short:'Arquitectura',icon:'arq'},
     {key:'grafico',href:'/diseno-grafico.html',label:'Diseño Gráfico',short:'Diseño G.',icon:'graf'},
-    {key:'web',href:'/diseno-web.html',label:'Diseño Web',short:'Diseño Web',icon:'web'}
+    {key:'web',href:'/diseno-web.html',label:'Diseño Web',short:'Diseño Web',icon:'web'},
+    {key:'portfolio',href:'/portafolio.html',label:'Proyectos',short:'Proyectos',icon:'folder'}
   ];
 
   const escapeHTML = value => String(value ?? '')
@@ -32,6 +33,7 @@
     if(p.includes('arquitectura')) return 'arquitectura';
     if(p.includes('diseno-grafico')) return 'grafico';
     if(p.includes('diseno-web')) return 'web';
+    if(p.includes('portafolio')) return 'portfolio';
     return 'home';
   };
 
@@ -66,6 +68,7 @@
     .evo-route-indicator{position:absolute;left:0;bottom:-10px;height:2px;width:var(--evo-ind-w,0px);border-radius:999px;background:var(--evo-accent);box-shadow:0 0 12px rgba(212,184,149,.42);transform:translate3d(var(--evo-ind-x,0px),0,0);opacity:0;pointer-events:none;transition:width .34s cubic-bezier(.16,1,.3,1),transform .34s cubic-bezier(.16,1,.3,1),opacity .18s ease}
     .evo-route-indicator.ready{opacity:1}
 
+    .evo-orders-link{color:#b9b1a7!important}.evo-orders-link:hover{color:#fff!important}
     .evo-login{color:var(--evo-accent)!important;font-weight:800!important;display:inline-flex;align-items:center;gap:5px}
     .evo-software{height:42px;padding:0 17px;border-radius:999px;background:#f5f5f3;color:#080808;display:inline-flex;align-items:center;font:800 .73rem/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:transform .18s ease}
     .evo-software:hover{transform:translateY(-1px)}
@@ -146,7 +149,7 @@
 
               <div class="evo-links">
                 ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-link${p.key===active?' active':''}">${p.label}</a>`).join('')}
-                <a href="/proyectos.html" class="evo-link">Órdenes</a>
+                <a href="/proyectos.html" class="evo-link evo-orders-link">Órdenes</a>
                 <div id="auth-desktop-wrapper"><a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a></div>
                 <span class="evo-route-indicator evo-desktop-indicator" aria-hidden="true"></span>
               </div>
@@ -168,7 +171,6 @@
           </div>
           <div class="evo-tabs">
             ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-tab${p.key===active?' active':''}">${ICONS[p.icon]}<span>${p.short}</span></a>`).join('')}
-            <a href="/proyectos.html" class="evo-tab">${ICONS.folder}<span>Órdenes</span></a>
             <span class="evo-route-indicator evo-mobile-indicator" aria-hidden="true"></span>
           </div>
         </nav>`;
