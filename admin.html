@@ -521,6 +521,8 @@
   .store-admin-note strong{margin-bottom:6px}
 }
 
+
+.store-shipping-lock,.store-shipping-ready{display:flex;align-items:flex-start;gap:11px;margin-bottom:14px;padding:13px 14px;border-radius:15px}.store-shipping-lock.hidden,.store-shipping-ready.hidden{display:none}.store-shipping-lock{border:1px solid rgba(255,187,92,.16);background:rgba(255,165,64,.045)}.store-shipping-lock-icon{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:rgba(255,176,68,.08);color:#e3b06d;font-size:13px}.store-shipping-lock strong,.store-shipping-ready strong{display:block;font-size:10px;margin-bottom:4px}.store-shipping-lock span,.store-shipping-ready small{display:block;color:#85858c;font-size:8.5px;line-height:1.5}.store-shipping-ready{border:1px solid rgba(85,217,138,.16);background:rgba(85,217,138,.04)}.store-shipping-ready>span{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:rgba(85,217,138,.08);color:#76e4a0;font-size:12px;font-weight:900}.store-shipping-ready strong{color:#9fe8ba}
 </style>
 <style id="evolution-admin-performance">
 /* =========================================================
@@ -1474,7 +1476,7 @@ html.admin-page-hidden *{
           <div class="field"><label>Marca</label><input class="input" id="tempSaleBrand" maxlength="80" placeholder="Apple, Samsung, Lenovo…"></div>
           <div class="field"><label>Mercado / procedencia</label><select class="input" id="tempSaleOriginMarket"><option value="guatemala">Guatemala</option><option value="usa">Estados Unidos</option></select></div>
           <div class="field"><label>Ubicación actual</label><input class="input" id="tempSaleLocation" maxlength="120" placeholder="Ej. Houston, TX · Estados Unidos"></div>
-          <div class="field"><label>Estado logístico</label><select class="input" id="tempSaleImportStatus"><option value="available_gt">Disponible en Guatemala</option><option value="usa_stock">En Estados Unidos</option><option value="in_transit">En tránsito a Guatemala</option><option value="customs">En aduana</option><option value="released">Liberado de aduana</option></select></div>
+          <div class="field"><label>Estado logístico</label><select class="input" id="tempSaleImportStatus"><option value="available_gt">Disponible en Guatemala</option><option value="usa_stock">En Estados Unidos</option><option value="in_transit">En tránsito a Guatemala</option><option value="customs">En aduana</option><option value="released">Aduana pagada / liberado</option></select></div>
           <div class="field full"><label>Descripción corta</label><textarea class="textarea" id="tempSaleSubtitle" maxlength="500" placeholder="Descripción del equipo, procedencia, estado y puntos fuertes…"></textarea></div>
           <div class="field"><label>Precio actual Q</label><input class="input" id="tempSalePrice" type="number" min="1" step="0.01"></div>
           <div class="field"><label>Precio de referencia Q</label><input class="input" id="tempSaleReferencePrice" type="number" min="0" step="0.01" placeholder="Opcional"></div>
@@ -1575,24 +1577,38 @@ html.admin-page-hidden *{
       <div class="section-b" id="storeOrderDelivery"></div>
     </div>
 
-    <div class="section">
-      <div class="section-h">Envío y seguimiento manual</div>
+    <div class="section" id="storeOrderShipmentSection">
+      <div class="section-h">Envío nacional y seguimiento</div>
       <div class="section-b">
-        <div class="form-grid">
-          <div class="field"><label>Estado</label><select class="input" id="storeOrderEditStatus">
-            <option value="received">Pedido recibido</option>
-            <option value="confirmed">Confirmado</option>
-            <option value="preparing">Preparando</option>
-            <option value="shipped">Enviado / listo para entrega</option>
-            <option value="delivered">Entregado</option>
-            <option value="cancelled">Cancelado</option>
-          </select></div>
-          <div class="field"><label>Paquetería / entrega</label><input class="input" id="storeOrderCarrier" placeholder="Forza, Cargo Expreso, entrega personal…"></div>
-          <div class="field full"><label>Número de guía / tracking</label><input class="input" id="storeOrderTracking" maxlength="120" placeholder="Ej. 123456789"></div>
-          <div class="field full"><label>Link de guía / seguimiento</label><input class="input" id="storeOrderTrackingUrl" maxlength="900" inputmode="url" placeholder="https://..."><div class="hint">Pega aquí el enlace que te entregue la paquetería. El cliente verá un botón para abrirlo desde Mis Proyectos.</div></div>
-          <div class="field full"><label>Nota administrativa</label><textarea class="textarea" id="storeOrderAdminNote" maxlength="600" placeholder="Nota interna del pedido…"></textarea></div>
+        <div class="store-shipping-lock hidden" id="storeOrderShippingLocked">
+          <div class="store-shipping-lock-icon">⌛</div>
+          <div><strong>Envío nacional bloqueado</strong><span id="storeOrderShippingLockedText">Este artículo todavía no ha sido liberado de aduana.</span></div>
         </div>
-        <div class="form-actions"><button class="btn btn-accent" id="saveStoreOrderBtn" type="button" onclick="saveStoreOrder()">Guardar seguimiento</button></div>
+        <div class="store-shipping-ready hidden" id="storeOrderShippingReady">
+          <span>✓</span><div><strong>Aduana pagada / liberada</strong><small>Ya puedes registrar la guía nacional. Al guardar, el cliente recibirá un correo automáticamente.</small></div>
+        </div>
+        <div id="storeOrderShippingForm">
+          <div class="form-grid">
+            <div class="field" id="storeOrderStatusField"><label>Estado</label><select class="input" id="storeOrderEditStatus">
+              <option value="received">Pedido recibido</option>
+              <option value="confirmed">Confirmado</option>
+              <option value="preparing">Preparando</option>
+              <option value="shipped">En camino</option>
+              <option value="delivered">Entregado</option>
+              <option value="cancelled">Cancelado</option>
+            </select></div>
+            <div class="field"><label>Paquetería</label><select class="input" id="storeOrderCarrier">
+              <option value="">Selecciona paquetería</option>
+              <option value="Cargo Expreso">Cargo Expreso</option>
+              <option value="Forza">Forza</option>
+              <option value="Guatex">Guatex</option>
+            </select></div>
+            <div class="field full"><label>Número de guía / tracking</label><input class="input" id="storeOrderTracking" maxlength="120" placeholder="Ej. 123456789"></div>
+            <div class="field full"><label>Link de seguimiento <span class="sub">(opcional)</span></label><input class="input" id="storeOrderTrackingUrl" maxlength="900" inputmode="url" placeholder="https://..."><div class="hint">Si la paquetería te entrega un enlace de seguimiento, puedes pegarlo aquí. El cliente también verá la guía desde su cuenta.</div></div>
+            <div class="field full"><label>Nota administrativa</label><textarea class="textarea" id="storeOrderAdminNote" maxlength="600" placeholder="Nota interna del pedido…"></textarea></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-accent" id="saveStoreOrderBtn" type="button" onclick="saveStoreOrder()">Guardar seguimiento</button></div>
+        </div>
       </div>
     </div>
 
@@ -1758,6 +1774,7 @@ window.openStoreOrder=function(orderId){
     ...(o.receiptStoragePath ? [['Comprobante','Recibido ✓']] : []),
     ...(o.trackingUrl ? [['Link de seguimiento','Publicado ✓']] : []),
     ...(Number(o.paidUsd||0)>0 ? [['Cobrado por PayPal',`$${Number(o.paidUsd).toFixed(2)} USD`]] : []),
+    ...(o.customsRequired ? [['Importación',storeImportStatusLabel(o.customsStatus||o.importInfo?.status)],['Aduana',Number(o.customsTotalGtq||0)>0?gtq(o.customsTotalGtq):'Pendiente']] : []),
     ...(o.paymentMethod==='visacuotas' ? [['Recargo Visacuotas','Se confirma en Recurrente']] : [])
   ].map(([l,v])=>`<div class="detail"><span>${esc(l)}</span><strong>${esc(v)}</strong></div>`).join('');
   const address=o.paymentMethod==='pickup_pana'
@@ -1775,6 +1792,22 @@ window.openStoreOrder=function(orderId){
   $('storeOrderTracking').value=o.trackingNumber||'';
   $('storeOrderTrackingUrl').value=o.trackingUrl||'';
   $('storeOrderAdminNote').value=o.adminNote||'';
+  const imported=o.customsRequired===true||o.importInfo?.originMarket==='usa';
+  const importStatus=o.customsStatus||o.importInfo?.status||'available_gt';
+  const customsReleased=!imported||['released','available_gt'].includes(importStatus);
+  const locked=$('storeOrderShippingLocked'),ready=$('storeOrderShippingReady'),form=$('storeOrderShippingForm'),saveBtn=$('saveStoreOrderBtn');
+  locked?.classList.toggle('hidden',!imported||customsReleased);
+  ready?.classList.toggle('hidden',!imported||!customsReleased);
+  form?.classList.toggle('hidden',imported&&!customsReleased);
+  if(imported&&!customsReleased&&$('storeOrderShippingLockedText')){
+    $('storeOrderShippingLockedText').textContent=importStatus==='customs'
+      ?'El equipo está en aduana. Marca el producto como “Aduana pagada / liberado” antes de registrar una guía nacional.'
+      :importStatus==='in_transit'?'El equipo todavía viene en tránsito hacia Guatemala.':'El equipo todavía se encuentra en Estados Unidos.';
+  }
+  if(imported&&customsReleased){
+    $('storeOrderEditStatus').value=o.status==='delivered'?'delivered':'shipped';
+    if(saveBtn)saveBtn.textContent=o.trackingNumber?'Actualizar guía y notificar':'Guardar guía y notificar cliente';
+  }else if(saveBtn){saveBtn.textContent='Guardar seguimiento'}
   if($('deleteStoreOrderBtn')){
     $('deleteStoreOrderBtn').disabled=false;
     $('deleteStoreOrderBtn').title='Eliminar pedido y liberar disponibilidad';
@@ -1831,19 +1864,27 @@ window.deleteSelectedStoreOrder=async function(){
 window.closeStoreOrder=function(){$('storeOrderModal')?.classList.remove('show');selectedStoreOrder=null}
 window.saveStoreOrder=async function(){
   if(!selectedStoreOrder)return;
-  const btn=$('saveStoreOrderBtn');const old=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
+  const o=selectedStoreOrder;
+  const imported=o.customsRequired===true||o.importInfo?.originMarket==='usa';
+  const importStatus=o.customsStatus||o.importInfo?.status||'available_gt';
+  const customsReleased=!imported||['released','available_gt'].includes(importStatus);
+  const carrier=$('storeOrderCarrier').value.trim();
+  const trackingNumber=$('storeOrderTracking').value.trim();
+  if(imported&&!customsReleased){toast('Primero marca el producto como Aduana pagada / liberado.');return}
+  if(imported&&(!carrier||!trackingNumber)){toast('Selecciona la paquetería y escribe el número de guía.');return}
+  const btn=$('saveStoreOrderBtn');const old=btn.textContent;btn.disabled=true;btn.textContent=imported?'Guardando y notificando…':'Guardando…';
   try{
-    await storeAdminRequest('/store/orders/admin/update',{method:'POST',body:{
-      orderId:selectedStoreOrder.orderId||selectedStoreOrder.id,
-      status:$('storeOrderEditStatus').value,
-      carrier:$('storeOrderCarrier').value.trim(),
-      trackingNumber:$('storeOrderTracking').value.trim(),
+    const result=await storeAdminRequest('/store/orders/admin/update',{method:'POST',body:{
+      orderId:o.orderId||o.id,
+      status:imported?'shipped':$('storeOrderEditStatus').value,
+      carrier,
+      trackingNumber,
       trackingUrl:$('storeOrderTrackingUrl').value.trim(),
-      adminNote:$('storeOrderAdminNote').value.trim()
+      adminNote:$('storeOrderAdminNote').value.trim(),
+      shipmentNotify:imported
     }});
-    toast('Pedido actualizado. El cliente verá el nuevo seguimiento.');
-    closeStoreOrder();
-    await refresh();
+    toast(imported?(result.shipmentMailSent?'Guía guardada. Cliente notificado: su paquete va en camino.':'Guía guardada. El seguimiento quedó actualizado.'):'Pedido actualizado. El cliente verá el nuevo seguimiento.');
+    closeStoreOrder();await refresh();
   }catch(e){console.error(e);toast(e.message||'No se pudo actualizar el pedido.')}
   finally{btn.disabled=false;btn.textContent=old}
 }
@@ -1915,7 +1956,7 @@ function tempSaleUrl(slug){return `${location.origin}/venta.html?s=${encodeURICo
 function tempSaleCategoryLabel(v){
   return ({phone:'Teléfono',tablet:'Tablet',computer:'Computadora',accessory:'Accesorio',other:'Otro'})[v]||'Otro';
 }
-function storeImportStatusLabel(v){return ({available_gt:'Disponible en Guatemala',usa_stock:'En Estados Unidos',in_transit:'En tránsito a Guatemala',customs:'En aduana',released:'Liberado de aduana'})[v]||'Disponible en Guatemala'}
+function storeImportStatusLabel(v){return ({available_gt:'Disponible en Guatemala',usa_stock:'En Estados Unidos',in_transit:'En tránsito a Guatemala',customs:'En aduana',released:'Aduana pagada / liberado'})[v]||'Disponible en Guatemala'}
 function renderTemporarySales(){
   const rows=Array.isArray(data.tempSales)?data.tempSales:[];
   if($('tempSaleCount'))$('tempSaleCount').textContent=String(rows.length);
