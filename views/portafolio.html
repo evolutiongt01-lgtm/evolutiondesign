@@ -44,6 +44,14 @@ h1{font-size:clamp(4.2rem,9vw,8rem);line-height:.84;letter-spacing:-.07em;margin
 @media(max-width:767.98px){main{padding:128px 11px 55px}.hero{padding:12px 10px 30px;gap:22px}h1{font-size:clamp(3.75rem,18vw,5.5rem)}.hero-copy{font-size:11px;line-height:1.62}.hero-side{padding:15px;border-radius:20px}.toolbar{top:112px;margin:0 -1px;padding:13px 1px 14px;align-items:flex-start}.filters{gap:5px}.filter{padding:8px 9px;font-size:7.5px}.project-count{display:none}.grid{gap:10px}.card,.card.wide{grid-column:span 12;min-height:360px;border-radius:21px}.card.tall{min-height:410px}.card-body{padding:17px}.card h2{font-size:1.45rem}.card p{font-size:9px}.card.web .card-media{padding:11px}.cta{margin-top:22px;padding:21px;border-radius:22px;display:block}.cta-actions{margin-top:17px}.modal{padding:0;align-items:flex-end}.modal-card{width:100%;max-height:92dvh;border-radius:24px 24px 0 0;border-bottom:0}.modal-image{min-height:280px}.modal-copy{grid-template-columns:1fr;padding:18px}.service-link{width:100%}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
+
+<style id="evo-projects-shell-clearance-v5010">
+:root{--evo-shell-mobile-nav-bottom:142px}
+@media(max-width:1000px){
+  main{padding-top:calc(var(--evo-shell-mobile-nav-bottom) + 14px)!important}
+  .toolbar{top:calc(var(--evo-shell-mobile-nav-bottom) + 3px)!important}
+}
+</style>
 </head>
 <body>
 <main>
@@ -176,6 +184,42 @@ h1{font-size:clamp(4.2rem,9vw,8rem);line-height:.84;letter-spacing:-.07em;margin
   close.addEventListener('click',closeModal);
   modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+})();
+</script>
+
+<script id="evo-mobile-nav-clearance-fix">
+(()=>{
+  const root=document.documentElement;
+  let ro=null, tries=0;
+  const setValue=v=>root.style.setProperty('--evo-shell-mobile-nav-bottom',`${Math.max(0,Math.ceil(v||0))}px`);
+  const measure=()=>{
+    if(innerWidth>991.98){setValue(0);return true}
+    if(window.parent===window){setValue(0);return true}
+    try{
+      const nav=window.parent.document.querySelector('evolution-nav .evo-mobile');
+      if(!nav){return false}
+      const cs=window.parent.getComputedStyle(nav);
+      if(cs.display==='none'||cs.visibility==='hidden'){setValue(0);return true}
+      const rect=nav.getBoundingClientRect();
+      if(rect.bottom>0){
+        setValue(rect.bottom);
+        if('ResizeObserver' in window.parent && !ro){
+          ro=new window.parent.ResizeObserver(()=>requestAnimationFrame(measure));
+          ro.observe(nav);
+        }
+        return true;
+      }
+    }catch(_){ }
+    return false;
+  };
+  const boot=()=>{
+    if(measure())return;
+    if(tries++<90)requestAnimationFrame(boot);
+  };
+  boot();
+  addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true});
+  addEventListener('orientationchange',()=>setTimeout(measure,120),{passive:true});
+  try{window.parent.addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true})}catch(_){ }
 })();
 </script>
 </body>
