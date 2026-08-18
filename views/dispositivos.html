@@ -302,6 +302,16 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 }
 
 </style>
+
+<style id="evo-store-shell-clearance-v5010">
+:root{--evo-shell-mobile-nav-bottom:142px}
+@media(max-width:991.98px){
+  main{padding-top:calc(var(--evo-shell-mobile-nav-bottom) + 14px)!important}
+}
+@media(max-width:680px){
+  .filters{top:calc(var(--evo-shell-mobile-nav-bottom) + 4px)!important}
+}
+</style>
 </head>
 <body class="store-mobile-ready">
 <main>
@@ -434,6 +444,42 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 
   loadCatalog();
   send('evolution:view-title',{title:'Dispositivos · Evolution Design'});
+})();
+</script>
+
+<script id="evo-mobile-nav-clearance-fix">
+(()=>{
+  const root=document.documentElement;
+  let ro=null, tries=0;
+  const setValue=v=>root.style.setProperty('--evo-shell-mobile-nav-bottom',`${Math.max(0,Math.ceil(v||0))}px`);
+  const measure=()=>{
+    if(innerWidth>991.98){setValue(0);return true}
+    if(window.parent===window){setValue(0);return true}
+    try{
+      const nav=window.parent.document.querySelector('evolution-nav .evo-mobile');
+      if(!nav){return false}
+      const cs=window.parent.getComputedStyle(nav);
+      if(cs.display==='none'||cs.visibility==='hidden'){setValue(0);return true}
+      const rect=nav.getBoundingClientRect();
+      if(rect.bottom>0){
+        setValue(rect.bottom);
+        if('ResizeObserver' in window.parent && !ro){
+          ro=new window.parent.ResizeObserver(()=>requestAnimationFrame(measure));
+          ro.observe(nav);
+        }
+        return true;
+      }
+    }catch(_){ }
+    return false;
+  };
+  const boot=()=>{
+    if(measure())return;
+    if(tries++<90)requestAnimationFrame(boot);
+  };
+  boot();
+  addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true});
+  addEventListener('orientationchange',()=>setTimeout(measure,120),{passive:true});
+  try{window.parent.addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true})}catch(_){ }
 })();
 </script>
 </body>
