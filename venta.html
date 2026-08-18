@@ -1568,6 +1568,16 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 
 
 .import-status-card{margin:18px 0 8px;padding:16px;border:1px solid rgba(124,181,255,.17);border-radius:19px;background:radial-gradient(circle at 92% 0,rgba(70,135,220,.11),transparent 32%),linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));box-shadow:inset 0 1px rgba(255,255,255,.04)}.import-status-card.hidden{display:none}.import-status-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.import-kicker{display:block;color:#9cc9ff;font-size:7.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;margin-bottom:5px}.import-status-head strong{font-size:16px;letter-spacing:-.03em}.import-location{padding:6px 8px;border:1px solid rgba(124,181,255,.16);border-radius:999px;color:#9cc9ff;font-size:7.5px}.import-status-card p{color:#85858c;font-size:9px;line-height:1.6;margin:10px 0}.import-customs-total{padding:11px 12px;border:1px solid rgba(212,184,149,.17);border-radius:13px;background:rgba(212,184,149,.045)}.import-customs-total span,.import-customs-total small{display:block}.import-customs-total span{color:#8b7a66;font-size:7px;text-transform:uppercase;letter-spacing:.1em;font-weight:850}.import-customs-total strong{display:block;color:#e2c49e;font-size:15px;margin:4px 0}.import-customs-total small{color:#77777e;font-size:7.5px;line-height:1.5}.import-breakdown{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:8px}.import-breakdown.hidden{display:none}.import-breakdown div{padding:8px;border:1px solid rgba(255,255,255,.06);border-radius:10px;background:rgba(0,0,0,.14)}.import-breakdown small{display:block;color:#696970;font-size:6.5px;text-transform:uppercase;letter-spacing:.07em}.import-breakdown b{display:block;color:#aaaab0;font-size:9px;margin-top:3px}.customs-ack{margin-bottom:10px!important;border:1px solid rgba(212,184,149,.15);border-radius:13px;padding:10px;background:rgba(212,184,149,.035)}.customs-ack.hidden{display:none}@media(max-width:600px){.import-status-head{display:block}.import-location{display:inline-flex;margin-top:8px}}
+
+.sold-product-notice{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;margin:18px 0 4px;padding:16px;border:1px solid rgba(212,184,149,.18);border-radius:18px;background:radial-gradient(circle at 94% 0,rgba(212,184,149,.10),transparent 35%),linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));box-shadow:inset 0 1px rgba(255,255,255,.04)}
+.sold-product-notice.hidden{display:none}
+.sold-product-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid rgba(212,184,149,.24);background:rgba(212,184,149,.07);color:#e0c29c;font-size:14px;font-weight:900}
+.sold-product-notice span{display:block;color:#a78e70;font-size:7px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;margin:2px 0 5px}
+.sold-product-notice strong{display:block;color:#f3f1ee;font-size:14px;letter-spacing:-.025em}
+.sold-product-notice p{margin:5px 0 0;color:#85858c;font-size:9px;line-height:1.55}
+.sold-product-notice a{grid-column:2;display:inline-flex;width:max-content;margin-top:2px;color:#d6ba95;font-size:8px;font-weight:850;text-decoration:none}
+.purchase-card.sold-state #authGate,.purchase-card.sold-state #orderForm{display:none!important}
+@media(max-width:600px){.sold-product-notice{grid-template-columns:auto 1fr;padding:14px}.sold-product-notice a{grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -1654,6 +1664,15 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 
   <aside class="purchase-card">
     <div class="purchase-head"><div><div class="kicker">Pedido seguro</div><h2>Comprar ahora</h2><p>Inicia sesión y completa tus datos para continuar con el pedido.</p></div><span class="availability" id="availability">Consultando…</span></div>
+    <div class="sold-product-notice hidden" id="soldProductNotice">
+      <div class="sold-product-icon">✓</div>
+      <div>
+        <span id="soldProductKicker">Unidad vendida</span>
+        <strong id="soldProductTitle">Esta unidad ya fue vendida.</strong>
+        <p id="soldProductCopy">Esta publicación permanece visible como referencia, pero ya no acepta pedidos.</p>
+      </div>
+      <a href="/dispositivos.html">Ver otros dispositivos →</a>
+    </div>
 
     <div class="auth-gate" id="authGate">
       <div>
@@ -2258,7 +2277,7 @@ function finishStoreSuccess(order){
   $("availability").textContent=paid?"Pago confirmado":"Pedido registrado";
   $("availability").classList.add("sold");
 }
-async function renderOnlinePayment(method){const panel=$("onlinePaymentPanel"),host=$("paypalStoreButtons"),seq=++paypalRenderSeq;if(!["paypal_shipping","card_shipping"].includes(method)){panel.classList.remove("show");paypalRenderedMethod="";host.replaceChildren();setPaypalStatus("");return}panel.classList.add("show");$("onlinePaymentTitle").textContent=method==="card_shipping"?"Tarjeta débito/crédito":"PayPal";$("onlinePaymentCopy").textContent=`Pago seguro · ${money(currentQuote()?.totalGtq||0)}. Tus datos de entrega ya están listos para usarse en el checkout.`;if(paypalRenderedMethod===method&&host.childElementCount>0)return;paypalRenderedMethod="";host.innerHTML='<div style="padding:9px;color:#333;font-size:11px;text-align:center">Preparando pago seguro…</div>';try{const paypal=await loadPayPalSdk();if(seq!==paypalRenderSeq||$("paymentMethod").value!==method)return;host.replaceChildren();const mount=document.createElement("div");mount.id=`paypal-store-mount-${seq}`;host.appendChild(mount);const fundingSource=method==="card_shipping"?paypal.FUNDING.CARD:paypal.FUNDING.PAYPAL,buttons=paypal.Buttons({fundingSource,style:{layout:"vertical",shape:"rect",color:method==="card_shipping"?"black":"gold",label:method==="card_shipping"?"pay":"paypal",height:45},createOrder:async()=>{clearFeedback();setPaypalStatus("Validando datos y preparando el pago…");if(!config?.available)throw new Error("Este producto ya no está disponible.");const draft=validateStoreDraft(),token=await recaptchaToken(),result=await authedFetch("/paypal/create-order",{method:"POST",body:{mode:"store_sale_purchase",saleSlug:TEMP_SALE_SLUG,fundingSource:method==="card_shipping"?"card":"paypal",storeDraft:draft,recaptchaToken:token,requestedUri:location.href}});setPaypalStatus("Orden preparada. Continúa en el checkout seguro.");return result.orderId},onApprove:async data=>{setPaypalStatus("Confirmando pago…");try{const result=await authedFetch("/paypal/capture-order",{method:"POST",body:{orderId:data.orderID}});if(!result?.storeOrder)throw new Error("El pago fue confirmado, pero no recibimos el pedido final.");setPaypalStatus("Pago confirmado ✓");finishStoreSuccess(result.storeOrder)}catch(e){setPaypalStatus(e.message||"No pudimos confirmar el pago.","error");throw e}},onCancel:()=>setPaypalStatus("Pago cancelado. Puedes intentarlo nuevamente."),onError:e=>{console.error(e);setPaypalStatus(e?.message||"No se pudo abrir el pago seguro.","error")}});if(!buttons.isEligible()){host.innerHTML='<div style="padding:12px;color:#8a1c1c;font-size:11px;text-align:center">Este método no está disponible en este dispositivo. Prueba otro método.</div>';return}await buttons.render(`#${mount.id}`);if(seq===paypalRenderSeq&&$("paymentMethod").value===method)paypalRenderedMethod=method}catch(e){if(seq!==paypalRenderSeq)return;console.error(e);host.innerHTML="";paypalRenderedMethod="";setPaypalStatus(e.message||"No se pudo preparar PayPal.","error")}}
+async function renderOnlinePayment(method){const panel=$("onlinePaymentPanel"),host=$("paypalStoreButtons"),seq=++paypalRenderSeq;if(!["paypal_shipping","card_shipping"].includes(method)){panel.classList.remove("show");paypalRenderedMethod="";host.replaceChildren();setPaypalStatus("");return}panel.classList.add("show");$("onlinePaymentTitle").textContent=method==="card_shipping"?"Tarjeta débito/crédito":"PayPal";$("onlinePaymentCopy").textContent=`Pago seguro · ${money(currentQuote()?.totalGtq||0)}. Tus datos de entrega ya están listos para usarse en el checkout.`;if(paypalRenderedMethod===method&&host.childElementCount>0)return;paypalRenderedMethod="";host.innerHTML='<div style="padding:9px;color:#333;font-size:11px;text-align:center">Preparando pago seguro…</div>';try{const paypal=await loadPayPalSdk();if(seq!==paypalRenderSeq||$("paymentMethod").value!==method)return;host.replaceChildren();const mount=document.createElement("div");mount.id=`paypal-store-mount-${seq}`;host.appendChild(mount);const fundingSource=method==="card_shipping"?paypal.FUNDING.CARD:paypal.FUNDING.PAYPAL,buttons=paypal.Buttons({fundingSource,style:{layout:"vertical",shape:"rect",color:method==="card_shipping"?"black":"gold",label:method==="card_shipping"?"pay":"paypal",height:45},createOrder:async()=>{clearFeedback();setPaypalStatus("Validando datos y preparando el pago…");if(!(config?.available===true&&Number(config?.sale?.stock??0)>0&&Number(config?.remaining??0)>0))throw new Error("Esta unidad ya fue vendida o reservada.");const draft=validateStoreDraft(),token=await recaptchaToken(),result=await authedFetch("/paypal/create-order",{method:"POST",body:{mode:"store_sale_purchase",saleSlug:TEMP_SALE_SLUG,fundingSource:method==="card_shipping"?"card":"paypal",storeDraft:draft,recaptchaToken:token,requestedUri:location.href}});setPaypalStatus("Orden preparada. Continúa en el checkout seguro.");return result.orderId},onApprove:async data=>{setPaypalStatus("Confirmando pago…");try{const result=await authedFetch("/paypal/capture-order",{method:"POST",body:{orderId:data.orderID}});if(!result?.storeOrder)throw new Error("El pago fue confirmado, pero no recibimos el pedido final.");setPaypalStatus("Pago confirmado ✓");finishStoreSuccess(result.storeOrder)}catch(e){setPaypalStatus(e.message||"No pudimos confirmar el pago.","error");throw e}},onCancel:()=>setPaypalStatus("Pago cancelado. Puedes intentarlo nuevamente."),onError:e=>{console.error(e);setPaypalStatus(e?.message||"No se pudo abrir el pago seguro.","error")}});if(!buttons.isEligible()){host.innerHTML='<div style="padding:12px;color:#8a1c1c;font-size:11px;text-align:center">Este método no está disponible en este dispositivo. Prueba otro método.</div>';return}await buttons.render(`#${mount.id}`);if(seq===paypalRenderSeq&&$("paymentMethod").value===method)paypalRenderedMethod=method}catch(e){if(seq!==paypalRenderSeq)return;console.error(e);host.innerHTML="";paypalRenderedMethod="";setPaypalStatus(e.message||"No se pudo preparar PayPal.","error")}}
 function renderPaymentExtra(){const method=$("paymentMethod").value;$("transferPanel").classList.toggle("show",method==="transfer_shipping");$("cryptoPanel").classList.toggle("show",method==="crypto_binance");$("visacuotasPanel").classList.toggle("show",method==="visacuotas");$("selectVisacuotasBtn")?.classList.toggle("active",method==="visacuotas");if(method==="transfer_shipping"){const q=config?.methods?.find(x=>x.method==="transfer_shipping");if($("transferPanelCopy"))$("transferPanelCopy").textContent=Number(q?.shippingGtq||0)>0?`Transfiere el total exacto indicado. El envío nacional configurado para este producto es ${money(q.shippingGtq)}.`:"Transfiere el total exacto indicado. Este producto no tiene costo de envío adicional configurado.";renderBankDetails()}if(method==="crypto_binance")renderCrypto();renderOnlinePayment(method);const url=config?.visacuotasUrl||config?.sale?.visacuotasUrl||"#";$("visacuotasPreviewLink").href=url;$("payVisacuotasBtn").href=url;$("visacuotasPreviewLink").classList.toggle("hidden",url==="#")}
 function syncDelivery(){
   const method=$("paymentMethod").value,pickup=method==="pickup_pana";
@@ -2270,18 +2289,56 @@ function syncDelivery(){
   if(pickup)$("pobladoSuggestions").classList.remove("show");
   $("submitBtn").disabled=["paypal_shipping","card_shipping"].includes(method)||!config?.available;
 }
-function renderSummary(){const q=currentQuote();if(!q)return;const rows=[[config?.title||config?.sale?.title||"Producto",money(q.basePriceGtq)]];if(q.surchargeGtq){const pricing=salePricing(),configured=(q.method==="cod_forza"||q.method==="cod_cargo")?pricing.codSurchargePct:["paypal_shipping","card_shipping"].includes(q.method)?pricing.paypalSurchargePct:0,pct=quotePct(q,configured),label=(q.method==="cod_forza"||q.method==="cod_cargo")?`Recargo contra entrega${pct?` ${pctLabel(pct)}%`:""}`:`Recargo de pago${pct?` ${pctLabel(pct)}%`:""}`;rows.push([label,money(q.surchargeGtq)])}if(q.shippingGtq)rows.push(["Envío nacional",money(q.shippingGtq)]);if(q.method==="crypto_binance"&&q.usdtAmount)rows.push(["Pago cripto",`≈ ${Number(q.usdtAmount).toFixed(2)} USDT`]);if(q.method==="pickup_pana"){rows.push(["Punto de encuentro","Callejón Las Armonías, Panajachel"]);rows.push(["Cita","Lunes a sábado · hora asignada entre 2:00 y 5:00 p. m."])}else if(q.method==="visacuotas")rows.push(["Financiamiento","Recurrente calcula cuotas y recargo"]);else if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",money(0)]);$("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${v}</strong></div>`).join("")+`<div class="summary-row total"><span>${q.method==="visacuotas"?"Base antes del financiamiento":"Total"}</span><strong>${money(q.totalGtq)}</strong></div>`;if(["paypal_shipping","card_shipping"].includes(q.method)){$("submitBtn").textContent="Completa el pago seguro arriba";$("submitBtn").disabled=true}else{$("submitBtn").disabled=!config?.available;$("submitBtn").textContent=q.method==="visacuotas"?`Registrar y financiar · ${money(q.totalGtq)}`:q.method==="transfer_shipping"?`Enviar referencia · ${money(q.totalGtq)}`:q.method==="crypto_binance"?`Registrar pago cripto · ${money(q.totalGtq)}`:`Confirmar pedido · ${money(q.totalGtq)}`}}
+function renderSummary(){const q=currentQuote();if(!q)return;const rows=[[config?.title||config?.sale?.title||"Producto",money(q.basePriceGtq)]];if(q.surchargeGtq){const pricing=salePricing(),configured=(q.method==="cod_forza"||q.method==="cod_cargo")?pricing.codSurchargePct:["paypal_shipping","card_shipping"].includes(q.method)?pricing.paypalSurchargePct:0,pct=quotePct(q,configured),label=(q.method==="cod_forza"||q.method==="cod_cargo")?`Recargo contra entrega${pct?` ${pctLabel(pct)}%`:""}`:`Recargo de pago${pct?` ${pctLabel(pct)}%`:""}`;rows.push([label,money(q.surchargeGtq)])}if(q.shippingGtq)rows.push(["Envío nacional",money(q.shippingGtq)]);if(q.method==="crypto_binance"&&q.usdtAmount)rows.push(["Pago cripto",`≈ ${Number(q.usdtAmount).toFixed(2)} USDT`]);if(q.method==="pickup_pana"){rows.push(["Punto de encuentro","Callejón Las Armonías, Panajachel"]);rows.push(["Cita","Lunes a sábado · hora asignada entre 2:00 y 5:00 p. m."])}else if(q.method==="visacuotas")rows.push(["Financiamiento","Recurrente calcula cuotas y recargo"]);else if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",money(0)]);$("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${v}</strong></div>`).join("")+`<div class="summary-row total"><span>${q.method==="visacuotas"?"Base antes del financiamiento":"Total"}</span><strong>${money(q.totalGtq)}</strong></div>`;if(["paypal_shipping","card_shipping"].includes(q.method)){$("submitBtn").textContent="Completa el pago seguro arriba";$("submitBtn").disabled=true}else{$("submitBtn").disabled=!(config?.available===true&&Number(config?.sale?.stock??0)>0&&Number(config?.remaining??0)>0);$("submitBtn").textContent=q.method==="visacuotas"?`Registrar y financiar · ${money(q.totalGtq)}`:q.method==="transfer_shipping"?`Enviar referencia · ${money(q.totalGtq)}`:q.method==="crypto_binance"?`Registrar pago cripto · ${money(q.totalGtq)}`:`Confirmar pedido · ${money(q.totalGtq)}`}}
+function renderSaleAvailabilityState(){
+  const sale=config?.sale||{};
+  const stock=Math.max(0,Number(sale.stock??0)||0);
+  const remaining=Math.max(0,Number(config?.remaining??sale.remaining??0)||0);
+  const available=config?.available===true&&stock>0&&remaining>0;
+  const sold=stock<=0||String(sale.badge||"").trim().toLowerCase()==="vendido";
+  const card=document.querySelector(".purchase-card"),notice=$("soldProductNotice");
+
+  if(available){
+    $("availability").textContent=`${remaining} disponible${remaining===1?"":"s"}`;
+    $("availability").classList.remove("sold");
+    card?.classList.remove("sold-state");
+    notice?.classList.add("hidden");
+    return {available:true,sold:false};
+  }
+
+  $("availability").classList.add("sold");
+  card?.classList.add("sold-state");
+  notice?.classList.remove("hidden");
+  $("submitBtn").disabled=true;
+
+  if(sold){
+    $("availability").textContent="VENDIDO";
+    $("soldProductKicker").textContent="Unidad vendida";
+    $("soldProductTitle").textContent="Esta unidad ya fue vendida.";
+    $("soldProductCopy").textContent="Esta publicación permanece visible como referencia, pero ya no acepta pedidos.";
+  }else{
+    $("availability").textContent="UNIDAD RESERVADA";
+    $("soldProductKicker").textContent="Unidad reservada";
+    $("soldProductTitle").textContent="Esta unidad ya tiene un pedido activo.";
+    $("soldProductCopy").textContent="Mientras la reserva siga activa, no se aceptan pedidos adicionales para esta unidad.";
+  }
+  return {available:false,sold};
+}
+
 async function loadConfig(){
   try{
     if(!TEMP_SALE_SLUG)throw new Error("Falta el identificador de esta venta temporal.");
     config=await publicGet(`/store/sales/config?slug=${encodeURIComponent(TEMP_SALE_SLUG)}`);
     if(!config?.sale)throw new Error("No encontramos esta venta temporal.");
     applyTemporarySale();
-    const remaining=Number(config.remaining);
-    $("availability").textContent=config.available?(Number.isFinite(remaining)&&remaining>0?`${remaining} disponible${remaining===1?"":"s"}`:"Disponible"):"Agotado / finalizado";
-    $("availability").classList.toggle("sold",!config.available);
+    const availabilityState=renderSaleAvailabilityState();
     renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate();renderGuide();
-    $("submitBtn").disabled=!config.available;
+    if(!availabilityState.available){
+      $("submitBtn").disabled=true;
+      paypalRenderSeq++;
+      $("onlinePaymentPanel")?.classList.remove("show");
+      $("paypalStoreButtons")?.replaceChildren();
+    }
   }catch(e){
     $("availability").textContent="Venta no disponible";
     $("availability").classList.add("sold");
@@ -2319,7 +2376,7 @@ $("emailAuthForm").addEventListener("submit",async e=>{e.preventDefault();const 
 
 $("selectVisacuotasBtn").onclick=()=>{$("paymentMethod").value="visacuotas";renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate();$("visacuotasPanel").scrollIntoView({behavior:"smooth",block:"center"})};
 
-$("orderForm").addEventListener("submit",async e=>{e.preventDefault();clearFeedback();if(!config?.available){showFeedback("Este producto ya no está disponible.");return}const q=currentQuote();if(!q)return;if(["paypal_shipping","card_shipping"].includes(q.method)){showFeedback("Completa el pago con el botón seguro que aparece arriba.");return}const btn=$("submitBtn");btn.disabled=true;btn.textContent="Validando pedido…";try{const draft=validateStoreDraft();let paymentReference="",paymentProofId="";if(q.method==="transfer_shipping"){paymentReference=$("transferReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia de la transferencia.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("transferReceipt")}if(q.method==="crypto_binance"){paymentReference=$("cryptoReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia del pago cripto.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("cryptoReceipt")}btn.textContent="Validando seguridad…";const token=await recaptchaToken();btn.textContent="Guardando pedido…";const result=await authedFetch("/store/sales/orders/create",{method:"POST",body:{...draft,saleSlug:TEMP_SALE_SLUG,paymentMethod:q.method,paymentReference,paymentProofId,recaptchaToken:token,requestedUri:location.href}});finishStoreSuccess(result.order)}catch(err){showFeedback(err.message||"No se pudo registrar el pedido.");btn.disabled=false;renderSummary()}});
+$("orderForm").addEventListener("submit",async e=>{e.preventDefault();clearFeedback();if(!(config?.available===true&&Number(config?.sale?.stock??0)>0&&Number(config?.remaining??0)>0)){showFeedback("Esta unidad ya fue vendida o reservada y no acepta nuevos pedidos.");return}const q=currentQuote();if(!q)return;if(["paypal_shipping","card_shipping"].includes(q.method)){showFeedback("Completa el pago con el botón seguro que aparece arriba.");return}const btn=$("submitBtn");btn.disabled=true;btn.textContent="Validando pedido…";try{const draft=validateStoreDraft();let paymentReference="",paymentProofId="";if(q.method==="transfer_shipping"){paymentReference=$("transferReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia de la transferencia.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("transferReceipt")}if(q.method==="crypto_binance"){paymentReference=$("cryptoReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia del pago cripto.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("cryptoReceipt")}btn.textContent="Validando seguridad…";const token=await recaptchaToken();btn.textContent="Guardando pedido…";const result=await authedFetch("/store/sales/orders/create",{method:"POST",body:{...draft,saleSlug:TEMP_SALE_SLUG,paymentMethod:q.method,paymentReference,paymentProofId,recaptchaToken:token,requestedUri:location.href}});finishStoreSuccess(result.order)}catch(err){showFeedback(err.message||"No se pudo registrar el pedido.");btn.disabled=false;renderSummary()}});
 
 
 $("submitSuccessReceipt").onclick=async()=>{
