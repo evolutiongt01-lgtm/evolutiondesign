@@ -499,6 +499,28 @@
 
 
 
+
+/* ==========================================================
+   EVOLUTION STORE MANAGER · V49
+   ========================================================== */
+.store-manager-panel .panel-head{align-items:flex-start}
+.store-admin-note{display:flex;align-items:flex-start;gap:13px;margin-bottom:16px;padding:14px 15px;border:1px solid rgba(212,184,149,.18);border-radius:16px;background:linear-gradient(145deg,rgba(212,184,149,.06),rgba(255,255,255,.015))}
+.store-admin-note strong{display:block;min-width:150px;color:#e5c9a5;font-size:10px}
+.store-admin-note span{color:#898990;font-size:9px;line-height:1.6}
+.store-product-editor .section-h{letter-spacing:.09em}
+.store-gallery-admin{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+.store-gallery-item{position:relative;aspect-ratio:1.25;border-radius:12px;border:1px solid rgba(255,255,255,.08);overflow:hidden;background:#09090b}
+.store-gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
+.store-gallery-delete{position:absolute;top:6px;right:6px;width:27px;height:27px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(7,7,9,.78);color:#fff;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.store-price-ref{display:block;margin-top:3px;color:#68686e;font-size:8px;text-decoration:line-through}
+@media(max-width:760px){
+  .store-manager-panel .panel-head{display:block}
+  .store-manager-panel .panel-head .form-actions{margin-top:12px!important;display:grid;grid-template-columns:1fr}
+  .store-gallery-admin{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .store-admin-note{display:block}
+  .store-admin-note strong{margin-bottom:6px}
+}
+
 </style>
 <style id="evolution-admin-performance">
 /* =========================================================
@@ -888,7 +910,7 @@ html.admin-page-hidden *{
 </head>
 <body>
 <div class="admin-shell" id="adminShell" style="visibility:hidden">
-<aside class="sidebar"><div class="brand"><img alt="Evolution Design" src="img/logo.png"/><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div><a aria-label="Volver al Home" class="admin-home-mobile" href="index.html" title="Volver al Home"><svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="18"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg></a></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="subscriptions"><span class="dot"></span>Suscripciones <span class="sub-count" id="subscriptionCount">0</span></button><button data-view="orders"><span class="dot"></span>Pedidos <span class="sub-count" id="storeOrderCount">0</span></button><button data-view="tempsales"><span class="dot"></span>Ventas temporales <span class="sub-count" id="tempSaleCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div class="admin-user" id="adminEmail">—</div><a class="admin-home-side" href="index.html"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="15"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Volver al Home</span></a><button class="logout" id="logoutBtn">Cerrar sesión</button></div></aside>
+<aside class="sidebar"><div class="brand"><img alt="Evolution Design" src="img/logo.png"/><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div><a aria-label="Volver al Home" class="admin-home-mobile" href="index.html" title="Volver al Home"><svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="18"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg></a></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="subscriptions"><span class="dot"></span>Suscripciones <span class="sub-count" id="subscriptionCount">0</span></button><button data-view="orders"><span class="dot"></span>Pedidos <span class="sub-count" id="storeOrderCount">0</span></button><button data-view="tempsales"><span class="dot"></span>Productos <span class="sub-count" id="tempSaleCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div class="admin-user" id="adminEmail">—</div><a class="admin-home-side" href="index.html"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="15"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Volver al Home</span></a><button class="logout" id="logoutBtn">Cerrar sesión</button></div></aside>
 <main class="main"><div class="system-alert" id="systemAlert"></div>
 <div class="topbar"><div><div class="kicker">Evolution Design · Administración</div><h1 class="title" id="pageTitle">Dashboard</h1></div><div class="top-actions"><button class="btn" id="refreshBtn">Actualizar datos</button><a aria-label="Volver al Home" class="btn admin-home-btn" href="index.html"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="14"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Volver al Home</span></a></div></div>
 <section class="view active" id="view-dashboard"><div class="metrics" id="metrics"></div><div class="grid-2"><div class="panel"><div class="panel-head"><div><div class="panel-title">Proyectos recientes</div><div class="panel-copy">Compras, órdenes personalizadas y estado operativo.</div></div><button class="btn" onclick="switchView('projects')">Ver todos</button></div><div class="panel-body" id="recentProjects"></div></div><div class="panel"><div class="panel-head"><div><div class="panel-title">Clientes por país</div><div class="panel-copy">País reportado por PayPal o última ubicación.</div></div></div><div class="panel-body country-list" id="countryList"></div></div></div></section>
@@ -933,7 +955,7 @@ html.admin-page-hidden *{
   <div class="panel-head">
     <div>
       <div class="panel-title">Envíos manuales</div>
-      <div class="panel-copy">Crea la guía directamente con la paquetería que prefieras. Luego abre el pedido y pega la empresa, número de guía y link de seguimiento; el cliente lo verá en Órdenes.</div>
+      <div class="panel-copy">Crea la guía directamente con la paquetería que prefieras. Luego abre el pedido y pega la empresa, número de guía y link de seguimiento; el cliente lo verá en Mis Proyectos.</div>
     </div>
   </div>
 </div>
@@ -982,19 +1004,26 @@ html.admin-page-hidden *{
 </section>
 
 <section class="view" id="view-tempsales">
-  <div class="panel">
+  <div class="panel store-manager-panel">
     <div class="panel-head">
       <div>
-        <div class="panel-title">Páginas temporales de venta</div>
-        <div class="panel-copy">Crea publicaciones reutilizables con checkout, pagos, Boxful, seguimiento y stock.</div>
+        <div class="panel-title">Evolution Store Manager</div>
+        <div class="panel-copy">Administra el catálogo público de Dispositivos sin editar HTML: productos, precios, stock, imágenes, pagos y publicación.</div>
       </div>
-      <button class="btn btn-accent" type="button" onclick="openTempSaleEditor()">+ Crear página</button>
+      <div class="form-actions" style="margin:0">
+        <button class="btn" type="button" onclick="seedStoreProducts()">Importar iPhone + Mac</button>
+        <button class="btn" type="button" onclick="testStoreEmail()">Probar correo</button>
+        <button class="btn btn-accent" type="button" onclick="openTempSaleEditor()">+ Nuevo producto</button>
+      </div>
     </div>
     <div class="panel-body">
-      <div class="hint" style="margin-bottom:12px">Todas usan una sola plantilla: <code>venta.html?s=slug</code>. No necesitas crear un HTML nuevo por producto.</div>
+      <div class="store-admin-note">
+        <strong>Tienda conectada al Worker</strong>
+        <span>Los cambios aparecen automáticamente en <code>Dispositivos</code>. Cada producto usa <code>venta.html?s=slug</code>, por lo que no necesitas crear páginas nuevas.</span>
+      </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Estado</th><th>URL</th><th></th></tr></thead>
+          <thead><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th>Publicación</th><th></th></tr></thead>
           <tbody id="tempSalesBody"></tbody>
         </table>
       </div>
@@ -1022,7 +1051,7 @@ html.admin-page-hidden *{
 </div>
 <div class="table-wrap"><table><thead><tr><th>Solicitud</th><th>Cliente</th><th>Negocio</th><th>Plan</th><th>Precio</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody id="webRequestsBody"></tbody></table></div>
 </section>
-<section class="view" id="view-custom"><div class="panel"><div class="panel-head"><div><div class="panel-title">Crear orden personalizada</div><div class="panel-copy">La orden aparecerá directamente en “Órdenes” del cliente. Puede quedar pendiente de PayPal o marcarse pagada manualmente.</div></div></div><div class="panel-body"><form id="customOrderForm"><div class="form-grid"><div class="field full"><label>Cliente</label><select class="input" id="customClient" required=""></select></div><div class="field"><label>Nombre de la orden</label><input class="input" id="customTitle" placeholder="Ej. Remodelación integral vivienda" required=""/></div><div class="field"><label>Categoría</label><input class="input" id="customCategory" value="Orden personalizada"/></div><div class="field"><label>Precio USD</label><input class="input" id="customPrice" min="1" required="" step="0.01" type="number"/></div><div class="field"><label>Costo interno USD</label><input class="input" id="customCost" min="0" step="0.01" type="number" value="0"/><div class="hint">Solo visible en el panel admin; se usa para calcular ganancia.</div></div><div class="field full"><label>Descripción para el cliente</label><textarea class="textarea" id="customDescription" placeholder="Explica el alcance de la orden…"></textarea></div><div class="field full"><label>Archivos requeridos</label><textarea class="textarea" id="customUpload" placeholder="Ej. Sube plano PDF/DWG, fotografías actuales y medidas principales."></textarea></div><div class="field full"><label>Incluye (una línea por elemento)</label><textarea class="textarea" id="customIncluded" placeholder="Modelado 3D completo\n12 renders hiperrealistas\n2 revisiones"></textarea></div><div class="field full"><label>Notas internas</label><textarea class="textarea" id="customAdminNotes" placeholder="Solo administración…"></textarea></div></div><label class="check"><input id="customManualPaid" type="checkbox"/> Marcar esta orden como pagada</label><label class="check"><input checked="" id="customRequestPaymentNow" type="checkbox"/> Solicitar el pago inmediatamente si queda pendiente</label><div class="payment-method-wrap hidden" id="customPaymentMethodWrap"><div class="field"><label>Método con el que pagó el cliente</label><select class="input" id="customPaymentMethod"><option value="Binance">Binance</option><option value="POS">POS</option><option value="Efectivo">Efectivo</option><option value="Tarjeta de crédito o débito">Tarjeta de crédito o débito</option><option value="PayPal">PayPal</option></select><div class="hint">Este método quedará guardado en la orden y visible en el panel administrativo.</div></div></div><div class="form-actions"><button class="btn btn-accent" type="submit">Crear orden personalizada</button></div></form></div></div></section>
+<section class="view" id="view-custom"><div class="panel"><div class="panel-head"><div><div class="panel-title">Crear orden personalizada</div><div class="panel-copy">La orden aparecerá directamente en “Mis Proyectos” del cliente. Puede quedar pendiente de PayPal o marcarse pagada manualmente.</div></div></div><div class="panel-body"><form id="customOrderForm"><div class="form-grid"><div class="field full"><label>Cliente</label><select class="input" id="customClient" required=""></select></div><div class="field"><label>Nombre de la orden</label><input class="input" id="customTitle" placeholder="Ej. Remodelación integral vivienda" required=""/></div><div class="field"><label>Categoría</label><input class="input" id="customCategory" value="Orden personalizada"/></div><div class="field"><label>Precio USD</label><input class="input" id="customPrice" min="1" required="" step="0.01" type="number"/></div><div class="field"><label>Costo interno USD</label><input class="input" id="customCost" min="0" step="0.01" type="number" value="0"/><div class="hint">Solo visible en el panel admin; se usa para calcular ganancia.</div></div><div class="field full"><label>Descripción para el cliente</label><textarea class="textarea" id="customDescription" placeholder="Explica el alcance de la orden…"></textarea></div><div class="field full"><label>Archivos requeridos</label><textarea class="textarea" id="customUpload" placeholder="Ej. Sube plano PDF/DWG, fotografías actuales y medidas principales."></textarea></div><div class="field full"><label>Incluye (una línea por elemento)</label><textarea class="textarea" id="customIncluded" placeholder="Modelado 3D completo\n12 renders hiperrealistas\n2 revisiones"></textarea></div><div class="field full"><label>Notas internas</label><textarea class="textarea" id="customAdminNotes" placeholder="Solo administración…"></textarea></div></div><label class="check"><input id="customManualPaid" type="checkbox"/> Marcar esta orden como pagada</label><label class="check"><input checked="" id="customRequestPaymentNow" type="checkbox"/> Solicitar el pago inmediatamente si queda pendiente</label><div class="payment-method-wrap hidden" id="customPaymentMethodWrap"><div class="field"><label>Método con el que pagó el cliente</label><select class="input" id="customPaymentMethod"><option value="Binance">Binance</option><option value="POS">POS</option><option value="Efectivo">Efectivo</option><option value="Tarjeta de crédito o débito">Tarjeta de crédito o débito</option><option value="PayPal">PayPal</option></select><div class="hint">Este método quedará guardado en la orden y visible en el panel administrativo.</div></div></div><div class="form-actions"><button class="btn btn-accent" type="submit">Crear orden personalizada</button></div></form></div></div></section>
 </main></div>
 <div class="modal-back" id="subscriptionModal">
 <div class="drawer">
@@ -1184,7 +1213,7 @@ html.admin-page-hidden *{
 <div class="field full">
 <label>Título del proyecto</label>
 <input class="input" id="editProjectTitle" maxlength="160" placeholder="Nombre visible del proyecto"/>
-<div class="hint">Este nombre se actualizará también en “Órdenes” del cliente.</div>
+<div class="hint">Este nombre se actualizará también en “Mis Proyectos” del cliente.</div>
 </div>
 <div class="field">
 <label>Estado</label>
@@ -1226,7 +1255,7 @@ html.admin-page-hidden *{
 <div class="field">
 <label>Precio del proyecto USD</label>
 <div class="price-field-wrap"><span class="price-prefix">$</span><input class="input" id="editPrice" inputmode="decimal" min="0" step="0.01" type="number"/></div>
-<div class="bank-like-help">Este precio se mostrará al cliente en “Órdenes”.</div>
+<div class="bank-like-help">Este precio se mostrará al cliente en “Mis Proyectos”.</div>
 </div>
 <div class="field">
 <label>Costo interno USD</label>
@@ -1393,7 +1422,7 @@ html.admin-page-hidden *{
 <div class="zoho-modal-head">
 <div>
 <strong>Notificar al cliente</strong>
-<span>La muestra se publicará en Órdenes y se enviará un correo transaccional desde Evolution Design.</span>
+<span>La muestra se publicará en Mis Proyectos y se enviará un correo transaccional desde Evolution Design.</span>
 </div>
 <button aria-label="Cerrar" class="zoho-close" onclick="closeZohoNotify()" type="button">×</button>
 </div>
@@ -1420,33 +1449,74 @@ html.admin-page-hidden *{
 </div>
 
 <div class="modal-back" id="tempSaleModal">
-  <div class="drawer" style="max-width:760px">
+  <div class="drawer store-product-editor" style="max-width:920px">
     <div class="drawer-head">
-      <div><div class="kicker">Evolution Store</div><div class="drawer-title" id="tempSaleModalTitle">Nueva venta temporal</div><div class="sub">La página usa venta.html y se controla desde Firestore.</div></div>
+      <div>
+        <div class="kicker">Evolution Store Manager</div>
+        <div class="drawer-title" id="tempSaleModalTitle">Nuevo producto</div>
+        <div class="sub">Producto dinámico · Firestore + R2 + Worker</div>
+      </div>
       <button aria-label="Cerrar" class="drawer-close" onclick="closeTempSaleEditor()">×</button>
     </div>
+
     <div class="section">
-      <div class="section-h">Producto</div>
+      <div class="section-h">Información comercial</div>
       <div class="section-b">
         <div class="form-grid">
-          <div class="field"><label>Nombre</label><input class="input" id="tempSaleTitle" maxlength="120" placeholder="Ej. MacBook Pro 2019"></div>
-          <div class="field"><label>Slug / URL</label><input class="input" id="tempSaleSlug" maxlength="60" placeholder="macbook-pro-2019"></div>
-          <div class="field full"><label>Descripción corta</label><textarea class="textarea" id="tempSaleSubtitle" maxlength="500" placeholder="Descripción del producto…"></textarea></div>
-          <div class="field full"><label>Imagen principal</label><input class="input" id="tempSaleImage" maxlength="500" value="img/product.png" placeholder="img/product.png"><div class="hint">Puedes pegar una ruta existente o subir una imagen directamente aquí.</div><input class="input" id="tempSaleImageFile" type="file" accept="image/png,image/jpeg,image/webp" style="margin-top:8px"></div>
-          <div class="field"><label>Precio base Q</label><input class="input" id="tempSalePrice" type="number" min="1" step="0.01"></div>
-          <div class="field"><label>Stock</label><input class="input" id="tempSaleStock" type="number" min="1" max="999" step="1" value="1"></div>
+          <div class="field"><label>Nombre</label><input class="input" id="tempSaleTitle" maxlength="120" placeholder="Ej. iPhone 15 Pro"></div>
+          <div class="field"><label>Slug / URL</label><input class="input" id="tempSaleSlug" maxlength="60" placeholder="iphone-15-pro"></div>
+          <div class="field"><label>Categoría</label><select class="input" id="tempSaleCategory">
+            <option value="phone">Teléfono</option>
+            <option value="tablet">Tablet</option>
+            <option value="computer">Computadora</option>
+            <option value="accessory">Accesorio</option>
+            <option value="other">Otro</option>
+          </select></div>
+          <div class="field"><label>Marca</label><input class="input" id="tempSaleBrand" maxlength="80" placeholder="Apple, Samsung, Lenovo…"></div>
+          <div class="field full"><label>Descripción corta</label><textarea class="textarea" id="tempSaleSubtitle" maxlength="500" placeholder="Descripción del equipo, procedencia, estado y puntos fuertes…"></textarea></div>
+          <div class="field"><label>Precio actual Q</label><input class="input" id="tempSalePrice" type="number" min="1" step="0.01"></div>
+          <div class="field"><label>Precio de referencia Q</label><input class="input" id="tempSaleReferencePrice" type="number" min="0" step="0.01" placeholder="Opcional"></div>
+          <div class="field"><label>Stock</label><input class="input" id="tempSaleStock" type="number" min="0" max="999" step="1" value="1"></div>
+          <div class="field"><label>Orden en catálogo</label><input class="input" id="tempSaleSortOrder" type="number" min="-999" max="9999" step="1" value="100"></div>
+          <div class="field"><label>Condición</label><input class="input" id="tempSaleCondition" maxlength="120" placeholder="Como nuevo, usado, open box…"></div>
+          <div class="field"><label>Etiqueta superior</label><input class="input" id="tempSaleBadge" maxlength="80" value="Disponible"></div>
           <div class="field"><label>Color</label><input class="input" id="tempSaleColor" maxlength="80"></div>
           <div class="field"><label>Almacenamiento / capacidad</label><input class="input" id="tempSaleStorage" maxlength="80"></div>
           <div class="field"><label>Batería / estado</label><input class="input" id="tempSaleBattery" maxlength="80"></div>
-          <div class="field"><label>Etiqueta superior</label><input class="input" id="tempSaleBadge" maxlength="80" value="Venta temporal"></div>
           <div class="field full"><label>Especificaciones</label><textarea class="textarea" id="tempSaleSpecs" placeholder="Pantalla: Retina 13 pulgadas&#10;Procesador: Intel Core i5&#10;RAM: 16 GB"></textarea><div class="hint">Una especificación por línea en formato <code>Nombre: Valor</code>.</div></div>
+          <div class="field full"><label class="check"><input type="checkbox" id="tempSaleFeatured"> Destacar este producto en el catálogo</label></div>
         </div>
       </div>
     </div>
+
     <div class="section">
-      <div class="section-h">Pagos y envío</div>
+      <div class="section-h">Imágenes</div>
       <div class="section-b">
         <div class="form-grid">
+          <div class="field full">
+            <label>Imagen principal</label>
+            <input class="input" id="tempSaleImage" maxlength="500" value="img/product.png" placeholder="img/product.png">
+            <div class="hint">Puedes usar una ruta existente o subir una imagen. La subida se realiza por el Worker hacia R2.</div>
+            <input class="input" id="tempSaleImageFile" type="file" accept="image/png,image/jpeg,image/webp" style="margin-top:8px">
+          </div>
+          <div class="field full">
+            <label>Galería del producto</label>
+            <input class="input" id="tempSaleGalleryFiles" type="file" accept="image/png,image/jpeg,image/webp" multiple>
+            <div class="hint">Hasta 12 imágenes por producto. Puedes seleccionar varias de una vez.</div>
+            <div class="store-gallery-admin" id="tempSaleGalleryExisting"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-h">Precios, pagos y envío</div>
+      <div class="section-b">
+        <div class="form-grid">
+          <div class="field"><label>Recargo contra entrega %</label><input class="input" id="tempSaleCodPct" type="number" min="0" max="30" step="0.01" value="7"></div>
+          <div class="field"><label>Recargo PayPal / tarjeta %</label><input class="input" id="tempSalePaypalPct" type="number" min="0" max="30" step="0.01" value="0"></div>
+          <div class="field"><label>Envío nacional Q</label><input class="input" id="tempSaleShipping" type="number" min="0" max="5000" step="0.01" value="40"></div>
+          <div class="field"><label>Link Visacuotas / Recurrente</label><input class="input" id="tempSaleVisacuotas" maxlength="900" placeholder="https://app.recurrente.com/..."></div>
           <div class="field full">
             <label>Métodos habilitados</label>
             <div id="tempSaleMethods" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
@@ -1459,18 +1529,18 @@ html.admin-page-hidden *{
               <label class="check"><input type="checkbox" value="visacuotas"> Visacuotas</label>
             </div>
           </div>
-          <div class="field full"><label>Link Visacuotas / Recurrente</label><input class="input" id="tempSaleVisacuotas" maxlength="900" placeholder="https://app.recurrente.com/..."></div>
           <div class="field"><label>Peso kg</label><input class="input" id="tempSaleWeight" type="number" min="0.01" step="0.01" value="1"></div>
           <div class="field"><label>Largo cm</label><input class="input" id="tempSaleLength" type="number" min="1" step="1" value="20"></div>
           <div class="field"><label>Ancho cm</label><input class="input" id="tempSaleWidth" type="number" min="1" step="1" value="15"></div>
           <div class="field"><label>Alto cm</label><input class="input" id="tempSaleHeight" type="number" min="1" step="1" value="8"></div>
-          <div class="field full"><label class="check"><input type="checkbox" id="tempSaleActive" checked> Página activa / disponible públicamente</label></div>
+          <div class="field full"><label class="check"><input type="checkbox" id="tempSaleActive" checked> Producto publicado / visible en Dispositivos</label></div>
         </div>
       </div>
     </div>
+
     <div class="form-actions" style="padding:18px">
       <button class="btn" type="button" onclick="closeTempSaleEditor()">Cancelar</button>
-      <button class="btn btn-accent" id="saveTempSaleBtn" type="button" onclick="saveTempSale()">Guardar página temporal</button>
+      <button class="btn btn-accent" id="saveTempSaleBtn" type="button" onclick="saveTempSale()">Guardar producto</button>
     </div>
   </div>
 </div>
@@ -1502,7 +1572,7 @@ html.admin-page-hidden *{
           </select></div>
           <div class="field"><label>Paquetería / entrega</label><input class="input" id="storeOrderCarrier" placeholder="Forza, Cargo Expreso, entrega personal…"></div>
           <div class="field full"><label>Número de guía / tracking</label><input class="input" id="storeOrderTracking" maxlength="120" placeholder="Ej. 123456789"></div>
-          <div class="field full"><label>Link de guía / seguimiento</label><input class="input" id="storeOrderTrackingUrl" maxlength="900" inputmode="url" placeholder="https://..."><div class="hint">Pega aquí el enlace que te entregue la paquetería. El cliente verá un botón para abrirlo desde Órdenes.</div></div>
+          <div class="field full"><label>Link de guía / seguimiento</label><input class="input" id="storeOrderTrackingUrl" maxlength="900" inputmode="url" placeholder="https://..."><div class="hint">Pega aquí el enlace que te entregue la paquetería. El cliente verá un botón para abrirlo desde Mis Proyectos.</div></div>
           <div class="field full"><label>Nota administrativa</label><textarea class="textarea" id="storeOrderAdminNote" maxlength="600" placeholder="Nota interna del pedido…"></textarea></div>
         </div>
         <div class="form-actions"><button class="btn btn-accent" id="saveStoreOrderBtn" type="button" onclick="saveStoreOrder()">Guardar seguimiento</button></div>
@@ -1824,48 +1894,66 @@ async function loadTemporarySalesAdmin(){
   const result=await storeAdminRequest('/store/sales/admin');
   return Array.isArray(result.sales)?result.sales:[];
 }
-function tempSaleUrl(slug){
-  return `${location.origin}/venta.html?s=${encodeURIComponent(slug)}`;
+function tempSaleUrl(slug){return `${location.origin}/venta.html?s=${encodeURIComponent(slug)}`;}
+function tempSaleCategoryLabel(v){
+  return ({phone:'Teléfono',tablet:'Tablet',computer:'Computadora',accessory:'Accesorio',other:'Otro'})[v]||'Otro';
 }
 function renderTemporarySales(){
   const rows=Array.isArray(data.tempSales)?data.tempSales:[];
   if($('tempSaleCount'))$('tempSaleCount').textContent=String(rows.length);
   if($('tempSalesBody'))$('tempSalesBody').innerHTML=rows.map(s=>`<tr>
-    <td><div class="strong">${esc(s.title||s.slug)}</div><div class="sub">${esc(s.slug||'')}</div></td>
-    <td>${gtq(s.priceGtq)}</td>
-    <td>${esc(String(s.stock||1))}</td>
-    <td><span class="pill ${s.active===false?'red':'green'}">${s.active===false?'Inactiva':'Activa'}</span></td>
+    <td><div class="strong">${esc(s.title||s.slug)}${s.featured===true?' · ★':''}</div><div class="sub">${esc(s.brand||'')} ${esc(s.condition||'')}</div></td>
+    <td>${esc(tempSaleCategoryLabel(s.category))}</td>
+    <td>${gtq(s.priceGtq)}${Number(s.referencePriceGtq||0)>0?`<span class="store-price-ref">${gtq(s.referencePriceGtq)}</span>`:''}</td>
+    <td>${esc(String(s.stock??0))}</td>
+    <td><span class="pill ${s.active===false?'red':'green'}">${s.active===false?'Oculto':'Publicado'}</span></td>
     <td><a class="mini" href="venta.html?s=${encodeURIComponent(s.slug)}" target="_blank" rel="noopener">Abrir</a> <button class="mini" onclick="copyTempSaleUrl('${esc(s.slug)}',this)">Copiar URL</button></td>
-    <td><button class="mini" onclick="openTempSaleEditor('${esc(s.slug)}')">Editar</button> <button class="mini danger" onclick="deactivateTempSale('${esc(s.slug)}')">Desactivar</button></td>
-  </tr>`).join('')||'<tr><td colspan="6">Todavía no has creado páginas temporales.</td></tr>';
+    <td><button class="mini" onclick="openTempSaleEditor('${esc(s.slug)}')">Editar</button> <button class="mini danger" onclick="deactivateTempSale('${esc(s.slug)}')">Ocultar</button></td>
+  </tr>`).join('')||'<tr><td colspan="7">Todavía no hay productos. Usa “Importar iPhone + Mac” o crea uno nuevo.</td></tr>';
 }
-function saleSpecsToText(specs){
-  return (Array.isArray(specs)?specs:[]).map(x=>`${x.label}: ${x.value}`).join('\n');
-}
+function saleSpecsToText(specs){return (Array.isArray(specs)?specs:[]).map(x=>`${x.label}: ${x.value}`).join('\n');}
 function saleTextToSpecs(text){
   return String(text||'').split(/\n+/).map(line=>{
-    const i=line.indexOf(':');
-    if(i<1)return null;
+    const i=line.indexOf(':');if(i<1)return null;
     return {label:line.slice(0,i).trim(),value:line.slice(i+1).trim()};
-  }).filter(x=>x?.label&&x?.value).slice(0,16);
+  }).filter(x=>x?.label&&x?.value).slice(0,24);
+}
+function galleryAdminUrl(slug,index){
+  return `${EVOLUTION_BACKEND_URL}/store/sales/image?slug=${encodeURIComponent(slug)}&index=${index}`;
+}
+function renderTempSaleGalleryAdmin(s={}){
+  const host=$('tempSaleGalleryExisting');if(!host)return;
+  const gallery=Array.isArray(s.galleryImages)?s.galleryImages:[];
+  host.innerHTML=gallery.map((img,index)=>`<div class="store-gallery-item"><img src="${esc(galleryAdminUrl(s.slug,index))}" alt="Imagen ${index+1}" loading="lazy"><button class="store-gallery-delete" type="button" onclick="deleteTempSaleGalleryImage(${index})" aria-label="Eliminar imagen">×</button></div>`).join('')||
+    '<div class="hint">Todavía no hay imágenes adicionales.</div>';
 }
 window.openTempSaleEditor=function(slug=''){
   selectedTempSale=(data.tempSales||[]).find(x=>x.slug===slug)||null;
   const s=selectedTempSale||{};
-  $('tempSaleModalTitle').textContent=s.slug?'Editar venta temporal':'Nueva venta temporal';
+  $('tempSaleModalTitle').textContent=s.slug?'Editar producto':'Nuevo producto';
   $('tempSaleTitle').value=s.title||'';
   $('tempSaleSlug').value=s.slug||'';
+  $('tempSaleCategory').value=s.category||'phone';
+  $('tempSaleBrand').value=s.brand||'';
   $('tempSaleSubtitle').value=s.subtitle||'';
   $('tempSaleImage').value=s.imagePath||'img/product.png';
   if($('tempSaleImageFile'))$('tempSaleImageFile').value='';
+  if($('tempSaleGalleryFiles'))$('tempSaleGalleryFiles').value='';
   $('tempSalePrice').value=s.priceGtq||'';
-  $('tempSaleStock').value=s.stock||1;
+  $('tempSaleReferencePrice').value=s.referencePriceGtq||'';
+  $('tempSaleStock').value=s.stock??1;
+  $('tempSaleSortOrder').value=s.sortOrder??100;
+  $('tempSaleCondition').value=s.condition||'';
   $('tempSaleColor').value=s.color||'';
   $('tempSaleStorage').value=s.storage||'';
   $('tempSaleBattery').value=s.battery||'';
-  $('tempSaleBadge').value=s.badge||'Venta temporal';
+  $('tempSaleBadge').value=s.badge||'Disponible';
   $('tempSaleSpecs').value=saleSpecsToText(s.specs);
+  $('tempSaleFeatured').checked=s.featured===true;
   $('tempSaleVisacuotas').value=s.visacuotasUrl||'';
+  $('tempSaleCodPct').value=s.pricing?.codSurchargePct??7;
+  $('tempSalePaypalPct').value=s.pricing?.paypalSurchargePct??0;
+  $('tempSaleShipping').value=s.pricing?.shippingGtq??40;
   $('tempSaleWeight').value=s.package?.weight||1;
   $('tempSaleLength').value=s.package?.length||20;
   $('tempSaleWidth').value=s.package?.width||15;
@@ -1874,6 +1962,7 @@ window.openTempSaleEditor=function(slug=''){
   const active=new Set(Array.isArray(s.methods)?s.methods:['cod_cargo','transfer_shipping','paypal_shipping','card_shipping','crypto_binance','pickup_pana']);
   document.querySelectorAll('#tempSaleMethods input[type=checkbox]').forEach(cb=>cb.checked=active.has(cb.value));
   $('tempSaleSlug').disabled=Boolean(s.slug);
+  renderTempSaleGalleryAdmin(s);
   $('tempSaleModal').classList.add('show');
 }
 window.closeTempSaleEditor=function(){
@@ -1881,32 +1970,34 @@ window.closeTempSaleEditor=function(){
   selectedTempSale=null;
   if($('tempSaleSlug'))$('tempSaleSlug').disabled=false;
 }
-
 window.copyTempSaleUrl=async function(slug,btn){
   const url=tempSaleUrl(slug);
   try{
     await navigator.clipboard.writeText(url);
-    const old=btn?.textContent;
-    if(btn){btn.textContent='Copiada ✓';setTimeout(()=>btn.textContent=old,1200)}
+    const old=btn?.textContent;if(btn){btn.textContent='Copiada ✓';setTimeout(()=>btn.textContent=old,1200)}
   }catch{prompt('Copia esta URL:',url)}
 }
-async function uploadTempSaleImage(slug,file){
+async function uploadTempSaleImage(slug,file,kind='main'){
   if(!file)return null;
-  if(file.size>12*1024*1024)throw new Error('La imagen no puede superar 12 MB.');
+  if(file.size>12*1024*1024)throw new Error('Cada imagen no puede superar 12 MB.');
   if(!/^image\/(?:png|jpe?g|webp)$/i.test(file.type||''))throw new Error('Usa PNG, JPG o WEBP.');
   const user=auth.currentUser;if(!user)throw new Error('Tu sesión administrativa no está activa.');
   const token=await user.getIdToken();
-  const form=new FormData();
-  form.append('slug',slug);
-  form.append('file',file,file.name);
-  const response=await fetch(`${EVOLUTION_BACKEND_URL}/store/sales/admin/image/upload`,{
-    method:'POST',
-    headers:{authorization:`Bearer ${token}`},
-    body:form
-  });
+  const form=new FormData();form.append('slug',slug);form.append('kind',kind);form.append('file',file,file.name);
+  const response=await fetch(`${EVOLUTION_BACKEND_URL}/store/sales/admin/image/upload`,{method:'POST',headers:{authorization:`Bearer ${token}`},body:form});
   const result=await response.json().catch(()=>({}));
   if(!response.ok||result?.ok===false)throw new Error(result?.error||'No se pudo subir la imagen.');
   return result;
+}
+window.deleteTempSaleGalleryImage=async function(index){
+  if(!selectedTempSale?.slug||!confirm('¿Eliminar esta imagen de la galería?'))return;
+  try{
+    await storeAdminRequest('/store/sales/admin/image/delete',{method:'POST',body:{slug:selectedTempSale.slug,index}});
+    toast('Imagen eliminada.');
+    data.tempSales=await loadTemporarySalesAdmin();
+    selectedTempSale=(data.tempSales||[]).find(x=>x.slug===selectedTempSale.slug)||selectedTempSale;
+    renderTempSaleGalleryAdmin(selectedTempSale);
+  }catch(e){toast(e.message||'No se pudo eliminar la imagen.')}
 }
 window.saveTempSale=async function(){
   const btn=$('saveTempSaleBtn'),old=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
@@ -1915,10 +2006,16 @@ window.saveTempSale=async function(){
     const payload={
       slug:$('tempSaleSlug').value.trim()||$('tempSaleTitle').value.trim(),
       title:$('tempSaleTitle').value.trim(),
+      category:$('tempSaleCategory').value,
+      brand:$('tempSaleBrand').value.trim(),
       subtitle:$('tempSaleSubtitle').value.trim(),
       imagePath:$('tempSaleImage').value.trim(),
       priceGtq:Number($('tempSalePrice').value),
-      stock:Number($('tempSaleStock').value||1),
+      referencePriceGtq:Number($('tempSaleReferencePrice').value||0),
+      stock:Number($('tempSaleStock').value||0),
+      sortOrder:Number($('tempSaleSortOrder').value||100),
+      condition:$('tempSaleCondition').value.trim(),
+      featured:$('tempSaleFeatured').checked,
       color:$('tempSaleColor').value.trim(),
       storage:$('tempSaleStorage').value.trim(),
       battery:$('tempSaleBattery').value.trim(),
@@ -1926,6 +2023,11 @@ window.saveTempSale=async function(){
       specs:saleTextToSpecs($('tempSaleSpecs').value),
       methods,
       visacuotasUrl:$('tempSaleVisacuotas').value.trim(),
+      pricing:{
+        codSurchargePct:Number($('tempSaleCodPct').value||0),
+        paypalSurchargePct:Number($('tempSalePaypalPct').value||0),
+        shippingGtq:Number($('tempSaleShipping').value||0)
+      },
       active:$('tempSaleActive').checked,
       package:{
         weight:Number($('tempSaleWeight').value||1),
@@ -1937,29 +2039,48 @@ window.saveTempSale=async function(){
     let result=await storeAdminRequest('/store/sales/admin',{method:'POST',body:payload});
     const imageFile=$('tempSaleImageFile')?.files?.[0]||null;
     if(imageFile){
-      btn.textContent='Subiendo imagen…';
-      const uploaded=await uploadTempSaleImage(result.sale.slug,imageFile);
+      btn.textContent='Subiendo portada…';
+      const uploaded=await uploadTempSaleImage(result.sale.slug,imageFile,'main');
       if(uploaded?.imagePath)result.sale.imagePath=uploaded.imagePath;
     }
-    const url=tempSaleUrl(result.sale.slug);
-    toast(`Página temporal guardada · ${url}`);
+    const galleryFiles=[...($('tempSaleGalleryFiles')?.files||[])].slice(0,12);
+    for(let i=0;i<galleryFiles.length;i++){
+      btn.textContent=`Subiendo galería ${i+1}/${galleryFiles.length}…`;
+      await uploadTempSaleImage(result.sale.slug,galleryFiles[i],'gallery');
+    }
+    toast('Producto guardado y publicado en Evolution Store.');
     closeTempSaleEditor();
     await refresh();
     switchView('tempsales');
-  }catch(e){console.error(e);toast(e.message||'No se pudo crear la página temporal.')}
+  }catch(e){console.error(e);toast(e.message||'No se pudo guardar el producto.')}
   finally{btn.disabled=false;btn.textContent=old}
 }
 window.deactivateTempSale=async function(slug){
-  if(!confirm('¿Desactivar esta página temporal?'))return;
+  if(!confirm('¿Ocultar este producto del catálogo público?'))return;
   try{
     await storeAdminRequest('/store/sales/admin/delete',{method:'POST',body:{slug}});
-    toast('Venta temporal desactivada.');
+    toast('Producto ocultado.');
     await refresh();
-  }catch(e){toast(e.message||'No se pudo desactivar.')}
+  }catch(e){toast(e.message||'No se pudo ocultar.')}
+}
+window.seedStoreProducts=async function(){
+  if(!confirm('¿Importar al catálogo administrable el iPhone 8 Plus y la MacBook Pro 2019 si todavía no existen?'))return;
+  try{
+    const r=await storeAdminRequest('/store/sales/admin/seed',{method:'POST',body:{}});
+    toast(`Importación lista · ${r.created?.length||0} creados, ${r.skipped?.length||0} existentes.`);
+    await refresh();switchView('tempsales');
+  }catch(e){toast(e.message||'No se pudieron importar los productos.')}
+}
+window.testStoreEmail=async function(){
+  const email=auth.currentUser?.email||'';
+  try{
+    const r=await storeAdminRequest('/store/sales/admin/email/test',{method:'POST',body:{toAddress:email}});
+    toast(`Correo de prueba enviado a ${r.toAddress||email}.`);
+  }catch(e){toast(e.message||'No se pudo enviar el correo de prueba.')}
 }
 $('tempSaleModal')?.addEventListener('click',e=>{if(e.target?.id==='tempSaleModal')closeTempSaleEditor()});
 
-window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',orders:'Pedidos físicos',tempsales:'Ventas temporales',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
+window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',orders:'Pedidos físicos',tempsales:'Productos / Tienda',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
 function currentEditPrice(){return Math.max(0,Number($('editPrice')?.value||0))}
 function currentEditCost(){return Math.max(0,Number($('editCost')?.value||0))}
@@ -3006,7 +3127,7 @@ window.requestClientPayment=async function(){
       updatedAt:serverTimestamp()
     };
     await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
-    toast('Pago solicitado. El cliente verá la pasarela en Órdenes.');
+    toast('Pago solicitado. El cliente verá la pasarela en Mis Proyectos.');
     const uid=selected.ownerUid,id=selected.id;await refresh();selected=data.projects.find(p=>p.ownerUid===uid&&p.id===id)||{...selected,...patch};renderPaymentRequestAdmin();
   }catch(e){console.error(e);toast(e?.message||'No se pudo solicitar el pago.');}
   finally{if(btn){btn.disabled=false;btn.textContent='Solicitar pago al cliente';}}
