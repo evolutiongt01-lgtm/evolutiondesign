@@ -1,4 +1,4 @@
-/* Evolution Design · Smart Persistent Navigation · v19 · Public Projects */
+/* Evolution Design · Smart Persistent Navigation · v20 · Devices Store */
 (() => {
   'use strict';
 
@@ -9,6 +9,7 @@
     graf:`<svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><path d="m9 5 3-3 3 3M9 19l3 3 3-3M5 9l-3 3 3 3M19 9l3 3-3 3"/></svg>`,
     web:`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 13l-2 2 2 2M15 13l2 2-2 2"/></svg>`,
     folder:`<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
+    devices:`<svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="12.5" height="9" rx="1.5"/><path d="M6 18h5.5M8.75 14v4"/><rect x="16.5" y="3" width="5" height="11" rx="1.3"/><path d="M18.25 11.5h1.5"/></svg>`,
     login:`<svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>`,
     logout:`<svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>`,
     shield:`<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
@@ -17,10 +18,11 @@
 
   const PAGES = [
     {key:'home',href:'/index.html',label:'Home',short:'Home',icon:'home'},
-    {key:'arquitectura',href:'/arquitectura.html',label:'Arquitectura',short:'Arquitectura',icon:'arq'},
+    {key:'arquitectura',href:'/arquitectura.html',label:'Arquitectura',short:'Arq.',icon:'arq'},
     {key:'grafico',href:'/diseno-grafico.html',label:'Diseño Gráfico',short:'Diseño G.',icon:'graf'},
-    {key:'web',href:'/diseno-web.html',label:'Diseño Web',short:'Diseño Web',icon:'web'},
-    {key:'portfolio',href:'/portafolio.html',label:'Proyectos',short:'Proyectos',icon:'folder'}
+    {key:'web',href:'/diseno-web.html',label:'Diseño Web',short:'Web',icon:'web'},
+    {key:'portfolio',href:'/portafolio.html',label:'Proyectos',short:'Proyectos',icon:'folder'},
+    {key:'devices',href:'/dispositivos.html',label:'Dispositivos',short:'Tienda',icon:'devices'}
   ];
 
   const escapeHTML = value => String(value ?? '')
@@ -34,6 +36,7 @@
     if(p.includes('diseno-grafico')) return 'grafico';
     if(p.includes('diseno-web')) return 'web';
     if(p.includes('portafolio')) return 'portfolio';
+    if(p.includes('dispositivos')) return 'devices';
     return 'home';
   };
 
@@ -103,8 +106,8 @@
     .evo-mobile-profile img{width:28px;height:28px;border-radius:50%;object-fit:cover}
     .evo-mobile-profile .evo-avatar-fallback{width:28px;height:28px;border:0;font-size:.62rem}
 
-    .evo-tabs{position:relative;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:0 7px!important;gap:2px!important}
-    .evo-tab{min-width:0;min-height:54px;padding:5px 1px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7d7d85;border-bottom:2px solid transparent;font:600 .58rem/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:color .18s ease,transform .22s cubic-bezier(.16,1,.3,1)}
+    .evo-tabs{position:relative;display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;padding:0 7px!important;gap:2px!important}
+    .evo-tab{min-width:0;min-height:54px;padding:5px 1px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7d7d85;border-bottom:2px solid transparent;font:600 .54rem/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap;transition:color .18s ease,transform .22s cubic-bezier(.16,1,.3,1)}
     .evo-tab svg{width:19px;height:19px;margin-bottom:4px;opacity:.66;transition:opacity .18s ease,transform .30s cubic-bezier(.16,1,.3,1)}
     .evo-tab.active{color:#fff}
     .evo-tab.active svg{opacity:1;transform:translateY(-1px) scale(1.09)}
@@ -118,7 +121,7 @@
     }
 
     @media(min-width:992px){.evo-desktop{display:block}.evo-mobile{display:none!important}}
-    @media(max-width:390px){.evo-mobile-top{padding-left:10px;padding-right:10px}.evo-mobile .evo-logo img{max-width:112px}.evo-tab{font-size:.53rem}}
+    @media(max-width:390px){.evo-mobile-top{padding-left:10px;padding-right:10px}.evo-mobile .evo-logo img{max-width:112px}.evo-tab{font-size:.49rem}.evo-tab svg{width:18px;height:18px}}
     @media(prefers-reduced-motion:reduce){.evo-nav *{transition:none!important;animation:none!important}}
   `;
   document.head.appendChild(style);
