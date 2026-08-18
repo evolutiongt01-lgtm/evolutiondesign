@@ -1,5 +1,5 @@
-/* Evolution Design · Advanced App Shell Service Worker · v37 · Local Anchor Router Fix */
-const VERSION='evolution-smart-app-v37-local-anchor-router';
+/* Evolution Design · Advanced App Shell Service Worker · v37.1 · View Recovery */
+const VERSION='evolution-smart-app-v37-1-view-recovery';
 const APP_BUILD=45;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
