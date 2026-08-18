@@ -1427,68 +1427,163 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 /* Evolution Checkout Flow · v49.7 */
 .checkout-payment-zone{margin-top:19px;padding-top:3px;border-top:1px solid rgba(255,255,255,.055)}.payment-zone-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin:-1px 0 11px;padding:12px 13px;border:1px solid rgba(255,255,255,.065);border-radius:14px;background:linear-gradient(145deg,rgba(255,255,255,.028),rgba(255,255,255,.009))}.payment-zone-intro strong{display:block;color:#f0f0ee;font-size:10px;margin-bottom:4px}.payment-zone-intro span:not(.payment-zone-secure){display:block;color:#74747b;font-size:8.5px;line-height:1.55}.payment-zone-secure{flex:0 0 auto;padding:6px 8px;border-radius:999px;color:#78e8a3!important;background:rgba(85,217,138,.055);border:1px solid rgba(85,217,138,.16);font-size:7.5px!important;font-weight:850;text-transform:uppercase;letter-spacing:.08em}.financing-card{position:relative;overflow:hidden;margin:14px 0 16px;padding:18px;border:1px solid rgba(212,184,149,.30);border-radius:20px;background:radial-gradient(circle at 92% 5%,rgba(212,184,149,.18),transparent 35%),linear-gradient(145deg,rgba(212,184,149,.105),rgba(255,255,255,.025) 48%,rgba(8,8,10,.55));box-shadow:0 18px 44px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.055)}.financing-card.hidden{display:none}.financing-glow{position:absolute;width:220px;height:220px;border-radius:50%;right:-105px;bottom:-135px;background:rgba(212,184,149,.10);filter:blur(14px);pointer-events:none}.financing-top{position:relative;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.financing-kicker{display:block;color:#d4b895;font-size:7.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;margin-bottom:6px}.financing-top strong{display:block;color:#fff;font-size:17px;letter-spacing:-.035em;line-height:1.08}.financing-pill{flex:0 0 auto;padding:7px 9px;border-radius:999px;background:#d4b895;color:#17120d;font-size:8px;font-weight:900;box-shadow:0 8px 22px rgba(212,184,149,.15)}.financing-price{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:15px 0 10px;padding:11px 12px;border:1px solid rgba(255,255,255,.07);border-radius:13px;background:rgba(0,0,0,.18)}.financing-price span{color:#74747b;font-size:8.5px}.financing-price b{color:#f0d5b2;font-size:17px;letter-spacing:-.035em}.financing-card p{position:relative;z-index:2;margin:0 0 12px;color:#96969c;font-size:9px;line-height:1.62}.financing-benefits{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px}.financing-benefits span{padding:6px 7px;border-radius:9px;border:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.16);color:#9f9fa5;font-size:7.5px}.financing-card .visacuotas-select{position:relative;z-index:2;width:100%;display:flex;align-items:center;justify-content:space-between;min-height:44px;padding:11px 13px;border:1px solid rgba(212,184,149,.50);border-radius:12px;background:linear-gradient(180deg,#e2c7a5,#cba87f);color:#17120d;font-size:10px;font-weight:900;box-shadow:0 12px 26px rgba(212,184,149,.10)}.financing-card .visacuotas-select b{font-size:16px}.financing-card .visacuotas-select.active{box-shadow:0 0 0 3px rgba(212,184,149,.10),0 14px 30px rgba(212,184,149,.12)}.visacuotas-premium-panel{border-color:rgba(212,184,149,.24)!important;background:linear-gradient(145deg,rgba(212,184,149,.07),rgba(255,255,255,.015))!important}.financing-link{width:100%;min-height:42px}@media(max-width:600px){.payment-zone-intro{display:block}.payment-zone-secure{display:inline-flex!important;margin-top:9px}.financing-card{padding:15px;border-radius:17px}.financing-top strong{font-size:15px}.financing-benefits{display:grid;grid-template-columns:1fr}}
 
-/* Evolution Venta · Back Button v49.8 */
-.sale-top-left{
+/* ==========================================================
+   EVOLUTION · PREMIUM CONTEXT BACK BUTTON v49.9
+   ========================================================== */
+.sale-nav-left{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:13px;
   min-width:0
 }
-.sale-top-left .brand,
-.sale-top-left > a{
+.sale-brand{
+  display:flex;
+  align-items:center;
   flex:0 0 auto
 }
-.sale-back-btn{
+.sale-brand img{display:block}
+.sale-back-premium{
+  position:relative;
+  isolation:isolate;
   display:inline-flex;
   align-items:center;
-  justify-content:center;
-  gap:7px;
-  min-height:34px;
-  padding:7px 11px;
-  border:1px solid rgba(255,255,255,.09);
+  gap:9px;
+  min-height:39px;
+  padding:5px 12px 5px 5px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.105);
   border-radius:999px;
-  background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
-  color:#bdbdc2;
-  font:750 9px/1 -apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",sans-serif;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.025)),
+    rgba(18,18,20,.42);
+  color:#f5f3f0;
   cursor:pointer;
-  -webkit-backdrop-filter:blur(16px) saturate(150%);
-  backdrop-filter:blur(16px) saturate(150%);
-  box-shadow:inset 0 1px rgba(255,255,255,.045),0 8px 22px rgba(0,0,0,.16);
-  transition:transform .18s ease,border-color .18s ease,color .18s ease,background .18s ease
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.095),
+    inset 0 -1px 0 rgba(0,0,0,.14),
+    0 10px 28px rgba(0,0,0,.22);
+  transition:
+    transform .22s cubic-bezier(.16,1,.3,1),
+    border-color .22s ease,
+    background .22s ease,
+    box-shadow .22s ease
 }
-.sale-back-btn:hover{
-  color:#f0d3af;
-  border-color:rgba(212,184,149,.24);
-  background:linear-gradient(180deg,rgba(212,184,149,.10),rgba(255,255,255,.025))
-}
-.sale-back-btn:active{transform:scale(.96)}
-.sale-back-icon{
-  display:inline-grid;
-  place-items:center;
-  width:18px;height:18px;
+.sale-back-premium:before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:90px;height:60px;
+  left:-22px;top:-24px;
   border-radius:50%;
-  background:rgba(212,184,149,.08);
-  color:#d4b895;
-  font-size:13px;
-  line-height:1
+  background:radial-gradient(circle,rgba(212,184,149,.18),transparent 68%);
+  pointer-events:none
 }
-@media(max-width:620px){
-  .sale-top-left{gap:7px}
-  .sale-back-btn{padding:7px 8px;min-width:34px}
-  .sale-back-label{display:none}
-  .sale-back-icon{width:17px;height:17px}
+.sale-back-shine{
+  position:absolute;
+  inset:1px 15% auto;
+  height:1px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.24),transparent);
+  pointer-events:none
+}
+.sale-back-orb{
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  width:29px;height:29px;
+  border:1px solid rgba(212,184,149,.25);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 25%,rgba(255,255,255,.18),transparent 38%),
+    linear-gradient(180deg,rgba(212,184,149,.15),rgba(212,184,149,.055));
+  color:#e4c8a4;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 5px 15px rgba(0,0,0,.17)
+}
+.sale-back-orb svg{
+  width:15px;height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round
+}
+.sale-back-copy{
+  display:grid;
+  gap:1px;
+  min-width:0;
+  text-align:left
+}
+.sale-back-copy small{
+  color:#74747c;
+  font-size:6.5px;
+  font-weight:850;
+  line-height:1;
+  letter-spacing:.105em;
+  text-transform:uppercase
+}
+.sale-back-copy strong{
+  max-width:118px;
+  overflow:hidden;
+  color:#d9d6d2;
+  font-size:9px;
+  font-weight:800;
+  line-height:1.15;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  transition:color .2s ease
+}
+.sale-back-premium:hover{
+  transform:translateY(-1px);
+  border-color:rgba(212,184,149,.28);
+  background:
+    linear-gradient(180deg,rgba(212,184,149,.105),rgba(255,255,255,.03)),
+    rgba(18,18,20,.52);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 14px 34px rgba(0,0,0,.27)
+}
+.sale-back-premium:hover .sale-back-copy strong{color:#f0d3ae}
+.sale-back-premium:active{transform:scale(.965)}
+.sale-back-premium:focus-visible{
+  outline:none;
+  box-shadow:
+    0 0 0 3px rgba(212,184,149,.12),
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 14px 34px rgba(0,0,0,.27)
+}
+@media(max-width:720px){
+  .sale-nav-left{gap:7px}
+  .sale-back-premium{
+    width:37px;height:37px;min-height:37px;
+    padding:4px;
+    justify-content:center
+  }
+  .sale-back-orb{width:27px;height:27px}
+  .sale-back-copy,.sale-back-shine{display:none}
 }
 
 </style>
 </head>
 <body>
-<header class="top"><div class="nav"><a href="index.html" aria-label="Evolution Design"><div class="sale-top-left">
-          <img src="img/logo.png" alt="Evolution Design">
-          <button class="sale-back-btn" id="saleBackBtn" type="button" aria-label="Regresar">
-            <span class="sale-back-icon">←</span>
-            <span class="sale-back-label">Regresar</span>
-          </button>
-        </div></a><div class="nav-actions"><span class="nav-user" id="navUser">Venta temporal · Evolution Design</span><button class="nav-btn hidden" id="logoutBtn" type="button">Cerrar sesión</button><button class="nav-btn accent" id="loginTopBtn" type="button">Iniciar sesión</button></div></div></header>
+<header class="top"><div class="nav">
+  <div class="sale-nav-left">
+    <a class="sale-brand" href="index.html" aria-label="Evolution Design"><img src="img/logo.png" alt="Evolution Design"></a>
+    <button class="sale-back-premium" id="saleBackBtn" type="button" aria-label="Regresar a la página anterior">
+      <span class="sale-back-orb" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5M8.5 12H20"/></svg>
+      </span>
+      <span class="sale-back-copy">
+        <small>Volver a</small>
+        <strong id="saleBackContext">Dispositivos</strong>
+      </span>
+      <span class="sale-back-shine" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="nav-actions"><span class="nav-user" id="navUser">Venta temporal · Evolution Design</span><button class="nav-btn hidden" id="logoutBtn" type="button">Cerrar sesión</button><button class="nav-btn accent" id="loginTopBtn" type="button">Iniciar sesión</button></div></div></header>
 
 <main class="wrap">
 <section class="hero">
@@ -2219,49 +2314,55 @@ loadConfig();
 loadRecaptcha().catch(()=>{});
 
 
-/* Regreso inteligente desde la ficha de venta */
+/* ==========================================================
+   CONTEXTUAL RETURN · remembers Admin > Products
+   ========================================================== */
 const saleBackBtn=document.getElementById("saleBackBtn");
-if(saleBackBtn){
-  saleBackBtn.addEventListener("click",()=>{
-    let ref=null;
-    try{ref=document.referrer?new URL(document.referrer):null}catch(_){}
-    const sameOrigin=ref&&ref.origin===location.origin;
-    const usefulRef=sameOrigin && (
-      ref.pathname.includes("/admin") ||
-      ref.pathname.includes("/dispositivos") ||
-      ref.pathname.includes("/proyectos") ||
-      ref.pathname.includes("/index") ||
-      ref.pathname==="/"
-    );
+const saleBackContext=document.getElementById("saleBackContext");
 
-    if(usefulRef){
-      history.back();
-      return;
+function resolveSaleReturn(){
+  const params=new URLSearchParams(location.search);
+  const explicit=params.get("return");
+
+  if(explicit==="admin-products"){
+    return {
+      label:"Productos",
+      href:"/admin.html#tempsales",
+      mode:"direct"
+    };
+  }
+
+  let ref=null;
+  try{ref=document.referrer?new URL(document.referrer):null}catch(_){}
+
+  if(ref && ref.origin===location.origin){
+    if(ref.pathname.includes("/admin")){
+      return {label:"Productos",href:"/admin.html#tempsales",mode:"direct"};
     }
-
-    /* Si la ficha fue abierta desde Admin en una pestaña nueva,
-       document.referrer puede venir vacío. En ese caso intentamos
-       cerrar la pestaña; si el navegador no lo permite, volvemos
-       al catálogo. */
-    if(window.opener && !window.opener.closed){
-      window.close();
-      setTimeout(()=>{location.href="/dispositivos.html"},120);
-      return;
+    if(ref.pathname.includes("/dispositivos")){
+      return {label:"Dispositivos",href:ref.pathname+ref.search+ref.hash,mode:"history"};
     }
-
-    if(history.length>1){
-      history.back();
-      setTimeout(()=>{
-        if(document.visibilityState==="visible"){
-          location.href="/dispositivos.html";
-        }
-      },450);
-      return;
+    if(ref.pathname.includes("/proyectos")){
+      return {label:"Órdenes",href:ref.pathname+ref.search+ref.hash,mode:"history"};
     }
+    if(ref.pathname==="/" || ref.pathname.includes("/index")){
+      return {label:"Inicio",href:ref.pathname+ref.search+ref.hash,mode:"history"};
+    }
+  }
 
-    location.href="/dispositivos.html";
-  });
+  return {label:"Dispositivos",href:"/dispositivos.html",mode:"direct"};
 }
+
+const saleReturn=resolveSaleReturn();
+if(saleBackContext)saleBackContext.textContent=saleReturn.label;
+
+saleBackBtn?.addEventListener("click",()=>{
+  if(saleReturn.mode==="history" && history.length>1){
+    history.back();
+    return;
+  }
+  location.href=saleReturn.href;
+});
 </script>
 </body>
 </html>
