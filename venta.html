@@ -1397,6 +1397,19 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
   }
 }
 
+
+/* Evolution Store V49 */
+.sale-reference-price{display:none;margin-top:7px;color:#73737a;font-size:12px;font-weight:700;text-decoration:line-through;text-decoration-thickness:1px}
+.sale-reference-price.show{display:block}
+.sale-saving-badge{display:none;margin-top:7px;width:max-content;padding:6px 8px;border-radius:9px;border:1px solid rgba(85,217,138,.16);background:rgba(85,217,138,.055);color:#78e8a3;font-size:8px;font-weight:850}
+.sale-saving-badge.show{display:block}
+.sale-gallery{display:none;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-top:14px;max-width:520px}
+.sale-gallery.show{display:grid}
+.sale-gallery button{position:relative;aspect-ratio:1;border:1px solid rgba(255,255,255,.08);border-radius:11px;overflow:hidden;background:#09090b;padding:0;cursor:pointer}
+.sale-gallery button.active{border-color:rgba(212,184,149,.55);box-shadow:0 0 0 2px rgba(212,184,149,.08)}
+.sale-gallery img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:767.98px){.sale-gallery{grid-template-columns:repeat(4,minmax(0,1fr));max-width:70%}}
+
 </style>
 </head>
 <body>
@@ -1417,7 +1430,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <div class="kicker" id="saleBadge">Evolution Design · Venta temporal</div>
       <h1 class="sale-product-title" id="saleTitle">Producto<br><span>Evolution.</span></h1>
       <p class="hero-copy" id="saleSubtitle">Cargando información del producto…</p>
-      <div class="price-big"><span id="salePrice">Q—</span><small>precio base</small></div>
+      <div class="price-big"><span id="salePrice">Q—</span><small>precio base</small></div><div class="sale-reference-price" id="saleReferencePrice"></div><div class="sale-saving-badge" id="saleSavingBadge"></div>
       <div class="hero-meta">
         <span class="chip">Cuenta Evolution requerida</span>
         <span class="chip">Seguimiento en Mis Proyectos</span>
@@ -1437,7 +1450,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <div class="phone-stage-glass" aria-hidden="true"></div>
       <div class="phone-floating-card battery hidden" id="saleFloatingBattery"><span>Batería / estado</span><strong id="saleFloatingBatteryText">—</strong></div>
       <div class="phone-floating-card verified"><span>Evolution</span><strong>Venta verificada</strong></div>
-      <img class="product-phone-img" id="saleProductImage" src="img/product.png" alt="Producto de venta temporal" loading="eager" decoding="async">
+      <img class="product-phone-img" id="saleProductImage" src="img/product.png" alt="Producto de venta temporal" loading="eager" decoding="async"><div class="sale-gallery" id="saleGallery" aria-label="Galería del producto"></div>
     </div>
     <div class="tech-specs hidden" id="saleSpecsBox" aria-label="Especificaciones principales">
         <div class="tech-specs-head">
@@ -1645,9 +1658,23 @@ function applyTemporarySale(){
   $("saleTitle").innerHTML=saleTitleMarkup(title);
   $("saleSubtitle").textContent=sale.subtitle||`${title} disponible por tiempo limitado en Evolution Design.`;
   $("salePrice").textContent=money(sale.priceGtq??config?.basePriceGtq??0);
+  const ref=Number(sale.referencePriceGtq||0),now=Number(sale.priceGtq??config?.basePriceGtq??0);
+  const refEl=$("saleReferencePrice"),saveEl=$("saleSavingBadge");
+  if(refEl){refEl.textContent=ref>now?`Referencia ${money(ref)}`:"";refEl.classList.toggle("show",ref>now)}
+  if(saveEl){const pct=ref>now?Math.round((1-now/ref)*100):0;saveEl.textContent=pct>0?`Ahorras ${pct}%`:"";saveEl.classList.toggle("show",pct>0)}
   $("saleBadge").textContent=`Evolution Design · ${sale.badge||"Venta temporal"}`;
   $("saleProductImage").src=sale.imagePath||"img/product.png";
   $("saleProductImage").alt=`${title} · Evolution Design`;
+  const gallery=[sale.imagePath,...(Array.isArray(sale.gallery)?sale.gallery:[])].filter(Boolean);
+  const galleryHost=$("saleGallery");
+  if(galleryHost){
+    galleryHost.innerHTML=gallery.map((src,i)=>`<button type="button" class="${i===0?'active':''}" data-sale-image="${String(src).replace(/"/g,'&quot;')}"><img src="${String(src).replace(/"/g,'&quot;')}" alt="Vista ${i+1}"></button>`).join("");
+    galleryHost.classList.toggle("show",gallery.length>1);
+    galleryHost.querySelectorAll("button[data-sale-image]").forEach(btn=>btn.addEventListener("click",()=>{
+      $("saleProductImage").src=btn.dataset.saleImage;
+      galleryHost.querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===btn));
+    }));
+  }
 
   const quick=[
     ["saleColorSpec","saleColor",sale.color],
