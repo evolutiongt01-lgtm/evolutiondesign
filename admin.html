@@ -523,6 +523,10 @@
 
 
 .store-shipping-lock,.store-shipping-ready{display:flex;align-items:flex-start;gap:11px;margin-bottom:14px;padding:13px 14px;border-radius:15px}.store-shipping-lock.hidden,.store-shipping-ready.hidden{display:none}.store-shipping-lock{border:1px solid rgba(255,187,92,.16);background:rgba(255,165,64,.045)}.store-shipping-lock-icon{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:rgba(255,176,68,.08);color:#e3b06d;font-size:13px}.store-shipping-lock strong,.store-shipping-ready strong{display:block;font-size:10px;margin-bottom:4px}.store-shipping-lock span,.store-shipping-ready small{display:block;color:#85858c;font-size:8.5px;line-height:1.5}.store-shipping-ready{border:1px solid rgba(85,217,138,.16);background:rgba(85,217,138,.04)}.store-shipping-ready>span{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:rgba(85,217,138,.08);color:#76e4a0;font-size:12px;font-weight:900}.store-shipping-ready strong{color:#9fe8ba}
+
+.quickbox-reference{padding:13px 14px;border:1px solid rgba(124,181,255,.14);border-radius:15px;background:rgba(90,145,220,.035)}.quickbox-reference strong{display:block;color:#a8ceff;font-size:10px;margin-bottom:5px}.quickbox-reference>span,.quickbox-reference>small{display:block;color:#85858c;font-size:8.5px;line-height:1.55}.qb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:10px 0}.qb-grid b{display:flex;justify-content:space-between;gap:8px;padding:8px 9px;border:1px solid rgba(255,255,255,.055);border-radius:10px;background:rgba(0,0,0,.12);color:#9999a1;font-size:8px}.qb-grid em{color:#d5ba97;font-style:normal}@media(max-width:600px){.qb-grid{grid-template-columns:1fr}}
+
+.sold-action{border-color:rgba(224,184,116,.25)!important;color:#e0bf8e!important;background:rgba(224,184,116,.055)!important;font-weight:900!important;letter-spacing:.045em}.sold-action:hover{background:rgba(224,184,116,.11)!important}.sold-action.is-sold,.sold-action:disabled{opacity:.48;cursor:default}.sold-main{border-color:rgba(224,184,116,.32)!important;color:#ead0a8!important;background:linear-gradient(180deg,rgba(224,184,116,.13),rgba(224,184,116,.045))!important;font-weight:900!important;letter-spacing:.08em}.sold-main:hover{border-color:rgba(224,184,116,.48)!important;transform:translateY(-1px)}
 </style>
 <style id="evolution-admin-performance">
 /* =========================================================
@@ -1517,13 +1521,16 @@ html.admin-page-hidden *{
       <div class="section-h">Importación y aduana</div><div class="section-b">
         <div class="store-admin-note"><strong>Artículo importado</strong><span>El precio del producto no incluye aduana. Al cambiar el estado a <b>En aduana</b>, el Worker notificará a los compradores con pedidos activos.</span></div>
         <div class="form-grid">
-          <div class="field"><label>Total de aduana Q</label><input class="input" id="tempSaleCustomsTotal" type="number" min="0" step="0.01" value="0"></div>
+          <div class="field"><label>Total base de aduana / factura Q</label><input class="input" id="tempSaleCustomsTotal" type="number" min="0" step="0.01" value="0"><div class="hint">Escribe el monto real o estimado antes de la reserva operativa.</div></div>
           <div class="field"><label>Referencia / documento</label><input class="input" id="tempSaleCustomsReference" maxlength="120" placeholder="Opcional"></div>
-          <div class="field"><label>Tributos / impuestos %</label><input class="input" id="tempSaleCustomsPctTaxes" type="number" min="0" max="100" step="0.01" value="60"></div>
-          <div class="field"><label>Gestión aduanal %</label><input class="input" id="tempSaleCustomsPctBroker" type="number" min="0" max="100" step="0.01" value="20"></div>
-          <div class="field"><label>Manejo / almacenaje %</label><input class="input" id="tempSaleCustomsPctHandling" type="number" min="0" max="100" step="0.01" value="12"></div>
-          <div class="field"><label>Otros cargos %</label><input class="input" id="tempSaleCustomsPctOther" type="number" min="0" max="100" step="0.01" value="8"></div>
-          <div class="field full"><div class="hint">Desglose estimado e informativo. Siempre suma el total de aduana que ingreses. No sustituye una factura o documento oficial.</div></div>
+          <div class="field"><label>Reserva operativa</label><input class="input" id="tempSaleCustomsSafetyPct" type="number" min="0" max="25" step="0.01" value="5"><div class="hint">Por defecto 5% de reserva operativa.</div></div>
+          <div class="field"><label>Total previsto con margen</label><input class="input" id="tempSaleCustomsProjected" readonly value="Q0.00"></div>
+          <div class="field full"><div class="quickbox-reference">
+            <strong>Perfil QuickBox de referencia</strong>
+            <span>La factura que compartiste era de 3 lb, pero tenía 2 lb promocionales gratis. Para no subestimar futuros paquetes, el perfil fue recalculado como si las 3 lb hubieran sido cobradas.</span>
+            <div class="qb-grid"><b>Flete estimado <em>58.01%</em></b><b>Gestión aeropuerto <em>38.68%</em></b><b>Administrativo <em>3.31%</em></b><b>RETTA <em>0% · eliminado</em></b></div>
+            <small>El domicilio de QuickBox no se incluye: la entrega nacional se gestiona aparte con Cargo Expreso, Forza o Guatex.</small>
+          </div></div>
         </div>
       </div>
     </div>
@@ -1544,7 +1551,7 @@ html.admin-page-hidden *{
               <label class="check"><input type="checkbox" value="paypal_shipping" checked> PayPal</label>
               <label class="check"><input type="checkbox" value="card_shipping" checked> Tarjeta</label>
               <label class="check"><input type="checkbox" value="crypto_binance" checked> Binance / Cripto</label>
-              <label class="check"><input type="checkbox" value="pickup_pana" checked> Entrega Panajachel <span class="sub">(solo Guatemala)</span></label>
+              <label class="check"><input type="checkbox" value="pickup_pana" checked> Entrega personal · Callejón Las Armonías <span class="sub">(solo Guatemala)</span></label>
               <label class="check"><input type="checkbox" value="visacuotas"> Visacuotas</label>
             </div>
           </div>
@@ -1558,6 +1565,8 @@ html.admin-page-hidden *{
     </div>
 
     <div class="form-actions" style="padding:18px">
+      <button class="btn sold-main hidden" id="soldTempSaleBtn" type="button" onclick="markTempSaleSold()">VENDIDO</button>
+      <span style="flex:1"></span>
       <button class="btn" type="button" onclick="closeTempSaleEditor()">Cancelar</button>
       <button class="btn btn-accent" id="saveTempSaleBtn" type="button" onclick="saveTempSale()">Guardar producto</button>
     </div>
@@ -1576,6 +1585,8 @@ html.admin-page-hidden *{
       <div class="section-h">Entrega y contacto</div>
       <div class="section-b" id="storeOrderDelivery"></div>
     </div>
+
+    <div class="section"><div class="section-h">Factura / comprobante</div><div class="section-b"><div class="hint" style="margin-bottom:10px">Genera una factura comercial Evolution con los datos reales del pedido. Puedes imprimirla o guardarla como PDF.</div><div class="form-actions"><button class="btn btn-accent" type="button" onclick="generateSelectedStoreInvoice()">Generar factura</button></div></div></div>
 
     <div class="section" id="storeOrderShipmentSection">
       <div class="section-h">Envío nacional y seguimiento</div>
@@ -1686,7 +1697,7 @@ function storeOrderStatusLabel(order){
   if(s==='shipped'&&order?.paymentMethod==='pickup_pana')return'Listo para entregar';
   return({received:'Pedido recibido',confirmed:'Confirmado',preparing:'Preparando',shipped:'Enviado',delivered:'Entregado',cancelled:'Cancelado'})[s]||s;
 }
-function storeOrderMethodLabel(order){return order?.paymentMethodLabel||({cod_forza:'Contra entrega · Forza',cod_cargo:'Contra entrega · Cargo Expreso',transfer_shipping:'Transferencia bancaria · Envío nacional',paypal_shipping:'PayPal · Envío nacional',card_shipping:'Tarjeta débito/crédito · Envío nacional',crypto_binance:'Cripto · Binance Pay',visacuotas:'Visacuotas · Recurrente',pickup_pana:'Entrega personal · Panajachel'})[order?.paymentMethod]||order?.paymentMethod||'—'}
+function storeOrderMethodLabel(order){return order?.paymentMethodLabel||({cod_forza:'Contra entrega · Forza',cod_cargo:'Contra entrega · Cargo Expreso',transfer_shipping:'Transferencia bancaria · Envío nacional',paypal_shipping:'PayPal · Envío nacional',card_shipping:'Tarjeta débito/crédito · Envío nacional',crypto_binance:'Cripto · Binance Pay',visacuotas:'Visacuotas · Recurrente',pickup_pana:'Entrega personal · Callejón Las Armonías'})[order?.paymentMethod]||order?.paymentMethod||'—'}
 function storeOrderPill(order){
   const s=String(order?.status||'received'),cls=s==='delivered'?'green':s==='cancelled'?'red':s==='received'?'gold':'';
   return `<span class="pill ${cls}">${esc(storeOrderStatusLabel(order))}</span>`;
@@ -1756,6 +1767,25 @@ function renderStoreOrders(){
     <td><button class="mini" onclick="openStoreOrder('${esc(o.orderId||o.id)}')">Abrir</button></td>
   </tr>`).join('')||'<tr><td colspan="7">Sin pedidos.</td></tr>';
 }
+
+function evolutionInvoiceMoney(value){return `Q${Number(value||0).toLocaleString("es-GT",{minimumFractionDigits:2,maximumFractionDigits:2})}`}
+function evolutionInvoiceDate(value){try{const d=value?.toDate?value.toDate():value?.seconds?new Date(value.seconds*1000):value?new Date(value):new Date();return d.toLocaleString("es-GT",{dateStyle:"medium",timeStyle:"short"})}catch(_){return new Date().toLocaleString("es-GT")}}
+function evolutionInvoiceEscape(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function evolutionInvoicePaymentLabel(order){const map={cod_cargo:"Contra entrega · Cargo Expreso",cod_forza:"Contra entrega · Forza",transfer_shipping:"Transferencia bancaria",paypal_shipping:"PayPal",card_shipping:"Tarjeta débito/crédito",crypto_binance:"Binance Pay / Cripto",pickup_pana:"Entrega personal · Callejón Las Armonías",visacuotas:"Visacuotas / Recurrente"};return map[order?.paymentMethod]||order?.paymentMethodLabel||order?.paymentMethod||"—"}
+function evolutionInvoiceHtml(order){
+  const esc=evolutionInvoiceEscape,money=evolutionInvoiceMoney;
+  const base=Number(order.basePriceGtq??order.productPriceGtq??order.totalGtq??0),surcharge=Number(order.surchargeGtq||0),shipping=Number(order.shippingGtq||0),orderTotal=Number(order.totalGtq||base+surcharge+shipping);
+  const imp=order.importInfo||{},customsRequired=order.customsRequired===true||imp.originMarket==="usa",customsBase=Number(imp.customsBaseTotalGtq??order.customsBaseTotalGtq??0),reservePct=Number(imp.safetyPct??order.safetyPct??5),reserve=Number(imp.safetyGtq??order.safetyGtq??(customsBase*reservePct/100)),customsTotal=Number(imp.customsTotalGtq??order.customsTotalGtq??(customsBase+reserve)),breakdown=imp.customsBreakdown||order.customsBreakdown||{};
+  const address=order.paymentMethod==="pickup_pana"?`${order.pickupLocation||"Callejón Las Armonías, Panajachel"}${order.pickupAppointmentLabel?` · Cita: ${order.pickupAppointmentLabel}`:""}`:[order.department,order.municipality,order.poblado,order.address,order.reference?`Ref: ${order.reference}`:""].filter(Boolean).join(" · ");
+  const paid=order.paymentStatus==="paid",invoiceNo=`EV-COM-${String(order.orderId||order.id||Date.now()).replace(/[^a-zA-Z0-9-]/g,"").toUpperCase()}`;
+  const rows=[["Producto",order.productTitle||"Producto Evolution",base],...(surcharge>0?[["Recargo de método",evolutionInvoicePaymentLabel(order),surcharge]]:[]),...(shipping>0?[["Envío nacional","",shipping]]:[])];
+  const itemRows=rows.map(([label,desc,amount])=>`<tr><td><strong>${esc(label)}</strong>${desc?`<small>${esc(desc)}</small>`:""}</td><td>${money(amount)}</td></tr>`).join("");
+  const customsRows=customsRequired&&customsTotal>0?`<section class="import"><div class="section-title"><span>Importación</span><b>Pago separado</b></div><div class="import-grid"><div><small>Flete QuickBox</small><strong>${money(breakdown.freight||0)}</strong></div><div><small>Gestión aeropuerto</small><strong>${money(breakdown.airport||0)}</strong></div><div><small>Administrativo</small><strong>${money(breakdown.admin||0)}</strong></div><div><small>Reserva operativa ${reservePct}%</small><strong>${money(reserve)}</strong></div></div><div class="import-total"><span>Total previsto de importación</span><strong>${money(customsTotal)}</strong></div><p>Los cargos de importación/aduana no forman parte del precio del producto y se liquidan por separado. RETTA no se incluye; la entrega nacional se gestiona aparte.</p></section>`:"";
+  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(invoiceNo)} · Evolution Design</title><style>*{box-sizing:border-box}body{margin:0;background:#efefef;color:#161616;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.sheet{width:min(820px,calc(100% - 28px));margin:28px auto;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.12)}.head{padding:28px 34px;background:#0a0a0c;color:#fff;display:flex;justify-content:space-between;gap:20px;align-items:center}.head img{width:145px}.doc{text-align:right}.doc small{display:block;color:#c2a783;font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px}.doc strong{display:block;font-size:19px}.doc em{display:inline-block;margin-top:7px;padding:5px 7px;border:1px solid #5a4c3d;border-radius:999px;color:#cdb08c;font-size:8px;font-style:normal}.body{padding:30px 34px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}.card{padding:14px;border:1px solid #e7e7e7;border-radius:14px;background:#fafafa}.card span,.section-title span,.import-grid small{display:block;color:#7b7b80;font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}.card strong{font-size:12px;line-height:1.45}.items{width:100%;border-collapse:collapse;margin:8px 0 20px}.items th{padding:10px 12px;border-bottom:1px solid #ddd;color:#777;text-align:left;font-size:8px;text-transform:uppercase;letter-spacing:.1em}.items th:last-child,.items td:last-child{text-align:right}.items td{padding:13px 12px;border-bottom:1px solid #eee;font-size:11px}.items td small{display:block;color:#777;margin-top:3px}.total{display:flex;justify-content:space-between;align-items:end;padding:16px 18px;border-radius:15px;background:#0c0c0f;color:#fff;margin-bottom:20px}.total span{font-size:9px;color:#aaa}.total strong{font-size:24px;color:#dfc19d}.import{padding:17px;border:1px solid #eadbc8;border-radius:17px;background:#fffaf4;margin-bottom:20px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-title b{color:#9b7953;font-size:9px}.import-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.import-grid div{padding:10px;border-radius:11px;background:#fff;border:1px solid #eee4d8}.import-grid strong{font-size:11px}.import-total{display:flex;justify-content:space-between;gap:12px;padding-top:12px;margin-top:12px;border-top:1px solid #e7d7c4}.import-total span{font-size:9px;color:#7c6a56}.import-total strong{color:#9b7953}.import p{margin:10px 0 0;color:#827566;font-size:8px;line-height:1.55}.legal{padding:15px 16px;border-radius:14px;background:#f5f5f6;color:#696970;font-size:8px;line-height:1.6}.footer{padding:18px 34px 24px;text-align:center;color:#777;font-size:8px}.actions{position:sticky;bottom:12px;display:flex;justify-content:center;gap:8px;margin:0 auto 25px}.actions button{border:0;border-radius:999px;padding:11px 16px;background:#111;color:#fff;font-weight:800;cursor:pointer}.actions button.secondary{background:#d9d9dc;color:#111}@media(max-width:600px){.head,.body{padding-left:20px;padding-right:20px}.head{align-items:flex-start}.head img{width:110px}.doc strong{font-size:14px}.meta{grid-template-columns:1fr}.import-grid{grid-template-columns:1fr 1fr}.sheet{margin:12px auto;border-radius:17px}}@media print{body{background:#fff}.sheet{width:100%;margin:0;box-shadow:none;border-radius:0}.actions{display:none}}</style></head><body><main class="sheet"><header class="head"><img src="https://www.evolutiondesing.com/img/logo.png" alt="Evolution Design"><div class="doc"><small>Factura comercial</small><strong>${esc(invoiceNo)}</strong><em>Documento no FEL / no DTE</em></div></header><div class="body"><div class="meta"><div class="card"><span>Cliente</span><strong>${esc(order.customerName||order.recipientName||"Consumidor final")}</strong><br><small>${esc(order.ownerEmail||"")}</small></div><div class="card"><span>NIT / DPI</span><strong>${esc(order.nitDpi||"CF")}</strong></div><div class="card"><span>Fecha</span><strong>${esc(evolutionInvoiceDate(order.createdAt))}</strong></div><div class="card"><span>Método de pago</span><strong>${esc(evolutionInvoicePaymentLabel(order))}</strong><br><small>${paid?"Pago confirmado":order.paymentStatus==="pending_review"?"Pago en revisión":"Pago pendiente"}</small></div></div><div class="card" style="margin-bottom:18px"><span>Entrega</span><strong>${esc(address||"Por confirmar")}</strong>${order.phone?`<br><small>${esc(order.phone)}</small>`:""}</div><table class="items"><thead><tr><th>Concepto</th><th>Total</th></tr></thead><tbody>${itemRows}</tbody></table><div class="total"><div><span>Total del pedido</span><small style="display:block;color:#696970;margin-top:4px">No incluye cargos aduanales cuando correspondan.</small></div><strong>${money(orderTotal)}</strong></div>${customsRows}<div class="legal"><strong>Documento comercial generado por Evolution Design.</strong><br>Este documento sirve como comprobante interno/comercial de la operación. No es un Documento Tributario Electrónico (DTE) certificado bajo el Régimen FEL y no sustituye una factura fiscal autorizada por SAT.</div></div><footer class="footer">EVOLUTION GROUP · Evolution Design · www.evolutiondesing.com · support@evolutiondesing.com</footer></main><div class="actions"><button onclick="window.print()">Imprimir / Guardar PDF</button><button class="secondary" onclick="window.close()">Cerrar</button></div></body></html>`;
+}
+function openEvolutionCommercialInvoice(order){if(!order)return;const popup=window.open("","_blank");if(!popup){alert("Permite ventanas emergentes para generar la factura.");return}popup.document.open();popup.document.write(evolutionInvoiceHtml(order));popup.document.close()}
+
+window.generateSelectedStoreInvoice=function(){if(!selectedStoreOrder){toast("Abre un pedido primero.");return}openEvolutionCommercialInvoice(selectedStoreOrder)};
 window.openStoreOrder=function(orderId){
   selectedStoreOrder=(data.orders||[]).find(o=>(o.orderId||o.id)===orderId);
   if(!selectedStoreOrder)return;
@@ -1775,10 +1805,11 @@ window.openStoreOrder=function(orderId){
     ...(o.trackingUrl ? [['Link de seguimiento','Publicado ✓']] : []),
     ...(Number(o.paidUsd||0)>0 ? [['Cobrado por PayPal',`$${Number(o.paidUsd).toFixed(2)} USD`]] : []),
     ...(o.customsRequired ? [['Importación',storeImportStatusLabel(o.customsStatus||o.importInfo?.status)],['Aduana',Number(o.customsTotalGtq||0)>0?gtq(o.customsTotalGtq):'Pendiente']] : []),
+    ...(o.paymentMethod==='pickup_pana' ? [['Punto de encuentro',o.pickupLocation||'Callejón Las Armonías, Panajachel'],['Cita asignada',o.pickupAppointmentLabel||'Lunes a sábado · 2:00–5:00 p. m.']] : []),
     ...(o.paymentMethod==='visacuotas' ? [['Recargo Visacuotas','Se confirma en Recurrente']] : [])
   ].map(([l,v])=>`<div class="detail"><span>${esc(l)}</span><strong>${esc(v)}</strong></div>`).join('');
   const address=o.paymentMethod==='pickup_pana'
-    ?'Entrega personal en Panajachel'
+    ?`${o.pickupLocation||'Callejón Las Armonías, Panajachel'}${o.pickupAppointmentLabel?` · Cita: ${o.pickupAppointmentLabel}`:''}`
     :[o.department,o.municipality,o.poblado,o.address,o.reference?`Referencia: ${o.reference}`:''].filter(Boolean).join(' · ');
   $('storeOrderDelivery').innerHTML=`<div class="store-order-delivery-box">
     <div class="store-order-delivery-row"><span>Cliente / receptor</span><strong>${esc(o.customerName||'—')} · recibe ${esc(o.recipientName||o.customerName||'—')}</strong></div>
@@ -1968,7 +1999,7 @@ function renderTemporarySales(){
     <td>${esc(String(s.stock??0))}</td>
     <td><span class="pill ${s.active===false?'red':'green'}">${s.active===false?'Oculto':'Publicado'}</span></td>
     <td><a class="mini" href="venta.html?s=${encodeURIComponent(s.slug)}&return=admin-products">Abrir</a> <button class="mini" onclick="copyTempSaleUrl('${esc(s.slug)}',this)">Copiar URL</button></td>
-    <td><button class="mini" onclick="openTempSaleEditor('${esc(s.slug)}')">Editar</button> <button class="mini danger" onclick="deactivateTempSale('${esc(s.slug)}')">Ocultar</button></td>
+    <td><button class="mini" onclick="openTempSaleEditor('${esc(s.slug)}')">Editar</button> <button class="mini sold-action ${Number(s.stock||0)<=0?'is-sold':''}" ${Number(s.stock||0)<=0?'disabled':''} onclick="markTempSaleSold('${esc(s.slug)}')">${Number(s.stock||0)<=0?'Vendido ✓':'VENDIDO'}</button> <button class="mini danger" onclick="deactivateTempSale('${esc(s.slug)}')">Ocultar</button></td>
   </tr>`).join('')||'<tr><td colspan="8">Todavía no hay productos. Crea uno nuevo desde este panel.</td></tr>';
 }
 function saleSpecsToText(specs){return (Array.isArray(specs)?specs:[]).map(x=>`${x.label}: ${x.value}`).join('\n');}
@@ -2000,10 +2031,8 @@ window.openTempSaleEditor=function(slug=''){
   $('tempSaleImportStatus').value=s.importInfo?.status||($('tempSaleOriginMarket').value==='usa'?'usa_stock':'available_gt');
   $('tempSaleCustomsTotal').value=s.importInfo?.customsTotalGtq??0;
   $('tempSaleCustomsReference').value=s.importInfo?.customsReference||'';
-  $('tempSaleCustomsPctTaxes').value=s.importInfo?.breakdownPct?.taxes??60;
-  $('tempSaleCustomsPctBroker').value=s.importInfo?.breakdownPct?.broker??20;
-  $('tempSaleCustomsPctHandling').value=s.importInfo?.breakdownPct?.handling??12;
-  $('tempSaleCustomsPctOther').value=s.importInfo?.breakdownPct?.other??8;
+  $('tempSaleCustomsSafetyPct').value=s.importInfo?.safetyPct??5;
+  updateCustomsProjection();
   $('tempSaleSubtitle').value=s.subtitle||'';
   $('tempSaleImage').value=s.imagePath||'img/product.png';
   if($('tempSaleImageFile'))$('tempSaleImageFile').value='';
@@ -2031,10 +2060,20 @@ window.openTempSaleEditor=function(slug=''){
   const active=new Set(Array.isArray(s.methods)?s.methods:['cod_cargo','transfer_shipping','paypal_shipping','card_shipping','crypto_binance','pickup_pana']);
   document.querySelectorAll('#tempSaleMethods input[type=checkbox]').forEach(cb=>cb.checked=active.has(cb.value));
   $('tempSaleSlug').disabled=Boolean(s.slug);
+  if($('soldTempSaleBtn')){$('soldTempSaleBtn').classList.toggle('hidden',!s.slug);$('soldTempSaleBtn').textContent=Number(s.stock||0)<=0?'Vendido ✓':'VENDIDO';$('soldTempSaleBtn').disabled=Number(s.stock||0)<=0}
   renderTempSaleGalleryAdmin(s);
   syncStoreImportFields();
   $('tempSaleModal').classList.add('show');
 }
+function updateCustomsProjection(){
+  const base=Math.max(0,Number($('tempSaleCustomsTotal')?.value||0));
+  const pct=Math.max(0,Number($('tempSaleCustomsSafetyPct')?.value||5));
+  const total=base*(1+pct/100);
+  if($('tempSaleCustomsProjected'))$('tempSaleCustomsProjected').value=gtq(total);
+}
+$('tempSaleCustomsTotal')?.addEventListener('input',updateCustomsProjection);
+$('tempSaleCustomsSafetyPct')?.addEventListener('input',updateCustomsProjection);
+
 function syncStoreImportFields(){
   const usa=$('tempSaleOriginMarket')?.value==='usa';
   $('tempSaleCustomsSection')?.classList.toggle('hidden',!usa);
@@ -2104,6 +2143,20 @@ window.deleteTempSaleGalleryImage=async function(index){
     renderTempSaleGalleryAdmin(selectedTempSale);
   }catch(e){toast(e.message||'No se pudo eliminar la imagen.')}
 }
+window.markTempSaleSold=async function(slug=""){
+  const sale=(data.tempSales||[]).find(x=>x.slug===(slug||selectedTempSale?.slug));
+  if(!sale){toast("Guarda el producto antes de marcarlo vendido.");return}
+  if(Number(sale.stock||0)<=0){toast("Este producto ya está marcado como vendido.");return}
+  if(!confirm(`¿Marcar “${sale.title||sale.slug}” como VENDIDO? Quedará visible como agotado y ya no podrá comprarse.`))return;
+  try{
+    const payload={...sale,stock:0,badge:"Vendido",featured:false,active:true};
+    const result=await storeAdminRequest("/store/sales/admin",{method:"POST",body:payload});
+    toast("Producto marcado como VENDIDO ✓");
+    if($("tempSaleModal")?.classList.contains("show"))closeTempSaleEditor();
+    await refresh();switchView("tempsales");
+    return result;
+  }catch(e){console.error(e);toast(e.message||"No se pudo marcar como vendido.")}
+}
 window.saveTempSale=async function(){
   const btn=$('saveTempSaleBtn'),old=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
   try{
@@ -2113,7 +2166,7 @@ window.saveTempSale=async function(){
       title:$('tempSaleTitle').value.trim(),
       category:$('tempSaleCategory').value,
       brand:$('tempSaleBrand').value.trim(),
-      importInfo:{originMarket:$('tempSaleOriginMarket').value,locationLabel:$('tempSaleLocation').value.trim(),status:$('tempSaleImportStatus').value,customsTotalGtq:Number($('tempSaleCustomsTotal').value||0),customsReference:$('tempSaleCustomsReference').value.trim(),breakdownPct:{taxes:Number($('tempSaleCustomsPctTaxes').value||0),broker:Number($('tempSaleCustomsPctBroker').value||0),handling:Number($('tempSaleCustomsPctHandling').value||0),other:Number($('tempSaleCustomsPctOther').value||0)}},
+      importInfo:{originMarket:$('tempSaleOriginMarket').value,locationLabel:$('tempSaleLocation').value.trim(),status:$('tempSaleImportStatus').value,customsBaseTotalGtq:Number($('tempSaleCustomsTotal').value||0),customsReference:$('tempSaleCustomsReference').value.trim(),safetyPct:Number($('tempSaleCustomsSafetyPct').value||5)},
       subtitle:$('tempSaleSubtitle').value.trim(),
       imagePath:$('tempSaleImage').value.trim(),
       priceGtq:Number($('tempSalePrice').value),
