@@ -1511,7 +1511,7 @@ html.admin-page-hidden *{
         <div class="form-grid" style="margin-top:12px">
           <div class="field"><label>Grupo de opciones</label><input class="input" id="tempSaleGroupKey" maxlength="60" placeholder="Ej. iphone-13-pro"><div class="hint">Déjalo vacío si este producto no tendrá alternativas.</div></div>
           <div class="field"><label>Nombre de esta opción</label><input class="input" id="tempSaleOptionLabel" maxlength="100" placeholder="Ej. 256 GB · Azul · Como nuevo"><div class="hint">Es el texto principal de su tarjeta de opción.</div></div>
-          <div class="field full"><label>Enlace de Facebook Marketplace · solo Administración</label><input class="input" id="tempSaleSourceUrl" maxlength="900" placeholder="https://www.facebook.com/marketplace/item/..."><div class="hint">Este enlace es solo para Administración. Nunca se muestra al cliente.</div></div>
+          <div class="field full"><label>Link de Swappa · solo Administración</label><input class="input" id="tempSaleSourceUrl" maxlength="900" placeholder="https://swappa.com/listing/view/..."><div class="hint">Este enlace es solo para Administración. Nunca se muestra al cliente.</div></div>
           <div class="field"><label>Estado de la fuente</label><select class="input" id="tempSaleSourceStatus"><option value="unverified">Sin revisar</option><option value="available">Disponible</option><option value="unavailable">Vendido / no disponible</option></select></div>
           <div class="field"><label>Verificación manual</label><button class="btn" id="tempSaleSourceOpenBtn" type="button" onclick="openTempSaleSource()">Abrir publicación ↗</button><div class="hint" id="tempSaleSourceChecked">Abre la publicación y marca manualmente si sigue disponible o ya fue vendida.</div></div>
         </div>
@@ -2013,7 +2013,7 @@ function renderTemporarySales(){
   const rows=Array.isArray(data.tempSales)?data.tempSales:[];
   if($('tempSaleCount'))$('tempSaleCount').textContent=String(rows.length);
   if($('tempSalesBody'))$('tempSalesBody').innerHTML=rows.map(s=>`<tr>
-    <td><div class="strong">${esc(s.title||s.slug)}${s.featured===true?' · ★':''}</div><div class="sub">${esc(s.brand||'')} ${esc(s.condition||'')}</div>${s.groupKey?`<div class="sub">Grupo: ${esc(s.groupKey)}${s.optionLabel?` · ${esc(s.optionLabel)}`:''}</div>`:''}${s.sourceInfo?.url?`<div class="sub">Facebook Marketplace: ${s.sourceInfo.status==='available'?'Disponible':s.sourceInfo.status==='unavailable'?'No disponible':'Sin verificar'}</div>`:''}</td>
+    <td><div class="strong">${esc(s.title||s.slug)}${s.featured===true?' · ★':''}</div><div class="sub">${esc(s.brand||'')} ${esc(s.condition||'')}</div>${s.groupKey?`<div class="sub">Grupo: ${esc(s.groupKey)}${s.optionLabel?` · ${esc(s.optionLabel)}`:''}</div>`:''}${s.sourceInfo?.url?`<div class="sub">Swappa: ${s.sourceInfo.status==='available'?'Disponible':s.sourceInfo.status==='unavailable'?'No disponible':'Sin verificar'}</div>`:''}</td>
     <td>${esc(tempSaleCategoryLabel(s.category))}</td>
     <td>${(()=>{const st=s.importInfo?.status||'available_gt',imp=s.importInfo?.originMarket==='usa'||['usa_stock','in_transit','customs','released'].includes(st);const loc=imp?(st==='usa_stock'?'Estados Unidos':st==='in_transit'?'En tránsito hacia Guatemala':st==='customs'?'Aduana · Guatemala':st==='released'?'Guatemala · liberado':'Estados Unidos'):'Panajachel, Guatemala';return `<div class="strong">${esc(loc)}</div><div class="sub">${esc(storeImportStatusLabel(st))}</div>`})()}</td>
     <td>${gtq(s.priceGtq)}${Number(s.referencePriceGtq||0)>0?`<span class="store-price-ref">${gtq(s.referencePriceGtq)}</span>`:''}</td>
@@ -2183,12 +2183,12 @@ $('tempSaleOriginMarket')?.addEventListener('change',()=>syncStoreImportFields('
 $('tempSaleImportStatus')?.addEventListener('change',()=>syncStoreImportFields('status'));
 window.openTempSaleSource=function(){
   const raw=$('tempSaleSourceUrl')?.value.trim()||'';
-  if(!raw){toast('Primero pega el enlace de Facebook Marketplace.');return}
+  if(!raw){toast('Primero pega el enlace de Swappa.');return}
   try{
     const u=new URL(raw),host=u.hostname.toLowerCase();
-    if(u.protocol!=='https:'||!(host==='facebook.com'||host.endsWith('.facebook.com'))||!u.pathname.toLowerCase().includes('/marketplace/'))throw new Error();
+    if(u.protocol!=='https:'||!(host==='swappa.com'||host.endsWith('.swappa.com')))throw new Error();
     window.open(u.href,'_blank','noopener,noreferrer');
-  }catch(_){toast('Pega un enlace válido de Facebook Marketplace.')}
+  }catch(_){toast('Pega un enlace válido de Swappa.')}
 }
 $('tempSaleSourceStatus')?.addEventListener('change',()=>{
   if($('tempSaleSourceStatus').value==='unavailable'){
@@ -2257,7 +2257,7 @@ window.saveTempSale=async function(){
       brand:$('tempSaleBrand').value.trim(),
       groupKey:$('tempSaleGroupKey').value.trim(),
       optionLabel:$('tempSaleOptionLabel').value.trim(),
-      sourceInfo:{provider:'facebook_marketplace',url:$('tempSaleSourceUrl').value.trim(),status:$('tempSaleSourceStatus').value},
+      sourceInfo:{provider:'swappa',url:$('tempSaleSourceUrl').value.trim(),status:$('tempSaleSourceStatus').value},
       importInfo:{originMarket:$('tempSaleOriginMarket').value,locationLabel:$('tempSaleLocation').value.trim(),status:$('tempSaleImportStatus').value,logisticsGtq:Number($('tempSaleCustomsTotal').value||0),customsBaseTotalGtq:Number($('tempSaleCustomsTotal').value||0),fuelSurchargeGtq:Number($('tempSaleFuelSurcharge').value||0),customsReference:$('tempSaleCustomsReference').value.trim(),safetyPct:Number($('tempSaleCustomsSafetyPct').value||5),quickboxDeliveryMode:$('tempSaleQuickboxDeliveryMode').value,declaredValueGtq:Number($('tempSaleDeclaredValueGtq').value||0),customsIvaRatePct:12,customsIvaEnabled:true,importCostLocked:tempSaleImportLocked},
       subtitle:$('tempSaleSubtitle').value.trim(),
       imagePath:$('tempSaleImage').value.trim(),
