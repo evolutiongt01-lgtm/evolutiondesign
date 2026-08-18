@@ -312,6 +312,11 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   .filters{top:calc(var(--evo-shell-mobile-nav-bottom) + 4px)!important}
 }
 </style>
+
+<style id="evo-device-origin-v5017">
+.origin-promise{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px;align-items:start;margin:0 0 11px;padding:9px 10px;border:1px solid rgba(111,224,154,.12);border-radius:12px;background:rgba(111,224,154,.025)}.origin-promise.usa{border-color:rgba(124,181,255,.14);background:rgba(70,135,220,.025)}.origin-promise-icon{display:grid;place-items:center;width:26px;height:26px;border-radius:9px;border:1px solid rgba(111,224,154,.14);color:#72cf98;background:rgba(111,224,154,.035);font-size:11px}.origin-promise.usa .origin-promise-icon{border-color:rgba(124,181,255,.15);color:#9cc9ff;background:rgba(70,135,220,.04)}.origin-promise-copy{min-width:0}.origin-promise-copy strong{display:block;color:#ceced2;font-size:8.5px;line-height:1.35}.origin-promise-copy span{display:block;margin-top:3px;color:#76767d;font-size:7px;line-height:1.45}.country.local{color:#78d59c;border-color:rgba(111,224,154,.16);background:rgba(111,224,154,.035)}
+@media(max-width:680px){.origin-promise{padding:8px 9px;margin-bottom:9px}.origin-promise-copy strong{font-size:8px}.origin-promise-copy span{font-size:6.8px}}
+</style>
 </head>
 <body class="store-mobile-ready">
 <main>
@@ -387,9 +392,10 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
     return `<a class="product ${esc(p.category||'other')}" href="/venta.html?s=${encodeURIComponent(p.slug)}" data-category="${esc(p.category||'other')}">
       <div class="product-media"><img src="${esc(p.imagePath||'/img/product.png')}" alt="${esc(p.title)}"></div>
       <div class="product-body">
-        <div class="product-top"><span class="product-type">${esc(categoryLabel(p.category))}${p.brand?` · ${esc(p.brand)}`:''}</span><span class="country ${p.importInfo?.originMarket==='usa'?'usa':''}">${sold?'Agotado':esc(p.importInfo?.originMarket==='usa'?(p.importInfo?.locationLabel||'Estados Unidos'):'Guatemala')}</span></div>
+        <div class="product-top"><span class="product-type">${esc(categoryLabel(p.category))}${p.brand?` · ${esc(p.brand)}`:''}</span><span class="country ${p.importInfo?.originMarket==='usa'?'usa':'local'}">${sold?'Agotado':p.importInfo?.originMarket==='usa'?'Estados Unidos':'Panajachel'}</span></div>
         <h3>${esc(p.title)}${p.featured?` <span style="color:#d4b895;font-size:14px">★</span>`:''}</h3>
         <p>${esc(p.subtitle||'Producto disponible en Evolution Devices Guatemala.')}</p>
+        ${!sold?(p.importInfo?.originMarket==='usa'?`<div class="origin-promise usa"><span class="origin-promise-icon">✦</span><div class="origin-promise-copy"><strong>Disponible en Estados Unidos · Importación bajo pedido</strong><span>Evolution coordina la importación y la entrega hasta tu domicilio en Guatemala.</span></div></div>`:`<div class="origin-promise"><span class="origin-promise-icon">✓</span><div class="origin-promise-copy"><strong>Disponible en Panajachel</strong><span>Entrega personal disponible y envíos a todo Guatemala.</span></div></div>`):''}
         ${p.importInfo?.requiresCustoms?`<div class="customs-note"><strong>${esc(p.importInfo.statusLabel||'Importación USA')}</strong> · El precio publicado no incluye aduana. Los cargos de importación se pagan por separado.</div>`:''}
         <div class="specs">${specs.map(x=>`<span class="spec">${esc(x)}</span>`).join('')}</div>
         <div class="buy-row"><div class="price"><span>${sold?'Sin disponibilidad':'Precio publicado'}</span><strong>${money(price)}</strong>${ref>price?`<del>${money(ref)}</del>`:''}</div>
