@@ -1907,7 +1907,7 @@ function renderTemporarySales(){
     <td>${gtq(s.priceGtq)}${Number(s.referencePriceGtq||0)>0?`<span class="store-price-ref">${gtq(s.referencePriceGtq)}</span>`:''}</td>
     <td>${esc(String(s.stock??0))}</td>
     <td><span class="pill ${s.active===false?'red':'green'}">${s.active===false?'Oculto':'Publicado'}</span></td>
-    <td><a class="mini" href="venta.html?s=${encodeURIComponent(s.slug)}" target="_blank" rel="noopener">Abrir</a> <button class="mini" onclick="copyTempSaleUrl('${esc(s.slug)}',this)">Copiar URL</button></td>
+    <td><a class="mini" href="venta.html?s=${encodeURIComponent(s.slug)}&return=admin-products">Abrir</a> <button class="mini" onclick="copyTempSaleUrl('${esc(s.slug)}',this)">Copiar URL</button></td>
     <td><button class="mini" onclick="openTempSaleEditor('${esc(s.slug)}')">Editar</button> <button class="mini danger" onclick="deactivateTempSale('${esc(s.slug)}')">Ocultar</button></td>
   </tr>`).join('')||'<tr><td colspan="7">Todavía no hay productos. Usa “Importar iPhone + Mac” o crea uno nuevo.</td></tr>';
 }
@@ -2080,8 +2080,17 @@ window.testStoreEmail=async function(){
 }
 $('tempSaleModal')?.addEventListener('click',e=>{if(e.target?.id==='tempSaleModal')closeTempSaleEditor()});
 
-window.switchView=function(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$(`view-${v}`).classList.add('active');$('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',orders:'Pedidos físicos',tempsales:'Productos / Tienda',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v};
+window.switchView=function(v){
+  const allowed=new Set(['dashboard','payments','subscriptions','orders','tempsales','projects','clients','webrequests','custom']);
+  if(!allowed.has(v))v='dashboard';
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));
+  $(`view-${v}`).classList.add('active');
+  $('pageTitle').textContent={dashboard:'Dashboard',payments:'Comprobantes de pago',subscriptions:'Suscripciones PSD',orders:'Pedidos físicos',tempsales:'Productos / Tienda',projects:'Proyectos y órdenes',clients:'Clientes',webrequests:'Solicitudes Web',custom:'Nueva orden personalizada'}[v]||v;
+  if(location.hash!==`#${v}`)history.replaceState(null,'',`${location.pathname}${location.search}#${v}`);
+};
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
+window.addEventListener('hashchange',()=>{const v=String(location.hash||'').replace(/^#/,'');if(v&&document.getElementById(`view-${v}`))switchView(v)});
 function currentEditPrice(){return Math.max(0,Number($('editPrice')?.value||0))}
 function currentEditCost(){return Math.max(0,Number($('editCost')?.value||0))}
 function updateFinancialPreview(animate=true){
@@ -3946,7 +3955,7 @@ $('customOrderForm').onsubmit=async e=>{
 };
 
 $('logoutBtn').onclick=async()=>{await signOut(auth);window.location.replace('index.html')};
-let authResolved=false;onAuthStateChanged(auth,async u=>{if(authResolved&&!u)return;authResolved=true;const email=String(u?.email||'').trim().toLowerCase();if(!u){window.location.replace('index.html');return}if(!ADMIN_EMAILS.has(email)){await signOut(auth).catch(()=>{});window.location.replace('index.html');return}$('adminEmail').textContent=u.email||u.uid;$('adminShell').style.visibility='visible';await refresh()});
+let authResolved=false;onAuthStateChanged(auth,async u=>{if(authResolved&&!u)return;authResolved=true;const email=String(u?.email||'').trim().toLowerCase();if(!u){window.location.replace('index.html');return}if(!ADMIN_EMAILS.has(email)){await signOut(auth).catch(()=>{});window.location.replace('index.html');return}$('adminEmail').textContent=u.email||u.uid;$('adminShell').style.visibility='visible';await refresh();const requestedView=String(location.hash||'').replace(/^#/,'');const allowedViews=new Set(['dashboard','payments','subscriptions','orders','tempsales','projects','clients','webrequests','custom']);switchView(allowedViews.has(requestedView)?requestedView:'dashboard')});
 </script>
 <script id="evolution-admin-performance-controller">
 (() => {
