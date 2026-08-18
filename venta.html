@@ -1403,12 +1403,25 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 .sale-reference-price.show{display:block}
 .sale-saving-badge{display:none;margin-top:7px;width:max-content;padding:6px 8px;border-radius:9px;border:1px solid rgba(85,217,138,.16);background:rgba(85,217,138,.055);color:#78e8a3;font-size:8px;font-weight:850}
 .sale-saving-badge.show{display:block}
-.sale-gallery{display:none;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-top:14px;max-width:520px}
-.sale-gallery.show{display:grid}
-.sale-gallery button{position:relative;aspect-ratio:1;border:1px solid rgba(255,255,255,.08);border-radius:11px;overflow:hidden;background:#09090b;padding:0;cursor:pointer}
-.sale-gallery button.active{border-color:rgba(212,184,149,.55);box-shadow:0 0 0 2px rgba(212,184,149,.08)}
-.sale-gallery img{width:100%;height:100%;object-fit:cover;display:block}
-@media(max-width:767.98px){.sale-gallery{grid-template-columns:repeat(4,minmax(0,1fr));max-width:70%}}
+
+.real-device-gallery{display:none;grid-column:1/-1;position:relative;margin-top:20px;padding:18px;border:1px solid rgba(255,255,255,.075);border-radius:24px;overflow:hidden;background:radial-gradient(circle at 88% 10%,rgba(212,184,149,.085),transparent 32%),linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 22px 55px rgba(0,0,0,.18)}
+.real-device-gallery.show{display:block}
+.real-device-gallery:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.035),transparent 28%,transparent 72%,rgba(212,184,149,.025))}
+.real-gallery-head{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:13px}
+.real-gallery-kicker{color:#d6ba95;font-size:8px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px}
+.real-gallery-head h3{margin:0;color:#f4f2ef;font-size:18px;letter-spacing:-.035em}
+.real-gallery-head p{margin:5px 0 0;color:#77777f;font-size:9px;line-height:1.55}
+.real-gallery-counter{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:52px;height:30px;padding:0 10px;border:1px solid rgba(255,255,255,.09);border-radius:999px;background:rgba(10,10,12,.50);color:#b9b9be;font-size:9px;font-weight:800;-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px)}
+.real-gallery-stage{position:relative;z-index:2;min-height:340px;border:1px solid rgba(255,255,255,.07);border-radius:19px;overflow:hidden;background:radial-gradient(circle at 50% 48%,rgba(255,255,255,.035),transparent 46%),#08080a;display:grid;place-items:center;touch-action:pan-y}
+.real-gallery-stage img{display:block;width:100%;height:100%;min-height:340px;max-height:500px;object-fit:contain;padding:12px;user-select:none;-webkit-user-drag:none;transition:opacity .16s ease,transform .28s cubic-bezier(.16,1,.3,1)}
+.real-gallery-stage.changing img{opacity:.32;transform:scale(.985)}
+.real-gallery-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.13);background:rgba(8,8,10,.62);color:#fff;display:grid;place-items:center;cursor:pointer;font:700 18px/1 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);box-shadow:0 10px 26px rgba(0,0,0,.28);transition:transform .18s ease,background .18s ease}
+.real-gallery-nav:hover{background:rgba(25,23,21,.78)}.real-gallery-nav:active{transform:translateY(-50%) scale(.94)}.real-gallery-nav.prev{left:12px}.real-gallery-nav.next{right:12px}
+.real-gallery-strip{position:relative;z-index:2;display:flex;gap:8px;overflow-x:auto;margin-top:10px;padding:2px 1px 4px;scrollbar-width:none;scroll-snap-type:x proximity}.real-gallery-strip::-webkit-scrollbar{display:none}
+.real-gallery-thumb{flex:0 0 76px;width:76px;height:63px;padding:0;border:1px solid rgba(255,255,255,.075);border-radius:12px;overflow:hidden;background:#08080a;cursor:pointer;opacity:.56;scroll-snap-align:start;transition:opacity .18s ease,border-color .18s ease,transform .18s ease}.real-gallery-thumb:hover{opacity:.86}.real-gallery-thumb.active{opacity:1;border-color:rgba(212,184,149,.55);box-shadow:0 0 0 2px rgba(212,184,149,.09)}.real-gallery-thumb:active{transform:scale(.96)}.real-gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.real-gallery-trust{position:relative;z-index:2;display:flex;align-items:center;gap:7px;margin-top:9px;color:#6f6f76;font-size:8px;line-height:1.5}.real-gallery-trust:before{content:"✓";display:grid;place-items:center;width:17px;height:17px;border-radius:50%;color:#72df9d;background:rgba(85,217,138,.055);border:1px solid rgba(85,217,138,.15);font-size:8px;font-weight:900}
+@media(max-width:767.98px){.real-device-gallery{margin-top:14px;padding:12px;border-radius:19px}.real-gallery-head{align-items:flex-start}.real-gallery-head h3{font-size:16px}.real-gallery-stage{min-height:285px;border-radius:15px}.real-gallery-stage img{min-height:285px;max-height:390px;padding:8px}.real-gallery-nav{width:34px;height:34px}.real-gallery-nav.prev{left:8px}.real-gallery-nav.next{right:8px}.real-gallery-thumb{flex-basis:68px;width:68px;height:57px}}
+
 
 </style>
 </head>
@@ -1450,7 +1463,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       <div class="phone-stage-glass" aria-hidden="true"></div>
       <div class="phone-floating-card battery hidden" id="saleFloatingBattery"><span>Batería / estado</span><strong id="saleFloatingBatteryText">—</strong></div>
       <div class="phone-floating-card verified"><span>Evolution</span><strong>Venta verificada</strong></div>
-      <img class="product-phone-img" id="saleProductImage" src="img/product.png" alt="Producto de venta temporal" loading="eager" decoding="async"><div class="sale-gallery" id="saleGallery" aria-label="Galería del producto"></div>
+      <img class="product-phone-img" id="saleProductImage" src="img/product.png" alt="Producto de venta temporal" loading="eager" decoding="async">
     </div>
     <div class="tech-specs hidden" id="saleSpecsBox" aria-label="Especificaciones principales">
         <div class="tech-specs-head">
@@ -1459,6 +1472,23 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
         </div>
         <div class="tech-spec-grid" id="saleSpecsGrid"></div>
       </div>
+    <section class="real-device-gallery" id="saleRealGallery" aria-label="Fotos reales del dispositivo">
+      <div class="real-gallery-head">
+        <div>
+          <div class="real-gallery-kicker">Fotos reales</div>
+          <h3>Esta es la unidad que recibirás.</h3>
+          <p>Imágenes reales del dispositivo publicadas por Evolution Design.</p>
+        </div>
+        <span class="real-gallery-counter" id="saleRealGalleryCounter">1 / 1</span>
+      </div>
+      <div class="real-gallery-stage" id="saleRealGalleryStage">
+        <img id="saleRealGalleryImage" src="" alt="Foto real del producto" loading="lazy" decoding="async">
+        <button class="real-gallery-nav prev" id="saleRealGalleryPrev" type="button" aria-label="Foto anterior">‹</button>
+        <button class="real-gallery-nav next" id="saleRealGalleryNext" type="button" aria-label="Foto siguiente">›</button>
+      </div>
+      <div class="real-gallery-strip" id="saleRealGalleryStrip" aria-label="Miniaturas de fotos reales"></div>
+      <div class="real-gallery-trust">Fotos del equipo real; pueden mostrar detalles normales de uso según la condición publicada.</div>
+    </section>
   </article>
 
   <aside class="purchase-card">
@@ -1649,6 +1679,38 @@ function saleTitleMarkup(title="Producto Evolution"){
   const split=Math.max(1,Math.ceil(words.length*.55));
   return `${saleEscape(words.slice(0,split).join(" "))}<br><span>${saleEscape(words.slice(split).join(" "))}</span>`;
 }
+
+let saleRealGalleryItems=[];
+let saleRealGalleryIndex=0;
+let saleRealGalleryTouchX=null;
+function renderRealDeviceGallery(items=[],productTitle="Producto"){
+  const box=$("saleRealGallery"),stage=$("saleRealGalleryStage"),img=$("saleRealGalleryImage"),strip=$("saleRealGalleryStrip"),counter=$("saleRealGalleryCounter"),prev=$("saleRealGalleryPrev"),next=$("saleRealGalleryNext");
+  if(!box||!stage||!img||!strip)return;
+  saleRealGalleryItems=[...new Set(items.map(x=>String(x||"").trim()).filter(Boolean))];
+  saleRealGalleryIndex=0;
+  const has=saleRealGalleryItems.length>0;
+  box.classList.toggle("show",has);
+  if(!has){strip.innerHTML="";img.removeAttribute("src");return}
+  strip.innerHTML=saleRealGalleryItems.map((src,i)=>`<button class="real-gallery-thumb ${i===0?"active":""}" type="button" data-real-gallery-index="${i}" aria-label="Ver foto real ${i+1}"><img src="${src.replace(/"/g,"&quot;")}" alt="Foto real ${i+1} de ${String(productTitle).replace(/"/g,"&quot;")}" loading="lazy"></button>`).join("");
+  const show=(index,animate=true)=>{
+    if(!saleRealGalleryItems.length)return;
+    saleRealGalleryIndex=(index+saleRealGalleryItems.length)%saleRealGalleryItems.length;
+    const apply=()=>{
+      img.src=saleRealGalleryItems[saleRealGalleryIndex];
+      img.alt=`Foto real ${saleRealGalleryIndex+1} de ${productTitle}`;
+      if(counter)counter.textContent=`${saleRealGalleryIndex+1} / ${saleRealGalleryItems.length}`;
+      strip.querySelectorAll("[data-real-gallery-index]").forEach((b,i)=>{const active=i===saleRealGalleryIndex;b.classList.toggle("active",active);if(active)b.scrollIntoView({behavior:"smooth",block:"nearest",inline:"nearest"})});
+      prev?.classList.toggle("hidden",saleRealGalleryItems.length<2);next?.classList.toggle("hidden",saleRealGalleryItems.length<2);stage.classList.remove("changing");
+    };
+    if(animate){stage.classList.add("changing");setTimeout(apply,95)}else apply();
+  };
+  strip.querySelectorAll("[data-real-gallery-index]").forEach(btn=>btn.addEventListener("click",()=>show(Number(btn.dataset.realGalleryIndex))));
+  if(prev)prev.onclick=()=>show(saleRealGalleryIndex-1);if(next)next.onclick=()=>show(saleRealGalleryIndex+1);
+  stage.onpointerdown=e=>{if(e.pointerType!=="mouse")saleRealGalleryTouchX=e.clientX};
+  stage.onpointerup=e=>{if(saleRealGalleryTouchX===null||e.pointerType==="mouse")return;const dx=e.clientX-saleRealGalleryTouchX;saleRealGalleryTouchX=null;if(Math.abs(dx)>=38)show(saleRealGalleryIndex+(dx<0?1:-1))};
+  show(0,false);
+}
+
 function applyTemporarySale(){
   const sale=config?.sale||config||{};
   tempSale=sale;
@@ -1665,15 +1727,7 @@ function applyTemporarySale(){
   $("saleBadge").textContent=`Evolution Design · ${sale.badge||"Venta temporal"}`;
   $("saleProductImage").src=sale.imagePath||"img/product.png";
   $("saleProductImage").alt=`${title} · Evolution Design`;
-  const gallery=[sale.imagePath,...(Array.isArray(sale.gallery)?sale.gallery:[])].filter(Boolean);
-  const galleryHost=$("saleGallery");
-  if(galleryHost){
-    galleryHost.innerHTML=gallery.map((src,i)=>`<button type="button" class="${i===0?'active':''}" data-sale-image="${String(src).replace(/"/g,'&quot;')}"><img src="${String(src).replace(/"/g,'&quot;')}" alt="Vista ${i+1}"></button>`).join("");
-    galleryHost.classList.toggle("show",gallery.length>1);
-    galleryHost.querySelectorAll("button[data-sale-image]").forEach(btn=>btn.addEventListener("click",()=>{
-      $("saleProductImage").src=btn.dataset.saleImage;
-      galleryHost.querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===btn));
-    }));
+  renderRealDeviceGallery(Array.isArray(sale.gallery)?sale.gallery.filter(Boolean):[],title);
   }
 
   const quick=[
