@@ -1,21 +1,21 @@
 {
-  "build": 45,
-  "version": "45",
+  "build": 48,
+  "version": "48.1",
   "announce": true,
   "required": false,
-  "subtitle": "Nueva sección pública de Proyectos integrada al Smart App Shell sin tocar la lógica privada de Órdenes.",
+  "subtitle": "Evolution Devices ya forma parte del sitio público.",
   "notes": [
     {
-      "title": "Proyectos públicos",
-      "detail": "Arquitectura, Diseño Gráfico y Diseño Web ahora tienen un portafolio unificado con filtros y vista ampliada."
+      "title": "Dispositivos",
+      "detail": "Nueva sección para teléfonos, tablets y computadoras disponibles en Guatemala."
     },
     {
-      "title": "Órdenes sigue intacto",
-      "detail": "La antigua sección Mis Proyectos conserva /proyectos.html, IDs, Firebase y toda su lógica; solo cambió el nombre visible."
+      "title": "Catálogo inicial",
+      "detail": "iPhone 8 Plus y MacBook Pro 2019 conectados a sus fichas de compra existentes."
     },
     {
-      "title": "Swipe de 5 secciones",
-      "detail": "En móvil ahora puedes deslizar Inicio → Arquitectura → Diseño Gráfico → Diseño Web → Proyectos."
+      "title": "App Shell estable",
+      "detail": "La integración parte de la recuperación v47.1 y conserva las vistas sin parámetros ?shell."
     }
   ]
 }
