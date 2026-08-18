@@ -1423,10 +1423,72 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
 @media(max-width:767.98px){.real-device-gallery{margin-top:14px;padding:12px;border-radius:19px}.real-gallery-head{align-items:flex-start}.real-gallery-head h3{font-size:16px}.real-gallery-stage{min-height:285px;border-radius:15px}.real-gallery-stage img{min-height:285px;max-height:390px;padding:8px}.real-gallery-nav{width:34px;height:34px}.real-gallery-nav.prev{left:8px}.real-gallery-nav.next{right:8px}.real-gallery-thumb{flex-basis:68px;width:68px;height:57px}}
 
 
+
+/* Evolution Checkout Flow · v49.7 */
+.checkout-payment-zone{margin-top:19px;padding-top:3px;border-top:1px solid rgba(255,255,255,.055)}.payment-zone-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin:-1px 0 11px;padding:12px 13px;border:1px solid rgba(255,255,255,.065);border-radius:14px;background:linear-gradient(145deg,rgba(255,255,255,.028),rgba(255,255,255,.009))}.payment-zone-intro strong{display:block;color:#f0f0ee;font-size:10px;margin-bottom:4px}.payment-zone-intro span:not(.payment-zone-secure){display:block;color:#74747b;font-size:8.5px;line-height:1.55}.payment-zone-secure{flex:0 0 auto;padding:6px 8px;border-radius:999px;color:#78e8a3!important;background:rgba(85,217,138,.055);border:1px solid rgba(85,217,138,.16);font-size:7.5px!important;font-weight:850;text-transform:uppercase;letter-spacing:.08em}.financing-card{position:relative;overflow:hidden;margin:14px 0 16px;padding:18px;border:1px solid rgba(212,184,149,.30);border-radius:20px;background:radial-gradient(circle at 92% 5%,rgba(212,184,149,.18),transparent 35%),linear-gradient(145deg,rgba(212,184,149,.105),rgba(255,255,255,.025) 48%,rgba(8,8,10,.55));box-shadow:0 18px 44px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.055)}.financing-card.hidden{display:none}.financing-glow{position:absolute;width:220px;height:220px;border-radius:50%;right:-105px;bottom:-135px;background:rgba(212,184,149,.10);filter:blur(14px);pointer-events:none}.financing-top{position:relative;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.financing-kicker{display:block;color:#d4b895;font-size:7.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;margin-bottom:6px}.financing-top strong{display:block;color:#fff;font-size:17px;letter-spacing:-.035em;line-height:1.08}.financing-pill{flex:0 0 auto;padding:7px 9px;border-radius:999px;background:#d4b895;color:#17120d;font-size:8px;font-weight:900;box-shadow:0 8px 22px rgba(212,184,149,.15)}.financing-price{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:15px 0 10px;padding:11px 12px;border:1px solid rgba(255,255,255,.07);border-radius:13px;background:rgba(0,0,0,.18)}.financing-price span{color:#74747b;font-size:8.5px}.financing-price b{color:#f0d5b2;font-size:17px;letter-spacing:-.035em}.financing-card p{position:relative;z-index:2;margin:0 0 12px;color:#96969c;font-size:9px;line-height:1.62}.financing-benefits{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px}.financing-benefits span{padding:6px 7px;border-radius:9px;border:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.16);color:#9f9fa5;font-size:7.5px}.financing-card .visacuotas-select{position:relative;z-index:2;width:100%;display:flex;align-items:center;justify-content:space-between;min-height:44px;padding:11px 13px;border:1px solid rgba(212,184,149,.50);border-radius:12px;background:linear-gradient(180deg,#e2c7a5,#cba87f);color:#17120d;font-size:10px;font-weight:900;box-shadow:0 12px 26px rgba(212,184,149,.10)}.financing-card .visacuotas-select b{font-size:16px}.financing-card .visacuotas-select.active{box-shadow:0 0 0 3px rgba(212,184,149,.10),0 14px 30px rgba(212,184,149,.12)}.visacuotas-premium-panel{border-color:rgba(212,184,149,.24)!important;background:linear-gradient(145deg,rgba(212,184,149,.07),rgba(255,255,255,.015))!important}.financing-link{width:100%;min-height:42px}@media(max-width:600px){.payment-zone-intro{display:block}.payment-zone-secure{display:inline-flex!important;margin-top:9px}.financing-card{padding:15px;border-radius:17px}.financing-top strong{font-size:15px}.financing-benefits{display:grid;grid-template-columns:1fr}}
+
+/* Evolution Venta · Back Button v49.8 */
+.sale-top-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0
+}
+.sale-top-left .brand,
+.sale-top-left > a{
+  flex:0 0 auto
+}
+.sale-back-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:34px;
+  padding:7px 11px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+  color:#bdbdc2;
+  font:750 9px/1 -apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",sans-serif;
+  cursor:pointer;
+  -webkit-backdrop-filter:blur(16px) saturate(150%);
+  backdrop-filter:blur(16px) saturate(150%);
+  box-shadow:inset 0 1px rgba(255,255,255,.045),0 8px 22px rgba(0,0,0,.16);
+  transition:transform .18s ease,border-color .18s ease,color .18s ease,background .18s ease
+}
+.sale-back-btn:hover{
+  color:#f0d3af;
+  border-color:rgba(212,184,149,.24);
+  background:linear-gradient(180deg,rgba(212,184,149,.10),rgba(255,255,255,.025))
+}
+.sale-back-btn:active{transform:scale(.96)}
+.sale-back-icon{
+  display:inline-grid;
+  place-items:center;
+  width:18px;height:18px;
+  border-radius:50%;
+  background:rgba(212,184,149,.08);
+  color:#d4b895;
+  font-size:13px;
+  line-height:1
+}
+@media(max-width:620px){
+  .sale-top-left{gap:7px}
+  .sale-back-btn{padding:7px 8px;min-width:34px}
+  .sale-back-label{display:none}
+  .sale-back-icon{width:17px;height:17px}
+}
+
 </style>
 </head>
 <body>
-<header class="top"><div class="nav"><a href="index.html" aria-label="Evolution Design"><img src="img/logo.png" alt="Evolution Design"></a><div class="nav-actions"><span class="nav-user" id="navUser">Venta temporal · Evolution Design</span><button class="nav-btn hidden" id="logoutBtn" type="button">Cerrar sesión</button><button class="nav-btn accent" id="loginTopBtn" type="button">Iniciar sesión</button></div></div></header>
+<header class="top"><div class="nav"><a href="index.html" aria-label="Evolution Design"><div class="sale-top-left">
+          <img src="img/logo.png" alt="Evolution Design">
+          <button class="sale-back-btn" id="saleBackBtn" type="button" aria-label="Regresar">
+            <span class="sale-back-icon">←</span>
+            <span class="sale-back-label">Regresar</span>
+          </button>
+        </div></a><div class="nav-actions"><span class="nav-user" id="navUser">Venta temporal · Evolution Design</span><button class="nav-btn hidden" id="logoutBtn" type="button">Cerrar sesión</button><button class="nav-btn accent" id="loginTopBtn" type="button">Iniciar sesión</button></div></div></header>
 
 <main class="wrap">
 <section class="hero">
@@ -1506,17 +1568,10 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
     <form class="form hidden" id="orderForm">
       <div class="account-bar"><div><div class="account-name" id="accountName">Cliente</div><div class="account-mail" id="accountEmail">—</div></div><span class="chip">Cuenta verificada</span></div>
 
-      <div class="section-label">1 · Elige cómo quieres pagar</div>
-      <div class="method-grid" id="methodGrid"></div><input type="hidden" id="paymentMethod" value="cod_cargo">
-      <div class="payment-live-panel" id="onlinePaymentPanel"><div class="payment-live-head"><strong id="onlinePaymentTitle">Pago seguro</strong><span id="onlinePaymentCopy">Completa tus datos de entrega y continúa aquí.</span></div><div class="paypal-white-card"><div id="paypalStoreButtons"></div></div><div class="paypal-status" id="paypalStoreStatus"></div></div>
-      <div class="payment-extra" id="transferPanel"><div class="payment-extra-title">Cuentas para transferencia</div><p class="payment-extra-copy">Usamos las mismas cuentas configuradas en Arquitectura. Transfiere el total indicado; Q40 de envío nacional ya está incluido.</p><div class="bank-tabs" id="bankTabs"></div><div id="bankDetails"></div><div class="payment-reference"><label>Referencia / ID de la transferencia</label><input class="input" id="transferReference" maxlength="160" placeholder="Escribe la referencia del banco"></div><div class="receipt-upload"><label>Captura / foto del comprobante</label><p>Adjunta imagen o PDF. Máximo 12 MB. Se enviará a Administración para revisión.</p><input class="receipt-file" id="transferReceipt" type="file" accept="image/*,application/pdf"><div class="receipt-file-name" id="transferReceiptName">Ningún archivo seleccionado.</div></div></div>
-      <div class="payment-extra" id="cryptoPanel"><div class="payment-extra-title">Cripto · Binance Pay</div><p class="payment-extra-copy">Envía el monto indicado en USDT al mismo Binance Pay que usamos en Arquitectura. El pedido queda en revisión hasta confirmar el ingreso.</p><div class="crypto-card"><img class="crypto-qr" id="cryptoQr" src="img/binance-pay.jpeg" alt="QR Binance Pay Evolution Design"><div class="crypto-meta"><div class="bank-row"><span>Alias</span><strong id="cryptoAlias">Evolution Desing</strong></div><div class="bank-row"><span>Activo</span><strong id="cryptoAsset">USDT</strong></div><div class="bank-row"><span>Monto aproximado</span><strong id="cryptoAmount">—</strong></div></div><div class="payment-reference"><label>Referencia / ID del pago cripto</label><input class="input" id="cryptoReference" maxlength="160" placeholder="ID o referencia de Binance Pay"></div><div class="receipt-upload"><label>Captura / foto del comprobante</label><p>Adjunta la captura de Binance Pay o un PDF. Máximo 12 MB.</p><input class="receipt-file" id="cryptoReceipt" type="file" accept="image/*,application/pdf"><div class="receipt-file-name" id="cryptoReceiptName">Ningún archivo seleccionado.</div></div></div></div>
-      <div class="visacuotas-separate" id="visacuotasSeparate"><div class="tag">Financiamiento aparte</div><strong>Visacuotas · Recurrente</strong><p>Esta opción es independiente de PayPal y tarjeta. Recurrente muestra el recargo y las cuotas antes de confirmar.</p><button class="visacuotas-select" id="selectVisacuotasBtn" type="button">Elegir Visacuotas</button></div>
-      <div class="payment-extra" id="visacuotasPanel"><div class="payment-extra-title">Pago con Visacuotas</div><div class="visa-warning"><strong>Importante:</strong> Visacuotas aplica un recargo adicional. Recurrente mostrará el monto final y las cuotas antes de que confirmes el pago.</div><p class="payment-extra-copy">Primero registra tu pedido aquí para que quede identificado. Después podrás abrir el enlace seguro de Recurrente para completar el financiamiento.</p><a class="visa-btn" id="visacuotasPreviewLink" href="#" target="_blank" rel="noopener">Ver Visacuotas en Recurrente ↗</a></div>
 
-      <div class="shipping-notice"><strong>Envíos · lunes a viernes</strong><span id="shippingNoticeText">Los pedidos realizados sábado o domingo se despachan el lunes a las 10:00 a. m.</span><div class="damage-mini">Al recibir el producto, revísalo. Los daños atribuibles al transporte deben reportarse dentro de <b>10 horas</b> con evidencia.</div><br><button class="guide-btn" id="openGuideForm" type="button" style="margin-top:9px">Ver guía y políticas completas</button></div>
 
-      <div class="section-label">2 · Datos de quien recibe</div>
+
+      <div class="section-label">1 · Datos de quien recibe</div>
       <div class="fields">
         <div class="field"><label>Nombre completo</label><input class="input" id="customerName" maxlength="120" required></div>
         <div class="field"><label>Nombre de quien recibe</label><input class="input" id="recipientName" maxlength="120" required></div>
@@ -1525,7 +1580,7 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
       </div>
 
       <div class="delivery-fields" id="deliveryFields">
-        <div class="section-label">3 · Dirección de entrega</div>
+        <div class="section-label">2 · Dirección de entrega</div>
         <div class="fields">
           <div class="field full">
             <label>Departamento</label>
@@ -1568,6 +1623,20 @@ h1{font-size:clamp(3.4rem,8vw,6.8rem);letter-spacing:-.065em;line-height:.86;mar
           <small id="deliveryEstimateDetail">Política de despacho Evolution Design</small>
         </div>
       </div>
+
+
+      <div class="shipping-notice"><strong>Envíos · lunes a viernes</strong><span id="shippingNoticeText">Los pedidos realizados sábado o domingo se despachan el lunes a las 10:00 a. m.</span><div class="damage-mini">Al recibir el producto, revísalo. Los daños atribuibles al transporte deben reportarse dentro de <b>10 horas</b> con evidencia.</div><br><button class="guide-btn" id="openGuideForm" type="button" style="margin-top:9px">Ver guía y políticas completas</button></div>
+
+      <section class="checkout-payment-zone" id="checkoutPaymentZone">
+        <div class="section-label">3 · Elige cómo quieres pagar</div>
+        <div class="payment-zone-intro"><div><strong>Elige la forma que más te convenga.</strong><span>Los recargos y el envío se calculan con la configuración real de este producto.</span></div><span class="payment-zone-secure">Pago seguro</span></div>
+        <div class="method-grid" id="methodGrid"></div><input type="hidden" id="paymentMethod" value="cod_cargo">
+        <div class="payment-live-panel" id="onlinePaymentPanel"><div class="payment-live-head"><strong id="onlinePaymentTitle">Pago seguro</strong><span id="onlinePaymentCopy">Completa tus datos y continúa aquí.</span></div><div class="paypal-white-card"><div id="paypalStoreButtons"></div></div><div class="paypal-status" id="paypalStoreStatus"></div></div>
+        <div class="payment-extra" id="transferPanel"><div class="payment-extra-title">Cuentas para transferencia</div><p class="payment-extra-copy" id="transferPanelCopy">Transfiere el total exacto indicado abajo.</p><div class="bank-tabs" id="bankTabs"></div><div id="bankDetails"></div><div class="payment-reference"><label>Referencia / ID de la transferencia</label><input class="input" id="transferReference" maxlength="160" placeholder="Escribe la referencia del banco"></div><div class="receipt-upload"><label>Captura / foto del comprobante</label><p>Adjunta imagen o PDF. Máximo 12 MB. Se enviará a Administración para revisión.</p><input class="receipt-file" id="transferReceipt" type="file" accept="image/*,application/pdf"><div class="receipt-file-name" id="transferReceiptName">Ningún archivo seleccionado.</div></div></div>
+        <div class="payment-extra" id="cryptoPanel"><div class="payment-extra-title">Cripto · Binance Pay</div><p class="payment-extra-copy">Envía el monto indicado en USDT al Binance Pay de Evolution. El pedido queda en revisión hasta confirmar el ingreso.</p><div class="crypto-card"><img class="crypto-qr" id="cryptoQr" src="img/binance-pay.jpeg" alt="QR Binance Pay Evolution Design"><div class="crypto-meta"><div class="bank-row"><span>Alias</span><strong id="cryptoAlias">Evolution Desing</strong></div><div class="bank-row"><span>Activo</span><strong id="cryptoAsset">USDT</strong></div><div class="bank-row"><span>Monto aproximado</span><strong id="cryptoAmount">—</strong></div></div><div class="payment-reference"><label>Referencia / ID del pago cripto</label><input class="input" id="cryptoReference" maxlength="160" placeholder="ID o referencia de Binance Pay"></div><div class="receipt-upload"><label>Captura / foto del comprobante</label><p>Adjunta la captura de Binance Pay o un PDF. Máximo 12 MB.</p><input class="receipt-file" id="cryptoReceipt" type="file" accept="image/*,application/pdf"><div class="receipt-file-name" id="cryptoReceiptName">Ningún archivo seleccionado.</div></div></div></div>
+        <div class="financing-card" id="visacuotasSeparate"><div class="financing-glow" aria-hidden="true"></div><div class="financing-top"><div><span class="financing-kicker">Financiamiento disponible</span><strong>¿Prefieres pagarlo en cuotas?</strong></div><span class="financing-pill">Visacuotas</span></div><div class="financing-price"><span>Precio base del equipo</span><b id="financingBasePrice">Q—</b></div><p>Consulta las opciones de cuotas de forma segura con Recurrente. Antes de confirmar verás el recargo, plazo y total financiado.</p><div class="financing-benefits"><span>✓ Cuotas disponibles</span><span>✓ Total visible antes de pagar</span><span>✓ Pedido vinculado a tu cuenta</span></div><button class="visacuotas-select" id="selectVisacuotasBtn" type="button"><span>Quiero financiar mi compra</span><b>→</b></button></div>
+        <div class="payment-extra visacuotas-premium-panel" id="visacuotasPanel"><div class="payment-extra-title">Financiamiento con Visacuotas</div><div class="visa-warning"><strong>Sin sorpresas:</strong> Recurrente te mostrará el recargo, las cuotas y el monto final antes de confirmar.</div><p class="payment-extra-copy">Registra primero tu pedido para identificar esta unidad. Después continúa al enlace seguro de Recurrente para elegir el financiamiento.</p><a class="visa-btn financing-link" id="visacuotasPreviewLink" href="#" target="_blank" rel="noopener">Explorar cuotas en Recurrente ↗</a></div>
+      </section>
 
       <div class="summary" id="summary"></div>
       <label class="check"><input type="checkbox" id="terms" required><span>Confirmo que mis datos son correctos, que realizaré el pago según el método seleccionado, que leí la guía de compra y envíos y que <strong>acepto las políticas de envío, recepción, reporte de daños y responsabilidad por daños posteriores a la entrega de Evolution Design</strong>. La disponibilidad se confirma por Evolution Design.</span></label>
@@ -1655,7 +1724,7 @@ setPersistence(auth,browserLocalPersistence).catch(()=>{});
 const BACKEND="https://evolution-design-backend.evolutiongt01.workers.dev";
 const $=id=>document.getElementById(id);
 const money=n=>`Q${Number(n||0).toFixed(2)}`;
-let config=null,authMode="login",recaptchaConfigPromise=null,recaptchaScriptPromise=null;let paypalSdkPromise=null,paypalRenderSeq=0,lastStoreOrder=null;
+let config=null,authMode="login",recaptchaConfigPromise=null,recaptchaScriptPromise=null;let paypalSdkPromise=null,paypalRenderSeq=0,paypalRenderedMethod="",lastStoreOrder=null;
 const TEMP_SALE_SLUG=(new URLSearchParams(location.search).get("s")||"").trim();
 let tempSale=null;
 
@@ -1802,7 +1871,11 @@ async function recaptchaToken(){
   return new Promise((resolve,reject)=>window.grecaptcha.enterprise.ready(async()=>{try{resolve(await window.grecaptcha.enterprise.execute(cfg.siteKey,{action:"STORE_ORDER"}))}catch(e){reject(e)}}));
 }
 
-function renderMethods(){const host=$("methodGrid");if(!config?.methods?.length){host.innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos cargar los métodos disponibles.</div>';return}const regular=config.methods.filter(q=>q.method!=="visacuotas");host.innerHTML=regular.map(q=>{const detail=q.method==="cod_forza"||q.method==="cod_cargo"?`7% de recargo incluido · ${money(q.surchargeGtq)}`:["transfer_shipping","paypal_shipping","card_shipping","crypto_binance"].includes(q.method)?`Envío nacional incluido · ${money(q.shippingGtq)}`:"Sin recargo ni costo de entrega",extra=q.method==="crypto_binance"&&q.usdtAmount?` · aprox. ${Number(q.usdtAmount).toFixed(2)} USDT`:"",cls=q.method==="paypal_shipping"?"paypal":q.method==="card_shipping"?"card":q.method==="crypto_binance"?"crypto":"";return `<button type="button" class="method ${cls} ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${detail}${extra}</span><b>${money(q.totalGtq)}</b></button>`}).join("");host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate()}));$("selectVisacuotasBtn")?.classList.toggle("active",$("paymentMethod").value==="visacuotas")}
+function salePricing(){return config?.sale?.pricing||{}}
+function quotePct(q,configured=0){const base=Number(q?.basePriceGtq||0),fee=Number(q?.surchargeGtq||0),cfg=Number(configured||0);if(Number.isFinite(cfg)&&cfg>0)return Math.round(cfg*100)/100;if(base>0&&fee>0)return Math.round((fee/base)*10000)/100;return 0}
+function pctLabel(value){const n=Number(value||0);return Number.isInteger(n)?String(n):n.toLocaleString("es-GT",{maximumFractionDigits:2})}
+function syncFinancingOffer(){const price=Number(config?.sale?.priceGtq??config?.basePriceGtq??0);if($("financingBasePrice"))$("financingBasePrice").textContent=money(price)}
+function renderMethods(){const host=$("methodGrid");if(!config?.methods?.length){host.innerHTML='<div class="feedback show error" style="grid-column:1/-1">No pudimos cargar los métodos disponibles.</div>';return}const pricing=salePricing(),regular=config.methods.filter(q=>q.method!=="visacuotas");host.innerHTML=regular.map(q=>{const isCod=q.method==="cod_forza"||q.method==="cod_cargo",isOnline=["paypal_shipping","card_shipping"].includes(q.method),hasShipping=["transfer_shipping","paypal_shipping","card_shipping","crypto_binance"].includes(q.method),configuredPct=isCod?pricing.codSurchargePct:isOnline?pricing.paypalSurchargePct:0,pct=quotePct(q,configuredPct),bits=[];if(Number(q.surchargeGtq||0)>0)bits.push(`${pct?`${pctLabel(pct)}% · `:""}${money(q.surchargeGtq)} recargo`);if(hasShipping&&Number(q.shippingGtq||0)>0)bits.push(`${money(q.shippingGtq)} envío`);if(!bits.length)bits.push("Sin recargo ni costo de entrega");const extra=q.method==="crypto_binance"&&q.usdtAmount?` · aprox. ${Number(q.usdtAmount).toFixed(2)} USDT`:"",cls=q.method==="paypal_shipping"?"paypal":q.method==="card_shipping"?"card":q.method==="crypto_binance"?"crypto":"";return `<button type="button" class="method ${cls} ${q.method===$("paymentMethod").value?"active":""}" data-method="${q.method}"><strong>${q.methodLabel}</strong><span>${bits.join(" + ")}${extra}</span><b>${money(q.totalGtq)}</b></button>`}).join("");host.querySelectorAll(".method").forEach(btn=>btn.addEventListener("click",()=>{$("paymentMethod").value=btn.dataset.method;renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate()}));$("selectVisacuotasBtn")?.classList.toggle("active",$("paymentMethod").value==="visacuotas");syncFinancingOffer()}
 
 let selectedBankKey="bac";
 function renderGuide(){const guide=config?.guide||{};$("guideTitle").textContent=guide.title||"Guía de compra y envío";$("guideIntro").textContent=guide.intro||"Revisa esta información antes de confirmar tu pedido.";$("guidePaymentText").textContent=guide.paymentText||"";$("guideShippingText").textContent=guide.shippingText||"";$("guideDamageText").textContent=guide.damageText||"Al recibir el producto, revisa su estado. Si detectas daño atribuible al transporte, repórtalo dentro de 10 horas con fotografías o video y evidencia de entrega.";$("guideCustomerDamageText").textContent=guide.customerDamageText||"Evolution Design no responde por daños causados después de la entrega por golpes, líquidos, manipulación, reparaciones de terceros, modificaciones o uso indebido. Todo reclamo queda sujeto a revisión para determinar su origen.";$("shippingNoticeText").textContent=guide.shippingText||"Los envíos se realizan de lunes a viernes."}
@@ -2055,9 +2128,8 @@ function finishStoreSuccess(order){
   $("availability").textContent=paid?"Pago confirmado":"Pedido registrado";
   $("availability").classList.add("sold");
 }
-async function renderOnlinePayment(method){const panel=$("onlinePaymentPanel"),host=$("paypalStoreButtons");if(!["paypal_shipping","card_shipping"].includes(method)){panel.classList.remove("show");host.innerHTML="";setPaypalStatus("");return}panel.classList.add("show");$("onlinePaymentTitle").textContent=method==="card_shipping"?"Tarjeta débito/crédito":"PayPal";$("onlinePaymentCopy").textContent=`Pago seguro · ${money(currentQuote()?.totalGtq||990)}. El Worker convierte el total a USD para el checkout.`;host.innerHTML='<div style="padding:8px;color:#333;font-size:11px;text-align:center">Preparando pago seguro…</div>';const seq=++paypalRenderSeq;try{const paypal=await loadPayPalSdk();if(seq!==paypalRenderSeq)return;host.innerHTML="";const fundingSource=method==="card_shipping"?paypal.FUNDING.CARD:paypal.FUNDING.PAYPAL,buttons=paypal.Buttons({fundingSource,style:{layout:"vertical",shape:"rect",color:method==="card_shipping"?"black":"gold",label:method==="card_shipping"?"pay":"paypal",height:45},createOrder:async()=>{clearFeedback();setPaypalStatus("Validando datos y preparando el pago…");if(!config?.available)throw new Error("Este producto ya no está disponible.");const draft=validateStoreDraft(),token=await recaptchaToken(),result=await authedFetch("/paypal/create-order",{method:"POST",body:{mode:"store_sale_purchase",saleSlug:TEMP_SALE_SLUG,fundingSource:method==="card_shipping"?"card":"paypal",storeDraft:draft,recaptchaToken:token,requestedUri:location.href}});setPaypalStatus("Orden preparada. Continúa en el checkout seguro.");return result.orderId},onApprove:async data=>{setPaypalStatus("Confirmando pago…");try{const result=await authedFetch("/paypal/capture-order",{method:"POST",body:{orderId:data.orderID}});if(!result?.storeOrder)throw new Error("El pago fue confirmado, pero no recibimos el pedido final.");setPaypalStatus("Pago confirmado ✓");finishStoreSuccess(result.storeOrder)}catch(e){setPaypalStatus(e.message||"No pudimos confirmar el pago.","error");throw e}},onCancel:()=>setPaypalStatus("Pago cancelado. Puedes intentarlo nuevamente."),onError:e=>{console.error(e);setPaypalStatus(e?.message||"No se pudo abrir el pago seguro.","error")}});if(!buttons.isEligible()){host.innerHTML='<div style="padding:12px;color:#8a1c1c;font-size:11px;text-align:center">Este método no está disponible en este dispositivo. Prueba otro método.</div>';return}await buttons.render("#paypalStoreButtons")}catch(e){console.error(e);host.innerHTML="";setPaypalStatus(e.message||"No se pudo preparar PayPal.","error")}}
-function renderCrypto(){const q=config?.methods?.find(x=>x.method==="crypto_binance"),b=config?.binancePayment||{};$("cryptoQr").src=b.qrImage||"img/binance-pay.jpeg";$("cryptoAlias").textContent=b.alias||"Evolution Desing";$("cryptoAsset").textContent=b.asset||"USDT";$("cryptoAmount").textContent=q?.usdtAmount?`${Number(q.usdtAmount).toFixed(2)} USDT`:"Se calcula al cargar"}
-function renderPaymentExtra(){const method=$("paymentMethod").value;$("transferPanel").classList.toggle("show",method==="transfer_shipping");$("cryptoPanel").classList.toggle("show",method==="crypto_binance");$("visacuotasPanel").classList.toggle("show",method==="visacuotas");$("selectVisacuotasBtn")?.classList.toggle("active",method==="visacuotas");if(method==="transfer_shipping")renderBankDetails();if(method==="crypto_binance")renderCrypto();renderOnlinePayment(method);const url=config?.visacuotasUrl||config?.sale?.visacuotasUrl||"#";$("visacuotasPreviewLink").href=url;$("payVisacuotasBtn").href=url;$("visacuotasPreviewLink").classList.toggle("hidden",url==="#")}
+async function renderOnlinePayment(method){const panel=$("onlinePaymentPanel"),host=$("paypalStoreButtons"),seq=++paypalRenderSeq;if(!["paypal_shipping","card_shipping"].includes(method)){panel.classList.remove("show");paypalRenderedMethod="";host.replaceChildren();setPaypalStatus("");return}panel.classList.add("show");$("onlinePaymentTitle").textContent=method==="card_shipping"?"Tarjeta débito/crédito":"PayPal";$("onlinePaymentCopy").textContent=`Pago seguro · ${money(currentQuote()?.totalGtq||0)}. Tus datos de entrega ya están listos para usarse en el checkout.`;if(paypalRenderedMethod===method&&host.childElementCount>0)return;paypalRenderedMethod="";host.innerHTML='<div style="padding:9px;color:#333;font-size:11px;text-align:center">Preparando pago seguro…</div>';try{const paypal=await loadPayPalSdk();if(seq!==paypalRenderSeq||$("paymentMethod").value!==method)return;host.replaceChildren();const mount=document.createElement("div");mount.id=`paypal-store-mount-${seq}`;host.appendChild(mount);const fundingSource=method==="card_shipping"?paypal.FUNDING.CARD:paypal.FUNDING.PAYPAL,buttons=paypal.Buttons({fundingSource,style:{layout:"vertical",shape:"rect",color:method==="card_shipping"?"black":"gold",label:method==="card_shipping"?"pay":"paypal",height:45},createOrder:async()=>{clearFeedback();setPaypalStatus("Validando datos y preparando el pago…");if(!config?.available)throw new Error("Este producto ya no está disponible.");const draft=validateStoreDraft(),token=await recaptchaToken(),result=await authedFetch("/paypal/create-order",{method:"POST",body:{mode:"store_sale_purchase",saleSlug:TEMP_SALE_SLUG,fundingSource:method==="card_shipping"?"card":"paypal",storeDraft:draft,recaptchaToken:token,requestedUri:location.href}});setPaypalStatus("Orden preparada. Continúa en el checkout seguro.");return result.orderId},onApprove:async data=>{setPaypalStatus("Confirmando pago…");try{const result=await authedFetch("/paypal/capture-order",{method:"POST",body:{orderId:data.orderID}});if(!result?.storeOrder)throw new Error("El pago fue confirmado, pero no recibimos el pedido final.");setPaypalStatus("Pago confirmado ✓");finishStoreSuccess(result.storeOrder)}catch(e){setPaypalStatus(e.message||"No pudimos confirmar el pago.","error");throw e}},onCancel:()=>setPaypalStatus("Pago cancelado. Puedes intentarlo nuevamente."),onError:e=>{console.error(e);setPaypalStatus(e?.message||"No se pudo abrir el pago seguro.","error")}});if(!buttons.isEligible()){host.innerHTML='<div style="padding:12px;color:#8a1c1c;font-size:11px;text-align:center">Este método no está disponible en este dispositivo. Prueba otro método.</div>';return}await buttons.render(`#${mount.id}`);if(seq===paypalRenderSeq&&$("paymentMethod").value===method)paypalRenderedMethod=method}catch(e){if(seq!==paypalRenderSeq)return;console.error(e);host.innerHTML="";paypalRenderedMethod="";setPaypalStatus(e.message||"No se pudo preparar PayPal.","error")}}
+function renderPaymentExtra(){const method=$("paymentMethod").value;$("transferPanel").classList.toggle("show",method==="transfer_shipping");$("cryptoPanel").classList.toggle("show",method==="crypto_binance");$("visacuotasPanel").classList.toggle("show",method==="visacuotas");$("selectVisacuotasBtn")?.classList.toggle("active",method==="visacuotas");if(method==="transfer_shipping"){const q=config?.methods?.find(x=>x.method==="transfer_shipping");if($("transferPanelCopy"))$("transferPanelCopy").textContent=Number(q?.shippingGtq||0)>0?`Transfiere el total exacto indicado. El envío nacional configurado para este producto es ${money(q.shippingGtq)}.`:"Transfiere el total exacto indicado. Este producto no tiene costo de envío adicional configurado.";renderBankDetails()}if(method==="crypto_binance")renderCrypto();renderOnlinePayment(method);const url=config?.visacuotasUrl||config?.sale?.visacuotasUrl||"#";$("visacuotasPreviewLink").href=url;$("payVisacuotasBtn").href=url;$("visacuotasPreviewLink").classList.toggle("hidden",url==="#")}
 function syncDelivery(){
   const method=$("paymentMethod").value,pickup=method==="pickup_pana";
   $("deliveryFields").classList.toggle("hidden",pickup);
@@ -2068,8 +2140,7 @@ function syncDelivery(){
   if(pickup)$("pobladoSuggestions").classList.remove("show");
   $("submitBtn").disabled=["paypal_shipping","card_shipping"].includes(method)||!config?.available;
 }
-function renderSummary(){const q=currentQuote();if(!q)return;const rows=[[config?.title||config?.sale?.title||"Producto",money(q.basePriceGtq)]];if(q.surchargeGtq)rows.push(["Recargo contra entrega 7%",money(q.surchargeGtq)]);if(q.shippingGtq)rows.push(["Envío nacional",money(q.shippingGtq)]);if(q.method==="crypto_binance"&&q.usdtAmount)rows.push(["Pago cripto",`≈ ${Number(q.usdtAmount).toFixed(2)} USDT`]);if(q.method==="visacuotas")rows.push(["Recargo Visacuotas","Se calcula en Recurrente"]);else if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",money(0)]);$("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${v}</strong></div>`).join("")+`<div class="summary-row total"><span>${q.method==="visacuotas"?"Base antes del recargo":"Total"}</span><strong>${money(q.totalGtq)}</strong></div>`;if(["paypal_shipping","card_shipping"].includes(q.method)){$("submitBtn").textContent="Completa el pago seguro arriba";$("submitBtn").disabled=true}else{$("submitBtn").disabled=!config?.available;$("submitBtn").textContent=q.method==="visacuotas"?`Registrar pedido · ${money(q.totalGtq)} + recargo`:q.method==="transfer_shipping"?`Enviar referencia · ${money(q.totalGtq)}`:q.method==="crypto_binance"?`Registrar pago cripto · ${money(q.totalGtq)}`:`Confirmar pedido · ${money(q.totalGtq)}`}}
-
+function renderSummary(){const q=currentQuote();if(!q)return;const rows=[[config?.title||config?.sale?.title||"Producto",money(q.basePriceGtq)]];if(q.surchargeGtq){const pricing=salePricing(),configured=(q.method==="cod_forza"||q.method==="cod_cargo")?pricing.codSurchargePct:["paypal_shipping","card_shipping"].includes(q.method)?pricing.paypalSurchargePct:0,pct=quotePct(q,configured),label=(q.method==="cod_forza"||q.method==="cod_cargo")?`Recargo contra entrega${pct?` ${pctLabel(pct)}%`:""}`:`Recargo de pago${pct?` ${pctLabel(pct)}%`:""}`;rows.push([label,money(q.surchargeGtq)])}if(q.shippingGtq)rows.push(["Envío nacional",money(q.shippingGtq)]);if(q.method==="crypto_binance"&&q.usdtAmount)rows.push(["Pago cripto",`≈ ${Number(q.usdtAmount).toFixed(2)} USDT`]);if(q.method==="visacuotas")rows.push(["Financiamiento","Recurrente calcula cuotas y recargo"]);else if(!q.surchargeGtq&&!q.shippingGtq)rows.push(["Entrega",money(0)]);$("summary").innerHTML=rows.map(([l,v])=>`<div class="summary-row"><span>${l}</span><strong>${v}</strong></div>`).join("")+`<div class="summary-row total"><span>${q.method==="visacuotas"?"Base antes del financiamiento":"Total"}</span><strong>${money(q.totalGtq)}</strong></div>`;if(["paypal_shipping","card_shipping"].includes(q.method)){$("submitBtn").textContent="Completa el pago seguro arriba";$("submitBtn").disabled=true}else{$("submitBtn").disabled=!config?.available;$("submitBtn").textContent=q.method==="visacuotas"?`Registrar y financiar · ${money(q.totalGtq)}`:q.method==="transfer_shipping"?`Enviar referencia · ${money(q.totalGtq)}`:q.method==="crypto_binance"?`Registrar pago cripto · ${money(q.totalGtq)}`:`Confirmar pedido · ${money(q.totalGtq)}`}}
 async function loadConfig(){
   try{
     if(!TEMP_SALE_SLUG)throw new Error("Falta el identificador de esta venta temporal.");
@@ -2116,7 +2187,7 @@ $("googleBtn").onclick=async()=>{try{$("loginError").classList.remove("show");aw
 $("toggleMode").onclick=()=>{authMode=authMode==="login"?"signup":"login";$("loginTitle").textContent=authMode==="login"?"Iniciar sesión":"Crear cuenta";$("emailAuthBtn").textContent=authMode==="login"?"Ingresar":"Crear cuenta";$("toggleMode").textContent=authMode==="login"?"¿No tienes cuenta? Crear cuenta":"¿Ya tienes cuenta? Iniciar sesión";$("authPassword").autocomplete=authMode==="login"?"current-password":"new-password"};
 $("emailAuthForm").addEventListener("submit",async e=>{e.preventDefault();const btn=$("emailAuthBtn");btn.disabled=true;$("loginError").classList.remove("show");try{const email=$("authEmail").value.trim(),password=$("authPassword").value;authMode==="login"?await signInWithEmailAndPassword(auth,email,password):await createUserWithEmailAndPassword(auth,email,password)}catch(err){$("loginError").textContent=err.message||"No pudimos completar el acceso."; $("loginError").classList.add("show")}finally{btn.disabled=false}});
 
-$("selectVisacuotasBtn").onclick=()=>{$("paymentMethod").value="visacuotas";renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate();$("visacuotasPanel").scrollIntoView({behavior:"smooth",block:"nearest"})};
+$("selectVisacuotasBtn").onclick=()=>{$("paymentMethod").value="visacuotas";renderMethods();syncDelivery();renderPaymentExtra();renderSummary();scheduleDeliveryEstimate();$("visacuotasPanel").scrollIntoView({behavior:"smooth",block:"center"})};
 
 $("orderForm").addEventListener("submit",async e=>{e.preventDefault();clearFeedback();if(!config?.available){showFeedback("Este producto ya no está disponible.");return}const q=currentQuote();if(!q)return;if(["paypal_shipping","card_shipping"].includes(q.method)){showFeedback("Completa el pago con el botón seguro que aparece arriba.");return}const btn=$("submitBtn");btn.disabled=true;btn.textContent="Validando pedido…";try{const draft=validateStoreDraft();let paymentReference="",paymentProofId="";if(q.method==="transfer_shipping"){paymentReference=$("transferReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia de la transferencia.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("transferReceipt")}if(q.method==="crypto_binance"){paymentReference=$("cryptoReference").value.trim();if(paymentReference.length<3)throw new Error("Ingresa la referencia del pago cripto.");btn.textContent="Subiendo comprobante…";paymentProofId=await uploadStorePaymentProof("cryptoReceipt")}btn.textContent="Validando seguridad…";const token=await recaptchaToken();btn.textContent="Guardando pedido…";const result=await authedFetch("/store/sales/orders/create",{method:"POST",body:{...draft,saleSlug:TEMP_SALE_SLUG,paymentMethod:q.method,paymentReference,paymentProofId,recaptchaToken:token,requestedUri:location.href}});finishStoreSuccess(result.order)}catch(err){showFeedback(err.message||"No se pudo registrar el pedido.");btn.disabled=false;renderSummary()}});
 
@@ -2146,6 +2217,51 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("guideModal").cla
 $("openOrdersBtn").onclick=()=>{try{sessionStorage.setItem("evolutionPortalArea","orders")}catch{} location.href="proyectos.html"};
 loadConfig();
 loadRecaptcha().catch(()=>{});
+
+
+/* Regreso inteligente desde la ficha de venta */
+const saleBackBtn=document.getElementById("saleBackBtn");
+if(saleBackBtn){
+  saleBackBtn.addEventListener("click",()=>{
+    let ref=null;
+    try{ref=document.referrer?new URL(document.referrer):null}catch(_){}
+    const sameOrigin=ref&&ref.origin===location.origin;
+    const usefulRef=sameOrigin && (
+      ref.pathname.includes("/admin") ||
+      ref.pathname.includes("/dispositivos") ||
+      ref.pathname.includes("/proyectos") ||
+      ref.pathname.includes("/index") ||
+      ref.pathname==="/"
+    );
+
+    if(usefulRef){
+      history.back();
+      return;
+    }
+
+    /* Si la ficha fue abierta desde Admin en una pestaña nueva,
+       document.referrer puede venir vacío. En ese caso intentamos
+       cerrar la pestaña; si el navegador no lo permite, volvemos
+       al catálogo. */
+    if(window.opener && !window.opener.closed){
+      window.close();
+      setTimeout(()=>{location.href="/dispositivos.html"},120);
+      return;
+    }
+
+    if(history.length>1){
+      history.back();
+      setTimeout(()=>{
+        if(document.visibilityState==="visible"){
+          location.href="/dispositivos.html";
+        }
+      },450);
+      return;
+    }
+
+    location.href="/dispositivos.html";
+  });
+}
 </script>
 </body>
 </html>
