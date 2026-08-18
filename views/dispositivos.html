@@ -301,6 +301,9 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   .view-btn{width:100%}
 }
 
+
+.price strong .from-label{font-style:normal;font-size:.45em;font-weight:800;letter-spacing:.025em;color:#a79279;vertical-align:middle;margin-right:2px;text-transform:uppercase}
+@media(max-width:680px){.price strong .from-label{font-size:.43em}}
 </style>
 
 <style id="evo-store-shell-clearance-v5010">
@@ -386,20 +389,28 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
       p.storage,p.battery,p.condition,
       ...(Array.isArray(p.specs)?p.specs.slice(0,2).map(x=>x.value):[])
     ].filter(Boolean).slice(0,3);
-    const ref=Number(p.referencePriceGtq||0),price=Number(p.priceGtq||0);
-    const save=ref>price?Math.round((1-price/ref)*100):0;
+    const importStatus=String(p.importInfo?.status||"available_gt");
+    const imported=p.importInfo?.originMarket==="usa"||p.importInfo?.requiresCustoms===true||["usa_stock","in_transit","customs","released"].includes(importStatus);
+    const ref=Number(p.finalReferencePriceGtq||p.referencePriceGtq||0),price=Number(p.finalPriceGtq||p.priceGtq||0);
+    const groupAvailableCount=Math.max(0,Number(p.groupAvailableCount||0));
+    const groupMinPrice=Math.max(0,Number(p.groupMinPriceGtq||0));
+    const hasOptions=Boolean(p.groupKey)&&groupAvailableCount>1&&groupMinPrice>0;
+    const displayPrice=hasOptions?groupMinPrice:price;
+    // Reference-price savings belong to an individual unit, so we do not mix
+    // them with a grouped "Desde" price from another option.
+    const save=!hasOptions&&ref>price?Math.round((1-price/ref)*100):0;
     const sold=!p.available;
     return `<a class="product ${esc(p.category||'other')}" href="/venta.html?s=${encodeURIComponent(p.slug)}" data-category="${esc(p.category||'other')}">
       <div class="product-media"><img src="${esc(p.imagePath||'/img/product.png')}" alt="${esc(p.title)}"></div>
       <div class="product-body">
-        <div class="product-top"><span class="product-type">${esc(categoryLabel(p.category))}${p.brand?` · ${esc(p.brand)}`:''}</span><span class="country ${p.importInfo?.originMarket==='usa'?'usa':'local'}">${sold?'Agotado':p.importInfo?.originMarket==='usa'?'Estados Unidos':'Panajachel'}</span></div>
+        <div class="product-top"><span class="product-type">${esc(categoryLabel(p.category))}${p.brand?` · ${esc(p.brand)}`:''}</span><span class="country ${imported?'usa':'local'}">${sold?'Agotado':imported?'Estados Unidos':'Panajachel'}</span></div>
         <h3>${esc(p.title)}${p.featured?` <span style="color:#d4b895;font-size:14px">★</span>`:''}</h3>
         <p>${esc(p.subtitle||'Producto disponible en Evolution Devices Guatemala.')}</p>
-        ${!sold?(p.importInfo?.originMarket==='usa'?`<div class="origin-promise usa"><span class="origin-promise-icon">✦</span><div class="origin-promise-copy"><strong>Disponible en Estados Unidos · Importación bajo pedido</strong><span>Evolution coordina la importación y la entrega hasta tu domicilio en Guatemala.</span></div></div>`:`<div class="origin-promise"><span class="origin-promise-icon">✓</span><div class="origin-promise-copy"><strong>Disponible en Panajachel</strong><span>Entrega personal disponible y envíos a todo Guatemala.</span></div></div>`):''}
-        ${p.importInfo?.requiresCustoms?`<div class="customs-note"><strong>${esc(p.importInfo.statusLabel||'Importación USA')}</strong> · El precio publicado no incluye aduana. Los cargos de importación se pagan por separado.</div>`:''}
+        ${!sold?(imported?`<div class="origin-promise usa"><span class="origin-promise-icon">✦</span><div class="origin-promise-copy"><strong>Disponible en Estados Unidos · Importación bajo pedido</strong><span>Evolution coordina la importación, la incluye en el precio final y gestiona la entrega en Guatemala. Estimado: 3 a 25 días.</span></div></div>`:`<div class="origin-promise"><span class="origin-promise-icon">✓</span><div class="origin-promise-copy"><strong>Disponible en Panajachel</strong><span>Entrega personal disponible y envíos a todo Guatemala.</span></div></div>`):''}
+        ${imported?`<div class="customs-note"><strong>${esc(p.importInfo.statusLabel||'Importación USA')}</strong> · Importación incluida en el precio final · sin cobro aduanero adicional por separado.</div>`:''}
         <div class="specs">${specs.map(x=>`<span class="spec">${esc(x)}</span>`).join('')}</div>
-        <div class="buy-row"><div class="price"><span>${sold?'Sin disponibilidad':'Precio publicado'}</span><strong>${money(price)}</strong>${ref>price?`<del>${money(ref)}</del>`:''}</div>
-        ${sold?`<span class="view-btn" style="opacity:.55">Agotado</span>`:`<span class="view-btn">Ver producto ${save?`<em class="product-savings">-${save}%</em>`:''} <b>→</b></span>`}</div>
+        <div class="buy-row"><div class="price"><span>${sold?'Sin disponibilidad':hasOptions?`${groupAvailableCount} opciones disponibles`:'Precio publicado'}</span><strong>${hasOptions?`<em class="from-label">Desde</em> `:''}${money(displayPrice)}</strong>${!hasOptions&&ref>price?`<del>${money(ref)}</del>`:''}</div>
+        ${sold?`<span class="view-btn" style="opacity:.55">Agotado</span>`:`<span class="view-btn">${hasOptions?'Ver opciones':'Ver producto'} ${save?`<em class="product-savings">-${save}%</em>`:''} <b>→</b></span>`}</div>
       </div>
     </a>`;
   }
