@@ -2356,6 +2356,19 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
   }
 </style>
 
+
+<style id="evo-graphic-shell-clearance-v5010">
+:root{--evo-shell-mobile-nav-bottom:142px}
+@media(max-width:991.98px){
+  .graphic-hero{
+    padding-top:calc(var(--evo-shell-mobile-nav-bottom) + 22px)!important;
+  }
+  /* Compatibilidad con bloques hero antiguos que todavía viven en la vista. */
+  .hero:not(.graphic-hero){
+    scroll-margin-top:calc(var(--evo-shell-mobile-nav-bottom) + 12px)!important;
+  }
+}
+</style>
 </head>
 <body data-evolution-view="grafico" class="graphic-page">
 <div id="evolution-view-auth-mirror" hidden aria-hidden="true">
@@ -4451,5 +4464,41 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
   de Google.
 </div>
 
+
+<script id="evo-mobile-nav-clearance-fix">
+(()=>{
+  const root=document.documentElement;
+  let ro=null, tries=0;
+  const setValue=v=>root.style.setProperty('--evo-shell-mobile-nav-bottom',`${Math.max(0,Math.ceil(v||0))}px`);
+  const measure=()=>{
+    if(innerWidth>991.98){setValue(0);return true}
+    if(window.parent===window){setValue(0);return true}
+    try{
+      const nav=window.parent.document.querySelector('evolution-nav .evo-mobile');
+      if(!nav){return false}
+      const cs=window.parent.getComputedStyle(nav);
+      if(cs.display==='none'||cs.visibility==='hidden'){setValue(0);return true}
+      const rect=nav.getBoundingClientRect();
+      if(rect.bottom>0){
+        setValue(rect.bottom);
+        if('ResizeObserver' in window.parent && !ro){
+          ro=new window.parent.ResizeObserver(()=>requestAnimationFrame(measure));
+          ro.observe(nav);
+        }
+        return true;
+      }
+    }catch(_){ }
+    return false;
+  };
+  const boot=()=>{
+    if(measure())return;
+    if(tries++<90)requestAnimationFrame(boot);
+  };
+  boot();
+  addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true});
+  addEventListener('orientationchange',()=>setTimeout(measure,120),{passive:true});
+  try{window.parent.addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true})}catch(_){ }
+})();
+</script>
 </body>
 </html>
