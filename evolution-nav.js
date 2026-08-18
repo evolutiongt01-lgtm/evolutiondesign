@@ -121,7 +121,7 @@
   `).join('') + `
     <li><a href="/sobre-nosotros" class="evo-menu-item"><span>Sobre Nosotros</span></a></li>
     <li><a href="/feedback" class="evo-menu-item"><span>Feedback</span></a></li>
-    <li><a href="/proyectos.html" class="evo-menu-item">${ICONS.folder}<span>Mis Proyectos</span></a></li>
+    <li><a href="/proyectos.html" class="evo-menu-item">${ICONS.folder}<span>Órdenes</span></a></li>
     <li class="evo-install-item evo-d-none"><a href="#" class="evo-menu-item" data-evo-install>${ICONS.install}<span>Instalar Evolution</span></a></li>
   `;
 
@@ -146,7 +146,7 @@
 
               <div class="evo-links">
                 ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-link${p.key===active?' active':''}">${p.label}</a>`).join('')}
-                <a href="/proyectos.html" class="evo-link">Mis Proyectos</a>
+                <a href="/proyectos.html" class="evo-link">Órdenes</a>
                 <div id="auth-desktop-wrapper"><a href="#" class="evo-link evo-login" data-evo-login>${ICONS.login}<span>Login</span></a></div>
                 <span class="evo-route-indicator evo-desktop-indicator" aria-hidden="true"></span>
               </div>
@@ -168,7 +168,7 @@
           </div>
           <div class="evo-tabs">
             ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-tab${p.key===active?' active':''}">${ICONS[p.icon]}<span>${p.short}</span></a>`).join('')}
-            <a href="/proyectos.html" class="evo-tab">${ICONS.folder}<span>Proyectos</span></a>
+            <a href="/proyectos.html" class="evo-tab">${ICONS.folder}<span>Órdenes</span></a>
             <span class="evo-route-indicator evo-mobile-indicator" aria-hidden="true"></span>
           </div>
         </nav>`;
