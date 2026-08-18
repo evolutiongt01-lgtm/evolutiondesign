@@ -1,6 +1,6 @@
 /* Evolution Design · Advanced App Shell Service Worker · v37.1 · View Recovery */
-const VERSION='evolution-smart-app-v37-1-view-recovery';
-const APP_BUILD=45;
+const VERSION='evolution-smart-app-v48-1-ventas';
+const APP_BUILD=48;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
@@ -8,7 +8,7 @@ const IMAGES=`${VERSION}-images`;
 
 const SHELL_FILES=[
   '/',
-  '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html','/portafolio.html',
+  '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html','/portafolio.html','/dispositivos.html',
   '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-sw.js',
   '/img/logo.png','/manifest.webmanifest'
 ];
@@ -18,7 +18,8 @@ const VIEW_FILES=[
   '/views/arquitectura.html',
   '/views/diseno-grafico.html',
   '/views/diseno-web.html',
-  '/views/portafolio.html'
+  '/views/portafolio.html',
+  '/views/dispositivos.html'
 ];
 
 const PRIVATE=[
@@ -28,8 +29,8 @@ const PRIVATE=[
 ];
 
 const isPrivate=p=>PRIVATE.some(x=>p.toLowerCase().includes(x));
-const isShellPath=p=>['/','/index.html','/arquitectura','/arquitectura.html','/diseno-grafico','/diseno-grafico.html','/diseno-web','/diseno-web.html','/portafolio','/portafolio.html'].includes(p);
-const shellAlias=p=>p==='/arquitectura'?'/arquitectura.html':p==='/diseno-grafico'?'/diseno-grafico.html':p==='/diseno-web'?'/diseno-web.html':p==='/portafolio'?'/portafolio.html':p;
+const isShellPath=p=>['/','/index.html','/arquitectura','/arquitectura.html','/diseno-grafico','/diseno-grafico.html','/diseno-web','/diseno-web.html','/portafolio','/portafolio.html','/dispositivos','/dispositivos.html'].includes(p);
+const shellAlias=p=>p==='/arquitectura'?'/arquitectura.html':p==='/diseno-grafico'?'/diseno-grafico.html':p==='/diseno-web'?'/diseno-web.html':p==='/portafolio'?'/portafolio.html':p==='/dispositivos'?'/dispositivos.html':p;
 const isView=p=>p.startsWith('/views/')&&p.endsWith('.html');
 const isImage=p=>/\.(png|jpe?g|webp|avif|gif|svg)$/i.test(p)||p.startsWith('/img/');
 const isStatic=p=>
