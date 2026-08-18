@@ -1728,7 +1728,6 @@ function applyTemporarySale(){
   $("saleProductImage").src=sale.imagePath||"img/product.png";
   $("saleProductImage").alt=`${title} · Evolution Design`;
   renderRealDeviceGallery(Array.isArray(sale.gallery)?sale.gallery.filter(Boolean):[],title);
-  }
 
   const quick=[
     ["saleColorSpec","saleColor",sale.color],
