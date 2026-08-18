@@ -2,8 +2,8 @@
 (() => {
   'use strict';
 
-  const VERSION='45.1';
-  const APP_BUILD=45;
+  const VERSION='48.1';
+  const APP_BUILD=48;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -12,7 +12,8 @@
     arquitectura:{key:'arquitectura',path:'/arquitectura.html',view:'/views/arquitectura.html',title:'Arquitectura · Evolution Design',order:1,transition:{x:0,y:8,scale:.997,blur:1}},
     grafico:{key:'grafico',path:'/diseno-grafico.html',view:'/views/diseno-grafico.html',title:'Diseño Gráfico · Evolution Design',order:2,transition:{x:10,y:0,scale:.999,blur:0}},
     web:{key:'web',path:'/diseno-web.html',view:'/views/diseno-web.html',title:'Diseño Web · Evolution Design',order:3,transition:{x:0,y:7,scale:.998,blur:2}},
-    portfolio:{key:'portfolio',path:'/portafolio.html',view:'/views/portafolio.html',title:'Proyectos · Evolution Design',order:4,transition:{x:0,y:6,scale:.998,blur:1}}
+    portfolio:{key:'portfolio',path:'/portafolio.html',view:'/views/portafolio.html',title:'Proyectos · Evolution Design',order:4,transition:{x:0,y:6,scale:.998,blur:1}},
+    devices:{key:'devices',path:'/dispositivos.html',view:'/views/dispositivos.html',title:'Dispositivos · Evolution Design',order:5,transition:{x:7,y:0,scale:.999,blur:1}}
   };
 
   const ROUTE_LIST=Object.values(ROUTES);
@@ -21,7 +22,7 @@
 
   /* Orden de navegación táctil móvil. Órdenes queda fuera porque
      es una zona privada y no pertenece al App Shell público. */
-  const MOBILE_SWIPE_ORDER=['home','arquitectura','grafico','web','portfolio'];
+  const MOBILE_SWIPE_ORDER=['home','arquitectura','grafico','web','portfolio','devices'];
   const MOBILE_SWIPE_COMMIT_PROGRESS=.60;
   const PRIVATE_HINTS=['/proyectos','/perfil','/admin','/portal','/account','/checkout','/payment','/pago','/login','/api/'];
   const prefetchedViews=new Set();
@@ -801,6 +802,7 @@
     if(p.includes('diseno-grafico'))return ROUTES.grafico;
     if(p.includes('diseno-web'))return ROUTES.web;
     if(p.includes('portafolio'))return ROUTES.portfolio;
+    if(p.includes('dispositivos'))return ROUTES.devices;
     return ROUTES.home;
   };
 
@@ -817,7 +819,7 @@
       if(PRIVATE_HINTS.some(x=>p.includes(x)))return null;
 
       /* IMPORTANTE:
-         Solo estas cinco rutas pertenecen al router público.
+         Solo estas seis rutas pertenecen al router público.
          Un enlace interno, feedback, sobre-nosotros, archivo, etc.
          jamás debe convertirse accidentalmente en Home. */
       if(p==='/'||p==='/index.html')return ROUTES.home;
@@ -825,6 +827,7 @@
       if(p==='/diseno-grafico'||p==='/diseno-grafico.html')return ROUTES.grafico;
       if(p==='/diseno-web'||p==='/diseno-web.html')return ROUTES.web;
       if(p==='/portafolio'||p==='/portafolio.html')return ROUTES.portfolio;
+      if(p==='/dispositivos'||p==='/dispositivos.html')return ROUTES.devices;
 
       return null;
     }catch(_){return null}
