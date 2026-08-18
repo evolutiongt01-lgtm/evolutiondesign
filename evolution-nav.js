@@ -55,8 +55,10 @@
     .evo-logo{display:flex;align-items:center}
     .evo-logo img{display:block;height:31px;width:auto;max-width:150px}
     .evo-menu-wrap{position:relative}
-    .evo-icon{width:42px;height:42px;min-width:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;transition:transform .2s cubic-bezier(.16,1,.3,1),background .18s ease,border-color .18s ease}
-    .evo-icon:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22);transform:scale(1.04)}
+    .evo-icon{position:relative;isolation:isolate;overflow:hidden;width:42px;height:42px;min-width:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.055));color:#fff;box-shadow:0 10px 28px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -10px 20px rgba(255,255,255,.03);backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%);transition:transform .2s cubic-bezier(.16,1,.3,1),background .18s ease,border-color .18s ease,box-shadow .18s ease}
+    .evo-icon:before{content:"";position:absolute;inset:1px;z-index:-1;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.02) 58%,rgba(255,255,255,.01))}
+    .evo-icon:after{content:"";position:absolute;left:7px;right:7px;top:5px;height:42%;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.20),rgba(255,255,255,0));opacity:.85;pointer-events:none}
+    .evo-icon:hover{background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.075));border-color:rgba(255,255,255,.24);box-shadow:0 14px 34px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.32),inset 0 -12px 22px rgba(255,255,255,.04);transform:scale(1.04)}
     .evo-icon:active{transform:scale(.95)}
 
     .evo-links{position:relative;margin-left:auto;display:flex;align-items:center;gap:clamp(12px,1.3vw,21px);min-width:0}
@@ -79,22 +81,24 @@
     .evo-admin-badge{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:999px;background:rgba(190,38,55,.25);border:1px solid rgba(220,53,69,.48);color:#fff!important;font:800 .61rem/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
     .evo-admin-badge svg{width:13px;height:13px}
 
-    .evo-drop{position:absolute;left:0;top:52px;min-width:220px;margin:0;padding:7px;list-style:none;border:1px solid rgba(255,255,255,.11);border-radius:16px;background:rgba(13,13,15,.97);box-shadow:0 18px 50px rgba(0,0,0,.5);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-7px) scale(.98);transform-origin:top left;transition:opacity .18s ease,transform .22s cubic-bezier(.16,1,.3,1),visibility .18s}
+    .evo-drop{position:absolute;left:0;top:52px;min-width:220px;margin:0;padding:8px;list-style:none;border:1px solid rgba(255,255,255,.13);border-radius:20px;background:linear-gradient(180deg,rgba(19,19,22,.84),rgba(9,9,11,.92));box-shadow:0 22px 60px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.14);backdrop-filter:blur(28px) saturate(165%);-webkit-backdrop-filter:blur(28px) saturate(165%);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-7px) scale(.98);transform-origin:top left;transition:opacity .18s ease,transform .22s cubic-bezier(.16,1,.3,1),visibility .18s}
     .evo-drop.show{opacity:1;visibility:visible;pointer-events:auto;transform:none}
     .evo-drop li{list-style:none;margin:0;padding:0}
-    .evo-menu-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:#c4c4c8;font:600 .76rem/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    .evo-menu-item svg{width:18px;height:18px;opacity:.8}
-    .evo-menu-item:hover,.evo-menu-item.active{background:rgba(255,255,255,.08);color:#fff}
+    .evo-menu-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:13px;color:#d0d0d4;font:600 .76rem/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transition:background .18s ease,color .18s ease,transform .18s ease}
+    .evo-menu-item svg{width:18px;height:18px;opacity:.84}
+    .evo-menu-item:hover,.evo-menu-item.active{background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));color:#fff;transform:translateX(1px)}
 
     .evo-mobile{display:block;position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:2147483000!important;padding-top:env(safe-area-inset-top,0px)!important;background:rgba(5,5,6,.90)!important;border-bottom:1px solid rgba(255,255,255,.055)!important;box-shadow:0 6px 20px rgba(0,0,0,.18)!important;backdrop-filter:blur(10px) saturate(120%)!important;-webkit-backdrop-filter:blur(10px) saturate(120%)!important;transform:none!important;transition:background .28s ease,border-color .28s ease,box-shadow .28s ease,backdrop-filter .28s ease,-webkit-backdrop-filter .28s ease}
     evolution-nav.evo-is-scrolled .evo-mobile{background:rgba(5,5,6,.975)!important;border-bottom-color:rgba(255,255,255,.09)!important;box-shadow:0 10px 34px rgba(0,0,0,.38)!important;backdrop-filter:blur(20px) saturate(150%)!important;-webkit-backdrop-filter:blur(20px) saturate(150%)!important}
     .evo-mobile-top{min-height:60px;padding:10px 14px 9px;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:10px}
     .evo-mobile .evo-logo{justify-self:center}
     .evo-mobile .evo-logo img{height:27px;max-width:128px}
-    .evo-mobile .evo-icon{width:40px;height:40px;min-width:40px}
+    .evo-mobile .evo-icon{width:40px;height:40px;min-width:40px;border-color:rgba(255,255,255,.18);background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.065));box-shadow:0 12px 30px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.30),inset 0 -10px 20px rgba(255,255,255,.04);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%)}
+    #mobileMenuBtn{border-color:rgba(255,255,255,.22);background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.07));box-shadow:0 14px 34px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.34),inset 0 -12px 22px rgba(255,255,255,.05)}
+    #mobileMenuBtn svg{stroke-width:1.9}
     #auth-mobile-wrapper{min-width:40px;display:flex;align-items:center;justify-content:flex-end;gap:7px}
     .evo-mobile-auth{display:flex;align-items:center;gap:7px}
-    .evo-mobile-profile,.evo-mobile-action{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.04);color:#fff!important}
+    .evo-mobile-profile,.evo-mobile-action{position:relative;isolation:isolate;overflow:hidden;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.05));color:#fff!important;box-shadow:0 8px 22px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.20);backdrop-filter:blur(20px) saturate(170%);-webkit-backdrop-filter:blur(20px) saturate(170%)}
     .evo-mobile-profile{border-color:rgba(212,184,149,.5)}
     .evo-mobile-profile img{width:28px;height:28px;border-radius:50%;object-fit:cover}
     .evo-mobile-profile .evo-avatar-fallback{width:28px;height:28px;border:0;font-size:.62rem}
