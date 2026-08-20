@@ -1489,8 +1489,8 @@ html.admin-page-hidden *{
           <div class="field"><label>Ubicación actual</label><input class="input" id="tempSaleLocation" maxlength="120" placeholder="Ej. Panajachel, Guatemala · o Estados Unidos"><div class="hint">En productos de Guatemala, la tienda mostrará “Disponible en Panajachel”. En importados mostrará “Disponible en Estados Unidos”.</div></div>
           <div class="field"><label>Estado logístico</label><select class="input" id="tempSaleImportStatus"><option value="available_gt">Disponible en Guatemala</option><option value="usa_stock">En Estados Unidos</option><option value="in_transit">En tránsito a Guatemala</option><option value="customs">En aduana</option><option value="released">Aduana pagada / liberado</option></select></div>
           <div class="field full"><label>Descripción corta</label><textarea class="textarea" id="tempSaleSubtitle" maxlength="500" placeholder="Descripción del equipo, procedencia, estado y puntos fuertes…"></textarea></div>
-          <div class="field"><label>Precio actual Q</label><input class="input" id="tempSalePrice" type="number" min="1" step="0.01"></div>
-          <div class="field"><label>Precio de referencia Q</label><input class="input" id="tempSaleReferencePrice" type="number" min="0" step="0.01" placeholder="Opcional"></div>
+          <div class="field"><label id="tempSalePriceLabel">Precio actual Q</label><input class="input" id="tempSalePrice" type="number" min="0.01" step="0.01"></div>
+          <div class="field"><label id="tempSaleReferencePriceLabel">Precio de referencia Q</label><input class="input" id="tempSaleReferencePrice" type="number" min="0" step="0.01" placeholder="Opcional"></div>
           <div class="field"><label>Stock</label><input class="input" id="tempSaleStock" type="number" min="0" max="999" step="1" value="1"></div>
           <div class="field"><label>Orden en catálogo</label><input class="input" id="tempSaleSortOrder" type="number" min="-999" max="9999" step="1" value="100"></div>
           <div class="field"><label>Condición</label><input class="input" id="tempSaleCondition" maxlength="120" placeholder="Como nuevo, usado, open box…"></div>
@@ -1539,19 +1539,21 @@ html.admin-page-hidden *{
     </div>
 
     <div class="section hidden" id="tempSaleCustomsSection">
-      <div class="section-h import-admin-head"><span>Importación incluida</span><button class="import-lock-btn" id="tempSaleImportLockBtn" type="button" onclick="toggleTempSaleImportLock()">🔒 Costos bloqueados</button></div>
+      <div class="section-h import-admin-head"><span>Costos USA · USD</span><button class="import-lock-btn" id="tempSaleImportLockBtn" type="button" onclick="toggleTempSaleImportLock()">🔒 Costos bloqueados</button></div>
       <div class="section-b">
-        <div class="store-admin-note"><strong>Precio final para el cliente</strong><span>Evolution suma estos costos al precio del producto. El cliente paga un solo total y <b>no recibe un cobro de aduana por separado</b>. Para modificar flete o combustible, desbloquea los costos con el candado.</span></div>
-        <div class="form-grid">
-          <div class="field"><label>Base aduanera del artículo Q</label><input class="input import-cost-field" id="tempSaleDeclaredValueGtq" type="number" min="0" step="0.01" value="0"><div class="hint">Escribe el valor en quetzales que usarás como base para el cálculo interno.</div></div>
-          <div class="field"><label>IVA importación · fijo 12% 🔒</label><input class="input" id="tempSaleCustomsIvaFixed" readonly value="Q0.00"><div class="hint">El 12% queda fijo dentro del sistema.</div></div>
-          <div class="field"><label>Flete y gestión de importación Q</label><input class="input import-cost-field" id="tempSaleCustomsTotal" type="number" min="0" step="0.01" value="0"><div class="hint">Editable para actualizar tarifas logísticas.</div></div>
-          <div class="field"><label>Recargo por combustible Q</label><input class="input import-cost-field" id="tempSaleFuelSurcharge" type="number" min="0" step="0.01" value="0"><div class="hint">Modifícalo cuando cambien los costos por combustible.</div></div>
-          <div class="field"><label>Reserva operativa %</label><input class="input import-cost-field" id="tempSaleCustomsSafetyPct" type="number" min="0" max="25" step="0.01" value="5"></div>
-          <div class="field"><label>Recepción de importación</label><select class="input import-cost-field" id="tempSaleQuickboxDeliveryMode"><option value="delivery">Entrega de importación · +Q55</option><option value="branch">Retiro en sucursal · Q0</option></select></div>
+        <div class="store-admin-note"><strong>Administración en dólares · venta pública en quetzales</strong><span>Cuando la procedencia es Estados Unidos, el precio base y los costos de importación se administran en <b>USD</b>. Evolution convierte automáticamente el total a <b>GTQ</b> para mostrarlo al cliente. Tax, Aduana y Flete son porcentajes editables calculados sobre el precio base del artículo.</span></div>
+        <div class="form-grid" style="margin-top:12px">
+          <div class="field"><label>Tipo de cambio · Q por $1</label><input class="input import-cost-field" id="tempSaleFxRate" type="number" min="0.01" max="100" step="0.0001" value="7.65"><div class="hint">Editable para actualizar la conversión que verá el cliente en quetzales.</div></div>
+          <div class="field"><label>Tax USA %</label><input class="input import-cost-field" id="tempSaleTaxPct" type="number" min="0" max="100" step="0.01" value="8"><div class="hint">Valor inicial: 8%.</div></div>
+          <div class="field"><label>Aduana %</label><input class="input import-cost-field" id="tempSaleCustomsPct" type="number" min="0" max="100" step="0.01" value="12"><div class="hint">Valor inicial: 12%.</div></div>
+          <div class="field"><label>Flete %</label><input class="input import-cost-field" id="tempSaleFreightPct" type="number" min="0" max="100" step="0.01" value="15"><div class="hint">Valor inicial: 15%.</div></div>
+          <div class="field"><label>Tax calculado USD</label><input class="input import-total-readonly" id="tempSaleTaxUsd" readonly value="$0.00"></div>
+          <div class="field"><label>Aduana calculada USD</label><input class="input import-total-readonly" id="tempSaleCustomsUsd" readonly value="$0.00"></div>
+          <div class="field"><label>Flete calculado USD</label><input class="input import-total-readonly" id="tempSaleFreightUsd" readonly value="$0.00"></div>
+          <div class="field"><label>Total costos USA USD</label><input class="input import-total-readonly" id="tempSaleImportTotalUsd" readonly value="$0.00"></div>
+          <div class="field"><label>Precio final USD</label><input class="input import-total-readonly" id="tempSaleFinalUsd" readonly value="$0.00"></div>
           <div class="field"><label>Referencia / documento</label><input class="input" id="tempSaleCustomsReference" maxlength="120" placeholder="Opcional"></div>
-          <div class="field"><label>Total importación incluido</label><input class="input import-total-readonly" id="tempSaleCustomsProjected" readonly value="Q0.00"></div>
-          <div class="field full"><label>Precio final al cliente</label><input class="input final-price-admin" id="tempSaleFinalPrice" readonly value="Q0.00"><div class="hint">Precio producto + importación incluida. Los recargos del método de pago y envío nacional se calculan después.</div></div>
+          <div class="field full"><label>Precio final para el cliente · GTQ</label><input class="input final-price-admin" id="tempSaleFinalPrice" readonly value="Q0.00"><div class="hint">Este es el total público: precio base USD + Tax + Aduana + Flete, convertido a quetzales. Los recargos del método de pago se calculan después.</div></div>
         </div>
       </div>
     </div>
@@ -2016,7 +2018,7 @@ function renderTemporarySales(){
     <td><div class="strong">${esc(s.title||s.slug)}${s.featured===true?' · ★':''}</div><div class="sub">${esc(s.brand||'')} ${esc(s.condition||'')}</div>${s.groupKey?`<div class="sub">Grupo: ${esc(s.groupKey)}${s.optionLabel?` · ${esc(s.optionLabel)}`:''}</div>`:''}${s.sourceInfo?.url?`<div class="sub">Swappa: ${s.sourceInfo.status==='available'?'Disponible':s.sourceInfo.status==='unavailable'?'No disponible':'Sin verificar'}</div>`:''}</td>
     <td>${esc(tempSaleCategoryLabel(s.category))}</td>
     <td>${(()=>{const st=s.importInfo?.status||'available_gt',imp=s.importInfo?.originMarket==='usa'||['usa_stock','in_transit','customs','released'].includes(st);const loc=imp?(st==='usa_stock'?'Estados Unidos':st==='in_transit'?'En tránsito hacia Guatemala':st==='customs'?'Aduana · Guatemala':st==='released'?'Guatemala · liberado':'Estados Unidos'):'Panajachel, Guatemala';return `<div class="strong">${esc(loc)}</div><div class="sub">${esc(storeImportStatusLabel(st))}</div>`})()}</td>
-    <td>${gtq(s.priceGtq)}${Number(s.referencePriceGtq||0)>0?`<span class="store-price-ref">${gtq(s.referencePriceGtq)}</span>`:''}</td>
+    <td>${(()=>{const st=s.importInfo?.status||'available_gt',usaSale=s.importInfo?.originMarket==='usa'||['usa_stock','in_transit','customs','released'].includes(st);if(!usaSale)return `${gtq(s.priceGtq)}${Number(s.referencePriceGtq||0)>0?`<span class="store-price-ref">${gtq(s.referencePriceGtq)}</span>`:''}`;const fx=Math.max(.01,Number(s.importInfo?.fxRateGtq||7.65)),baseUsd=Number(s.importInfo?.basePriceUsd||0)||(Number(s.priceGtq||0)/fx),refUsd=Number(s.importInfo?.referencePriceUsd||0)||(Number(s.referencePriceGtq||0)/fx),clientGtq=Number(s.priceGtq||0)+Number(s.importInfo?.importIncludedGtq||s.importInfo?.customsTotalGtq||0);return `<div class="strong">${usd(baseUsd)}</div>${refUsd>0?`<span class="store-price-ref">${usd(refUsd)}</span>`:''}<div class="sub">Cliente: ${gtq(clientGtq)}</div>`})()}</td>
     <td>${esc(String(s.stock??0))}</td>
     <td><span class="pill ${s.active===false?'red':'green'}">${s.active===false?'Oculto':'Publicado'}</span></td>
     <td><a class="mini" href="venta.html?s=${encodeURIComponent(s.slug)}&return=admin-products">Abrir</a> <button class="mini" onclick="copyTempSaleUrl('${esc(s.slug)}',this)">Copiar URL</button></td>
@@ -2059,20 +2061,24 @@ window.openTempSaleEditor=function(slug=''){
   $('tempSaleLocation').value=savedIsUsa
     ?($('tempSaleImportStatus').value==='usa_stock'?'Estados Unidos':s.importInfo?.locationLabel||'Estados Unidos')
     :'Panajachel, Guatemala';
-  $('tempSaleCustomsTotal').value=s.importInfo?.customsBaseTotalGtq??s.importInfo?.customsTotalGtq??0;
+  const savedFxRate=Math.max(.01,Number(s.importInfo?.fxRateGtq||7.65)||7.65);
+  const savedBaseUsd=Math.max(0,Number(s.importInfo?.basePriceUsd||0)||(savedIsUsa?Number(s.priceGtq||0)/savedFxRate:0));
+  const savedReferenceUsd=Math.max(0,Number(s.importInfo?.referencePriceUsd||0)||(savedIsUsa?Number(s.referencePriceGtq||0)/savedFxRate:0));
+  $('tempSaleFxRate').value=Number(savedFxRate.toFixed(4));
+  $('tempSaleTaxPct').value=s.importInfo?.taxRatePct??8;
+  $('tempSaleCustomsPct').value=s.importInfo?.customsRatePct??12;
+  $('tempSaleFreightPct').value=s.importInfo?.freightRatePct??15;
   $('tempSaleCustomsReference').value=s.importInfo?.customsReference||'';
-  $('tempSaleCustomsSafetyPct').value=s.importInfo?.safetyPct??5;
-  $('tempSaleQuickboxDeliveryMode').value=s.importInfo?.quickboxDeliveryMode||'delivery';
-  $('tempSaleDeclaredValueGtq').value=s.importInfo?.declaredValueGtq??s.importInfo?.customsValuationGtq??0;
-  $('tempSaleFuelSurcharge').value=s.importInfo?.fuelSurchargeGtq??0;
-  setTempSaleImportLock(s.slug?(s.importInfo?.importCostLocked!==false):false);
-  updateCustomsProjection();
   $('tempSaleSubtitle').value=s.subtitle||'';
   $('tempSaleImage').value=s.imagePath||'img/product.png';
   if($('tempSaleImageFile'))$('tempSaleImageFile').value='';
   if($('tempSaleGalleryFiles'))$('tempSaleGalleryFiles').value='';
-  $('tempSalePrice').value=s.priceGtq||'';
-  $('tempSaleReferencePrice').value=s.referencePriceGtq||'';
+  $('tempSalePrice').value=savedIsUsa?(savedBaseUsd?Number(savedBaseUsd.toFixed(2)):''):(s.priceGtq||'');
+  $('tempSaleReferencePrice').value=savedIsUsa?(savedReferenceUsd?Number(savedReferenceUsd.toFixed(2)):''):(s.referencePriceGtq||'');
+  $('tempSalePrice').dataset.currency=savedIsUsa?'USD':'GTQ';
+  $('tempSaleReferencePrice').dataset.currency=savedIsUsa?'USD':'GTQ';
+  setTempSaleImportLock(s.slug?(s.importInfo?.importCostLocked!==false):false);
+  updateCustomsProjection();
   $('tempSaleStock').value=s.stock??1;
   $('tempSaleSortOrder').value=s.sortOrder??100;
   $('tempSaleCondition').value=s.condition||'';
@@ -2113,22 +2119,49 @@ window.toggleTempSaleImportLock=function(){
   setTempSaleImportLock(!tempSaleImportLocked);
   toast(tempSaleImportLocked?'Costos de importación bloqueados.':'Costos desbloqueados para edición.');
 }
-function updateCustomsProjection(){
-  const logistics=Math.max(0,Number($('tempSaleCustomsTotal')?.value||0));
-  const declared=Math.max(0,Number($('tempSaleDeclaredValueGtq')?.value||0));
-  const fuel=Math.max(0,Number($('tempSaleFuelSurcharge')?.value||0));
-  const iva=declared*.12;
-  const pct=Math.max(0,Number($('tempSaleCustomsSafetyPct')?.value||5));
-  const reserve=(logistics+fuel+iva)*(pct/100);
-  const importDelivery=$('tempSaleQuickboxDeliveryMode')?.value==='branch'?0:55;
-  const importTotal=logistics+fuel+iva+reserve+importDelivery;
-  const productPrice=Math.max(0,Number($('tempSalePrice')?.value||0));
-  if($('tempSaleCustomsIvaFixed'))$('tempSaleCustomsIvaFixed').value=gtq(iva);
-  if($('tempSaleCustomsProjected'))$('tempSaleCustomsProjected').value=gtq(importTotal);
-  if($('tempSaleFinalPrice'))$('tempSaleFinalPrice').value=gtq(productPrice+importTotal);
+function tempSaleUsaSelected(){
+  const status=$('tempSaleImportStatus')?.value||'available_gt';
+  return $('tempSaleOriginMarket')?.value==='usa'||['usa_stock','in_transit','customs','released'].includes(status);
 }
-['tempSaleCustomsTotal','tempSaleDeclaredValueGtq','tempSaleFuelSurcharge','tempSaleCustomsSafetyPct','tempSalePrice'].forEach(id=>$(id)?.addEventListener('input',updateCustomsProjection));
-$('tempSaleQuickboxDeliveryMode')?.addEventListener('change',updateCustomsProjection);
+function syncTempSaleCurrencyLabels(){
+  const usa=tempSaleUsaSelected(),desired=usa?'USD':'GTQ';
+  const fx=Math.max(.01,Number($('tempSaleFxRate')?.value||7.65));
+  const price=$('tempSalePrice'),reference=$('tempSaleReferencePrice');
+  const current=price?.dataset.currency||desired;
+  if(current!==desired){
+    const convert=v=>{const n=Number(v||0);if(!n)return '';return Number((desired==='USD'?n/fx:n*fx).toFixed(2));};
+    if(price)price.value=convert(price.value);
+    if(reference)reference.value=convert(reference.value);
+  }
+  if(price)price.dataset.currency=desired;
+  if(reference)reference.dataset.currency=desired;
+  if($('tempSalePriceLabel'))$('tempSalePriceLabel').textContent=usa?'Precio base USD':'Precio actual Q';
+  if($('tempSaleReferencePriceLabel'))$('tempSaleReferencePriceLabel').textContent=usa?'Precio de referencia USD':'Precio de referencia Q';
+  if(price)price.placeholder=usa?'Ej. 499.00':'Ej. 3999.00';
+  if(reference)reference.placeholder=usa?'Opcional · USD':'Opcional';
+}
+function updateCustomsProjection(){
+  syncTempSaleCurrencyLabels();
+  if(!tempSaleUsaSelected())return;
+  const baseUsd=Math.max(0,Number($('tempSalePrice')?.value||0));
+  const fxRate=Math.max(.01,Number($('tempSaleFxRate')?.value||7.65));
+  const taxPct=Math.max(0,Math.min(100,Number($('tempSaleTaxPct')?.value||0)));
+  const customsPct=Math.max(0,Math.min(100,Number($('tempSaleCustomsPct')?.value||0)));
+  const freightPct=Math.max(0,Math.min(100,Number($('tempSaleFreightPct')?.value||0)));
+  const taxUsd=baseUsd*taxPct/100;
+  const customsUsd=baseUsd*customsPct/100;
+  const freightUsd=baseUsd*freightPct/100;
+  const importUsd=taxUsd+customsUsd+freightUsd;
+  const finalUsd=baseUsd+importUsd;
+  const finalGtq=finalUsd*fxRate;
+  if($('tempSaleTaxUsd'))$('tempSaleTaxUsd').value=usd(taxUsd);
+  if($('tempSaleCustomsUsd'))$('tempSaleCustomsUsd').value=usd(customsUsd);
+  if($('tempSaleFreightUsd'))$('tempSaleFreightUsd').value=usd(freightUsd);
+  if($('tempSaleImportTotalUsd'))$('tempSaleImportTotalUsd').value=usd(importUsd);
+  if($('tempSaleFinalUsd'))$('tempSaleFinalUsd').value=usd(finalUsd);
+  if($('tempSaleFinalPrice'))$('tempSaleFinalPrice').value=gtq(finalGtq);
+}
+['tempSalePrice','tempSaleFxRate','tempSaleTaxPct','tempSaleCustomsPct','tempSaleFreightPct'].forEach(id=>$(id)?.addEventListener('input',updateCustomsProjection));
 
 function syncStoreImportFields(source='origin'){
   const status=$('tempSaleImportStatus')?.value||'available_gt';
@@ -2154,6 +2187,7 @@ function syncStoreImportFields(source='origin'){
   }
 
   $('tempSaleCustomsSection')?.classList.toggle('hidden',!usa);
+  syncTempSaleCurrencyLabels();
 
   if(usa){
     if($('tempSaleImportStatus').value==='available_gt')$('tempSaleImportStatus').value='usa_stock';
@@ -2192,6 +2226,7 @@ function syncStoreImportFields(source='origin'){
       :'';
     note.style.display=usa?'block':'none';
   }
+  updateCustomsProjection();
 }
 $('tempSaleOriginMarket')?.addEventListener('change',()=>syncStoreImportFields('origin'));
 $('tempSaleImportStatus')?.addEventListener('change',()=>syncStoreImportFields('status'));
@@ -2264,6 +2299,13 @@ window.saveTempSale=async function(){
   const btn=$('saveTempSaleBtn'),old=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
   try{
     const methods=[...document.querySelectorAll('#tempSaleMethods input[type=checkbox]:checked')].map(x=>x.value);
+    const usa=tempSaleUsaSelected();
+    const enteredPrice=Math.max(0,Number($('tempSalePrice').value||0));
+    const enteredReference=Math.max(0,Number($('tempSaleReferencePrice').value||0));
+    const fxRate=Math.max(.01,Number($('tempSaleFxRate')?.value||7.65));
+    const taxPct=Math.max(0,Math.min(100,Number($('tempSaleTaxPct')?.value||8)));
+    const customsPct=Math.max(0,Math.min(100,Number($('tempSaleCustomsPct')?.value||12)));
+    const freightPct=Math.max(0,Math.min(100,Number($('tempSaleFreightPct')?.value||15)));
     const payload={
       slug:$('tempSaleSlug').value.trim()||$('tempSaleTitle').value.trim(),
       title:$('tempSaleTitle').value.trim(),
@@ -2272,11 +2314,13 @@ window.saveTempSale=async function(){
       groupKey:$('tempSaleGroupKey').value.trim(),
       optionLabel:$('tempSaleOptionLabel').value.trim(),
       sourceInfo:{provider:'swappa',url:$('tempSaleSourceUrl').value.trim(),status:$('tempSaleSourceStatus').value},
-      importInfo:{originMarket:$('tempSaleOriginMarket').value,locationLabel:$('tempSaleLocation').value.trim(),status:$('tempSaleImportStatus').value,logisticsGtq:Number($('tempSaleCustomsTotal').value||0),customsBaseTotalGtq:Number($('tempSaleCustomsTotal').value||0),fuelSurchargeGtq:Number($('tempSaleFuelSurcharge').value||0),customsReference:$('tempSaleCustomsReference').value.trim(),safetyPct:Number($('tempSaleCustomsSafetyPct').value||5),quickboxDeliveryMode:$('tempSaleQuickboxDeliveryMode').value,declaredValueGtq:Number($('tempSaleDeclaredValueGtq').value||0),customsIvaRatePct:12,customsIvaEnabled:true,importCostLocked:tempSaleImportLocked},
+      importInfo:{originMarket:$('tempSaleOriginMarket').value,locationLabel:$('tempSaleLocation').value.trim(),status:$('tempSaleImportStatus').value,currency:usa?'USD':'GTQ',publicCurrency:'GTQ',basePriceUsd:usa?enteredPrice:0,referencePriceUsd:usa?enteredReference:0,fxRateGtq:usa?fxRate:0,taxRatePct:usa?taxPct:0,customsRatePct:usa?customsPct:0,freightRatePct:usa?freightPct:0,customsReference:$('tempSaleCustomsReference').value.trim(),importCostLocked:tempSaleImportLocked},
       subtitle:$('tempSaleSubtitle').value.trim(),
       imagePath:$('tempSaleImage').value.trim(),
-      priceGtq:Number($('tempSalePrice').value),
-      referencePriceGtq:Number($('tempSaleReferencePrice').value||0),
+      priceUsd:usa?enteredPrice:0,
+      referencePriceUsd:usa?enteredReference:0,
+      priceGtq:usa?Math.round(enteredPrice*fxRate*100)/100:enteredPrice,
+      referencePriceGtq:usa?Math.round(enteredReference*fxRate*100)/100:enteredReference,
       stock:Number($('tempSaleStock').value||0),
       sortOrder:Number($('tempSaleSortOrder').value||100),
       condition:$('tempSaleCondition').value.trim(),
