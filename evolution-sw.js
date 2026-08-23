@@ -1,5 +1,5 @@
 /* Evolution Design · Advanced App Shell Service Worker · v37.1 · View Recovery */
-const VERSION='evolution-smart-app-v50.33-apple-logo';
+const VERSION='evolution-smart-app-v50.34-android-splash';
 const APP_BUILD=49;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
@@ -10,7 +10,10 @@ const SHELL_FILES=[
   '/',
   '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html','/portafolio.html','/dispositivos.html',
   '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-presence.js','/evolution-sw.js',
-  '/img/logo.png','/manifest.webmanifest'
+  '/img/logo.png','/manifest.webmanifest',
+  '/img/evolution-android-any-v3-192.png','/img/evolution-android-any-v3-512.png',
+  '/img/evolution-android-maskable-v3-192.png','/img/evolution-android-maskable-v3-512.png',
+  '/img/evolution-launch-mark-v3.png'
 ];
 
 const VIEW_FILES=[
