@@ -971,8 +971,107 @@ html.admin-page-hidden *{
   }
 </style>
 
+
+<style id="evolution-admin-boss-welcome-v5041">
+/* =========================================================
+   v50.41 · ADMIN COMMAND CENTER · 8s AUTHORIZED WELCOME
+   ========================================================= */
+html.admin-boss-active,body.admin-boss-active{overflow:hidden!important;overscroll-behavior:none!important}
+.admin-boss-welcome{
+  position:fixed;inset:0;z-index:1000000;display:none;place-items:center;overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 44%,rgba(212,184,149,.105),transparent 25%),
+    radial-gradient(circle at 50% 80%,rgba(57,212,119,.035),transparent 28%),
+    #030303;
+  color:#f7f5f1;isolation:isolate;
+}
+.admin-boss-welcome.show{display:grid}
+.admin-boss-welcome::before{
+  content:"";position:absolute;inset:-25%;opacity:.46;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(212,184,149,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(212,184,149,.035) 1px,transparent 1px);
+  background-size:58px 58px;
+  transform:perspective(720px) rotateX(68deg) translateY(20%);
+  transform-origin:center 72%;
+  mask-image:linear-gradient(to bottom,transparent 6%,#000 36%,#000 70%,transparent 96%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent 6%,#000 36%,#000 70%,transparent 96%);
+  animation:adminBossGridV5041 8s linear both;
+}
+.admin-boss-welcome::after{
+  content:"";position:absolute;left:0;right:0;top:-18%;height:22%;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(212,184,149,.055),transparent);
+  filter:blur(8px);animation:adminBossScanV5041 4.2s .25s cubic-bezier(.25,.8,.25,1) both;
+}
+.admin-boss-orbit{position:absolute;left:50%;top:46%;width:min(62vw,620px);aspect-ratio:1;border:1px solid rgba(212,184,149,.08);border-radius:50%;transform:translate(-50%,-50%) scale(.72);opacity:0;animation:adminBossOrbitInV5041 1.3s .45s cubic-bezier(.16,1,.3,1) forwards}
+.admin-boss-orbit::before,.admin-boss-orbit::after{content:"";position:absolute;border-radius:50%;inset:12%;border:1px solid rgba(212,184,149,.065)}
+.admin-boss-orbit::after{inset:25%;border-color:rgba(212,184,149,.10);box-shadow:0 0 80px rgba(212,184,149,.035) inset}
+.admin-boss-core{position:relative;z-index:3;width:min(860px,calc(100vw - 34px));text-align:center;padding:30px 18px 38px}
+.admin-boss-security{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:21px;font-size:9px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#73e5a0;opacity:0;transform:translateY(8px);animation:adminBossRiseV5041 .6s .35s cubic-bezier(.16,1,.3,1) forwards}
+.admin-boss-security-dot{width:6px;height:6px;border-radius:50%;background:#57dd8d;box-shadow:0 0 0 6px rgba(57,212,119,.055),0 0 22px rgba(57,212,119,.65);animation:adminBossDotV5041 1.2s ease-in-out infinite}
+.admin-boss-mark{position:relative;width:106px;height:106px;margin:0 auto 18px;display:grid;place-items:center;opacity:0;transform:scale(.72);animation:adminBossMarkV5041 1s .7s cubic-bezier(.16,1,.3,1) forwards}
+.admin-boss-mark::before{content:"";position:absolute;inset:0;border-radius:34px;border:1px solid rgba(212,184,149,.18);background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(212,184,149,.018));box-shadow:0 22px 70px rgba(0,0,0,.5),0 0 55px rgba(212,184,149,.08),inset 0 1px rgba(255,255,255,.07);transform:rotate(45deg) scale(.72)}
+.admin-boss-mark img{position:relative;z-index:2;width:152px;height:auto;filter:brightness(1.28) contrast(1.05) drop-shadow(0 0 18px rgba(255,255,255,.08));pointer-events:none}
+.admin-boss-kicker{font-size:10px;font-weight:850;letter-spacing:.28em;text-transform:uppercase;color:#d5b78f;opacity:0;animation:adminBossRiseV5041 .65s 1.35s cubic-bezier(.16,1,.3,1) forwards}
+.admin-boss-title{margin:11px 0 0;font-size:clamp(44px,6vw,82px);line-height:.94;letter-spacing:-.062em;font-weight:800;opacity:0;transform:translateY(13px) scale(.985);animation:adminBossTitleV5041 .85s 1.65s cubic-bezier(.16,1,.3,1) forwards}
+.admin-boss-title span{background:linear-gradient(104deg,#fff 10%,#fff 38%,#d7bd99 70%,#f4e4cf 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.admin-boss-sub{margin:14px auto 0;max-width:600px;color:#8e8e95;font-size:12px;letter-spacing:.015em;opacity:0;animation:adminBossRiseV5041 .65s 2.15s cubic-bezier(.16,1,.3,1) forwards}
+.admin-boss-command{margin:25px auto 0;width:min(640px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:7px;opacity:0;transform:translateY(8px);animation:adminBossRiseV5041 .7s 2.75s cubic-bezier(.16,1,.3,1) forwards}
+.admin-boss-command div{position:relative;padding:10px 8px;border:1px solid rgba(255,255,255,.075);border-radius:11px;background:rgba(255,255,255,.022);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:8px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#8d8d94;overflow:hidden}
+.admin-boss-command div::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;margin-right:7px;vertical-align:1px;background:#4ed681;box-shadow:0 0 12px rgba(57,212,119,.65)}
+.admin-boss-command div::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent,rgba(255,255,255,.05),transparent);transform:translateX(-120%);animation:adminBossChipSweepV5041 1s 3.5s ease forwards}
+.admin-boss-footer{position:absolute;z-index:5;left:50%;bottom:max(34px,calc(20px + env(safe-area-inset-bottom)));width:min(520px,calc(100vw - 44px));transform:translateX(-50%);text-align:center;opacity:0;animation:adminBossRiseV5041 .65s 3.35s cubic-bezier(.16,1,.3,1) forwards}
+.admin-boss-footer-label{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;color:#6f6f76;font-size:7px;font-weight:800;letter-spacing:.21em;text-transform:uppercase}
+.admin-boss-footer-label strong{color:#c7aa86;font-weight:900}
+.admin-boss-track{height:2px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.018)}
+.admin-boss-progress{height:100%;width:0;background:linear-gradient(90deg,#8e7458,#d4b895,#f2dbc0);box-shadow:0 0 18px rgba(212,184,149,.48);animation:adminBossProgressV5041 4.35s 3.25s cubic-bezier(.22,.7,.22,1) forwards}
+.admin-boss-welcome.exit{animation:adminBossExitV5041 .72s 7.25s cubic-bezier(.5,0,.75,0) forwards}
+.admin-boss-welcome.exit .admin-boss-core{animation:adminBossCoreExitV5041 .65s 7.18s ease forwards}
+@keyframes adminBossGridV5041{0%{opacity:0;transform:perspective(720px) rotateX(68deg) translateY(23%)}15%,82%{opacity:.46}100%{opacity:0;transform:perspective(720px) rotateX(68deg) translateY(15%)}}
+@keyframes adminBossScanV5041{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(520%);opacity:0}}
+@keyframes adminBossOrbitInV5041{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes adminBossRiseV5041{to{opacity:1;transform:none}}
+@keyframes adminBossMarkV5041{to{opacity:1;transform:scale(1)}}
+@keyframes adminBossTitleV5041{to{opacity:1;transform:none}}
+@keyframes adminBossDotV5041{0%,100%{opacity:.7;transform:scale(.9)}50%{opacity:1;transform:scale(1.13)}}
+@keyframes adminBossChipSweepV5041{to{transform:translateX(120%)}}
+@keyframes adminBossProgressV5041{0%{width:0}18%{width:13%}42%{width:39%}65%{width:68%}82%{width:83%}100%{width:100%}}
+@keyframes adminBossCoreExitV5041{to{opacity:0;transform:translateY(-8px) scale(.985);filter:blur(5px)}}
+@keyframes adminBossExitV5041{to{opacity:0;visibility:hidden}}
+@media(max-width:700px){
+  .admin-boss-core{padding:18px 15px 90px}.admin-boss-orbit{width:min(112vw,520px);top:43%}
+  .admin-boss-mark{width:82px;height:82px;margin-bottom:16px}.admin-boss-mark img{width:124px}
+  .admin-boss-title{font-size:clamp(40px,13vw,62px)}.admin-boss-sub{font-size:10px;max-width:330px;line-height:1.55}
+  .admin-boss-command{grid-template-columns:1fr 1fr;width:min(340px,100%);margin-top:20px}.admin-boss-command div{padding:9px 7px;font-size:7px}
+  .admin-boss-footer{bottom:max(26px,calc(16px + env(safe-area-inset-bottom)))}
+}
+@media(max-height:650px){.admin-boss-mark{width:68px;height:68px;margin-bottom:9px}.admin-boss-mark img{width:104px}.admin-boss-title{font-size:40px}.admin-boss-sub{margin-top:9px}.admin-boss-command{margin-top:14px}.admin-boss-footer{bottom:17px}}
+@media(prefers-reduced-motion:reduce){
+  .admin-boss-welcome::before,.admin-boss-welcome::after,.admin-boss-welcome *{animation-duration:.01ms!important;animation-delay:0ms!important;animation-iteration-count:1!important}
+}
+</style>
+
 </head>
 <body>
+
+<div class="admin-boss-welcome" id="adminBossWelcome" aria-hidden="true">
+  <div class="admin-boss-orbit" aria-hidden="true"></div>
+  <div class="admin-boss-core" role="status" aria-live="polite">
+    <div class="admin-boss-security"><span class="admin-boss-security-dot"></span><span>Acceso autorizado · Nivel ejecutivo</span></div>
+    <div class="admin-boss-mark"><img src="img/logo.png" alt="" aria-hidden="true"></div>
+    <div class="admin-boss-kicker">Evolution Command Center</div>
+    <h1 class="admin-boss-title"><span>Bienvenido, jefe.</span></h1>
+    <div class="admin-boss-sub">Tu ecosistema está en línea. Control de operaciones, ventas, proyectos y clientes listo para entrar.</div>
+    <div class="admin-boss-command" aria-hidden="true">
+      <div>Ventas online</div><div>Proyectos listos</div><div>Clientes seguros</div><div>Visión global</div>
+    </div>
+  </div>
+  <div class="admin-boss-footer">
+    <div class="admin-boss-footer-label"><span>Sincronizando centro de mando</span><strong id="adminBossPercent">00%</strong></div>
+    <div class="admin-boss-track"><div class="admin-boss-progress"></div></div>
+  </div>
+</div>
+
 <div class="admin-shell" id="adminShell" style="visibility:hidden">
 <aside class="sidebar"><div class="brand"><img alt="Evolution Design" src="img/logo.png"/><div><strong style="font-size:12px">CONTROL</strong><small>Administration Suite</small></div><a aria-label="Volver al Home" class="admin-home-mobile" href="index.html" title="Volver al Home"><svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="18"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg></a></div><nav class="nav"><button class="active" data-view="dashboard"><span class="dot"></span>Dashboard</button><button data-view="visitors"><span class="dot"></span>Visitantes <span class="sub-count" id="presenceNavCount">0</span></button><button data-view="payments"><span class="dot"></span>Comprobantes <span class="payment-review-count zero" id="paymentReviewCount">0</span></button><button data-view="subscriptions"><span class="dot"></span>Suscripciones <span class="sub-count" id="subscriptionCount">0</span></button><button data-view="orders"><span class="dot"></span>Pedidos <span class="sub-count" id="storeOrderCount">0</span></button><button data-view="tempsales"><span class="dot"></span>Productos <span class="sub-count" id="tempSaleCount">0</span></button><button data-view="projects"><span class="dot"></span>Proyectos</button><button data-view="clients"><span class="dot"></span>Clientes</button><button data-view="webrequests"><span class="dot"></span>Solicitudes Web <span class="webreq-count" id="webRequestCount">0</span></button><button data-view="custom"><span class="dot"></span>Nueva orden</button></nav><div class="side-bottom"><div class="admin-user" id="adminEmail">—</div><a class="admin-home-side" href="index.html"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24" width="15"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Volver al Home</span></a><button class="logout" id="logoutBtn">Cerrar sesión</button></div></aside>
 <main class="main"><div class="system-alert" id="systemAlert"></div>
@@ -4411,8 +4510,39 @@ $('customOrderForm').onsubmit=async e=>{
   }catch(err){console.error(err);toast(err?.message?.replace(/^FirebaseError:\s*/,'')||'No se pudo crear la orden.');}
 };
 
+
+
+async function playAdminBossWelcome(user){
+  const overlay=$('adminBossWelcome');
+  if(!overlay)return;
+  const reduce=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches===true;
+  const duration=reduce?900:8000;
+  document.documentElement.classList.add('admin-boss-active');
+  document.body.classList.add('admin-boss-active');
+  overlay.classList.remove('exit');
+  overlay.classList.add('show');
+  overlay.setAttribute('aria-hidden','false');
+  const percent=$('adminBossPercent');
+  const started=performance.now();
+  let raf=0;
+  const tick=(now)=>{
+    const ratio=Math.max(0,Math.min(1,(now-started)/duration));
+    if(percent)percent.textContent=`${String(Math.round(ratio*100)).padStart(2,'0')}%`;
+    if(ratio<1)raf=requestAnimationFrame(tick);
+  };
+  raf=requestAnimationFrame(tick);
+  if(!reduce)setTimeout(()=>overlay.classList.add('exit'),7250);
+  await new Promise(resolve=>setTimeout(resolve,duration));
+  cancelAnimationFrame(raf);
+  if(percent)percent.textContent='100%';
+  overlay.classList.remove('show','exit');
+  overlay.setAttribute('aria-hidden','true');
+  document.documentElement.classList.remove('admin-boss-active');
+  document.body.classList.remove('admin-boss-active');
+}
+
 $('logoutBtn').onclick=async()=>{await signOut(auth);window.location.replace('index.html')};
-let authResolved=false;onAuthStateChanged(auth,async u=>{if(authResolved&&!u)return;authResolved=true;const email=String(u?.email||'').trim().toLowerCase();if(!u){window.location.replace('index.html');return}if(!ADMIN_EMAILS.has(email)){await signOut(auth).catch(()=>{});window.location.replace('index.html');return}$('adminEmail').textContent=u.email||u.uid;const adminShell=$('adminShell');adminShell.classList.add('admin-enter-v5031');adminShell.style.visibility='visible';setTimeout(()=>adminShell.classList.remove('admin-enter-v5031'),1200);await refresh();startPresenceAdminAutoRefresh();const requestedView=String(location.hash||'').replace(/^#/,'');const allowedViews=new Set(['dashboard','visitors','payments','subscriptions','orders','tempsales','projects','clients','webrequests','custom']);switchView(allowedViews.has(requestedView)?requestedView:'dashboard')});
+let authResolved=false;onAuthStateChanged(auth,async u=>{if(authResolved&&!u)return;authResolved=true;const email=String(u?.email||'').trim().toLowerCase();if(!u){window.location.replace('index.html');return}if(!ADMIN_EMAILS.has(email)){await signOut(auth).catch(()=>{});window.location.replace('index.html');return}$('adminEmail').textContent=u.email||u.uid;const adminShell=$('adminShell');const adminPreload=refresh().catch(e=>console.error('Admin preload',e));await playAdminBossWelcome(u);adminShell.classList.add('admin-enter-v5031');adminShell.style.visibility='visible';setTimeout(()=>adminShell.classList.remove('admin-enter-v5031'),1200);await adminPreload;startPresenceAdminAutoRefresh();const requestedView=String(location.hash||'').replace(/^#/,'');const allowedViews=new Set(['dashboard','visitors','payments','subscriptions','orders','tempsales','projects','clients','webrequests','custom']);switchView(allowedViews.has(requestedView)?requestedView:'dashboard')});
 </script>
 <script id="evolution-admin-performance-controller">
 (() => {
