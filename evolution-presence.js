@@ -6,8 +6,8 @@
   window.__EVOLUTION_PRESENCE_V1__=true;
 
   const WORKER='https://evolution-design-backend.evolutiongt01.workers.dev';
-  const PING_INTERVAL=30000;
-  const MIN_GAP=8000;
+  const PING_INTERVAL=5000;
+  const MIN_GAP=2500;
   const SESSION_TTL=30*60*1000;
   const VISITOR_KEY='evolution_presence_visitor_v1';
   const SESSION_KEY='evolution_presence_session_v1';
