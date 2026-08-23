@@ -1,5 +1,5 @@
-/* Evolution Design · Advanced App Shell Service Worker · v37.1 · View Recovery */
-const VERSION='evolution-smart-app-v50.37-graphic-modal-responsive';
+/* Evolution Design · Advanced App Shell Service Worker · v38 · reCAPTCHA badge UI fix */
+const VERSION='evolution-smart-app-v50.38-graphic-recaptcha-clean';
 const APP_BUILD=50;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
