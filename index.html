@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="Evolution Design">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="evolution-build" content="2026-08-18-smart-app-v48-1-ventas">
+<meta name="evolution-build" content="2026-08-23-web-welcome-v50.39">
 <title>Evolution Design</title>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="preload" href="/evolution-nav.js?v=48.1" as="script">
@@ -26,6 +26,54 @@
   #evolution-route-progress:before{content:"";position:absolute;inset:0;width:34%;background:#d4b895;box-shadow:0 0 14px rgba(212,184,149,.45);animation:evoShellProgress .7s ease-in-out infinite}
   @keyframes evoShellProgress{from{transform:translateX(-120%)}to{transform:translateX(390%)}}
   .evo-shell-noscript{min-height:100vh;display:grid;place-items:center;padding:30px;text-align:center;background:#050505;color:#fff}
+
+  /* ===== v50.39 · Web welcome intro · 7s ===== */
+  #evolution-web-welcome{
+    position:fixed;inset:0;z-index:2147483647;display:none;place-items:center;overflow:hidden;
+    background:#030303;color:#fff;isolation:isolate;opacity:1;transition:opacity .5s cubic-bezier(.22,.61,.36,1);
+  }
+  #evolution-web-welcome.evo-welcome-show{display:grid}
+  #evolution-web-welcome.evo-welcome-out{opacity:0;pointer-events:none}
+  #evolution-web-welcome::before{
+    content:"";position:absolute;inset:-18%;z-index:-3;
+    background:radial-gradient(circle at 50% 44%,rgba(212,184,149,.14),transparent 23%),
+               radial-gradient(circle at 50% 50%,rgba(255,255,255,.035),transparent 42%);
+    transform:scale(.84);animation:evoWelcomeAura 7s cubic-bezier(.16,1,.3,1) both;
+  }
+  #evolution-web-welcome::after{
+    content:"";position:absolute;left:50%;top:50%;width:min(78vw,760px);height:min(78vw,760px);
+    transform:translate(-50%,-50%);border-radius:50%;z-index:-2;opacity:.56;
+    background:repeating-radial-gradient(circle,transparent 0 68px,rgba(212,184,149,.045) 69px 70px);
+    -webkit-mask-image:radial-gradient(circle,#000 0 42%,transparent 72%);mask-image:radial-gradient(circle,#000 0 42%,transparent 72%);
+    animation:evoWelcomeOrbit 9s linear infinite;
+  }
+  .evo-welcome-core{width:min(720px,calc(100vw - 44px));text-align:center;display:grid;justify-items:center;position:relative}
+  .evo-welcome-mark-wrap{position:relative;width:132px;height:132px;display:grid;place-items:center;margin-bottom:28px}
+  .evo-welcome-mark-wrap::before,.evo-welcome-mark-wrap::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(212,184,149,.15);opacity:0;animation:evoWelcomeRing 3.4s .65s ease-out both}
+  .evo-welcome-mark-wrap::after{inset:-23px;animation-delay:1s;border-color:rgba(255,255,255,.055)}
+  .evo-welcome-mark{width:98px;height:98px;object-fit:contain;filter:drop-shadow(0 14px 38px rgba(212,184,149,.12));opacity:0;transform:scale(.72) translateY(8px);animation:evoWelcomeMark 1.25s .18s cubic-bezier(.16,1,.3,1) forwards}
+  .evo-welcome-eyebrow{font-size:10px;font-weight:800;letter-spacing:.32em;text-transform:uppercase;color:#bda689;opacity:0;transform:translateY(9px);animation:evoWelcomeCopy .8s 1.12s ease forwards}
+  .evo-welcome-title{margin:13px 0 0;font-size:clamp(34px,6vw,68px);line-height:.95;letter-spacing:-.065em;font-weight:760;opacity:0;transform:translateY(16px);animation:evoWelcomeCopy .95s 1.34s cubic-bezier(.16,1,.3,1) forwards}
+  .evo-welcome-title span{background:linear-gradient(100deg,#fff 8%,#e5d4bd 55%,#fff 92%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .evo-welcome-line{width:54px;height:1px;margin:24px 0 18px;background:linear-gradient(90deg,transparent,#d4b895,transparent);opacity:0;transform:scaleX(.2);animation:evoWelcomeLine .9s 1.85s ease forwards}
+  .evo-welcome-tagline{margin:0;color:#83838a;font-size:clamp(12px,1.8vw,15px);line-height:1.55;letter-spacing:.025em;opacity:0;animation:evoWelcomeCopy .75s 2.05s ease forwards}
+  .evo-welcome-progress{position:absolute;left:50%;bottom:max(34px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(240px,48vw);height:2px;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.06)}
+  .evo-welcome-progress span{display:block;width:100%;height:100%;transform-origin:left center;transform:scaleX(0);background:linear-gradient(90deg,#8d7355,#e1c7a7,#fff);box-shadow:0 0 16px rgba(212,184,149,.28);animation:evoWelcomeProgress 6.45s .25s cubic-bezier(.2,.65,.2,1) forwards}
+  .evo-welcome-caption{position:absolute;bottom:calc(max(34px,env(safe-area-inset-bottom)) + 15px);left:50%;transform:translateX(-50%);font-size:8px;font-weight:750;letter-spacing:.18em;text-transform:uppercase;color:#4d4d52;white-space:nowrap;opacity:0;animation:evoWelcomeCopy .6s 2.6s ease forwards}
+  @keyframes evoWelcomeMark{to{opacity:1;transform:none}}
+  @keyframes evoWelcomeCopy{to{opacity:1;transform:none}}
+  @keyframes evoWelcomeLine{to{opacity:1;transform:scaleX(1)}}
+  @keyframes evoWelcomeRing{0%{opacity:0;transform:scale(.5)}25%{opacity:.8}100%{opacity:0;transform:scale(1.45)}}
+  @keyframes evoWelcomeAura{0%{opacity:.35;transform:scale(.84)}55%{opacity:1;transform:scale(1)}100%{opacity:.55;transform:scale(1.06)}}
+  @keyframes evoWelcomeOrbit{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  @keyframes evoWelcomeProgress{to{transform:scaleX(1)}}
+  @media(max-width:600px){
+    .evo-welcome-mark-wrap{width:112px;height:112px;margin-bottom:22px}.evo-welcome-mark{width:84px;height:84px}
+    .evo-welcome-title{font-size:clamp(36px,12vw,54px)}.evo-welcome-tagline{font-size:12px}.evo-welcome-core{width:calc(100vw - 34px)}
+  }
+  @media(prefers-reduced-motion:reduce){
+    #evolution-web-welcome::before,#evolution-web-welcome::after,.evo-welcome-mark-wrap::before,.evo-welcome-mark-wrap::after,.evo-welcome-mark,.evo-welcome-eyebrow,.evo-welcome-title,.evo-welcome-line,.evo-welcome-tagline,.evo-welcome-progress span,.evo-welcome-caption{animation:none!important;opacity:1!important;transform:none!important}
+  }
   @media(prefers-reduced-motion:reduce){.evo-view-frame{transition:none!important;transform:none!important}#evolution-route-progress:before{animation:none!important;width:100%}}
 </style>
 <script src="/evolution-nav.js?v=48.1" defer></script>
@@ -33,10 +81,42 @@
 <script src="/evolution-presence.js?v=1" defer></script>
 </head>
 <body>
+
+<div id="evolution-web-welcome" aria-hidden="true">
+  <div class="evo-welcome-core">
+    <div class="evo-welcome-mark-wrap"><img class="evo-welcome-mark" src="/img/evolution-launch-mark-v3.png" alt=""></div>
+    <div class="evo-welcome-eyebrow">Bienvenido a</div>
+    <h1 class="evo-welcome-title"><span>Evolution Design</span></h1>
+    <div class="evo-welcome-line"></div>
+    <p class="evo-welcome-tagline">Diseñamos. Construimos. Evolucionamos.</p>
+  </div>
+  <div class="evo-welcome-caption">Preparando tu experiencia</div>
+  <div class="evo-welcome-progress" aria-hidden="true"><span></span></div>
+</div>
 <evolution-nav></evolution-nav>
 <div id="evolution-view-stage" aria-live="polite"></div>
 <div id="evolution-route-progress" aria-hidden="true"></div>
 <noscript><div class="evo-shell-noscript">Evolution Design necesita JavaScript para navegar entre sus secciones.</div></noscript>
+
+<script>
+(function(){
+  const rootPath=(location.pathname==="/"||location.pathname==="/index.html");
+  const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+  let already=false;
+  try{already=sessionStorage.getItem("evolution_web_welcome_v5039")==="1"}catch(_){ }
+  if(!rootPath||standalone||already)return;
+  const intro=document.getElementById("evolution-web-welcome");
+  if(!intro)return;
+  intro.classList.add("evo-welcome-show");
+  intro.setAttribute("aria-hidden","false");
+  try{sessionStorage.setItem("evolution_web_welcome_v5039","1")}catch(_){ }
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fadeAt=reduced?850:6500;
+  const removeAt=reduced?1300:7000;
+  setTimeout(()=>intro.classList.add("evo-welcome-out"),fadeAt);
+  setTimeout(()=>{intro.remove();},removeAt);
+})();
+</script>
 <script>
 if('serviceWorker' in navigator){
   addEventListener('load',()=>navigator.serviceWorker.register('/evolution-sw.js',{scope:'/',updateViaCache:'none'}).catch(console.warn),{once:true});
