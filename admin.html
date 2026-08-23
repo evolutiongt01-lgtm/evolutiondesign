@@ -972,9 +972,9 @@ html.admin-page-hidden *{
 </style>
 
 
-<style id="evolution-admin-boss-welcome-v5041">
+<style id="evolution-admin-boss-welcome-v5043">
 /* =========================================================
-   v50.41 · ADMIN COMMAND CENTER · 8s AUTHORIZED WELCOME
+   v50.43 · ADMIN COMMAND CENTER · MOBILE PROGRESS CENTER FIX
    ========================================================= */
 html.admin-boss-active,body.admin-boss-active{overflow:hidden!important;overscroll-behavior:none!important}
 .admin-boss-welcome{
@@ -1020,7 +1020,7 @@ html.admin-boss-active,body.admin-boss-active{overflow:hidden!important;overscro
 .admin-boss-command div{position:relative;padding:10px 8px;border:1px solid rgba(255,255,255,.075);border-radius:11px;background:rgba(255,255,255,.022);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:8px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#8d8d94;overflow:hidden}
 .admin-boss-command div::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;margin-right:7px;vertical-align:1px;background:#4ed681;box-shadow:0 0 12px rgba(57,212,119,.65)}
 .admin-boss-command div::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent,rgba(255,255,255,.05),transparent);transform:translateX(-120%);animation:adminBossChipSweepV5041 1s 3.5s ease forwards}
-.admin-boss-footer{position:absolute;z-index:5;left:50%;bottom:max(34px,calc(20px + env(safe-area-inset-bottom)));width:min(520px,calc(100vw - 44px));transform:translateX(-50%);text-align:center;opacity:0;animation:adminBossRiseV5041 .65s 3.35s cubic-bezier(.16,1,.3,1) forwards}
+.admin-boss-footer{position:absolute;z-index:5;left:50%;right:auto;bottom:max(34px,calc(20px + env(safe-area-inset-bottom)));width:min(520px,calc(100vw - 44px));margin:0;box-sizing:border-box;transform:translate3d(-50%,8px,0);text-align:center;opacity:0;animation:adminBossFooterRiseV5043 .65s 3.35s cubic-bezier(.16,1,.3,1) forwards}
 .admin-boss-footer-label{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;color:#6f6f76;font-size:7px;font-weight:800;letter-spacing:.21em;text-transform:uppercase}
 .admin-boss-footer-label strong{color:#c7aa86;font-weight:900}
 .admin-boss-track{height:2px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.018)}
@@ -1031,6 +1031,7 @@ html.admin-boss-active,body.admin-boss-active{overflow:hidden!important;overscro
 @keyframes adminBossScanV5041{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(520%);opacity:0}}
 @keyframes adminBossOrbitInV5041{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 @keyframes adminBossRiseV5041{to{opacity:1;transform:none}}
+@keyframes adminBossFooterRiseV5043{from{opacity:0;transform:translate3d(-50%,8px,0)}to{opacity:1;transform:translate3d(-50%,0,0)}}
 @keyframes adminBossMarkV5041{to{opacity:1;transform:scale(1)}}
 @keyframes adminBossTitleV5041{to{opacity:1;transform:none}}
 @keyframes adminBossDotV5041{0%,100%{opacity:.7;transform:scale(.9)}50%{opacity:1;transform:scale(1.13)}}
@@ -1043,7 +1044,7 @@ html.admin-boss-active,body.admin-boss-active{overflow:hidden!important;overscro
   .admin-boss-mark{width:82px;height:82px;margin-bottom:16px}.admin-boss-mark img{width:124px}
   .admin-boss-title{font-size:clamp(40px,13vw,62px)}.admin-boss-sub{font-size:10px;max-width:330px;line-height:1.55}
   .admin-boss-command{grid-template-columns:1fr 1fr;width:min(340px,100%);margin-top:20px}.admin-boss-command div{padding:9px 7px;font-size:7px}
-  .admin-boss-footer{bottom:max(26px,calc(16px + env(safe-area-inset-bottom)))}
+  .admin-boss-footer{left:50%;right:auto;width:min(520px,calc(100vw - 32px));bottom:max(26px,calc(16px + env(safe-area-inset-bottom)));transform:translate3d(-50%,0,0)}
 }
 @media(max-height:650px){.admin-boss-mark{width:68px;height:68px;margin-bottom:9px}.admin-boss-mark img{width:104px}.admin-boss-title{font-size:40px}.admin-boss-sub{margin-top:9px}.admin-boss-command{margin-top:14px}.admin-boss-footer{bottom:17px}}
 @media(prefers-reduced-motion:reduce){
