@@ -780,6 +780,19 @@
       height:24px;
     }
 
+    /* v50.33 · Apple mark: optical sizing inside the install pill.
+       The Apple glyph leaves more empty space in its 24x24 viewBox than
+       Android/Windows, so it looked noticeably smaller even at equal CSS size. */
+    .evolution-platform-apple > .platform-logo {
+      width:30px;
+      height:30px;
+      flex:0 0 30px;
+      margin-left:-2px;
+      margin-right:1px;
+      transform:translateY(-1px);
+      transform-origin:center;
+    }
+
     .android-logo {
       color:#a4d65e;
     }
@@ -837,6 +850,15 @@
       .platform-logo-wrap .platform-logo {
         width:21px;
         height:21px;
+      }
+
+      .evolution-platform-apple > .platform-logo {
+        width:27px;
+        height:27px;
+        flex-basis:27px;
+        margin-left:-2px;
+        margin-right:0;
+        transform:translateY(-1px);
       }
 
       .platform-btn-copy small {
