@@ -1,6 +1,6 @@
 /* Evolution Design · Advanced App Shell Service Worker · v37.1 · View Recovery */
-const VERSION='evolution-smart-app-v48-1-ventas';
-const APP_BUILD=48;
+const VERSION='evolution-smart-app-v49-presence';
+const APP_BUILD=49;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
@@ -9,7 +9,7 @@ const IMAGES=`${VERSION}-images`;
 const SHELL_FILES=[
   '/',
   '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html','/portafolio.html','/dispositivos.html',
-  '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-sw.js',
+  '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-presence.js','/evolution-sw.js',
   '/img/logo.png','/manifest.webmanifest'
 ];
 
@@ -37,6 +37,7 @@ const isStatic=p=>
   p==='/evolution-nav.js'||
   p==='/evolution-app.js'||
   p==='/evolution-payments.js'||
+  p==='/evolution-presence.js'||
   p==='/manifest.webmanifest'||
   p.startsWith('/css/')||
   p.startsWith('/js/')||
