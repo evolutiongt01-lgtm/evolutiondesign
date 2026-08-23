@@ -2147,26 +2147,6 @@ body.gd-modal-open{overflow:hidden}
 html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile-app-nav{display:none!important}
 </style>
 
-<style id="evolution-recaptcha-badge-ui-fix-v25">
-  .grecaptcha-badge{
-    visibility:hidden !important;
-  }
-  .evolution-recaptcha-disclosure{
-    margin:18px auto 8px;
-    padding:0 14px;
-    max-width:760px;
-    color:rgba(255,255,255,.34);
-    font:500 10px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    text-align:center;
-  }
-  .evolution-recaptcha-disclosure a{
-    color:inherit;
-    text-decoration:underline;
-    text-underline-offset:2px;
-  }
-</style>
-
-
 <style id="evolution-graphic-modal-mobile-safearea-v46">
   /* ==========================================================
      V46 · MODALES MÓVILES SEGUROS BAJO LA NAV PERSISTENTE
@@ -2356,21 +2336,170 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
   }
 </style>
 
+<script src="/evolution-presence.js?v=1" defer></script>
 
-<style id="evo-graphic-shell-clearance-v5010">
-:root{--evo-shell-mobile-nav-bottom:142px}
-@media(max-width:991.98px){
-  .graphic-hero{
-    padding-top:calc(var(--evo-shell-mobile-nav-bottom) + 22px)!important;
+<style id="evolution-graphic-modal-layout-v5037">
+  /* v50.37 · Brief / pago / login de Diseño Gráfico siempre debajo de la nav */
+  :root{
+    --evo-graphic-modal-top:96px;
+    --evo-graphic-modal-bottom:14px;
+    --evo-graphic-modal-side:18px;
   }
-  /* Compatibilidad con bloques hero antiguos que todavía viven en la vista. */
-  .hero:not(.graphic-hero){
-    scroll-margin-top:calc(var(--evo-shell-mobile-nav-bottom) + 12px)!important;
+
+  .gd-order-modal,
+  .login-modal-overlay{
+    top:var(--evo-graphic-modal-top)!important;
+    right:0!important;
+    bottom:var(--evo-graphic-modal-bottom)!important;
+    left:0!important;
+    height:auto!important;
+    min-height:0!important;
+    padding:10px var(--evo-graphic-modal-side)!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
   }
-}
+
+  .gd-order-dialog{
+    width:min(980px,100%)!important;
+    height:auto!important;
+    max-height:100%!important;
+    min-height:0!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior-y:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-gutter:stable!important;
+  }
+
+  .gd-order-close{
+    top:10px!important;
+    right:10px!important;
+    z-index:90!important;
+    width:44px!important;
+    height:44px!important;
+    min-width:44px!important;
+    min-height:44px!important;
+    margin:10px 10px -54px 0!important;
+    display:grid!important;
+    place-items:center!important;
+    border:1px solid rgba(255,255,255,.18)!important;
+    background:rgba(10,10,12,.88)!important;
+    color:#fff!important;
+    box-shadow:0 12px 30px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.12)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(165%)!important;
+    backdrop-filter:blur(18px) saturate(165%)!important;
+  }
+
+  .gd-order-head,
+  .gd-order-form,
+  .gd-pay-panel,
+  .gd-pay-success{
+    min-width:0!important;
+  }
+
+  .login-card{
+    width:min(430px,100%)!important;
+    max-height:100%!important;
+    overflow-y:auto!important;
+    overscroll-behavior-y:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-gutter:stable!important;
+  }
+
+  .close-modal{
+    z-index:90!important;
+  }
+
+  @media (min-width:1200px){
+    :root{
+      --evo-graphic-modal-top:98px;
+      --evo-graphic-modal-bottom:16px;
+      --evo-graphic-modal-side:22px;
+    }
+  }
+
+  /* Tablet: la nav móvil ocupa más alto que en teléfono. */
+  @media (min-width:576px) and (max-width:991.98px){
+    :root{
+      --evo-graphic-modal-top:calc(116px + env(safe-area-inset-top,0px));
+      --evo-graphic-modal-bottom:max(10px,env(safe-area-inset-bottom,0px));
+      --evo-graphic-modal-side:14px;
+    }
+    .gd-order-modal,
+    .login-modal-overlay{
+      padding-top:8px!important;
+    }
+    .gd-order-dialog{
+      width:min(900px,100%)!important;
+      border-radius:24px!important;
+    }
+    .gd-order-head{padding:28px 26px 23px!important}
+    .gd-order-form,.gd-pay-panel{padding-left:26px!important;padding-right:26px!important}
+  }
+
+  /* Teléfonos: usa toda la zona útil sin meterse debajo de la nav. */
+  @media (max-width:575.98px){
+    :root{
+      --evo-graphic-modal-top:calc(114px + env(safe-area-inset-top,0px));
+      --evo-graphic-modal-bottom:max(8px,env(safe-area-inset-bottom,0px));
+      --evo-graphic-modal-side:8px;
+    }
+    .gd-order-modal,
+    .login-modal-overlay{
+      padding:6px var(--evo-graphic-modal-side)!important;
+      align-items:stretch!important;
+    }
+    .gd-order-dialog{
+      width:100%!important;
+      height:100%!important;
+      max-height:100%!important;
+      border-radius:18px!important;
+    }
+    .gd-order-close{
+      top:8px!important;
+      right:8px!important;
+      width:40px!important;
+      height:40px!important;
+      min-width:40px!important;
+      min-height:40px!important;
+      margin:8px 8px -48px 0!important;
+    }
+    .gd-order-head{
+      padding:48px 16px 20px!important;
+      gap:12px!important;
+    }
+    .gd-order-head h2{font-size:clamp(1.85rem,9vw,2.7rem)!important}
+    .gd-order-form,
+    .gd-pay-panel{
+      padding-left:16px!important;
+      padding-right:16px!important;
+      padding-bottom:calc(22px + env(safe-area-inset-bottom,0px))!important;
+    }
+    .gd-continue-pay,
+    .gd-manual-submit{
+      min-height:48px!important;
+    }
+    .gd-payment-tabs{grid-template-columns:1fr!important}
+    .login-card{
+      align-self:center!important;
+      padding:24px 18px!important;
+      border-radius:22px!important;
+    }
+  }
+
+  /* Pantallas muy bajas / teléfono horizontal. */
+  @media (max-height:680px){
+    :root{--evo-graphic-modal-bottom:6px}
+    .gd-order-modal,.login-modal-overlay{padding-top:5px!important;padding-bottom:5px!important}
+    .gd-order-head{padding-top:48px!important;padding-bottom:18px!important}
+    .gd-order-form,.gd-pay-panel{padding-top:20px!important}
+  }
 </style>
+
 </head>
 <body data-evolution-view="grafico" class="graphic-page">
+<!-- Evolution View Bridge Fix V25 · internal CTA/hash links stay inside Diseño Gráfico -->
 <div id="evolution-view-auth-mirror" hidden aria-hidden="true">
   <div id="auth-desktop-wrapper"></div>
   <div id="auth-mobile-wrapper"></div>
@@ -2385,8 +2514,8 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
 <script id="evolution-view-bridge">
 (() => {
   'use strict';
-  const MAIN=['/','/index','/arquitectura','/diseno-grafico','/diseno-web','/portafolio'];
-  const clean=value=>{try{const u=new URL(value,location.href);let p=u.pathname.replace(/\/+$/,'').replace(/\.html$/,'').toLowerCase();const last=p.split('/').pop()||'';if(!p||p==='/')return '/';if(['index','arquitectura','diseno-grafico','diseno-web','portafolio'].includes(last))return '/'+last;return p}catch(_){return ''}};
+  const MAIN=['/','/index','/arquitectura','/diseno-grafico','/diseno-web'];
+  const clean=value=>{try{const u=new URL(value,location.href);let p=u.pathname.replace(/\/+$/,'').replace(/\.html$/,'').toLowerCase();const last=p.split('/').pop()||'';if(!p||p==='/')return '/';if(['index','arquitectura','diseno-grafico','diseno-web'].includes(last))return '/'+last;return p}catch(_){return ''}};
   const main=value=>MAIN.includes(clean(value));
   const send=(type,data={})=>{try{parent.postMessage({type,...data},location.origin)}catch(_){}};
 
@@ -2394,20 +2523,12 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
     if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
     const a=e.target instanceof Element?e.target.closest('a[href]'):null;
     if(!a||a.target==='_blank'||a.hasAttribute('download'))return;
-    /* V47: con <base href="/"> un href="#seccion" resolvería a /#seccion
-       y el App Shell lo interpretaría como Home. Los hashes locales se
-       entregan al padre usando la vista activa como contexto. */
-    const rawHref=(a.getAttribute('href')||'').trim();
-    if(rawHref==='#'){
-      e.preventDefault();
-      return;
-    }
-    if(rawHref.startsWith('#')){
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      send('evolution:navigate',{href:rawHref});
-      return;
-    }
+
+    /* V25: Los CTA internos de Diseño Gráfico usan href="#" y su propio
+       onclick (abrirPedidoDiseno / Logo / Video). Nunca deben pasar al
+       router del App Shell. También deja intactos los hashes internos. */
+    const rawHref=String(a.getAttribute('href')||'').trim();
+    if(!rawHref||rawHref==='#'||rawHref.startsWith('#'))return;
 
     let u;try{u=new URL(a.href,location.href)}catch(_){return}
     if(u.origin!==location.origin)return;
@@ -4455,50 +4576,5 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
 })();
 </script>
 
-
-<div class="evolution-recaptcha-disclosure" data-evolution-recaptcha-disclosure>
-  Este sitio está protegido por reCAPTCHA y se aplican la
-  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad</a>
-  y los
-  <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Términos de Servicio</a>
-  de Google.
-</div>
-
-
-<script id="evo-mobile-nav-clearance-fix">
-(()=>{
-  const root=document.documentElement;
-  let ro=null, tries=0;
-  const setValue=v=>root.style.setProperty('--evo-shell-mobile-nav-bottom',`${Math.max(0,Math.ceil(v||0))}px`);
-  const measure=()=>{
-    if(innerWidth>991.98){setValue(0);return true}
-    if(window.parent===window){setValue(0);return true}
-    try{
-      const nav=window.parent.document.querySelector('evolution-nav .evo-mobile');
-      if(!nav){return false}
-      const cs=window.parent.getComputedStyle(nav);
-      if(cs.display==='none'||cs.visibility==='hidden'){setValue(0);return true}
-      const rect=nav.getBoundingClientRect();
-      if(rect.bottom>0){
-        setValue(rect.bottom);
-        if('ResizeObserver' in window.parent && !ro){
-          ro=new window.parent.ResizeObserver(()=>requestAnimationFrame(measure));
-          ro.observe(nav);
-        }
-        return true;
-      }
-    }catch(_){ }
-    return false;
-  };
-  const boot=()=>{
-    if(measure())return;
-    if(tries++<90)requestAnimationFrame(boot);
-  };
-  boot();
-  addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true});
-  addEventListener('orientationchange',()=>setTimeout(measure,120),{passive:true});
-  try{window.parent.addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true})}catch(_){ }
-})();
-</script>
 </body>
 </html>
