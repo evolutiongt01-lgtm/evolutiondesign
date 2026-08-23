@@ -1,6 +1,6 @@
 /* Evolution Design · Advanced App Shell Service Worker · v37.1 · View Recovery */
-const VERSION='evolution-smart-app-v50.35-web-plan-app-admin';
-const APP_BUILD=49;
+const VERSION='evolution-smart-app-v50.36-web-plan-modal-responsive';
+const APP_BUILD=50;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
