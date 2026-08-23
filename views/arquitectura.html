@@ -663,6 +663,10 @@
         padding-left: 15px;
         padding-right: 15px;
         scroll-padding-left: 15px;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        touch-action: pan-x pan-y;
+        scroll-snap-stop: normal;
       }
       .service-card {
         flex-basis: min(84vw, 330px);
@@ -1849,7 +1853,7 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
 <a class="text-white text-decoration-none small fw-medium d-inline-flex align-items-center gap-1" href="#visualizacion" style="opacity: 0.8;">Ver todos los servicios →</a>
 </div>
 </div>
-<div class="services-scroll-container" data-aos="fade-up">
+<div class="services-scroll-container" data-aos="fade-up" data-no-swipe="true" data-evo-horizontal-carousel="services">
 <div class="service-card"><video class="service-card-video" data-evolution-smart-video="1" loop="" muted="" playsinline="" preload="none" src="vid/servicio-3d.mp4"></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Visualización 3D</h5><p class="text-secondary small mb-4">Renders fotorrealistas que muestran cada detalle antes de construir.</p></div><a class="text-white text-decoration-none small d-flex align-items-center gap-1" href="#visualizacion" style="opacity: 0.7;">→</a></div></div>
 <div class="service-card"><video class="service-card-video" data-evolution-smart-video="1" loop="" muted="" playsinline="" preload="none" src="vid/servicio-2d.mp4"></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Planos 2D</h5><p class="text-secondary small mb-4">Planos arquitectónicos precisos y listos para construcción.</p></div><a class="text-white text-decoration-none small d-flex align-items-center gap-1" href="#servicios-tecnicos" style="opacity: 0.7;">→</a></div></div>
 <div class="service-card"><video class="service-card-video" data-evolution-smart-video="1" loop="" muted="" playsinline="" preload="none" src="vid/servicio-recorrido.mp4"></video><div class="service-card-body"><div><h5 class="text-white fw-bold mb-2 fs-6">Recorridos Virtuales</h5><p class="text-secondary small mb-4">Experiencias inmersivas que permiten recorrer tu proyecto en 360°.</p></div><a class="text-white text-decoration-none small d-flex align-items-center gap-1" href="#visualizacion" style="opacity: 0.7;">→</a></div></div>
