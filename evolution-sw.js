@@ -1,5 +1,5 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.41 · admin command center welcome */
-const VERSION='evolution-smart-app-v50.41-admin-command-welcome';
+/* Evolution Design · Advanced App Shell Service Worker · v50.42 · global login recovery */
+const VERSION='evolution-smart-app-v50.42-login-recovery';
 const APP_BUILD=50;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;

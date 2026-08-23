@@ -248,22 +248,24 @@
           ? appModule.getApp()
           : appModule.initializeApp(FIREBASE_CONFIG);
 
-        try{
-          shellAuth=authModule.initializeAuth(firebaseApp,{
-            persistence:[
-              authModule.indexedDBLocalPersistence,
-              authModule.browserLocalPersistence
-            ]
-          });
-        }catch(error){
-          /* Si otra integración del Shell ya inicializó Auth, reutilízala
-             y fuerza una persistencia LOCAL. Nunca SESSION. */
-          shellAuth=authModule.getAuth(firebaseApp);
+        /* v50.42 · AUTH RECOVERY
+           getAuth() es más tolerante cuando Firebase ya fue inicializado por
+           otra parte del Shell. La persistencia se intenta en cascada, pero
+           un fallo de IndexedDB/localStorage ya NO mata el inicio de sesión. */
+        shellAuth=authModule.getAuth(firebaseApp);
 
+        let persistenceApplied=false;
+        for(const persistence of [
+          authModule.indexedDBLocalPersistence,
+          authModule.browserLocalPersistence,
+          authModule.inMemoryPersistence
+        ]){
+          if(!persistence||persistenceApplied)continue;
           try{
-            await authModule.setPersistence(shellAuth,authModule.indexedDBLocalPersistence);
-          }catch(indexedDBError){
-            await authModule.setPersistence(shellAuth,authModule.browserLocalPersistence);
+            await authModule.setPersistence(shellAuth,persistence);
+            persistenceApplied=true;
+          }catch(error){
+            console.warn('Evolution Auth persistence fallback:',error?.code||error?.message||error);
           }
         }
 
@@ -280,17 +282,17 @@
         window.EvolutionShellAuth={
           get currentUser(){return shellAuth?.currentUser||null},
           async signInGoogle(){
-            if(!shellAuth||!shellAuthModule)throw new Error('AUTH_NOT_READY');
+            if(!shellAuth||!shellAuthModule){const error=new Error('AUTH_NOT_READY');error.code='AUTH_NOT_READY';throw error}
             const provider=new shellAuthModule.GoogleAuthProvider();
             provider.setCustomParameters({prompt:'select_account'});
             return shellAuthModule.signInWithPopup(shellAuth,provider);
           },
           async signInEmail(email,password){
-            if(!shellAuth||!shellAuthModule)throw new Error('AUTH_NOT_READY');
+            if(!shellAuth||!shellAuthModule){const error=new Error('AUTH_NOT_READY');error.code='AUTH_NOT_READY';throw error}
             return shellAuthModule.signInWithEmailAndPassword(shellAuth,String(email||'').trim(),String(password||''));
           },
           async signUpEmail(email,password){
-            if(!shellAuth||!shellAuthModule)throw new Error('AUTH_NOT_READY');
+            if(!shellAuth||!shellAuthModule){const error=new Error('AUTH_NOT_READY');error.code='AUTH_NOT_READY';throw error}
             return shellAuthModule.createUserWithEmailAndPassword(shellAuth,String(email||'').trim(),String(password||''));
           },
           async signOut(){
@@ -305,8 +307,13 @@
 
         return shellAuth;
       }catch(error){
-        console.warn('Evolution Shell Auth:',error?.code||error);
-        return null;
+        /* Permite que el siguiente intento vuelva a inicializar Firebase.
+           Antes shellAuthReady quedaba resuelta en null para toda la pestaña. */
+        console.warn('Evolution Shell Auth:',error?.code||error?.message||error);
+        shellAuth=null;
+        shellAuthModule=null;
+        shellAuthReady=null;
+        throw error;
       }
     })();
 
@@ -332,7 +339,12 @@
       'auth/popup-closed-by-user':'Cerraste la ventana de Google antes de terminar.',
       'auth/popup-blocked':'Chrome bloqueó la ventana de Google. Permite pop-ups e inténtalo otra vez.',
       'auth/cancelled-popup-request':'Ya hay una ventana de acceso abierta.',
-      'AUTH_NOT_READY':'Firebase todavía está iniciando. Inténtalo nuevamente.'
+      'auth/network-request-failed':'No pudimos conectar con Firebase. Revisa tu conexión e inténtalo nuevamente.',
+      'auth/too-many-requests':'Firebase bloqueó temporalmente nuevos intentos por seguridad. Espera un momento e inténtalo de nuevo.',
+      'auth/user-disabled':'Esta cuenta está deshabilitada.',
+      'auth/operation-not-allowed':'Este método de inicio de sesión no está habilitado en Firebase.',
+      'auth/internal-error':'Firebase tuvo un error temporal. Inténtalo nuevamente.',
+      'AUTH_NOT_READY':'Firebase todavía está iniciando. Inténtalo nuevamente.' 
     };
     return map[code]||'No pudimos iniciar sesión. Inténtalo nuevamente.';
   };
@@ -423,7 +435,9 @@
       btn.disabled=true;btn.textContent='Abriendo Google…';
       try{
         await initShellAuth();
-        await window.EvolutionShellAuth.signInGoogle();
+        const authApi=window.EvolutionShellAuth;
+        if(!authApi){const error=new Error('AUTH_NOT_READY');error.code='AUTH_NOT_READY';throw error}
+        await authApi.signInGoogle();
         close();
       }catch(error){
         console.warn('Evolution Google Login:',error?.code||error);
@@ -439,8 +453,10 @@
       submit.disabled=true;submit.textContent=globalAuthMode==='signup'?'Creando…':'Ingresando…';
       try{
         await initShellAuth();
-        if(globalAuthMode==='signup')await window.EvolutionShellAuth.signUpEmail(email,pass);
-        else await window.EvolutionShellAuth.signInEmail(email,pass);
+        const authApi=window.EvolutionShellAuth;
+        if(!authApi){const error=new Error('AUTH_NOT_READY');error.code='AUTH_NOT_READY';throw error}
+        if(globalAuthMode==='signup')await authApi.signUpEmail(email,pass);
+        else await authApi.signInEmail(email,pass);
         close();
       }catch(error){
         console.warn('Evolution Email Login:',error?.code||error);
