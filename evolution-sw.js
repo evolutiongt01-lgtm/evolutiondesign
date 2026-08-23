@@ -1,5 +1,5 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.39 · web welcome intro */
-const VERSION='evolution-smart-app-v50.39-web-welcome';
+/* Evolution Design · Advanced App Shell Service Worker · v50.40 · centered welcome progress caption */
+const VERSION='evolution-smart-app-v50.40-welcome-caption-center';
 const APP_BUILD=50;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
