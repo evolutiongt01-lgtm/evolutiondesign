@@ -2497,6 +2497,26 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
   }
 </style>
 
+
+<style id="evolution-recaptcha-badge-ui-fix-v38">
+  .grecaptcha-badge{
+    visibility:hidden !important;
+  }
+  .evolution-recaptcha-disclosure{
+    margin:18px auto 8px;
+    padding:0 14px calc(10px + env(safe-area-inset-bottom,0px));
+    max-width:760px;
+    color:rgba(255,255,255,.34);
+    font:500 10px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    text-align:center;
+  }
+  .evolution-recaptcha-disclosure a{
+    color:inherit;
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+</style>
+
 </head>
 <body data-evolution-view="grafico" class="graphic-page">
 <!-- Evolution View Bridge Fix V25 · internal CTA/hash links stay inside Diseño Gráfico -->
@@ -4575,6 +4595,15 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
   }, { once:true });
 })();
 </script>
+
+
+<div class="evolution-recaptcha-disclosure" data-evolution-recaptcha-disclosure>
+  Este sitio está protegido por reCAPTCHA y se aplican la
+  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad</a>
+  y los
+  <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Términos de Servicio</a>
+  de Google.
+</div>
 
 </body>
 </html>
