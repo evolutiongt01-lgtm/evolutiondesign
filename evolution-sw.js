@@ -1,5 +1,5 @@
 /* Evolution Design · Advanced App Shell Service Worker · v37.1 · View Recovery */
-const VERSION='evolution-smart-app-v49-presence';
+const VERSION='evolution-smart-app-v50.30-services-carousel';
 const APP_BUILD=49;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
