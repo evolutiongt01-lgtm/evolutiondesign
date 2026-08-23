@@ -4,7 +4,7 @@
 <head>
 <!-- Evolution Admin · Boxful V3.9.15 · official quoter flow + delete/release -->
 <meta charset="utf-8"/>
-<meta content="2026-08-22-presence-globe-v1" name="evolution-build"/>
+<meta content="2026-08-22-admin-products-v50.31" name="evolution-build"/>
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <meta content="#050505" name="theme-color"/>
 <title>Evolution Design · Admin</title>
@@ -539,6 +539,51 @@
 .presence-live-auto{color:#70e19a!important;border-color:rgba(57,212,119,.22)!important;background:rgba(57,212,119,.055)!important;cursor:default!important;opacity:1!important;animation:evoLivePulse 1.8s ease-in-out infinite}
 @keyframes evoLivePulse{0%,100%{box-shadow:0 0 0 0 rgba(57,212,119,0)}50%{box-shadow:0 0 0 5px rgba(57,212,119,.055)}}.presence-list{max-height:330px;overflow:auto;padding:8px}.presence-person{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border-radius:12px;border:1px solid transparent}.presence-person:hover{background:rgba(255,255,255,.022);border-color:rgba(212,184,149,.08)}.presence-avatar{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:rgba(212,184,149,.07);border:1px solid rgba(212,184,149,.15);font-size:17px}.presence-copy{min-width:0}.presence-copy b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.presence-copy small{display:block;color:#777780;font-size:9px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.presence-person-time{text-align:right}.presence-person-time b{display:block;font-size:9px;color:#bdbdc2}.presence-person-time small{display:block;font-size:8px;color:#6f6f77;margin-top:3px}.presence-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}.presence-toolbar .search{min-width:220px}.presence-online{color:#65df93;font-weight:700}.presence-recent{color:#888891}.presence-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#777784;font-size:9px}.presence-access{display:inline-flex;padding:4px 7px;border-radius:999px;border:1px solid var(--line);font-size:8px;font-weight:700}.presence-access.app{color:#6fe3a0;border-color:rgba(57,212,119,.17);background:rgba(57,212,119,.04)}.presence-access.web{color:#a6a6ad}.presence-privacy{padding:11px 13px;margin-top:10px;border:1px solid rgba(212,184,149,.11);border-radius:12px;background:rgba(212,184,149,.025);font-size:9px;color:#777780;line-height:1.55}.presence-empty{padding:28px;text-align:center;color:#777780;font-size:10px}
 @media(max-width:1000px){.presence-layout{grid-template-columns:1fr}.presence-globe{border-right:0;border-bottom:1px solid var(--soft);min-height:320px}.presence-globe-stage{width:min(72%,310px)}}@media(max-width:800px){.presence-metrics{grid-template-columns:1fr 1fr}.presence-layout{border-radius:15px}.presence-globe{min-height:250px}.presence-globe-stage{width:min(72%,230px)}.presence-side-head{padding:13px}.presence-list{max-height:290px}.presence-person{grid-template-columns:34px minmax(0,1fr)}.presence-avatar{width:33px;height:33px}.presence-person-time{display:none}}
+
+
+
+/* =========================================================
+   v50.31 · PRODUCT MANAGER SCROLL + ADMIN ENTRANCE
+   ========================================================= */
+#view-tempsales .store-manager-panel .panel-body{min-height:0}
+#view-tempsales .store-manager-panel .table-wrap{
+  max-height:min(68dvh,760px);
+  overflow:auto;
+  overscroll-behavior-x:contain;
+  overscroll-behavior-y:auto;
+  touch-action:pan-x pan-y;
+  scrollbar-gutter:stable both-edges;
+}
+#view-tempsales .store-manager-panel .table-wrap::-webkit-scrollbar{width:9px;height:9px}
+#view-tempsales .store-manager-panel .table-wrap::-webkit-scrollbar-thumb{background:rgba(212,184,149,.24);border:2px solid rgba(10,10,11,.85);border-radius:999px}
+#view-tempsales .store-manager-panel .table-wrap::-webkit-scrollbar-track{background:rgba(255,255,255,.018)}
+
+/* Entrada premium: solo al autorizar el panel, no en cada cambio de sección. */
+#adminShell.admin-enter-v5031 .sidebar{animation:adminSidebarEnterV5031 .58s cubic-bezier(.16,1,.3,1) both}
+#adminShell.admin-enter-v5031 .main{animation:adminMainEnterV5031 .68s .06s cubic-bezier(.16,1,.3,1) both}
+#adminShell.admin-enter-v5031 .brand{animation:adminBrandEnterV5031 .72s .10s cubic-bezier(.16,1,.3,1) both}
+#adminShell.admin-enter-v5031 .topbar{animation:adminTopEnterV5031 .62s .14s cubic-bezier(.16,1,.3,1) both}
+#adminShell.admin-enter-v5031 .nav button{animation:adminNavEnterV5031 .46s cubic-bezier(.16,1,.3,1) both}
+#adminShell.admin-enter-v5031 .nav button:nth-child(1){animation-delay:.10s}
+#adminShell.admin-enter-v5031 .nav button:nth-child(2){animation-delay:.13s}
+#adminShell.admin-enter-v5031 .nav button:nth-child(3){animation-delay:.16s}
+#adminShell.admin-enter-v5031 .nav button:nth-child(4){animation-delay:.19s}
+#adminShell.admin-enter-v5031 .nav button:nth-child(5){animation-delay:.22s}
+#adminShell.admin-enter-v5031 .nav button:nth-child(6){animation-delay:.25s}
+#adminShell.admin-enter-v5031 .nav button:nth-child(n+7){animation-delay:.28s}
+@keyframes adminSidebarEnterV5031{from{opacity:0;transform:translate3d(-18px,0,0)}to{opacity:1;transform:none}}
+@keyframes adminMainEnterV5031{from{opacity:0;transform:translate3d(0,14px,0);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+@keyframes adminBrandEnterV5031{from{opacity:0;transform:translate3d(0,-7px,0) scale(.97)}to{opacity:1;transform:none}}
+@keyframes adminTopEnterV5031{from{opacity:0;transform:translate3d(0,-8px,0)}to{opacity:1;transform:none}}
+@keyframes adminNavEnterV5031{from{opacity:0;transform:translate3d(-8px,0,0)}to{opacity:1;transform:none}}
+@media(max-width:800px){
+  #view-tempsales .store-manager-panel .table-wrap{max-height:58dvh;overscroll-behavior-y:auto!important;touch-action:pan-x pan-y!important}
+  #adminShell.admin-enter-v5031 .sidebar{animation-duration:.46s}
+  #adminShell.admin-enter-v5031 .main{animation-duration:.56s;filter:none}
+}
+@media(prefers-reduced-motion:reduce){
+  #adminShell.admin-enter-v5031 .sidebar,#adminShell.admin-enter-v5031 .main,#adminShell.admin-enter-v5031 .brand,#adminShell.admin-enter-v5031 .topbar,#adminShell.admin-enter-v5031 .nav button{animation:none!important}
+}
 
 </style>
 <style id="evolution-admin-performance">
@@ -2319,11 +2364,14 @@ window.markTempSaleSold=async function(slug=""){
   if(Number(sale.stock||0)<=0){toast("Este producto ya está marcado como vendido.");return}
   if(!confirm(`¿Marcar “${sale.title||sale.slug}” como VENDIDO? Quedará visible como agotado y ya no podrá comprarse.`))return;
   try{
-    const payload={...sale,stock:0,badge:"Vendido",featured:false,active:true};
-    const result=await storeAdminRequest("/store/sales/admin",{method:"POST",body:payload});
+    // v50.31: no reenviamos el producto completo. Los registros antiguos pueden
+    // contener campos legacy que ya no pasan el validador actual aunque stock sea válido.
+    const result=await storeAdminRequest("/store/sales/admin/sold",{method:"POST",body:{slug:sale.slug}});
     toast("Producto marcado como VENDIDO ✓");
     if($("tempSaleModal")?.classList.contains("show"))closeTempSaleEditor();
-    await refresh();switchView("tempsales");
+    data.tempSales=await loadTemporarySalesAdmin();
+    renderTemporarySales();
+    switchView("tempsales");
     return result;
   }catch(e){console.error(e);toast(e.message||"No se pudo marcar como vendido.")}
 }
@@ -4364,7 +4412,7 @@ $('customOrderForm').onsubmit=async e=>{
 };
 
 $('logoutBtn').onclick=async()=>{await signOut(auth);window.location.replace('index.html')};
-let authResolved=false;onAuthStateChanged(auth,async u=>{if(authResolved&&!u)return;authResolved=true;const email=String(u?.email||'').trim().toLowerCase();if(!u){window.location.replace('index.html');return}if(!ADMIN_EMAILS.has(email)){await signOut(auth).catch(()=>{});window.location.replace('index.html');return}$('adminEmail').textContent=u.email||u.uid;$('adminShell').style.visibility='visible';await refresh();startPresenceAdminAutoRefresh();const requestedView=String(location.hash||'').replace(/^#/,'');const allowedViews=new Set(['dashboard','visitors','payments','subscriptions','orders','tempsales','projects','clients','webrequests','custom']);switchView(allowedViews.has(requestedView)?requestedView:'dashboard')});
+let authResolved=false;onAuthStateChanged(auth,async u=>{if(authResolved&&!u)return;authResolved=true;const email=String(u?.email||'').trim().toLowerCase();if(!u){window.location.replace('index.html');return}if(!ADMIN_EMAILS.has(email)){await signOut(auth).catch(()=>{});window.location.replace('index.html');return}$('adminEmail').textContent=u.email||u.uid;const adminShell=$('adminShell');adminShell.classList.add('admin-enter-v5031');adminShell.style.visibility='visible';setTimeout(()=>adminShell.classList.remove('admin-enter-v5031'),1200);await refresh();startPresenceAdminAutoRefresh();const requestedView=String(location.hash||'').replace(/^#/,'');const allowedViews=new Set(['dashboard','visitors','payments','subscriptions','orders','tempsales','projects','clients','webrequests','custom']);switchView(allowedViews.has(requestedView)?requestedView:'dashboard')});
 </script>
 <script id="evolution-admin-performance-controller">
 (() => {
