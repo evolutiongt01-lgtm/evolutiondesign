@@ -1,5 +1,5 @@
 /* Evolution Design · Advanced App Shell Service Worker · v37.1 · View Recovery */
-const VERSION='evolution-smart-app-v50.34-android-splash';
+const VERSION='evolution-smart-app-v50.35-web-plan-app-admin';
 const APP_BUILD=49;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
