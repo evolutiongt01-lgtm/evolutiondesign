@@ -102,6 +102,7 @@
     .evo-mobile .evo-logo img{height:27px;max-width:128px}
     .evo-mobile .evo-icon{width:40px;height:40px;min-width:40px;border-color:rgba(255,255,255,.18);background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.065));box-shadow:0 12px 30px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.30),inset 0 -10px 20px rgba(255,255,255,.04);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%)}
     #mobileMenuBtn{border-color:rgba(255,255,255,.22);background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.07));box-shadow:0 14px 34px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.34),inset 0 -12px 22px rgba(255,255,255,.05)}
+    #mobileMenuBtn:focus,#mobileMenuBtn:focus-visible,#mobileMenuBtn[aria-expanded="true"]{outline:none!important;border-color:rgba(212,184,149,.48)!important;background:linear-gradient(180deg,rgba(212,184,149,.22),rgba(255,255,255,.065))!important;color:#fff!important;box-shadow:0 14px 34px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.26)!important}
     #mobileMenuBtn svg{stroke-width:1.9}
     #auth-mobile-wrapper{min-width:40px;display:flex;align-items:center;justify-content:flex-end;gap:7px}
     .evo-mobile-auth{display:flex;align-items:center;gap:7px}
