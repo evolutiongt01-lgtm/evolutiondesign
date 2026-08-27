@@ -14,7 +14,7 @@
 <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
 <link href="//www.gstatic.com" rel="dns-prefetch"/>
 <!-- SDK DE AWS v2 (Tanque de guerra para Cloudflare R2 en navegadores) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1390.0/aws-sdk.min.js"></script>
+<script src="/evolution-project-files.js?v=1"></script>
 <style>
 @font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-v12-latin-regular.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-v12-latin-500.woff2') format('woff2')}@font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-v12-latin-700.woff2') format('woff2')}
 :root{--bg:#050505;--panel:#0d0d0e;--panel2:#121213;--line:rgba(255,255,255,.09);--soft:rgba(255,255,255,.055);--text:#f6f6f3;--muted:#8c8c92;--accent:#d4b895;--accent2:#e4c9a7;--green:#39d477;--red:#ff6673;--yellow:#e9bc65;--radius:18px}*{box-sizing:border-box}html{background:#050505;color-scheme:dark}body{margin:0;background:radial-gradient(circle at 30% -10%,rgba(212,184,149,.08),transparent 32%),#050505;color:var(--text);font-family:Inter,system-ui,sans-serif;min-height:100vh}button,input,select,textarea{font:inherit}.hidden{display:none!important}
@@ -1839,28 +1839,12 @@ import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase
 import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {getFirestore,collection,collectionGroup,getDocs,doc,getDoc,setDoc,updateDoc,deleteDoc,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// CREDENCIALES DE CLOUDFLARE R2
-const R2_ACCOUNT_ID = "d94e264f8a09f87496e21e72bd3731aa";
-const R2_ACCESS_KEY_ID = "ea76378ab014694c3f387477de604782"; 
-const R2_SECRET_ACCESS_KEY = "cf9a573453b35a875f4adb07c88374f942047b9ae9e358c3a3c11a629a0af4f6"; 
-const R2_BUCKET_NAME = "evolution-design-files";
 const EVOLUTION_BACKEND_URL = "https://evolution-design-backend.evolutiongt01.workers.dev";
-
-let s3 = null;
-if (window.AWS) {
-  window.AWS.config.update({
-    accessKeyId: R2_ACCESS_KEY_ID,
-    secretAccessKey: R2_SECRET_ACCESS_KEY,
-    region: 'auto',
-    signatureVersion: 'v4'
-  });
-  s3 = new window.AWS.S3({
-    endpoint: new window.AWS.Endpoint(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`)
-  });
-}
 
 const cfg={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
 const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
+window.__evolutionProjectFilesAuth=auth;
+const projectFiles=window.EvolutionProjectFiles;
 const ADMIN_EMAILS=new Set(['evolutiongt01@gmail.com','tepaz2025@gmail.com']);
 let data={metrics:{},clients:[],projects:[],countries:[],webRequests:[],subscriptions:[],orders:[]},selected=null,selectedWebRequest=null,selectedSubscription=null,selectedStoreOrder=null;
 let pendingClientAdminFiles=[];
@@ -3065,16 +3049,16 @@ async function renderPaymentProof(){
   const details=[['Método',selected.paymentMethod||selected.paymentProvider||'Pago manual'],['Monto esperado',paymentExpectedText(selected)],['Referencia',selected.manualPaymentReference||selected.transactionId||'—'],['Banco',selected.bankName||selected.bankKey||'—'],['Archivo',selected.receiptName||'Comprobante'],['Enviado',niceDateTime(selected.paymentSubmittedAt||selected.createdAt)],...(String(selected.clientPaymentComment||'').trim()?[['Mensaje del cliente',selected.clientPaymentComment]]:[])];
   $('paymentProofDetails').innerHTML=details.map(x=>`<div class="payment-proof-detail"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');
   const preview=$('paymentReceiptPreview');preview.innerHTML='<div class="payment-receipt-empty"><strong>Cargando comprobante…</strong>Preparando vista previa.</div>';
-  if(!s3){preview.innerHTML='<div class="payment-receipt-empty"><strong>R2 no disponible</strong>Usa la descarga cuando la conexión esté disponible.</div>';return}
+  if(!projectFiles){preview.innerHTML='<div class="payment-receipt-empty"><strong>Archivos no disponibles</strong>Usa la descarga cuando la conexión esté disponible.</div>';return}
   try{
-    const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:selected.receiptStoragePath,Expires:300}),type=String(selected.receiptContentType||'').toLowerCase(),name=String(selected.receiptName||'').toLowerCase();
+    const url=await projectFiles.objectURL(selected.receiptStoragePath),type=String(selected.receiptContentType||'').toLowerCase(),name=String(selected.receiptName||'').toLowerCase();
     if(type.startsWith('image/')||/\.(png|jpe?g|webp|gif|avif|bmp)$/i.test(name))preview.innerHTML=`<img src="${esc(url)}" alt="Comprobante de pago" loading="lazy" decoding="async">`;
     else if(type==='application/pdf'||name.endsWith('.pdf'))preview.innerHTML=`<iframe src="${esc(url)}#toolbar=0&navpanes=0" title="Comprobante PDF" loading="lazy"></iframe>`;
     else preview.innerHTML='<div class="payment-receipt-empty"><strong>Vista previa no disponible</strong>Usa “Ver comprobante” o “Descargar archivo”.</div>';
   }catch(e){console.error(e);preview.innerHTML='<div class="payment-receipt-empty"><strong>No se pudo mostrar</strong>Usa el botón de descarga.</div>'}
   if($('approvePaymentBtn'))$('approvePaymentBtn').disabled=state==='approved';
 }
-window.openPaymentReceipt=function(download=false){if(!selected||!hasPaymentReceipt(selected)){toast('Este proyecto no tiene comprobante.');return}if(!s3){toast('No hay conexión a R2.');return}try{const params={Bucket:R2_BUCKET_NAME,Key:selected.receiptStoragePath,Expires:300};if(download)params.ResponseContentDisposition=`attachment; filename="${String(selected.receiptName||'comprobante').replace(/"/g,'')}"`;const url=s3.getSignedUrl('getObject',params);if(download){const a=document.createElement('a');a.href=url;a.download=selected.receiptName||'comprobante';document.body.appendChild(a);a.click();a.remove()}else window.open(url,'_blank','noopener,noreferrer')}catch(e){console.error(e);toast('No se pudo abrir el comprobante.')}}
+window.openPaymentReceipt=async function(download=false){if(!selected||!hasPaymentReceipt(selected)){toast('Este proyecto no tiene comprobante.');return}if(!projectFiles){toast('No hay conexión al servidor de archivos.');return}try{if(download){await projectFiles.download(selected.receiptStoragePath,selected.receiptName||'comprobante');return}const url=await projectFiles.objectURL(selected.receiptStoragePath);window.open(url,'_blank','noopener,noreferrer');setTimeout(()=>URL.revokeObjectURL(url),60000)}catch(e){console.error(e);toast('No se pudo abrir el comprobante.')}}
 window.approveManualPayment=async function(){
   if(!selected||!hasPaymentReceipt(selected))return;
   const refText=selected.manualPaymentReference||selected.transactionId||'sin referencia';
@@ -3576,8 +3560,8 @@ function renderPaymentPreviewAdmin(){
     const count=Math.max(0,Number(selected.clientPreviewViewCount??selected.paymentPreviewViewCount??0));
     meta.textContent=`${selected.clientPreviewName||selected.paymentPreviewName||'Muestra del trabajo'}${(selected.clientPreviewSize||selected.paymentPreviewSize)?` · ${bytes(selected.clientPreviewSize||selected.paymentPreviewSize)}`:''} · ${notified?'VISIBLE PARA EL CLIENTE':'PREPARADA · NO NOTIFICADA'} · ${viewedText}${count?` · ${count} vista${count===1?'':'s'}`:''}`;
   }
-  if(!s3){view.innerHTML='<div class="payment-preview-empty">Muestra guardada. La vista previa requiere conexión a R2.</div>';return;}
-  try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:path,Expires:900});view.innerHTML=`<img src="${esc(url)}" alt="Muestra del trabajo" loading="lazy" decoding="async"><span class="payment-preview-watermark">MUESTRA · EVOLUTION DESIGN</span>`;}catch(e){console.error(e);view.innerHTML='<div class="payment-preview-empty">No se pudo cargar la muestra.</div>';}
+  if(!projectFiles){view.innerHTML='<div class="payment-preview-empty">Muestra guardada. La vista previa requiere conexión.</div>';return;}
+  projectFiles.objectURL(path).then(url=>{view.innerHTML=`<img src="${esc(url)}" alt="Muestra del trabajo" loading="lazy" decoding="async"><span class="payment-preview-watermark">MUESTRA · EVOLUTION DESIGN</span>`;}).catch(e=>{console.error(e);view.innerHTML='<div class="payment-preview-empty">No se pudo cargar la muestra.</div>';});
 }
 window.uploadPaymentPreview=async function(){
   if(!selected)return;
@@ -3585,15 +3569,16 @@ window.uploadPaymentPreview=async function(){
   if(!file){toast('Selecciona la imagen de muestra.');return;}
   if(!paymentPreviewIsImage(file)){toast('La muestra debe ser JPG, PNG, WEBP o AVIF.');return;}
   if(file.size>50*1024*1024){toast('La muestra supera el máximo de 50 MB.');return;}
-  if(!s3){toast('No hay conexión a Cloudflare R2.');return;}
+  if(!projectFiles){toast('No hay conexión al servidor de archivos.');return;}
   const btn=$('paymentPreviewUploadBtn'),oldPath=adminPreviewPath(selected);
   try{
     if(btn){btn.disabled=true;btn.textContent='Subiendo muestra…';}
-    const fileId=newFileId(),safeName=safeR2Name(file.name||'muestra.jpg'),path=`projects/${selected.ownerUid}/${selected.id}/client-preview/${fileId}/${safeName}`;
-    await s3.putObject({Bucket:R2_BUCKET_NAME,Key:path,Body:file,ContentType:file.type||'image/jpeg'}).promise();
+    const fileId=newFileId(),safeName=safeR2Name(file.name||'muestra.jpg');
+    const uploaded=await projectFiles.upload({ownerUid:selected.ownerUid,projectId:selected.id,folder:'client-preview',fileId,file});
+    const path=uploaded.storagePath;
     const patch={clientPreviewStoragePath:path,clientPreviewName:file.name||safeName,clientPreviewContentType:file.type||'image/jpeg',clientPreviewSize:Number(file.size||0),clientPreviewUpdatedAt:serverTimestamp(),paymentPreviewStoragePath:path,paymentPreviewName:file.name||safeName,paymentPreviewContentType:file.type||'image/jpeg',paymentPreviewSize:Number(file.size||0),paymentPreviewUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()};
     await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);
-    if(oldPath&&oldPath!==path){try{await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:oldPath}).promise();}catch(e){console.info('La muestra anterior no pudo eliminarse de R2:',e);}}
+    if(oldPath&&oldPath!==path){try{await projectFiles.remove(oldPath);}catch(e){console.info('La muestra anterior no pudo eliminarse de R2:',e);}}
     Object.assign(selected,{...patch,clientPreviewStoragePath:path,clientPreviewName:file.name||safeName,clientPreviewSize:Number(file.size||0)});if(input)input.value='';renderWorkCompletionAdmin();toast(adminPreviewPublished(selected)?'Muestra reemplazada. El cliente verá la nueva versión.':'Muestra preparada. Pulsa “Notificar al cliente” para mostrarla.');
   }catch(e){console.error(e);toast(e?.message||'No se pudo subir la muestra.');}
   finally{if(btn){btn.disabled=false;btn.textContent='Subir / reemplazar muestra';}}
@@ -3604,7 +3589,7 @@ window.deletePaymentPreview=async function(){
   const btn=$('paymentPreviewRemoveBtn');
   try{
     if(btn){btn.disabled=true;btn.textContent='Quitando…';}
-    if(s3){try{await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:path}).promise();}catch(e){console.info('No se pudo borrar la muestra de R2:',e);}}
+    if(projectFiles){try{await projectFiles.remove(path);}catch(e){console.info('No se pudo borrar la muestra de R2:',e);}}
     const patch={clientPreviewStoragePath:'',clientPreviewName:'',clientPreviewContentType:'',clientPreviewSize:0,clientPreviewPublished:false,clientPreviewUpdatedAt:serverTimestamp(),paymentPreviewStoragePath:'',paymentPreviewName:'',paymentPreviewContentType:'',paymentPreviewSize:0,paymentPreviewUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()};
     await updateDoc(doc(db,'users',selected.ownerUid,'projects',selected.id),patch);Object.assign(selected,patch);renderWorkCompletionAdmin();toast('Muestra eliminada. La entrega final sigue intacta.');
   }catch(e){console.error(e);toast(e?.message||'No se pudo quitar la muestra.');}
@@ -3829,14 +3814,9 @@ function fileHTML(f,role){
   return `<div class="file">${icon}<div class="file-info"><div class="file-name">${esc(f.label||f.name)}</div><div class="file-meta">${bytes(f.size)} · ${role==='client'?(f.uploadedByAdmin?'Añadido por administración':'Cliente'):'Evolution Design'}${f.source==='admin_whatsapp'?' · WhatsApp':''}</div>${accessMarkup}${activityMarkup}</div><div class="file-actions"><button class="mini" onclick="downloadR2File('${esc(f.storagePath)}','${esc(f.label||f.name)}',this)">Descargar</button><button class="mini delete" onclick="deleteR2File('${esc(f.fileId||f.id)}','${role}','${esc(f.storagePath)}')">Eliminar</button></div></div>`;
 }
 function loadR2PreviewImage(img){
-  if(!s3||!img||img.dataset.loaded==='1')return;
+  if(!projectFiles||!img||img.dataset.loaded==='1')return;
   img.dataset.loaded='1';
-  try{
-    const url=s3.getSignedUrl('getObject',{
-      Bucket:R2_BUCKET_NAME,
-      Key:img.dataset.storagePath,
-      Expires:3600
-    });
+  projectFiles.objectURL(img.dataset.storagePath).then(url=>{
     img.src=url;
     img.onload=()=>img.classList.add('ready');
     img.onerror=()=>{
@@ -3846,14 +3826,14 @@ function loadR2PreviewImage(img){
         box.textContent=img.dataset.fallback||'IMG';
       }
     };
-  }catch(e){
+  }).catch(e=>{
     console.info('Vista previa no disponible:',e);
     const box=img.parentElement;
     if(box){
       box.classList.remove('has-preview');
       box.textContent=img.dataset.fallback||'IMG';
     }
-  }
+  });
 }
 const adminPreviewObserver='IntersectionObserver' in window
   ?new IntersectionObserver(entries=>{
@@ -3865,7 +3845,7 @@ const adminPreviewObserver='IntersectionObserver' in window
     },{rootMargin:'180px 0px',threshold:.01})
   :null;
 async function hydrateImagePreviews(root){
-  if(!s3||!root)return;
+  if(!projectFiles||!root)return;
   const imgs=[...root.querySelectorAll('.file-preview-img[data-storage-path]')];
   imgs.forEach(img=>{
     if(img.dataset.loaded==='1'||img.dataset.previewObserved==='1')return;
@@ -3965,19 +3945,12 @@ async function loadFiles(){if(!selected)return;try{clearPreviewObjectUrls();cons
 // === LÓGICA DE CLOUDFLARE R2 PARA DESCARGAR ARCHIVOS ===
 window.downloadR2File = async function(storagePath, fileName, btn) {
   if(!selected) return;
-  if(!s3) { toast('Error de conexión a R2.'); return; }
+  if(!projectFiles) { toast('Error de conexión al servidor de archivos.'); return; }
   if(!storagePath || storagePath === 'undefined') { toast('Ruta no válida en la base de datos.'); return; }
 
   const old = btn.textContent; btn.disabled = true; btn.textContent = 'Abriendo...';
   try {
-      const url = s3.getSignedUrl('getObject', {
-          Bucket: R2_BUCKET_NAME,
-          Key: storagePath,
-          Expires: 300,
-          ResponseContentDisposition: `attachment; filename="${fileName}"`
-      });
-      const a = document.createElement('a'); a.href = url; a.download = fileName;
-      document.body.appendChild(a); a.click(); a.remove();
+      await projectFiles.download(storagePath,fileName);
   } catch (e) {
       console.error("Error al descargar de R2:", e);
       toast('No se pudo descargar de Cloudflare R2.');
@@ -3990,8 +3963,8 @@ window.downloadR2File = async function(storagePath, fileName, btn) {
 window.deleteR2File = async function(fileId, role, storagePath) {
   if(!selected||!confirm('¿Eliminar definitivamente este archivo de Cloudflare R2 y el registro en Firebase?')) return;
   try {
-      if(storagePath && storagePath !== 'undefined' && s3) {
-          await s3.deleteObject({ Bucket: R2_BUCKET_NAME, Key: storagePath }).promise().catch(e=>console.log('Error borrando en R2:', e));
+      if(storagePath && storagePath !== 'undefined' && projectFiles) {
+          await projectFiles.remove(storagePath).catch(e=>console.log('Error borrando en R2:', e));
       }
       const col=role==='delivery'?'deliveryFiles':'clientFiles';
       const fRef=doc(db,'users',selected.ownerUid,'projects',selected.id,col,fileId);
@@ -4258,27 +4231,15 @@ function resetPendingFiles(kind){
 
 async function uploadR2ProjectFile({file,role,label,source,onProgress}){
   if(!selected)throw new Error('No hay proyecto seleccionado.');
-  if(!s3)throw new Error('No hay conexión a Cloudflare R2.');
+  if(!projectFiles)throw new Error('No hay conexión al servidor de archivos.');
   if(!file)throw new Error('Archivo inválido.');
   if(file.size>500*1024*1024)throw new Error(`${file.name}: supera el máximo de 500 MB.`);
 
   const fileId=newFileId();
   const safeName=safeR2Name(file.name);
   const folder=role==='delivery'?'delivery':'client';
-  const path=`projects/${selected.ownerUid}/${selected.id}/${folder}/${fileId}/${safeName}`;
-
-  const request=s3.putObject({
-    Bucket:R2_BUCKET_NAME,
-    Key:path,
-    Body:file,
-    ContentType:file.type||'application/octet-stream'
-  });
-
-  request.on('httpUploadProgress',p=>{
-    if(p.total>0 && onProgress)onProgress(p.loaded,p.total);
-  });
-
-  await request.promise();
+  const uploaded=await projectFiles.upload({ownerUid:selected.ownerUid,projectId:selected.id,folder,fileId,file,onProgress});
+  const path=uploaded.storagePath;
 
   const collectionName=role==='delivery'?'deliveryFiles':'clientFiles';
   const payload={
@@ -4467,21 +4428,7 @@ window.deleteProject=async function(){
   if(!selected||!confirm('Esto eliminará el proyecto y todos sus archivos en R2 y Firebase. ¿Continuar?'))return;
   if(prompt('Escribe ELIMINAR para confirmar')!=='ELIMINAR')return;
   try{
-    if (s3) {
-      let isTruncated = true;
-      let token = undefined;
-      const prefix = `projects/${selected.ownerUid}/${selected.id}/`;
-      while(isTruncated) {
-          const list = await s3.listObjectsV2({ Bucket: R2_BUCKET_NAME, Prefix: prefix, ContinuationToken: token }).promise();
-          if(list.Contents) {
-              for(const item of list.Contents) {
-                  await s3.deleteObject({ Bucket: R2_BUCKET_NAME, Key: item.Key }).promise();
-              }
-          }
-          isTruncated = list.IsTruncated;
-          token = list.NextContinuationToken;
-      }
-    }
+    if(projectFiles)await projectFiles.removeProject(selected.ownerUid,selected.id);
     
     for(const sub of ['clientFiles','deliveryFiles','deliveryLinks']){const snap=await getDocs(collection(db,'users',selected.ownerUid,'projects',selected.id,sub));for(const d of snap.docs)await deleteDoc(d.ref)}
     await deleteDoc(doc(db,'users',selected.ownerUid,'projects',selected.id));

@@ -9,7 +9,7 @@ const IMAGES=`${VERSION}-images`;
 const SHELL_FILES=[
   '/',
   '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html','/portafolio.html','/dispositivos.html',
-  '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-presence.js','/evolution-sw.js',
+  '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-project-files.js','/evolution-presence.js','/evolution-sw.js',
   '/img/logo.png','/manifest.webmanifest',
   '/img/evolution-android-any-v3-192.png','/img/evolution-android-any-v3-512.png',
   '/img/evolution-android-maskable-v3-192.png','/img/evolution-android-maskable-v3-512.png',
@@ -40,6 +40,7 @@ const isStatic=p=>
   p==='/evolution-nav.js'||
   p==='/evolution-app.js'||
   p==='/evolution-payments.js'||
+  p==='/evolution-project-files.js'||
   p==='/evolution-presence.js'||
   p==='/manifest.webmanifest'||
   p.startsWith('/css/')||
