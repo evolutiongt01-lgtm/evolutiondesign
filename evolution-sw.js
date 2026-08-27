@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.52 · Persistent Academy + GTQ */
-const VERSION='evolution-smart-app-v50.52-academy-shell-gtq';
-const APP_BUILD=60;
+/* Evolution Design · Advanced App Shell Service Worker · v50.53 · Academy chat + admin alerts */
+const VERSION='evolution-smart-app-v50.53-academy-chat-alerts';
+const APP_BUILD=61;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
@@ -9,7 +9,7 @@ const IMAGES=`${VERSION}-images`;
 const SHELL_FILES=[
   '/',
   '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html','/portafolio.html','/dispositivos.html','/academia.html','/curso-autocad-intermedio.html',
-  '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-project-files.js','/evolution-presence.js','/evolution-sw.js',
+  '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-project-files.js','/evolution-presence.js','/evolution-academy-chat.js','/evolution-sw.js',
   '/img/logo.png','/manifest.webmanifest',
   '/img/evolution-android-any-v3-192.png','/img/evolution-android-any-v3-512.png',
   '/img/evolution-android-maskable-v3-192.png','/img/evolution-android-maskable-v3-512.png',
@@ -41,7 +41,8 @@ const isStatic=p=>
   p==='/evolution-app.js'||
   p==='/evolution-payments.js'||
   p==='/evolution-project-files.js'||
-  p==='/evolution-presence.js'||
+  p==='/evolution-presence.js'|| 
+  p==='/evolution-academy-chat.js'||
   p==='/manifest.webmanifest'||
   p.startsWith('/css/')||
   p.startsWith('/js/')||
