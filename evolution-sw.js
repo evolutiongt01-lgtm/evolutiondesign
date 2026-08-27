@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.44 · Academy admin review */
-const VERSION='evolution-smart-app-v50.44-academy-admin-review';
-const APP_BUILD=52;
+/* Evolution Design · Advanced App Shell Service Worker · v50.45 · Academy classroom */
+const VERSION='evolution-smart-app-v50.45-academy-classroom';
+const APP_BUILD=53;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
@@ -27,7 +27,7 @@ const VIEW_FILES=[
 
 const PRIVATE=[
   '/proyectos','/perfil','/admin','/portal','/account',
-  '/checkout','/payment','/pago','/login',
+  '/checkout','/payment','/pago','/login','/diploma','/academy',
   '/api/','/recaptcha','/__/auth','/__/firebase'
 ];
 

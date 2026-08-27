@@ -7711,6 +7711,8 @@ const ACADEMY_DEFAULT_COURSE = Object.freeze({
     youtubeId: "WhYmkWFol2U",
     duration: "",
     freePreview: false,
+    assignmentTitle: "Tarea 1 · Reproduce el ejercicio de la clase",
+    assignmentInstructions: "Realiza en AutoCAD el mismo ejercicio desarrollado durante la primera clase y sube tu archivo DWG o un PDF con el resultado.",
     published: true,
     sortOrder: 10
   }]
@@ -7740,6 +7742,8 @@ function normalizeAcademyCourse(input = {}, existing = ACADEMY_DEFAULT_COURSE) {
     youtubeId: academyYouTubeId(lesson?.youtubeId || lesson?.youtubeUrl),
     duration: clean(lesson?.duration, 40),
     freePreview: lesson?.freePreview === true,
+    assignmentTitle: clean(lesson?.assignmentTitle || (index === 0 ? "Tarea 1 · Reproduce el ejercicio de la clase" : `Tarea ${index + 1}`), 220),
+    assignmentInstructions: clean(lesson?.assignmentInstructions || (index === 0 ? "Realiza en AutoCAD el mismo ejercicio desarrollado durante la primera clase y sube tu archivo DWG o un PDF con el resultado." : "Completa el ejercicio indicado en la clase y sube tu archivo para revisión."), 1200),
     published: lesson?.published !== false,
     sortOrder: Number.isFinite(Number(lesson?.sortOrder)) ? Number(lesson.sortOrder) : (index + 1) * 10
   })).filter(lesson => lesson.youtubeId).sort((a, b) => a.sortOrder - b.sortOrder);
@@ -7796,6 +7800,81 @@ async function academyAdminCourseRoute(request, env, origin, url) {
     const status = ["AUTH_MISSING", "AUTH_INVALID"].includes(code) ? 401 : code === "ADMIN_ONLY" ? 403 : 500;
     return json({ ok: false, code, error: status === 403 ? "Solo administración puede editar la Academia." : "No se pudo guardar el curso." }, status, origin);
   }
+}
+
+function academyEnrollmentId(slug, uid) { return `${academyCourseSlug(slug)}__${clean(uid, 160)}`; }
+function academySubmissionId(slug, uid, lessonId) { return `${academyCourseSlug(slug)}__${clean(uid, 160)}__${clean(lessonId, 100)}`; }
+async function academyActor(request) { const user = await requireFirebaseUser(bearerToken(request)); return projectFileActor(user); }
+async function requireAcademyEnrollment(env, actor, slug) {
+  if (actor.isAdmin) return { active: true, admin: true };
+  const snap = await adminGetDocument(env, ["academyEnrollments", academyEnrollmentId(slug, actor.uid)], true);
+  if (!snap.exists || !["active", "completed"].includes(String(snap.data?.status || ""))) throw new Error("ACADEMY_ENROLLMENT_REQUIRED");
+  return snap.data;
+}
+async function academyProgress(env, uid, course) {
+  const submissions = [];
+  for (const lesson of course.lessons) {
+    const snap = await adminGetDocument(env, ["users", uid, "academySubmissions", `${course.slug}__${lesson.id}`], true);
+    submissions.push(snap.exists ? snap.data : null);
+  }
+  return submissions;
+}
+async function academyStudentCourseRoute(request, env, origin, url) {
+  try {
+    const actor = await academyActor(request), course = await academyCourseData(env, url.searchParams.get("slug"));
+    await requireAcademyEnrollment(env, actor, course.slug);
+    const submissions = actor.isAdmin ? [] : await academyProgress(env, actor.uid, course);
+    const lessons = course.lessons.map((lesson, index) => {
+      const previousApproved = index === 0 || actor.isAdmin || submissions[index - 1]?.status === "approved";
+      const submission = submissions[index] || null;
+      return { ...lesson, youtubeId: previousApproved ? lesson.youtubeId : "", unlocked: previousApproved, submission: submission ? { status: submission.status, feedback: submission.feedback || "", grade: submission.grade ?? null, submittedAt: submission.submittedAt || "", fileName: submission.fileName || "" } : null };
+    });
+    const diplomaEligible = actor.isAdmin || (lessons.length > 0 && submissions.length === lessons.length && submissions.every(item => item?.status === "approved"));
+    return json({ ok: true, course: { ...course, lessons }, diplomaEligible, admin: actor.isAdmin }, 200, origin);
+  } catch (error) {
+    const code = String(error?.message || "ACADEMY_STUDENT_FAILED"), status = code.includes("AUTH") ? 401 : code === "ACADEMY_ENROLLMENT_REQUIRED" ? 403 : 500;
+    return json({ ok: false, code, error: status === 403 ? "Necesitas una inscripción activa para acceder al curso." : "No se pudo cargar tu aula." }, status, origin);
+  }
+}
+async function academySubmissionUploadRoute(request, env, origin, url) {
+  try {
+    if (!env.PROFILE_R2) throw new Error("R2_BINDING_MISSING");
+    const actor = await academyActor(request), slug = academyCourseSlug(url.searchParams.get("slug")), lessonId = clean(url.searchParams.get("lessonId"), 100);
+    await requireAcademyEnrollment(env, actor, slug);
+    const course = await academyCourseData(env, slug), index = course.lessons.findIndex(item => item.id === lessonId);
+    if (index < 0) throw new Error("ACADEMY_LESSON_INVALID");
+    if (!actor.isAdmin && index > 0) { const prev = await adminGetDocument(env, ["users", actor.uid, "academySubmissions", `${slug}__${course.lessons[index - 1].id}`], true); if (!prev.exists || prev.data?.status !== "approved") throw new Error("ACADEMY_LESSON_LOCKED"); }
+    const fileName = safeProjectFilePart(url.searchParams.get("fileName") || "tarea"), contentType = clean((request.headers.get("content-type") || "application/octet-stream").split(";")[0], 160).toLowerCase(), size = Number(request.headers.get("content-length") || 0);
+    if (size > 100 * 1024 * 1024) throw new Error("R2_FILE_TOO_LARGE");
+    if (["text/html", "application/xhtml+xml", "image/svg+xml"].includes(contentType)) throw new Error("R2_TYPE_INVALID");
+    const key = `academy/${slug}/${actor.uid}/${lessonId}/${crypto.randomUUID()}-${fileName}`;
+    await env.PROFILE_R2.put(key, request.body, { httpMetadata: { contentType, cacheControl: "private, no-store" }, customMetadata: { ownerUid: actor.uid, courseSlug: slug, lessonId, uploadedAt: new Date().toISOString() } });
+    const now = new Date().toISOString(), record = { id: academySubmissionId(slug, actor.uid, lessonId), ownerUid: actor.uid, ownerEmail: actor.email || "", courseSlug: slug, courseTitle: course.title, lessonId, lessonTitle: course.lessons[index].title, fileKey: key, fileName, contentType, size: size || null, status: "pending_review", grade: null, feedback: "", submittedAt: now, updatedAt: now };
+    await Promise.all([adminSetDocument(env, ["academySubmissions", record.id], record), adminSetDocument(env, ["users", actor.uid, "academySubmissions", `${slug}__${lessonId}`], record)]);
+    return json({ ok: true, submission: { status: record.status, fileName, submittedAt: now } }, 200, origin);
+  } catch (error) { return projectFileErrorResponse(error, origin); }
+}
+async function academySubmissionObjectRoute(request, env, origin, url) {
+  try { if (!env.PROFILE_R2) throw new Error("R2_BINDING_MISSING"); const actor = await academyActor(request), key = clean(url.searchParams.get("key"), 1200); if (!key.startsWith("academy/") || key.includes("..")) throw new Error("R2_KEY_INVALID"); const parts = key.split("/"); if (!actor.isAdmin && parts[2] !== actor.uid) throw new Error("R2_OWNER_MISMATCH"); const object = await env.PROFILE_R2.get(key); if (!object) throw new Error("R2_OBJECT_NOT_FOUND"); const headers = new Headers(corsHeaders(origin)); object.writeHttpMetadata(headers); headers.set("cache-control", "private, no-store"); headers.set("content-disposition", `attachment; filename*=UTF-8''${encodeURIComponent(safeProjectFilePart(url.searchParams.get("fileName") || key.split("/").pop()))}`); return new Response(object.body, { status: 200, headers }); } catch (error) { return projectFileErrorResponse(error, origin); }
+}
+async function academyAdminSubmissionsRoute(request, env, origin) {
+  try { await requireFirebaseAdmin(bearerToken(request)); const rows = await adminRunQuery(env, { from: [{ collectionId: "academySubmissions" }], orderBy: [{ field: { fieldPath: "submittedAt" }, direction: "DESCENDING" }], limit: 200 }); return json({ ok: true, submissions: rows.map(row => row.data) }, 200, origin); } catch (error) { return json({ ok: false, error: "No se pudieron cargar las tareas." }, 403, origin); }
+}
+async function academyGradeSubmissionRoute(request, env, origin) {
+  try { const admin = await requireFirebaseAdmin(bearerToken(request)), payload = await request.json().catch(() => ({})), id = clean(payload.id, 500); const snap = await adminGetDocument(env, ["academySubmissions", id], true); if (!snap.exists) throw new Error("NOT_FOUND"); const record = snap.data, status = payload.status === "approved" ? "approved" : "changes_requested", patch = { status, grade: Math.max(0, Math.min(100, Number(payload.grade || 0))), feedback: clean(payload.feedback, 1200), gradedAt: new Date().toISOString(), gradedBy: admin.email || "admin", updatedAt: new Date().toISOString() }; await Promise.all([adminPatchDocument(env, ["academySubmissions", id], patch), adminPatchDocument(env, ["users", record.ownerUid, "academySubmissions", `${record.courseSlug}__${record.lessonId}`], patch)]); return json({ ok: true, status }); } catch (error) { return json({ ok: false, error: "No se pudo guardar la calificación." }, 400, origin); }
+}
+async function academyAdminEnrollmentsRoute(request, env, origin) {
+  try {
+    const admin = await requireFirebaseAdmin(bearerToken(request));
+    if (request.method === "GET") { const rows = await adminRunQuery(env, { from: [{ collectionId: "academyEnrollments" }], orderBy: [{ field: { fieldPath: "createdAt" }, direction: "DESCENDING" }], limit: 300 }); return json({ ok: true, enrollments: rows.map(row => row.data) }, 200, origin); }
+    const payload = await request.json().catch(() => ({})), email = validEmail(payload.email), slug = academyCourseSlug(payload.slug || ACADEMY_DEFAULT_COURSE.slug);
+    let uid = clean(payload.uid, 160);
+    if (!validFirebaseUid(uid) && email) { const matches = await adminRunQuery(env, { from: [{ collectionId: "users" }], where: { fieldFilter: { field: { fieldPath: "email" }, op: "EQUAL", value: { stringValue: email } } }, limit: 1 }); uid = clean(matches[0]?.id || matches[0]?.data?.uid, 160); }
+    if (!validFirebaseUid(uid)) throw new Error("ACADEMY_STUDENT_NOT_FOUND");
+    const now = new Date().toISOString(), record = { id: academyEnrollmentId(slug, uid), uid, email: email || "", courseSlug: slug, status: payload.status === "completed" ? "completed" : "active", source: "admin", createdAt: now, updatedAt: now, createdBy: admin.email || "admin" };
+    await adminSetDocument(env, ["academyEnrollments", record.id], record);
+    return json({ ok: true, enrollment: record }, 200, origin);
+  } catch (error) { return json({ ok: false, code: String(error?.message || "ACADEMY_ENROLL_FAILED"), error: "No se pudo inscribir al alumno. Verifica que ya tenga una cuenta." }, 400, origin); }
 }
 
 // ============================================================================
@@ -8384,6 +8463,12 @@ export default {
     if (url.pathname === "/academy/admin/course" && (request.method === "GET" || request.method === "POST")) {
       return academyAdminCourseRoute(request, env, origin, url);
     }
+    if (url.pathname === "/academy/student/course" && request.method === "GET") return academyStudentCourseRoute(request, env, origin, url);
+    if (url.pathname === "/academy/submissions/upload" && request.method === "POST") return academySubmissionUploadRoute(request, env, origin, url);
+    if (url.pathname === "/academy/submissions/object" && request.method === "GET") return academySubmissionObjectRoute(request, env, origin, url);
+    if (url.pathname === "/academy/admin/submissions" && request.method === "GET") return academyAdminSubmissionsRoute(request, env, origin);
+    if (url.pathname === "/academy/admin/submissions/grade" && request.method === "POST") return academyGradeSubmissionRoute(request, env, origin);
+    if (url.pathname === "/academy/admin/enrollments" && (request.method === "GET" || request.method === "POST")) return academyAdminEnrollmentsRoute(request, env, origin);
     if (url.pathname === "/admin/presence" && request.method === "GET") {
       return adminPresenceRoute(request, env, origin);
     }
