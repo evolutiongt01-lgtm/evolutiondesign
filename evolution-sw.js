@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.58 · iPhone video + chat unread */
-const VERSION='evolution-smart-app-v50.58-iphone-video-chat-unread';
-const APP_BUILD=66;
+/* Evolution Design · Advanced App Shell Service Worker · v50.59 · Admin chat purge */
+const VERSION='evolution-smart-app-v50.59-admin-chat-purge';
+const APP_BUILD=67;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
