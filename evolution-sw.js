@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.61 · iPhone direct-gesture video */
-const VERSION='evolution-smart-app-v50.61-iphone-direct-gesture';
-const APP_BUILD=69;
+/* Evolution Design · Advanced App Shell Service Worker · v50.62 · Safari manual YouTube playback */
+const VERSION='evolution-smart-app-v50.62-safari-manual-youtube';
+const APP_BUILD=70;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
