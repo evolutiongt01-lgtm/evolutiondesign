@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.49 · Interactive HD classroom */
-const VERSION='evolution-smart-app-v50.49-interactive-hd-classroom';
-const APP_BUILD=57;
+/* Evolution Design · Advanced App Shell Service Worker · v50.50 · Academy auth bridge */
+const VERSION='evolution-smart-app-v50.50-academy-auth-bridge';
+const APP_BUILD=58;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;

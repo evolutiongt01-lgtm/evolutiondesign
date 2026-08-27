@@ -20,4 +20,13 @@
   <script>
     fetch('https://evolution-design-backend.evolutiongt01.workers.dev/academy/course?slug=autocad-intermedio-dibujo-tecnico',{headers:{accept:'application/json'},cache:'no-store'}).then(r=>r.json()).then(({course})=>{if(!course)return;courseTitle.textContent=course.title;courseDescription.textContent=course.description;courseLevel.textContent=String(course.level||'Intermedio').toUpperCase();coursePrice.textContent=`$${Number(course.priceUsd||30).toFixed(0)}`;const n=(course.lessons||[]).length;lessonCount.textContent=`${n} CLASE${n===1?'':'S'} PUBLICADA${n===1?'':'S'}`}).catch(()=>{});
   </script>
+  <script type="module">
+    import{initializeApp,getApps}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import{getAuth,onAuthStateChanged,signOut}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    const cfg={apiKey:'AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM',authDomain:'evolution-design-9b63b.firebaseapp.com',projectId:'evolution-design-9b63b',appId:'1:433474708581:web:cff7830077fb7d0e8a128c'},auth=getAuth(getApps()[0]||initializeApp(cfg)),admins=new Set(['evolutiongt01@gmail.com','tepaz2025@gmail.com']);
+    function syncAcademyNavigation(user){let attempts=0;const apply=()=>{if(window.EvolutionNav?.setAuth){window.EvolutionNav.setAuth({user,isAdmin:Boolean(user&&admins.has(String(user.email||'').toLowerCase()))});return}if(++attempts<50)setTimeout(apply,100)};apply()}
+    onAuthStateChanged(auth,user=>syncAcademyNavigation(user));
+    document.addEventListener('evolution:logout-request',()=>signOut(auth));
+    document.addEventListener('evolution:auth-request',()=>{if(!auth.currentUser)location.href='/index.html'});
+  </script>
 </body></html>
