@@ -7769,7 +7769,13 @@ async function academyPublicCourseRoute(env, origin, url) {
   try {
     const course = await academyCourseData(env, url.searchParams.get("slug"));
     if (!course.published) return json({ ok: false, error: "Curso no disponible." }, 404, origin);
-    return json({ ok: true, course: { ...course, lessons: course.lessons.filter(lesson => lesson.published) } }, 200, origin);
+    const lessons = course.lessons.filter(lesson => lesson.published).map(lesson => ({
+      id: lesson.id, module: lesson.module, title: lesson.title,
+      description: lesson.description, duration: lesson.duration,
+      freePreview: lesson.freePreview, published: true, sortOrder: lesson.sortOrder,
+      ...(lesson.freePreview ? { youtubeId: lesson.youtubeId } : {})
+    }));
+    return json({ ok: true, course: { ...course, lessons } }, 200, origin);
   } catch (error) {
     return json({ ok: false, error: "No se pudo cargar la Academia." }, 500, origin);
   }

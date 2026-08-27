@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.43 · Academy */
-const VERSION='evolution-smart-app-v50.43-academy';
-const APP_BUILD=51;
+/* Evolution Design · Advanced App Shell Service Worker · v50.44 · Academy admin review */
+const VERSION='evolution-smart-app-v50.44-academy-admin-review';
+const APP_BUILD=52;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
