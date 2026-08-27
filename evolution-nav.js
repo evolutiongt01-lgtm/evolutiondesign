@@ -10,6 +10,7 @@
     web:`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 13l-2 2 2 2M15 13l2 2-2 2"/></svg>`,
     folder:`<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
     devices:`<svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="12.5" height="9" rx="1.5"/><path d="M6 18h5.5M8.75 14v4"/><rect x="16.5" y="3" width="5" height="11" rx="1.3"/><path d="M18.25 11.5h1.5"/></svg>`,
+    academy:`<svg viewBox="0 0 24 24"><path d="m3 10 9-5 9 5-9 5-9-5Z"/><path d="M7 12.5V17c3 2 7 2 10 0v-4.5M21 10v6"/></svg>`,
     login:`<svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>`,
     logout:`<svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>`,
     shield:`<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
@@ -22,6 +23,7 @@
     {key:'grafico',href:'/diseno-grafico.html',label:'Diseño Gráfico',short:'Diseño G.',icon:'graf'},
     {key:'web',href:'/diseno-web.html',label:'Diseño Web',short:'Web',icon:'web'},
     {key:'portfolio',href:'/portafolio.html',label:'Proyectos',short:'Proyectos',icon:'folder'},
+    {key:'academy',href:'/academia.html',label:'Academia',short:'Cursos',icon:'academy'},
     {key:'devices',href:'/dispositivos.html',label:'Dispositivos',short:'Tienda',icon:'devices'}
   ];
 
@@ -36,6 +38,7 @@
     if(p.includes('diseno-grafico')) return 'grafico';
     if(p.includes('diseno-web')) return 'web';
     if(p.includes('portafolio')) return 'portfolio';
+    if(p.includes('academia')||p.includes('curso-autocad')) return 'academy';
     if(p.includes('dispositivos')) return 'devices';
     return 'home';
   };

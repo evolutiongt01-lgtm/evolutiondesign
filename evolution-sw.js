@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.42 · global login recovery */
-const VERSION='evolution-smart-app-v50.42-login-recovery';
-const APP_BUILD=50;
+/* Evolution Design · Advanced App Shell Service Worker · v50.43 · Academy */
+const VERSION='evolution-smart-app-v50.43-academy';
+const APP_BUILD=51;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
@@ -8,7 +8,7 @@ const IMAGES=`${VERSION}-images`;
 
 const SHELL_FILES=[
   '/',
-  '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html','/portafolio.html','/dispositivos.html',
+  '/index.html','/arquitectura.html','/diseno-grafico.html','/diseno-web.html','/portafolio.html','/dispositivos.html','/academia.html','/curso-autocad-intermedio.html',
   '/evolution-nav.js','/evolution-app.js','/evolution-payments.js','/evolution-project-files.js','/evolution-presence.js','/evolution-sw.js',
   '/img/logo.png','/manifest.webmanifest',
   '/img/evolution-android-any-v3-192.png','/img/evolution-android-any-v3-512.png',
@@ -32,8 +32,8 @@ const PRIVATE=[
 ];
 
 const isPrivate=p=>PRIVATE.some(x=>p.toLowerCase().includes(x));
-const isShellPath=p=>['/','/index.html','/arquitectura','/arquitectura.html','/diseno-grafico','/diseno-grafico.html','/diseno-web','/diseno-web.html','/portafolio','/portafolio.html','/dispositivos','/dispositivos.html'].includes(p);
-const shellAlias=p=>p==='/arquitectura'?'/arquitectura.html':p==='/diseno-grafico'?'/diseno-grafico.html':p==='/diseno-web'?'/diseno-web.html':p==='/portafolio'?'/portafolio.html':p==='/dispositivos'?'/dispositivos.html':p;
+const isShellPath=p=>['/','/index.html','/arquitectura','/arquitectura.html','/diseno-grafico','/diseno-grafico.html','/diseno-web','/diseno-web.html','/portafolio','/portafolio.html','/dispositivos','/dispositivos.html','/academia','/academia.html','/curso-autocad-intermedio','/curso-autocad-intermedio.html'].includes(p);
+const shellAlias=p=>p==='/arquitectura'?'/arquitectura.html':p==='/diseno-grafico'?'/diseno-grafico.html':p==='/diseno-web'?'/diseno-web.html':p==='/portafolio'?'/portafolio.html':p==='/dispositivos'?'/dispositivos.html':p==='/academia'?'/academia.html':p==='/curso-autocad-intermedio'?'/curso-autocad-intermedio.html':p;
 const isView=p=>p.startsWith('/views/')&&p.endsWith('.html');
 const isImage=p=>/\.(png|jpe?g|webp|avif|gif|svg)$/i.test(p)||p.startsWith('/img/');
 const isStatic=p=>

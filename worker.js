@@ -7688,6 +7688,111 @@ async function updateProfileDataRoute(request, env, origin) {
 }
 
 // ============================================================================
+// EVOLUTION ACADEMY · PUBLIC CATALOG + ADMINISTRABLE COURSE CONTENT
+// ============================================================================
+
+const ACADEMY_DEFAULT_COURSE = Object.freeze({
+  slug: "autocad-intermedio-dibujo-tecnico",
+  title: "AutoCAD Intermedio para Estudiantes de Dibujo Técnico",
+  shortTitle: "AutoCAD Intermedio",
+  description: "Domina herramientas intermedias de AutoCAD y desarrolla planos técnicos con orden, precisión y una metodología profesional.",
+  priceUsd: 30,
+  level: "Intermedio",
+  audience: "Estudiantes de dibujo técnico",
+  accessType: "lifetime",
+  published: true,
+  category: "Diseño técnico",
+  instructor: "Evolution Design Academy",
+  lessons: [{
+    id: "lesson_autocad_01",
+    module: "Módulo 1 · Fundamentos intermedios",
+    title: "Clase 1 · AutoCAD Intermedio",
+    description: "Primera clase del curso. Preparación del entorno y flujo de trabajo para dibujo técnico.",
+    youtubeId: "WhYmkWFol2U",
+    duration: "",
+    freePreview: false,
+    published: true,
+    sortOrder: 10
+  }]
+});
+
+function academyCourseSlug(value) {
+  return clean(value, 100).toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "") || ACADEMY_DEFAULT_COURSE.slug;
+}
+
+function academyYouTubeId(value) {
+  const raw = clean(value, 500);
+  const direct = raw.match(/^[A-Za-z0-9_-]{11}$/)?.[0];
+  if (direct) return direct;
+  try {
+    const url = new URL(raw);
+    const id = url.hostname.includes("youtu.be") ? url.pathname.split("/").filter(Boolean)[0] : url.searchParams.get("v") || url.pathname.match(/\/(?:embed|shorts)\/([A-Za-z0-9_-]{11})/)?.[1];
+    return /^[A-Za-z0-9_-]{11}$/.test(String(id || "")) ? id : "";
+  } catch (_) { return ""; }
+}
+
+function normalizeAcademyCourse(input = {}, existing = ACADEMY_DEFAULT_COURSE) {
+  const lessons = (Array.isArray(input.lessons) ? input.lessons : existing.lessons || []).slice(0, 200).map((lesson, index) => ({
+    id: clean(lesson?.id, 100).replace(/[^A-Za-z0-9_-]/g, "") || `lesson_${Date.now()}_${index}`,
+    module: clean(lesson?.module || `Módulo ${index + 1}`, 180),
+    title: clean(lesson?.title || `Clase ${index + 1}`, 220),
+    description: clean(lesson?.description, 1200),
+    youtubeId: academyYouTubeId(lesson?.youtubeId || lesson?.youtubeUrl),
+    duration: clean(lesson?.duration, 40),
+    freePreview: lesson?.freePreview === true,
+    published: lesson?.published !== false,
+    sortOrder: Number.isFinite(Number(lesson?.sortOrder)) ? Number(lesson.sortOrder) : (index + 1) * 10
+  })).filter(lesson => lesson.youtubeId).sort((a, b) => a.sortOrder - b.sortOrder);
+  return {
+    slug: academyCourseSlug(input.slug || existing.slug),
+    title: clean(input.title || existing.title, 240),
+    shortTitle: clean(input.shortTitle || existing.shortTitle, 100),
+    description: clean(input.description || existing.description, 1800),
+    priceUsd: Math.max(0, Number(input.priceUsd ?? existing.priceUsd ?? 30)),
+    level: clean(input.level || existing.level, 80),
+    audience: clean(input.audience || existing.audience, 180),
+    accessType: input.accessType === "limited" ? "limited" : "lifetime",
+    published: input.published !== false,
+    category: clean(input.category || existing.category, 100),
+    instructor: clean(input.instructor || existing.instructor, 160),
+    lessons
+  };
+}
+
+async function academyCourseData(env, slug = ACADEMY_DEFAULT_COURSE.slug) {
+  const safeSlug = academyCourseSlug(slug);
+  const saved = await adminGetDocument(env, ["academyCourses", safeSlug], true);
+  return normalizeAcademyCourse(saved.exists ? saved.data : { ...ACADEMY_DEFAULT_COURSE, slug: safeSlug });
+}
+
+async function academyPublicCourseRoute(env, origin, url) {
+  try {
+    const course = await academyCourseData(env, url.searchParams.get("slug"));
+    if (!course.published) return json({ ok: false, error: "Curso no disponible." }, 404, origin);
+    return json({ ok: true, course: { ...course, lessons: course.lessons.filter(lesson => lesson.published) } }, 200, origin);
+  } catch (error) {
+    return json({ ok: false, error: "No se pudo cargar la Academia." }, 500, origin);
+  }
+}
+
+async function academyAdminCourseRoute(request, env, origin, url) {
+  try {
+    const admin = await requireFirebaseAdmin(bearerToken(request));
+    const slug = academyCourseSlug(url.searchParams.get("slug") || ACADEMY_DEFAULT_COURSE.slug);
+    if (request.method === "GET") return json({ ok: true, course: await academyCourseData(env, slug) }, 200, origin);
+    const payload = await request.json().catch(() => ({}));
+    const existing = await academyCourseData(env, slug);
+    const course = normalizeAcademyCourse(payload.course || payload, existing);
+    await adminSetDocument(env, ["academyCourses", course.slug], { ...course, updatedAt: new Date().toISOString(), updatedBy: admin.email });
+    return json({ ok: true, course }, 200, origin);
+  } catch (error) {
+    const code = String(error?.message || "ACADEMY_ADMIN_FAILED");
+    const status = ["AUTH_MISSING", "AUTH_INVALID"].includes(code) ? 401 : code === "ADMIN_ONLY" ? 403 : 500;
+    return json({ ok: false, code, error: status === 403 ? "Solo administración puede editar la Academia." : "No se pudo guardar el curso." }, status, origin);
+  }
+}
+
+// ============================================================================
 // PROJECT FILES · FIREBASE AUTH -> CLOUDFLARE WORKER -> R2
 // Uses the existing PROFILE_R2 binding. No R2 credential reaches the browser.
 // ============================================================================
@@ -8266,6 +8371,12 @@ export default {
 
     if (url.pathname === "/presence/heartbeat" && request.method === "POST") {
       return presenceHeartbeatRoute(request, env, origin);
+    }
+    if (url.pathname === "/academy/course" && request.method === "GET") {
+      return academyPublicCourseRoute(env, origin, url);
+    }
+    if (url.pathname === "/academy/admin/course" && (request.method === "GET" || request.method === "POST")) {
+      return academyAdminCourseRoute(request, env, origin, url);
     }
     if (url.pathname === "/admin/presence" && request.method === "GET") {
       return adminPresenceRoute(request, env, origin);
