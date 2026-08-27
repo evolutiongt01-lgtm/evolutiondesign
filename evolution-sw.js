@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.59 · Admin chat purge */
-const VERSION='evolution-smart-app-v50.59-admin-chat-purge';
-const APP_BUILD=67;
+/* Evolution Design · Advanced App Shell Service Worker · v50.60 · iPhone YouTube touch fix */
+const VERSION='evolution-smart-app-v50.60-iphone-youtube-touch';
+const APP_BUILD=68;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
