@@ -2,8 +2,8 @@
 (() => {
   'use strict';
 
-  const VERSION='49.5';
-  const APP_BUILD=50;
+  const VERSION='49.6';
+  const APP_BUILD=51;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 

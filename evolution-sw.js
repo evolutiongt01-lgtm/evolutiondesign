@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.55 · Academy shell isolation */
-const VERSION='evolution-smart-app-v50.55-academy-shell-isolation';
-const APP_BUILD=63;
+/* Evolution Design · Advanced App Shell Service Worker · v50.56 · Main route cache + dynamic cinema */
+const VERSION='evolution-smart-app-v50.56-academy-route-cinema';
+const APP_BUILD=64;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
