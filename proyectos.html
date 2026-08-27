@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/theme.min.css">
     
     <!-- SDK DE AWS v2 (Tanque de guerra para servidores de Evolution Group en navegadores) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1390.0/aws-sdk.min.js"></script>
+    <script src="/evolution-project-files.js?v=1"></script>
 
     <style>
       @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: local(''), url('fonts/inter-v12-latin-300.woff2') format('woff2'), url('fonts/inter-v12-latin-300.woff') format('woff'); }
@@ -1712,27 +1712,10 @@
       import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
       import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, onSnapshot, serverTimestamp, increment, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      // CREDENCIALES DE CLOUDFLARE R2
-      const R2_ACCOUNT_ID = "d94e264f8a09f87496e21e72bd3731aa";
-      const R2_ACCESS_KEY_ID = "ea76378ab014694c3f387477de604782"; 
-      const R2_SECRET_ACCESS_KEY = "cf9a573453b35a875f4adb07c88374f942047b9ae9e358c3a3c11a629a0af4f6"; 
-      const R2_BUCKET_NAME = "evolution-design-files";
-
-      let s3 = null;
-      if (window.AWS) {
-        window.AWS.config.update({
-          accessKeyId: R2_ACCESS_KEY_ID,
-          secretAccessKey: R2_SECRET_ACCESS_KEY,
-          region: 'auto',
-          signatureVersion: 'v4'
-        });
-        s3 = new window.AWS.S3({
-          endpoint: new window.AWS.Endpoint(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`)
-        });
-      }
-
       const firebaseConfig={apiKey:"AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM",authDomain:"evolution-design-9b63b.firebaseapp.com",projectId:"evolution-design-9b63b",storageBucket:"evolution-design-9b63b.firebasestorage.app",messagingSenderId:"433474708581",appId:"1:433474708581:web:cff7830077fb7d0e8a128c"};
       const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app);
+      window.__evolutionProjectFilesAuth=auth;
+      const projectFiles=window.EvolutionProjectFiles;
       const EVOLUTION_WORKER_URL="https://evolution-design-backend.evolutiongt01.workers.dev".replace(/\/$/,"");
 
       /* reCAPTCHA Enterprise · Órdenes */
@@ -2084,12 +2067,18 @@
 
       function fileThumb(file){
         const fallback=esc(ext(file?.name||file?.label));
-        if(!isImageFile(file)||!s3||!file?.storagePath)return `<div class=\"project-file-icon\">${fallback}</div>`;
-        try{
-          const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:file.storagePath,Expires:300});
-          return `<div class=\"project-file-icon has-preview\" title=\"Vista previa de ${esc(file.label||file.name||'imagen')}\"><img src=\"${esc(url)}\" alt=\"Vista previa\" loading=\"lazy\" onerror=\"this.style.display='none';this.nextElementSibling.style.display='flex'\"><span class=\"preview-fallback\">${fallback}</span></div>`;
-        }catch(e){return `<div class=\"project-file-icon\">${fallback}</div>`;}
+        if(!isImageFile(file)||!projectFiles||!file?.storagePath)return `<div class=\"project-file-icon\">${fallback}</div>`;
+        return `<div class=\"project-file-icon has-preview\" title=\"Vista previa de ${esc(file.label||file.name||'imagen')}\"><img data-secure-r2-key=\"${esc(file.storagePath)}\" alt=\"Vista previa\" loading=\"lazy\"><span class=\"preview-fallback\">${fallback}</span></div>`;
       }
+
+      async function hydrateSecureR2Image(img){
+        if(!img||img.dataset.secureR2Loading==='1'||img.src)return;
+        img.dataset.secureR2Loading='1';
+        try{img.src=await projectFiles.objectURL(img.dataset.secureR2Key||'');}
+        catch(_){img.style.display='none';img.nextElementSibling?.style.setProperty('display','flex');}
+      }
+      const secureR2Observer=new MutationObserver(()=>document.querySelectorAll('img[data-secure-r2-key]').forEach(hydrateSecureR2Image));
+      secureR2Observer.observe(document.documentElement,{childList:true,subtree:true});
       function renderSpecs(items){return Array.isArray(items)&&items.length?`<div class="mini-meta">${items.map(x=>`<span class="mini-meta-item"><span class="mini-meta-dot"></span><strong>${esc(x.label)}:</strong> ${esc(x.value)}</span>`).join('')}</div>`:'';}
       function renderIncluded(items){return Array.isArray(items)&&items.length?`<div class="ui-card included-card"><h3 class="section-heading"><span class="section-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg></span>Tu tarifa incluye</h3><p class="section-copy mb-0">Estos son exactamente los servicios incluidos en tu compra.</p><ul class="included-list">${items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';}
       function statusInfo(p){const labels={awaiting_payment:'Pago pendiente',payment_pending_review:'Comprobante por revisar',payment_failed:'Fallo de pago',waiting_files:'Esperando archivos',files_received:'Archivos recibidos',assigned:'Profesional asignado',in_progress:'En proceso',review:'En revisión',delivered:'Entregado',cancelled:'Cancelado'};const status=p.status||'waiting_files';if(deliveryIsPublished(p))return {status:'delivered',label:'Entregado'};if(clientPreviewPublished(p)&&workIsCompleted(p))return {status,label:'Trabajo terminado · muestra disponible'};if(workIsCompleted(p))return {status,label:'Trabajo terminado'};return {status,label:labels[status]||'En proceso'};}
@@ -2128,11 +2117,8 @@
       }
 
       function receiptImageCard(receipt){
-        if(!s3||!receipt?.storagePath)return'';
-        try{
-          const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:receipt.storagePath,Expires:300});
-          return `<div class="receipt-image-card"><img src="${esc(url)}" alt="Comprobante de pago" loading="lazy"></div>`;
-        }catch(e){console.error('Comprobante:',e);return'';}
+        if(!projectFiles||!receipt?.storagePath)return'';
+        return `<div class="receipt-image-card"><img data-secure-r2-key="${esc(receipt.storagePath)}" alt="Comprobante de pago" loading="lazy"></div>`;
       }
 
       function renderReceiptOnly(records,containerId,emptyCopy){
@@ -2165,10 +2151,7 @@
 
       function firstReceiptImage(record){
         const receipt=receiptEntries(record)[0];
-        if(!receipt||!s3)return '';
-        try{
-          return s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:receipt.storagePath,Expires:300});
-        }catch(e){console.error('Comprobante:',e);return'';}
+        return receipt?.storagePath||'';
       }
 
       function paymentStatePortal(record){
@@ -2225,7 +2208,7 @@
           return `<article class="service-mini-card">
             <div class="service-mini-receipt">
               ${receiptUrl
-                ?`<img src="${esc(receiptUrl)}" alt="Comprobante de pago de Diseño Web" loading="lazy">`
+                ?`<img data-secure-r2-key="${esc(receiptUrl)}" alt="Comprobante de pago de Diseño Web" loading="lazy">`
                 :`<div class="service-mini-receipt-empty"><strong>Pago digital / sin imagen</strong>Este método no tiene una imagen de comprobante asociada.</div>`}
             </div>
 
@@ -2337,7 +2320,7 @@
           return `<article class="service-mini-card">
             <div class="service-mini-receipt">
               ${receiptUrl
-                ?`<img src="${esc(receiptUrl)}" alt="Comprobante de suscripción" loading="lazy">`
+                ?`<img data-secure-r2-key="${esc(receiptUrl)}" alt="Comprobante de suscripción" loading="lazy">`
                 :`<div class="service-mini-receipt-empty"><strong>Pago digital / sin imagen</strong>Esta membresía no tiene una imagen de comprobante asociada.</div>`}
             </div>
 
@@ -2532,7 +2515,7 @@
       function clientPreviewCard(project,unique){
         if(!clientPreviewPublished(project)||!clientPreviewPath(project))return '';
         let media='<div class="delivery-preview-empty"><strong style="display:block;color:#ddd;margin-bottom:.3rem">Muestra preparada</strong>No pudimos cargar la vista previa en este momento.</div>';
-        if(s3){try{const url=s3.getSignedUrl('getObject',{Bucket:R2_BUCKET_NAME,Key:clientPreviewPath(project),Expires:300});media=`<img src="${esc(url)}" alt="Muestra del trabajo terminado" loading="lazy" draggable="false" onload="window.registrarVistaLamina&&window.registrarVistaLamina('${esc(project.id)}')" oncontextmenu="return false"><span class="delivery-preview-badge">Muestra protegida · sin descarga</span>`;}catch(e){console.info('Muestra protegida:',e);}}
+        if(projectFiles)media=`<img data-secure-r2-key="${esc(clientPreviewPath(project))}" alt="Muestra del trabajo terminado" loading="lazy" draggable="false" onload="window.registrarVistaLamina&&window.registrarVistaLamina('${esc(project.id)}')" oncontextmenu="return false"><span class="delivery-preview-badge">Muestra protegida · sin descarga</span>`;
         const paid=projectPaid(project),finalPublished=deliveryIsPublished(project);
         const state=paid?(finalPublished?'Pago confirmado · entrega final disponible':'Pago confirmado · preparando entrega final'):'Trabajo terminado · pago pendiente';
         const copy=paid?(finalPublished?'Tu pago está confirmado y la entrega final ya fue publicada.':'Tu pago está confirmado. Esta muestra es solo una vista previa; el equipo publicará los archivos finales por separado.'):'Esta es una muestra protegida del trabajo terminado. Los archivos finales permanecen ocultos y no se entregan desde esta vista previa.';
@@ -2622,7 +2605,7 @@
       // === ELIMINAR ARCHIVO (BOTON X) DESDE CLIENTE ===
       window.eliminarArchivoR2Cliente=async function(projectId,fileId,storagePath,button){
         if(!confirm('¿Estás seguro de eliminar este archivo?'))return;
-        if(!s3)return;
+        if(!projectFiles)return;
         const user=auth.currentUser;
         const old=button.textContent;button.disabled=true;button.textContent='...';
         try{
@@ -2632,7 +2615,7 @@
             alert('Este proyecto ya fue entregado. Tus archivos se conservan como historial y ya no pueden eliminarse desde el portal.');
             return;
           }
-          await s3.deleteObject({Bucket:R2_BUCKET_NAME,Key:storagePath}).promise().catch(e=>console.log(e));
+          await projectFiles.remove(storagePath);
           await updateDoc(doc(db,'users',user.uid,'projects',projectId,'clientFiles',fileId),{availability:'deleted',deletedAt:serverTimestamp()});
           if(snap.exists()){
             const current=Math.max(0,Number(snap.data().clientFileCount||0)-1);
@@ -2645,7 +2628,7 @@
         }
       };
 
-      // === SUBIDA DIRECTA A CLOUDFLARE R2 DESDE EL CLIENTE (CON AWS SDK v2) ===
+      // === SUBIDA SEGURA A CLOUDFLARE R2 A TRAVÉS DEL WORKER ===
       window.subirArchivosProyecto=async function(projectId,input,progressId,feedbackId){
         const user=auth.currentUser, files=Array.from(input?.files||[]), progress=document.getElementById(progressId), feedback=document.getElementById(feedbackId); 
         if(!user||!files.length)return;
@@ -2658,7 +2641,7 @@
           }
         }catch(e){console.info('Validación de proyecto entregado:',e);}
         
-        if(!s3) {
+        if(!projectFiles) {
           alert('La librería de subida no cargó correctamente. Revisa tu conexión de red o recarga la página.');
           if(feedback){feedback.textContent='Error de conexión: El servidor de archivos de Evolution Group no está listo.';feedback.className='files-feedback error'}
           return;
@@ -2668,27 +2651,19 @@
         
         for(const file of files){
           if(file.size>100*1024*1024){if(feedback){feedback.textContent=`${file.name} supera 100 MB.`;feedback.className='files-feedback error'}continue;}
-          const fileId=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,''), clean=file.name.replace(/[\\/]+/g,'_').slice(-180), path=`projects/${user.uid}/${projectId}/client/${fileId}/${clean}`;
+          const fileId=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,'');
           const row=document.createElement('div');row.className='file-progress-item';row.innerHTML=`<div class="file-progress-top"><span>${esc(file.name)}</span><span>0%</span></div><div class="file-progress-track"><div class="file-progress-bar" style="width:0%"></div></div>`;progress?.appendChild(row);const pct=row.querySelector('.file-progress-top span:last-child');
           const bar=row.querySelector('.file-progress-bar');
           
           try {
-            const request = s3.putObject({
-              Bucket: R2_BUCKET_NAME,
-              Key: path,
-              Body: file,
-              ContentType: file.type || 'application/octet-stream'
-            });
-
-            request.on('httpUploadProgress', function (p) {
-              if (p.total > 0) {
-                const n = Math.round((p.loaded / p.total) * 100);
+            const result=await projectFiles.upload({ownerUid:user.uid,projectId,folder:'client',fileId,file,onProgress:(loaded,total)=>{
+              if(total>0){
+                const n=Math.round((loaded/total)*100);
                 pct.textContent = `${n}%`;
                 bar.style.width = `${n}%`;
               }
-            });
-
-            await request.promise();
+            }});
+            const path=result.storagePath;
 
             await setDoc(doc(db,'users',user.uid,'projects',projectId,'clientFiles',fileId),{ownerUid:user.uid,projectId,fileId,role:'client',storagePath:path,name:file.name,label:file.name,size:file.size,contentType:file.type||'',availability:'active',uploadedAt:serverTimestamp()});
             await updateDoc(doc(db,'users',user.uid,'projects',projectId),{clientFileCount:increment(1),updatedAt:serverTimestamp()});
@@ -2703,17 +2678,10 @@
 
       // === DESCARGA DESDE CLOUDFLARE R2 ===
       window.descargarArchivoR2=async function(projectId,fileId,storagePath,fileName,button,role='delivery'){
-        if(!s3) return;
+        if(!projectFiles) return;
         const old=button?.textContent; if(button){button.disabled=true;button.textContent='Abriendo…'}
         try {
-          const url = s3.getSignedUrl('getObject', {
-              Bucket: R2_BUCKET_NAME,
-              Key: storagePath,
-              Expires: 300,
-              ResponseContentDisposition: `attachment; filename="${fileName}"`
-          });
-          const a = document.createElement('a'); a.href = url; a.download = fileName;
-          document.body.appendChild(a); a.click(); a.remove();
+          await projectFiles.download(storagePath,fileName);
           if(role==='delivery'&&projectId&&fileId)void registrarDescargaEntrega(projectId,fileId,fileName);
         } catch(e){
           console.error(e); alert('No se pudo descargar el archivo.');
@@ -2787,15 +2755,14 @@
       }
       function paymentSafeName(v){return String(v||'comprobante').replace(/[\\/]+/g,'_').replace(/[^A-Za-z0-9._() -]/g,'_').slice(-160)}
       async function uploadCustomPaymentReceipt(user,projectId,file,onProgress){
-        if(!s3)throw new Error('El servidor de comprobantes no está disponible.');
+        if(!projectFiles)throw new Error('El servidor de comprobantes no está disponible.');
         if(!file)throw new Error('Adjunta el comprobante del pago.');
         if(file.size>12*1024*1024)throw new Error('El comprobante no puede superar 12 MB.');
         if(!(/^image\//i.test(file.type)||file.type==='application/pdf'))throw new Error('El comprobante debe ser imagen o PDF.');
         const fileId=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,'');
-        const safe=paymentSafeName(file.name),path=`projects/${user.uid}/${projectId}/payment/${fileId}/${safe}`;
-        const request=s3.putObject({Bucket:R2_BUCKET_NAME,Key:path,Body:file,ContentType:file.type||'application/octet-stream'});
-        request.on('httpUploadProgress',x=>{if(x.total>0&&onProgress)onProgress(Math.round(x.loaded/x.total*100));});
-        await request.promise();
+        const safe=paymentSafeName(file.name);
+        const result=await projectFiles.upload({ownerUid:user.uid,projectId,folder:'payment',fileId,file,onProgress:(loaded,total)=>{if(total>0&&onProgress)onProgress(Math.round(loaded/total*100));}});
+        const path=result.storagePath;
         return {storagePath:path,name:file.name||safe,size:file.size,contentType:file.type||'application/octet-stream'};
       }
       function paymentStatusInline(panel,text,kind='info'){const el=panel?.querySelector('.manual-custom-status');if(!el)return;el.className=`manual-custom-status ${kind}`;el.textContent=text;}

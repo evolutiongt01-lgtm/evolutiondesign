@@ -3254,6 +3254,7 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
     
   </script>
 <!-- INTEGRACIÓN DE FIREBASE (AUTH & MODAL LOGIC) -->
+<script src="/evolution-project-files.js?v=1"></script>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, setPersistence, indexedDBLocalPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
@@ -3288,19 +3289,9 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
     const db = getFirestore(app);
     const providerGoogle = new GoogleAuthProvider();
 
-    // === COMPROBANTES MANUALES (BINANCE / TRANSFERENCIAS) ===
-    // Se conserva la misma infraestructura R2 que ya usa Órdenes/Admin.
-    // IMPORTANTE DE PRODUCCIÓN: una credencial R2 escrita en frontend es visible para el navegador.
-    // Conviene migrar esta subida a URLs firmadas/Worker cuando quieras endurecer seguridad.
-    const R2_ACCOUNT_ID = "d94e264f8a09f87496e21e72bd3731aa";
-    const R2_ACCESS_KEY_ID = "ea76378ab014694c3f387477de604782";
-    const R2_SECRET_ACCESS_KEY = "cf9a573453b35a875f4adb07c88374f942047b9ae9e358c3a3c11a629a0af4f6";
-    const R2_BUCKET_NAME = "evolution-design-files";
-    let paymentR2 = null;
-    if (window.AWS) {
-      window.AWS.config.update({accessKeyId:R2_ACCESS_KEY_ID,secretAccessKey:R2_SECRET_ACCESS_KEY,region:'auto',signatureVersion:'v4'});
-      paymentR2 = new window.AWS.S3({endpoint:new window.AWS.Endpoint(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`)});
-    }
+    // Comprobantes manuales protegidos por Firebase Auth + Worker + binding R2.
+    window.__evolutionProjectFilesAuth=auth;
+    const projectFiles=window.EvolutionProjectFiles;
 
     const BINANCE_PAYMENT = {
       alias: 'Evolution Desing',
@@ -3970,7 +3961,7 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
     }
 
     async function uploadManualReceipt(user, projectId, file, onProgress) {
-      if(!paymentR2) throw new Error('El servidor de comprobantes R2 no está disponible.');
+      if(!projectFiles) throw new Error('El servidor de comprobantes no está disponible.');
       if(!file) throw new Error('Adjunta el comprobante del pago.');
       if(file.size > 12*1024*1024) throw new Error('El comprobante no puede superar 12 MB.');
       const allowed = /^image\//i.test(file.type) || file.type === 'application/pdf';
@@ -3978,10 +3969,8 @@ html,body{background:#050505!important} evolution-nav,nav.desktop-nav,nav.mobile
 
       const fileId=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}_${Math.random().toString(36).slice(2)}`).replace(/[^A-Za-z0-9_-]/g,'');
       const safeName=String(file.name||'comprobante').replace(/[\\/]+/g,'_').slice(-160);
-      const path=`projects/${user.uid}/${projectId}/payment/${fileId}/${safeName}`;
-      const request=paymentR2.putObject({Bucket:R2_BUCKET_NAME,Key:path,Body:file,ContentType:file.type||'application/octet-stream'});
-      request.on('httpUploadProgress',p=>{if(p.total>0&&typeof onProgress==='function')onProgress(Math.round(p.loaded/p.total*100));});
-      await request.promise();
+      const result=await projectFiles.upload({ownerUid:user.uid,projectId,folder:'payment',fileId,file,onProgress:(loaded,total)=>{if(total>0&&typeof onProgress==='function')onProgress(Math.round(loaded/total*100));}});
+      const path=result.storagePath;
       return {storagePath:path,name:file.name||safeName,size:file.size,contentType:file.type||'application/octet-stream'};
     }
 
