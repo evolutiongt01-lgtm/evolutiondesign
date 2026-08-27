@@ -8,7 +8,6 @@ const cfg={apiKey:'AIzaSyA5b-2R5WUQNOt3N2cAKBZK3x5--YhwzHM',authDomain:'evolutio
 const auth=getAuth(getApps()[0]||initializeApp(cfg));
 let activeLesson=null;
 document.body.style.paddingTop=innerWidth<992?'118px':'96px';document.querySelector('.top')?.style.setProperty('display','none','important');
-if(!document.querySelector('evolution-nav')){const host=document.createElement('evolution-nav');document.body.prepend(host);const nav=document.createElement('script');nav.src='/evolution-nav.js?v=50.47';nav.defer=true;document.head.appendChild(nav)}
 function syncAcademyNav(user){let tries=0;const apply=()=>{if(window.EvolutionNav?.setAuth){window.EvolutionNav.setAuth({user,isAdmin:Boolean(user&&ADMINS.has(String(user.email||'').toLowerCase()))});return}if(++tries<40)setTimeout(apply,100)};apply()}
 onAuthStateChanged(auth,user=>syncAcademyNav(user));
 const ambientStyle=document.createElement('style');ambientStyle.textContent='.video-feature{overflow:visible!important;isolation:isolate;--academy-ambient:none}.video-feature:before{content:"";position:absolute;z-index:-1;inset:5% -3% -8%;background-image:var(--academy-ambient);background-position:center;background-size:cover;filter:blur(48px) saturate(1.65);opacity:.72;transform:scale(1.03);pointer-events:none;transition:background-image .45s}.video-feature iframe,.video-feature>img{position:relative;z-index:1;border-radius:25px}';document.head.appendChild(ambientStyle);

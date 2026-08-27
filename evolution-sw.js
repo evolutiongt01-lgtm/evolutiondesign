@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.47 · Academy mobile + multifile */
-const VERSION='evolution-smart-app-v50.47-academy-multifile';
-const APP_BUILD=55;
+/* Evolution Design · Advanced App Shell Service Worker · v50.48 · Shared course navigation */
+const VERSION='evolution-smart-app-v50.48-shared-course-nav';
+const APP_BUILD=56;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
