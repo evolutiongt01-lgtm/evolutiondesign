@@ -26,6 +26,7 @@
     {key:'academy',href:'/academia.html',label:'Academia',short:'Cursos',icon:'academy'},
     {key:'devices',href:'/dispositivos.html',label:'Dispositivos',short:'Tienda',icon:'devices'}
   ];
+  const MOBILE_PAGES = PAGES.filter(page => page.key !== 'portfolio');
 
   const escapeHTML = value => String(value ?? '')
     .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
@@ -129,7 +130,7 @@
   `;
   document.head.appendChild(style);
 
-  const menuRows = active => PAGES.map(p => `
+  const menuRows = (active,pages=PAGES) => pages.map(p => `
     <li><a href="${p.href}" class="evo-menu-item${p.key===active?' active':''}" data-evo-route="${p.key}">${ICONS[p.icon]}<span>${p.label}</span></a></li>
   `).join('') + `
     <li><a href="/sobre-nosotros" class="evo-menu-item"><span>Sobre Nosotros</span></a></li>
@@ -174,13 +175,13 @@
           <div class="evo-mobile-top">
             <div class="evo-menu-wrap">
               <a href="#" class="evo-icon" id="mobileMenuBtn" aria-label="Menú" aria-expanded="false">${ICONS.menu}</a>
-              <ul class="evo-drop" id="mobileDropdownMenu">${menuRows(active)}</ul>
+              <ul class="evo-drop" id="mobileDropdownMenu">${menuRows(active,MOBILE_PAGES)}</ul>
             </div>
             <a href="/index.html" class="evo-logo" data-evo-route="home" aria-label="Evolution Design Home"><img src="/img/logo.png" alt="Evolution Design"></a>
             <div id="auth-mobile-wrapper"><a href="#" class="evo-icon" data-evo-login aria-label="Login">${ICONS.login}</a></div>
           </div>
           <div class="evo-tabs">
-            ${PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-tab${p.key===active?' active':''}">${ICONS[p.icon]}<span>${p.short}</span></a>`).join('')}
+            ${MOBILE_PAGES.map(p=>`<a href="${p.href}" data-evo-route="${p.key}" class="evo-tab${p.key===active?' active':''}">${ICONS[p.icon]}<span>${p.short}</span></a>`).join('')}
             <span class="evo-route-indicator evo-mobile-indicator" aria-hidden="true"></span>
           </div>
         </nav>`;

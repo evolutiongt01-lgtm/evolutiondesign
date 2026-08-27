@@ -7717,6 +7717,8 @@ const ACADEMY_DEFAULT_COURSE = Object.freeze({
     sortOrder: 10
   }]
 });
+const ACADEMY_TEST_COUPON = "EVOLUTION-ACADEMIA-TEST-100";
+const ACADEMY_TEST_COUPON_EXPIRES = "2026-09-30T05:59:59.999Z";
 
 function academyCourseSlug(value) {
   return clean(value, 100).toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "") || ACADEMY_DEFAULT_COURSE.slug;
@@ -7875,6 +7877,23 @@ async function academyAdminEnrollmentsRoute(request, env, origin) {
     await adminSetDocument(env, ["academyEnrollments", record.id], record);
     return json({ ok: true, enrollment: record }, 200, origin);
   } catch (error) { return json({ ok: false, code: String(error?.message || "ACADEMY_ENROLL_FAILED"), error: "No se pudo inscribir al alumno. Verifica que ya tenga una cuenta." }, 400, origin); }
+}
+async function academyCouponRedeemRoute(request, env, origin) {
+  try {
+    const user = await requireFirebaseUser(bearerToken(request)), payload = await request.json().catch(() => ({}));
+    const code = clean(payload.code, 80).toUpperCase(), slug = academyCourseSlug(payload.slug || ACADEMY_DEFAULT_COURSE.slug);
+    if (code !== ACADEMY_TEST_COUPON || Date.now() > Date.parse(ACADEMY_TEST_COUPON_EXPIRES)) throw new Error("ACADEMY_COUPON_INVALID");
+    const already = await adminGetDocument(env, ["academyCouponRedemptions", user.uid], true);
+    if (already.exists) throw new Error("ACADEMY_COUPON_ALREADY_USED");
+    const used = await adminRunQuery(env, { from: [{ collectionId: "academyCouponRedemptions" }], where: { fieldFilter: { field: { fieldPath: "code" }, op: "EQUAL", value: { stringValue: ACADEMY_TEST_COUPON } } }, limit: 4 });
+    if (used.length >= 3) throw new Error("ACADEMY_COUPON_LIMIT_REACHED");
+    const now = new Date().toISOString(), enrollment = { id: academyEnrollmentId(slug, user.uid), uid: user.uid, email: user.email || "", courseSlug: slug, status: "active", source: "temporary_test_coupon", paidUsd: 0, createdAt: now, updatedAt: now };
+    await Promise.all([adminSetDocument(env, ["academyEnrollments", enrollment.id], enrollment), adminSetDocument(env, ["academyCouponRedemptions", user.uid], { uid: user.uid, email: user.email || "", code: ACADEMY_TEST_COUPON, courseSlug: slug, redeemedAt: now })]);
+    return json({ ok: true, enrollment, message: "Curso desbloqueado gratuitamente para pruebas." }, 200, origin);
+  } catch (error) {
+    const code = String(error?.message || "ACADEMY_COUPON_FAILED"), messages = { ACADEMY_COUPON_INVALID: "El cupón no es válido o ya venció.", ACADEMY_COUPON_ALREADY_USED: "Esta cuenta ya utilizó el cupón de prueba.", ACADEMY_COUPON_LIMIT_REACHED: "El cupón temporal alcanzó su límite de usos." };
+    return json({ ok: false, code, error: messages[code] || "No se pudo aplicar el cupón." }, 400, origin);
+  }
 }
 
 // ============================================================================
@@ -8469,6 +8488,7 @@ export default {
     if (url.pathname === "/academy/admin/submissions" && request.method === "GET") return academyAdminSubmissionsRoute(request, env, origin);
     if (url.pathname === "/academy/admin/submissions/grade" && request.method === "POST") return academyGradeSubmissionRoute(request, env, origin);
     if (url.pathname === "/academy/admin/enrollments" && (request.method === "GET" || request.method === "POST")) return academyAdminEnrollmentsRoute(request, env, origin);
+    if (url.pathname === "/academy/coupon/redeem" && request.method === "POST") return academyCouponRedeemRoute(request, env, origin);
     if (url.pathname === "/admin/presence" && request.method === "GET") {
       return adminPresenceRoute(request, env, origin);
     }
