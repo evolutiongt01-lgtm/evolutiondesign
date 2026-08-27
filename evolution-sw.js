@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.50 · Academy auth bridge */
-const VERSION='evolution-smart-app-v50.51-academy-video-email';
-const APP_BUILD=59;
+/* Evolution Design · Advanced App Shell Service Worker · v50.52 · Persistent Academy + GTQ */
+const VERSION='evolution-smart-app-v50.52-academy-shell-gtq';
+const APP_BUILD=60;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;

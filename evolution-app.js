@@ -2,8 +2,8 @@
 (() => {
   'use strict';
 
-  const VERSION='49.4';
-  const APP_BUILD=49;
+  const VERSION='49.5';
+  const APP_BUILD=50;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -13,7 +13,8 @@
     grafico:{key:'grafico',path:'/diseno-grafico.html',view:'/views/diseno-grafico.html',title:'Diseño Gráfico · Evolution Design',order:2,transition:{x:10,y:0,scale:.999,blur:0}},
     web:{key:'web',path:'/diseno-web.html',view:'/views/diseno-web.html',title:'Diseño Web · Evolution Design',order:3,transition:{x:0,y:7,scale:.998,blur:2}},
     portfolio:{key:'portfolio',path:'/portafolio.html',view:'/views/portafolio.html',title:'Proyectos · Evolution Design',order:4,transition:{x:0,y:6,scale:.998,blur:1}},
-    devices:{key:'devices',path:'/dispositivos.html',view:'/views/dispositivos.html',title:'Dispositivos · Evolution Design',order:5,transition:{x:7,y:0,scale:.999,blur:1}}
+    academy:{key:'academy',path:'/academia.html',view:'/academia.html?evolutionView=1',title:'Evolution Academy · Cursos profesionales',order:5,transition:{x:0,y:7,scale:.998,blur:1}},
+    devices:{key:'devices',path:'/dispositivos.html',view:'/views/dispositivos.html',title:'Dispositivos · Evolution Design',order:6,transition:{x:7,y:0,scale:.999,blur:1}}
   };
 
   const ROUTE_LIST=Object.values(ROUTES);
@@ -22,7 +23,7 @@
 
   /* Orden de navegación táctil móvil. Órdenes queda fuera porque
      es una zona privada y no pertenece al App Shell público. */
-  const MOBILE_SWIPE_ORDER=['home','arquitectura','grafico','web','portfolio','devices'];
+  const MOBILE_SWIPE_ORDER=['home','arquitectura','grafico','web','portfolio','academy','devices'];
   const MOBILE_SWIPE_COMMIT_PROGRESS=.60;
   const PRIVATE_HINTS=['/proyectos','/perfil','/admin','/portal','/account','/checkout','/payment','/pago','/login','/api/'];
   const prefetchedViews=new Set();
@@ -986,6 +987,7 @@
     if(p.includes('diseno-grafico'))return ROUTES.grafico;
     if(p.includes('diseno-web'))return ROUTES.web;
     if(p.includes('portafolio'))return ROUTES.portfolio;
+    if(p.includes('academia'))return ROUTES.academy;
     if(p.includes('dispositivos'))return ROUTES.devices;
     return ROUTES.home;
   };
@@ -1011,6 +1013,7 @@
       if(p==='/diseno-grafico'||p==='/diseno-grafico.html')return ROUTES.grafico;
       if(p==='/diseno-web'||p==='/diseno-web.html')return ROUTES.web;
       if(p==='/portafolio'||p==='/portafolio.html')return ROUTES.portfolio;
+      if(p==='/academia'||p==='/academia.html')return ROUTES.academy;
       if(p==='/dispositivos'||p==='/dispositivos.html')return ROUTES.devices;
 
       return null;
