@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.62 · Safari manual YouTube playback */
-const VERSION='evolution-smart-app-v50.62-safari-manual-youtube';
-const APP_BUILD=70;
+/* Evolution Design · Advanced App Shell Service Worker · v50.63 · privacy player restore */
+const VERSION='evolution-smart-app-v50.63-youtube-nocookie-restore';
+const APP_BUILD=71;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
