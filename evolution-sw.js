@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.57 · Academy frame routing fix */
-const VERSION='evolution-smart-app-v50.57-academy-frame-routing';
-const APP_BUILD=65;
+/* Evolution Design · Advanced App Shell Service Worker · v50.58 · iPhone video + chat unread */
+const VERSION='evolution-smart-app-v50.58-iphone-video-chat-unread';
+const APP_BUILD=66;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
