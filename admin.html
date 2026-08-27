@@ -1052,6 +1052,18 @@ html.admin-boss-active,body.admin-boss-active{overflow:hidden!important;overscro
 }
 </style>
 
+<style id="academy-admin-chat-mobile-v5054">
+@media(max-width:700px){
+  #academyAdminChats .panel-body>div{grid-template-columns:1fr!important}
+  #academyChatList{display:flex!important;overflow-x:auto;gap:7px;padding-bottom:4px;scrollbar-width:none}
+  #academyChatList::-webkit-scrollbar{display:none}
+  #academyChatList>button{flex:0 0 min(78vw,260px)}
+  #academyAdminChatMessages{height:min(46vh,420px)!important;padding:11px!important}
+  #academyAdminChatForm{grid-template-columns:40px minmax(0,1fr) 43px!important;padding:9px!important}
+  #academyAdminChatText{min-width:0!important;width:100%!important;font-size:16px!important}
+  #adminNotificationsBtn{max-width:128px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+</style>
 </head>
 <body>
 

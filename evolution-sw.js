@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.53 · Academy chat + admin alerts */
-const VERSION='evolution-smart-app-v50.53-academy-chat-alerts';
-const APP_BUILD=61;
+/* Evolution Design · Advanced App Shell Service Worker · v50.54 · Mobile Academy chat */
+const VERSION='evolution-smart-app-v50.54-academy-chat-mobile';
+const APP_BUILD=62;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
