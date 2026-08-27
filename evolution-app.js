@@ -2,8 +2,8 @@
 (() => {
   'use strict';
 
-  const VERSION='49.6';
-  const APP_BUILD=51;
+  const VERSION='49.7';
+  const APP_BUILD=52;
   const RELEASE_ENDPOINT='/evolution-version.json';
   const RELEASE_ACK_KEY='evolution_release_ack_build';
 
@@ -3089,7 +3089,8 @@
     try{
       const childURL=new URL(frame.contentWindow.location.href);
       const isView=childURL.origin===location.origin&&childURL.pathname.startsWith('/views/');
-      if(!isView){
+      const isAcademyView=childURL.origin===location.origin&&childURL.pathname==='/academia.html'&&childURL.searchParams.has('evolutionView');
+      if(!isView&&!isAcademyView){
         location.href=childURL.href;
         return false;
       }

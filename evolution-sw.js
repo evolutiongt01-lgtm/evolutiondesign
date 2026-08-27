@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.56 · Main route cache + dynamic cinema */
-const VERSION='evolution-smart-app-v50.56-academy-route-cinema';
-const APP_BUILD=64;
+/* Evolution Design · Advanced App Shell Service Worker · v50.57 · Academy frame routing fix */
+const VERSION='evolution-smart-app-v50.57-academy-frame-routing';
+const APP_BUILD=65;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
