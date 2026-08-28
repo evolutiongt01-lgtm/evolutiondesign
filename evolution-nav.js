@@ -187,12 +187,33 @@
     evolution-nav.evo-academy-light-glass .evo-mobile .evo-logo img{filter:none}
     evolution-nav.evo-academy-light-glass .evo-tab{color:rgba(255,246,231,.68)}
     evolution-nav.evo-academy-light-glass .evo-tab.active{color:#fff;background:linear-gradient(180deg,rgba(255,235,203,.20),rgba(29,27,24,.16));box-shadow:inset 0 1px rgba(255,255,255,.25),0 7px 17px rgba(35,24,14,.16)}
+    evolution-nav.evo-academy-light-glass .evo-brand,evolution-nav.evo-academy-light-glass .evo-links,evolution-nav.evo-academy-light-glass .evo-software,evolution-nav.evo-academy-light-glass #floating-profile-desktop{backdrop-filter:url(#evo-liquid-refraction) blur(18px) saturate(185%) contrast(116%);-webkit-backdrop-filter:url(#evo-liquid-refraction) blur(18px) saturate(185%) contrast(116%)}
+    evolution-nav.evo-academy-light-glass .evo-links:before{content:"";position:absolute;z-index:-1;inset:4px 8px;border-radius:999px;background:linear-gradient(105deg,rgba(255,255,255,.06),rgba(255,232,194,.12) 30%,rgba(24,23,22,.08) 52%,rgba(255,235,204,.11) 72%,rgba(255,255,255,.04));backdrop-filter:url(#evo-liquid-refraction-soft) blur(3px) contrast(112%);-webkit-backdrop-filter:url(#evo-liquid-refraction-soft) blur(3px) contrast(112%);pointer-events:none}
+    evolution-nav.evo-academy-light-glass .evo-mobile{backdrop-filter:url(#evo-liquid-refraction-soft) blur(22px) saturate(180%) contrast(112%)!important;-webkit-backdrop-filter:url(#evo-liquid-refraction-soft) blur(22px) saturate(180%) contrast(112%)!important}
 
     @media(min-width:992px){.evo-desktop{display:block}.evo-mobile{display:none!important}}
     @media(max-width:390px){.evo-mobile-top{padding-left:10px;padding-right:10px}.evo-mobile .evo-logo img{max-width:112px}.evo-tab{font-size:.49rem}.evo-tab svg{width:18px;height:18px}}
     @media(prefers-reduced-motion:reduce){.evo-nav *{transition:none!important;animation:none!important}}
   `;
   document.head.appendChild(style);
+
+  const liquidSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  liquidSvg.setAttribute('aria-hidden','true');
+  liquidSvg.setAttribute('width','0');
+  liquidSvg.setAttribute('height','0');
+  liquidSvg.style.cssText='position:absolute;width:0;height:0;overflow:hidden;pointer-events:none';
+  liquidSvg.innerHTML=`<defs>
+    <filter id="evo-liquid-refraction" x="-12%" y="-20%" width="124%" height="140%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.035" numOctaves="2" seed="17" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="1.2" result="softNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="evo-liquid-refraction-soft" x="-8%" y="-15%" width="116%" height="130%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.045" numOctaves="1" seed="29" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="B"/>
+    </filter>
+  </defs>`;
+  (document.body||document.documentElement).appendChild(liquidSvg);
 
   const menuRows = (active,pages=PAGES) => pages.map(p => `
     <li><a href="${p.href}" class="evo-menu-item${p.key===active?' active':''}" data-evo-route="${p.key}">${ICONS[p.icon]}<span>${p.label}</span></a></li>

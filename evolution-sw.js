@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.71 · amber glass reference */
-const VERSION='evolution-smart-app-v50.71-amber-liquid-glass-reference';
-const APP_BUILD=79;
+/* Evolution Design · Advanced App Shell Service Worker · v50.72 · optical glass refraction */
+const VERSION='evolution-smart-app-v50.72-optical-glass-refraction';
+const APP_BUILD=80;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
