@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.72 · optical glass refraction */
-const VERSION='evolution-smart-app-v50.72-optical-glass-refraction';
-const APP_BUILD=80;
+/* Evolution Design · Advanced App Shell Service Worker · v50.73 · neutral adaptive glass */
+const VERSION='evolution-smart-app-v50.73-neutral-adaptive-glass';
+const APP_BUILD=81;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
