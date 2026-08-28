@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.75 · unified optical navigation */
-const VERSION='evolution-smart-app-v50.75-unified-optical-navigation';
-const APP_BUILD=83;
+/* Evolution Design · Advanced App Shell Service Worker · v50.76 · academy editorial redesign */
+const VERSION='evolution-smart-app-v50.76-academy-editorial-redesign';
+const APP_BUILD=84;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
