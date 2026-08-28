@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.81 · course presentation redesign */
-const VERSION='evolution-smart-app-v50.81-course-presentation';
-const APP_BUILD=89;
+/* Evolution Design · Advanced App Shell Service Worker · v50.82 · enrolled classroom redesign */
+const VERSION='evolution-smart-app-v50.82-enrolled-classroom';
+const APP_BUILD=90;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
