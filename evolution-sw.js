@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.77 · academy catalog cards */
-const VERSION='evolution-smart-app-v50.77-academy-catalog-cards';
-const APP_BUILD=85;
+/* Evolution Design · Advanced App Shell Service Worker · v50.78 · academy icon alignment */
+const VERSION='evolution-smart-app-v50.78-academy-icon-alignment';
+const APP_BUILD=86;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
