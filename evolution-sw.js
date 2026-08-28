@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.63 · privacy player restore */
-const VERSION='evolution-smart-app-v50.63-youtube-nocookie-restore';
-const APP_BUILD=71;
+/* Evolution Design · Advanced App Shell Service Worker · v50.64 · academy rectangle catalog */
+const VERSION='evolution-smart-app-v50.64-academy-rectangle-catalog';
+const APP_BUILD=72;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
