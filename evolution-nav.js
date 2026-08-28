@@ -163,6 +163,31 @@
     evolution-nav.evo-academy-light-glass .evo-tab{margin:3px 1px 5px;border:0;border-radius:14px;color:#716b64}
     evolution-nav.evo-academy-light-glass .evo-tab.active{color:#171513;background:rgba(255,255,255,.54);box-shadow:0 7px 18px rgba(67,50,30,.09),inset 0 1px #fff}
 
+    /* Warm amber Liquid Glass reference */
+    evolution-nav.evo-academy-light-glass .evo-pill{min-height:64px;padding:0!important;gap:10px;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:visible}
+    evolution-nav.evo-academy-light-glass .evo-pill:before,evolution-nav.evo-academy-light-glass .evo-pill:after{display:none}
+    evolution-nav.evo-academy-light-glass .evo-brand,evolution-nav.evo-academy-light-glass .evo-links,evolution-nav.evo-academy-light-glass .evo-software,evolution-nav.evo-academy-light-glass #floating-profile-desktop{border:1.5px solid rgba(236,181,105,.72);background:radial-gradient(ellipse at 5% 55%,rgba(20,22,25,.58),transparent 9%),radial-gradient(ellipse at 95% 55%,rgba(23,24,27,.55),transparent 9%),linear-gradient(180deg,rgba(178,142,99,.63),rgba(116,87,55,.58));box-shadow:0 18px 42px rgba(38,27,16,.25),inset 0 2px 2px rgba(255,241,216,.30),inset 0 -2px 2px rgba(44,31,19,.28),inset 12px 0 24px rgba(255,223,177,.08),inset -12px 0 24px rgba(39,29,20,.10);backdrop-filter:blur(24px) saturate(170%) contrast(112%);-webkit-backdrop-filter:blur(24px) saturate(170%) contrast(112%)}
+    evolution-nav.evo-academy-light-glass .evo-brand{min-height:62px;padding:8px 18px 8px 8px;border-radius:999px;gap:13px;overflow:hidden}
+    evolution-nav.evo-academy-light-glass .evo-links{min-height:62px;margin-left:0;padding:7px 10px;border-radius:999px;gap:2px;overflow:hidden}
+    evolution-nav.evo-academy-light-glass .evo-logo img{filter:none;opacity:.96}
+    evolution-nav.evo-academy-light-glass .evo-icon{width:44px;height:44px;min-width:44px;color:#fff8ec;border:1px solid rgba(255,230,191,.28);background:linear-gradient(145deg,rgba(255,238,209,.14),rgba(28,27,26,.16));box-shadow:inset 0 1px rgba(255,247,232,.32),0 8px 20px rgba(35,25,16,.18)}
+    evolution-nav.evo-academy-light-glass .evo-icon:before{background:linear-gradient(180deg,rgba(255,243,218,.22),rgba(255,255,255,0))}
+    evolution-nav.evo-academy-light-glass .evo-icon:after{background:linear-gradient(180deg,rgba(255,238,207,.28),rgba(255,255,255,0))}
+    evolution-nav.evo-academy-light-glass .evo-link{padding:11px 10px;color:rgba(255,249,237,.78);text-shadow:0 1px 7px rgba(22,16,10,.45)}
+    evolution-nav.evo-academy-light-glass .evo-link:hover{color:#fff;background:rgba(255,240,216,.13);box-shadow:inset 0 1px rgba(255,255,255,.2)}
+    evolution-nav.evo-academy-light-glass .evo-link.active{color:#fffdf8;border:1px solid rgba(255,229,188,.3);background:linear-gradient(180deg,rgba(255,235,203,.22),rgba(32,28,24,.15));box-shadow:inset 0 1px rgba(255,255,255,.3),0 6px 16px rgba(38,26,15,.13)}
+    evolution-nav.evo-academy-light-glass .evo-orders-link{color:rgba(255,244,226,.74)!important}
+    evolution-nav.evo-academy-light-glass .evo-login{color:#fff4df!important}
+    evolution-nav.evo-academy-light-glass .evo-software{height:62px;padding:0 20px;border-radius:999px;color:#fffaf1;background:radial-gradient(ellipse at 7% 50%,rgba(20,21,23,.58),transparent 13%),radial-gradient(ellipse at 93% 50%,rgba(20,21,23,.53),transparent 13%),linear-gradient(180deg,rgba(167,130,87,.68),rgba(102,75,47,.62));font-weight:850;text-shadow:0 1px 7px rgba(20,14,9,.48)}
+    evolution-nav.evo-academy-light-glass #floating-profile-desktop{width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 70% 40%,rgba(25,25,27,.48),transparent 27%),linear-gradient(180deg,rgba(171,134,91,.68),rgba(103,76,47,.62))}
+    evolution-nav.evo-academy-light-glass .evo-drop{border:1.5px solid rgba(232,177,104,.6);background:linear-gradient(180deg,rgba(134,102,65,.88),rgba(72,54,35,.92));box-shadow:0 25px 65px rgba(34,23,13,.35),inset 0 1px rgba(255,235,204,.24);backdrop-filter:blur(30px) saturate(170%);-webkit-backdrop-filter:blur(30px) saturate(170%)}
+    evolution-nav.evo-academy-light-glass .evo-menu-item{color:rgba(255,248,236,.82)}
+    evolution-nav.evo-academy-light-glass .evo-menu-item:hover,evolution-nav.evo-academy-light-glass .evo-menu-item.active{background:rgba(255,228,187,.14);color:#fff}
+    evolution-nav.evo-academy-light-glass .evo-mobile{background:radial-gradient(ellipse at 3% 45%,rgba(22,23,25,.48),transparent 9%),radial-gradient(ellipse at 97% 45%,rgba(22,23,25,.45),transparent 9%),linear-gradient(180deg,rgba(170,133,90,.72),rgba(100,73,45,.68))!important;border-bottom:1.5px solid rgba(235,180,107,.68)!important;box-shadow:0 16px 38px rgba(36,25,14,.27),inset 0 2px rgba(255,237,207,.22)!important;backdrop-filter:blur(28px) saturate(175%)!important;-webkit-backdrop-filter:blur(28px) saturate(175%)!important}
+    evolution-nav.evo-academy-light-glass .evo-mobile .evo-logo img{filter:none}
+    evolution-nav.evo-academy-light-glass .evo-tab{color:rgba(255,246,231,.68)}
+    evolution-nav.evo-academy-light-glass .evo-tab.active{color:#fff;background:linear-gradient(180deg,rgba(255,235,203,.20),rgba(29,27,24,.16));box-shadow:inset 0 1px rgba(255,255,255,.25),0 7px 17px rgba(35,24,14,.16)}
+
     @media(min-width:992px){.evo-desktop{display:block}.evo-mobile{display:none!important}}
     @media(max-width:390px){.evo-mobile-top{padding-left:10px;padding-right:10px}.evo-mobile .evo-logo img{max-width:112px}.evo-tab{font-size:.49rem}.evo-tab svg{width:18px;height:18px}}
     @media(prefers-reduced-motion:reduce){.evo-nav *{transition:none!important;animation:none!important}}
