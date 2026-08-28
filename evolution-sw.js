@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.79 · infinity icon alignment */
-const VERSION='evolution-smart-app-v50.79-infinity-icon-alignment';
-const APP_BUILD=87;
+/* Evolution Design · Advanced App Shell Service Worker · v50.80 · unlimited-access icon */
+const VERSION='evolution-smart-app-v50.80-unlimited-access-icon';
+const APP_BUILD=88;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;

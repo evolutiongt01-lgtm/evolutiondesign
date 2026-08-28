@@ -69,9 +69,12 @@
     .course-stage .course-access-icon svg{
       display:block!important;margin:0!important;position:static!important;transform:none!important;
     }
-    /* v50.79 · Optical correction for the infinity glyph. */
-    .course-benefit:nth-child(2) .course-benefit-icon svg{
-      transform:translateY(1px)!important;
+    /* v50.80 · Replace the malformed infinity SVG with a centered unlimited-access glyph. */
+    .course-benefit:nth-child(2) .course-benefit-icon svg{display:none!important}
+    .course-benefit:nth-child(2) .course-benefit-icon:before{
+      content:"";display:block;width:21px;height:21px;background:currentColor;
+      -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 16c5 0 7-8 12-8a4 4 0 0 1 0 8c-5 0-7-8-12-8a4 4 0 1 0 0 8' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+      mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 16c5 0 7-8 12-8a4 4 0 0 1 0 8c-5 0-7-8-12-8a4 4 0 1 0 0 8' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
     }
     .coming .future-index{
       display:grid!important;place-items:center!important;align-content:center!important;
