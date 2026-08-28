@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.80 · unlimited-access icon */
-const VERSION='evolution-smart-app-v50.80-unlimited-access-icon';
-const APP_BUILD=88;
+/* Evolution Design · Advanced App Shell Service Worker · v50.81 · course presentation redesign */
+const VERSION='evolution-smart-app-v50.81-course-presentation';
+const APP_BUILD=89;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
