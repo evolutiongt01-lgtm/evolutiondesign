@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.69 · academy ivory liquid glass */
-const VERSION='evolution-smart-app-v50.69-academy-ivory-liquid-glass';
-const APP_BUILD=77;
+/* Evolution Design · Advanced App Shell Service Worker · v50.70 · Apple 26.1 nav trial */
+const VERSION='evolution-smart-app-v50.70-apple-26-1-nav-trial';
+const APP_BUILD=78;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
