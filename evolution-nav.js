@@ -237,13 +237,55 @@
       -webkit-backdrop-filter:var(--evo-optical-filter) blur(4px) saturate(142%) contrast(105%)!important;
     }
 
+    /* v50.75 · Same geometry as dark mode; only the shell material changes. */
+    evolution-nav.evo-academy-light-glass .evo-pill{
+      pointer-events:auto;position:relative;isolation:isolate;flex:1;min-height:58px!important;
+      padding:7px 9px 7px 14px!important;border:1px solid rgba(255,255,255,.58)!important;
+      border-radius:999px!important;display:flex;align-items:center;gap:16px!important;overflow:hidden!important;
+      background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.045))!important;
+      box-shadow:0 16px 42px rgba(24,22,19,.15),inset 0 1px 0 rgba(255,255,255,.92),inset 0 -1px 0 rgba(25,23,20,.11)!important;
+      backdrop-filter:blur(11px) saturate(145%) contrast(104%)!important;
+      -webkit-backdrop-filter:blur(11px) saturate(145%) contrast(104%)!important;
+    }
+    evolution-nav.evo-academy-light-glass .evo-pill:before{
+      content:""!important;display:block!important;position:absolute;inset:1px!important;height:auto!important;width:auto!important;
+      border-radius:inherit!important;z-index:0!important;pointer-events:none;
+      background:linear-gradient(125deg,rgba(255,255,255,.38),transparent 24%,transparent 72%,rgba(255,255,255,.20))!important;
+      filter:none!important;transform:none!important;
+    }
+    evolution-nav.evo-academy-light-glass .evo-pill:after{display:none!important}
+    evolution-nav.evo-academy-light-glass.evo-optical-ready .evo-pill.evo-optical-glass{
+      backdrop-filter:var(--evo-optical-filter) brightness(108%) saturate(135%)!important;
+      -webkit-backdrop-filter:var(--evo-optical-filter) brightness(108%) saturate(135%)!important;
+    }
+    evolution-nav.evo-academy-light-glass .evo-brand{
+      min-height:0!important;padding:0!important;border:0!important;border-radius:0!important;gap:12px!important;overflow:visible!important;
+      background:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+    }
+    evolution-nav.evo-academy-light-glass .evo-links{
+      min-height:0!important;margin-left:auto!important;padding:0!important;border:0!important;border-radius:0!important;
+      gap:clamp(12px,1.3vw,21px)!important;overflow:visible!important;background:none!important;box-shadow:none!important;
+      backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+    }
+    evolution-nav.evo-academy-light-glass .evo-links:before,
+    evolution-nav.evo-academy-light-glass .evo-links:after,
+    evolution-nav.evo-academy-light-glass .evo-brand:after,
+    evolution-nav.evo-academy-light-glass .evo-software:after{display:none!important}
+    evolution-nav.evo-academy-light-glass .evo-link{padding:0!important;border-radius:0!important;background:none!important;border:0!important;box-shadow:none!important}
+    evolution-nav.evo-academy-light-glass .evo-link.active{transform:translateY(-1px)!important}
+    evolution-nav.evo-academy-light-glass .evo-software{
+      height:42px!important;padding:0 17px!important;border:0!important;border-radius:999px!important;
+      background:#171717!important;color:#fff!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+    }
+    evolution-nav.evo-academy-light-glass #floating-profile-desktop{width:42px!important;height:42px!important;border-radius:50%!important}
+
     @media(min-width:992px){.evo-desktop{display:block}.evo-mobile{display:none!important}}
     @media(max-width:390px){.evo-mobile-top{padding-left:10px;padding-right:10px}.evo-mobile .evo-logo img{max-width:112px}.evo-tab{font-size:.49rem}.evo-tab svg{width:18px;height:18px}}
     @media(prefers-reduced-motion:reduce){.evo-nav *{transition:none!important;animation:none!important}}
   `;
   document.head.appendChild(style);
 
-  const isChromiumBackdropSVG = /Chrome\//.test(navigator.userAgent) && !/Edg\//.test(navigator.userAgent) && !/CriOS\//.test(navigator.userAgent);
+  const isChromiumBackdropSVG = /(Chrome|Chromium)\//.test(navigator.userAgent) && !/CriOS\//.test(navigator.userAgent);
   const opticalFilters = new Map();
 
   function capsuleMapData(width,height,specular=false){
@@ -290,20 +332,28 @@
     filter.id=id;filter.setAttribute('x','0');filter.setAttribute('y','0');filter.setAttribute('width',String(w));filter.setAttribute('height',String(h));filter.setAttribute('filterUnits','userSpaceOnUse');filter.setAttribute('color-interpolation-filters','sRGB');
     const map=document.createElementNS('http://www.w3.org/2000/svg','feImage');
     map.setAttribute('href',capsuleMapData(w,h));map.setAttribute('width',String(w));map.setAttribute('height',String(h));map.setAttribute('result','map');
+    const sourceBlur=document.createElementNS('http://www.w3.org/2000/svg','feGaussianBlur');
+    sourceBlur.setAttribute('in','SourceGraphic');sourceBlur.setAttribute('stdDeviation','.7');sourceBlur.setAttribute('result','blurred-source');
     const displacement=document.createElementNS('http://www.w3.org/2000/svg','feDisplacementMap');
-    displacement.setAttribute('in','SourceGraphic');displacement.setAttribute('in2','map');displacement.setAttribute('scale',String(Math.min(18,h*.27)));displacement.setAttribute('xChannelSelector','R');displacement.setAttribute('yChannelSelector','G');displacement.setAttribute('result','refracted');
+    displacement.setAttribute('in','blurred-source');displacement.setAttribute('in2','map');displacement.setAttribute('scale',String(Math.min(18,h*.27)));displacement.setAttribute('xChannelSelector','R');displacement.setAttribute('yChannelSelector','G');displacement.setAttribute('result','refracted');
+    const saturated=document.createElementNS('http://www.w3.org/2000/svg','feColorMatrix');
+    saturated.setAttribute('in','refracted');saturated.setAttribute('type','saturate');saturated.setAttribute('values','2.4');saturated.setAttribute('result','refracted-saturated');
     const shine=document.createElementNS('http://www.w3.org/2000/svg','feImage');
     shine.setAttribute('href',capsuleMapData(w,h,true));shine.setAttribute('width',String(w));shine.setAttribute('height',String(h));shine.setAttribute('result','specular');
+    const shineBlur=document.createElementNS('http://www.w3.org/2000/svg','feGaussianBlur');
+    shineBlur.setAttribute('in','specular');shineBlur.setAttribute('stdDeviation','.8');shineBlur.setAttribute('result','specular-soft');
+    const shineMask=document.createElementNS('http://www.w3.org/2000/svg','feComposite');
+    shineMask.setAttribute('in','refracted-saturated');shineMask.setAttribute('in2','specular-soft');shineMask.setAttribute('operator','in');shineMask.setAttribute('result','specular-reflection');
     const blend=document.createElementNS('http://www.w3.org/2000/svg','feBlend');
-    blend.setAttribute('in','refracted');blend.setAttribute('in2','specular');blend.setAttribute('mode','screen');
-    filter.append(map,displacement,shine,blend);svg.firstChild.appendChild(filter);
+    blend.setAttribute('in','specular-reflection');blend.setAttribute('in2','refracted');blend.setAttribute('mode','normal');
+    filter.append(map,sourceBlur,displacement,saturated,shine,shineBlur,shineMask,blend);svg.firstChild.appendChild(filter);
     const value=`url(#${id})`;opticalFilters.set(key,value);return value;
   }
 
   function installOpticalGlass(host){
     if(!isChromiumBackdropSVG||!host)return;
     const apply=()=>{
-      host.querySelectorAll('.evo-brand,.evo-links,.evo-software,#floating-profile-desktop').forEach(el=>{
+      host.querySelectorAll('.evo-pill,#floating-profile-desktop').forEach(el=>{
         const rect=el.getBoundingClientRect();if(rect.width<20||rect.height<20)return;
         el.classList.add('evo-optical-glass');el.style.setProperty('--evo-optical-filter',opticalFilterFor(rect.width,rect.height));
       });
@@ -311,7 +361,7 @@
     };
     requestAnimationFrame(()=>requestAnimationFrame(apply));
     const observer=new ResizeObserver(()=>requestAnimationFrame(apply));
-    host.querySelectorAll('.evo-brand,.evo-links,.evo-software,#floating-profile-desktop').forEach(el=>observer.observe(el));
+    host.querySelectorAll('.evo-pill,#floating-profile-desktop').forEach(el=>observer.observe(el));
   }
 
   const menuRows = (active,pages=PAGES) => pages.map(p => `

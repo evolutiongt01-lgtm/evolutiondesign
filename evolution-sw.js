@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.74 · optical liquid glass */
-const VERSION='evolution-smart-app-v50.74-optical-liquid-glass';
-const APP_BUILD=82;
+/* Evolution Design · Advanced App Shell Service Worker · v50.75 · unified optical navigation */
+const VERSION='evolution-smart-app-v50.75-unified-optical-navigation';
+const APP_BUILD=83;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
