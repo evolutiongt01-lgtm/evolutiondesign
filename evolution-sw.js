@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.68 · academy catalog themes */
-const VERSION='evolution-smart-app-v50.68-academy-catalog-themes';
-const APP_BUILD=76;
+/* Evolution Design · Advanced App Shell Service Worker · v50.69 · academy ivory liquid glass */
+const VERSION='evolution-smart-app-v50.69-academy-ivory-liquid-glass';
+const APP_BUILD=77;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;

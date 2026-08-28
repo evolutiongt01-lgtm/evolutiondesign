@@ -125,6 +125,23 @@
       -webkit-backdrop-filter:blur(8px)!important;
     }
 
+    evolution-nav.evo-academy-light-glass .evo-pill{background:linear-gradient(135deg,rgba(255,255,255,.70),rgba(244,239,231,.48))!important;border-color:rgba(255,255,255,.88)!important;box-shadow:0 18px 55px rgba(73,55,31,.16),inset 0 1px 0 rgba(255,255,255,.96),inset 0 -1px 0 rgba(120,91,53,.08)!important;backdrop-filter:blur(32px) saturate(180%)!important;-webkit-backdrop-filter:blur(32px) saturate(180%)!important}
+    evolution-nav.evo-academy-light-glass .evo-logo img{filter:invert(1);opacity:.88}
+    evolution-nav.evo-academy-light-glass .evo-link{color:#625d56}
+    evolution-nav.evo-academy-light-glass .evo-link:hover,evolution-nav.evo-academy-light-glass .evo-link.active{color:#111113}
+    evolution-nav.evo-academy-light-glass .evo-orders-link{color:#7c6b55!important}
+    evolution-nav.evo-academy-light-glass .evo-icon{color:#24211d;border-color:rgba(110,87,58,.18);background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(225,214,199,.42));box-shadow:0 12px 28px rgba(70,52,30,.13),inset 0 1px 0 #fff}
+    evolution-nav.evo-academy-light-glass .evo-icon:before{background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(255,255,255,.08))}
+    evolution-nav.evo-academy-light-glass .evo-icon:after{background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,0))}
+    evolution-nav.evo-academy-light-glass .evo-software{background:#191715;color:#fff;box-shadow:0 10px 24px rgba(30,23,15,.18)}
+    evolution-nav.evo-academy-light-glass .evo-route-indicator{background:#a97a43;box-shadow:0 0 12px rgba(169,122,67,.3)}
+    evolution-nav.evo-academy-light-glass .evo-drop{background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(245,239,231,.9));border-color:rgba(101,76,44,.14);box-shadow:0 24px 60px rgba(56,42,25,.18),inset 0 1px #fff}
+    evolution-nav.evo-academy-light-glass .evo-menu-item{color:#4e4943}
+    evolution-nav.evo-academy-light-glass .evo-menu-item:hover,evolution-nav.evo-academy-light-glass .evo-menu-item.active{background:rgba(169,122,67,.1);color:#111}
+    evolution-nav.evo-academy-light-glass .evo-mobile{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(245,239,231,.68))!important;border-bottom-color:rgba(99,74,43,.12)!important;box-shadow:0 10px 30px rgba(64,48,28,.13)!important;backdrop-filter:blur(28px) saturate(175%)!important;-webkit-backdrop-filter:blur(28px) saturate(175%)!important}
+    evolution-nav.evo-academy-light-glass .evo-tab{color:#77716a}
+    evolution-nav.evo-academy-light-glass .evo-tab.active{color:#171513}
+
     @media(min-width:992px){.evo-desktop{display:block}.evo-mobile{display:none!important}}
     @media(max-width:390px){.evo-mobile-top{padding-left:10px;padding-right:10px}.evo-mobile .evo-logo img{max-width:112px}.evo-tab{font-size:.49rem}.evo-tab svg{width:18px;height:18px}}
     @media(prefers-reduced-motion:reduce){.evo-nav *{transition:none!important;animation:none!important}}
