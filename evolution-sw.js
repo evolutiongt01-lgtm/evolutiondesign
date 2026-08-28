@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.66 · academy title gradient */
-const VERSION='evolution-smart-app-v50.66-academy-title-gradient';
-const APP_BUILD=74;
+/* Evolution Design · Advanced App Shell Service Worker · v50.68 · academy catalog themes */
+const VERSION='evolution-smart-app-v50.68-academy-catalog-themes';
+const APP_BUILD=76;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
