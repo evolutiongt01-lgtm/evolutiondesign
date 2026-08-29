@@ -59,6 +59,12 @@
     html[data-academy-theme="light"] .course-stage .course-card{box-shadow:0 18px 42px rgba(44,34,24,.10)!important}html[data-academy-theme="light"] .course-stage .course-info{box-shadow:0 28px 70px rgba(54,40,25,.17)!important}
     @media(max-width:1050px){.course-stage{grid-template-columns:minmax(300px,380px) 1fr!important}.course-stage .course-info{left:0!important;top:calc(100% + 12px)!important;width:100%!important;min-height:0!important}.course-stage .course-info:before{left:36px!important;top:-9px!important;border:0!important;border-left:1px solid var(--academy-stroke)!important;border-top:1px solid var(--academy-stroke)!important}}
     @media(max-width:760px){.course-stage{display:block!important}.course-stage .course-card{width:100%!important}.course-stage .course-info{position:static!important;width:auto!important;min-height:0!important;padding:20px!important;border:0!important;border-top:1px solid var(--academy-stroke)!important;border-radius:0!important;box-shadow:none!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important}.course-stage .course-info:before{display:none!important}.course-stage .course-intro{padding:30px 0 6px}.course-stage .course-action{flex-direction:column;align-items:stretch}.course-stage .course-cta{width:100%}}
+    /* v50.85 · Reserve the complete shared mobile-nav height inside routed views. */
+    @media(max-width:720px){
+      .evolution-view .academy-hero{
+        padding-top:calc(208px + env(safe-area-inset-top,0px))!important;
+      }
+    }
     /* v50.78 · Keep icon containers out of generic span text rules. */
     .course-benefit .course-benefit-icon,
     .course-stage .course-access-icon{

@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.84 · academy chat controls */
-const VERSION='evolution-smart-app-v50.84-chat-controls';
-const APP_BUILD=92;
+/* Evolution Design · Advanced App Shell Service Worker · v50.85 · academy mobile top offset */
+const VERSION='evolution-smart-app-v50.85-academy-mobile-offset';
+const APP_BUILD=93;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
