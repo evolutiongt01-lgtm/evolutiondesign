@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.86 · dark optical liquid glass */
-const VERSION='evolution-smart-app-v50.86-dark-optical-glass';
-const APP_BUILD=94;
+/* Evolution Design · Advanced App Shell Service Worker · v50.87 · global dark optical liquid glass */
+const VERSION='evolution-smart-app-v50.87-global-dark-optical-glass';
+const APP_BUILD=95;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;

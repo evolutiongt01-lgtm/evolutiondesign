@@ -280,7 +280,7 @@
     evolution-nav.evo-academy-light-glass #floating-profile-desktop{width:42px!important;height:42px!important;border-radius:50%!important}
 
     /* v50.86 · Optical Liquid Glass adapted for Academy dark mode. */
-    evolution-nav.evo-academy-dark-glass .evo-pill{
+    evolution-nav:not(.evo-academy-light-glass) .evo-pill{
       overflow:hidden!important;
       background:linear-gradient(180deg,rgba(28,29,34,.42),rgba(8,9,12,.28))!important;
       border-color:rgba(255,255,255,.19)!important;
@@ -288,30 +288,30 @@
       backdrop-filter:blur(11px) saturate(148%) contrast(108%)!important;
       -webkit-backdrop-filter:blur(11px) saturate(148%) contrast(108%)!important;
     }
-    evolution-nav.evo-academy-dark-glass .evo-pill:before{
+    evolution-nav:not(.evo-academy-light-glass) .evo-pill:before{
       content:""!important;display:block!important;position:absolute!important;inset:1px!important;height:auto!important;
       border-radius:inherit!important;z-index:0!important;pointer-events:none;
       background:linear-gradient(125deg,rgba(255,255,255,.17),transparent 25%,transparent 70%,rgba(224,189,139,.08))!important;
     }
-    evolution-nav.evo-academy-dark-glass .evo-pill:after{display:none!important}
-    evolution-nav.evo-academy-dark-glass.evo-optical-ready .evo-optical-glass{
+    evolution-nav:not(.evo-academy-light-glass) .evo-pill:after{display:none!important}
+    evolution-nav.evo-optical-ready:not(.evo-academy-light-glass) .evo-optical-glass{
       backdrop-filter:var(--evo-optical-filter) blur(4px) brightness(82%) saturate(145%) contrast(112%)!important;
       -webkit-backdrop-filter:var(--evo-optical-filter) blur(4px) brightness(82%) saturate(145%) contrast(112%)!important;
     }
-    evolution-nav.evo-academy-dark-glass .evo-icon,
-    evolution-nav.evo-academy-dark-glass #floating-profile-desktop{
+    evolution-nav:not(.evo-academy-light-glass) .evo-icon,
+    evolution-nav:not(.evo-academy-light-glass) #floating-profile-desktop{
       border-color:rgba(255,255,255,.22)!important;
       background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.035))!important;
       box-shadow:0 12px 30px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.24)!important;
     }
-    evolution-nav.evo-academy-dark-glass .evo-mobile{
+    evolution-nav:not(.evo-academy-light-glass) .evo-mobile{
       background:linear-gradient(180deg,rgba(18,19,23,.66),rgba(5,6,8,.48))!important;
       border-bottom-color:rgba(255,255,255,.13)!important;
       box-shadow:0 16px 40px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.12)!important;
       backdrop-filter:blur(22px) saturate(155%) contrast(108%)!important;
       -webkit-backdrop-filter:blur(22px) saturate(155%) contrast(108%)!important;
     }
-    evolution-nav.evo-academy-dark-glass .evo-tab.active{background:rgba(255,255,255,.07);box-shadow:inset 0 1px rgba(255,255,255,.11)}
+    evolution-nav:not(.evo-academy-light-glass) .evo-tab.active{background:rgba(255,255,255,.07);box-shadow:inset 0 1px rgba(255,255,255,.11)}
 
     @media(min-width:992px){.evo-desktop{display:block}.evo-mobile{display:none!important}}
     @media(max-width:390px){.evo-mobile-top{padding-left:10px;padding-right:10px}.evo-mobile .evo-logo img{max-width:112px}.evo-tab{font-size:.49rem}.evo-tab svg{width:18px;height:18px}}
