@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.85 · academy mobile top offset */
-const VERSION='evolution-smart-app-v50.85-academy-mobile-offset';
-const APP_BUILD=93;
+/* Evolution Design · Advanced App Shell Service Worker · v50.86 · dark optical liquid glass */
+const VERSION='evolution-smart-app-v50.86-dark-optical-glass';
+const APP_BUILD=94;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
