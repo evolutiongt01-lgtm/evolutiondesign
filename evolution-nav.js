@@ -294,7 +294,7 @@
       background:linear-gradient(125deg,rgba(255,255,255,.17),transparent 25%,transparent 70%,rgba(224,189,139,.08))!important;
     }
     evolution-nav:not(.evo-academy-light-glass) .evo-pill:after{display:none!important}
-    evolution-nav.evo-optical-ready:not(.evo-academy-light-glass) .evo-optical-glass{
+    evolution-nav.evo-optical-ready:not(.evo-academy-light-glass) .evo-pill.evo-optical-glass{
       backdrop-filter:var(--evo-optical-filter) blur(4px) brightness(82%) saturate(145%) contrast(112%)!important;
       -webkit-backdrop-filter:var(--evo-optical-filter) blur(4px) brightness(82%) saturate(145%) contrast(112%)!important;
     }
@@ -369,7 +369,7 @@
     const sourceBlur=document.createElementNS('http://www.w3.org/2000/svg','feGaussianBlur');
     sourceBlur.setAttribute('in','SourceGraphic');sourceBlur.setAttribute('stdDeviation','.7');sourceBlur.setAttribute('result','blurred-source');
     const displacement=document.createElementNS('http://www.w3.org/2000/svg','feDisplacementMap');
-    displacement.setAttribute('in','blurred-source');displacement.setAttribute('in2','map');displacement.setAttribute('scale',String(Math.min(18,h*.27)));displacement.setAttribute('xChannelSelector','R');displacement.setAttribute('yChannelSelector','G');displacement.setAttribute('result','refracted');
+    displacement.setAttribute('in','blurred-source');displacement.setAttribute('in2','map');displacement.setAttribute('scale',String(Math.min(7,h*.10)));displacement.setAttribute('xChannelSelector','R');displacement.setAttribute('yChannelSelector','G');displacement.setAttribute('result','refracted');
     const saturated=document.createElementNS('http://www.w3.org/2000/svg','feColorMatrix');
     saturated.setAttribute('in','refracted');saturated.setAttribute('type','saturate');saturated.setAttribute('values','2.4');saturated.setAttribute('result','refracted-saturated');
     const shine=document.createElementNS('http://www.w3.org/2000/svg','feImage');
