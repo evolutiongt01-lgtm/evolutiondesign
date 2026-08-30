@@ -55,7 +55,7 @@
     .evo-d-none{display:none!important}
 
     .evo-desktop{display:none;position:fixed;top:0;left:0;right:0;z-index:2147483000;padding:calc(22px + env(safe-area-inset-top,0px)) 22px 0;pointer-events:none}
-    .evo-desktop-inner{width:min(1400px,100%);margin:auto;display:flex;align-items:center;gap:12px}
+    .evo-desktop-inner{position:relative;width:min(1400px,100%);margin:auto;display:flex;align-items:center;gap:12px}
     .evo-pill{pointer-events:auto;position:relative;isolation:isolate;flex:1;min-height:58px;padding:7px 9px 7px 14px;border:1px solid rgba(255,255,255,.13);border-radius:999px;background:linear-gradient(135deg,rgba(24,24,27,.86),rgba(7,7,9,.88));box-shadow:0 14px 42px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);display:flex;align-items:center;gap:16px;transition:background .28s ease,border-color .28s ease,box-shadow .28s ease,backdrop-filter .28s ease,-webkit-backdrop-filter .28s ease}
     evolution-nav.evo-is-scrolled .evo-pill{background:linear-gradient(135deg,rgba(20,20,23,.965),rgba(7,7,9,.975));border-color:rgba(255,255,255,.17);box-shadow:0 20px 55px rgba(0,0,0,.50),inset 0 1px rgba(255,255,255,.10);backdrop-filter:blur(30px) saturate(175%);-webkit-backdrop-filter:blur(30px) saturate(175%)}
     .evo-brand{display:flex;align-items:center;gap:12px;position:relative;flex:0 0 auto}
@@ -84,8 +84,9 @@
     #floating-profile-desktop{pointer-events:auto;width:42px;height:42px;display:flex;align-items:center;justify-content:center}
     .evo-profile-pic{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid rgba(212,184,149,.58);background:#111;box-shadow:0 8px 24px rgba(0,0,0,.3)}
     .evo-avatar-fallback{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#1b1b1e;border:2px solid rgba(212,184,149,.58);color:#fff;font:800 .78rem system-ui}
-    #admin-badge-container-desktop{position:absolute;top:49px;left:53px;z-index:10}
-    .evo-admin-badge{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:999px;background:rgba(190,38,55,.25);border:1px solid rgba(220,53,69,.48);color:#fff!important;font:800 .61rem/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    #admin-badge-container-desktop{position:absolute;top:49px;left:53px;z-index:10;pointer-events:auto}
+    #admin-badge-container-desktop:empty{display:none!important}
+    .evo-admin-badge{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:999px;background:linear-gradient(145deg,rgba(190,38,55,.42),rgba(92,13,25,.5));border:1px solid rgba(235,75,91,.52);color:#fff!important;box-shadow:0 10px 28px rgba(75,8,19,.3),inset 0 1px rgba(255,255,255,.16);font:800 .61rem/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backdrop-filter:blur(16px) saturate(145%);-webkit-backdrop-filter:blur(16px) saturate(145%)}
     .evo-admin-badge svg{width:13px;height:13px}
 
     .evo-drop{position:absolute;left:0;top:52px;min-width:220px;margin:0;padding:8px;list-style:none;border:1px solid rgba(255,255,255,.13);border-radius:20px;background:linear-gradient(180deg,rgba(19,19,22,.84),rgba(9,9,11,.92));box-shadow:0 22px 60px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.14);backdrop-filter:blur(28px) saturate(165%);-webkit-backdrop-filter:blur(28px) saturate(165%);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-7px) scale(.98);transform-origin:top left;transition:opacity .18s ease,transform .22s cubic-bezier(.16,1,.3,1),visibility .18s}
@@ -304,6 +305,14 @@
       background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.035))!important;
       box-shadow:0 12px 30px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.24)!important;
     }
+    evolution-nav:not(.evo-academy-light-glass) #floating-profile-desktop{
+      width:42px!important;height:42px!important;min-width:42px!important;border:1px solid rgba(255,255,255,.22)!important;
+      border-radius:50%!important;overflow:hidden!important;position:relative!important;isolation:isolate!important;
+    }
+    evolution-nav:not(.evo-academy-light-glass) #floating-profile-desktop:empty{display:none!important}
+    evolution-nav:not(.evo-academy-light-glass) #floating-profile-desktop>a{width:100%;height:100%;display:grid;place-items:center;border-radius:inherit;overflow:hidden}
+    evolution-nav:not(.evo-academy-light-glass) #floating-profile-desktop .evo-profile-pic,
+    evolution-nav:not(.evo-academy-light-glass) #floating-profile-desktop .evo-avatar-fallback{width:38px!important;height:38px!important;border-radius:50%!important}
     evolution-nav:not(.evo-academy-light-glass) .evo-mobile{
       background:linear-gradient(180deg,rgba(18,19,23,.66),rgba(5,6,8,.48))!important;
       border-bottom-color:rgba(255,255,255,.13)!important;
@@ -453,6 +462,10 @@
             <span class="evo-route-indicator evo-mobile-indicator" aria-hidden="true"></span>
           </div>
         </nav>`;
+
+      const adminBadge=this.querySelector('#admin-badge-container-desktop');
+      const desktopInner=this.querySelector('.evo-desktop-inner');
+      if(adminBadge&&desktopInner)desktopInner.appendChild(adminBadge);
 
       requestAnimationFrame(()=>requestAnimationFrame(()=>window.EvolutionNav?.positionIndicators()));
       installOpticalGlass(this);

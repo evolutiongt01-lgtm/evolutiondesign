@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.88 · stable global optical glass */
-const VERSION='evolution-smart-app-v50.88-stable-global-optical-glass';
-const APP_BUILD=96;
+/* Evolution Design · Advanced App Shell Service Worker · v50.90 · admin badge restoration */
+const VERSION='evolution-smart-app-v50.90-admin-badge-restoration';
+const APP_BUILD=98;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
