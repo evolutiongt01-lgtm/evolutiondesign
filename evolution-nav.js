@@ -84,10 +84,15 @@
     #floating-profile-desktop{pointer-events:auto;width:42px;height:42px;display:flex;align-items:center;justify-content:center}
     .evo-profile-pic{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid rgba(212,184,149,.58);background:#111;box-shadow:0 8px 24px rgba(0,0,0,.3)}
     .evo-avatar-fallback{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#1b1b1e;border:2px solid rgba(212,184,149,.58);color:#fff;font:800 .78rem system-ui}
-    #admin-badge-container-desktop{position:absolute;top:49px;left:53px;z-index:10;pointer-events:auto}
+    #admin-badge-container-desktop{position:absolute;top:52px;left:54px;z-index:10;pointer-events:auto}
     #admin-badge-container-desktop:empty{display:none!important}
-    .evo-admin-badge{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:999px;background:linear-gradient(145deg,rgba(190,38,55,.42),rgba(92,13,25,.5));border:1px solid rgba(235,75,91,.52);color:#fff!important;box-shadow:0 10px 28px rgba(75,8,19,.3),inset 0 1px rgba(255,255,255,.16);font:800 .61rem/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backdrop-filter:blur(16px) saturate(145%);-webkit-backdrop-filter:blur(16px) saturate(145%)}
-    .evo-admin-badge svg{width:13px;height:13px}
+    .evo-admin-badge{position:relative;isolation:isolate;overflow:hidden;min-height:40px;display:inline-flex;align-items:center;gap:8px;padding:5px 10px 5px 5px;border-radius:999px;background:linear-gradient(135deg,rgba(117,16,31,.88),rgba(52,8,17,.92));border:1px solid rgba(244,86,105,.55);color:#fff!important;box-shadow:0 13px 34px rgba(91,8,24,.38),inset 0 1px rgba(255,255,255,.18),inset 0 -1px rgba(0,0,0,.35);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backdrop-filter:blur(18px) saturate(155%);-webkit-backdrop-filter:blur(18px) saturate(155%);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+    .evo-admin-badge:before{content:"";position:absolute;z-index:-1;left:8%;right:8%;top:0;height:45%;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent);pointer-events:none}
+    .evo-admin-badge:hover{transform:translateY(-2px);border-color:rgba(255,112,128,.8);box-shadow:0 17px 40px rgba(108,8,27,.48),inset 0 1px rgba(255,255,255,.23)}
+    .evo-admin-shield{width:29px;height:29px;flex:0 0 29px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 1px rgba(255,255,255,.2)}
+    .evo-admin-shield svg{width:15px;height:15px;stroke:#ffd8dd}
+    .evo-admin-copy{display:flex;flex-direction:column;gap:2px;line-height:1}.evo-admin-copy b{font-size:.65rem;letter-spacing:.01em}.evo-admin-copy small{color:rgba(255,215,221,.62);font-size:.43rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase}
+    .evo-admin-arrow{margin-left:2px;color:#ffc1ca;font-size:.78rem;transition:transform .2s ease}.evo-admin-badge:hover .evo-admin-arrow{transform:translateX(2px)}
 
     .evo-drop{position:absolute;left:0;top:52px;min-width:220px;margin:0;padding:8px;list-style:none;border:1px solid rgba(255,255,255,.13);border-radius:20px;background:linear-gradient(180deg,rgba(19,19,22,.84),rgba(9,9,11,.92));box-shadow:0 22px 60px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.14);backdrop-filter:blur(28px) saturate(165%);-webkit-backdrop-filter:blur(28px) saturate(165%);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-7px) scale(.98);transform-origin:top left;transition:opacity .18s ease,transform .22s cubic-bezier(.16,1,.3,1),visibility .18s}
     .evo-drop.show{opacity:1;visibility:visible;pointer-events:auto;transform:none}
@@ -597,7 +602,7 @@
       if(desktop)desktop.innerHTML=`<a href="#" class="evo-link evo-login" data-evo-logout>${ICONS.logout}<span>Salir</span></a>`;
       if(profile)profile.innerHTML=`<a href="/perfil.html" aria-label="Mi perfil">${avatar}</a>`;
       if(mobile)mobile.innerHTML=`<div class="evo-mobile-auth"><a href="/perfil.html" class="evo-mobile-profile" aria-label="Mi perfil">${mobileAvatar}</a>${isAdmin?`<a href="/admin.html" class="evo-mobile-action" aria-label="Panel Admin">${ICONS.shield}</a>`:''}<a href="#" class="evo-mobile-action" data-evo-logout aria-label="Salir">${ICONS.logout}</a></div>`;
-      if(admin)admin.innerHTML=isAdmin?`<a href="/admin.html" class="evo-admin-badge">${ICONS.shield}<span>Panel Admin</span></a>`:'';
+      if(admin)admin.innerHTML=isAdmin?`<a href="/admin.html" class="evo-admin-badge"><span class="evo-admin-shield">${ICONS.shield}</span><span class="evo-admin-copy"><b>Panel Admin</b><small>Evolution Control</small></span><span class="evo-admin-arrow">→</span></a>`:'';
     }
   };
 

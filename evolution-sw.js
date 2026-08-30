@@ -1,6 +1,6 @@
-/* Evolution Design · Advanced App Shell Service Worker · v50.90 · admin badge restoration */
-const VERSION='evolution-smart-app-v50.90-admin-badge-restoration';
-const APP_BUILD=98;
+/* Evolution Design · Advanced App Shell Service Worker · v50.91 · premium admin control */
+const VERSION='evolution-smart-app-v50.91-premium-admin-control';
+const APP_BUILD=99;
 const SHELL=`${VERSION}-shell`;
 const VIEWS=`${VERSION}-views`;
 const ASSETS=`${VERSION}-assets`;
